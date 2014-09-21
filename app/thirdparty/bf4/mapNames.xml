@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mapNames>
+    <!-- Large Conquest Maps -->
+    <map uri="MP_Abandoned" name="Zavod 311" playmode="ConquestLarge0" />
+    <map uri="MP_Damage" name="Lancang Dam" playmode="ConquestLarge0" />
+    <map uri="MP_Flooded" name="Flood Zone" playmode="ConquestLarge0" />
+    <map uri="MP_Journey" name="Golmud Railway" playmode="ConquestLarge0" />
+    <map uri="MP_Naval" name="Paracel Storm" playmode="ConquestLarge0" />
+    <map uri="MP_Prison" name="Operation Locker" playmode="ConquestLarge0" />
+    <map uri="MP_Resort" name="Hainan Resort" playmode="ConquestLarge0" />
+    <map uri="MP_Siege" name="Siege of Shanghai" playmode="ConquestLarge0" />
+    <map uri="MP_TheDish" name="Rogue Transmission" playmode="ConquestLarge0" />
+    <map uri="MP_Tremors" name="Dawnbreaker" playmode="ConquestLarge0" />
+    <map uri="XP1_001" name="Silk Road" playmode="ConquestLarge0" />
+    <map uri="XP1_002" name="Altai Range" playmode="ConquestLarge0" />
+    <map uri="XP1_003" name="Guilin Peaks" playmode="ConquestLarge0" />
+    <map uri="XP1_004" name="Dragon Pass" playmode="ConquestLarge0" />
+    <map uri="XP0_Caspian" name="Caspian Border 2014" playmode="ConquestLarge0" />
+    <map uri="XP0_Firestorm" name="Operation Firestorm 2014" playmode="ConquestLarge0" />
+    <map uri="XP0_Metro" name="Operation Metro 2014" playmode="ConquestLarge0" />
+    <map uri="XP0_Oman" name="Gulf of Oman 2014" playmode="ConquestLarge0" />
+    <map uri="XP2_001" name="Lost Islands" playmode="ConquestLarge0" />
+    <map uri="XP2_002" name="Nansha Strike" playmode="ConquestLarge0" />
+    <map uri="XP2_003" name="Wavebreaker" playmode="ConquestLarge0" />
+    <map uri="XP2_004" name="Operation Mortar" playmode="ConquestLarge0" />
+    <map uri="XP3_MarketPl" name="Pearl Market" playmode="ConquestLarge0" />
+    <map uri="XP3_Prpganda" name="Propaganda" playmode="ConquestLarge0" />
+    <map uri="XP3_UrbanGdn" name="Lumphini Garden" playmode="ConquestLarge0" />
+    <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="ConquestLarge0" />
+
+    <!-- Small Conquest Maps -->
+    <map uri="MP_Abandoned" name="Zavod 311" playmode="ConquestSmall0" />
+    <map uri="MP_Damage" name="Lancang Dam" playmode="ConquestSmall0" />
+    <map uri="MP_Flooded" name="Flood Zone" playmode="ConquestSmall0" />
+    <map uri="MP_Journey" name="Golmud Railway" playmode="ConquestSmall0" />
+    <map uri="MP_Naval" name="Paracel Storm" playmode="ConquestSmall0" />
+    <map uri="MP_Prison" name="Operation Locker" playmode="ConquestSmall0" />
+    <map uri="MP_Resort" name="Hainan Resort" playmode="ConquestSmall0" />
+    <map uri="MP_Siege" name="Siege of Shanghai" playmode="ConquestSmall0" />
+    <map uri="MP_TheDish" name="Rogue Transmission" playmode="ConquestSmall0" />
+    <map uri="MP_Tremors" name="Dawnbreaker" playmode="ConquestSmall0" />
+    <map uri="XP1_001" name="Silk Road" playmode="ConquestSmall0" />
+    <map uri="XP1_002" name="Altai Range" playmode="ConquestSmall0" />
+    <map uri="XP1_003" name="Guilin Peaks" playmode="ConquestSmall0" />
+    <map uri="XP1_004" name="Dragon Pass" playmode="ConquestSmall0" />
+    <map uri="XP0_Caspian" name="Caspian Border 2014" playmode="ConquestSmall0" />
+    <map uri="XP0_Firestorm" name="Operation Firestorm 2014" playmode="ConquestSmall0" />
+    <map uri="XP0_Metro" name="Operation Metro 2014" playmode="ConquestSmall0" />
+    <map uri="XP0_Oman" name="Gulf of Oman 2014" playmode="ConquestSmall0" />
+    <map uri="XP2_001" name="Lost Islands" playmode="ConquestSmall0" />
+    <map uri="XP2_002" name="Nansha Strike" playmode="ConquestSmall0" />
+    <map uri="XP2_003" name="Wavebreaker" playmode="ConquestSmall0" />
+    <map uri="XP2_004" name="Operation Mortar" playmode="ConquestSmall0" />
+    <map uri="XP3_MarketPl" name="Pearl Market" playmode="ConquestSmall0" />
+    <map uri="XP3_Prpganda" name="Propaganda" playmode="ConquestSmall0" />
+    <map uri="XP3_UrbanGdn" name="Lumphini Garden" playmode="ConquestSmall0" />
+    <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="ConquestSmall0" />
+
+    <!-- Domination Maps -->
+    <map uri="MP_Abandoned" name="Zavod 311" playmode="Domination0" />
+    <map uri="MP_Damage" name="Lancang Dam" playmode="Domination0" />
+    <map uri="MP_Flooded" name="Flood Zone" playmode="Domination0" />
+    <map uri="MP_Journey" name="Golmud Railway" playmode="Domination0" />
+    <map uri="MP_Naval" name="Paracel Storm" playmode="Domination0" />
+    <map uri="MP_Prison" name="Operation Locker" playmode="Domination0" />
+    <map uri="MP_Resort" name="Hainan Resort" playmode="Domination0" />
+    <map uri="MP_Siege" name="Siege of Shanghai" playmode="Domination0" />
+    <map uri="MP_TheDish" name="Rogue Transmission" playmode="Domination0" />
+    <map uri="MP_Tremors" name="Dawnbreaker" playmode="Domination0" />
+    <map uri="XP1_001" name="Silk Road" playmode="Domination0" />
+    <map uri="XP1_002" name="Altai Range" playmode="Domination0" />
+    <map uri="XP1_003" name="Guilin Peaks" playmode="Domination0" />
+    <map uri="XP1_004" name="Dragon Pass" playmode="Domination0" />
+    <map uri="XP0_Caspian" name="Caspian Border 2014" playmode="Domination0" />
+    <map uri="XP0_Firestorm" name="Operation Firestorm 2014" playmode="Domination0" />
+    <map uri="XP0_Metro" name="Operation Metro 2014" playmode="Domination0" />
+    <map uri="XP0_Oman" name="Gulf of Oman 2014" playmode="Domination0" />
+    <map uri="XP2_001" name="Lost Islands" playmode="Domination0" />
+    <map uri="XP2_002" name="Nansha Strike" playmode="Domination0" />
+    <map uri="XP2_003" name="Wavebreaker" playmode="Domination0" />
+    <map uri="XP2_004" name="Operation Mortar" playmode="Domination0" />
+    <map uri="XP3_MarketPl" name="Pearl Market" playmode="Domination0" />
+    <map uri="XP3_Prpganda" name="Propaganda" playmode="Domination0" />
+    <map uri="XP3_UrbanGdn" name="Lumphini Garden" playmode="Domination0" />
+    <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="Domination0" />
+
+    <!-- Elimination Maps -->
+    <map uri="MP_Abandoned" name="Zavod 311" playmode="Elimination0" />
+    <map uri="MP_Damage" name="Lancang Dam" playmode="Elimination0" />
+    <map uri="MP_Flooded" name="Flood Zone" playmode="Elimination0" />
+    <map uri="MP_Journey" name="Golmud Railway" playmode="Elimination0" />
+    <map uri="MP_Naval" name="Paracel Storm" playmode="Elimination0" />
+    <map uri="MP_Prison" name="Operation Locker" playmode="Elimination0" />
+    <map uri="MP_Resort" name="Hainan Resort" playmode="Elimination0" />
+    <map uri="MP_Siege" name="Siege of Shanghai" playmode="Elimination0" />
+    <map uri="MP_TheDish" name="Rogue Transmission" playmode="Elimination0" />
+    <map uri="MP_Tremors" name="Dawnbreaker" playmode="Elimination0" />
+    <map uri="XP1_001" name="Silk Road" playmode="Elimination0" />
+    <map uri="XP1_002" name="Altai Range" playmode="Elimination0" />
+    <map uri="XP1_003" name="Guilin Peaks" playmode="Elimination0" />
+    <map uri="XP1_004" name="Dragon Pass" playmode="Elimination0" />
+    <map uri="XP0_Caspian" name="Caspian Border 2014" playmode="Elimination0" />
+    <map uri="XP0_Firestorm" name="Operation Firestorm 2014" playmode="Elimination0" />
+    <map uri="XP0_Metro" name="Operation Metro 2014" playmode="Elimination0" />
+    <map uri="XP0_Oman" name="Gulf of Oman 2014" playmode="Elimination0" />
+    <map uri="XP2_001" name="Lost Islands" playmode="Elimination0" />
+    <map uri="XP2_002" name="Nansha Strike" playmode="Elimination0" />
+    <map uri="XP2_003" name="Wavebreaker" playmode="Elimination0" />
+    <map uri="XP2_004" name="Operation Mortar" playmode="Elimination0" />
+    <map uri="XP3_MarketPl" name="Pearl Market" playmode="Elimination0" />
+    <map uri="XP3_Prpganda" name="Propaganda" playmode="Elimination0" />
+    <map uri="XP3_UrbanGdn" name="Lumphini Garden" playmode="Elimination0" />
+    <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="Elimination0" />
+
+    <!-- Obliteration Maps -->
+    <map uri="MP_Abandoned" name="Zavod 311" playmode="Obliteration" />
+    <map uri="MP_Damage" name="Lancang Dam" playmode="Obliteration" />
+    <map uri="MP_Flooded" name="Flood Zone" playmode="Obliteration" />
+    <map uri="MP_Journey" name="Golmud Railway" playmode="Obliteration" />
+    <map uri="MP_Naval" name="Paracel Storm" playmode="Obliteration" />
+    <map uri="MP_Prison" name="Operation Locker" playmode="Obliteration" />
+    <map uri="MP_Resort" name="Hainan Resort" playmode="Obliteration" />
+    <map uri="MP_Siege" name="Siege of Shanghai" playmode="Obliteration" />
+    <map uri="MP_TheDish" name="Rogue Transmission" playmode="Obliteration" />
+    <map uri="MP_Tremors" name="Dawnbreaker" playmode="Obliteration" />
+    <map uri="XP1_001" name="Silk Road" playmode="Obliteration" />
+    <map uri="XP1_002" name="Altai Range" playmode="Obliteration" />
+    <map uri="XP1_003" name="Guilin Peaks" playmode="Obliteration" />
+    <map uri="XP1_004" name="Dragon Pass" playmode="Obliteration" />
+    <map uri="XP0_Caspian" name="Caspian Border 2014" playmode="Obliteration" />
+    <map uri="XP0_Firestorm" name="Operation Firestorm 2014" playmode="Obliteration" />
+    <map uri="XP0_Metro" name="Operation Metro 2014" playmode="Obliteration" />
+    <map uri="XP0_Oman" name="Gulf of Oman 2014" playmode="Obliteration" />
+    <map uri="XP2_001" name="Lost Islands" playmode="Obliteration" />
+    <map uri="XP2_002" name="Nansha Strike" playmode="Obliteration" />
+    <map uri="XP2_003" name="Wavebreaker" playmode="Obliteration" />
+    <map uri="XP2_004" name="Operation Mortar" playmode="Obliteration" />
+    <map uri="XP3_MarketPl" name="Pearl Market" playmode="Obliteration" />
+    <map uri="XP3_Prpganda" name="Propaganda" playmode="Obliteration" />
+    <map uri="XP3_UrbanGdn" name="Lumphini Garden" playmode="Obliteration" />
+    <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="Obliteration" />
+
+    <!-- Rush Maps -->
+    <map uri="MP_Abandoned" name="Zavod 311" playmode="RushLarge0" />
+    <map uri="MP_Damage" name="Lancang Dam" playmode="RushLarge0" />
+    <map uri="MP_Flooded" name="Flood Zone" playmode="RushLarge0" />
+    <map uri="MP_Journey" name="Golmud Railway" playmode="RushLarge0" />
+    <map uri="MP_Naval" name="Paracel Storm" playmode="RushLarge0" />
+    <map uri="MP_Prison" name="Operation Locker" playmode="RushLarge0" />
+    <map uri="MP_Resort" name="Hainan Resort" playmode="RushLarge0" />
+    <map uri="MP_Siege" name="Siege of Shanghai" playmode="RushLarge0" />
+    <map uri="MP_TheDish" name="Rogue Transmission" playmode="RushLarge0" />
+    <map uri="MP_Tremors" name="Dawnbreaker" playmode="RushLarge0" />
+    <map uri="XP1_001" name="Silk Road" playmode="RushLarge0" />
+    <map uri="XP1_002" name="Altai Range" playmode="RushLarge0" />
+    <map uri="XP1_003" name="Guilin Peaks" playmode="RushLarge0" />
+    <map uri="XP1_004" name="Dragon Pass" playmode="RushLarge0" />
+    <map uri="XP0_Caspian" name="Caspian Border 2014" playmode="RushLarge0" />
+    <map uri="XP0_Firestorm" name="Operation Firestorm 2014" playmode="RushLarge0" />
+    <map uri="XP0_Metro" name="Operation Metro 2014" playmode="RushLarge0" />
+    <map uri="XP0_Oman" name="Gulf of Oman 2014" playmode="RushLarge0" />
+    <map uri="XP2_001" name="Lost Islands" playmode="RushLarge0" />
+    <map uri="XP2_002" name="Nansha Strike" playmode="RushLarge0" />
+    <map uri="XP2_003" name="Wavebreaker" playmode="RushLarge0" />
+    <map uri="XP2_004" name="Operation Mortar" playmode="RushLarge0" />
+    <map uri="XP3_MarketPl" name="Pearl Market" playmode="RushLarge0" />
+    <map uri="XP3_Prpganda" name="Propaganda" playmode="RushLarge0" />
+    <map uri="XP3_UrbanGdn" name="Lumphini Garden" playmode="RushLarge0" />
+    <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="RushLarge0" />
+
+    <!-- Squad Death Match Maps -->
+    <map uri="MP_Abandoned" name="Zavod 311" playmode="SquadDeathMatch0" />
+    <map uri="MP_Damage" name="Lancang Dam" playmode="SquadDeathMatch0" />
+    <map uri="MP_Flooded" name="Flood Zone" playmode="SquadDeathMatch0" />
+    <map uri="MP_Journey" name="Golmud Railway" playmode="SquadDeathMatch0" />
+    <map uri="MP_Naval" name="Paracel Storm" playmode="SquadDeathMatch0" />
+    <map uri="MP_Prison" name="Operation Locker" playmode="SquadDeathMatch0" />
+    <map uri="MP_Resort" name="Hainan Resort" playmode="SquadDeathMatch0" />
+    <map uri="MP_Siege" name="Siege of Shanghai" playmode="SquadDeathMatch0" />
+    <map uri="MP_TheDish" name="Rogue Transmission" playmode="SquadDeathMatch0" />
+    <map uri="MP_Tremors" name="Dawnbreaker" playmode="SquadDeathMatch0" />
+    <map uri="XP1_001" name="Silk Road" playmode="SquadDeathMatch0" />
+    <map uri="XP1_002" name="Altai Range" playmode="SquadDeathMatch0" />
+    <map uri="XP1_003" name="Guilin Peaks" playmode="SquadDeathMatch0" />
+    <map uri="XP1_004" name="Dragon Pass" playmode="SquadDeathMatch0" />
+    <map uri="XP0_Caspian" name="Caspian Border 2014" playmode="SquadDeathMatch0" />
+    <map uri="XP0_Firestorm" name="Operation Firestorm 2014" playmode="SquadDeathMatch0" />
+    <map uri="XP0_Metro" name="Operation Metro 2014" playmode="SquadDeathMatch0" />
+    <map uri="XP0_Oman" name="Gulf of Oman 2014" playmode="SquadDeathMatch0" />
+    <map uri="XP2_001" name="Lost Islands" playmode="SquadDeathMatch0" />
+    <map uri="XP2_002" name="Nansha Strike" playmode="SquadDeathMatch0" />
+    <map uri="XP2_003" name="Wavebreaker" playmode="SquadDeathMatch0" />
+    <map uri="XP2_004" name="Operation Mortar" playmode="SquadDeathMatch0" />
+    <map uri="XP3_MarketPl" name="Pearl Market" playmode="SquadDeathMatch0" />
+    <map uri="XP3_Prpganda" name="Propaganda" playmode="SquadDeathMatch0" />
+    <map uri="XP3_UrbanGdn" name="Lumphini Garden" playmode="SquadDeathMatch0" />
+    <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="SquadDeathMatch0" />
+
+    <!-- Team Deathmatch Maps -->
+    <map uri="MP_Abandoned" name="Zavod 311" playmode="TeamDeathMatch0" />
+    <map uri="MP_Damage" name="Lancang Dam" playmode="TeamDeathMatch0" />
+    <map uri="MP_Flooded" name="Flood Zone" playmode="TeamDeathMatch0" />
+    <map uri="MP_Journey" name="Golmud Railway" playmode="TeamDeathMatch0" />
+    <map uri="MP_Naval" name="Paracel Storm" playmode="TeamDeathMatch0" />
+    <map uri="MP_Prison" name="Operation Locker" playmode="TeamDeathMatch0" />
+    <map uri="MP_Resort" name="Hainan Resort" playmode="TeamDeathMatch0" />
+    <map uri="MP_Siege" name="Siege of Shanghai" playmode="TeamDeathMatch0" />
+    <map uri="MP_TheDish" name="Rogue Transmission" playmode="TeamDeathMatch0" />
+    <map uri="MP_Tremors" name="Dawnbreaker" playmode="TeamDeathMatch0" />
+    <map uri="XP1_001" name="Silk Road" playmode="TeamDeathMatch0" />
+    <map uri="XP1_002" name="Altai Range" playmode="TeamDeathMatch0" />
+    <map uri="XP1_003" name="Guilin Peaks" playmode="TeamDeathMatch0" />
+    <map uri="XP1_004" name="Dragon Pass" playmode="TeamDeathMatch0" />
+    <map uri="XP0_Caspian" name="Caspian Border 2014" playmode="TeamDeathMatch0" />
+    <map uri="XP0_Firestorm" name="Operation Firestorm 2014" playmode="TeamDeathMatch0" />
+    <map uri="XP0_Metro" name="Operation Metro 2014" playmode="TeamDeathMatch0" />
+    <map uri="XP0_Oman" name="Gulf of Oman 2014" playmode="TeamDeathMatch0" />
+    <map uri="XP2_001" name="Lost Islands" playmode="TeamDeathMatch0" />
+    <map uri="XP2_002" name="Nansha Strike" playmode="TeamDeathMatch0" />
+    <map uri="XP2_003" name="Wavebreaker" playmode="TeamDeathMatch0" />
+    <map uri="XP2_004" name="Operation Mortar" playmode="TeamDeathMatch0" />
+    <map uri="XP3_MarketPl" name="Pearl Market" playmode="TeamDeathMatch0" />
+    <map uri="XP3_Prpganda" name="Propaganda" playmode="TeamDeathMatch0" />
+    <map uri="XP3_UrbanGdn" name="Lumphini Garden" playmode="TeamDeathMatch0" />
+    <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="TeamDeathMatch0" />
+
+    <!-- Capture The Flag Maps -->
+    <map uri="XP0_Caspian" name="Caspian Border 2014" playmode="CaptureTheFlag0" />
+    <map uri="XP0_Firestorm" name="Operation Firestorm 2014" playmode="CaptureTheFlag0" />
+    <map uri="XP0_Metro" name="Operation Metro 2014" playmode="CaptureTheFlag0" />
+    <map uri="XP0_Oman" name="Gulf of Oman 2014" playmode="CaptureTheFlag0" />
+    <map uri="XP3_MarketPl" name="Pearl Market" playmode="CaptureTheFlag0" />
+    <map uri="XP3_Prpganda" name="Propaganda" playmode="CaptureTheFlag0" />
+    <map uri="XP3_UrbanGdn" name="Lumphini Garden" playmode="CaptureTheFlag0" />
+    <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="CaptureTheFlag0" />
+
+    <!-- CarrierAssault Large -->
+    <map uri="XP2_001" name="Lost Islands" playmode="CarrierAssaultLarge0" />
+    <map uri="XP2_002" name="Nansha Strike" playmode="CarrierAssaultLarge0" />
+    <map uri="XP2_003" name="Wavebreaker" playmode="CarrierAssaultLarge0" />
+    <map uri="XP2_004" name="Operation Mortar" playmode="CarrierAssaultLarge0" />
+    <map uri="XP3_MarketPl" name="Pearl Market" playmode="CarrierAssaultLarge0" />
+    <map uri="XP3_Prpganda" name="Propaganda" playmode="CarrierAssaultLarge0" />
+    <map uri="XP3_UrbanGdn" name="Lumphini Garden" playmode="CarrierAssaultLarge0" />
+    <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="CarrierAssaultLarge0" />
+
+    <!-- CarrierAssault Small -->
+    <map uri="XP2_001" name="Lost Islands" playmode="CarrierAssaultSmall0" />
+    <map uri="XP2_002" name="Nansha Strike" playmode="CarrierAssaultSmall0" />
+    <map uri="XP2_003" name="Wavebreaker" playmode="CarrierAssaultSmall0" />
+    <map uri="XP2_004" name="Operation Mortar" playmode="CarrierAssaultSmall0" />
+    <map uri="XP3_MarketPl" name="Pearl Market" playmode="CarrierAssaultSmall0" />
+    <map uri="XP3_Prpganda" name="Propaganda" playmode="CarrierAssaultSmall0" />
+    <map uri="XP3_UrbanGdn" name="Lumphini Garden" playmode="CarrierAssaultSmall0" />
+    <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="CarrierAssaultSmall0" />
+
+    <!-- Chainlink -->
+    <map uri="XP3_MarketPl" name="Pearl Market" playmode="Chainlink0" />
+    <map uri="XP3_Prpganda" name="Propaganda" playmode="Chainlink0" />
+    <map uri="XP3_UrbanGdn" name="Lumphini Garden" playmode="Chainlink0" />
+    <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="Chainlink0" />
+
+</mapNames>
