@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playmodes>
+	<playmode uri="ConquestLarge0" name="Conquest Large" />
+	<playmode uri="ConquestSmall0" name="Conquest" />
+	<playmode uri="Domination0" name="Domination" />
+	<playmode uri="Elimination0" name="Defuse" />
+	<playmode uri="Obliteration" name="Obliteration" />
+	<playmode uri="RushLarge0" name="Rush" />
+	<playmode uri="SquadDeathMatch0" name="Squad Deathmatch" />
+	<playmode uri="TeamDeathMatch0" name="Team Deathmatch" />
+    <playmode uri="AirSuperiority0" name="Air Superiority" />
+	<playmode uri="CaptureTheFlag0" name="Capture the Flag" />
+	<playmode uri="CarrierAssaultLarge0" name="Carrier Assault Large" />
+	<playmode uri="CarrierAssaultSmall0" name="Carrier Assault Small" />
+	<playmode uri="Chainlink0" name="Chainlink" />
+
+</playmodes>

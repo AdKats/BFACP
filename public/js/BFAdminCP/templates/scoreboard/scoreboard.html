@@ -1,0 +1,334 @@
+<section ng-show="loaded">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table class="table table-condensed">
+                        <thead>
+                            <th>Name</th>
+                            <th>Players</th>
+                            <th>Map</th>
+                            <th>Mode</th>
+                            <th>Round</th>
+                            <th>Uptime</th>
+                            <th ng-show="isBF4">Time Left</th>
+                            <th ng-show="isBF4">Starting Tickets/Timer</th>
+                            <th ng-show="isBF3">Starting Tickets</th>
+                            <th colspan="2">Next Map/Mode</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{serverinfo.server_name}}</td>
+                                <td>{{serverinfo.current_players}} / {{serverinfo.total_players}}</td>
+                                <td>{{serverinfo.map}}</td>
+                                <td>{{serverinfo.gamemode}}</td>
+                                <td>{{serverinfo.times.round}}</td>
+                                <td>{{serverinfo.times.uptime}}</td>
+                                <td ng-show="isBF4">{{serverinfo.times.remaining}}</td>
+                                <td ng-show="isBF4">{{serverinfo.starting_tickets | number}} / {{serverinfo.starting_timer}}</td>
+                                <td ng-show="isBF3">{{serverinfo.starting_tickets | number}}</td>
+                                <td>{{serverinfo.nextmap.map.friendlyName}} / {{serverinfo.nextmap.mode.friendlyName}}</td>
+                                <td>
+                                    <button data-toggle="modal" data-target="#online_admins" class="btn btn-primary btn-xs">
+                                    Online Admins ({{online_admins.length}})
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="(perm.bf3 || perm.bf4) && (perm.kickall || perm.nuke || perm.yell)" id="admin_gen_controls">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">General Admin Commands</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-12" style="padding-bottom: 25px">
+                        <div class="btn-group">
+                            <button type="button" ng-if="hasPermission('kickall')" ng-class="{'active bg-navy': admin.views.kickall}" ng-click="showView('kickall')" class="btn btn-primary">Kick All</button>
+                            <button type="button" ng-if="hasPermission('nuke')" ng-class="{'active bg-navy': admin.views.nuke}" ng-click="showView('nuke')" class="btn btn-primary">Kill All</button>
+                            <button type="button" ng-if="hasPermission('yell')" ng-class="{'active bg-navy': admin.views.yell}" ng-click="showView('yell')" class="btn btn-primary">Yell</button>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div ng-show="admin.views.kickall || admin.views.nuke || admin.views.yell">
+                            <div class="form-group">
+                                <select class="form-control" ng-model="admin.message" ng-init="admin.message = ''" id="premessages">
+                                    <option value="" selected>Select Preset Message...</option>
+                                    <option ng-repeat="message in premessages" value="{{message}}">{{message}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" ng-model="admin.message" maxlength="100" placeholder="Enter message...">
+                            </div>
+
+                            <div class="form-group" ng-if="admin.views.yell">
+                                <label>Yell Duration (seconds)</label>
+                                <input class="form-control" type="number" ng-model="admin.yell.duration" min="1" max="60" ng-init="admin.yell.duration = 30" value="30">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="button" ng-if="admin.views.kickall" ng-click="issueKickAll()" class="btn bg-olive" data-loading-text="Please wait..." id="admin_kickall">Submit</button>
+                            <button type="button" ng-if="admin.views.nuke" ng-click="issueNuke()" class="btn bg-olive" data-loading-text="Please wait..." id="admin_killall">Submit</button>
+                            <button type="button" ng-if="admin.views.yell" ng-click="issueYell()" class="btn bg-olive" data-loading-text="Please wait..." id="admin_yell">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="(perm.bf3 || perm.bf4) && player.player_id !== null" id="admin_controls">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Issue Command On {{player.player_name}}</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-primary btn-xs" data-widget="remove" ng-click="clearPlayer()"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-12" style="padding-bottom: 25px">
+                        <div class="btn-group">
+                            <button type="button" ng-if="hasPermission('punish')" ng-class="{'active bg-navy': admin.views.punish}" ng-click="showView('punish')" class="btn btn-primary">Punish</button>
+                            <button type="button" ng-if="hasPermission('forgive')" ng-class="{'active bg-navy': admin.views.forgive}" ng-click="showView('forgive')" class="btn btn-primary">Forgive</button>
+                            <button type="button" ng-if="hasPermission('kill')" ng-class="{'active bg-navy': admin.views.kill}" ng-click="showView('kill')" class="btn btn-primary">Kill</button>
+                            <button type="button" ng-if="hasPermission('kick')" ng-class="{'active bg-navy': admin.views.kick}" ng-click="showView('kick')" class="btn btn-primary">Kick</button>
+                            <button type="button" ng-if="hasPermission('pmute')" ng-class="{'active bg-navy': admin.views.mute}" ng-click="showView('mute')" class="btn btn-primary">Mute</button>
+                            <button type="button" ng-if="hasPermission('team')" ng-class="{'active bg-navy': admin.views.teamswitch}" ng-click="showView('teamswitch')" class="btn btn-primary">Teamswitch</button>
+                            <button type="button" ng-if="hasPermission('squad')" ng-class="{'active bg-navy': admin.views.squadswitch}" ng-click="showView('squadswitch')" class="btn btn-primary">Squad</button>
+                            <button type="button" ng-if="hasPermission('tban')" ng-class="{'active bg-navy': admin.views.tempban}" ng-click="showView('tempban')" class="btn btn-primary">Temp Ban</button>
+                            <button type="button" ng-if="hasPermission('ban')" ng-class="{'active bg-navy': admin.views.permban}" ng-click="showView('permban')" class="btn btn-primary">Perm Ban</button>
+                            <button type="button" ng-if="hasPermission('psay')" ng-class="{'active bg-navy': admin.views.psay}" ng-click="showView('psay')" class="btn btn-primary">Say</button>
+                            <button type="button" ng-if="hasPermission('pyell')" ng-class="{'active bg-navy': admin.views.pyell}" ng-click="showView('pyell')" class="btn btn-primary">Yell</button>
+                            <a ng-if="haveDbId()" ng-href="/player/{{player.player_db_id}}/{{player.player_name}}" target="_blank" class="btn btn-primary">Info</a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div ng-show="admin.views.punish || admin.views.forgive || admin.views.kill || admin.views.kick || admin.views.tempban || admin.views.permban || admin.views.mute || admin.views.psay || admin.views.pyell">
+                            <div class="form-group">
+                                <select class="form-control" ng-model="admin.message" ng-init="admin.message = ''" id="premessages">
+                                    <option value="" selected>Select Preset Message...</option>
+                                    <option ng-repeat="message in premessages" value="{{message}}">{{message}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" ng-model="admin.message" maxlength="100" placeholder="Enter message...">
+                            </div>
+
+                            <div class="form-group" ng-if="admin.views.pyell">
+                                <label>Yell Duration (seconds)</label>
+                                <input class="form-control" type="number" ng-model="admin.yell.duration" min="1" max="60" ng-init="admin.yell.duration = 30" value="30">
+                            </div>
+
+                            <div class="form-group" ng-if="admin.views.tempban">
+                                <label>Ban Duration (minutes)</label>
+                                <input class="form-control" type="number" ng-model="admin.ban.duration" min="1" ng-init="admin.ban.duration = 30" value="30">
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info" ng-if="admin.views.teamswitch">
+                            <i class="fa fa-info"></i>
+                            Clicking submit will switch <strong>{{player.player_name}}</strong> to the opposing team.
+                        </div>
+
+                        <div ng-if="admin.views.squadswitch">
+
+                            <div class="alert alert-info">
+                                <i class="fa fa-info"></i>
+                                Clicking submit will switch <strong>{{player.player_name}}</strong> to the squad <span class="label label-success">{{squadlist[admin.squad.new]}}</span> from <span class="label label-warning">{{squadlist[player.player_squad_id]}}</span>. This will also kill the player in the process.
+                            </div>
+
+                            <div class="form-group">
+                                <label>Squadlist</label>
+                                <select class="form-control" ng-model="admin.squad.new" ng-init="admin.squad.new = 0">
+                                    <option ng-repeat="squad in squadlist" value="{{$index}}">{{squad}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="button" ng-if="admin.views.punish" ng-click="issuePunish()" class="btn bg-olive" data-loading-text="Please wait..." id="admin_punish">Submit</button>
+                            <button type="button" ng-if="admin.views.forgive" ng-click="issueForgive()" class="btn bg-olive" data-loading-text="Please wait..." id="admin_forgive">Submit</button>
+                            <button type="button" ng-if="admin.views.kill" ng-click="issueKill()" class="btn bg-olive" data-loading-text="Please wait..." id="admin_kill">Submit</button>
+                            <button type="button" ng-if="admin.views.kick" ng-click="issueKick()" class="btn bg-olive" data-loading-text="Please wait..." id="admin_kick">Submit</button>
+                            <button type="button" ng-if="admin.views.mute" ng-click="issueMute()" class="btn bg-olive" data-loading-text="Please wait..." id="admin_mute">Submit</button>
+                            <button type="button" ng-if="admin.views.teamswitch" ng-click="issueTeamSwitch()" class="btn bg-olive" data-loading-text="Please wait..." id="admin_teamswap">Submit</button>
+                            <button type="button" ng-if="admin.views.squadswitch" ng-click="issueSquadSwitch()" class="btn bg-olive" data-loading-text="Please wait..." id="admin_squadswap">Submit</button>
+                            <button type="button" ng-if="admin.views.tempban" ng-click="issueTempBan()" class="btn bg-olive" data-loading-text="Please wait..." id="admin_tban">Submit</button>
+                            <button type="button" ng-if="admin.views.permban" ng-click="issuePermBan()" class="btn bg-olive" data-loading-text="Please wait..." id="admin_pban">Submit</button>
+                            <button type="button" ng-if="admin.views.pyell" ng-click="issuePlayerYell()" class="btn bg-olive" data-loading-text="Please wait..." id="admin_pyell">Submit</button>
+                            <button type="button" ng-if="admin.views.psay" ng-click="issuePlayerSay()" class="btn bg-olive" data-loading-text="Please wait..." id="admin_psay">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="input-group input-group-sm">
+                    <input placeholder="Filter Players..." ng-model="teamplayersearch" class="form-control">
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-flat" type="button" ng-click="teamplayersearch=''">Reset</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Joining <span class="badge bg-light-blue">{{connecting.length}}</span></h3>
+                    </div>
+
+                    <div class="box-body" ng-show="connecting.length > 0">
+                        <ul class="list-unstyled">
+                            <li ng-repeat="player in connecting track by player.player_id">
+                                <i class="ion-loading-c"></i> {{player.player_name}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-if="isBF4">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title" title="Spectators">Spectators <span class="badge bg-light-blue">{{spectators.length}}</span></h3>
+                    </div>
+
+                    <div class="box-body" ng-show="spectators.length > 0">
+                        <ul class="list-unstyled">
+                            <li ng-repeat="player in spectators track by player.player_id">
+                                <a href="javascript://" ng-if="perm.bf3 || perm.bf4" ng-click="setPlayer(player)">{{player.player_name}}</a>
+                                <span ng-if="!perm.bf3 && !perm.bf4">{{player.player_name}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Player Listing -->
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">{{ team1.faction.full_name }} ({{team1.playerlist.length}}) <i class="fa fa-trophy" ng-class='{"text-green": team1lead}' ng-hide="serverinfo.gamemode_uri == 'RushLarge0'"></i></h3>
+                <div class="box-tools pull-right" ng-if="serverinfo.gamemode_uri != 'CaptureTheFlag0'">
+                   <span class="badge bg-light-blue">{{team1.ticketcount | number}}</span>
+                </div>
+            </div>
+
+            <div class="box-body">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <th ng-click="changeSorting('player_name')" scope="col">
+                            <i class="{{sortClass('player_name')}}"></i> Player
+                        </th>
+                        <th ng-click="changeSorting('player_score')">
+                            <i class="{{sortClass('player_score')}}"></i> Score
+                        </th>
+                        <th ng-click="changeSorting('player_kills')">
+                            <i class="{{sortClass('player_kills')}}"></i> Kills
+                        </th>
+                        <th ng-click="changeSorting('player_deaths')">
+                            <i class="{{sortClass('player_deaths')}}"></i> Deaths
+                        </th>
+                        <th ng-click="changeSorting('player_squad')" class="hidden-xs hidden-sm">
+                            <i class="{{sortClass('player_squad')}}"></i> Squad
+                        </th>
+                        <th ng-click="changeSorting('player_ping')" ng-if="isBF4">
+                            <i class="{{sortClass('player_ping')}}"></i> Ping
+                        </th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="team in team1.playerlist | filter:{player_name: teamplayersearch} | orderBy:sort.column:sort.descending track by team.player_id">
+                            <td ng-if="perm.bf3 || perm.bf4"><a href="javascript://" ng-click="setPlayer(team)">{{team.player_name}}</a></td>
+                            <td ng-if="!perm.bf3 && !perm.bf4">{{team.player_name}}</td>
+                            <td>{{team.player_score | number}}</td>
+                            <td>{{team.player_kills}}</td>
+                            <td>{{team.player_deaths}}</td>
+                            <td class="hidden-xs hidden-sm">{{team.player_squad}}</td>
+                            <td ng-if="isBF4" class="{{ pingcheck(team.player_ping) }}">{{ (team.player_ping > 1000 ? '-' : team.player_ping) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="box-footer" ng-if="isBF4" ng-show="team1.commander">
+                Commander: {{team1.commander.player_name}} <span class="pull-right">Score: {{team1.commander.player_score | number}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">{{ team2.faction.full_name }} ({{team2.playerlist.length}}) <i class="fa fa-trophy" ng-class='{"text-green": team2lead}' ng-hide="serverinfo.gamemode_uri == 'RushLarge0'"></i></h3>
+                <div class="box-tools pull-right" ng-if="serverinfo.gamemode_uri != 'CaptureTheFlag0'">
+                    <span class="badge bg-light-blue">{{team2.ticketcount | number}}</span>
+                </div>
+            </div>
+
+            <div class="box-body">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <th ng-click="changeSorting('player_name')" scope="col">
+                            <i class="{{sortClass('player_name')}}"></i> Player
+                        </th>
+                        <th ng-click="changeSorting('player_score')">
+                            <i class="{{sortClass('player_score')}}"></i> Score
+                        </th>
+                        <th ng-click="changeSorting('player_kills')">
+                            <i class="{{sortClass('player_kills')}}"></i> Kills
+                        </th>
+                        <th ng-click="changeSorting('player_deaths')">
+                            <i class="{{sortClass('player_deaths')}}"></i> Deaths
+                        </th>
+                        <th ng-click="changeSorting('player_squad')" class="hidden-xs hidden-sm">
+                            <i class="{{sortClass('player_squad')}}"></i> Squad
+                        </th>
+                        <th ng-click="changeSorting('player_ping')" ng-if="isBF4">
+                            <i class="{{sortClass('player_ping')}}"></i> Ping
+                        </th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="team in team2.playerlist | filter:{player_name: teamplayersearch} | orderBy:sort.column:sort.descending track by team.player_id">
+                            <td ng-if="perm.bf3 || perm.bf4"><a href="javascript://" ng-click="setPlayer(team)">{{team.player_name}}</a></td>
+                            <td ng-if="!perm.bf3 && !perm.bf4">{{team.player_name}}</td>
+                            <td>{{team.player_score | number}}</td>
+                            <td>{{team.player_kills}}</td>
+                            <td>{{team.player_deaths}}</td>
+                            <td class="hidden-xs hidden-sm">{{team.player_squad}}</td>
+                            <td ng-if="isBF4" class="{{ pingcheck(team.player_ping) }}">{{ (team.player_ping > 1000 ? '-' : team.player_ping) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="box-footer" ng-if="isBF4" ng-show="team2.commander" >
+                Commander: {{team2.commander.player_name}} <span class="pull-right">Score: {{team2.commander.player_score | number}}</span>
+            </div>
+        </div>
+    </div>
+    <!-- END Player Listing -->
+</section>
