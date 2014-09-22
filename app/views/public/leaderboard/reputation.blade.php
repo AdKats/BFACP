@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="row">
+    @if(Config::get('webadmin.BF3'))
     <div class="col-xs-6">
         <div class="box box-info">
             <div class="box-header">
@@ -31,7 +32,9 @@
             </div>
         </div>
     </div>
+    @endif
 
+    @if(Config::get('webadmin.BF4'))
     <div class="col-xs-6">
         <div class="box box-info">
             <div class="box-header">
@@ -61,5 +64,6 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
 @stop

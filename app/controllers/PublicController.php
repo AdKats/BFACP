@@ -448,13 +448,15 @@ class PublicController extends \BaseController
 
     public function showLeaderboardPlayers()
     {
-        $bf3stats = DB::select(File::get(storage_path() . '/sql/top_50_players.sql'), array('game' => Helper::getGameId('BF3')));
+        if(Config::get('webadmin.BF3'))
+            $bf3stats = DB::select(File::get(storage_path() . '/sql/top_50_players.sql'), array('game' => Helper::getGameId('BF3')));
 
-        $bf4stats = DB::select(File::get(storage_path() . '/sql/top_50_players.sql'), array('game' => Helper::getGameId('BF4')));
+        if(Config::get('webadmin.BF4'))
+            $bf4stats = DB::select(File::get(storage_path() . '/sql/top_50_players.sql'), array('game' => Helper::getGameId('BF4')));
 
         return View::make('public.leaderboard.stats')->with('title', 'Stats Leaderboard')
-                ->with('_bf3stats', $bf3stats)
-                ->with('_bf4stats', $bf4stats);
+                ->with('_bf3stats', isset($bf3stats) ? $bf3stats : NULL)
+                ->with('_bf4stats', isset($bf4stats) ? $bf4stats : NULL);
     }
 
     public function showMemberlist()
