@@ -3,7 +3,12 @@
 @section('content')
 <div class="row">
     @if(Config::get('webadmin.BF3'))
+
+    @if(Config::get('webadmin.BF3') && Config::get('webadmin.BF4'))
     <div class="col-xs-6">
+    @else
+    <div class="col-xs-12">
+    @endif
         <div class="box box-info">
             <div class="box-header">
                 <h3 class="box-title">BF3 Top 100</h3>
@@ -35,7 +40,12 @@
     @endif
 
     @if(Config::get('webadmin.BF4'))
+
+    @if(Config::get('webadmin.BF3') && Config::get('webadmin.BF4'))
     <div class="col-xs-6">
+    @else
+    <div class="col-xs-12">
+    @endif
         <div class="box box-info">
             <div class="box-header">
                 <h3 class="box-title">BF4 Top 100</h3>
