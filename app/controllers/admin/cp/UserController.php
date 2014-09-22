@@ -218,7 +218,7 @@ class UserController extends \BaseController
             $user->roles()->attach($input_role);
         }
 
-        $user->updateUniques();
+        $user->save();
         $preferences->save();
 
         return Redirect::action('ADKGamers\\Webadmin\\Controllers\\Admin\\UserController@edit', [$id])->with('message', sprintf("%s account has been updated", $user->username));
