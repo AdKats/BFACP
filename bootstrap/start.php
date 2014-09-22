@@ -120,6 +120,11 @@ if(!App::runningInConsole())
     }
 }
 
+if(version_compare(phpversion(), '5.4.0', '<') || !extension_loaded("mcrypt") || !extension_loaded("pdo"))
+{
+    die(View::make('error.requirement_check_failed'));
+}
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
