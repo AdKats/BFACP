@@ -431,19 +431,25 @@ class PublicController extends \BaseController
 
     public function showLeaderboardReputation()
     {
-        $bf3Top100 = Reputation::select('target_rep', 'source_rep', 'total_rep', 'total_rep_co', 'SoldierName', 'PlayerID', 'tbl_games.Name')
+        if(Config::get('webadmin.BF3'))
+        {
+            $bf3Top100 = Reputation::select('target_rep', 'source_rep', 'total_rep', 'total_rep_co', 'SoldierName', 'PlayerID', 'tbl_games.Name')
                         ->join('tbl_playerdata', 'adkats_player_reputation.player_id', '=', 'tbl_playerdata.PlayerID')
                         ->leftJoin('tbl_games', 'tbl_playerdata.GameID', '=', 'tbl_games.GameID')
                         ->where('tbl_games.Name', 'BF3')->orderBy('total_rep_co', 'desc')->take(100)->get();
+        }
 
-        $bf4Top100 = Reputation::select('target_rep', 'source_rep', 'total_rep', 'total_rep_co', 'SoldierName', 'PlayerID', 'tbl_games.Name')
+        if(Config::get('webadmin.BF4'))
+        {
+            $bf4Top100 = Reputation::select('target_rep', 'source_rep', 'total_rep', 'total_rep_co', 'SoldierName', 'PlayerID', 'tbl_games.Name')
                         ->join('tbl_playerdata', 'adkats_player_reputation.player_id', '=', 'tbl_playerdata.PlayerID')
                         ->leftJoin('tbl_games', 'tbl_playerdata.GameID', '=', 'tbl_games.GameID')
                         ->where('tbl_games.Name', 'BF4')->orderBy('total_rep_co', 'desc')->take(100)->get();
+        }
 
         return View::make('public.leaderboard.reputation')->with('title', 'Reputation Leaderboard')
-                ->with('_bf3top100', $bf3Top100)
-                ->with('_bf4top100', $bf4Top100);
+                ->with('_bf3top100', isset($bf3Top100) ? $bf3Top100 : NULL)
+                ->with('_bf4top100', isset($bf4Top100) ? $bf4Top100 : NULL);
     }
 
     public function showLeaderboardPlayers()
