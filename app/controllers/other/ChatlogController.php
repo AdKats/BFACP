@@ -33,7 +33,7 @@ class ChatlogController extends \BaseController
 
         // Fetch all the servers and put them into an array
         // for the form selct option
-        foreach(Server::all() as $server)
+        foreach(Server::where('ConnectionState', 'on')->get() as $server)
         {
             $serverlist[$server->ServerID] = '[' . $server->ServerID . '] ' . $server->ServerName;
         }
