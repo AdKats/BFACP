@@ -19,6 +19,7 @@ use BattlefieldException, Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -465,13 +466,7 @@ class Scoreboard extends \BaseController
      */
     private function _checkForAdmins()
     {
-        $admins = DB::table('adkats_usersoldiers')
-                        ->join('adkats_users', 'adkats_usersoldiers.user_id', '=', 'adkats_users.user_id')
-                        ->join('adkats_roles', 'adkats_users.user_role', '=', 'adkats_roles.role_id')
-                        ->join('tbl_playerdata', 'adkats_usersoldiers.player_id', '=', 'tbl_playerdata.PlayerID')
-                        ->whereIn('adkats_roles.role_name', array('Absolute', 'Admin', 'Advisor', 'DevAdmin', 'Manager'))
-                        ->select('player_id', 'EAGUID', 'GameID')
-                        ->get();
+        $admins = DB::select(File::get(storage_path() . '/sql/adkats_role_is_admin.sql'));
 
         for($i=0; $i <= count($this->data['teaminfo']); $i++)
         {
@@ -572,8 +567,7 @@ class Scoreboard extends \BaseController
                     {
                         $this->data['teaminfo'][0]['spectators'][] = array(
                             'player_id'      => sha1($player_guid),
-                            'player_name'    => $player_soldier_name,
-                            //'player_profile' => action("ADKGamers\\Webadmin\\Controllers\\PlayerController@showInfo", array($player_id, $player_soldier_name))
+                            'player_name'    => $player_soldier_name
                         );
 
                         continue;
@@ -584,8 +578,7 @@ class Scoreboard extends \BaseController
                         $this->data['teaminfo'][$player_team_id]['commander'] = array(
                             'player_id'      => sha1($player_guid),
                             'player_name'    => $player_soldier_name,
-                            'player_score'   => $player_score,
-                            //'player_profile' => action("ADKGamers\\Webadmin\\Controllers\\PlayerController@showInfo", array($player_id, $player_soldier_name))
+                            'player_score'   => $player_score
                         );
 
                         continue;
@@ -603,8 +596,7 @@ class Scoreboard extends \BaseController
                     'player_squad_id' => $player_squad_id,
                     'player_ping'     => (isset($player_ping) ? $player_ping : NULL),
                     'player_rank'     => (isset($player_rank) ? $player_rank : NULL),
-                    'player_kdr'      => BFHelper::calculKDRatio($player_kills, $player_deaths),
-                    //'player_profile'  => action("ADKGamers\\Webadmin\\Controllers\\PlayerController@showInfo", array($player_id, $player_soldier_name))
+                    'player_kdr'      => BFHelper::calculKDRatio($player_kills, $player_deaths)
 
                 );
             }
