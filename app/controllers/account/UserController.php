@@ -12,6 +12,7 @@
 use ADKGamers\Webadmin\Libs\Helpers\Main as Helper;
 use ADKGamers\Webadmin\Models\Battlefield\Player;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
-use User, Confide, Preference;
+use User, Zizaco\Confide\Facade AS Confide, Preference;
 
 class UserController extends \BaseController
 {
@@ -96,14 +97,11 @@ class UserController extends \BaseController
                     ->withErrors($validation);
         }
 
-        $user = new User;
+        $repo = App::make('UserRepository');
 
-        $user->username              = Input::get('username');
-        $user->email                 = Input::get('email');
-        $user->password              = Input::get('password');
-        $user->password_confirmation = Input::get('password_confirmation');
+        $user = $repo->signup(Input::all());
 
-        if($user->save())
+        if($user->id)
         {
             if(Input::has('bf3pid'))
             {
@@ -212,6 +210,23 @@ class UserController extends \BaseController
             'password_confirmation' => Input::get( 'password_confirmation' )
         );
 
+        $repo = App::make('UserRepository');
+
+        if($repo->resetPassword($input))
+        {
+            $notice_msg = Lang::get('confide::confide.alerts.password_reset');
+
+            return Redirect::action('ADKGamers\\Webadmin\\Controllers\\UserController@showSignIn')
+                            ->with( 'notice', $notice_msg );
+        }
+        else
+        {
+            $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
+            return Redirect::action('ADKGamers\\Webadmin\\Controllers\\UserController@showResetPassword', array( 'token' => $input['token']))
+                    ->withInput()
+                    ->withErrors( $error_msg );
+        }
+
         // By passing an array with the token, password and confirmation
         if( Confide::resetPassword( $input ) )
         {
@@ -241,20 +256,19 @@ class UserController extends \BaseController
             'remember' => Input::get( 'remember_me' ),
         );
 
-        if ( Confide::logAttempt( $input, Config::get('confide::signup_confirm') ) )
+        $repo = App::make('UserRepository');
+
+        if($repo->login($input))
         {
             return Redirect::intended('/');
         }
         else
         {
-            $user = new User;
-
-            // Check if there was too many login attempts
-            if(Confide::isThrottled($input))
+            if ($repo->isThrottled($input))
             {
                 $err_msg = Lang::get('confide::confide.alerts.too_many_attempts');
             }
-            elseif($user->checkUserExists($input) and !$user->isConfirmed($input))
+            elseif ($repo->existsButNotConfirmed($input))
             {
                 $err_msg = Lang::get('confide::confide.alerts.not_confirmed');
             }
