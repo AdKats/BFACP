@@ -547,6 +547,20 @@ app.controller("ScoreboardCtrl", ['$scope', '$timeout', '$location', 'Scoreboard
         'Celeste'
     ];
 
+    $scope.render = {
+        admin: function() {
+            if($scope.isBF3 && $scope.perm.bf3) {
+                return true
+            }
+
+            if($scope.isBF4 && $scope.perm.bf4) {
+                return true
+            }
+
+            return false
+        }
+    }
+
     $scope.showView = function(view) {
         angular.forEach($scope.admin.views, function(value, key) {
             if(view == key) {
@@ -719,7 +733,7 @@ app.controller("ScoreboardCtrl", ['$scope', '$timeout', '$location', 'Scoreboard
     };
 
     $scope.setPlayer = function(player) {
-        if(!$scope.perm.bf3 || !$scope.perm.bf4) return;
+        if($scope.render.admin() === false) return;
         $scope.clearPlayer();
         $scope.player = player;
         SBAdmin.pinfo(id, player.player_name).success(function(data) {

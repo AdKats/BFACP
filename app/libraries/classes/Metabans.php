@@ -46,15 +46,26 @@ class Metabans
 
     private function makeRequest($data)
     {
-        $response = Requests::post(self::API_SERVER, array(), $data);
-
-        if($response->success)
+        try
         {
-            $response_data = json_decode($response->body, true);
-            return $response_data['responses'][0]['data'];
-        }
+            $response = Requests::post(self::API_SERVER, array(), $data);
 
-        return $response->status_code;
+            if($response->success)
+            {
+                $response_data = json_decode($response->body, true);
+
+                if(array_key_exists('data', $response_data['responses'][0]))
+                    return $response_data['responses'][0]['data'];
+
+                return $response['responses'][0];
+            }
+
+            return $response->status_code;
+        }
+        catch(Exception $e)
+        {
+            return FALSE;
+        }
     }
 
     public function feed()

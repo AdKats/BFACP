@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="(perm.bf3 || perm.bf4) && (perm.kickall || perm.nuke || perm.yell)" id="admin_gen_controls">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="render.admin() && (perm.kickall || perm.nuke || perm.yell)" id="admin_gen_controls">
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">General Admin Commands</h3>
@@ -87,7 +87,7 @@
         </div>
     </div>
 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="(perm.bf3 || perm.bf4) && player.player_id !== null" id="admin_controls">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="render.admin() && player.player_id !== null" id="admin_controls">
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">Issue Command On {{player.player_name}}</h3>
@@ -218,8 +218,8 @@
                     <div class="box-body" ng-show="spectators.length > 0">
                         <ul class="list-unstyled">
                             <li ng-repeat="player in spectators track by player.player_id">
-                                <a href="javascript://" ng-if="perm.bf3 || perm.bf4" ng-click="setPlayer(player)">{{player.player_name}}</a>
-                                <span ng-if="!perm.bf3 && !perm.bf4">{{player.player_name}}</span>
+                                <a href="javascript://" ng-if="render.admin()" ng-click="setPlayer(player)">{{player.player_name}}</a>
+                                <span ng-if="!render.admin()">{{player.player_name}}</span>
                             </li>
                         </ul>
                     </div>
@@ -262,8 +262,8 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="team in team1.playerlist | filter:{player_name: teamplayersearch} | orderBy:sort.column:sort.descending track by team.player_id">
-                            <td ng-if="perm.bf3 || perm.bf4"><a href="javascript://" ng-click="setPlayer(team)">{{team.player_name}}</a></td>
-                            <td ng-if="!perm.bf3 && !perm.bf4">{{team.player_name}}</td>
+                            <td ng-if="render.admin()"><a href="javascript://" ng-click="setPlayer(team)">{{team.player_name}}</a></td>
+                            <td ng-if="!render.admin()">{{team.player_name}}</td>
                             <td>{{team.player_score | number}}</td>
                             <td>{{team.player_kills}}</td>
                             <td>{{team.player_deaths}}</td>
@@ -313,8 +313,8 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="team in team2.playerlist | filter:{player_name: teamplayersearch} | orderBy:sort.column:sort.descending track by team.player_id">
-                            <td ng-if="perm.bf3 || perm.bf4"><a href="javascript://" ng-click="setPlayer(team)">{{team.player_name}}</a></td>
-                            <td ng-if="!perm.bf3 && !perm.bf4">{{team.player_name}}</td>
+                            <td ng-if="render.admin()"><a href="javascript://" ng-click="setPlayer(team)">{{team.player_name}}</a></td>
+                            <td ng-if="!render.admin()">{{team.player_name}}</td>
                             <td>{{team.player_score | number}}</td>
                             <td>{{team.player_kills}}</td>
                             <td>{{team.player_deaths}}</td>
