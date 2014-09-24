@@ -218,7 +218,8 @@
                     <div class="box-body" ng-show="spectators.length > 0">
                         <ul class="list-unstyled">
                             <li ng-repeat="player in spectators track by player.player_id">
-                                {{player.player_name}}
+                                <a href="javascript://" ng-if="render.admin()" ng-click="setPlayer(player)">{{player.player_name}}</a>
+                                <span ng-if="!render.admin()">{{player.player_name}}</span>
                             </li>
                         </ul>
                     </div>
