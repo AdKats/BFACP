@@ -16,7 +16,7 @@
         <div class="form-box">
             <div class="header">{{ Lang::get('confide::confide.email.password_reset.subject') }}</div>
             <div class="body bg-gray">
-                <p>{{ Lang::get('confide::confide.email.password_reset.greetings', array( 'name' => $user->username)) }},</p>
+                <p>{{ Lang::get('confide::confide.email.password_reset.greetings', array( 'name' => $user['username'])) }},</p>
                 <p>{{ Lang::get('confide::confide.email.password_reset.body') }}</p>
                 <a href="{{ action('ADKGamers\\Webadmin\\Controllers\\UserController@showResetPassword', array($token)) }}">
                     {{ action('ADKGamers\\Webadmin\\Controllers\\UserController@showResetPassword', array($token)) }}
