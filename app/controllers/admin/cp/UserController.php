@@ -244,7 +244,6 @@ class UserController extends \BaseController
         $name = $user->username;
 
         $user->roles()->detach($user->roleId());
-        $user->updateUniques();
 
         $user->delete();
 
