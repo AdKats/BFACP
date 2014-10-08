@@ -103,6 +103,17 @@ class UserController extends \BaseController
 
         if($user->id)
         {
+
+            if(Config::get('confide::signup_email'))
+            {
+                Mail::send(Config::get('confide::email_account_confirmation'), ['user' => $user], function($message) use(&$user)
+                {
+                    $message
+                        ->to($user->email, $user->username)
+                        ->subject(Lang::get('confide::confide.email.account_confirmation.subject'));
+                });
+            }
+
             if(Input::has('bf3pid'))
             {
                 $preference_data['bf3_playerid'] = Player::where('SoldierName', Input::get('bf3pid'))->where('GameID', Helper::getGameId('BF3'))->pluck('PlayerID');
@@ -225,21 +236,6 @@ class UserController extends \BaseController
             return Redirect::action('ADKGamers\\Webadmin\\Controllers\\UserController@showResetPassword', array( 'token' => $input['token']))
                     ->withInput()
                     ->withErrors( $error_msg );
-        }
-
-        // By passing an array with the token, password and confirmation
-        if( Confide::resetPassword( $input ) )
-        {
-            $notice_msg = Lang::get('confide::confide.alerts.password_reset');
-                        return Redirect::action('ADKGamers\\Webadmin\\Controllers\\UserController@showSignIn')
-                            ->with( 'notice', $notice_msg );
-        }
-        else
-        {
-            $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
-                        return Redirect::action('ADKGamers\\Webadmin\\Controllers\\UserController@showResetPassword', array( 'token' => $input['token']))
-                            ->withInput()
-                ->withErrors( $error_msg );
         }
     }
 
