@@ -262,6 +262,14 @@ class PlayerController extends \BaseController
                 $results['data'][$key]['target_link'] = action("ADKGamers\\Webadmin\\Controllers\\PlayerController@showInfo", array($record['target_id'], $record['target_name']));
             if(!is_null($record['source_id']))
                 $results['data'][$key]['source_link'] = action("ADKGamers\\Webadmin\\Controllers\\PlayerController@showInfo", array($record['source_id'], $record['source_name']));
+
+            if(preg_match("/(LINKED ACCOUNT).([0-9]+)/", $record['record_message'], $matches))
+            {
+                $link = action("ADKGamers\\Webadmin\\Controllers\\PlayerController@showInfo", [$matches[2], null]);
+                $results['data'][$key]['linked']['url']  = $link;
+                $results['data'][$key]['linked']['text'] = $matches[0];
+                $results['data'][$key]['record_message'] = str_replace($matches[0], "", $record['record_message']);
+            }
         }
 
         return Helper::response('success', NULL, $results);

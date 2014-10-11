@@ -58,7 +58,14 @@
                         <td class="hidden-sm"><span class="trim-server-name" tooltip-placement="top" tooltip="{{record.ServerName}}">{{record.ServerName}}</span></td>
                         <td>{{record.command_type}}</td>
                         <td>{{record.command_action}}</td>
-                        <td><span ng-if="record.command_numeric !== null" class="label label-primary">{{record.command_numeric}}</span> {{record.record_message}}</td>
+                        <td>
+                            <span ng-if="record.command_numeric !== null" class="label label-primary">{{record.command_numeric}}</span>
+
+                            <ng-switch on="record.linked !== undefined">
+                                <span ng-switch-when="true">{{record.record_message.replace("[]", "")}} <a href="{{record.linked.url}}">[{{ record.linked.text }}]</a></span>
+                                <span ng-switch-default>{{record.record_message}}</span>
+                            </ng-switch>
+                        </td>
                         <td><span class="label" ng-class='{"label-danger": !record.adkats_web, "label-success": record.adkats_web}'>{{ (record.adkats_web ? 'Yes' : 'No') }}</span></td>
                     </tr>
                 </tbody>
