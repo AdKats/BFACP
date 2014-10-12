@@ -596,7 +596,8 @@ class Scoreboard extends \BaseController
                     'player_squad_id' => $player_squad_id,
                     'player_ping'     => (isset($player_ping) ? $player_ping : NULL),
                     'player_rank'     => (isset($player_rank) ? $player_rank : NULL),
-                    'player_kdr'      => BFHelper::calculKDRatio($player_kills, $player_deaths)
+                    'player_kdr'      => BFHelper::calculKDRatio($player_kills, $player_deaths),
+                    'rank_image'      => (isset($player_rank) ? self::_getRankImage($player_rank) : NULL)
 
                 );
             }
@@ -604,6 +605,22 @@ class Scoreboard extends \BaseController
         }
 
         $this->data['errors']['count'] = $err;
+    }
+
+    public function _getRankImage($rank)
+    {
+        switch($this->game)
+        {
+            case "BF3":
+            case "BF4":
+                $image = sprintf("r%u.png", $rank);
+            break;
+
+            default:
+                $image = NULL;
+        }
+
+        return $image;
     }
 
     public function _getNextMap()

@@ -262,8 +262,18 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="team in team1.playerlist | filter:{player_name: teamplayersearch} | orderBy:sort.column:sort.descending track by team.player_id">
-                            <td ng-if="render.admin()"><a href="javascript://" ng-click="setPlayer(team)">{{team.player_name}}</a></td>
-                            <td ng-if="!render.admin()">{{team.player_name}}</td>
+                            <td ng-switch on="render.admin()">
+                                <div ng-switch-when="true">
+                                    <a href="javascript://" ng-click="setPlayer(team)">
+                                        <img ng-src="{{imagePath()}}/{{team.rank_image}}" width="24" tooltip="Rank {{team.player_rank}}" />
+                                        {{team.player_name}}
+                                    </a>
+                                </div>
+                                <div ng-switch-default>
+                                    <img ng-src="{{imagePath()}}/{{team.rank_image}}" width="24" tooltip="Rank {{team.player_rank}}" />
+                                    {{team.player_name}}
+                                </div>
+                            </td>
                             <td>{{team.player_score | number}}</td>
                             <td>{{team.player_kills}}</td>
                             <td>{{team.player_deaths}}</td>
@@ -313,8 +323,18 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="team in team2.playerlist | filter:{player_name: teamplayersearch} | orderBy:sort.column:sort.descending track by team.player_id">
-                            <td ng-if="render.admin()"><a href="javascript://" ng-click="setPlayer(team)">{{team.player_name}}</a></td>
-                            <td ng-if="!render.admin()">{{team.player_name}}</td>
+                            <td ng-switch on="render.admin()">
+                                <div ng-switch-when="true">
+                                    <a href="javascript://" ng-click="setPlayer(team)">
+                                        <img ng-src="{{imagePath()}}/{{team.rank_image}}" width="24" tooltip="Rank {{team.player_rank}}" />
+                                        {{team.player_name}}
+                                    </a>
+                                </div>
+                                <div ng-switch-default>
+                                    <img ng-src="{{imagePath()}}/{{team.rank_image}}" width="24" tooltip="Rank {{team.player_rank}}" />
+                                    {{team.player_name}}
+                                </div>
+                            </td>
                             <td>{{team.player_score | number}}</td>
                             <td>{{team.player_kills}}</td>
                             <td>{{team.player_deaths}}</td>

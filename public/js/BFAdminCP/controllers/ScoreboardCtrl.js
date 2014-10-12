@@ -384,6 +384,19 @@ app.controller("ScoreboardCtrl", ['$scope', '$timeout', '$location', 'Scoreboard
         }
     };
 
+    $scope.imagePath = function()
+    {
+        var path;
+
+        if($scope.isBF3) {
+            path = "/img/bf3/rankssmall";
+        } else if($scope.isBF4) {
+            path = "/img/bf4/ranks";
+        }
+
+        return path;
+    };
+
     $scope.wasReported = function(name)
     {
         var _reports = ReportsStorage.get();
