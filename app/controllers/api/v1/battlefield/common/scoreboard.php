@@ -615,6 +615,9 @@ class Scoreboard extends \BaseController
 
     public function _queryPlayerData()
     {
+        if($this->data['serverinfo']['current_players'] == 0)
+            return false;
+
         $players = [];
 
         foreach($this->data['teaminfo'] as $team)
