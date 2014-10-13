@@ -180,11 +180,15 @@ class Scoreboard extends \BaseController
         }
         catch(BattlefieldException $e)
         {
-            $this->finalized = Helper::response('error', $e->getMessage());
+            $this->finalized = Helper::response('error', $e->getMessage(), [
+                'line' => $e->getLine()
+            ]);
         }
         catch(Exception $e)
         {
-            $this->finalized = Helper::response('error', $e->getMessage());
+            $this->finalized = Helper::response('error', $e->getMessage(), [
+                'line' => $e->getLine()
+            ]);
         }
     }
 
@@ -566,7 +570,7 @@ class Scoreboard extends \BaseController
                     if($player_type == 1)
                     {
                         $this->data['teaminfo'][0]['spectators'][] = array(
-                            'player_id'      => sha1($player_guid),
+                            'player_id'      => $player_guid,
                             'player_name'    => $player_soldier_name
                         );
 
@@ -576,7 +580,7 @@ class Scoreboard extends \BaseController
                     if($player_type == 2 || $player_type == 3)
                     {
                         $this->data['teaminfo'][$player_team_id]['commander'] = array(
-                            'player_id'      => sha1($player_guid),
+                            'player_id'      => $player_guid,
                             'player_name'    => $player_soldier_name,
                             'player_score'   => $player_score
                         );
@@ -586,7 +590,7 @@ class Scoreboard extends \BaseController
                 }
 
                 $this->data['teaminfo'][$player_team_id]['playerlist'][] = array(
-                    'player_id'       => sha1($player_guid),
+                    'player_id'       => $player_guid,
                     'player_deaths'   => $player_deaths,
                     'player_kills'    => $player_kills,
                     'player_score'    => $player_score,
@@ -605,6 +609,44 @@ class Scoreboard extends \BaseController
         }
 
         $this->data['errors']['count'] = $err;
+
+        $this->_queryPlayerData();
+    }
+
+    public function _queryPlayerData()
+    {
+        $players = [];
+
+        foreach($this->data['teaminfo'] as $team)
+        {
+            if(array_key_exists('playerlist', $team))
+            {
+                foreach($team['playerlist'] as $player)
+                {
+                    $players[] = $player['player_id'];
+                }
+            }
+        }
+
+        $players_query = Player::where('GameID', $this->_gameid)->whereIn('EAGUID', $players)->get();
+
+        foreach($this->data['teaminfo'] as $teamid => $team)
+        {
+            if(array_key_exists('playerlist', $team))
+            {
+                foreach($team['playerlist'] as $key => $player)
+                {
+                    foreach($players_query as $pinfo)
+                    {
+                        if($player['player_id'] == $pinfo->EAGUID)
+                        {
+                            $this->data['teaminfo'][$teamid]['playerlist'][$key]['player_id'] = $pinfo->PlayerID;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public function _getRankImage($rank)
@@ -612,6 +654,14 @@ class Scoreboard extends \BaseController
         switch($this->game)
         {
             case "BF3":
+                if($rank > 45) {
+                    if($rank > 100) $rank = 100;
+                    $image = sprintf("ss%u.png", $rank);
+                } else {
+                    $image = sprintf("r%u.png", $rank);
+                }
+            break;
+
             case "BF4":
                 $image = sprintf("r%u.png", $rank);
             break;
