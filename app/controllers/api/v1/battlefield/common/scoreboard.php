@@ -163,18 +163,19 @@ class Scoreboard extends \BaseController
 
             $this->data['_permission'] = $this->_permissionCheck();
 
-            foreach ($server->adkatsConfig as $k => $v)
+            if($this->data['_permission']['bf3'] || $this->data['_permission']['bf4'])
             {
-                if($v->setting_name == "Pre-Message List")
+                foreach ($server->adkatsConfig as $k => $v)
                 {
-                    $this->presetMsgs = explode( '|', urldecode( rawurldecode( $v->setting_value ) ) );
-                    break;
+                    if($v->setting_name == "Pre-Message List")
+                    {
+                        $this->presetMsgs = explode( '|', urldecode( rawurldecode( $v->setting_value ) ) );
+                        break;
+                    }
                 }
             }
 
             $this->data['_premessages'] = $this->presetMsgs;
-
-            self::updateServerDB($server);
 
             $this->finalized = Helper::response('success', 'OK', $this->data);
         }
@@ -190,20 +191,6 @@ class Scoreboard extends \BaseController
                 'line' => $e->getLine()
             ]);
         }
-    }
-
-    /**
-     * Updates the database information for the server. Ensures population feed
-     * wont be misleading with old data.
-     * @param  Server $server Server Model Object
-     * @return void
-     */
-    private function updateServerDB(Server $server)
-    {
-        $server->usedSlots = $this->data['serverinfo']['current_players'];
-        $server->maxSlots = $this->data['serverinfo']['total_players'];
-        $server->Gamemode = $this->data['serverinfo']['gamemode_uri'];
-        $server->save();
     }
 
     /**
@@ -439,32 +426,6 @@ class Scoreboard extends \BaseController
     }
 
     /**
-     * Function to sort the playerlisting by score
-     *
-     * No longer need as sorting is done client side.
-     * @param  $order Sort in ASC or DESC
-     * @return void
-     */
-    // private function _sortPlayerlist($order = SORT_DESC)
-    // {
-    //     for($i=0; $i < count($this->data['teaminfo']); $i++)
-    //     {
-    //         // Temporary array
-    //         $temp = [];
-
-    //         if(!empty($this->data['teaminfo'][$i]['playerlist']))
-    //         {
-    //             foreach($this->data['teaminfo'][$i]['playerlist'] as $key => $player)
-    //             {
-    //                 $temp[$key] = $player['player_score'];
-    //             }
-
-    //             array_multisort($temp, $order, $this->data['teaminfo'][$i]['playerlist']);
-    //         }
-    //     }
-    // }
-
-    /**
      * Checks for any admins currently in the server and adds them to the online admins array
      * @return void
      */
@@ -480,7 +441,7 @@ class Scoreboard extends \BaseController
                 {
                     foreach($admins as $admin)
                     {
-                        if($player['player_id'] == sha1($admin->EAGUID) && $admin->GameID == $this->_gameid)
+                        if($player['player_id'] == $admin->EAGUID && $admin->GameID == $this->_gameid)
                         {
                             $this->data['online_admins'][] = [
                                 'player_name' => $player['player_name'],
@@ -498,7 +459,7 @@ class Scoreboard extends \BaseController
             {
                 foreach($admins as $admin)
                 {
-                    if($player['player_id'] == sha1($admin->EAGUID) && $admin->GameID == $this->_gameid)
+                    if($player['player_id'] == $admin->EAGUID && $admin->GameID == $this->_gameid)
                     {
                         $this->data['online_admins'][] = [
                             'player_name' => $player['player_name'],
@@ -516,7 +477,7 @@ class Scoreboard extends \BaseController
 
         $players = $this->conn->adminGetPlayerlist();
 
-        if(count($players) > 13 && $this->conn->getCurrentPlayers() == 0)
+        if(count($players) > 13 && $this->data['serverinfo']['current_players'] == 0)
         {
             switch(count($players))
             {
@@ -766,14 +727,27 @@ class Scoreboard extends \BaseController
 
     public function _permissionCheck()
     {
-        $permissions = \Permission::where('name', 'LIKE', 'scoreboard%')->get();
-
-        foreach($permissions as $p)
-        {
-            $cmdname = explode('.', $p->name);
-
-            $temp[ $cmdname[1] ] = FALSE;
-        }
+        $temp = array(
+            'ban'     => FALSE,
+            'bf3'     => FALSE,
+            'bf4'     => FALSE,
+            'forgive' => FALSE,
+            'kick'    => FALSE,
+            'kickall' => FALSE,
+            'kill'    => FALSE,
+            'nuke'    => FALSE,
+            'pmute'   => FALSE,
+            'psay'    => FALSE,
+            'punish'  => FALSE,
+            'pyell'   => FALSE,
+            'say'     => FALSE,
+            'squad'   => FALSE,
+            'tban'    => FALSE,
+            'team'    => FALSE,
+            'tsay'    => FALSE,
+            'tyell'   => FALSE,
+            'yell'    => FALSE,
+        );
 
         if(!\Auth::check()) return $temp;
 
