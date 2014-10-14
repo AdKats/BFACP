@@ -100,6 +100,7 @@ Route::group(array('prefix' => 'leaderboard'), function()
 
 Route::get('memberlist', 'ADKGamers\\Webadmin\\Controllers\\PublicController@showMemberlist');
 
+Route::get('rss/bans/{game}', 'ADKGamers\\Webadmin\\Controllers\\PublicController@rssBans');
 
 /**
  * AdKats Administration

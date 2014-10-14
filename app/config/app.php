@@ -110,6 +110,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
         'Zizaco\Confide\ServiceProvider',
+        'Roumen\Feed\FeedServiceProvider',
 	),
 
 	/*
@@ -179,6 +180,7 @@ return array(
 		'Confide'     => 'Zizaco\Confide\Facade',
 		'Helper'      => 'ADKGamers\Webadmin\Libs\Helpers\Main',
 		'Carbon'      => 'Carbon\Carbon',
+		'Feed'        => 'Roumen\Feed\Facades\Feed',
 
 	),
 

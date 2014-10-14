@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use Roumen\Feed\Facades\Feed;
 
 class PublicController extends \BaseController
 {
@@ -473,5 +474,69 @@ class PublicController extends \BaseController
                     ->select('bfadmincp_users.*', 'bfadmincp_user_preferences.gravatar', 'bfadmincp_roles.name AS groupname')->orderBy('username')->paginate(50);
 
         return View::make('public.memberlist')->with('users', $users)->with('title', 'Memberlist');
+    }
+
+    public function rssBans($game)
+    {
+        $game = strtoupper($game);
+
+        if(!in_array($game, ['BF3', 'BF4']))
+            return Helper::response('error', 'Invalid Game Code');
+
+        $gameID = Helper::getGameId($game);
+
+        if($gameID == FALSE)
+            return Helper::response('error', 'Invalid Game Code');
+
+        $feed = Feed::make();
+
+        $feed->setCache(0);
+
+        if(!$feed->isCached())
+        {
+            $feed->title = "Recent " . $game . " Bans";
+            $feed->description = "Shows the recent 100 bans from " . $game;
+            $feed->link = action('ADKGamers\\Webadmin\\Controllers\\PublicController@showIndex');
+            $feed->setDateFormat('datetime');
+            $feed->pubdate = Carbon::now();
+            $feed->lang = "en";
+            $feed->setShortening(true);
+            $feed->setTextLimit(300);
+
+            $bans = Ban::select('ban_id', 'player_id', 'target_name', 'source_name', 'source_id', 'ban_status', 'ban_startTime', 'ban_endTime', 'record_message', 'target_id', 'command_action', 'ServerName')
+                        ->join('adkats_records_main', 'adkats_bans.latest_record_id', '=', 'adkats_records_main.record_id')
+                        ->join('tbl_playerdata', 'adkats_records_main.target_id', '=', 'tbl_playerdata.PlayerID')
+                        ->join('tbl_server', 'adkats_records_main.server_id', '=', 'tbl_server.ServerID')
+                        ->where('tbl_playerdata.GameID', $gameID)
+                        ->where('ban_status', 'Active')
+                        ->orderBy('record_time', 'desc')->take(100)->get();
+
+            foreach($bans as $ban)
+            {
+                $title = "";
+
+                if($ban->command_action == 8) {
+                    $title .= "[PERMA BAN] ";
+                } else if($ban->command_action == 7) {
+                    $title .= "[TEMP BAN] ";
+                }
+
+                $title .= $ban->target_name . " for " . $ban->record_message;
+
+                $link = action("ADKGamers\\Webadmin\\Controllers\\PlayerController@showInfo", [$ban->target_id, $ban->target_name]);
+
+                $description = sprintf("%s was banned from %s for %s by %s", $ban->target_name, $ban->ServerName, $ban->record_message, $ban->source_name);
+
+                $feed->add(
+                    $title,
+                    $ban->source_name,
+                    $link,
+                    $ban->ban_startTime->toISO8601String(),
+                    $description
+                );
+            }
+        }
+
+        return $feed->render('atom');
     }
 }
