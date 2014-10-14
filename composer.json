@@ -23,7 +23,8 @@
         "zizaco/entrust": "1.2.*@dev",
         "rmccue/requests": "> 1.0",
         "laravelbook/ardent": "~2.4",
-        "guzzlehttp/guzzle": "~4.0"
+        "guzzlehttp/guzzle": "~4.0",
+        "roumen/feed": "dev-master"
     },
     "autoload": {
         "classmap": [

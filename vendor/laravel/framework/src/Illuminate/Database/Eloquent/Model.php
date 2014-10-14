@@ -1113,6 +1113,18 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
 	}
 
 	/**
+	 * Force a hard delete on a soft deleted model.
+	 *
+	 * This method protects developers from running forceDelete when trait is missing.
+	 *
+	 * @return void
+	 */
+	public function forceDelete()
+	{
+		return $this->delete();
+	}
+
+	/**
 	 * Perform the actual delete query on this model instance.
 	 *
 	 * @return void
@@ -1420,7 +1432,7 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
 		// clause to only update this model. Otherwise, we'll just insert them.
 		if ($this->exists)
 		{
-			$saved = $this->performUpdate($query);
+			$saved = $this->performUpdate($query, $options);
 		}
 
 		// If the model is brand new, we'll insert it into our database and set the
@@ -1428,7 +1440,7 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
 		// which is typically an auto-increment value managed by the database.
 		else
 		{
-			$saved = $this->performInsert($query);
+			$saved = $this->performInsert($query, $options);
 		}
 
 		if ($saved) $this->finishSave($options);
@@ -1457,7 +1469,7 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
 	 * @param  \Illuminate\Database\Eloquent\Builder  $query
 	 * @return bool|null
 	 */
-	protected function performUpdate(Builder $query)
+	protected function performUpdate(Builder $query, array $options)
 	{
 		$dirty = $this->getDirty();
 
@@ -1474,7 +1486,7 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
 			// First we need to create a fresh query instance and touch the creation and
 			// update timestamp on the model which are maintained by us for developer
 			// convenience. Then we will just continue saving the model instances.
-			if ($this->timestamps)
+			if ($this->timestamps && array_get($options, 'timestamps', true))
 			{
 				$this->updateTimestamps();
 			}
@@ -1501,14 +1513,14 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
 	 * @param  \Illuminate\Database\Eloquent\Builder  $query
 	 * @return bool
 	 */
-	protected function performInsert(Builder $query)
+	protected function performInsert(Builder $query, array $options)
 	{
 		if ($this->fireModelEvent('creating') === false) return false;
 
 		// First we'll need to create a fresh query instance and touch the creation and
 		// update timestamps on this model, which are maintained by us for developer
 		// convenience. After, we will just continue saving these model instances.
-		if ($this->timestamps)
+		if ($this->timestamps && array_get($options, 'timestamps', true))
 		{
 			$this->updateTimestamps();
 		}
@@ -1566,7 +1578,10 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
 		{
 			$this->$relation()->touch();
 
-			$this->$relation->touchOwners();
+			if ( ! is_null($this->$relation))
+			{
+				$this->$relation->touchOwners();
+			}
 		}
 	}
 
@@ -1626,10 +1641,8 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
 		{
 			return $this->original[$this->getKeyName()];
 		}
-		else
-		{
-			return $this->getAttribute($this->getKeyName());
-		}
+
+		return $this->getAttribute($this->getKeyName());
 	}
 
 	/**
@@ -3048,9 +3061,7 @@ abstract class Model implements ArrayAccess, ArrayableInterface, JsonableInterfa
 	 */
 	public function __unset($key)
 	{
-		unset($this->attributes[$key]);
-
-		unset($this->relations[$key]);
+		unset($this->attributes[$key], $this->relations[$key]);
 	}
 
 	/**

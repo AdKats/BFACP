@@ -580,6 +580,20 @@ class FinderTest extends Iterator\RealIteratorTestCase
         }
     }
 
+    /**
+     * @dataProvider getAdaptersTestData
+     */
+    public function testRegexSpecialCharsLocationWithPathRestrictionContainingStartFlag(Adapter\AdapterInterface $adapter)
+    {
+        $finder = $this->buildFinder($adapter);
+        $finder->in(__DIR__.DIRECTORY_SEPARATOR.'Fixtures'.DIRECTORY_SEPARATOR.'r+e.gex[c]a(r)s')
+            ->path('/^dir/');
+
+        $expected = array('r+e.gex[c]a(r)s'.DIRECTORY_SEPARATOR.'dir',
+                          'r+e.gex[c]a(r)s'.DIRECTORY_SEPARATOR.'dir'.DIRECTORY_SEPARATOR.'bar.dat',);
+        $this->assertIterator($this->toAbsoluteFixtures($expected), $finder);
+    }
+
     public function testAdaptersOrdering()
     {
         $finder = Finder::create()
@@ -684,7 +698,7 @@ class FinderTest extends Iterator\RealIteratorTestCase
         $tests = array(
             array('', '', array()),
             array('/^A\/B\/C/', '/C$/',
-                array('A'.DIRECTORY_SEPARATOR.'B'.DIRECTORY_SEPARATOR.'C'.DIRECTORY_SEPARATOR.'abc.dat')
+                array('A'.DIRECTORY_SEPARATOR.'B'.DIRECTORY_SEPARATOR.'C'.DIRECTORY_SEPARATOR.'abc.dat'),
             ),
             array('/^A\/B/', 'foobar',
                 array(
@@ -692,7 +706,7 @@ class FinderTest extends Iterator\RealIteratorTestCase
                     'A'.DIRECTORY_SEPARATOR.'B'.DIRECTORY_SEPARATOR.'C',
                     'A'.DIRECTORY_SEPARATOR.'B'.DIRECTORY_SEPARATOR.'ab.dat',
                     'A'.DIRECTORY_SEPARATOR.'B'.DIRECTORY_SEPARATOR.'C'.DIRECTORY_SEPARATOR.'abc.dat',
-                )
+                ),
             ),
             array('A/B/C', 'foobar',
                 array(
@@ -700,7 +714,7 @@ class FinderTest extends Iterator\RealIteratorTestCase
                     'A'.DIRECTORY_SEPARATOR.'B'.DIRECTORY_SEPARATOR.'C'.DIRECTORY_SEPARATOR.'abc.dat',
                     'copy'.DIRECTORY_SEPARATOR.'A'.DIRECTORY_SEPARATOR.'B'.DIRECTORY_SEPARATOR.'C',
                     'copy'.DIRECTORY_SEPARATOR.'A'.DIRECTORY_SEPARATOR.'B'.DIRECTORY_SEPARATOR.'C'.DIRECTORY_SEPARATOR.'abc.dat.copy',
-                )
+                ),
             ),
             array('A/B', 'foobar',
                 array(
@@ -714,12 +728,12 @@ class FinderTest extends Iterator\RealIteratorTestCase
                     'A'.DIRECTORY_SEPARATOR.'B'.DIRECTORY_SEPARATOR.'C'.DIRECTORY_SEPARATOR.'abc.dat',
                     'copy'.DIRECTORY_SEPARATOR.'A'.DIRECTORY_SEPARATOR.'B'.DIRECTORY_SEPARATOR.'ab.dat.copy',
                     'copy'.DIRECTORY_SEPARATOR.'A'.DIRECTORY_SEPARATOR.'B'.DIRECTORY_SEPARATOR.'C'.DIRECTORY_SEPARATOR.'abc.dat.copy',
-                )
+                ),
             ),
             array('/^with space\//', 'foobar',
                 array(
                     'with space'.DIRECTORY_SEPARATOR.'foo.txt',
-                )
+                ),
             ),
         );
 
@@ -819,7 +833,7 @@ class FinderTest extends Iterator\RealIteratorTestCase
             array(
                 new Adapter\BsdFindAdapter(),
                 new Adapter\GnuFindAdapter(),
-                new Adapter\PhpAdapter()
+                new Adapter\PhpAdapter(),
             ),
             function (Adapter\AdapterInterface $adapter) {
                 return $adapter->isSupported();
