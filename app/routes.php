@@ -172,4 +172,29 @@ Route::group(array('prefix' => 'acp/site', 'before' => 'auth'), function()
     Route::resource('role', 'ADKGamers\\Webadmin\\Controllers\\Admin\\RolePermsController');
 
     Route::resource('setting', 'ADKGamers\\Webadmin\\Controllers\\Admin\\SiteController');
+
+    Route::group(array('prefix' => 'info'), function()
+    {
+        Route::get('database', function()
+        {
+            $dbsizetotal = DB::select(File::get(storage_path() . '/sql/database_size_total.sql'));
+            $dbsizetables = DB::select(File::get(storage_path() . '/sql/database_size_tables.sql'));
+
+            $pie = [];
+
+            foreach($dbsizetables as $table)
+            {
+                $pie[] = [
+                    $table->tables,
+                    floatval($table->size_in_mb)
+                ];
+            }
+
+            return View::make('admin.information.database')
+                    ->with('title', 'Database Stats')
+                    ->with('piedata', json_encode($pie))
+                    ->with('dbtotal', $dbsizetotal)
+                    ->with('dbtables', $dbsizetables);
+        });
+    });
 });
