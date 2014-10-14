@@ -33,11 +33,19 @@
     </div>
 @stop
 @section('javascript')
+<script src="//code.highcharts.com/highcharts-3d.js"></script>
 <script type="text/javascript">
 $(function () {
     $('#chart').highcharts({
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45
+            }
+        },
         title: {
-            text: 'Tables by size'
+            text: ''
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -46,6 +54,8 @@ $(function () {
             pie: {
                 allowPointSelect: true,
                 cursor: 'pointer',
+                innerSize: 100,
+                depth: 45,
                 dataLabels: {
                     enabled: true,
                     format: '<b>{point.name}</b>: {point.percentage:.1f} %',
