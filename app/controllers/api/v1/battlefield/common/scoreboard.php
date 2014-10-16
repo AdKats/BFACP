@@ -441,7 +441,7 @@ class Scoreboard extends \BaseController
                 {
                     foreach($admins as $admin)
                     {
-                        if($player['player_id'] == $admin->EAGUID && $admin->GameID == $this->_gameid)
+                        if($player['player_id'] == $admin->player_id && $admin->GameID == $this->_gameid)
                         {
                             $this->data['online_admins'][] = [
                                 'player_name' => $player['player_name'],
@@ -459,7 +459,7 @@ class Scoreboard extends \BaseController
             {
                 foreach($admins as $admin)
                 {
-                    if($player['player_id'] == $admin->EAGUID && $admin->GameID == $this->_gameid)
+                    if($player['player_id'] == $admin->player_id && $admin->GameID == $this->_gameid)
                     {
                         $this->data['online_admins'][] = [
                             'player_name' => $player['player_name'],
@@ -476,6 +476,12 @@ class Scoreboard extends \BaseController
         $err = 0;
 
         $players = $this->conn->adminGetPlayerlist();
+
+        $squadStatus[0] = [];
+        $squadStatus[1] = [];
+        $squadStatus[2] = [];
+        $squadStatus[3] = [];
+        $squadStatus[4] = [];
 
         if(count($players) > 13 && $this->data['serverinfo']['current_players'] == 0)
         {
@@ -523,6 +529,14 @@ class Scoreboard extends \BaseController
                 $player_squad_id     = intval( $players[ ( $players[1] ) * $i + $players[1] + 6 ] );
                 $player_team_id      = intval( $players[ ( $players[1] ) * $i + $players[1] + 5 ] );
 
+                if($player_team_id != 0 && $player_squad_id != 0)
+                {
+                    if(array_key_exists($player_squad_id, $squadStatus[$player_team_id]) === FALSE)
+                        $squadStatus[$player_team_id][$player_squad_id] = $this->conn->adminIsSquadPrivate($player_team_id, $player_squad_id);
+
+                    $isSquadPrivate = $squadStatus[$player_team_id][$player_squad_id];
+                } else $isSquadPrivate = NULL;
+
                 if($this->game == 'BF4')
                 {
                     $player_ping = intval( $players[ ( $players[1] ) * $i + $players[1] + 11 ] );
@@ -551,22 +565,27 @@ class Scoreboard extends \BaseController
                 }
 
                 $this->data['teaminfo'][$player_team_id]['playerlist'][] = array(
-                    'player_id'       => $player_guid,
-                    'player_deaths'   => $player_deaths,
-                    'player_kills'    => $player_kills,
-                    'player_score'    => $player_score,
-                    'player_name'     => $player_soldier_name,
-                    'player_team'     => $player_team_id,
-                    'player_squad'    => BFHelper::squad($player_squad_id),
-                    'player_squad_id' => $player_squad_id,
-                    'player_ping'     => (isset($player_ping) ? $player_ping : NULL),
-                    'player_rank'     => (isset($player_rank) ? $player_rank : NULL),
-                    'player_kdr'      => BFHelper::calculKDRatio($player_kills, $player_deaths),
-                    'rank_image'      => (isset($player_rank) ? self::_getRankImage($player_rank) : NULL)
+                    'player_id'            => $player_guid,
+                    'player_deaths'        => $player_deaths,
+                    'player_kills'         => $player_kills,
+                    'player_score'         => $player_score,
+                    'player_name'          => $player_soldier_name,
+                    'player_team'          => $player_team_id,
+                    'player_squad'         => BFHelper::squad($player_squad_id),
+                    'player_squad_id'      => $player_squad_id,
+                    'player_squad_private' => $isSquadPrivate,
+                    'player_ping'          => (isset($player_ping) ? $player_ping : NULL),
+                    'player_rank'          => (isset($player_rank) ? $player_rank : NULL),
+                    'player_kdr'           => BFHelper::calculKDRatio($player_kills, $player_deaths),
+                    'rank_image'           => (isset($player_rank) ? self::_getRankImage($player_rank) : NULL)
 
                 );
             }
-            catch(Exception $e) { $err++; }
+            catch(Exception $e)
+            {
+                $err++;
+                $this->data['errors']['messages'][] = array($e->getMessage(), $e->getLine());
+            }
         }
 
         $this->data['errors']['count'] = $err;
@@ -590,7 +609,18 @@ class Scoreboard extends \BaseController
                     $players[] = $player['player_id'];
                 }
             }
+
+            if(array_key_exists('spectators', $team))
+            {
+                foreach($team['spectators'] as $player)
+                {
+                    $players[] = $player['player_id'];
+                }
+            }
         }
+
+        if(empty($players))
+            return false;
 
         $players_query = Player::where('GameID', $this->_gameid)->whereIn('EAGUID', $players)->get();
 
@@ -605,6 +635,21 @@ class Scoreboard extends \BaseController
                         if($player['player_id'] == $pinfo->EAGUID)
                         {
                             $this->data['teaminfo'][$teamid]['playerlist'][$key]['player_id'] = $pinfo->PlayerID;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if(array_key_exists('spectators', $team))
+            {
+                foreach($team['spectators'] as $key => $player)
+                {
+                    foreach($players_query as $pinfo)
+                    {
+                        if($player['player_id'] == $pinfo->EAGUID)
+                        {
+                            $this->data['teaminfo'][$teamid]['spectators'][$key]['player_id'] = $pinfo->PlayerID;
                             break;
                         }
                     }
@@ -723,6 +768,8 @@ class Scoreboard extends \BaseController
                 }
             }
         }
+
+        $this->data[0]['squad']['private'] = $this->conn->adminIsSquadPrivate(1, 2);
     }
 
     public function _permissionCheck()
