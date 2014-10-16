@@ -768,8 +768,6 @@ class Scoreboard extends \BaseController
                 }
             }
         }
-
-        $this->data[0]['squad']['private'] = $this->conn->adminIsSquadPrivate(1, 2);
     }
 
     public function _permissionCheck()
