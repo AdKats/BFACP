@@ -277,7 +277,7 @@
                             <td>{{team.player_score | number}}</td>
                             <td>{{team.player_kills}}</td>
                             <td>{{team.player_deaths}}</td>
-                            <td class="hidden-xs hidden-sm">{{team.player_squad}}</td>
+                            <td class="hidden-xs hidden-sm"><i class="fa fa-lock" ng-if="team.player_squad_private">&nbsp;</i>{{team.player_squad}}</td>
                             <td ng-if="isBF4" class="{{ pingcheck(team.player_ping) }}">{{ (team.player_ping > 1000 ? '-' : team.player_ping) }}</td>
                         </tr>
                     </tbody>
@@ -338,7 +338,7 @@
                             <td>{{team.player_score | number}}</td>
                             <td>{{team.player_kills}}</td>
                             <td>{{team.player_deaths}}</td>
-                            <td class="hidden-xs hidden-sm">{{team.player_squad}}</td>
+                            <td class="hidden-xs hidden-sm"><i class="fa fa-lock" ng-if="team.player_squad_private">&nbsp;</i>{{team.player_squad}}</td>
                             <td ng-if="isBF4" class="{{ pingcheck(team.player_ping) }}">{{ (team.player_ping > 1000 ? '-' : team.player_ping) }}</td>
                         </tr>
                     </tbody>
