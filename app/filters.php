@@ -195,3 +195,15 @@ Route::filter('manage_site_settings', function()
 });
 
 Route::when('acp/site/setting*', 'manage_site_settings');
+
+Route::filter('view_database_stats', function()
+{
+    if(Auth::guest()) return Redirect::guest('login');
+
+    if( !Entrust::can('acp_info_database'))
+    {
+        return View::make('access_denied')->with('title', 'Access Denied');
+    }
+});
+
+Route::when('acp/site/info/database', 'view_database_stats');

@@ -25,6 +25,9 @@ return array(
     'site_management' => array(
         'user' => 'Users',
         'role' => 'Roles',
-        'setting' => 'Settings'
+        'setting' => 'Settings',
+        'info' => array(
+            'database' => 'DB Stats'
+        )
     )
 );

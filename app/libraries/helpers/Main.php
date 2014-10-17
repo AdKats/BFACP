@@ -10,12 +10,13 @@
  */
 
 use ADKGamers\Webadmin\Models\Battlefield\Ban;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use DateTimeZone, Auth, WebadminException, Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Schema;
+use Zizaco\Entrust\EntrustFacade AS Entrust;
 
 class Main
 {
@@ -847,7 +848,7 @@ class Main
      * @param integer bytes Size in bytes to convert
      * @return string
      */
-    public static function bytesToSize($bytes, $precision = 2)
+    static public function bytesToSize($bytes, $precision = 2)
     {
         $kilobyte = 1024;
         $megabyte = $kilobyte * 1024;
@@ -871,5 +872,25 @@ class Main
         } else {
             return $bytes . ' B';
         }
+    }
+
+    /**
+     * Returns true if user has permission otherwise returns false
+     * @param  array/string  $perms Can be array or string
+     * @return boolean
+     */
+    static public function hasPerm($perms)
+    {
+        if(is_array($perms))
+        {
+            foreach($perms as $perm)
+                if( Entrust::can($perm) ) return TRUE;
+        }
+        else
+        {
+            if( Entrust::can($perms) ) return TRUE;
+        }
+
+        return FALSE;
     }
 }
