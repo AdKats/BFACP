@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="BFAdminCP : A web based admin tool for Battlefield 3 and Battlefield 4 integrated with AdKats and XPKillers Stat Logger plugins for ProCon.">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>BFAdminCP</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/Prophet731/BFAdminCP">View on GitHub</a>
+
+          <h1 id="project_title">BFAdminCP</h1>
+          <h2 id="project_tagline">A web based admin tool for Battlefield 3 and Battlefield 4 integrated with AdKats and XPKillers Stat Logger plugins for ProCon.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/Prophet731/BFAdminCP/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/Prophet731/BFAdminCP/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="brief-history" class="anchor" href="#brief-history"><span class="octicon octicon-link"></span></a>Brief History</h1>
+
+<p>This tool was created originally for <a href="http://www.adkgamers.com/">ADKGamers</a> exclusively back in late 2012 early 2013, but as the need for a web based admin tool to make it easier to manage bans and players through AdKats and its ever going nature a new tool had to be created to be more dynamic and more informative.</p>
+
+<h1>
+<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h1>
+
+<p>The BFAdminCP is a web based admin tool designed to work exclusively with <a href="https://github.com/ColColonCleaner/AdKats">AdKats</a> (v5.2+) and <a href="https://forum.myrcon.com/showthread.php?6698">XpKillers Chat, GUID, Stats and Mapstats Logger</a> (v1.0.0.2). The software is built with the <a href="http://laravel.com/">Laravel</a> PHP framework to speed up development time and make my job a lot easier.</p>
+
+<h1>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h1>
+
+<ul>
+<li>MySQL Database</li>
+<li>AdKats v5.2+</li>
+<li>XpKillers Chat, GUID, Stats and Mapstats Logger v1.0.0.2+</li>
+<li>PHP 5.4+</li>
+<li>PHP Mcrypt</li>
+<li>PHP PDO</li>
+</ul>
+
+<h1>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h1>
+
+<ul>
+<li>User, Role, and Permission system.</li>
+<li>Live Scoreboard with chat.</li>
+<li>Ban Management for AdKats.</li>
+<li>Detailed player information with graph charts.</li>
+<li>Server statistics page for each server showing population history, uptime history with data from UptimeRobot, and Mapstats.</li>
+<li>Metabans feed.</li>
+<li>Report notifications with ability to change alert sounds.</li>
+<li>Chatlog searching where you can search by multiple players and/or keywords and ability to only show from a certain date/time range.</li>
+<li>Message of the Day</li>
+<li>Quick DB Stats overview</li>
+<li>and more!</li>
+</ul>
+
+<h1>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h1>
+
+<p>Download the latest version from <a href="http://www.adkgamers.com/files/file/35-web-admin/">here</a> or by downloading the master branch. Once downloaded unzip it to a temporary folder. Next open the <code>database.php</code> file located in the <code>app/config</code> folder in your favorite text editor. Scroll down to the Database connections section and fill in your database connection information. </p>
+
+<p>Next we need to create a encryption key. This is <strong>IMPORTANT</strong>! The default key provided is just a placeholder string and is insecure. There are a few ways to do this. First if you have PHP installed on your current system you can open up a command prompt and CD to the directory where you have extracted the application and run the following command <code>php artisan key:generate</code>. This will create and update the key located in the file <code>app.php</code> in the <code>app/config</code> folder. If you don't have command line access or PHP installed on the current system, I have provided a page where you can get a random 32 character string. I do <strong>NOT</strong> save these and they are random on each refresh. You can access this page <a href="http://api.gamerethos.net/random_key">here</a>. Once you have your key open up the config file <code>app.php</code> and scroll down till you see the Encryption Key section. Replace the <code>YourSecretKey!!!</code> with the key that was generated. By default it will look like this.</p>
+
+<div class="highlight highlight-PHP"><pre>
+    <span class="cm">/*</span>
+<span class="cm">    |--------------------------------------------------------------------------</span>
+<span class="cm">    | Encryption Key</span>
+<span class="cm">    |--------------------------------------------------------------------------</span>
+<span class="cm">    |</span>
+<span class="cm">    | This key is used by the Illuminate encrypter service and should be set</span>
+<span class="cm">    | to a random, 32 character string, otherwise these encrypted strings</span>
+<span class="cm">    | will not be safe. Please do this before deploying an application!</span>
+<span class="cm">    |</span>
+<span class="cm">    */</span>
+
+    <span class="s1">'key'</span> <span class="o">=&gt;</span> <span class="s1">'YourSecretKey!!!'</span><span class="p">,</span>
+
+    <span class="s1">'cipher'</span> <span class="o">=&gt;</span> <span class="nx">MCRYPT_RIJNDAEL_256</span><span class="p">,</span>
+
+</pre></div>
+
+<p>Once completed upload the entire application to your webserver. Once uploaded you will need to modify some file and folder permissions. Change the files and folders permissions under <code>app/storage</code> recursively to 0777.</p>
+
+<p>Now load up application in your web browser and it will begin the process of creating the tables and migrating data if you used an older version of the BFAdminCP. This process will take a few seconds to run on first load. When it completed you should see the dashboard.</p>
+
+<p>If all goes well it will have been successfully setup. If this is your first install it will have setup the default admin user otherwise you can login with your old user login.</p>
+
+<h2>
+<a name="default-login" class="anchor" href="#default-login"><span class="octicon octicon-link"></span></a>Default login</h2>
+
+<p><strong>Username</strong>: admin</p>
+
+<p><strong>Password</strong>: admin</p>
+
+<p>You can change the default username and password by clicking on <strong>Site Management</strong> &gt; <strong>Users</strong> &gt; <strong>Admin</strong> &gt; <strong>Edit User</strong></p>
+
+<p>If you are upgrading from an older version please run this query after you have replaced <code>YourNameHere</code> with your username.</p>
+
+<div class="highlight highlight-SQL"><pre>
+<span class="k">UPDATE</span> <span class="o">`</span><span class="n">bfadmincp_assigned_roles</span><span class="o">`</span>
+        <span class="k">INNER</span> <span class="k">JOIN</span>
+    <span class="o">`</span><span class="n">bfadmincp_users</span><span class="o">`</span> <span class="k">ON</span> <span class="o">`</span><span class="n">bfadmincp_assigned_roles</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">user_id</span><span class="o">`</span> <span class="o">=</span> <span class="o">`</span><span class="n">bfadmincp_users</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> 
+<span class="k">SET</span> 
+    <span class="o">`</span><span class="n">role_id</span><span class="o">`</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">WHERE</span>
+    <span class="o">`</span><span class="n">username</span><span class="o">`</span> <span class="o">=</span> <span class="s1">'YourNameHere'</span>
+
+</pre></div>
+
+<p>If you have any questions or need help setting this up please post it <a href="http://www.adkgamers.com/forum/265-adk-web-dev-support/">here</a>.</p>
+
+<p>For suggestions/bugs please create a ticket <a href="https://github.com/Prophet731/BFAdminCP/issues">here</a>.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">BFAdminCP maintained by <a href="https://github.com/Prophet731">Prophet731</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
