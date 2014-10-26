@@ -2,6 +2,15 @@
 
 class BaseController extends Controller {
 
+	public $user_tz = 'UTC';
+
+	public function __construct()
+	{
+		if(Auth::check()) $this->user_tz = Auth::user()->preferences->timezone;
+
+		View::share('user_timezone', $this->user_tz);
+	}
+
 	/**
 	 * Setup the layout used by the controller.
 	 *
@@ -13,8 +22,6 @@ class BaseController extends Controller {
 		{
 			$this->layout = View::make($this->layout);
 		}
-
-		$this->whosOnline();
 	}
 
 	/**

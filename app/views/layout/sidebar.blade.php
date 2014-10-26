@@ -111,7 +111,7 @@
             </li>
             @endif
 
-            @if( Helper::hasPerm( [ 'manage_site_users', 'manage_site_roles_perms', 'manage_site_settings', 'acp_info_database' ] ) )
+            @if( Helper::hasPerm( [ 'manage_site_users', 'manage_site_roles_perms', 'manage_site_settings', 'acp_info_database', 'acp_manage_game' ] ) )
             <li class="treeview <?php echo (Request::segment(2) == 'site' ? 'active' : NULL); ?>">
                 <a href="#">
                     <i class="fa fa-folder"></i> <span>Site Management</span>
@@ -138,6 +138,14 @@
                         <li <?php echo (Request::segment(2) == 'site' && Request::segment(3) == 'setting' ? 'class="active"' : NULL); ?>>
                             <a href="/acp/site/setting">
                                 <i class="fa fa-angle-double-right"></i> {{ Lang::get('navigation.site_management.setting') }}
+                            </a>
+                        </li>
+                        @endif
+
+                        @if(Entrust::can('acp_manage_game'))
+                        <li <?php echo (Request::segment(2) == 'site' && Request::segment(3) == 'gameserver' ? 'class="active"' : NULL); ?>>
+                            <a href="/acp/site/gameserver">
+                                <i class="fa fa-angle-double-right"></i> {{ Lang::get('navigation.site_management.game.setting') }}
                             </a>
                         </li>
                         @endif

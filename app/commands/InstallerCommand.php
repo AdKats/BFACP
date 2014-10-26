@@ -4,6 +4,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use ADKGamers\Webadmin\Models\Battlefield\Player;
+use ADKGamers\Webadmin\Models\Battlefield\Server;
 
 class InstallerCommand extends Command
 {
@@ -38,34 +39,34 @@ class InstallerCommand extends Command
      */
     public function fire()
     {
-        $this->info("
-                ___  ____ ____ ___  _  _ _ _  _ ____ ___     _ _  _ ____ ___ ____ _    _    ____ ____
-                |__] |___ |__| |  \ |\/| | |\ | |    |__]    | |\ | [__   |  |__| |    |    |___ |__/
-                |__] |    |  | |__/ |  | | | \| |___ |       | | \| ___]  |  |  | |___ |___ |___ |  \
-
-            ");
-
-        $this->info("Thank you for choosing to install the Battlefield Admin Control Panel (BFAdminCP).");
-        $this->info("You will be asked a few questions to help configure your install.\n\n");
+        $this->info("Thank you for choosing to install the Battlefield Admin Control Panel.");
+        $this->info("You will be asked a few questions to help configure your install.\n");
 
 
         /*=================================
         =            Variables            =
         =================================*/
 
-        $missing_php54 = FALSE;
+        $missing_php54  = FALSE;
         $missing_mcrypt = FALSE;
-        $missing_pdo = FALSE;
+        $missing_pdo    = FALSE;
+        $servers_to_add = [];
+        $utr_key        = NULL;
+        $use_utr        = FALSE;
+        $use_bf3        = FALSE;
+        $use_bf4        = FALSE;
+        $use_ssl        = FALSE;
+        $use_auth       = FALSE;
+
 
         /*-----  End of Variables  ------*/
-
-
 
         /*==================================
         =            Check List            =
         ==================================*/
 
-        $this->info("Step 1: Pre-check list\n");
+        $this->info("Step 1: Pre-check list");
+        $this->info("----------------------------------------\n");
 
         $this->info("PHP Version Check...");
 
@@ -112,22 +113,60 @@ class InstallerCommand extends Command
 
         /*-----  End of Check List  ------*/
 
+        $this->info("\nStep 2: Configuration");
+        $this->info("----------------------------------------\n");
+
+        /*==========================================
+        =            Step 2.1 - General            =
+        ==========================================*/
+
+        $this->info("Step 2.1");
+        $this->info("----------------------------------------\n");
+
+        $this->info("Leave blank to use default value.");
+        $use_bf3  = $this->confirm("Do you want to enable the Battlefield 3 section? (Default: Yes) [yes|no]", true);
+        $use_bf4  = $this->confirm("Do you want to enable the Battlefield 4 section? (Default: Yes) [yes|no]", true);
+        $use_ssl  = $this->confirm("Do you want to force SSL connections? (Default: No) [yes|no]", false);
+        $use_auth = $this->confirm("Do you only want registered users to be able to access the BFAdminCP? (Default: No) [yes|no]", false);
+
+        /*-----  End of Step 2.1 - General  ------*/
 
 
+        /*=================================================
+        =            Section 2.2 - UptimeRobot            =
+        =================================================*/
 
+        $this->info("\nStep 2.2 - UptimeRobot");
+        $this->info("----------------------------------------\n");
 
-        /*
-        $user                        = new User;
-        $user->username              = 'Admin';
-        $user->email                 = 'admin@example.com';
-        $user->password              = 'password';
-        $user->password_confirmation = 'password';
-        $user->confirmed             = TRUE;
-        $user->save();
+        if($use_utr = $this->confirm("Do you want to use Uptime Robot? [yes|no]"))
+        {
+            $utr_key = $this->ask("Please enter your Main API key from UptimeRobot.com: ");
 
-        $preferences = Preference::create(['user_id' => $user->id]);
+            if($this->confirm("Would you like to add your servers now? [yes|no]"))
+            {
+                $this->info("You will be presented with each server and asked if it should be included on UptimeRobot.\n");
 
-        $user->attachRole($newrole);
-        */
+                $servers = Server::orderBy('ServerName', 'asc')->get();
+
+                $this->info(sprintf("I found %u %s.", $servers->count(), Lang::choice('server|servers', $servers->count()) ) );
+
+                $this->info("\nPress enter to use default option. The default option is No.\n");
+
+                foreach($servers as $server)
+                {
+                    $msg = sprintf("Would you like to add [%s] %s (%s) to UptimeRobot? [Yes|No]",
+                                Helper::getGameName($server->GameID),
+                                str_limit($server->ServerName, 35, '...'),
+                                Helper::getIpAddr($server->IP_Address)
+                            );
+
+                    if($this->confirm($msg)) $servers_to_add[] = $server;
+                }
+            }
+        }
+
+        /*-----  End of Section 2.2 - UptimeRobot  ------*/
+
     }
 }

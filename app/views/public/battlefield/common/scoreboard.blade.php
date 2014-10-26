@@ -6,14 +6,14 @@
         <div class="col-xm-12 col-sm-12 col-md-12 col-lg-12">
             <select class="form-control" id="serversel" ng-model="serverSelect" ng-change="switchServer()" ng-init="serverSelect = 'none'">
                 <option value="none" selected="selected">Select Server</option>
-                @if(!empty($servers['bf3']))
+                @if(!empty($servers['bf3']) && Config::get('webadmin.BF3'))
                 <optgroup label="Battlefield 3">
                     @foreach($servers['bf3'] as $server)
                     <option value="{{{ $server->ServerID }}}">{{{ $server->ServerName }}}</option>
                     @endforeach
                 </optgroup>
                 @endif
-                @if(!empty($servers['bf4']))
+                @if(!empty($servers['bf4']) && Config::get('webadmin.BF4'))
                 <optgroup label="Battlefield 4">
                     @foreach($servers['bf4'] as $server)
                     <option value="{{{ $server->ServerID }}}">{{{ $server->ServerName }}}</option>

@@ -26,6 +26,9 @@ return array(
         'user' => 'Users',
         'role' => 'Roles',
         'setting' => 'Settings',
+        'game' => array(
+            'setting' => 'Game Settings'
+        ),
         'info' => array(
             'database' => 'DB Stats'
         )

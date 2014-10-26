@@ -893,4 +893,61 @@ class Main
 
         return FALSE;
     }
+
+    /**
+     * Querys the database to check if the required tables exist
+     */
+    static public function RequiredTablesExist()
+    {
+        $tables = [
+            'bfadmincp_assigned_roles',
+            'bfadmincp_battlelog_playerdata',
+            'bfadmincp_migrations',
+            'bfadmincp_password_reminders',
+            'bfadmincp_permission_role',
+            'bfadmincp_permissions',
+            'bfadmincp_roles',
+            'bfadmincp_sessions',
+            'bfadmincp_settings',
+            'bfadmincp_settings_gameserver',
+            'bfadmincp_user_preferences',
+            'bfadmincp_users',
+            'adkats_bans',
+            'adkats_commands',
+            'adkats_infractions_global',
+            'adkats_infractions_server',
+            'adkats_player_reputation',
+            'adkats_records_main',
+            'adkats_rolecommands',
+            'adkats_roles',
+            'adkats_settings',
+            'adkats_specialplayers',
+            'adkats_users',
+            'adkats_usersoldiers',
+            'tbl_chatlog',
+            'tbl_dogtags',
+            'tbl_games',
+            'tbl_mapstats',
+            'tbl_playerdata',
+            'tbl_playerrank',
+            'tbl_playerstats',
+            'tbl_server',
+            'tbl_server_player',
+            'tbl_sessions',
+            'tbl_weapons',
+            'tbl_weapons_stats'
+        ];
+
+        $missing_tables = [];
+
+        foreach($tables as $table)
+        {
+            if(!Schema::hasTable($table)) $missing_tables[] = $table;
+        }
+
+        $result['status'] = empty($missing_tables) ? TRUE : FALSE;
+        $result['data'] = $missing_tables;
+
+        return $result;
+    }
 }

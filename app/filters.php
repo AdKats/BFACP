@@ -207,3 +207,15 @@ Route::filter('view_database_stats', function()
 });
 
 Route::when('acp/site/info/database', 'view_database_stats');
+
+Route::filter('acp_manage_game', function()
+{
+    if(Auth::guest()) return Redirect::guest('login');
+
+    if( !Entrust::can('acp_manage_game'))
+    {
+        return View::make('access_denied')->with('title', 'Access Denied');
+    }
+});
+
+Route::when('acp/site/gameserver*', 'acp_manage_game');

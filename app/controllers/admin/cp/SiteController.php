@@ -103,6 +103,12 @@ class SiteController extends \BaseController
 
         $messages = [];
 
+        if($settings['SERVERORDER']['value'] != $input_order)
+        {
+            Setting::where('token', 'SERVERORDER')->update(['context' => $input_order]);
+            $messages[] = "Server sorting changed to: " . $input_order;
+        }
+
         /*================================
         =            Booleans            =
         ================================*/

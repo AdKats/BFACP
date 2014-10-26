@@ -36,6 +36,7 @@ class RolePermissionTableSeeder extends Seeder
             ['name' => 'accessbf3',                 'display_name' => 'Access BF3 Admin'],
             ['name' => 'accessbf4',                 'display_name' => 'Access BF4 Admin'],
             ['name' => 'acp_info_database',         'display_name' => 'View DB Stats'],
+            ['name' => 'acp_manage_game',           'display_name' => 'Manage Site Game Settings'],
             ['name' => 'email_newuser',             'display_name' => 'Receive email on new user signup'],
             ['name' => 'issueforgive',              'display_name' => 'Issue Forgives'],
             ['name' => 'issuepban',                 'display_name' => 'Issue Perma Ban'],

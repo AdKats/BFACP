@@ -11,10 +11,15 @@
 
 use ADKGamers\Webadmin\Libs\Helpers\Battlefield AS BFHelper;
 use ADKGamers\Webadmin\Libs\Helpers\Main AS Helper;
+use ADKGamers\Webadmin\Models\Battlefield\Ban;
+use ADKGamers\Webadmin\Models\Battlefield\Player;
 use ADKGamers\Webadmin\Models\Battlefield\Server;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class Routing extends \BaseController
 {
@@ -25,7 +30,7 @@ class Routing extends \BaseController
     public function __construct()
     {
         // Fetch the games database id and assign it
-        $this->_gameId = Helper::getGameId(self::GAME);
+        $this->_gameId = BF4_DB_ID;
     }
 
     public function missingMethod($paramters = array())
@@ -35,7 +40,7 @@ class Routing extends \BaseController
 
     public function getPopulation()
     {
-        $servers = Server::where('GameID', $this->_gameId)->where('ConnectionState', 'on')->get();
+        $servers = Server::with('setting')->where('GameID', $this->_gameId)->orderBy(Config::get('webadmin.SERVERORDER', 'ServerID'))->where('ConnectionState', 'on')->get();
 
         if(!$servers)
             return Helper::response('error', 'No servers could be found or are not enabled');
@@ -50,7 +55,7 @@ class Routing extends \BaseController
             $data['servers'][] = array(
                 'id'                => $server->ServerID,
                 'full_server_name'  => $server->ServerName,
-                'short_server_name' => null,
+                'short_server_name' => is_null($server->setting) ? NULL : $server->strip($server->setting->name_strip),
                 'max'               => $server->maxSlots,
                 'used'              => $server->usedSlots,
                 'map'               => head(BFHelper::getMapName($server->mapName, $mapNamesXML)),
@@ -59,6 +64,16 @@ class Routing extends \BaseController
 
             $totalUsed += $server->usedSlots;
             $totalMax += $server->maxSlots;
+        }
+
+        if(Config::get('webadmin.SERVERORDER') == 'ServerName')
+        {
+            $server_sort = [];
+
+            foreach($data['servers'] as $key => $row)
+                $server_sort[$key] = $row['full_server_name'];
+
+            array_multisort($server_sort, SORT_ASC, SORT_STRING, $data['servers']);
         }
 
         $data['total'] = array(

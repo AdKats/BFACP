@@ -17,6 +17,7 @@ use ADKGamers\Webadmin\Models\Battlefield\Server;
 use ADKGamers\Webadmin\Models\Battlefield\Setting AS GameSetting;
 use BattlefieldException, Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -134,7 +135,7 @@ class Scoreboard extends \BaseController
             if(!$this->conn->isConnected())
                 throw new BattlefieldException("Could not establish connection to game server: " . trim( $server->ServerName ) );
 
-            $gsetting = GameSetting::find($this->server_id);
+            $gsetting = $server->setting;
 
             if(!$gsetting)
                 throw new BattlefieldException("Missing server configuration");
@@ -158,8 +159,7 @@ class Scoreboard extends \BaseController
                 break;
             }
 
-            if(Input::has('raw') && Input::get('raw') == 1)
-                $this->_addRaw();
+            if(Input::has('raw') && Input::get('raw') == 1) $this->_addRaw();
 
             $this->data['_permission'] = $this->_permissionCheck();
 
@@ -441,6 +441,8 @@ class Scoreboard extends \BaseController
                 {
                     foreach($admins as $admin)
                     {
+                        if(array_key_exists('player_id', $player) === FALSE) continue;
+
                         if($player['player_id'] == $admin->player_id && $admin->GameID == $this->_gameid)
                         {
                             $this->data['online_admins'][] = [
@@ -459,6 +461,8 @@ class Scoreboard extends \BaseController
             {
                 foreach($admins as $admin)
                 {
+                    if(array_key_exists('player_id', $player) === FALSE) continue;
+
                     if($player['player_id'] == $admin->player_id && $admin->GameID == $this->_gameid)
                     {
                         $this->data['online_admins'][] = [
@@ -471,6 +475,10 @@ class Scoreboard extends \BaseController
         }
     }
 
+    /**
+     * Handles the player listing compline for both games
+     * @return void
+     */
     private function buildPlayerListing()
     {
         $err = 0;
@@ -516,7 +524,7 @@ class Scoreboard extends \BaseController
             }
         }
 
-        for($i=0; $i <= $loop_count; $i++)
+        for($i=0; $i < $loop_count; $i++)
         {
             try
             {
@@ -545,8 +553,9 @@ class Scoreboard extends \BaseController
                     if($player_type == 1)
                     {
                         $this->data['teaminfo'][0]['spectators'][] = array(
-                            'player_id'      => $player_guid,
-                            'player_name'    => $player_soldier_name
+                            'player_id'   => $player_guid,
+                            'player_name' => $player_soldier_name,
+                            'isGhost'     => empty($player_guid) ? TRUE : FALSE
                         );
 
                         continue;
@@ -555,9 +564,10 @@ class Scoreboard extends \BaseController
                     if($player_type == 2 || $player_type == 3)
                     {
                         $this->data['teaminfo'][$player_team_id]['commander'] = array(
-                            'player_id'      => $player_guid,
-                            'player_name'    => $player_soldier_name,
-                            'player_score'   => $player_score
+                            'player_id'    => $player_guid,
+                            'player_name'  => $player_soldier_name,
+                            'player_score' => $player_score,
+                            'isGhost'      => empty($player_guid) ? TRUE : FALSE
                         );
 
                         continue;
@@ -577,22 +587,31 @@ class Scoreboard extends \BaseController
                     'player_ping'          => (isset($player_ping) ? $player_ping : NULL),
                     'player_rank'          => (isset($player_rank) ? $player_rank : NULL),
                     'player_kdr'           => BFHelper::calculKDRatio($player_kills, $player_deaths),
-                    'rank_image'           => (isset($player_rank) ? self::_getRankImage($player_rank) : NULL)
-
+                    'rank_image'           => (isset($player_rank) ? self::_getRankImage($player_rank) : NULL),
+                    'country'              => NULL,
+                    'isGhost'              => empty($player_guid) ? TRUE : FALSE
                 );
             }
             catch(Exception $e)
             {
-                $err++;
-                $this->data['errors']['messages'][] = array($e->getMessage(), $e->getLine());
+                if(Config::get('app.debug'))
+                {
+                    $err++;
+                    $this->data['errors']['messages'][] = array($e->getMessage(), $e->getLine());
+                }
             }
         }
 
-        $this->data['errors']['count'] = $err;
+        if(Config::get('app.debug'))
+            $this->data['errors']['count'] = $err;
 
         $this->_queryPlayerData();
     }
 
+    /**
+     * Querys the database for the players ID
+     * @return void
+     */
     public function _queryPlayerData()
     {
         if($this->data['serverinfo']['current_players'] == 0)
@@ -635,6 +654,16 @@ class Scoreboard extends \BaseController
                         if($player['player_id'] == $pinfo->EAGUID)
                         {
                             $this->data['teaminfo'][$teamid]['playerlist'][$key]['player_id'] = $pinfo->PlayerID;
+
+                            if(!empty($pinfo->CountryCode) && $pinfo->CountryName != FALSE)
+                            {
+                                $this->data['teaminfo'][$teamid]['playerlist'][$key]['country']   = [
+                                    'image' => $pinfo->CountryCode . '.png',
+                                    'path'  => asset('img/flags'),
+                                    'name'  => $pinfo->CountryName
+                                ];
+                            }
+
                             break;
                         }
                     }
@@ -650,6 +679,16 @@ class Scoreboard extends \BaseController
                         if($player['player_id'] == $pinfo->EAGUID)
                         {
                             $this->data['teaminfo'][$teamid]['spectators'][$key]['player_id'] = $pinfo->PlayerID;
+
+                            if(!empty($pinfo->CountryCode) && $pinfo->CountryName != FALSE)
+                            {
+                                $this->data['teaminfo'][$teamid]['spectators'][$key]['country']   = [
+                                    'image' => $pinfo->CountryCode . '.png',
+                                    'path'  => asset('img/flags'),
+                                    'name'  => $pinfo->CountryName
+                                ];
+                            }
+
                             break;
                         }
                     }
@@ -658,6 +697,11 @@ class Scoreboard extends \BaseController
         }
     }
 
+    /**
+     * Returns the image file needed to display the rank icon
+     * @param  integer $rank
+     * @return string
+     */
     public function _getRankImage($rank)
     {
         switch($this->game)
@@ -682,6 +726,10 @@ class Scoreboard extends \BaseController
         return $image;
     }
 
+    /**
+     * Returns the next map in rotation
+     * @return array
+     */
     public function _getNextMap()
     {
         $nextMapIndex = $this->conn->adminMaplistGetNextMapIndex();
@@ -699,6 +747,10 @@ class Scoreboard extends \BaseController
         return NULL;
     }
 
+    /**
+     * Gets the maplist from the game server
+     * @return array
+     */
     public function _getMapList()
     {
         $maplist = $this->conn->adminMaplistList();
@@ -745,6 +797,10 @@ class Scoreboard extends \BaseController
         return $listing;
     }
 
+    /**
+     * Added the raw information from the game server.
+     * Used for debugging
+     */
     public function _addRaw()
     {
         $serverinfo = $this->conn->getServerInfo();
@@ -770,6 +826,10 @@ class Scoreboard extends \BaseController
         }
     }
 
+    /**
+     * Returns the permissions the user is allowed to access
+     * @return array
+     */
     public function _permissionCheck()
     {
         $temp = array(

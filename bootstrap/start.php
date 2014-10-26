@@ -105,6 +105,11 @@ App::error(function(PDOException $e)
     }
 });
 
+App::error(function(Exception $e)
+{
+    die("FATAL ERROR: " . $e->getMessage());
+});
+
 if(!App::runningInConsole())
 {
     // Make sure the storage directory and sub folders are writeable
@@ -118,11 +123,35 @@ if(!App::runningInConsole())
     {
         DB::statement(File::get(storage_path() . '/sql/add_missing_sessions_table.sql'));
     }
-}
 
-if(version_compare(phpversion(), '5.4.0', '<') || !extension_loaded("mcrypt") || !extension_loaded("pdo"))
-{
-    die(View::make('error.requirement_check_failed'));
+    if(version_compare(phpversion(), '5.4.0', '<') || !extension_loaded("mcrypt") || !extension_loaded("pdo"))
+        die(View::make('error.requirement_check_failed'));
+
+    if( Helper::_empty(Config::get('database.connections.mysql.host')) &&
+        Helper::_empty(Config::get('database.connections.mysql.database')) &&
+        Helper::_empty(Config::get('database.connections.mysql.username')) )
+        die("Database connection settings are not configured.");
+
+    if(File::exists(storage_path() . '/meta/tablecheck') == FALSE)
+    {
+        $db_schema_check = Helper::RequiredTablesExist();
+
+        if($db_schema_check['status'] == FALSE)
+        {
+            $output = "<h1>You are missing the following tables</h1><ul>";
+
+            foreach($db_schema_check['data'] as $table)
+                $output .= "<li>" . $table . "</li>";
+
+            $output .= "</ul>";
+
+            die($output);
+        }
+        else
+        {
+            File::put(storage_path() . '/meta/tablecheck', '');
+        }
+    }
 }
 
 /*

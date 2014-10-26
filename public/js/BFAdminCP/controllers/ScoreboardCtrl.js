@@ -1147,7 +1147,7 @@ app.controller("ScoreboardChat", [ '$scope', '$timeout', 'Chat', 'UserPerms', 'S
         message: ''
     };
 
-    var id = angular.element('#serversel').val();
+    var id = $('#serversel').val();
 
     $scope.$on('changeServerEvent', function(event, args) {
         $scope.isLoaded = false;
@@ -1163,6 +1163,7 @@ app.controller("ScoreboardChat", [ '$scope', '$timeout', 'Chat', 'UserPerms', 'S
         if(id == 'none')
         {
             $scope.loaded = false;
+            console.log('Chat failed to load');
             return false;
         }
 

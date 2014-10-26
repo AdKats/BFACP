@@ -46,6 +46,8 @@ class Player extends Eloquent
      */
     public $timestamps = FALSE;
 
+    protected $appends = array( 'CountryName' );
+
     /**
      * Returns all records done by the player
      *
@@ -142,5 +144,11 @@ class Player extends Eloquent
     public function pointsPerServer()
     {
         return DB::table('adkats_infractions_server')->where('player_id', $this->PlayerID)->get();
+    }
+
+    public function getCountryNameAttribute()
+    {
+        if(is_null($this->CountryCode)) return NULL;
+        return Helper::countries($this->CountryCode);
     }
 }

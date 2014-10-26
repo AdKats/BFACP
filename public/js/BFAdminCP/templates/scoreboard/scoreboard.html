@@ -241,17 +241,16 @@
             <div class="box-body">
                 <table class="table table-condensed table-striped">
                     <thead>
+                        <th width="16px">&nbsp;</th>
                         <th ng-click="changeSorting('player_name')" scope="col">
                             <i class="{{sortClass('player_name')}}"></i> Player
                         </th>
                         <th ng-click="changeSorting('player_score')">
                             <i class="{{sortClass('player_score')}}"></i> Score
                         </th>
-                        <th ng-click="changeSorting('player_kills')">
-                            <i class="{{sortClass('player_kills')}}"></i> Kills
-                        </th>
-                        <th ng-click="changeSorting('player_deaths')">
-                            <i class="{{sortClass('player_deaths')}}"></i> Deaths
+                        <th>
+                            <span ng-click="changeSorting('player_kills')"><i class="{{sortClass('player_kills')}}"></i> K</span> /
+                            <span ng-click="changeSorting('player_deaths')"><i class="{{sortClass('player_deaths')}}"></i> D</span>
                         </th>
                         <th ng-click="changeSorting('player_squad')" class="hidden-xs hidden-sm">
                             <i class="{{sortClass('player_squad')}}"></i> Squad
@@ -262,6 +261,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="team in team1.playerlist | filter:{player_name: teamplayersearch} | orderBy:sort.column:sort.descending track by team.player_id">
+                            <td><img ng-if="team.country !== null" ng-src="{{team.country.path}}/{{team.country.image}}" width="16" tooltip="{{team.country.name}}" /></td>
                             <td ng-switch on="render.admin()">
                                 <div ng-switch-when="true">
                                     <a href="javascript://" ng-click="setPlayer(team)">
@@ -275,10 +275,9 @@
                                 </div>
                             </td>
                             <td>{{team.player_score | number}}</td>
-                            <td>{{team.player_kills}}</td>
-                            <td>{{team.player_deaths}}</td>
+                            <td>{{team.player_kills}} / {{team.player_deaths}}</td>
                             <td class="hidden-xs hidden-sm"><i class="fa fa-lock" ng-if="team.player_squad_private">&nbsp;</i>{{team.player_squad}}</td>
-                            <td ng-if="isBF4" class="{{ pingcheck(team.player_ping) }}">{{ (team.player_ping > 1000 ? '-' : team.player_ping) }}</td>
+                            <td ng-if="isBF4" ng-class="pingcheck(team.player_ping)">{{ (team.player_ping > 1000 ? '-' : team.player_ping) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -302,17 +301,16 @@
             <div class="box-body">
                 <table class="table table-condensed table-striped">
                     <thead>
+                        <th width="16px">&nbsp;</th>
                         <th ng-click="changeSorting('player_name')" scope="col">
                             <i class="{{sortClass('player_name')}}"></i> Player
                         </th>
                         <th ng-click="changeSorting('player_score')">
                             <i class="{{sortClass('player_score')}}"></i> Score
                         </th>
-                        <th ng-click="changeSorting('player_kills')">
-                            <i class="{{sortClass('player_kills')}}"></i> Kills
-                        </th>
-                        <th ng-click="changeSorting('player_deaths')">
-                            <i class="{{sortClass('player_deaths')}}"></i> Deaths
+                        <th>
+                            <span ng-click="changeSorting('player_kills')"><i class="{{sortClass('player_kills')}}"></i> K</span> /
+                            <span ng-click="changeSorting('player_deaths')"><i class="{{sortClass('player_deaths')}}"></i> D</span>
                         </th>
                         <th ng-click="changeSorting('player_squad')" class="hidden-xs hidden-sm">
                             <i class="{{sortClass('player_squad')}}"></i> Squad
@@ -323,6 +321,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="team in team2.playerlist | filter:{player_name: teamplayersearch} | orderBy:sort.column:sort.descending track by team.player_id">
+                            <td><img ng-if="team.country !== null" ng-src="{{team.country.path}}/{{team.country.image}}" width="16" tooltip="{{team.country.name}}" /></td>
                             <td ng-switch on="render.admin()">
                                 <div ng-switch-when="true">
                                     <a href="javascript://" ng-click="setPlayer(team)">
@@ -336,10 +335,9 @@
                                 </div>
                             </td>
                             <td>{{team.player_score | number}}</td>
-                            <td>{{team.player_kills}}</td>
-                            <td>{{team.player_deaths}}</td>
+                            <td>{{team.player_kills}} / {{team.player_deaths}}</td>
                             <td class="hidden-xs hidden-sm"><i class="fa fa-lock" ng-if="team.player_squad_private">&nbsp;</i>{{team.player_squad}}</td>
-                            <td ng-if="isBF4" class="{{ pingcheck(team.player_ping) }}">{{ (team.player_ping > 1000 ? '-' : team.player_ping) }}</td>
+                            <td ng-if="isBF4" ng-class="pingcheck(team.player_ping)">{{ (team.player_ping > 1000 ? '-' : team.player_ping) }}</td>
                         </tr>
                     </tbody>
                 </table>

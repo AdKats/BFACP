@@ -1,3 +1,5 @@
+var population_player_count = 0;
+
 app.controller("BF3PopulationFeed", ['$scope', '$http', '$timeout', function($scope, $http, $timeout)
 {
     $scope.refreshInt = 10;

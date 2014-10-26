@@ -18,7 +18,7 @@ class SettingsTableSeeder extends Seeder
         DB::table('bfadmincp_settings')->delete();
 
         Setting::insert([
-            ['token' => 'VERSION', 'context' => '1.5.0', 'description' => 'Current version'],
+            ['token' => 'VERSION', 'context' => '2.0.0', 'description' => 'Current version'],
             ['token' => 'BF3', 'context' => true, 'description' => 'Enables or Disables the Battlefield 3 sections'],
             ['token' => 'BF4', 'context' => true, 'description' => 'Enables or Disables the Battlefield 4 sections'],
             ['token' => 'SERVERORDER', 'context' => 'ServerID', 'description' => 'Order your servers by the database ID or by the name of the server'],

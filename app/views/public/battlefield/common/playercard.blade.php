@@ -3,26 +3,26 @@
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
             <div class="box box-primary">
                 <div class="box-header">
-                    <div class="box-title">Basic Info</div>
+                    <div class="box-title">{{ Lang::get('player.profile.section_titles.baisc') }}</div>
                 </div>
 
                 <div class="box-body">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label for="PID" class="col-sm-2 control-label">ID</label>
+                            <label for="PID" class="col-sm-2 control-label">{{ Lang::get('player.profile.basic.id') }}</label>
                             <div class="col-sm-10">
                                 <p class="form-control-static">{{{ $player->PlayerID }}}</p>
                                 <input type="hidden" id="PID" value="{{{ $player->PlayerID }}}" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="gameIdent" class="col-sm-2 control-label">Game</label>
+                            <label for="gameIdent" class="col-sm-2 control-label">{{ Lang::get('player.profile.basic.game') }}</label>
                             <div class="col-sm-10">
                                 <p class="form-control-static">{{ $_gameIdent }}</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="EAGUID" class="col-sm-2 control-label">EAGUID</label>
+                            <label for="EAGUID" class="col-sm-2 control-label">{{ Lang::get('player.profile.basic.eaguid') }}</label>
                             <div class="col-sm-10">
                                 @if(Entrust::can('view_player_guids'))
                                 <p class="form-control-static">
@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="PBGUID" class="col-sm-2 control-label">PBGUID</label>
+                            <label for="PBGUID" class="col-sm-2 control-label">{{ Lang::get('player.profile.basic.pbguid') }}</label>
                             <div class="col-sm-10">
                                 @if(!empty($player->PBGUID) && Entrust::can('view_player_guids'))
                                 <p class="form-control-static">{{{ $player->PBGUID }}}</p>
@@ -46,7 +46,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="IPADDR" class="col-sm-2 control-label">IP</label>
+                            <label for="IPADDR" class="col-sm-2 control-label">{{ Lang::get('player.profile.basic.ip') }}</label>
                             <div class="col-sm-10">
                                 @if(!empty($player->IP_Address) && Entrust::can('view_player_ip'))
                                 <p class="form-control-static">
@@ -60,7 +60,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="lastSeen" class="col-sm-2 control-label">Last Seen</label>
+                            <label for="lastSeen" class="col-sm-2 control-label">{{ Lang::get('player.profile.basic.last_seen') }}</label>
                             <div class="col-sm-10">
                                 <p class="form-control-static">
                                     @if(isset($player->lastSeen()->LastSeenOnServer))
@@ -69,6 +69,20 @@
                                     <span class="text-danger">N/A</span>
                                     @endif
                                 </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="country" class="col-sm-2 control-label">{{ Lang::get('player.profile.basic.country') }}</label>
+                            <div class="col-sm-10">
+                                @if(!empty($player->CountryCode) && $player->CountryName != FALSE)
+                                <p class="form-control-static">
+                                    <img src="{{ asset('img/flags/' . $player->CountryCode . '.png') }}" alt="{{ $player->CountryName }}" class="img-rounded" width="32"> {{ $player->CountryName }}
+                                </p>
+                                @else
+                                <p class="form-control-static">
+                                    <span class="text-danger">N/A</span>
+                                </p>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -90,9 +104,9 @@
             <div class="nav-tabs-custom">
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab_infractions" data-toggle="tab">Infractions</a></li>
-                        <li><a href="#tab_banactive" data-toggle="tab">Current Ban</a></li>
-                        <li><a href="#tab_banprevious" data-toggle="tab">Ban History</a></li>
+                        <li class="active"><a href="#tab_infractions" data-toggle="tab">{{ Lang::get('player.profile.overview.infractions.title') }}</a></li>
+                        <li><a href="#tab_banactive" data-toggle="tab">{{ Lang::get('player.profile.overview.bans.current.title') }}</a></li>
+                        <li><a href="#tab_banprevious" data-toggle="tab">{{ Lang::get('player.profile.overview.bans.previous.title') }}</a></li>
                     </ul>
 
                     <div class="tab-content">
@@ -101,10 +115,10 @@
                             <div class="box-body table-responsive" <?php if($_forgive) : ?> ng-controller="PlayerIssueForgive"<?php endif; ?>>
                                 <table class="table table-condensed table-striped">
                                     <thead>
-                                        <th width="250px">Server</th>
-                                        <th>Punishes</th>
-                                        <th>Forgives</th>
-                                        <th>Total</th>
+                                        <th width="250px">{{ Lang::get('player.profile.overview.infractions.table.col1') }}</th>
+                                        <th>{{ Lang::get('player.profile.overview.infractions.table.col2') }}</th>
+                                        <th>{{ Lang::get('player.profile.overview.infractions.table.col3') }}</th>
+                                        <th>{{ Lang::get('player.profile.overview.infractions.table.col4') }}</th>
                                         @if($_forgive)
                                         <th></th>
                                         @endif
@@ -121,7 +135,7 @@
                                             <td>{{{ $infraction->forgive_points }}}</td>
                                             <td>{{{ $infraction->total_points }}}</td>
                                             @if($_forgive)
-                                            <td><button class="btn btn-xs bg-olive" ng-click="forgiveCheck({{$infraction->server_id}});">Forgive</button></td>
+                                            <td><button class="btn btn-xs bg-olive" ng-click="forgiveCheck({{$infraction->server_id}});">{{ Lang::get('player.profile.overview.infractions.forgive.text') }}</button></td>
                                             @endif
                                         </tr>
                                         @endforeach
@@ -130,7 +144,7 @@
 
                                 @if($_forgive)
                                 <div ng-if="showActions" class="clearfix">
-                                    <p class="help-text">Enter forgive message and how many times to forgive the player</p>
+                                    <p class="help-text">{{ Lang::get('player.profile.overview.infractions.forgive.help') }}</p>
                                     <div class="row">
                                         <div class="col-xs-6">
                                             <input type="text" ng-model="forgive.message" class="form-control" maxlength="100" value="ForgivePlayer">
@@ -140,18 +154,25 @@
                                         </div>
                                         <div class="col-xs-12">
                                             <br>
-                                            <button class="btn btn-xs btn-success pull-right" ng-click="cancelForgive()" >Cancel</button>
-                                            <button class="btn btn-xs btn-primary pull-right" data-loading-text="Please wait..." id="forgive_submit" ng-click="issueForgive()" >Issue Forgive</button>
+                                            <button class="btn btn-xs btn-success pull-right" ng-click="cancelForgive()" >{{ Lang::get('player.profile.overview.infractions.forgive.actions.cancel') }}</button>
+                                            <button class="btn btn-xs btn-primary pull-right" data-loading-text="Please wait..." id="forgive_submit" ng-click="issueForgive()" >
+                                                {{ Lang::get('player.profile.overview.infractions.forgive.actions.ok') }}
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                                 @endif
                             </div>
                             <div class="box-footer clearfix text-center">
-                                {{{ $player->SoldierName }}} has <span class="badge bg-red">{{{ $player->points()->total_points }}}</span> infraction points. Consisting of <span class="badge bg-maroon">{{{ $player->points()->punish_points }}}</span> punishments and <span class="badge bg-blue">{{{ $player->points()->forgive_points }}}</span> forgives.
+                                {{ Lang::get('player.profile.overview.infractions.total', [
+                                    'playername' => $player->SoldierName,
+                                    'total'      => $player->points()->total_points,
+                                    'punish'     => $player->points()->punish_points,
+                                    'forgive'    => $player->points()->forgive_points
+                                ]) }}
                             </div>
                             @else
-                            <div class="alert alert-info">{{{ $player->SoldierName }}} has no infraction points</div>
+                            <div class="alert alert-info">{{ Lang::get('player.profile.overview.infractions.none', ['playername' => $player->SoldierName]) }}</div>
                             @endif
                         </div>
 
@@ -160,12 +181,12 @@
                             <div class="table-responsive">
                                 <table class="table table-condensed">
                                     <thead>
-                                        <th width="180px">Issued</th>
-                                        <th width="110px">Expire</th>
-                                        <th width="230px">Server</th>
-                                        <th width="50px">Type</th>
-                                        <th>Status</th>
-                                        <th>Reason</th>
+                                        <th width="180px">{{ Lang::get('player.profile.overview.bans.current.table.col1') }}</th>
+                                        <th width="110px">{{ Lang::get('player.profile.overview.bans.current.table.col2') }}</th>
+                                        <th width="230px">{{ Lang::get('player.profile.overview.bans.current.table.col3') }}</th>
+                                        <th width="50px">{{ Lang::get('player.profile.overview.bans.current.table.col4') }}</th>
+                                        <th>{{ Lang::get('player.profile.overview.bans.current.table.col5') }}</th>
+                                        <th>{{ Lang::get('player.profile.overview.bans.current.table.col6') }}</th>
                                     </thead>
 
                                     <tbody>
@@ -199,15 +220,15 @@
                                 </table>
                             </div>
                             @if(Entrust::can('manage_adkats_bans'))
-                            {{ link_to_action('ADKGamers\\Webadmin\\Controllers\\Admin\\AdKats\\BanController@edit', 'Modify Ban', [$player->recentBan->ban_id], ['class' => 'btn btn-xs bg-olive']) }}
+                            {{ link_to_action('ADKGamers\\Webadmin\\Controllers\\Admin\\AdKats\\BanController@edit', Lang::get('player.profile.overview.bans.current.modify'), [$player->recentBan->ban_id], ['class' => 'btn btn-xs bg-olive']) }}
                             @endif
                             @else
                             <div class="alert alert-info" role="alert">
-                                {{{ $player->SoldierName }}} does not have an active ban
+                                {{ Lang::get('player.profile.overview.bans.current.none', ['playername' => $player->SoldierName]) }}
                             </div>
                             @if(Entrust::can('manage_adkats_bans'))
                             <?php $create_ban_url = action('ADKGamers\\Webadmin\\Controllers\\Admin\\AdKats\\BanController@create') . "?" . http_build_query(['id' => $player->PlayerID]); ?>
-                            <a href="{{$create_ban_url}}" class="btn btn-xs bg-olive">Issue Ban</a>
+                            <a href="{{$create_ban_url}}" class="btn btn-xs bg-olive">{{ Lang::get('player.profile.overview.bans.current.issue') }}</a>
                             @endif
                             @endif
                         </div>
@@ -217,11 +238,11 @@
                             <div class="table-responsive">
                                 <table class="table table-condensed">
                                     <thead>
-                                        <th width="180px">Issued</th>
-                                        <th width="110px">Expire</th>
-                                        <th width="250px">Server</th>
-                                        <th width="50px">Type</th>
-                                        <th>Reason</th>
+                                        <th width="180px">{{ Lang::get('player.profile.overview.bans.current.table.col1') }}</th>
+                                        <th width="110px">{{ Lang::get('player.profile.overview.bans.current.table.col2') }}</th>
+                                        <th width="250px">{{ Lang::get('player.profile.overview.bans.current.table.col3') }}</th>
+                                        <th width="50px">{{ Lang::get('player.profile.overview.bans.current.table.col4') }}</th>
+                                        <th>{{ Lang::get('player.profile.overview.bans.current.table.col6') }}</th>
                                     </thead>
 
                                     <tbody>
@@ -249,7 +270,7 @@
                             </div>
                             @else
                             <div class="alert alert-info" role="alert">
-                                {{{ $player->SoldierName }}} does not have any previous bans
+                                {{ Lang::get('player.profile.overview.bans.previous.none', ['playername' => $player->SoldierName]) }}
                             </div>
                             @endif
                         </div>

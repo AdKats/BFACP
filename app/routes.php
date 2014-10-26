@@ -57,6 +57,7 @@ Route::group(array('prefix' => 'api/v1'), function()
     });
 
     Route::resource('uptime', 'ADKGamers\\Webadmin\\Controllers\\Api\\v1\\UptimeRobot');
+    Route::resource('acp/adkats/special_playerlist', 'ADKGamers\\Webadmin\\Controllers\\Api\\v1\\Battlefield\\Admin\\AdKats\\SpecialPlayersController');
 });
 
 /**
@@ -86,11 +87,6 @@ Route::group(array('prefix' => 'player'), function()
 });
 
 Route::get('stats', 'ADKGamers\\Webadmin\\Controllers\\PublicController@showServerStats');
-
-Route::get('stats/map', function()
-{
-    return View::make('public.maps')->with('title', 'Players Seen By Country');
-});
 
 Route::group(array('prefix' => 'leaderboard'), function()
 {
@@ -137,6 +133,7 @@ Route::group(array('prefix' => 'acp/adkats', 'before' => 'auth'), function()
 
     Route::resource('ban', 'ADKGamers\\Webadmin\\Controllers\\Admin\\AdKats\\BanController');
     Route::resource('plugin', 'ADKGamers\\Webadmin\\Controllers\\Admin\\AdKats\\PluginController');
+    Route::resource('special_playerlist', 'ADKGamers\\Webadmin\\Controllers\\Admin\\AdKats\\SpecialPlayersController');
 });
 
 /**
@@ -173,6 +170,7 @@ Route::group(array('prefix' => 'acp/site', 'before' => 'auth'), function()
     Route::resource('role', 'ADKGamers\\Webadmin\\Controllers\\Admin\\RolePermsController');
 
     Route::resource('setting', 'ADKGamers\\Webadmin\\Controllers\\Admin\\SiteController');
+    Route::resource('gameserver', 'ADKGamers\\Webadmin\\Controllers\\Admin\\SiteGameServerController');
 
     Route::group(array('prefix' => 'info'), function()
     {
@@ -199,3 +197,57 @@ Route::group(array('prefix' => 'acp/site', 'before' => 'auth'), function()
         });
     });
 });
+
+/*
+Route::get('test', function()
+{
+    $settings = ADKGamers\Webadmin\Models\AdKats\Setting::where('server_id', 1)->get();
+
+    $new_settings = [];
+
+    foreach($settings as $setting)
+    {
+        $search  = array( " ", "-", "/", ":", "(", ")" );
+        $replace = array( "_", "_", "_", "" );
+        $keyName = str_replace( $search, $replace, trim( strtolower( $setting['setting_name'] ) ) );
+
+        switch($setting['setting_type'])
+        {
+            case "double":
+                $new_settings['numeric'][$keyName] = [
+                    'display_name' => $setting['setting_name'],
+                    'value' => floatval($setting['setting_value'])
+                ];
+            break;
+
+            case "int":
+                $new_settings['numeric'][$keyName] = [
+                    'display_name' => $setting['setting_name'],
+                    'value' => intval($setting['setting_value'])
+                ];
+            break;
+
+            case "bool":
+                $new_settings['boolean'][$keyName] = [
+                    'display_name' => $setting['setting_name'],
+                    'value' => $setting['setting_value'] == 'True' ? TRUE : FALSE
+                ];
+            break;
+
+            case "multiline":
+                $new_settings['strings'][$keyName] = [
+                    'display_name' => $setting['setting_name'],
+                    'value' => (
+                        $setting['setting_name'] != 'Custom HTML Addition' && str_contains($setting['setting_value'], "|") ?
+                        explode( '|', urldecode( rawurldecode( $setting['setting_value'] ) ) ) :
+                        trim($setting['setting_value'])
+                    )
+                ];
+            break;
+        }
+    }
+
+    return Helper::response('success', NULL, $new_settings);
+});
+*/
+

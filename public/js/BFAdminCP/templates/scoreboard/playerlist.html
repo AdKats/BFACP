@@ -1,0 +1,43 @@
+<table class="table table-condensed table-striped">
+    <thead>
+        <th ng-click="changeSorting('player_name')" scope="col">
+            <i ng-class="sortClass('player_name')"></i> Player 2
+        </th>
+        <th ng-click="changeSorting('player_score')">
+            <i ng-class="sortClass('player_score')"></i> Score
+        </th>
+        <th ng-click="changeSorting('player_kills')">
+            <i ng-class="sortClass('player_kills')"></i> Kills
+        </th>
+        <th ng-click="changeSorting('player_deaths')">
+            <i ng-class="sortClass('player_deaths')"></i> Deaths
+        </th>
+        <th ng-click="changeSorting('player_squad')" class="hidden-xs hidden-sm">
+            <i ng-class="sortClass('player_squad')"></i> Squad
+        </th>
+        <th ng-click="changeSorting('player_ping')" ng-if="isBF4">
+            <i ng-class="sortClass('player_ping')"></i> Ping
+        </th>
+    </thead>
+    <tbody>
+        <tr ng-repeat="team in details.playerlist | filter:{player_name: teamplayersearch} | orderBy:sort.column:sort.descending track by team.player_id">
+            <td ng-switch on="render.admin()">
+                <div ng-switch-when="true">
+                    <a href="javascript://" ng-click="setPlayer(team)">
+                        <img ng-src="{{imagepath}}/{{team.rank_image}}" width="24" tooltip="Rank {{team.player_rank}}" />
+                        {{team.player_name}}
+                    </a>
+                </div>
+                <div ng-switch-default>
+                    <img ng-src="{{imagepath}}/{{team.rank_image}}" width="24" tooltip="Rank {{team.player_rank}}" />
+                    {{team.player_name}}
+                </div>
+            </td>
+            <td>{{team.player_score | number}}</td>
+            <td>{{team.player_kills}}</td>
+            <td>{{team.player_deaths}}</td>
+            <td class="hidden-xs hidden-sm"><i class="fa fa-lock" ng-if="team.player_squad_private">&nbsp;</i>{{team.player_squad}}</td>
+            <td ng-if="isBF4" ng-class="pingcheck(team.player_ping)">{{ (team.player_ping > 1000 ? '-' : team.player_ping) }}</td>
+        </tr>
+    </tbody>
+</table>

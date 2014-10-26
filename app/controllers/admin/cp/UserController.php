@@ -165,6 +165,10 @@ class UserController extends \BaseController
                 $preferences->bf3_playerid = $input_bf3_player;
             }
         }
+        else
+        {
+            $preferences->bf3_playerid = NULL;
+        }
 
         if(Input::has('bf4_player_id'))
         {
@@ -172,6 +176,10 @@ class UserController extends \BaseController
             {
                 $preferences->bf4_playerid = $input_bf4_player;
             }
+        }
+        else
+        {
+            $preferences->bf4_playerid = NULL;
         }
 
         if(Input::has('timezone'))

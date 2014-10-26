@@ -9,10 +9,10 @@
         <div class="box-body chat" id="chat-box">
 
             <div class="item" ng-repeat="chat in entrys | orderBy:'ID' | filter:{logSoldierName: chatsearch} track by chat.ID">
-                <img src="img/avatar.png" alt="user image" class="online"/>
+                <img src="/img/Battlefield 3_4.png" alt=""/>
                 <p class="message">
                     <a href="{{ chat.profile }}" class="name" target="_blank">
-                        <small class="text-muted pull-right" data-toggle="tooltip" data-placement="top" title="{{ chat.logDateIso }}">
+                        <small class="text-muted pull-right" data-toggle="tooltip" data-placement="top" title="{{ chat.logDateIso | date: 'medium' }}">
                             <i class="fa fa-clock-o"></i>
                             <span data-livestamp="{{ chat.logDateIso }}"></span>
                         </small>

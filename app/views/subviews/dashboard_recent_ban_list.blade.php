@@ -9,13 +9,19 @@
         <tbody>
             @foreach($bans as $ban)
             <tr>
-                <td>{{ link_to_action('ADKGamers\\Webadmin\\Controllers\\PlayerController@showInfo', $ban->target_name, [$ban->target_id, $ban->target_name]) }}</td>
-                <td>{{ Helper::UTCToLocal($ban->ban_startTime)->format('M j, Y g:ia T') }}</td>
                 <td>
-                    @if(Carbon::now( ( Auth::check() ? Auth::user()->preferences->timezone : 'UTC' ) )->diffInYears($ban->ban_endTime) > 1)
+                    <span data-toggle="tooltip" data-placement="top" title="{{ $ban->record_message }}">
+                        {{ link_to_action('ADKGamers\\Webadmin\\Controllers\\PlayerController@showInfo', $ban->target_name, [$ban->target_id, $ban->target_name]) }}
+                    </span>
+                </td>
+                <td>{{ Helper::UTCToLocal($ban->ban_startTime, $user_timezone)->format('M j, Y g:ia T') }}</td>
+                <td>
+                    @if(Carbon::now( $user_timezone )->diffInYears($ban->ban_endTime) > 1)
                     <span class="label label-danger">Permanent Ban</span>
                     @else
-                    {{ $ban->ban_endTime->diffForHumans() }}
+                    <span data-toggle="tooltip" data-placement="top" title="{{ Helper::UTCToLocal($ban->ban_endTime, $user_timezone)->format('M j, Y g:ia T') }}">
+                        {{ $ban->ban_endTime->diffForHumans() }}
+                    </span>
                     @endif
                 </td>
             </tr>
