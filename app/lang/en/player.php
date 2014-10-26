@@ -29,7 +29,7 @@ return array(
                         'ok' => 'Issue Forgive'
                     )
                 ),
-                'total' => ':playername has <span class="badge bg-red">:total</span> infraction points. Consisting of <span class="badge bg-marron">:punish</span> punishments and <span class="badge bg-blue">:forgive</span> forgives.',
+                'total' => ':playername has <span class="badge bg-red">:total</span> infraction points. Consisting of <span class="badge bg-maroon">:punish</span> punishments and <span class="badge bg-blue">:forgive</span> forgives.',
                 'none' => ':playername has no infraction points'
             ),
 

@@ -3,7 +3,7 @@
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
             <div class="box box-primary">
                 <div class="box-header">
-                    <div class="box-title">{{ Lang::get('player.profile.section_titles.baisc') }}</div>
+                    <div class="box-title">{{ Lang::get('player.profile.section_titles.basic') }}</div>
                 </div>
 
                 <div class="box-body">
