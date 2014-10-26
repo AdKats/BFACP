@@ -105,23 +105,12 @@ App::error(function(PDOException $e)
     }
 });
 
-App::error(function(Exception $e)
-{
-    die("FATAL ERROR: " . $e->getMessage());
-});
-
 if(!App::runningInConsole())
 {
     // Make sure the storage directory and sub folders are writeable
     if(!is_writable(storage_path()))
     {
         die('All folders under app/storage must be set to 0777');
-    }
-
-    // Check and make sure the sessions table exists otherwise create it
-    if(!Schema::hasTable('bfadmincp_sessions'))
-    {
-        DB::statement(File::get(storage_path() . '/sql/add_missing_sessions_table.sql'));
     }
 
     if(version_compare(phpversion(), '5.4.0', '<') || !extension_loaded("mcrypt") || !extension_loaded("pdo"))
@@ -131,6 +120,17 @@ if(!App::runningInConsole())
         Helper::_empty(Config::get('database.connections.mysql.database')) &&
         Helper::_empty(Config::get('database.connections.mysql.username')) )
         die("Database connection settings are not configured.");
+
+    if(Config::get('app.key') == 'YourSecretKey!!!')
+    {
+        die("Encryption key not set.");
+    }
+
+    // Check and make sure the sessions table exists otherwise create it
+    if(!Schema::hasTable('bfadmincp_sessions'))
+    {
+        DB::statement(File::get(storage_path() . '/sql/add_missing_sessions_table.sql'));
+    }
 
     if(File::exists(storage_path() . '/meta/tablecheck') == FALSE)
     {
@@ -150,6 +150,18 @@ if(!App::runningInConsole())
         else
         {
             File::put(storage_path() . '/meta/tablecheck', '');
+        }
+    }
+
+    if(Schema::hasTable('bfadmincp_users') == FALSE)
+    {
+        define('STDIN',fopen("php://stdin","r"));
+        Artisan::call('migrate', array('--force' => TRUE));
+        Artisan::call('db:seed', array('--force' => TRUE));
+
+        if(Schema::hasTable('gamesettings') && Schema::hasTable('users'))
+        {
+            DB::unprepared(File::get(storage_path() . '/sql/upgrades/migrate_1.4.4_2.0.0.sql'));
         }
     }
 }

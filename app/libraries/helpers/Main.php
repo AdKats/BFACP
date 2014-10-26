@@ -900,18 +900,6 @@ class Main
     static public function RequiredTablesExist()
     {
         $tables = [
-            'bfadmincp_assigned_roles',
-            'bfadmincp_battlelog_playerdata',
-            'bfadmincp_migrations',
-            'bfadmincp_password_reminders',
-            'bfadmincp_permission_role',
-            'bfadmincp_permissions',
-            'bfadmincp_roles',
-            'bfadmincp_sessions',
-            'bfadmincp_settings',
-            'bfadmincp_settings_gameserver',
-            'bfadmincp_user_preferences',
-            'bfadmincp_users',
             'adkats_bans',
             'adkats_commands',
             'adkats_infractions_global',
