@@ -12,10 +12,12 @@
 use ADKGamers\Webadmin\Models\Battlefield\Ban;
 use Carbon\Carbon;
 use DateTimeZone, Auth, WebadminException, Exception;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Schema;
+use User, Zizaco\Confide\Facade AS Confide, Preference;
 use Zizaco\Entrust\EntrustFacade AS Entrust;
 
 class Main
@@ -937,5 +939,26 @@ class Main
         $result['data'] = $missing_tables;
 
         return $result;
+    }
+
+    static public function createAdminUser()
+    {
+        $repo = App::make('UserRepository');
+
+        $user = $repo->signup(array(
+            'username'              => 'admin',
+            'email'                 => 'admin@localhost.lan',
+            'password'              => 'password',
+            'password_confirmation' => 'password'
+        ));
+
+        $user->confirmed = TRUE;
+        $user->save();
+
+        $preference = Preference::create(['user_id' => $user->id]);
+
+        $user->roles()->attach(1);
+
+        return $user;
     }
 }
