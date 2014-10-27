@@ -64,10 +64,12 @@
 <div class="row">
     @include('angular.public.dashboard-population')
 
-    @if(Helper::_empty(Config::get('webadmin.MB-KEY')) || Helper::_empty(Config::get('webadmin.MB-USR')) || Helper::_empty(Config::get('webadmin.MB-ACC')))
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-        <div class="alert alert-danger">Metabans configuration not set up</div>
-    </div>
+    @if( Helper::_empty(Config::get('webadmin.MB-KEY')) || Helper::_empty(Config::get('webadmin.MB-USR')) || Helper::_empty(Config::get('webadmin.MB-ACC') ) )
+        @if(Entrust::can('manage_site_settings'))
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="alert alert-danger">Metabans configuration not set up</div>
+        </div>
+        @endif
     @else
         @include('angular.public.dashboard-metabans')
     @endif
