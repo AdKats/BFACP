@@ -64,7 +64,7 @@ If all goes well it will have been successfully setup. If this is your first ins
 
 **Username**: admin
 
-**Password**: admin
+**Password**: password
 
 You can change the default username and password by clicking on **Site Management** > **Users** > **Admin** > **Edit User**
 

@@ -134,7 +134,7 @@ if(!App::runningInConsole())
         }
         else
         {
-            die("Unable to set encryption key automatically. Refer to FAQ #3");
+            die("Unable to set encryption key automatically. Refer to <a href=\"https://github.com/Prophet731/BFAdminCP/wiki/FAQ#3-could-not-set-encryption-key\" target=\"_blank\">FAQ #3</a>");
         }
     }
 
@@ -157,7 +157,7 @@ if(!App::runningInConsole())
 
             $output .= "</ul>";
 
-            $output .= "<br><p style=\"color: red\">Please refer to FAQ #2</p>";
+            $output .= "<br><p style=\"color: red\">Please refer to <a href=\"https://github.com/Prophet731/BFAdminCP/wiki/FAQ#2-missing-required-tables\" target=\"_blank\">FAQ #2</a></p>";
 
             die($output);
         }
