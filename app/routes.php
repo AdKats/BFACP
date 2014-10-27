@@ -57,7 +57,9 @@ Route::group(array('prefix' => 'api/v1'), function()
     });
 
     Route::resource('uptime', 'ADKGamers\\Webadmin\\Controllers\\Api\\v1\\UptimeRobot');
-    Route::resource('acp/adkats/special_playerlist', 'ADKGamers\\Webadmin\\Controllers\\Api\\v1\\Battlefield\\Admin\\AdKats\\SpecialPlayersController');
+
+    // TODO
+    // Route::resource('acp/adkats/special_playerlist', 'ADKGamers\\Webadmin\\Controllers\\Api\\v1\\Battlefield\\Admin\\AdKats\\SpecialPlayersController');
 });
 
 /**
@@ -133,7 +135,9 @@ Route::group(array('prefix' => 'acp/adkats', 'before' => 'auth'), function()
 
     Route::resource('ban', 'ADKGamers\\Webadmin\\Controllers\\Admin\\AdKats\\BanController');
     Route::resource('plugin', 'ADKGamers\\Webadmin\\Controllers\\Admin\\AdKats\\PluginController');
-    Route::resource('special_playerlist', 'ADKGamers\\Webadmin\\Controllers\\Admin\\AdKats\\SpecialPlayersController');
+
+    // TODO
+    // Route::resource('special_playerlist', 'ADKGamers\\Webadmin\\Controllers\\Admin\\AdKats\\SpecialPlayersController');
 });
 
 /**
