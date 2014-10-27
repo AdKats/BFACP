@@ -15,6 +15,7 @@ use ADKGamers\Webadmin\Models\Battlefield\Server;
 use ADKGamers\Webadmin\Models\Battlefield\Setting AS GSetting;
 use ADKGamers\Webadmin\Models\Setting;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
@@ -102,7 +103,7 @@ class SiteGameServerController extends \BaseController
 
         if(!empty($rconPassword))
         {
-            $rcon_hash = Hash::make($rconPassword);
+            $rcon_hash = Crypt::encrypt($rconPassword);
 
             $setting->rcon_pass_hash = $rcon_hash;
 
