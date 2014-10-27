@@ -9,6 +9,11 @@ class BaseController extends Controller {
 		if(Auth::check()) $this->user_tz = Auth::user()->preferences->timezone;
 
 		View::share('user_timezone', $this->user_tz);
+
+		if(Helper::_empty(Config::get('webadmin.CLANNAME')) == FALSE)
+		{
+			View::share('clan_name', Config::get('webadmin.CLANNAME') . ' |');
+		}
 	}
 
 	/**

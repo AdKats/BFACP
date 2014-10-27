@@ -2,7 +2,7 @@
 <html>
     <head>
         <base href="{{ URL::to('/') }}" />
-        <title>{{{ $title or 'No Title' }}} | BFAdminCP</title>
+        <title>{{{ $title or 'No Title' }}} | {{ (isset($clan_name) ? $clan_name . ' |' : NULL) }} BFAdminCP</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1' name='viewport'>
         <meta charset="UTF-8">
         <meta name="googlebot" content="noarchive">
@@ -64,7 +64,7 @@
     </head>
     <body class="skin-black fixed" ng-app="BFAdminCP">
         <header class="header">
-            <a href="{{ action('ADKGamers\\Webadmin\\Controllers\\PublicController@showIndex') }}" class="logo">BFAdminCP</a>
+            <a href="{{ action('ADKGamers\\Webadmin\\Controllers\\PublicController@showIndex') }}" class="logo">{{ (isset($clan_name) ? $clan_name : 'BFAdminCP') }}</a>
 
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->

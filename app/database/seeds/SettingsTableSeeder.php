@@ -15,10 +15,8 @@ class SettingsTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('bfadmincp_settings')->delete();
-
         Setting::insert([
-            ['token' => 'VERSION', 'context' => '2.0.0', 'description' => 'Current version'],
+            ['token' => 'VERSION', 'context' => '2.0.0-rc.1', 'description' => 'Current version'],
             ['token' => 'BF3', 'context' => true, 'description' => 'Enables or Disables the Battlefield 3 sections'],
             ['token' => 'BF4', 'context' => true, 'description' => 'Enables or Disables the Battlefield 4 sections'],
             ['token' => 'SERVERORDER', 'context' => 'ServerID', 'description' => 'Order your servers by the database ID or by the name of the server'],
@@ -32,6 +30,7 @@ class SettingsTableSeeder extends Seeder
             ['token' => 'UPTIMEROBOT-KEY', 'context' => '', 'description' => 'Main API Key'],
             ['token' => 'UPTIMEROBOT', 'context' => false, 'description' => 'Use Uptime Robot'],
             ['token' => 'FORCESSL', 'context' => false, 'description' => 'Force use of SSL'],
+            ['token' => 'CLANNAME', 'context' => '', 'description' => 'Set your clan or community name to be appened to the page title.'],
         ]);
     }
 }

@@ -103,6 +103,14 @@
                     </div>
 
                     <div class="form-group">
+                        {{ Form::label('CLANNAME', 'Clan Name', ['class' => 'col-sm-1 control-label']) }}
+                        <div class="col-sm-11">
+                            {{ Form::text('CLANNAME', $settings['CLANNAME']['value'], ['class' => 'form-control'])}}
+                            <p class="help-block">{{ $settings['CLANNAME']['description'] }}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         {{ Form::label('SERVERORDER', 'Server Sort Method', ['class' => 'col-sm-1 control-label']) }}
                         <div class="col-sm-11">
                             {{ Form::select('SERVERORDER', $serverSort, $settings['SERVERORDER']['value'], ['class' => 'form-control']) }}
