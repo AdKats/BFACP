@@ -68,7 +68,7 @@ If all goes well it will have been successfully setup. If this is your first ins
 
 You can change the default username and password by clicking on **Site Management** > **Users** > **Admin** > **Edit User**
 
-If you are upgrading from an older version please run this query after you have replaced `YourNameHere` with your username.
+If you are upgrading from an older version (v1.4.4) please run this query after you have replaced `YourNameHere` with your username.
 
 ```SQL
 
@@ -85,3 +85,5 @@ WHERE
 If you have any questions or need help setting this up please post it [here](http://www.adkgamers.com/forum/265-adk-web-dev-support/).
 
 For suggestions/bugs please create a ticket [here](https://github.com/Prophet731/BFAdminCP/issues).
+
+[FAQ](https://github.com/Prophet731/BFAdminCP/wiki/FAQ)
