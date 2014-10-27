@@ -251,37 +251,6 @@ app.controller("PlayerInfoRecordsBy", ['$scope', 'Player', function($scope, Play
     $scope.loadPage();
 }]);
 
-app.controller("PlayerInfoHackerCheck", ['$scope', '$http', function($scope, $http)
-{
-    $scope.isLoading = false;
-
-    $scope.loadCheckerStats = function()
-    {
-        $scope.isLoading = true;
-        $scope.failed = false;
-
-        $http({ method: 'POST', url: '/player/' + $("#PID").val() + '/extended/hackerchecker'})
-            .success(function(data)
-            {
-                $scope.isLoading = false;
-
-                if(data.status == 'success')
-                {
-                    $scope.weapons = data.data.weapons;
-                }
-                else if(data.status == 'error')
-                {
-                    $scope.failed = true;
-                    $scope.message = data.message;
-                }
-            });
-
-    };
-
-    $scope.loadCheckerStats();
-
-}]);
-
 app.controller("PlayerInfoGraphs", ['$scope', 'Player', function($scope, Player)
 {
     var pid = angular.element('#PID').val();
@@ -516,7 +485,7 @@ app.controller("PlayerInfoReputation", ['$scope', 'Player', function($scope, Pla
                     data: [data.data.total_rep_co],
                     dataLabels: {
                         format: '<div style="text-align:center"><span style="font-size:25px;color:' +
-                            ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                            ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{point.y:.2f}</span><br/>' +
                             '<span style="font-size:12px;color:silver">points</span></div>'
                     },
                     tooltip: {
@@ -542,6 +511,7 @@ app.controller("PlayerInfoStats", ['$scope', 'Player', function($scope, Player)
             $scope.overview = data.data.summary;
             $scope.sessions = data.data.sessions;
             $scope.weapons = data.data.weapons;
+            $scope.stats_per_servers = data.data.per_server;
 
             $("#session_stats").dataTable({
                 "aaData": $scope.sessions,

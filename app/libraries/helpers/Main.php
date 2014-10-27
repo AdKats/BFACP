@@ -10,12 +10,15 @@
  */
 
 use ADKGamers\Webadmin\Models\Battlefield\Ban;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use DateTimeZone, Auth, WebadminException, Exception;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Schema;
+use User, Zizaco\Confide\Facade AS Confide, Preference;
+use Zizaco\Entrust\EntrustFacade AS Entrust;
 
 class Main
 {
@@ -839,5 +842,123 @@ class Main
     static public function _empty($val)
     {
         return empty($val);
+    }
+
+    /**
+     * Convert bytes to human readable format
+     * @source http://codeaid.net/php/convert-size-in-bytes-to-a-human-readable-format-(php)
+     * @param integer bytes Size in bytes to convert
+     * @return string
+     */
+    static public function bytesToSize($bytes, $precision = 2)
+    {
+        $kilobyte = 1024;
+        $megabyte = $kilobyte * 1024;
+        $gigabyte = $megabyte * 1024;
+        $terabyte = $gigabyte * 1024;
+
+        if (($bytes >= 0) && ($bytes < $kilobyte)) {
+            return $bytes . ' B';
+
+        } elseif (($bytes >= $kilobyte) && ($bytes < $megabyte)) {
+            return round($bytes / $kilobyte, $precision) . ' KB';
+
+        } elseif (($bytes >= $megabyte) && ($bytes < $gigabyte)) {
+            return round($bytes / $megabyte, $precision) . ' MB';
+
+        } elseif (($bytes >= $gigabyte) && ($bytes < $terabyte)) {
+            return round($bytes / $gigabyte, $precision) . ' GB';
+
+        } elseif ($bytes >= $terabyte) {
+            return round($bytes / $terabyte, $precision) . ' TB';
+        } else {
+            return $bytes . ' B';
+        }
+    }
+
+    /**
+     * Returns true if user has permission otherwise returns false
+     * @param  array/string  $perms Can be array or string
+     * @return boolean
+     */
+    static public function hasPerm($perms)
+    {
+        if(is_array($perms))
+        {
+            foreach($perms as $perm)
+                if( Entrust::can($perm) ) return TRUE;
+        }
+        else
+        {
+            if( Entrust::can($perms) ) return TRUE;
+        }
+
+        return FALSE;
+    }
+
+    /**
+     * Querys the database to check if the required tables exist
+     */
+    static public function RequiredTablesExist()
+    {
+        $tables = [
+            'adkats_bans',
+            'adkats_commands',
+            'adkats_infractions_global',
+            'adkats_infractions_server',
+            'adkats_player_reputation',
+            'adkats_records_main',
+            'adkats_rolecommands',
+            'adkats_roles',
+            'adkats_settings',
+            'adkats_specialplayers',
+            'adkats_users',
+            'adkats_usersoldiers',
+            'tbl_chatlog',
+            'tbl_dogtags',
+            'tbl_games',
+            'tbl_mapstats',
+            'tbl_playerdata',
+            'tbl_playerrank',
+            'tbl_playerstats',
+            'tbl_server',
+            'tbl_server_player',
+            'tbl_sessions',
+            'tbl_weapons',
+            'tbl_weapons_stats'
+        ];
+
+        $missing_tables = [];
+
+        foreach($tables as $table)
+        {
+            if(!Schema::hasTable($table)) $missing_tables[] = $table;
+        }
+
+        $result['status'] = empty($missing_tables) ? TRUE : FALSE;
+        $result['data'] = $missing_tables;
+
+        return $result;
+    }
+
+    static public function createAdminUser()
+    {
+        $repo = App::make('UserRepository');
+
+        $user = $repo->signup(array(
+            'username'              => 'admin',
+            'email'                 => 'admin@localhost.lan',
+            'password'              => 'password',
+            'password_confirmation' => 'password'
+        ));
+
+        $user->confirmed = TRUE;
+        $user->save();
+
+        $preference = Preference::create(['user_id' => $user->id]);
+
+        $user->roles()->attach(1);
+
+        return $user;
     }
 }

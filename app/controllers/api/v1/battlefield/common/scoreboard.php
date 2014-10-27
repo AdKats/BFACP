@@ -17,6 +17,7 @@ use ADKGamers\Webadmin\Models\Battlefield\Server;
 use ADKGamers\Webadmin\Models\Battlefield\Setting AS GameSetting;
 use BattlefieldException, Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -134,7 +135,7 @@ class Scoreboard extends \BaseController
             if(!$this->conn->isConnected())
                 throw new BattlefieldException("Could not establish connection to game server: " . trim( $server->ServerName ) );
 
-            $gsetting = GameSetting::find($this->server_id);
+            $gsetting = $server->setting;
 
             if(!$gsetting)
                 throw new BattlefieldException("Missing server configuration");
@@ -158,48 +159,38 @@ class Scoreboard extends \BaseController
                 break;
             }
 
-            if(Input::has('raw') && Input::get('raw') == 1)
-                $this->_addRaw();
+            if(Input::has('raw') && Input::get('raw') == 1) $this->_addRaw();
 
             $this->data['_permission'] = $this->_permissionCheck();
 
-            foreach ($server->adkatsConfig as $k => $v)
+            if($this->data['_permission']['bf3'] || $this->data['_permission']['bf4'])
             {
-                if($v->setting_name == "Pre-Message List")
+                foreach ($server->adkatsConfig as $k => $v)
                 {
-                    $this->presetMsgs = explode( '|', urldecode( rawurldecode( $v->setting_value ) ) );
-                    break;
+                    if($v->setting_name == "Pre-Message List")
+                    {
+                        $this->presetMsgs = explode( '|', urldecode( rawurldecode( $v->setting_value ) ) );
+                        break;
+                    }
                 }
             }
 
             $this->data['_premessages'] = $this->presetMsgs;
 
-            self::updateServerDB($server);
-
             $this->finalized = Helper::response('success', 'OK', $this->data);
         }
         catch(BattlefieldException $e)
         {
-            $this->finalized = Helper::response('error', $e->getMessage());
+            $this->finalized = Helper::response('error', $e->getMessage(), [
+                'line' => $e->getLine()
+            ]);
         }
         catch(Exception $e)
         {
-            $this->finalized = Helper::response('error', $e->getMessage());
+            $this->finalized = Helper::response('error', $e->getMessage(), [
+                'line' => $e->getLine()
+            ]);
         }
-    }
-
-    /**
-     * Updates the database information for the server. Ensures population feed
-     * wont be misleading with old data.
-     * @param  Server $server Server Model Object
-     * @return void
-     */
-    private function updateServerDB(Server $server)
-    {
-        $server->usedSlots = $this->data['serverinfo']['current_players'];
-        $server->maxSlots = $this->data['serverinfo']['total_players'];
-        $server->Gamemode = $this->data['serverinfo']['gamemode_uri'];
-        $server->save();
     }
 
     /**
@@ -435,32 +426,6 @@ class Scoreboard extends \BaseController
     }
 
     /**
-     * Function to sort the playerlisting by score
-     *
-     * No longer need as sorting is done client side.
-     * @param  $order Sort in ASC or DESC
-     * @return void
-     */
-    // private function _sortPlayerlist($order = SORT_DESC)
-    // {
-    //     for($i=0; $i < count($this->data['teaminfo']); $i++)
-    //     {
-    //         // Temporary array
-    //         $temp = [];
-
-    //         if(!empty($this->data['teaminfo'][$i]['playerlist']))
-    //         {
-    //             foreach($this->data['teaminfo'][$i]['playerlist'] as $key => $player)
-    //             {
-    //                 $temp[$key] = $player['player_score'];
-    //             }
-
-    //             array_multisort($temp, $order, $this->data['teaminfo'][$i]['playerlist']);
-    //         }
-    //     }
-    // }
-
-    /**
      * Checks for any admins currently in the server and adds them to the online admins array
      * @return void
      */
@@ -476,7 +441,9 @@ class Scoreboard extends \BaseController
                 {
                     foreach($admins as $admin)
                     {
-                        if($player['player_id'] == sha1($admin->EAGUID) && $admin->GameID == $this->_gameid)
+                        if(array_key_exists('player_id', $player) === FALSE) continue;
+
+                        if($player['player_id'] == $admin->player_id && $admin->GameID == $this->_gameid)
                         {
                             $this->data['online_admins'][] = [
                                 'player_name' => $player['player_name'],
@@ -494,7 +461,9 @@ class Scoreboard extends \BaseController
             {
                 foreach($admins as $admin)
                 {
-                    if($player['player_id'] == sha1($admin->EAGUID) && $admin->GameID == $this->_gameid)
+                    if(array_key_exists('player_id', $player) === FALSE) continue;
+
+                    if($player['player_id'] == $admin->player_id && $admin->GameID == $this->_gameid)
                     {
                         $this->data['online_admins'][] = [
                             'player_name' => $player['player_name'],
@@ -506,13 +475,23 @@ class Scoreboard extends \BaseController
         }
     }
 
+    /**
+     * Handles the player listing compline for both games
+     * @return void
+     */
     private function buildPlayerListing()
     {
         $err = 0;
 
         $players = $this->conn->adminGetPlayerlist();
 
-        if(count($players) > 13 && $this->conn->getCurrentPlayers() == 0)
+        $squadStatus[0] = [];
+        $squadStatus[1] = [];
+        $squadStatus[2] = [];
+        $squadStatus[3] = [];
+        $squadStatus[4] = [];
+
+        if(count($players) > 13 && $this->data['serverinfo']['current_players'] == 0)
         {
             switch(count($players))
             {
@@ -545,7 +524,7 @@ class Scoreboard extends \BaseController
             }
         }
 
-        for($i=0; $i <= $loop_count; $i++)
+        for($i=0; $i < $loop_count; $i++)
         {
             try
             {
@@ -558,6 +537,14 @@ class Scoreboard extends \BaseController
                 $player_squad_id     = intval( $players[ ( $players[1] ) * $i + $players[1] + 6 ] );
                 $player_team_id      = intval( $players[ ( $players[1] ) * $i + $players[1] + 5 ] );
 
+                if($player_team_id != 0 && $player_squad_id != 0)
+                {
+                    if(array_key_exists($player_squad_id, $squadStatus[$player_team_id]) === FALSE)
+                        $squadStatus[$player_team_id][$player_squad_id] = $this->conn->adminIsSquadPrivate($player_team_id, $player_squad_id);
+
+                    $isSquadPrivate = $squadStatus[$player_team_id][$player_squad_id];
+                } else $isSquadPrivate = NULL;
+
                 if($this->game == 'BF4')
                 {
                     $player_ping = intval( $players[ ( $players[1] ) * $i + $players[1] + 11 ] );
@@ -566,8 +553,9 @@ class Scoreboard extends \BaseController
                     if($player_type == 1)
                     {
                         $this->data['teaminfo'][0]['spectators'][] = array(
-                            'player_id'      => sha1($player_guid),
-                            'player_name'    => $player_soldier_name
+                            'player_id'   => $player_guid,
+                            'player_name' => $player_soldier_name,
+                            'isGhost'     => empty($player_guid) ? TRUE : FALSE
                         );
 
                         continue;
@@ -576,9 +564,10 @@ class Scoreboard extends \BaseController
                     if($player_type == 2 || $player_type == 3)
                     {
                         $this->data['teaminfo'][$player_team_id]['commander'] = array(
-                            'player_id'      => sha1($player_guid),
-                            'player_name'    => $player_soldier_name,
-                            'player_score'   => $player_score
+                            'player_id'    => $player_guid,
+                            'player_name'  => $player_soldier_name,
+                            'player_score' => $player_score,
+                            'isGhost'      => empty($player_guid) ? TRUE : FALSE
                         );
 
                         continue;
@@ -586,26 +575,161 @@ class Scoreboard extends \BaseController
                 }
 
                 $this->data['teaminfo'][$player_team_id]['playerlist'][] = array(
-                    'player_id'       => sha1($player_guid),
-                    'player_deaths'   => $player_deaths,
-                    'player_kills'    => $player_kills,
-                    'player_score'    => $player_score,
-                    'player_name'     => $player_soldier_name,
-                    'player_team'     => $player_team_id,
-                    'player_squad'    => BFHelper::squad($player_squad_id),
-                    'player_squad_id' => $player_squad_id,
-                    'player_ping'     => (isset($player_ping) ? $player_ping : NULL),
-                    'player_rank'     => (isset($player_rank) ? $player_rank : NULL),
-                    'player_kdr'      => BFHelper::calculKDRatio($player_kills, $player_deaths)
-
+                    'player_id'            => $player_guid,
+                    'player_deaths'        => $player_deaths,
+                    'player_kills'         => $player_kills,
+                    'player_score'         => $player_score,
+                    'player_name'          => $player_soldier_name,
+                    'player_team'          => $player_team_id,
+                    'player_squad'         => BFHelper::squad($player_squad_id),
+                    'player_squad_id'      => $player_squad_id,
+                    'player_squad_private' => $isSquadPrivate,
+                    'player_ping'          => (isset($player_ping) ? $player_ping : NULL),
+                    'player_rank'          => (isset($player_rank) ? $player_rank : NULL),
+                    'player_kdr'           => BFHelper::calculKDRatio($player_kills, $player_deaths),
+                    'rank_image'           => (isset($player_rank) ? self::_getRankImage($player_rank) : NULL),
+                    'country'              => NULL,
+                    'isGhost'              => empty($player_guid) ? TRUE : FALSE
                 );
             }
-            catch(Exception $e) { $err++; }
+            catch(Exception $e)
+            {
+                if(Config::get('app.debug'))
+                {
+                    $err++;
+                    $this->data['errors']['messages'][] = array($e->getMessage(), $e->getLine());
+                }
+            }
         }
 
-        $this->data['errors']['count'] = $err;
+        if(Config::get('app.debug'))
+            $this->data['errors']['count'] = $err;
+
+        $this->_queryPlayerData();
     }
 
+    /**
+     * Querys the database for the players ID
+     * @return void
+     */
+    public function _queryPlayerData()
+    {
+        if($this->data['serverinfo']['current_players'] == 0)
+            return false;
+
+        $players = [];
+
+        foreach($this->data['teaminfo'] as $team)
+        {
+            if(array_key_exists('playerlist', $team))
+            {
+                foreach($team['playerlist'] as $player)
+                {
+                    $players[] = $player['player_id'];
+                }
+            }
+
+            if(array_key_exists('spectators', $team))
+            {
+                foreach($team['spectators'] as $player)
+                {
+                    $players[] = $player['player_id'];
+                }
+            }
+        }
+
+        if(empty($players))
+            return false;
+
+        $players_query = Player::where('GameID', $this->_gameid)->whereIn('EAGUID', $players)->get();
+
+        foreach($this->data['teaminfo'] as $teamid => $team)
+        {
+            if(array_key_exists('playerlist', $team))
+            {
+                foreach($team['playerlist'] as $key => $player)
+                {
+                    foreach($players_query as $pinfo)
+                    {
+                        if($player['player_id'] == $pinfo->EAGUID)
+                        {
+                            $this->data['teaminfo'][$teamid]['playerlist'][$key]['player_id'] = $pinfo->PlayerID;
+
+                            if(!empty($pinfo->CountryCode) && $pinfo->CountryName != FALSE)
+                            {
+                                $this->data['teaminfo'][$teamid]['playerlist'][$key]['country']   = [
+                                    'image' => $pinfo->CountryCode . '.png',
+                                    'path'  => asset('img/flags'),
+                                    'name'  => $pinfo->CountryName
+                                ];
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if(array_key_exists('spectators', $team))
+            {
+                foreach($team['spectators'] as $key => $player)
+                {
+                    foreach($players_query as $pinfo)
+                    {
+                        if($player['player_id'] == $pinfo->EAGUID)
+                        {
+                            $this->data['teaminfo'][$teamid]['spectators'][$key]['player_id'] = $pinfo->PlayerID;
+
+                            if(!empty($pinfo->CountryCode) && $pinfo->CountryName != FALSE)
+                            {
+                                $this->data['teaminfo'][$teamid]['spectators'][$key]['country']   = [
+                                    'image' => $pinfo->CountryCode . '.png',
+                                    'path'  => asset('img/flags'),
+                                    'name'  => $pinfo->CountryName
+                                ];
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Returns the image file needed to display the rank icon
+     * @param  integer $rank
+     * @return string
+     */
+    public function _getRankImage($rank)
+    {
+        switch($this->game)
+        {
+            case "BF3":
+                if($rank > 45) {
+                    if($rank > 100) $rank = 100;
+                    $image = sprintf("ss%u.png", $rank);
+                } else {
+                    $image = sprintf("r%u.png", $rank);
+                }
+            break;
+
+            case "BF4":
+                $image = sprintf("r%u.png", $rank);
+            break;
+
+            default:
+                $image = NULL;
+        }
+
+        return $image;
+    }
+
+    /**
+     * Returns the next map in rotation
+     * @return array
+     */
     public function _getNextMap()
     {
         $nextMapIndex = $this->conn->adminMaplistGetNextMapIndex();
@@ -623,6 +747,10 @@ class Scoreboard extends \BaseController
         return NULL;
     }
 
+    /**
+     * Gets the maplist from the game server
+     * @return array
+     */
     public function _getMapList()
     {
         $maplist = $this->conn->adminMaplistList();
@@ -669,6 +797,10 @@ class Scoreboard extends \BaseController
         return $listing;
     }
 
+    /**
+     * Added the raw information from the game server.
+     * Used for debugging
+     */
     public function _addRaw()
     {
         $serverinfo = $this->conn->getServerInfo();
@@ -694,16 +826,33 @@ class Scoreboard extends \BaseController
         }
     }
 
+    /**
+     * Returns the permissions the user is allowed to access
+     * @return array
+     */
     public function _permissionCheck()
     {
-        $permissions = \Permission::where('name', 'LIKE', 'scoreboard%')->get();
-
-        foreach($permissions as $p)
-        {
-            $cmdname = explode('.', $p->name);
-
-            $temp[ $cmdname[1] ] = FALSE;
-        }
+        $temp = array(
+            'ban'     => FALSE,
+            'bf3'     => FALSE,
+            'bf4'     => FALSE,
+            'forgive' => FALSE,
+            'kick'    => FALSE,
+            'kickall' => FALSE,
+            'kill'    => FALSE,
+            'nuke'    => FALSE,
+            'pmute'   => FALSE,
+            'psay'    => FALSE,
+            'punish'  => FALSE,
+            'pyell'   => FALSE,
+            'say'     => FALSE,
+            'squad'   => FALSE,
+            'tban'    => FALSE,
+            'team'    => FALSE,
+            'tsay'    => FALSE,
+            'tyell'   => FALSE,
+            'yell'    => FALSE,
+        );
 
         if(!\Auth::check()) return $temp;
 

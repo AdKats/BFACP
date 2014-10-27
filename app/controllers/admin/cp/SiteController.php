@@ -100,8 +100,21 @@ class SiteController extends \BaseController
         $input_forcessl         = Input::get('FORCESSL', TRUE);
         $input_uptimerobot      = Input::get('UPTIMEROBOT', TRUE);
         $input_uptimerobot_key  = Input::get('UPTIMEROBOT-KEY', "");
+        $input_clan_name        = Input::get('CLANNAME', "");
 
         $messages = [];
+
+        if($settings['SERVERORDER']['value'] != $input_order)
+        {
+            Setting::where('token', 'SERVERORDER')->update(['context' => $input_order]);
+            $messages[] = "Server sorting changed to: " . $input_order;
+        }
+
+        if($settings['CLANNAME']['value'] != $input_clan_name)
+        {
+            Setting::where('token', 'CLANNAME')->update(['context' => $input_clan_name]);
+            $messages[] = "Clan name has been changed to " . $input_clan_name;
+        }
 
         /*================================
         =            Booleans            =

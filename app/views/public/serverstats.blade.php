@@ -207,6 +207,18 @@
             </div>
         </div>
 
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="box box-info">
+                <div class="box-header">
+                    <h3 class="box-title">Favorite maps for the past week</h3>
+                </div>
+
+                <div class="box-body">
+                    <div id="maps_pie_chart"></div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     @endif
@@ -218,6 +230,33 @@
 $(function() {
     $('#mapstats-table').dataTable({
         "aaSorting": [[ 0, "desc" ]]
+    });
+
+    $('#maps_pie_chart').highcharts({
+        title: {
+            text: ''
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Map share',
+            data: <?php echo json_encode($results['stats']['maps_pie']); ?>
+        }]
     });
 
     $('#ping-graph').highcharts({

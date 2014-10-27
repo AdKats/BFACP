@@ -26,7 +26,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('your-machine-name'),
+    'local' => array('your-machine-name'),
 
 ));
 
@@ -113,16 +113,81 @@ if(!App::runningInConsole())
         die('All folders under app/storage must be set to 0777');
     }
 
+    if(version_compare(phpversion(), '5.4.0', '<') || !extension_loaded("mcrypt") || !extension_loaded("pdo"))
+        die(View::make('error.requirement_check_failed'));
+
+    if( Helper::_empty(Config::get('database.connections.mysql.host')) &&
+        Helper::_empty(Config::get('database.connections.mysql.database')) &&
+        Helper::_empty(Config::get('database.connections.mysql.username')) )
+        die("Database connection settings are not configured.");
+
+    if(Config::get('app.key') == 'YourSecretKey!!!')
+    {
+        if(is_writable(app_path() . '/config/app.php'))
+        {
+            $setKeyFunc = function() {
+                define('STDIN',fopen("php://stdin","r"));
+                Artisan::call('key:generate');
+            };
+
+            $setKeyFunc();
+        }
+        else
+        {
+            die("Unable to set encryption key automatically. Refer to <a href=\"https://github.com/Prophet731/BFAdminCP/wiki/FAQ#3-could-not-set-encryption-key\" target=\"_blank\">FAQ #3</a>");
+        }
+    }
+
     // Check and make sure the sessions table exists otherwise create it
     if(!Schema::hasTable('bfadmincp_sessions'))
     {
         DB::statement(File::get(storage_path() . '/sql/add_missing_sessions_table.sql'));
     }
-}
 
-if(version_compare(phpversion(), '5.4.0', '<') || !extension_loaded("mcrypt") || !extension_loaded("pdo"))
-{
-    die(View::make('error.requirement_check_failed'));
+    if(File::exists(storage_path() . '/meta/tablecheck') == FALSE)
+    {
+        $db_schema_check = Helper::RequiredTablesExist();
+
+        if($db_schema_check['status'] == FALSE)
+        {
+            $output = "<h1>You are missing the following tables</h1><ul>";
+
+            foreach($db_schema_check['data'] as $table)
+                $output .= "<li>" . $table . "</li>";
+
+            $output .= "</ul>";
+
+            $output .= "<br><p style=\"color: red\">Please refer to <a href=\"https://github.com/Prophet731/BFAdminCP/wiki/FAQ#2-missing-required-tables\" target=\"_blank\">FAQ #2</a></p>";
+
+            die($output);
+        }
+        else
+        {
+            File::put(storage_path() . '/meta/tablecheck', '');
+        }
+    }
+
+    if(Schema::hasTable('bfadmincp_users') == FALSE)
+    {
+        define('STDIN',fopen("php://stdin","r"));
+        Artisan::call('migrate', array('--force' => TRUE));
+        Artisan::call('db:seed', array('--force' => TRUE));
+
+        if(Schema::hasTable('gamesettings') && Schema::hasTable('users'))
+        {
+            DB::unprepared(File::get(storage_path() . '/sql/upgrades/migrate_1.4.4_2.0.0.sql'));
+        }
+
+        if(Schema::hasTable('bfadmincp_users') && Schema::hasTable('bfadmincp_user_preferences'))
+        {
+            $usersCount = User::count();
+
+            if($usersCount == 0)
+            {
+                $admin = Helper::createAdminUser();
+            }
+        }
+    }
 }
 
 /*

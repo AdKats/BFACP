@@ -55,7 +55,7 @@ return array(
 			'charset'   => 'utf8', // Do NOT change
 			'collation' => 'utf8_unicode_ci', // Do NOT change
 			'prefix'    => '', // Do NOT change
-		),
+		)
 	),
 
 	/*

@@ -15,11 +15,6 @@ class RolePermissionTableSeeder extends Seeder
 
     public function run()
     {
-        DB::table('bfadmincp_assigned_roles')->truncate();
-        DB::table('bfadmincp_permission_role')->truncate();
-        DB::table('bfadmincp_permissions')->truncate();
-        DB::table('bfadmincp_roles')->truncate();
-
         $role_list = [
             ['name' => 'Site Administrator'],
             ['name' => 'Battlefield Admin'],
@@ -35,6 +30,8 @@ class RolePermissionTableSeeder extends Seeder
         $permission_list = [
             ['name' => 'accessbf3',                 'display_name' => 'Access BF3 Admin'],
             ['name' => 'accessbf4',                 'display_name' => 'Access BF4 Admin'],
+            ['name' => 'acp_info_database',         'display_name' => 'View DB Stats'],
+            ['name' => 'acp_manage_game',           'display_name' => 'Manage Site Game Settings'],
             ['name' => 'email_newuser',             'display_name' => 'Receive email on new user signup'],
             ['name' => 'issueforgive',              'display_name' => 'Issue Forgives'],
             ['name' => 'issuepban',                 'display_name' => 'Issue Perma Ban'],
@@ -280,8 +277,6 @@ class RolePermissionTableSeeder extends Seeder
                 break;
             }
         }
-
-        DB::insert(File::get(storage_path() . '/sql/add_missing_users_role.sql'));
     }
 
     private function _retrivePermId($permission)

@@ -1719,6 +1719,30 @@ class BF3Conn
     }
 
     /**
+     * Gives player leader of their current squad
+     * @param  string $playerName
+     * @return string
+     */
+    function adminSquadLeader($playerName) {
+        $teamID = $this->getPlayerTeamID($playerName);
+        $squadID = $this->getPlayerSquadID($playerName);
+
+        return $this->_array2String($this->_clientRequest("squad.leader " .
+            $teamID . " " . $squadID . " " . $playerName), 0);
+    }
+
+    /**
+     * Checks if the squad is locked
+     * @param  integer $teamID
+     * @param  integer $squadID
+     * @return boolean
+     */
+    function adminIsSquadPrivate($teamID, $squadID) {
+        return $this->_array2boolean($this->_clientRequest("squad.private " .
+            $teamID . " " . $squadID));
+    }
+
+    /**
      * moves the given player to another specific squad<br />
      * if $forceKill is true, the player will be killed<br />
      * [ Works only if the player is dead! Otherwise $forceKill has to be true! ]

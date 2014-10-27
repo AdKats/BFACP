@@ -120,7 +120,7 @@ class AdminServerDirect extends \BaseController
     {
         try
         {
-            $server = Server::find(Input::get('server_id'));
+            $server = Server::with('setting')->find(Input::get('server_id'));
 
             // Did we get a result?
             if(!$server || !is_numeric(Input::get('server_id')))
@@ -164,7 +164,7 @@ class AdminServerDirect extends \BaseController
             if(!$this->conn->isConnected())
                 throw new BattlefieldException("Could not establish connection to gameserver");
 
-            $gsetting = GameSetting::find($this->server_id);
+            $gsetting = $server->setting;
 
             // Attempt to login to the gameserver
             $this->conn->loginSecure($gsetting->getPass());

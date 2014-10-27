@@ -79,7 +79,7 @@ class General extends \BaseController
         if($server_id < 1)
             return Helper::response('error', 'Server ID cannot be a negative value or less than 1');
 
-        $lsb = new Scoreboard(Server::find($server_id));
+        $lsb = new Scoreboard(Server::with('setting')->find($server_id));
 
         return $lsb->get();
     }
@@ -116,7 +116,7 @@ class General extends \BaseController
                 'message'   => $result->record_message,
                 'timestamp' => strtotime($result->record_time),
                 'server' => array(
-                    'short' => $server->strip(),
+                    'short' => is_null($server->setting) ? NULL : $server->strip($server->setting->name_strip),
                     'full'  => $server->ServerName,
                     'id'    => intval($server->ServerID)
                 )

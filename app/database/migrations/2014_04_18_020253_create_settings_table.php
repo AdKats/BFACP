@@ -18,7 +18,7 @@ class CreateSettingsTable extends Migration {
 			{
 				$table->increments('id');
 				$table->string('token', 50);
-				$table->string('context', 150);
+				$table->text('context');
 				$table->text('description');
 			});
 		}

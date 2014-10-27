@@ -1,14 +1,14 @@
 {
     "name": "adkgamers/BFAdminCP",
-    "description": "The Laravel Framework.",
+    "description": "A web based admin tool for Battlefield 3 and Battlefield 4 integrated with AdKats and XPKillers Stat Logger plugins for ProCon.",
     "keywords": ["adkgamers", "battlefield3", "webrcon", "adkats", "battlefield4"],
     "license": "proprietary",
     "type": "project",
     "homepage": "http://www.adkwebadmin.com/",
     "support": {
         "forum": "http://www.adkgamers.com/forum/265-adk-web-dev-support/",
-        "issues": "https://github.com/Prophet731/webadmin/issues",
-        "source": "https://github.com/Prophet731/webadmin"
+        "issues": "https://github.com/Prophet731/BFAdminCP/issues",
+        "source": "https://github.com/Prophet731/BFAdminCP"
     },
     "authors": [
         {
@@ -22,8 +22,8 @@
         "zizaco/confide": "~4.0@dev",
         "zizaco/entrust": "1.2.*@dev",
         "rmccue/requests": "> 1.0",
-        "laravelbook/ardent": "~2.4",
-        "guzzlehttp/guzzle": "~4.0"
+        "guzzlehttp/guzzle": "~4.0",
+        "roumen/feed": "dev-master"
     },
     "autoload": {
         "classmap": [

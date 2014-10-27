@@ -394,7 +394,7 @@ class BanController extends \BaseController
             $newRecord->adkats_web      = TRUE;
             $newRecord->save();
 
-            $record->command_action = ($ban_type == 8 ? 73 : 72);
+            $record->command_action = ($record->command_action == 8 ? 73 : 72);
             $record->save();
 
             $ban->latest_record_id = $newRecord->record_id;

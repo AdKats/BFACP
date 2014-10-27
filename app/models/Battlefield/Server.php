@@ -62,10 +62,10 @@ class Server extends Eloquent
      *
      * @return string
      */
-    public function strip()
+    public function strip($string = NULL)
     {
         // Check if the table exists
-        if(Schema::hasTable('bfadmincp_settings_gameserver'))
+        if(empty($string))
         {
             // Preform the query to get the information
             $strip = DB::table('bfadmincp_settings_gameserver')->where('server_id', $this->ServerID)->pluck('name_strip');
@@ -79,7 +79,7 @@ class Server extends Eloquent
             else return NULL;
         }
 
-        return NULL;
+        return preg_replace('/\s\s+/', ' ', trim(str_replace(explode(',', $string), '', $this->ServerName)));;
     }
 
     public function chat()
@@ -96,11 +96,11 @@ class Server extends Eloquent
     {
         if($all)
         {
-            return $query->where('GameID', Helper::getGameId('bf3'));
+            return $query->where('GameID', BF3_DB_ID);
         }
         else
         {
-            return $query->where('GameID', Helper::getGameId('bf3'))->where('ConnectionState', 'on');
+            return $query->where('GameID', BF3_DB_ID)->where('ConnectionState', 'on');
         }
     }
 
@@ -108,16 +108,21 @@ class Server extends Eloquent
     {
         if($all)
         {
-            return $query->where('GameID', Helper::getGameId('bf4'));
+            return $query->where('GameID', BF4_DB_ID);
         }
         else
         {
-            return $query->where('GameID', Helper::getGameId('bf4'))->where('ConnectionState', 'on');
+            return $query->where('GameID', BF4_DB_ID)->where('ConnectionState', 'on');
         }
     }
 
     public function adkatsConfig()
     {
         return $this->hasMany('ADKGamers\\Webadmin\\Models\\AdKats\\Setting', 'server_id', 'ServerID');
+    }
+
+    public function setting()
+    {
+        return $this->hasOne('ADKGamers\\Webadmin\\Models\\Battlefield\\Setting', 'server_id', 'ServerID');
     }
 }

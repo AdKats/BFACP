@@ -57,6 +57,9 @@ Route::group(array('prefix' => 'api/v1'), function()
     });
 
     Route::resource('uptime', 'ADKGamers\\Webadmin\\Controllers\\Api\\v1\\UptimeRobot');
+
+    // TODO
+    // Route::resource('acp/adkats/special_playerlist', 'ADKGamers\\Webadmin\\Controllers\\Api\\v1\\Battlefield\\Admin\\AdKats\\SpecialPlayersController');
 });
 
 /**
@@ -87,11 +90,6 @@ Route::group(array('prefix' => 'player'), function()
 
 Route::get('stats', 'ADKGamers\\Webadmin\\Controllers\\PublicController@showServerStats');
 
-Route::get('stats/map', function()
-{
-    return View::make('public.maps')->with('title', 'Players Seen By Country');
-});
-
 Route::group(array('prefix' => 'leaderboard'), function()
 {
     Route::get('reputation', 'ADKGamers\\Webadmin\\Controllers\\PublicController@showLeaderboardReputation');
@@ -100,6 +98,7 @@ Route::group(array('prefix' => 'leaderboard'), function()
 
 Route::get('memberlist', 'ADKGamers\\Webadmin\\Controllers\\PublicController@showMemberlist');
 
+Route::get('rss/bans/{game}', 'ADKGamers\\Webadmin\\Controllers\\PublicController@rssBans');
 
 /**
  * AdKats Administration
@@ -136,6 +135,9 @@ Route::group(array('prefix' => 'acp/adkats', 'before' => 'auth'), function()
 
     Route::resource('ban', 'ADKGamers\\Webadmin\\Controllers\\Admin\\AdKats\\BanController');
     Route::resource('plugin', 'ADKGamers\\Webadmin\\Controllers\\Admin\\AdKats\\PluginController');
+
+    // TODO
+    // Route::resource('special_playerlist', 'ADKGamers\\Webadmin\\Controllers\\Admin\\AdKats\\SpecialPlayersController');
 });
 
 /**
@@ -172,4 +174,84 @@ Route::group(array('prefix' => 'acp/site', 'before' => 'auth'), function()
     Route::resource('role', 'ADKGamers\\Webadmin\\Controllers\\Admin\\RolePermsController');
 
     Route::resource('setting', 'ADKGamers\\Webadmin\\Controllers\\Admin\\SiteController');
+    Route::resource('gameserver', 'ADKGamers\\Webadmin\\Controllers\\Admin\\SiteGameServerController');
+
+    Route::group(array('prefix' => 'info'), function()
+    {
+        Route::get('database', function()
+        {
+            $dbsizetotal = DB::select(File::get(storage_path() . '/sql/database_size_total.sql'));
+            $dbsizetables = DB::select(File::get(storage_path() . '/sql/database_size_tables.sql'));
+
+            $pie = [];
+
+            foreach($dbsizetables as $table)
+            {
+                $pie[] = [
+                    $table->tables,
+                    floatval($table->size_in_mb)
+                ];
+            }
+
+            return View::make('admin.information.database')
+                    ->with('title', 'Database Stats')
+                    ->with('piedata', json_encode($pie))
+                    ->with('dbtotal', $dbsizetotal)
+                    ->with('dbtables', $dbsizetables);
+        });
+    });
 });
+
+/*
+Route::get('test', function()
+{
+    $settings = ADKGamers\Webadmin\Models\AdKats\Setting::where('server_id', 1)->get();
+
+    $new_settings = [];
+
+    foreach($settings as $setting)
+    {
+        $search  = array( " ", "-", "/", ":", "(", ")" );
+        $replace = array( "_", "_", "_", "" );
+        $keyName = str_replace( $search, $replace, trim( strtolower( $setting['setting_name'] ) ) );
+
+        switch($setting['setting_type'])
+        {
+            case "double":
+                $new_settings['numeric'][$keyName] = [
+                    'display_name' => $setting['setting_name'],
+                    'value' => floatval($setting['setting_value'])
+                ];
+            break;
+
+            case "int":
+                $new_settings['numeric'][$keyName] = [
+                    'display_name' => $setting['setting_name'],
+                    'value' => intval($setting['setting_value'])
+                ];
+            break;
+
+            case "bool":
+                $new_settings['boolean'][$keyName] = [
+                    'display_name' => $setting['setting_name'],
+                    'value' => $setting['setting_value'] == 'True' ? TRUE : FALSE
+                ];
+            break;
+
+            case "multiline":
+                $new_settings['strings'][$keyName] = [
+                    'display_name' => $setting['setting_name'],
+                    'value' => (
+                        $setting['setting_name'] != 'Custom HTML Addition' && str_contains($setting['setting_value'], "|") ?
+                        explode( '|', urldecode( rawurldecode( $setting['setting_value'] ) ) ) :
+                        trim($setting['setting_value'])
+                    )
+                ];
+            break;
+        }
+    }
+
+    return Helper::response('success', NULL, $new_settings);
+});
+*/
+
