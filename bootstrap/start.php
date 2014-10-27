@@ -26,7 +26,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('your-machine-name'),
+    'local' => array('your-machine-name'),
 
 ));
 
@@ -123,7 +123,19 @@ if(!App::runningInConsole())
 
     if(Config::get('app.key') == 'YourSecretKey!!!')
     {
-        die("Encryption key not set.");
+        if(is_writable(app_path() . '/config/app.php'))
+        {
+            $setKeyFunc = function() {
+                define('STDIN',fopen("php://stdin","r"));
+                Artisan::call('key:generate');
+            };
+
+            $setKeyFunc();
+        }
+        else
+        {
+            die("Unable to set encryption key automatically. Refer to FAQ #3");
+        }
     }
 
     // Check and make sure the sessions table exists otherwise create it
@@ -145,6 +157,8 @@ if(!App::runningInConsole())
 
             $output .= "</ul>";
 
+            $output .= "<br><p style=\"color: red\">Please refer to FAQ #2</p>";
+
             die($output);
         }
         else
@@ -162,6 +176,16 @@ if(!App::runningInConsole())
         if(Schema::hasTable('gamesettings') && Schema::hasTable('users'))
         {
             DB::unprepared(File::get(storage_path() . '/sql/upgrades/migrate_1.4.4_2.0.0.sql'));
+        }
+
+        if(Schema::hasTable('bfadmincp_users') && Schema::hasTable('bfadmincp_user_preferences'))
+        {
+            $usersCount = User::count();
+
+            if($usersCount == 0)
+            {
+                $admin = Helper::createAdminUser();
+            }
         }
     }
 }
