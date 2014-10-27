@@ -1,7 +1,7 @@
 <div class="col-xs-12" ng-controller="PlayerInfoRecordsOn">
     <div class="box box-primary" ng-show="main.total==0">
         <div class="box-header">
-            <div class="box-title">Commands issued on <?php echo $player->SoldierName; ?></div>
+            <div class="box-title"><?php echo Lang::get('player.profile.section_titles.commands_on', ['playername' => $player->SoldierName]); ?></div>
             <div class="box-tools pull-right">
                 <div class="form-inline">
                     <div class="form-group">
@@ -24,7 +24,7 @@
     </div>
     <div class="box box-primary" ng-hide="main.total == 0">
         <div class="box-header">
-            <div class="box-title">Commands issued on <?php echo $player->SoldierName; ?></div>
+            <div class="box-title"><?php echo Lang::get('player.profile.section_titles.commands_on', ['playername' => $player->SoldierName]); ?></div>
             <div class="box-tools pull-right">
                 <div class="form-inline">
                     <div class="form-group">
@@ -52,13 +52,20 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="record in main.records track by record.record_id">
-                        <td>{{record.record_time}}</td>
+                        <td>{{ record.record_time}}</td>
                         <td ng-if="record.source_link != undefined"><a href="{{record.source_link}}">{{ record.source_name }}</a></td>
                         <td ng-if="record.source_link == undefined">{{ record.source_name }}</td>
                         <td class="hidden-sm"><span class="trim-server-name" tooltip-placement="top" tooltip="{{record.ServerName}}">{{record.ServerName}}</span></td>
                         <td>{{record.command_type}}</td>
                         <td>{{record.command_action}}</td>
-                        <td><span ng-if="record.command_numeric !== null" class="label label-primary">{{record.command_numeric}}</span> {{record.record_message}}</td>
+                        <td>
+                            <span ng-if="record.command_numeric !== null" class="label label-primary">{{record.command_numeric}}</span>
+
+                            <ng-switch on="record.linked !== undefined">
+                                <span ng-switch-when="true">{{record.record_message.replace("[]", "")}} <a href="{{record.linked.url}}">[{{ record.linked.text }}]</a></span>
+                                <span ng-switch-default>{{record.record_message}}</span>
+                            </ng-switch>
+                        </td>
                         <td><span class="label" ng-class='{"label-danger": !record.adkats_web, "label-success": record.adkats_web}'>{{ (record.adkats_web ? 'Yes' : 'No') }}</span></td>
                     </tr>
                 </tbody>
@@ -84,7 +91,7 @@
 <div class="col-xs-12" ng-controller="PlayerInfoRecordsBy">
     <div class="box box-primary" ng-show="main.total==0">
         <div class="box-header">
-            <div class="box-title">Commands issued by <?php echo $player->SoldierName; ?></div>
+            <div class="box-title"><?php echo Lang::get('player.profile.section_titles.commands_by', ['playername' => $player->SoldierName]); ?></div>
             <div class="box-tools pull-right">
                 <div class="form-inline">
                     <div class="form-group">
@@ -107,7 +114,7 @@
     </div>
     <div class="box box-primary" ng-hide="main.total == 0">
         <div class="box-header">
-            <div class="box-title">Commands issued by <?php echo $player->SoldierName; ?></div>
+            <div class="box-title"><?php echo Lang::get('player.profile.section_titles.commands_by', ['playername' => $player->SoldierName]); ?></div>
             <div class="box-tools pull-right">
                 <div class="form-inline">
                     <div class="form-group">

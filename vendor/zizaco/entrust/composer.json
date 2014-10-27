@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "~4.0",
+        "illuminate/support": "~4.0|~5.0",
         "laravelbook/ardent": "~2.4"
     },
     "require-dev": {
@@ -29,10 +29,10 @@
             "type": "package",
             "package": {
                 "name": "laravelbook/ardent",
-                "version": "2.4.2",
+                "version": "2.5.0",
                 "source": {
                     "type": "git",
-                    "url": "https://github.com/bexarcreativeinc/ardent.git",
+                    "url": "https://github.com/andrewelkins/ardent.git",
                     "reference": "master"
                 },
                 "autoload": {

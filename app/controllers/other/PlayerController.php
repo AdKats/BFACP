@@ -21,6 +21,7 @@ use ADKGamers\Webadmin\Models\Battlefield\Server;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
@@ -207,7 +208,7 @@ class PlayerController extends \BaseController
 
         $query = Record::select('adkats_records_main.*', 'tbl_server.ServerName')
                         ->join('tbl_server', 'adkats_records_main.server_id', '=', 'tbl_server.ServerID')
-                        ->whereNotIn('command_type', [48, 49])
+                        ->whereNotIn('command_type', [48, 49, 85, 86,])
                         ->orderBy('record_time', 'desc');
 
         switch(Input::get('type'))
@@ -262,6 +263,14 @@ class PlayerController extends \BaseController
                 $results['data'][$key]['target_link'] = action("ADKGamers\\Webadmin\\Controllers\\PlayerController@showInfo", array($record['target_id'], $record['target_name']));
             if(!is_null($record['source_id']))
                 $results['data'][$key]['source_link'] = action("ADKGamers\\Webadmin\\Controllers\\PlayerController@showInfo", array($record['source_id'], $record['source_name']));
+
+            if(preg_match("/(LINKED ACCOUNT).([0-9]+)/", $record['record_message'], $matches))
+            {
+                $link = action("ADKGamers\\Webadmin\\Controllers\\PlayerController@showInfo", [$matches[2], null]);
+                $results['data'][$key]['linked']['url']  = $link;
+                $results['data'][$key]['linked']['text'] = $matches[0];
+                $results['data'][$key]['record_message'] = str_replace($matches[0], "", $record['record_message']);
+            }
         }
 
         return Helper::response('success', NULL, $results);
@@ -278,10 +287,10 @@ class PlayerController extends \BaseController
             $rep->createOrUpdateOnly();
 
             $result = $player->reputation;
-            $result->target_rep   = intval($result->target_rep);
-            $result->source_rep   = intval($result->source_rep);
-            $result->total_rep    = intval($result->total_rep);
-            $result->total_rep_co = intval($result->total_rep_co);
+            $result->target_rep   = floatval($result->target_rep);
+            $result->source_rep   = floatval($result->source_rep);
+            $result->total_rep    = floatval($result->total_rep);
+            $result->total_rep_co = floatval($result->total_rep_co);
 
             return Helper::response('success', NULL, $result);
         }
@@ -293,11 +302,13 @@ class PlayerController extends \BaseController
 
     public function getPlayerStats($id)
     {
-        $player_sum_stats = DB::select(file_get_contents(storage_path() . '/sql/player_stats.sql'), [$id]);
+        $player_sum_stats = DB::select(File::get(storage_path() . '/sql/player_stats.sql'), [$id]);
 
-        $player_wep_stats = DB::select(file_get_contents(storage_path() . '/sql/player_weapon_stats.sql'), [$id]);
+        $player_wep_stats = DB::select(File::get(storage_path() . '/sql/player_weapon_stats.sql'), [$id]);
 
-        $player_sessions  = DB::select(file_get_contents(storage_path() . '/sql/player_session_stats.sql'), [$id]);
+        $player_sessions  = DB::select(File::get(storage_path() . '/sql/player_session_stats.sql'), [$id]);
+
+        $player_stats     = DB::select(File::get(storage_path() . '/sql/player_stats_per_server.sql'), [$id]);
 
         foreach($player_wep_stats as $key => $pss)
         {
@@ -331,6 +342,7 @@ class PlayerController extends \BaseController
 
         $pdata = array(
             'summary' => array_filter((array)$player_sum_stats[0], 'strlen'),
+            'per_server' => $player_stats,
             'sessions' => $sessions,
             'weapons' => $player_wep_stats
         );
@@ -357,7 +369,7 @@ class PlayerController extends \BaseController
         );
 
         $query = Chatlog::where('logPlayerID', $id)->whereNotIn('logMessage', $comoRoseCode)
-                    ->join('tbl_server', 'tbl_chatlog.ServerID', '=', 'tbl_server.ServerID')
+                    ->leftJoin('tbl_server', 'tbl_chatlog.ServerID', '=', 'tbl_server.ServerID')
                     ->select(DB::raw('tbl_chatlog.*, tbl_server.ServerName'))
                     ->orderBy('logDate', 'desc');
 

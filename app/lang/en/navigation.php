@@ -25,6 +25,12 @@ return array(
     'site_management' => array(
         'user' => 'Users',
         'role' => 'Roles',
-        'setting' => 'Settings'
+        'setting' => 'Settings',
+        'game' => array(
+            'setting' => 'Game Settings'
+        ),
+        'info' => array(
+            'database' => 'DB Stats'
+        )
     )
 );

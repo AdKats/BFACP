@@ -50,8 +50,6 @@ Event::listen('admin.user.create', function($user)
     {
         Mail::send('emails.admin.newuser', ['admin' => $admin, 'user' => $user], function($message) use(&$admin)
         {
-            $message->from(Config::get('mail.from.name'), 'BFAdminCP Notifications');
-
             $message->to($admin->email, $admin->username)->subject('New User Signup');
         });
     }

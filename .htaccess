@@ -1,0 +1,8 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond %{REQUEST_URI} !^public
+
+    # If you are getting a 500 error and are on 1and1 hosting
+    # add a forward slash in front of public
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

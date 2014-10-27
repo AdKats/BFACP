@@ -2,7 +2,7 @@
 <html>
     <head>
         <base href="{{ URL::to('/') }}" />
-        <title>{{{ $title or 'No Title' }}} | BFAdminCP</title>
+        <title>{{{ $title or 'No Title' }}} | {{ (isset($clan_name) ? $clan_name . ' |' : NULL) }} BFAdminCP</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1' name='viewport'>
         <meta charset="UTF-8">
         <meta name="googlebot" content="noarchive">
@@ -17,7 +17,7 @@
         <!-- bootstrap 3.0.2 -->
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- font Awesome -->
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- Ionicons -->
         <link href="{{ asset('css/ionicons.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
@@ -64,7 +64,7 @@
     </head>
     <body class="skin-black fixed" ng-app="BFAdminCP">
         <header class="header">
-            <a href="{{ action('ADKGamers\\Webadmin\\Controllers\\PublicController@showIndex') }}" class="logo">BFAdminCP</a>
+            <a href="{{ action('ADKGamers\\Webadmin\\Controllers\\PublicController@showIndex') }}" class="logo">{{ (isset($clan_name) ? $clan_name : 'BFAdminCP') }}</a>
 
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
@@ -102,23 +102,8 @@
             </aside>
         </div>
 
-
-
         @yield('javascript')
 
         @yield('modal_content')
-
-        @if(Request::is("acp/*") === FALSE)
-        <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-          ga('create', 'UA-38778073-4', 'auto');
-          ga('send', 'pageview');
-
-        </script>
-        @endif
     </body>
 </html>

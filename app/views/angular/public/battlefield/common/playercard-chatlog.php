@@ -1,7 +1,7 @@
 <div class="col-xs-12" ng-controller="PlayerInfoChatlog" id="p_chatlogs" ng-hide="main.chatlogs.length == 0 && main.filters.message.length == 0 && main.filters.serverid == 'none'">
     <div class="box box-primary">
         <div class="box-header">
-            <div class="box-title">Chatlogs by <?php echo $player->SoldierName; ?></div>
+            <div class="box-title"><?php echo Lang::get('player.profile.section_titles.chatlogs'); ?></div>
             <div class="box-tools pull-right">
                 <div class="form-inline">
                     <div class="form-group">

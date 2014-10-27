@@ -8,7 +8,7 @@
         <div class="col-xs-12" ng-hide="overview.length == 0">
             <div class="box box-info">
                 <div class="box-header">
-                    <div class="box-title">Stats Summary</div>
+                    <div class="box-title"><?php echo Lang::get('player.profile.section_titles.stats_summary'); ?></div>
                 </div>
                 <div class="box-body">
                     <div class="table-responsive">
@@ -42,10 +42,53 @@
             </div>
         </div>
 
+        <div class="col-xs-12" ng-hide="stats_per_servers.length == 0">
+            <div class="box box-info">
+                <div class="box-header">
+                    <div class="box-title"><?php echo Lang::get('player.profile.section_titles.stats_per_server'); ?></div>
+                </div>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-condensed">
+                            <thead>
+                                <th>Score</th>
+                                <th>Kills</th>
+                                <th>Deaths</th>
+                                <th>Headshots</th>
+                                <th>Suicide</th>
+                                <th>First Seen</th>
+                                <th>Last Seen</th>
+                                <th>Wins</th>
+                                <th>Losses</th>
+                                <th width="100px">Playtime</th>
+                                <th width="250px">Server</th>
+                            </thead>
+
+                            <tbody>
+                                <tr ng-repeat="stat in stats_per_servers">
+                                    <td>{{ stat.Score | number:0 }}</td>
+                                    <td>{{ stat.Kills | number:0 }}</td>
+                                    <td>{{ stat.Deaths | number:0 }}</td>
+                                    <td>{{ stat.Headshots | number:0 }}</td>
+                                    <td>{{ stat.Suicide | number:0 }}</td>
+                                    <td>{{ stat.FirstSeenOnServerUnix * 1000 | date: 'medium': timezone: 'UTC' }}</td>
+                                    <td>{{ stat.LastSeenOnServerUnix * 1000 | date: 'medium': timezone: 'UTC' }}</td>
+                                    <td>{{ stat.Wins | number:0 }}</td>
+                                    <td>{{ stat.Losses | number:0 }}</td>
+                                    <td>{{ stat.Playtime }}</td>
+                                    <td><span class="trim-server-name">{{ stat.ServerName }}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-xs-12" ng-hide="sessions.length == 0">
             <div class="box box-info">
                 <div class="box-header">
-                    <div class="box-title">Session History</div>
+                    <div class="box-title"><?php echo Lang::get('player.profile.section_titles.session'); ?></div>
                 </div>
                 <div class="box-body">
                     <div class="table-responsive">

@@ -356,7 +356,7 @@ class Process
         do {
             $this->checkTimeout();
             $running = defined('PHP_WINDOWS_VERSION_BUILD') ? $this->isRunning() : $this->processPipes->hasOpenHandles();
-            $close = !defined('PHP_WINDOWS_VERSION_BUILD') || !$running;;
+            $close = !defined('PHP_WINDOWS_VERSION_BUILD') || !$running;
             $this->readPipes(true, $close);
         } while ($running);
 
@@ -413,6 +413,7 @@ class Process
      * @return Process
      *
      * @throws RuntimeException In case the process is already running
+     * @throws LogicException   if an idle timeout is set
      */
     public function disableOutput()
     {
@@ -909,6 +910,7 @@ class Process
      *
      * @return self The current Process instance.
      *
+     * @throws LogicException           if the output is disabled
      * @throws InvalidArgumentException if the timeout is negative
      */
     public function setIdleTimeout($timeout)
@@ -1339,6 +1341,8 @@ class Process
      * @param int|float|null     $timeout
      *
      * @return float|null
+     *
+     * @throws InvalidArgumentException if the given timeout is a negative number
      */
     private function validateTimeout($timeout)
     {

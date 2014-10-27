@@ -15,3 +15,18 @@ app.directive('scoreboardChat', function()
         controller: 'ScoreboardChat'
     }
 });
+
+app.directive('playerlist', function() {
+    return {
+        restrict: 'A',
+        templateUrl: 'js/BFAdminCP/templates/scoreboard/playerlist.html',
+        scope: {
+            details: '=',
+            imagepath: '=',
+            isBF3: '=',
+            isBF4: '=',
+            isAdmin: '=',
+            sortClass: "&"
+        }
+    }
+});

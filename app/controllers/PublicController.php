@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use Roumen\Feed\Facades\Feed;
 
 class PublicController extends \BaseController
 {
@@ -41,43 +42,31 @@ class PublicController extends \BaseController
 
         if(Config::get('webadmin.BF3') == 1)
         {
-            $bf3Id = Helper::getGameId('BF3');
-
             $bf3Bans = Ban::select('ban_id', 'player_id', 'target_name', 'source_name', 'source_id', 'ban_status', 'ban_startTime', 'ban_endTime', 'record_message', 'target_id')
                 ->join('adkats_records_main', 'adkats_bans.latest_record_id', '=', 'adkats_records_main.record_id')
                 ->join('tbl_playerdata', 'adkats_records_main.target_id', '=', 'tbl_playerdata.PlayerID')
-                ->where('GameID', $bf3Id)
+                ->where('GameID', BF3_DB_ID)
                 ->where('ban_status', 'Active')
                 ->orderBy('ban_startTime', 'desc')->take(30)->get();
         }
 
         if(Config::get('webadmin.BF4') == 1)
         {
-            $bf4Id = Helper::getGameId('BF4');
-
             $bf4Bans = Ban::select('ban_id', 'player_id', 'target_name', 'source_name', 'source_id', 'ban_status', 'ban_startTime', 'ban_endTime', 'record_message', 'target_id')
                 ->join('adkats_records_main', 'adkats_bans.latest_record_id', '=', 'adkats_records_main.record_id')
                 ->join('tbl_playerdata', 'adkats_records_main.target_id', '=', 'tbl_playerdata.PlayerID')
-                ->where('GameID', $bf4Id)
+                ->where('GameID', BF4_DB_ID)
                 ->where('ban_status', 'Active')
                 ->orderBy('ban_startTime', 'desc')->take(30)->get();
         }
 
-        $userTz = 'UTC';
 
-        if(Auth::check())
-        {
-            $userTz = Auth::user()->preferences->timezone;
-        }
-
-        $yesterdayBanCount = Ban::where('ban_startTime', '>=', Carbon::yesterday($userTz))
-                            ->where('ban_startTime', '<=', Carbon::today($userTz))->count();
+        $yesterdayBanCount = Ban::where('ban_startTime', '>=', Carbon::yesterday($this->user_tz))
+                            ->where('ban_startTime', '<=', Carbon::today($this->user_tz))->count();
 
         $playerCountNow = Server::where('ConnectionState', 'on')->sum('usedSlots');
 
         $avgBansPerDay = head(DB::select(File::get(storage_path() . '/sql/avg_bans_per_day.sql')));
-
-
 
         $this->layout->content = View::make('public.index')
             ->with('bans', array( 'bf3' => ( isset( $bf3Bans ) ? $bf3Bans : [] ), 'bf4' => ( isset( $bf4Bans ) ? $bf4Bans : [] ) ) )
@@ -206,14 +195,14 @@ class PublicController extends \BaseController
 
         if(Input::has('sid') && is_numeric( Input::get('sid') ))
         {
-            $server = Server::find(Input::get('sid'));
+            $server = Server::with('setting')->where('ServerID', Input::get('sid'))->first();
 
             if($server->ConnectionState == 'off' || is_null($server->ConnectionState))
                 return View::make('error.generror')->with('code', 404)->with('errmsg', 'SERVER NOT FOUND')
                             ->with('errdescription', 'This server does not exist or not enabled')
                             ->with('title', 'Server Not Found');
 
-            $serverSettings = GSetting::find(Input::get('sid'));
+            $serverSettings = $server->setting;
 
             $results['serverinfo'] = $server;
 
@@ -329,7 +318,8 @@ class PublicController extends \BaseController
             try
             {
                 $mapStats = DB::table('tbl_mapstats')->where('ServerID', $server->ServerID)
-                            ->where('TimeMapLoad', '>=', Carbon::parse('-72 hours'))->get();
+                            ->where('TimeMapLoad', '>=', Carbon::parse('-72 hours'))
+                            ->where('TimeRoundStarted', '!=', '0001-01-01 00:00:00')->get();
 
                 switch($server->gameIdent())
                 {
@@ -348,9 +338,9 @@ class PublicController extends \BaseController
                 {
                     $mapStats[$key]->MapName          = BFHelper::getMapName($row->MapName, $filePath);
                     $mapStats[$key]->Gamemode         = BFHelper::getPlaymodeName($row->Gamemode, $filePath2);
-                    $mapStats[$key]->TimeMapLoad      = Helper::UTCToLocal($row->TimeMapLoad)->format('M j, Y \@ g:i:sa T');
-                    $mapStats[$key]->TimeRoundStarted = Helper::UTCToLocal($row->TimeRoundStarted)->format('M j, Y \@ g:i:sa T');
-                    $mapStats[$key]->TimeRoundEnd     = Helper::UTCToLocal($row->TimeRoundEnd)->format('M j, Y \@ g:i:sa T');
+                    $mapStats[$key]->TimeMapLoad      = Helper::UTCToLocal($row->TimeMapLoad, $this->user_tz)->format('M j, Y \@ g:i:sa T');
+                    $mapStats[$key]->TimeRoundStarted = Helper::UTCToLocal($row->TimeRoundStarted, $this->user_tz)->format('M j, Y \@ g:i:sa T');
+                    $mapStats[$key]->TimeRoundEnd     = Helper::UTCToLocal($row->TimeRoundEnd, $this->user_tz)->format('M j, Y \@ g:i:sa T');
                 }
 
                 $results['stats']['maps'] = $mapStats;
@@ -358,6 +348,50 @@ class PublicController extends \BaseController
             catch(Exception $e)
             {
                 $results['stats']['maps'] = [];
+            }
+
+            try
+            {
+                $results['stats']['maps_pie'] = [];
+
+                $mapsquery = DB::select(File::get(storage_path() . '/sql/map_stats_pie_chart.sql'), [$server->ServerID]);
+
+                switch($server->gameIdent())
+                {
+                    case "BF3":
+                        $filePath = app_path() . "/thirdparty/bf3/mapNames.xml";
+                    break;
+
+                    case "BF4":
+                        $filePath = app_path() . "/thirdparty/bf4/mapNames.xml";
+                    break;
+                }
+
+                foreach($mapsquery as $key => $row)
+                {
+                    $mapname = head(BFHelper::getMapName($row->MapName, $filePath));
+
+                    if($key == 0)
+                    {
+                        $results['stats']['maps_pie'][] = [
+                            'name'     => $mapname,
+                            'y'        => $row->Total,
+                            'sliced'   => TRUE,
+                            'selected' => TRUE
+                        ];
+                    }
+                    else
+                    {
+                        $results['stats']['maps_pie'][] = [
+                            $mapname,
+                            $row->Total
+                        ];
+                    }
+                }
+            }
+            catch(Exception $e)
+            {
+                $results['stats']['maps_pie'] = [$e->getMessage()];
             }
 
             /*-----  End of Map Stats  ------*/
@@ -414,16 +448,10 @@ class PublicController extends \BaseController
 
             /*-----  End of Population Chart  ------*/
 
-            if(Auth::check())
-            {
-                $_tz = Auth::user()->preferences->timezone;
-            }
-            else $_tz = 'UTC';
-
             return View::make('public.serverstats')->with('title', Lang::get('navigation.public.statistics'))->with('results', $results)
                         ->with('serverlisting', $serverlisting)
                         ->with('roundstats', $roundstats)
-                        ->with('_tz', $_tz);
+                        ->with('_tz', $this->user_tz);
         }
 
         return View::make('public.serverstats')->with('title', Lang::get('navigation.public.statistics'))->with('serverlisting', $serverlisting);
@@ -455,10 +483,10 @@ class PublicController extends \BaseController
     public function showLeaderboardPlayers()
     {
         if(Config::get('webadmin.BF3'))
-            $bf3stats = DB::select(File::get(storage_path() . '/sql/top_50_players.sql'), array('game' => Helper::getGameId('BF3')));
+            $bf3stats = DB::select(File::get(storage_path() . '/sql/top_50_players.sql'), array('game' => BF3_DB_ID));
 
         if(Config::get('webadmin.BF4'))
-            $bf4stats = DB::select(File::get(storage_path() . '/sql/top_50_players.sql'), array('game' => Helper::getGameId('BF4')));
+            $bf4stats = DB::select(File::get(storage_path() . '/sql/top_50_players.sql'), array('game' => BF4_DB_ID));
 
         return View::make('public.leaderboard.stats')->with('title', 'Stats Leaderboard')
                 ->with('_bf3stats', isset($bf3stats) ? $bf3stats : NULL)
@@ -473,5 +501,69 @@ class PublicController extends \BaseController
                     ->select('bfadmincp_users.*', 'bfadmincp_user_preferences.gravatar', 'bfadmincp_roles.name AS groupname')->orderBy('username')->paginate(50);
 
         return View::make('public.memberlist')->with('users', $users)->with('title', 'Memberlist');
+    }
+
+    public function rssBans($game)
+    {
+        $game = strtoupper($game);
+
+        if(!in_array($game, ['BF3', 'BF4']))
+            return Helper::response('error', 'Invalid Game Code');
+
+        $gameID = $game == 'BF3' ? BF3_DB_ID : BF4_DB_ID;
+
+        if($gameID == FALSE)
+            return Helper::response('error', 'Invalid Game Code');
+
+        $feed = Feed::make();
+
+        $feed->setCache(0);
+
+        if(!$feed->isCached())
+        {
+            $feed->title = "Recent " . $game . " Bans";
+            $feed->description = "Shows the recent 100 bans from " . $game;
+            $feed->link = action('ADKGamers\\Webadmin\\Controllers\\PublicController@showIndex');
+            $feed->setDateFormat('datetime');
+            $feed->pubdate = Carbon::now();
+            $feed->lang = "en";
+            $feed->setShortening(true);
+            $feed->setTextLimit(300);
+
+            $bans = Ban::select('ban_id', 'player_id', 'target_name', 'source_name', 'source_id', 'ban_status', 'ban_startTime', 'ban_endTime', 'record_message', 'target_id', 'command_action', 'ServerName')
+                        ->join('adkats_records_main', 'adkats_bans.latest_record_id', '=', 'adkats_records_main.record_id')
+                        ->join('tbl_playerdata', 'adkats_records_main.target_id', '=', 'tbl_playerdata.PlayerID')
+                        ->join('tbl_server', 'adkats_records_main.server_id', '=', 'tbl_server.ServerID')
+                        ->where('tbl_playerdata.GameID', $gameID)
+                        ->where('ban_status', 'Active')
+                        ->orderBy('record_time', 'desc')->take(100)->get();
+
+            foreach($bans as $ban)
+            {
+                $title = "";
+
+                if($ban->command_action == 8) {
+                    $title .= "[PERMA BAN] ";
+                } else if($ban->command_action == 7) {
+                    $title .= "[TEMP BAN] ";
+                }
+
+                $title .= $ban->target_name . " for " . $ban->record_message;
+
+                $link = action("ADKGamers\\Webadmin\\Controllers\\PlayerController@showInfo", [$ban->target_id, $ban->target_name]);
+
+                $description = sprintf("%s was banned from %s for %s by %s", $ban->target_name, $ban->ServerName, $ban->record_message, $ban->source_name);
+
+                $feed->add(
+                    $title,
+                    $ban->source_name,
+                    $link,
+                    $ban->ban_startTime->toISO8601String(),
+                    $description
+                );
+            }
+        }
+
+        return $feed->render('atom');
     }
 }

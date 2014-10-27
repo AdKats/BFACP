@@ -18,7 +18,7 @@
         <a ng-href="http://history.anticheatinc.com/bf4/?searchvalue={{player.name}}" class="btn btn-primary btn-sm" role="button" target="_blank">Anticheat Inc.</a>
         <a ng-href="http://metabans.com/search/?phrase={{player.name}}" class="btn btn-primary btn-sm" role="button" target="_blank">Metabans</a>
         <a ng-if="player.bf4db === null" ng-href="http://bf4db.com/players?name={{player.name}}" class="btn btn-primary btn-sm" role="button" target="_blank">BF4DB</a>
-        <a ng-if="player.bf4db !== null" ng-href="http://bf4db.com/players/{{player.bf4db.id}}" class="btn btn-primary btn-sm" role="button" target="_blank">BF4DB</a>
+        <a ng-if="player.bf4db !== null" ng-href="http://bf4db.com/players/{{player.bf4db.id}}" class="btn btn-primary btn-sm" role="button" target="_blank">BF4DB <span>Cheatscore: {{ player.bf4db.response.cheatscore }}%</span></a>
     </section>
 
 </div>

@@ -21,12 +21,15 @@ class StringUtils
     /**
      * This class should not be instantiated
      */
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     /**
      * Compares two strings.
      *
      * This method implements a constant-time algorithm to compare strings.
+     * Regardless of the used implementation, it will leak length information.
      *
      * @param string $knownString The string of known length to compare against
      * @param string $userInput   The string that the user can control
@@ -35,6 +38,13 @@ class StringUtils
      */
     public static function equals($knownString, $userInput)
     {
+        $knownString = (string) $knownString;
+        $userInput = (string) $userInput;
+
+        if (function_exists('hash_equals')) {
+            return hash_equals($knownString, $userInput);
+        }
+
         $knownLen = strlen($knownString);
         $userLen = strlen($userInput);
 
@@ -45,7 +55,7 @@ class StringUtils
         $result = $knownLen - $userLen;
 
         // Note that we ALWAYS iterate over the user-supplied length
-        // This is to prevent leaking length information
+        // This is to mitigate leaking length information
         for ($i = 0; $i < $userLen; $i++) {
             $result |= (ord($knownString[$i]) ^ ord($userInput[$i]));
         }

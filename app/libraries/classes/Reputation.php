@@ -35,7 +35,7 @@ class Reputation
         $this->player = $player;
     }
 
-    private function calculateSourceReputation()
+    private function calculateSourceReputation($breakdown = FALSE)
     {
         $start = 0;
 
@@ -55,15 +55,31 @@ class Reputation
                 if($command == $weight['command_typeaction'])
                 {
                     $start += $weight['source_weight'] * $commandCount;
+
+                    if($breakdown)
+                    {
+                        $temp[] = array(
+                            'command_type' => $result->command_type,
+                            'command_action' => $result->command_action,
+                            'command_typeaction' => $command,
+                            'weight' => array(
+                                'source' => $weight['source_weight'],
+                                'target' => $weight['target_weight']
+                            ),
+                            'total' => $commandCount,
+                            'reputation_earned' => ($weight['source_weight'] * $commandCount)
+                        );
+                    }
+
                     break;
                 }
             }
         }
 
-        return $start;
+        return $breakdown ? ['breakdown' => $temp, 'value' => $start] : $start;
     }
 
-    private function calculateTargetReputation()
+    private function calculateTargetReputation($breakdown = FALSE)
     {
         $start = 0;
         $startPoint = 0;
@@ -112,15 +128,31 @@ class Reputation
                 if($command == $weight['command_typeaction'])
                 {
                     $start += $weight['target_weight'] * $commandCount;
+
+                    if($breakdown)
+                    {
+                        $temp[] = array(
+                            'command_type' => $result->command_type,
+                            'command_action' => $result->command_action,
+                            'command_typeaction' => $command,
+                            'weight' => array(
+                                'source' => $weight['source_weight'],
+                                'target' => $weight['target_weight']
+                            ),
+                            'total' => $commandCount,
+                            'reputation_earned' => ($weight['target_weight'] * $commandCount)
+                        );
+                    }
+
                     break;
                 }
             }
         }
 
-        return $start;
+        return $breakdown ? ['breakdown' => $temp, 'value' => $start] : $start;
     }
 
-    private function calculateSpecialReputation()
+    private function calculateSpecialReputation($breakdown = FALSE)
     {
         $start = [
             'source' => 0,
@@ -167,6 +199,32 @@ class Reputation
             'total_rep'    => $source + $target,
             'total_rep_co' => $total
         ));
+    }
+
+    public function calculateOnly($breakdown = FALSE)
+    {
+        $special = $this->calculateSpecialReputation();
+        $source  = $this->calculateSourceReputation($breakdown);
+        $source['value'] + $special['source'];
+
+        $target  = $this->calculateTargetReputation($breakdown);
+        $target['value'] + $special['target'];
+
+        if($breakdown)
+        {
+            $total = $this->calculate($source['value'] + $target['value']);
+        }
+        else
+        {
+            $total = $this->calculate($source + $target);
+        }
+
+        return array(
+            'special' => $special,
+            'source'  => $source,
+            'target'  => $target,
+            'total'   => $total
+        );
     }
 
     public function createOrUpdateOnly()
