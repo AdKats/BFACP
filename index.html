@@ -73,7 +73,7 @@
 <h1>
 <a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h1>
 
-<p>Download the latest version from <a href="http://www.adkgamers.com/files/file/35-web-admin/">here</a> or by downloading the master branch. Once downloaded unzip it to a temporary folder. Next open the <code>database.php</code> file located in the <code>app/config</code> folder in your favorite text editor. Scroll down to the Database connections section and fill in your database connection information. </p>
+<p>Download the latest version from <a href="http://www.adkgamers.com/files/file/35-web-admin/">here</a> or by downloading the master branch. Once downloaded unzip it to a temporary folder. Next open the <code>database.php</code> file located in the <code>app/config</code> folder in your favorite text editor. Scroll down to the Database connections section and fill in your database connection information.</p>
 
 <p>Next we need to create a encryption key. This is <strong>IMPORTANT</strong>! The default key provided is just a placeholder string and is insecure. There are a few ways to do this. First if you have PHP installed on your current system you can open up a command prompt and CD to the directory where you have extracted the application and run the following command <code>php artisan key:generate</code>. This will create and update the key located in the file <code>app.php</code> in the <code>app/config</code> folder. If you don't have command line access or PHP installed on the current system, I have provided a page where you can get a random 32 character string. I do <strong>NOT</strong> save these and they are random on each refresh. You can access this page <a href="http://api.gamerethos.net/random_key">here</a>. Once you have your key open up the config file <code>app.php</code> and scroll down till you see the Encryption Key section. Replace the <code>YourSecretKey!!!</code> with the key that was generated. By default it will look like this.</p>
 
@@ -106,17 +106,17 @@
 
 <p><strong>Username</strong>: admin</p>
 
-<p><strong>Password</strong>: admin</p>
+<p><strong>Password</strong>: password</p>
 
 <p>You can change the default username and password by clicking on <strong>Site Management</strong> &gt; <strong>Users</strong> &gt; <strong>Admin</strong> &gt; <strong>Edit User</strong></p>
 
-<p>If you are upgrading from an older version please run this query after you have replaced <code>YourNameHere</code> with your username.</p>
+<p>If you are upgrading from an older version (v1.4.4) please run this query after you have replaced <code>YourNameHere</code> with your username.</p>
 
 <div class="highlight highlight-SQL"><pre>
 <span class="k">UPDATE</span> <span class="o">`</span><span class="n">bfadmincp_assigned_roles</span><span class="o">`</span>
         <span class="k">INNER</span> <span class="k">JOIN</span>
-    <span class="o">`</span><span class="n">bfadmincp_users</span><span class="o">`</span> <span class="k">ON</span> <span class="o">`</span><span class="n">bfadmincp_assigned_roles</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">user_id</span><span class="o">`</span> <span class="o">=</span> <span class="o">`</span><span class="n">bfadmincp_users</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span> 
-<span class="k">SET</span> 
+    <span class="o">`</span><span class="n">bfadmincp_users</span><span class="o">`</span> <span class="k">ON</span> <span class="o">`</span><span class="n">bfadmincp_assigned_roles</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">user_id</span><span class="o">`</span> <span class="o">=</span> <span class="o">`</span><span class="n">bfadmincp_users</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">id</span><span class="o">`</span>
+<span class="k">SET</span>
     <span class="o">`</span><span class="n">role_id</span><span class="o">`</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="k">WHERE</span>
     <span class="o">`</span><span class="n">username</span><span class="o">`</span> <span class="o">=</span> <span class="s1">'YourNameHere'</span>
@@ -126,6 +126,8 @@
 <p>If you have any questions or need help setting this up please post it <a href="http://www.adkgamers.com/forum/265-adk-web-dev-support/">here</a>.</p>
 
 <p>For suggestions/bugs please create a ticket <a href="https://github.com/Prophet731/BFAdminCP/issues">here</a>.</p>
+
+<p><a href="https://github.com/Prophet731/BFAdminCP/wiki/FAQ">FAQ</a></p>
       </section>
     </div>
 
