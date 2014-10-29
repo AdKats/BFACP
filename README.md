@@ -1,3 +1,5 @@
+[![Latest Stable Version](https://poser.pugx.org/adkgamers/bfadmincp/v/stable.svg)](https://packagist.org/packages/adkgamers/bfadmincp) [![Total Downloads](https://poser.pugx.org/adkgamers/bfadmincp/downloads.svg)](https://packagist.org/packages/adkgamers/bfadmincp) [![Latest Unstable Version](https://poser.pugx.org/adkgamers/bfadmincp/v/unstable.svg)](https://packagist.org/packages/adkgamers/bfadmincp) [![License](https://poser.pugx.org/adkgamers/bfadmincp/license.svg)](https://packagist.org/packages/adkgamers/bfadmincp)
+
 [![Dependency Status](https://www.versioneye.com/user/projects/542bf4b7beeeee64a900010a//badge.svg?style=flat)](https://www.versioneye.com/user/projects/542bf4b7beeeee64a900010a/)
 
 # Brief History
