@@ -1,5 +1,5 @@
 {
-    "name": "adkgamers/BFAdminCP",
+    "name": "adkgamers/bfadmincp",
     "description": "A web based admin tool for Battlefield 3 and Battlefield 4 integrated with AdKats and XPKillers Stat Logger plugins for ProCon.",
     "keywords": ["adkgamers", "battlefield3", "webrcon", "adkats", "battlefield4"],
     "license": "proprietary",
@@ -22,7 +22,7 @@
         "zizaco/confide": "~4.0@dev",
         "zizaco/entrust": "1.2.*@dev",
         "rmccue/requests": "> 1.0",
-        "guzzlehttp/guzzle": "~4.0",
+        "guzzlehttp/guzzle": "~5.0",
         "roumen/feed": "dev-master"
     },
     "autoload": {
@@ -37,10 +37,6 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "php artisan clear-compiled",
-            "php artisan optimize"
-        ],
-        "post-update-cmd": [
             "php artisan clear-compiled",
             "php artisan optimize"
         ],
