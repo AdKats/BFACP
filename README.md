@@ -1,3 +1,5 @@
+[![Dependency Status](https://www.versioneye.com/user/projects/542bf4b7beeeee64a900010a//badge.svg?style=flat)](https://www.versioneye.com/user/projects/542bf4b7beeeee64a900010a/)
+
 # Brief History
 
 This tool was created originally for [ADKGamers](http://www.adkgamers.com/) exclusively back in late 2012 early 2013, but as the need for a web based admin tool to make it easier to manage bans and players through AdKats and its ever going nature a new tool had to be created to be more dynamic and more informative.
