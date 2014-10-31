@@ -12,7 +12,7 @@ class BaseController extends Controller {
 
 		if(Helper::_empty(Config::get('webadmin.CLANNAME')) == FALSE)
 		{
-			View::share('clan_name', Config::get('webadmin.CLANNAME') . ' |');
+			View::share('clan_name', Config::get('webadmin.CLANNAME'));
 		}
 	}
 

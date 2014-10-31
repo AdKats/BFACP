@@ -67,13 +67,7 @@ Route::group(array('prefix' => 'api/v1'), function()
  */
 Route::get('/', 'ADKGamers\\Webadmin\\Controllers\\PublicController@showIndex');
 Route::get('search', 'ADKGamers\\Webadmin\\Controllers\\PublicController@searchForPlayer');
-Route::get('scoreboard', function()
-{
-    $data['bf3'] = ADKGamers\Webadmin\Models\Battlefield\Server::bf3()->get();
-    $data['bf4'] = ADKGamers\Webadmin\Models\Battlefield\Server::bf4()->get();
-    return View::make('public.battlefield.common.scoreboard')->with('title', 'Live Scoreboard')->with('servers', $data);
-});
-
+Route::get('scoreboard', 'ADKGamers\\Webadmin\\Controllers\\PublicController@showScoreboard');
 Route::get('chatlogs', 'ADKGamers\\Webadmin\\Controllers\\ChatlogController@showChatSearch');
 
 Route::group(array('prefix' => 'player'), function()

@@ -566,4 +566,12 @@ class PublicController extends \BaseController
 
         return $feed->render('atom');
     }
+
+    public function showScoreboard()
+    {
+        $data['bf3'] = Server::bf3()->get();
+        $data['bf4'] = Server::bf4()->get();
+
+        return View::make('public.battlefield.common.scoreboard')->with('title', 'Live Scoreboard')->with('servers', $data);
+    }
 }
