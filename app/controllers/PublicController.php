@@ -375,7 +375,7 @@ class PublicController extends \BaseController
                     {
                         $results['stats']['maps_pie'][] = [
                             'name'     => $mapname,
-                            'y'        => $row->Total,
+                            'y'        => intval($row->Total),
                             'sliced'   => TRUE,
                             'selected' => TRUE
                         ];
@@ -384,7 +384,7 @@ class PublicController extends \BaseController
                     {
                         $results['stats']['maps_pie'][] = [
                             $mapname,
-                            $row->Total
+                            intval($row->Total)
                         ];
                     }
                 }

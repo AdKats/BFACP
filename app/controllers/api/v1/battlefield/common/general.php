@@ -202,9 +202,9 @@ class General extends \BaseController
             $datetime_epoch = strtotime($datetime) * 1000;
 
             $temp[0]['data'][] = [$datetime_epoch, $result->team1_tickets + $result->team1_tpm];
-            $temp[1]['data'][] = [$datetime_epoch, $result->team1_tickets];
+            $temp[1]['data'][] = [$datetime_epoch, intval($result->team1_tickets)];
             $temp[2]['data'][] = [$datetime_epoch, $result->team2_tickets + $result->team2_tpm];
-            $temp[3]['data'][] = [$datetime_epoch, $result->team2_tickets];
+            $temp[3]['data'][] = [$datetime_epoch, intval($result->team2_tickets)];
         }
 
         return Helper::response('success', NULL, $temp);
