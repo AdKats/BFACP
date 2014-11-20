@@ -29,8 +29,8 @@
     <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="ConquestLarge0" />
     <map uri="XP4_Arctic" name="Operation Whiteout" playmode="ConquestLarge0" />
     <map uri="XP4_SubBase" name="Hammerhead" playmode="ConquestLarge0" />
-    <map uri="XP4_Titan" name="Giants Of Karelia" playmode="ConquestLarge0" />
-    <map uri="XP4_Wlkrftry" name="Hangar 21" playmode="ConquestLarge0" />
+    <map uri="XP4_Titan" name="Hangar 21" playmode="ConquestLarge0" />
+    <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="ConquestLarge0" />
 
     <!-- Small Conquest Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="ConquestSmall0" />
@@ -61,8 +61,8 @@
     <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="ConquestSmall0" />
     <map uri="XP4_Arctic" name="Operation Whiteout" playmode="ConquestSmall0" />
     <map uri="XP4_SubBase" name="Hammerhead" playmode="ConquestSmall0" />
-    <map uri="XP4_Titan" name="Giants Of Karelia" playmode="ConquestSmall0" />
-    <map uri="XP4_Wlkrftry" name="Hangar 21" playmode="ConquestSmall0" />
+    <map uri="XP4_Titan" name="Hangar 21" playmode="ConquestSmall0" />
+    <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="ConquestSmall0" />
 
     <!-- Domination Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="Domination0" />
@@ -93,8 +93,8 @@
     <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="Domination0" />
     <map uri="XP4_Arctic" name="Operation Whiteout" playmode="Domination0" />
     <map uri="XP4_SubBase" name="Hammerhead" playmode="Domination0" />
-    <map uri="XP4_Titan" name="Giants Of Karelia" playmode="Domination0" />
-    <map uri="XP4_Wlkrftry" name="Hangar 21" playmode="Domination0" />
+    <map uri="XP4_Titan" name="Hangar 21" playmode="Domination0" />
+    <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="Domination0" />
 
     <!-- Elimination Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="Elimination0" />
@@ -125,8 +125,8 @@
     <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="Elimination0" />
     <map uri="XP4_Arctic" name="Operation Whiteout" playmode="Elimination0" />
     <map uri="XP4_SubBase" name="Hammerhead" playmode="Elimination0" />
-    <map uri="XP4_Titan" name="Giants Of Karelia" playmode="Elimination0" />
-    <map uri="XP4_Wlkrftry" name="Hangar 21" playmode="Elimination0" />
+    <map uri="XP4_Titan" name="Hangar 21" playmode="Elimination0" />
+    <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="Elimination0" />
 
     <!-- Obliteration Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="Obliteration" />
@@ -157,8 +157,8 @@
     <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="Obliteration" />
     <map uri="XP4_Arctic" name="Operation Whiteout" playmode="Obliteration" />
     <map uri="XP4_SubBase" name="Hammerhead" playmode="Obliteration" />
-    <map uri="XP4_Titan" name="Giants Of Karelia" playmode="Obliteration" />
-    <map uri="XP4_Wlkrftry" name="Hangar 21" playmode="Obliteration" />
+    <map uri="XP4_Titan" name="Hangar 21" playmode="Obliteration" />
+    <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="Obliteration" />
 
     <!-- Rush Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="RushLarge0" />
@@ -189,8 +189,8 @@
     <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="RushLarge0" />
     <map uri="XP4_Arctic" name="Operation Whiteout" playmode="RushLarge0" />
     <map uri="XP4_SubBase" name="Hammerhead" playmode="RushLarge0" />
-    <map uri="XP4_Titan" name="Giants Of Karelia" playmode="RushLarge0" />
-    <map uri="XP4_Wlkrftry" name="Hangar 21" playmode="RushLarge0" />
+    <map uri="XP4_Titan" name="Hangar 21" playmode="RushLarge0" />
+    <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="RushLarge0" />
 
     <!-- Squad Death Match Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="SquadDeathMatch0" />
@@ -221,8 +221,8 @@
     <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="SquadDeathMatch0" />
     <map uri="XP4_Arctic" name="Operation Whiteout" playmode="SquadDeathMatch0" />
     <map uri="XP4_SubBase" name="Hammerhead" playmode="SquadDeathMatch0" />
-    <map uri="XP4_Titan" name="Giants Of Karelia" playmode="SquadDeathMatch0" />
-    <map uri="XP4_Wlkrftry" name="Hangar 21" playmode="SquadDeathMatch0" />
+    <map uri="XP4_Titan" name="Hangar 21" playmode="SquadDeathMatch0" />
+    <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="SquadDeathMatch0" />
 
     <!-- Team Deathmatch Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="TeamDeathMatch0" />
@@ -253,8 +253,8 @@
     <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="TeamDeathMatch0" />
     <map uri="XP4_Arctic" name="Operation Whiteout" playmode="TeamDeathMatch0" />
     <map uri="XP4_SubBase" name="Hammerhead" playmode="TeamDeathMatch0" />
-    <map uri="XP4_Titan" name="Giants Of Karelia" playmode="TeamDeathMatch0" />
-    <map uri="XP4_Wlkrftry" name="Hangar 21" playmode="TeamDeathMatch0" />
+    <map uri="XP4_Titan" name="Hangar 21" playmode="TeamDeathMatch0" />
+    <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="TeamDeathMatch0" />
 
     <!-- Capture The Flag Maps -->
     <map uri="XP0_Caspian" name="Caspian Border 2014" playmode="CaptureTheFlag0" />
@@ -267,28 +267,20 @@
     <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="CaptureTheFlag0" />
     <map uri="XP4_Arctic" name="Operation Whiteout" playmode="CaptureTheFlag0" />
     <map uri="XP4_SubBase" name="Hammerhead" playmode="CaptureTheFlag0" />
-    <map uri="XP4_Titan" name="Giants Of Karelia" playmode="CaptureTheFlag0" />
-    <map uri="XP4_Wlkrftry" name="Hangar 21" playmode="CaptureTheFlag0" />
+    <map uri="XP4_Titan" name="Hangar 21" playmode="CaptureTheFlag0" />
+    <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="CaptureTheFlag0" />
 
     <!-- CarrierAssault Large -->
     <map uri="XP2_001" name="Lost Islands" playmode="CarrierAssaultLarge0" />
     <map uri="XP2_002" name="Nansha Strike" playmode="CarrierAssaultLarge0" />
     <map uri="XP2_003" name="Wavebreaker" playmode="CarrierAssaultLarge0" />
     <map uri="XP2_004" name="Operation Mortar" playmode="CarrierAssaultLarge0" />
-    <map uri="XP3_MarketPl" name="Pearl Market" playmode="CarrierAssaultLarge0" />
-    <map uri="XP3_Prpganda" name="Propaganda" playmode="CarrierAssaultLarge0" />
-    <map uri="XP3_UrbanGdn" name="Lumphini Garden" playmode="CarrierAssaultLarge0" />
-    <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="CarrierAssaultLarge0" />
 
     <!-- CarrierAssault Small -->
     <map uri="XP2_001" name="Lost Islands" playmode="CarrierAssaultSmall0" />
     <map uri="XP2_002" name="Nansha Strike" playmode="CarrierAssaultSmall0" />
     <map uri="XP2_003" name="Wavebreaker" playmode="CarrierAssaultSmall0" />
     <map uri="XP2_004" name="Operation Mortar" playmode="CarrierAssaultSmall0" />
-    <map uri="XP3_MarketPl" name="Pearl Market" playmode="CarrierAssaultSmall0" />
-    <map uri="XP3_Prpganda" name="Propaganda" playmode="CarrierAssaultSmall0" />
-    <map uri="XP3_UrbanGdn" name="Lumphini Garden" playmode="CarrierAssaultSmall0" />
-    <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="CarrierAssaultSmall0" />
 
     <!-- Chainlink -->
     <map uri="XP3_MarketPl" name="Pearl Market" playmode="Chainlink0" />
@@ -297,7 +289,7 @@
     <map uri="XP3_WtrFront" name="Sunken Dragon" playmode="Chainlink0" />
     <map uri="XP4_Arctic" name="Operation Whiteout" playmode="Chainlink0" />
     <map uri="XP4_SubBase" name="Hammerhead" playmode="Chainlink0" />
-    <map uri="XP4_Titan" name="Giants Of Karelia" playmode="Chainlink0" />
-    <map uri="XP4_Wlkrftry" name="Hangar 21" playmode="Chainlink0" />
+    <map uri="XP4_Titan" name="Hangar 21" playmode="Chainlink0" />
+    <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="Chainlink0" />
 
 </mapNames>
