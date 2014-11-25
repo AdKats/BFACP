@@ -340,6 +340,9 @@ class PlayerController extends \BaseController
             );
         }
 
+        foreach($player_stats as $key => $row)
+            $player_stats[$key]->Playtime = Helper::convertSecToStr($row->Playtime, TRUE);
+
         $pdata = array(
             'summary' => array_filter((array)$player_sum_stats[0], 'strlen'),
             'per_server' => $player_stats,

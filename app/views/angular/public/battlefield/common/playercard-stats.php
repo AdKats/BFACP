@@ -60,7 +60,7 @@
                                 <th>Last Seen</th>
                                 <th>Wins</th>
                                 <th>Losses</th>
-                                <th width="100px">Playtime</th>
+                                <th width="150px">Playtime</th>
                                 <th width="250px">Server</th>
                             </thead>
 
