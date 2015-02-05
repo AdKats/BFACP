@@ -1,35 +1,28 @@
 <?php namespace BFACP\Http\Controllers\Api;
 
 use BFACP\Repositories\PlayerRepository;
-use Dingo\Api\Routing\ControllerTrait;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 
-class PlayersController extends Controller
+class PlayersController extends BaseController
 {
-    use ControllerTrait;
-
     private $repository;
-    public $request;
 
-    public function __construct(PlayerRepository $repository, Request $request)
+    public function __construct(PlayerRepository $repository)
     {
         $this->repository = $repository;
-        $this->request = $request;
     }
 
     public function index()
     {
-        return $this->repository
-            ->setopts($this->repository->request->get('opts', []))
-            ->getAllPlayers( $this->request->get( 'limit', FALSE ) );
+        $limit = $this->request->get('limit', FALSE);
+        $opts = $this->request->get('opts', []);
+
+        return $this->repository->setopts($opts)->getAllPlayers($limit);
     }
 
     public function show($id)
     {
-        $result = $this->repository
-            ->setopts($this->request->get('opts', []))
-            ->getPlayerById($id);
+        $opts = $this->request->get('opts', []);        
+        $result = $this->repository->setopts($opts)->getPlayerById($id);
 
         return $this->response->array($result->toArray());
     }

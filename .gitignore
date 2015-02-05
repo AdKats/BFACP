@@ -5,3 +5,5 @@ composer.lock
 .env.local.php
 .DS_Store
 Thumbs.db
+/resources
+/public/AdminLTE-master

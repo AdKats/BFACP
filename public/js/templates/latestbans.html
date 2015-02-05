@@ -1,0 +1,27 @@
+<div class="table-responsive">
+    <table class="table no-margin">
+        <thead>
+            <tr>
+                <th ng-bind="results.bans.columns.col1"></th>
+                <th class="hidden-xs" ng-bind="results.bans.columns.col2"></th>
+                <th ng-bind="results.bans.columns.col3"></th>
+                <th ng-bind="results.bans.columns.col4"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="(key, ban) in results.bans.data">
+                <td>
+                    <span ng-class="ban.player.game.class_css" ng-bind="ban.player.game.Name"></span>
+                    <a ng-href="{{ ban.player.profile_url }}" tooltip="{{ ban.record.record_message }}" ng-bind="ban.player.SoldierName"></a>
+                </td>
+                <td class="hidden-xs" ng-bind="ban.record.source_name"></td>
+                <td ng-bind="ban.ban_issued | date:'medium'"></td>
+                <td>
+                    <span ng-if="ban.is_perm" class="label label-danger">Permanent Ban</span>
+                    <span ng-if="!ban.is_perm" ng-bind="moment(ban.ban_endTime).fromNow()"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

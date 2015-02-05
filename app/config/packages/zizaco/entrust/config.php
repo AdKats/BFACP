@@ -11,7 +11,7 @@ return array(
 	| the role if it is in a different namespace.
 	|
 	*/
-	'role' => '\Role',
+	'role' => 'BFACP\Account\Role',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ return array(
 	| This is the Roles table used by Entrust to save roles to the database.
 	|
 	*/
-	'roles_table' => 'roles',
+	'roles_table' => 'bfadmincp_roles',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ return array(
 	| the permission if it is in a different namespace.
 	|
 	*/
-	'permission' => '\Permission',
+	'permission' => 'BFACP\Account\Permission',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return array(
 	| This is the Permissions table used by Entrust to save permissions to the database.
 	|
 	*/
-	'permissions_table' => 'permissions',
+	'permissions_table' => 'bfadmincp_permissions',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return array(
 	| This is the permission_role table used by Entrust to save relationship between permissions and roles to the database.
 	|
 	*/
-	'permission_role_table' => 'permission_role',
+	'permission_role_table' => 'bfadmincp_permission_role',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -62,6 +62,6 @@ return array(
 	| This is the assigned_roles table used by Entrust to save assigned roles to the database.
 	|
 	*/
-	'assigned_roles_table' => 'assigned_roles',
+	'assigned_roles_table' => 'bfadmincp_assigned_roles',
 
 );

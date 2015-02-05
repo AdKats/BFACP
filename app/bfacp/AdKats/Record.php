@@ -46,7 +46,7 @@ class Record extends Eloquent
      * Models to be loaded automaticly
      * @var array
      */
-    protected $with = ['server', 'type', 'action'];
+    protected $with = ['server'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Model
@@ -69,7 +69,11 @@ class Record extends Eloquent
      */
     public function server()
     {
-        return $this->belongsTo('BFACP\Battlefield\Server', 'server_id');
+        return $this->belongsTo('BFACP\Battlefield\Server', 'server_id')->select([
+            'ServerID',
+            'ServerName',
+            'GameID'
+        ]);
     }
 
     /**
@@ -77,7 +81,12 @@ class Record extends Eloquent
      */
     public function type()
     {
-        return $this->belongsTo('BFACP\AdKats\Command', 'command_type');
+        return $this->belongsTo('BFACP\AdKats\Command', 'command_type')->select([
+            'command_id',
+            'command_active',
+            'command_name',
+            'command_playerInteraction'
+        ]);
     }
 
     /**
@@ -85,7 +94,12 @@ class Record extends Eloquent
      */
     public function action()
     {
-        return $this->belongsTo('BFACP\AdKats\Command', 'command_action');
+        return $this->belongsTo('BFACP\AdKats\Command', 'command_action')->select([
+            'command_id',
+            'command_active',
+            'command_name',
+            'command_playerInteraction'
+        ]);
     }
 
     /**

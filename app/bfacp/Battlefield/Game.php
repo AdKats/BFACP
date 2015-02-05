@@ -40,7 +40,7 @@ class Game extends Eloquent
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = [];
+    protected $appends = ['class_css'];
 
     /**
      * Models to be loaded automaticly
@@ -54,5 +54,24 @@ class Game extends Eloquent
     public function servers()
     {
         return $this->hasMany('BFACP\Battlefield\Server', 'GameID');
+    }
+
+    public function getClassCssAttribute()
+    {
+        switch($this->Name)
+        {
+            case "BF3":
+                $class = 'label bg-purple';
+            break;
+
+            case "BF4":
+                $class = 'label bg-blue';
+            break;
+
+            default:
+                $class = 'label bg-yellow';
+        }
+
+        return $class;
     }
 }

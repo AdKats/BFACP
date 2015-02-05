@@ -3,6 +3,7 @@
 use BFACP\Battlefield\Player;
 use BFACP\Exceptions\PlayerNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Cache;
 
 class PlayerRepository extends BaseRepository
 {
@@ -26,8 +27,7 @@ class PlayerRepository extends BaseRepository
      */
     public function getAllPlayers($limit = 100)
     {
-        if($limit === FALSE)
-            $limit = 100;
+        if($limit === FALSE) $limit = 100;
 
         return Player::with($this->opts)->simplePaginate($limit);
     }
@@ -64,6 +64,19 @@ class PlayerRepository extends BaseRepository
         }
 
         throw new PlayerNotFoundException(404, "Player Not Found");
+    }
+
+    /**
+     * Gets the total number of players in the database
+     * @return integer
+     */
+    public function getPlayerCount()
+    {
+        $count = Cache::remember('player.count', 60, function() {
+            return Player::count();
+        });
+
+        return intval($count);
     }
 
     /**

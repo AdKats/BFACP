@@ -1,7 +1,8 @@
 <?php namespace BFACP\AdKats;
 
-use Illuminate\Database\Eloquent\Model AS Eloquent;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model AS Eloquent;
+use Illuminate\Support\Facades\Auth;
 
 class Ban extends Eloquent
 {
@@ -40,7 +41,7 @@ class Ban extends Eloquent
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = ['is_active', 'is_expired', 'enforced_by_name', 'enforced_by_guid', 'enforced_by_ip'];
+    protected $appends = ['is_active', 'is_expired', 'is_perm', 'ban_enforceName', 'ban_enforceGUID', 'ban_enforceIP',  'ban_issued', 'ban_expires'];
 
     /**
      * Models to be loaded automaticly
@@ -64,6 +65,46 @@ class Ban extends Eloquent
         return $this->belongsTo('BFACP\Battlefield\Player', 'player_id');
     }
 
+    public function scopeLatest($query, $limit = 60)
+    {
+        return $query->where('ban_status', 'Active')
+                ->orderBy('ban_startTime', 'desc')
+                ->take($limit);
+    }
+
+    public function scopeYesterday($query)
+    {
+        return $query->where('ban_startTime', '>=', Carbon::yesterday())
+            ->where('ban_startTime', '<=', Carbon::today());
+    }
+
+    public function scopePersonal($query, $limit = 30)
+    {
+        $user = Auth::user();
+
+        $playerIds = [];
+
+        if($user->setting->bf3player)
+        {
+            array_push($playerIds, $user->setting->bf3player->PlayerID);
+        }
+
+        if($user->setting->bf4player)
+        {
+            array_push($playerIds, $user->setting->bf4player->PlayerID);
+        }
+
+        if(empty($playerIds))
+        {
+            return $this;
+        }
+
+        return $query->join('adkats_records_main', 'adkats_bans.latest_record_id', '=', 'adkats_records_main.record_id')
+            ->whereIn('adkats_records_main.source_id', $playerIds)
+            ->orderBy('ban_startTime', 'desc')
+            ->take($limit);
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -73,11 +114,21 @@ class Ban extends Eloquent
             ->whereIn('command_action', [7,8,72,73]);
     }
 
+    public function getBanIssuedAttribute()
+    {
+        return $this->ban_startTime->toIso8601String();
+    }
+
+    public function getBanExpiresAttribute()
+    {
+        return $this->ban_endTime->toIso8601String();
+    }
+
     /**
      * Is ban enforced by name
      * @return bool
      */
-    public function getEnforcedByNameAttribute()
+    public function getBanEnforceNameAttribute()
     {
         return $this->attributes['ban_enforceName'] == 'Y';
     }
@@ -86,7 +137,7 @@ class Ban extends Eloquent
      * IS ban enforced by guid
      * @return bool
      */
-    public function getEnforcedByGuidAttribute()
+    public function getBanEnforceGUIDAttribute()
     {
         return $this->attributes['ban_enforceGUID'] == 'Y';
     }
@@ -95,7 +146,7 @@ class Ban extends Eloquent
      * Is ban enforced by ip
      * @return bool
      */
-    public function getEnforcedByIpAttribute()
+    public function getBanEnforceIPAttribute()
     {
         return $this->attributes['ban_enforceIP'] == 'Y';
     }
@@ -116,5 +167,14 @@ class Ban extends Eloquent
     public function getIsExpiredAttribute()
     {
         return $this->attributes['ban_status'] == 'Expired';
+    }
+
+    /**
+     * Is ban permanent
+     * @return bool
+     */
+    public function getIsPermAttribute()
+    {
+        return $this->record->command_action == 8;
     }
 }

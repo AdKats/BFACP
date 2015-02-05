@@ -1,0 +1,1 @@
+{{ $MainNav->asUl(['class' => 'sidebar-menu']) }}

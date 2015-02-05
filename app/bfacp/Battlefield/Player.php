@@ -40,7 +40,7 @@ class Player extends Eloquent
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = [];
+    protected $appends = ['profile_url'];
 
     /**
      * Models to be loaded automaticly
@@ -101,7 +101,7 @@ class Player extends Eloquent
      */
     public function game()
     {
-        return $this->belongsTo('BFACP\Battlefield\Game', 'GameID');
+        return $this->belongsTo('BFACP\Battlefield\Game', 'GameID')->remember(10);
     }
 
     /**
@@ -110,5 +110,17 @@ class Player extends Eloquent
     public function reputation()
     {
         return $this->hasOne('BFACP\Battlefield\Reputation', 'player_id');
+    }
+
+    /**
+     * Gets the URL to the players profile
+     * @return string
+     */
+    public function getProfileUrlAttribute()
+    {
+        return route('player.show', [
+            'id' => $this->PlayerID,
+            'name' => $this->SoldierName
+        ]);
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model AS Eloquent;
 use Carbon\Carbon;
+use MainHelper;
 
 class Server extends Eloquent
 {
@@ -40,7 +41,7 @@ class Server extends Eloquent
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = [];
+    protected $appends = ['percentage'];
 
     /**
      * Models to be loaded automaticly
@@ -53,6 +54,16 @@ class Server extends Eloquent
      */
     public function game()
     {
-        return $this->belongsTo('BFACP\Battlefield\Game', 'GameID');
+        return $this->belongsTo('BFACP\Battlefield\Game', 'GameID')->remember(10);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('ConnectionState', 'on');
+    }
+
+    public function getPercentageAttribute()
+    {
+        return MainHelper::percent($this->usedSlots, $this->maxSlots);
     }
 }

@@ -127,6 +127,7 @@ return array(
         'Zizaco\Confide\ServiceProvider',
         'Zizaco\Entrust\EntrustServiceProvider',
         'Dingo\Api\Provider\ApiServiceProvider',
+        'BFACP\Providers\HelpersProvider',
     ),
 
     /*
@@ -161,6 +162,7 @@ return array(
         'Auth'              => 'Illuminate\Support\Facades\Auth',
         'Blade'             => 'Illuminate\Support\Facades\Blade',
         'Cache'             => 'Illuminate\Support\Facades\Cache',
+        'Carbon'            => 'Carbon\Carbon',
         'ClassLoader'       => 'Illuminate\Support\ClassLoader',
         'Confide'           => 'Zizaco\Confide\Facade',
         'Config'            => 'Illuminate\Support\Facades\Config',
