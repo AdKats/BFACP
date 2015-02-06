@@ -32,6 +32,8 @@ angular.module('bfacp', [
             },
             population: {
                 columns: [],
+                title: '',
+                footer: '',
                 old: {
                     online: 0,
                     total: 0
@@ -101,6 +103,9 @@ angular.module('bfacp', [
                 $scope.results.population.online = data.data.online;
                 $scope.results.population.total = data.data.totalSlots;
                 $scope.results.population.percentage = data.data.percentage;
+                $scope.results.population.columns = data.data.columns;
+                $scope.results.population.title = data.data.title;
+                $scope.results.population.footer = data.data.footer;
             }).error(function(data, status) {
                 $scope.population();
             });

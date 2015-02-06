@@ -1,6 +1,6 @@
 <div class="box box-info" ng-repeat-start="(gameKey, game) in results.population.data">
     <div class="box-header with-border">
-        <h3 class="box-title"><span ng-bind="gameKey | uppercase"></span>&nbsp;Population</h3>
+        <h3 class="box-title"><span ng-bind="gameKey | uppercase"></span>&nbsp;<span ng-bind="results.population.title"></span></h3>
     </div>
 
     <div class="box-body">
@@ -8,9 +8,9 @@
             <table class="table no-margin table-condensed">
                 <thead>
                     <tr>
-                        <th>Server</th>
-                        <th>Online</th>
-                        <th>Map</th>
+                        <th ng-bind="results.population.columns.col1"></th>
+                        <th ng-bind="results.population.columns.col2"></th>
+                        <th ng-bind="results.population.columns.col3"></th>
                     </tr>
                 </thead>
 
@@ -23,7 +23,7 @@
                 </tbody>
 
                 <tfoot>
-                    <td><span class="pull-right">Total:</span></td>
+                    <td><span class="pull-right" ng-bind="results.population.footer"></span></td>
                     <td colspan="2"><span ng-bind="game.stats.online"></span> / <span ng-bind="game.stats.totalSlots"></span></td>
                 </tfoot>
             </table>
