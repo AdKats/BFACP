@@ -9,6 +9,16 @@ return [
 		'player_count' => 'Player DB Total'
 	],
 
+	'population' => [
+		'title'  => 'Population',
+		'footer' => 'Total',
+		'columns' => [
+			'col1' => 'Server',
+			'col2' => 'Online',
+			'col3' => 'Map'
+		]
+	],
+
 	'bans' => [
 		'title' => 'Latest Bans',
 		'columns' => [

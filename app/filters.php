@@ -29,10 +29,10 @@ App::before(function($request)
             $app->isLoggedIn = FALSE;
         }
 
-        View::share('user', Auth::user());
-
         return $app;
     });
+
+    View::share('user', App::make('bfadmincp'));
 });
 
 

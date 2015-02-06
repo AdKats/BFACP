@@ -15,28 +15,6 @@ $app = new Illuminate\Foundation\Application;
 
 /*
 |--------------------------------------------------------------------------
-| Detect The Application Environment
-|--------------------------------------------------------------------------
-|
-| Laravel takes a dead simple approach to your application environments
-| so you can just specify a machine name for the host that matches a
-| given environment, then we will automatically detect it for you.
-|
-*/
-
-$env = $app->detectEnvironment(function()
-{
-    if(file_exists(__DIR__ . "/../.env.local.php"))
-        return 'local';
-
-    if(file_exists(__DIR__ . "/../.env.php"))
-        return 'production';
-
-    throw new Exception("Invalid environment, check configurations");
-});
-
-/*
-|--------------------------------------------------------------------------
 | Bind Paths
 |--------------------------------------------------------------------------
 |
@@ -47,6 +25,30 @@ $env = $app->detectEnvironment(function()
 */
 
 $app->bindInstallPaths(require __DIR__.'/paths.php');
+
+/*
+|--------------------------------------------------------------------------
+| Detect The Application Environment
+|--------------------------------------------------------------------------
+|
+| Laravel takes a dead simple approach to your application environments
+| so you can just specify a machine name for the host that matches a
+| given environment, then we will automatically detect it for you.
+|
+*/
+
+$env = $app->detectEnvironment(function() use($app)
+{
+    // Only used for local develpment.
+    // DO NOT USE THIS FILE IN PRODUCTION
+    if(file_exists($app['path.base'] . "/.env.local.php"))
+        return 'local';
+
+    if(file_exists($app['path.base'] . "/.env.php"))
+        return 'production';
+
+    throw new Exception("Invalid environment, check configurations");
+});
 
 /*
 |--------------------------------------------------------------------------
