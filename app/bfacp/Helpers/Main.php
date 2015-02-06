@@ -12,10 +12,10 @@ class Main extends BaseHelper
      * @param  string  $status
      * @param  integer $httpcode
      * @param  boolean $cached
-     * @param  boolean $collection
+     * @param  boolean $collectionOnly
      * @return \Illuminate\Support\Facades\Response
      */
-    public function response($input = [], $message = 'OK', $status = 'success', $httpcode = 200, $cached = FALSE, $collection = FALSE)
+    public function response($input = [], $message = 'OK', $status = 'success', $httpcode = 200, $cached = FALSE, $collectionOnly = FALSE)
     {
         if(is_null($message)) $message = 'OK';
         if(is_null($status)) $status = 'success';
@@ -29,7 +29,7 @@ class Main extends BaseHelper
             'data'           => $input
         ]);
 
-        if($collection)
+        if($collectionOnly)
             return $collection;
 
         return $this->response->json($collection, $httpcode)
