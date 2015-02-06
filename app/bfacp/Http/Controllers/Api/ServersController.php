@@ -44,6 +44,6 @@ class ServersController extends BaseController
             'totalSlots' => $totalSlots,
             'percentage' => MainHelper::percent($usedSlots, $totalSlots),
             'games'      => $newCollection
-        ], NULL, NULL, NULL, FALSE, TRUE);
+        ] + Lang::get('dashboard.population'), NULL, NULL, NULL, FALSE, TRUE);
     }
 }
