@@ -7,7 +7,7 @@ return [
      * you know what you're doing
      */
     'APP_ENV' => 'production',
-    'APP_DEBUG' => TRUE,
+    'APP_DEBUG' => FALSE,
     'SESSION_DRIVER' => 'file',
     'CACHE_DRIVER' => 'file',
 
