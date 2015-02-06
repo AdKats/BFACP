@@ -13,7 +13,7 @@ class BansController extends BaseController
 {
     private $repository;
 
-    public functino __construct(BanRepository $repo)
+    public function __construct(BanRepository $repo)
     {
         $this->repository = $repo;
     }
@@ -23,7 +23,8 @@ class BansController extends BaseController
         if($this->isLoggedIn && $this->request->has('personal') && $this->request->get('personal') == 'true')
         {
             $isCached = FALSE;
-            $bans = Ban::with('player', 'record')->personal()->get()->toArray();
+
+            $bans = $this->repository->getPersonalBans( $this->user->settings()->playerIds() );
         }
         else
         {
@@ -54,6 +55,6 @@ class BansController extends BaseController
                 'yesterday' => $yesterdaysBans,
                 'average' => $avgBansPerDay
             ]
-        ]);
+        ], NULL, NULL, NULL, FALSE, TRUE);
     }
 }

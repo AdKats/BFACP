@@ -70,6 +70,21 @@ class Preference extends \Eloquent
         return $this->belongsTo('BFACP\Account\User', 'user_id');
     }
 
+    public function playerIds()
+    {
+        $ids = [];
+
+        if($this->bf3player) {
+            $ids[] = $this->bf3player->PlayerID;
+        }
+
+        if($this->bf4player) {
+            $ids[] = $this->bf4player->PlayerID;
+        }
+
+        return $ids;
+    }
+
     /**
      * @return Illuminate\Database\Eloquent\Model
      */

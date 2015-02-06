@@ -78,22 +78,8 @@ class Ban extends Eloquent
             ->where('ban_startTime', '<=', Carbon::today());
     }
 
-    public function scopePersonal($query, $limit = 30)
+    public function scopePersonal($query, $playerIds = [], $limit = 30)
     {
-        $user = Auth::user();
-
-        $playerIds = [];
-
-        if($user->setting->bf3player)
-        {
-            array_push($playerIds, $user->setting->bf3player->PlayerID);
-        }
-
-        if($user->setting->bf4player)
-        {
-            array_push($playerIds, $user->setting->bf4player->PlayerID);
-        }
-
         if(empty($playerIds))
         {
             return $this;

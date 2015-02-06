@@ -22,4 +22,16 @@ class BanRepository extends BaseRepository
 
 		return $bans;
 	}
+
+	/**
+	 * Gets the bans of the users soldiers
+	 * @param  array $ids Player IDs
+	 * @return array
+	 */
+	public function getPersonalBans($ids = [])
+	{
+		$bans = Ban::with('player', 'record')->personal($ids)->get()->toArray();
+
+		return $bans;
+	}
 }
