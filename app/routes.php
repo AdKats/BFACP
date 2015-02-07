@@ -19,7 +19,6 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
     {
         Route::get('population', ['as' => 'api.servers.population', 'uses' => 'ServersController@population']);
     });
-
 });
 
 Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
@@ -27,6 +26,7 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
     Route::group(['prefix' => 'players'], function()
     {
+        Route::get('/', ['as' => 'player.listing', 'uses' => 'PlayersController@listing']);
     	Route::get('{id}/{name}', ['as' => 'player.show', function()
     	{
     		return Redirect::back();

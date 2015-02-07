@@ -50,7 +50,10 @@ App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
 
-    return Response::view('system.error', compact('exception'), 500);
+    if(Config::get('app.debug') == FALSE)
+    {
+        return Response::view('system.error', compact('exception'), 500);
+    }
 });
 
 /*

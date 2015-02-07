@@ -1,22 +1,21 @@
 <?php namespace BFACP\Http\Controllers\Api;
 
 use Dingo\Api\Routing\ControllerTrait;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\App;
 
 class BaseController extends Controller
 {
     use ControllerTrait;
 
-    public $request;
-    public $user;
-    public $isLoggedIn;
+    protected $request;
+    protected $user;
+    protected $isLoggedIn;
 
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $this->request = $request;
-
-        $this->user = \App::make('bfadmincp')->user;
-        $this->isLoggedIn = \App::make('bfadmincp')->isLoggedIn;
+        $this->isLoggedIn = App::make('bfadmincp')->isLoggedIn;
+        $this->request    = App::make('Illuminate\Http\Request');
+        $this->user       = App::make('bfadmincp')->user;
     }
 }

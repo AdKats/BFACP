@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="bfacp">
     <head>
+        <base href="/">
         <meta charset="UTF-8">
         <title>{{{ MainHelper::getTitle($page_title, NULL) }}}</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>

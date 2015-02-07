@@ -25,11 +25,31 @@ class PlayerRepository extends BaseRepository
      * Returns a paginate result of all players
      * @return
      */
-    public function getAllPlayers($limit = 100)
+    public function getAllPlayers($limit = 100, $names = NULL)
     {
-        if($limit === FALSE) $limit = 100;
+        if($limit === FALSE || $limit > 100) $limit = 100;
 
-        return Player::with($this->opts)->simplePaginate($limit);
+        $query = Player::with('ban', 'infractionsGlobal', 'reputation');
+
+        if( ! is_null($names) )
+        {
+            $query->where(function($q) use($names)
+            {
+                foreach(explode(',', $names) as $name)
+                {
+                    $name = sprintf("%s%%", trim($name));
+                    $q->orWhere('SoldierName', 'LIKE', $name);
+                }
+            });
+
+            $query->orderBy('SoldierName', 'ASC');
+
+            return $query->paginate($limit);
+        }
+
+        $query->orderBy('PlayerID', 'ASC');
+
+        return $query->simplePaginate($limit);
     }
 
     /**
@@ -39,12 +59,9 @@ class PlayerRepository extends BaseRepository
      */
     public function getPlayerById($id)
     {
-        try
-        {
+        try {
             return Player::with($this->opts)->findOrFail($id);
-        }
-        catch(ModelNotFoundException $e)
-        {
+        } catch(ModelNotFoundException $e) {
             throw new PlayerNotFoundException(404, "Player Not Found");
         }
     }
@@ -59,9 +76,7 @@ class PlayerRepository extends BaseRepository
         $player = Player::with($this->opts)->where('EAGUID', $guid)->get();
 
         if($player->count() > 0)
-        {
             return $player;
-        }
 
         throw new PlayerNotFoundException(404, "Player Not Found");
     }

@@ -65,6 +65,12 @@ class Ban extends Eloquent
         return $this->belongsTo('BFACP\Battlefield\Player', 'player_id');
     }
 
+    /**
+     * Gets the latest bans that are in effect
+     * @param  object  $query
+     * @param  integer $limit
+     * @return \Illuminate\Database\Eloquent\Model
+     */
     public function scopeLatest($query, $limit = 60)
     {
         return $query->where('ban_status', 'Active')
@@ -72,12 +78,24 @@ class Ban extends Eloquent
                 ->take($limit);
     }
 
+    /**
+     * Gets the bans done yesterday (UTC)
+     * @param  object $query
+     * @return \Illuminate\Database\Eloquent\Model
+     */
     public function scopeYesterday($query)
     {
         return $query->where('ban_startTime', '>=', Carbon::yesterday())
             ->where('ban_startTime', '<=', Carbon::today());
     }
 
+    /**
+     * Get the bans that the player ids have done
+     * @param  object  $query
+     * @param  array   $playerIds
+     * @param  integer $limit
+     * @return \Illuminate\Database\Eloquent\Model
+     */
     public function scopePersonal($query, $playerIds = [], $limit = 30)
     {
         if(empty($playerIds))
