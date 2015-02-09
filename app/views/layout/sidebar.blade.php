@@ -1,7 +1,7 @@
 <aside class="left-side">
     <section class="sidebar">
         <div class="user-panel">
-            @if(Auth::check())
+            @if($user->isLoggedIn)
             <div class="pull-left image">
                 {{ HTML::image($user->gravatar, NULL, ['class' => 'img-circle']) }}
             </div>
@@ -10,7 +10,7 @@
 
                 <a href="{{ URL::to('/logout') }}">
                     <i class="fa fa-fw fa-sign-out"></i>
-                    <span>Logout</span>
+                    <span>{{ Lang::get('common.logout') }}</span>
                 </a>
             </div>
             @else
@@ -21,24 +21,26 @@
                 <p>Hello, Guest</p>
                 <a href="{{ URL::to('/login') }}">
                     <i class="fa fa-fw fa-sign-in"></i>
-                    <span>Login</span>
+                    <span>{{ Lang::get('common.login') }}</span>
                 </a>
             </div>
             @endif
         </div>
 
-        {{ Form::open(['route' => 'player.listing', 'class' => 'sidebar-form', 'method' => 'GET']) }}
+        {{ Former::open()->method('GET')
+                ->route('player.listing')
+                ->type('raw')
+                ->class('sidebar-form')
+                ->id('psearch') }}
             <div class="input-group">
-                {{ Former::text('player')
-                        ->placeholder('Search for player...')
-                        ->class('form-control') }}
+                {{ Former::text('player')->placeholder(Lang::get('common.nav.extras.psearch.placeholder')) }}
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-flat">
                         <i class="fa fa-search"></i>
                     </button>
                 </span>
             </div>
-        {{ Form::close() }}
+        {{ Former::close() }}
 
         @include('layout.navigation')
     </section>

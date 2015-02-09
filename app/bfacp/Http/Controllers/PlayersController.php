@@ -2,7 +2,7 @@
 
 use BFACP\Repositories\PlayerRepository;
 use Illuminate\Support\Facades\View;
-
+use Illuminate\Support\Facades\Input;
 class PlayersController extends BaseController
 {
     private $repository;
@@ -15,7 +15,8 @@ class PlayersController extends BaseController
 
     public function listing()
     {
-        return View::make('player.listing')
-                ->with('page_title', 'Player Listing');
+        $page_title = Input::has('player') ? 'Player Search' : 'Player Listing';
+
+        return View::make('player.listing', compact('page_title'));
     }
 }

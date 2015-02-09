@@ -29,16 +29,46 @@ class PlayerRepository extends BaseRepository
     {
         if($limit === FALSE || $limit > 100) $limit = 100;
 
-        $query = Player::with('ban', 'infractionsGlobal', 'reputation');
+        $query = Player::with(
+            'ban',
+            'infractionsGlobal',
+            'infractionsServer.server',
+            'reputation'
+        );
 
-        if( ! is_null($names) )
+        if( ! empty($names) )
         {
             $query->where(function($q) use($names)
             {
                 foreach(explode(',', $names) as $name)
                 {
-                    $name = sprintf("%s%%", trim($name));
-                    $q->orWhere('SoldierName', 'LIKE', $name);
+                    // Checks if string is an EAGUID
+                    if(preg_match("/^EA_([0-9A-Z]{32}+)$/", $name, $matches))
+                    {
+                        $eaguid = sprintf("EA_%s", $matches[1]);
+                        $q->orWhere('EAGUID', '=', $eaguid);
+                    }
+
+                    // Checks if string is a PBGUID
+                    elseif(preg_match("/^([a-f0-9]+)$/", $name, $matches))
+                    {
+                        $pbguid = trim($matches[1]);
+                        $q->orWhere('PBGUID', '=', $pbguid);
+                    }
+
+                    // Checks if string is an IPv4 Address
+                    elseif(preg_match("/^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|[0-9])$/", $name, $matches))
+                    {
+                        $ip = trim($name);
+                        $q->orWhere('IP_Address', '=', $ip);
+                    }
+
+                    // Checks if string is a player name
+                    elseif(preg_match("/^([a-zA-Z0-9_\-]+)$/", $name, $matches))
+                    {
+                        $name = sprintf("%s%%", $matches[1]);
+                        $q->orWhere('SoldierName', 'LIKE', $name);
+                    }
                 }
             });
 

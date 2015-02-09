@@ -10,7 +10,8 @@
 
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <!-- Ionicons -->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css" rel="stylesheet" type="text/css" />
+
         {{ HTML::style('css/ionicons.min.css') }}
 
         {{ HTML::style('css/style.css?v=1') }}
@@ -28,7 +29,7 @@
     <body class="skin-blue">
         <div class="wrapper">
             <header class="main-header">
-                {{ link_to_route('home', MainHelper::getTitle($page_title, NULL, TRUE), [], ['class' => 'logo']) }}
+                {{ link_to_route('home', MainHelper::getTitle($page_title, NULL, TRUE), [], ['class' => 'logo', 'target' => '_self']) }}
 
                 <nav class="navbar navbar-static-top" role="navigation">
                     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -56,9 +57,9 @@
 
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
-                    <b>Version</b> 2.0
+                    <strong>Version</strong> 2.0
                 </div>
-                <strong>Copyright &copy; 2013-{{ date('Y') }} <a href="http://www.adkgamers.com" target="_blank">A Different Kind, LLC</a>. All rights reserved.</strong>
+                <strong>&copy; 2013-{{ date('Y') }} <a href="http://www.adkgamers.com" target="_blank">A Different Kind, LLC</a>. All rights reserved.</strong> <em>{{ MainHelper::executionTime(true) }}</em>
             </footer>
         </div>
 

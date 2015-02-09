@@ -208,6 +208,7 @@ angular.module('bfacp', [
     .controller('PlayerListController', ['$scope', '$http', '$location', function($scope, $http, $location) {
 
         $scope.players = [];
+        $scope.alerts = [];
 
         $scope.loaded = false;
 
@@ -236,7 +237,28 @@ angular.module('bfacp', [
             return className;
         }
 
+        $scope.closeAlert = function(index) {
+            $scope.alerts.splice(index, 1);
+        };
+
+        $scope.$watch('main.page', function(newVal, oldVal) {
+            if($scope.main.page > $scope.main.last_page && $scope.main.total !== null) {
+                $scope.main.page = oldVal;
+            }
+        });
+
         $scope.getListing = function() {
+
+            if($scope.main.page > $scope.main.last_page && $scope.main.total !== null) {
+                $scope.alerts.push({
+                    type: 'danger',
+                    msg: 'You can\'t go to page ' + $scope.main.page + ' when there  is only ' + $scope.main.last_page + ' page(s).',
+                    timeout: 5000
+                });
+
+                return false;
+            }
+
             $scope.loaded = false;
 
             var url = 'api/players?page=' + $scope.main.page + '&limit=' + $scope.main.take;
@@ -272,3 +294,10 @@ angular.module('bfacp', [
         $scope.getListing();
 
     }]);
+
+$('#psearch').submit(function() {
+    $(this).find('input:text').each(function() {
+        var inputVal = $(this).val();
+        $(this).val(inputVal.split(' ').join(''));
+    });
+});

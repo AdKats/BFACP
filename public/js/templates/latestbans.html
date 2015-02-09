@@ -16,7 +16,7 @@
                     <a ng-href="{{ ban.player.profile_url }}" tooltip="{{ ban.record.record_message }}" ng-bind="ban.player.SoldierName"></a>
                 </td>
                 <td class="hidden-xs" ng-bind="ban.record.source_name"></td>
-                <td ng-bind="ban.ban_issued | date:'medium'"></td>
+                <td><span ng-bind="moment(ban.ban_issued).fromNow()" tooltip="{{ ban.ban_issued | date:'medium' }}"></span></td>
                 <td>
                     <span ng-if="ban.is_perm" class="label label-danger">Permanent Ban</span>
                     <span ng-if="!ban.is_perm" ng-bind="moment(ban.ban_endTime).fromNow()"></span>

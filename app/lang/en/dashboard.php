@@ -6,7 +6,7 @@ return [
 		'players_online' => 'Players Online',
 		'average_bans' => 'Average Bans Per Day',
 		'yesterday_bans' => 'Bans Yesterday',
-		'player_count' => 'Player DB Total'
+		'player_count' => 'Unique Players'
 	],
 
 	'population' => [

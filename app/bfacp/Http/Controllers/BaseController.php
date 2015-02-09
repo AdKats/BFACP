@@ -16,7 +16,8 @@ class BaseController extends Controller
         {
             $menu->raw('MAIN NAVIGATION', ['class' => 'header']);
             $menu->add('Dashboard', ['route' => 'home'])
-                ->prepend('<i class="fa fa-dashboard"></i>');
+                ->prepend('<i class="fa fa-dashboard"></i>')
+                ->link->attr(['target' => '_self']);
         });
 
         $this->user = \App::make('bfadmincp')->user;

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model AS Eloquent;
 use Carbon\Carbon;
+use MainHelper;
 
 class Player extends Eloquent
 {
@@ -40,7 +41,7 @@ class Player extends Eloquent
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = ['profile_url'];
+    protected $appends = ['profile_url', 'country_flag', 'country_name'];
 
     /**
      * Models to be loaded automaticly
@@ -122,5 +123,29 @@ class Player extends Eloquent
             'id' => $this->PlayerID,
             'name' => $this->SoldierName
         ]);
+    }
+
+    /**
+     * Get the country name
+     * @return string
+     */
+    public function getCountryNameAttribute()
+    {
+        if($this->CountryCode == '--' || empty($this->CountryCode))
+            return 'Unknown';
+
+        return MainHelper::countries($this->CountryCode);
+    }
+
+    /**
+     * Get the country image flag
+     * @return string
+     */
+    public function getCountryFlagAttribute()
+    {
+        if($this->CountryCode == '--' || empty($this->CountryCode))
+            return 'images/flags/24/_unknown.png';
+
+        return sprintf("images/flags/24/%s.png", strtoupper($this->CountryCode));
     }
 }

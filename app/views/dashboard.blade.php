@@ -10,8 +10,8 @@
                 <div class="info-box-content">
                     <span class="info-box-text">{{ Lang::get('dashboard.metro.players_online') }}</span>
                     <span class="info-box-number">
-                        <span count-to="@{{ results.population.online }}" value="@{{ results.population.old.online }}" duration="3"></span>&nbsp;/
-                        <span count-to="@{{ results.population.total }}" value="@{{ results.population.old.total }}" duration="3"></span>
+                        <span count-to="@{{ results.population.online }}" value="@{{ results.population.old.online }}" duration="1"></span>&nbsp;/
+                        <span count-to="@{{ results.population.total }}" value="@{{ results.population.old.total }}" duration="1"></span>
                     </span>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text">{{ Lang::get('dashboard.metro.player_count') }}</span>
                     <span class="info-box-number">
-                        <span count-to="{{ $uniquePlayers }}" value="0" duration="4"></span>
+                        <span count-to="{{ $uniquePlayers }}" value="0" duration="2"></span>
                     </span>
                 </div>
             </div>
