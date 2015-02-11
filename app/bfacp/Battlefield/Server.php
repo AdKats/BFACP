@@ -41,7 +41,7 @@ class Server extends Eloquent
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = ['percentage'];
+    protected $appends = ['percentage', 'ip', 'port'];
 
     /**
      * Models to be loaded automaticly
@@ -57,6 +57,22 @@ class Server extends Eloquent
         return $this->belongsTo('BFACP\Battlefield\Game', 'GameID')->remember(10);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function scoreboard()
+    {
+        return $this->hasMany('BFACP\Battlefield\Scoreboard\Scoreboard', 'ServerID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function scores()
+    {
+        return $this->hasMany('BFACP\Battlefield\Scoreboard\Scores', 'ServerID');
+    }
+
     public function scopeActive($query)
     {
         return $query->where('ConnectionState', 'on');
@@ -65,5 +81,16 @@ class Server extends Eloquent
     public function getPercentageAttribute()
     {
         return MainHelper::percent($this->usedSlots, $this->maxSlots);
+    }
+
+    public function getIPAttribute()
+    {
+        $host = explode(":", $this->IP_Address)[0];
+        return gethostbyname($host);
+    }
+
+    public function getPortAttribute()
+    {
+        return (int) explode(":", $this->IP_Address)[1];
     }
 }

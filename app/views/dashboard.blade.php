@@ -4,7 +4,7 @@
 <div ng-controller="DashboardController">
 
     <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon" ng-class="populationColor(results.population.percentage, true)"><i class="ion ion-ios-people-outline"></i></span>
                 <div class="info-box-content">
@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-green"><i class="ion ion-stats-bars"></i></span>
                 <div class="info-box-content">
@@ -31,7 +31,7 @@
 
         <div class="clearfix visible-sm-block"></div>
 
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-red"><i class="ion ion-stats-bars"></i></span>
                 <div class="info-box-content">
@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-red"><i class="ion ion-stats-bars"></i></span>
                 <div class="info-box-content">
@@ -58,11 +58,11 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-lg-6" ng-include="'js/templates/serverpopulation.html'"></div>
+        <div class="col-xs-12 col-md-8 col-lg-6" ng-include="'js/templates/serverpopulation.html'"></div>
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-lg-6">
+        <div class="col-xs-12 col-md-8 col-lg-6">
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">{{ Lang::get('dashboard.bans.title') }}</h3>
