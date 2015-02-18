@@ -91,6 +91,7 @@ class Server extends Eloquent
 
     public function getPortAttribute()
     {
-        return (int) explode(":", $this->IP_Address)[1];
+        $port = explode(":", $this->IP_Address)[1];
+        return (int) $port;
     }
 }

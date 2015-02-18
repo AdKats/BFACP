@@ -69,11 +69,7 @@ class Record extends Eloquent
      */
     public function server()
     {
-        return $this->belongsTo('BFACP\Battlefield\Server', 'server_id')->select([
-            'ServerID',
-            'ServerName',
-            'GameID'
-        ]);
+        return $this->belongsTo('BFACP\Battlefield\Server', 'server_id');
     }
 
     /**
