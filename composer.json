@@ -8,8 +8,10 @@
         "lavary/laravel-menu": "dev-master",
         "pda/pheanstalk": "~2.0",
         "php": ">=5.4.0",
-        "zizaco/confide": "~4.0@dev",
-        "zizaco/entrust": "1.2.*@dev"
+        "zizaco/confide": "~4.3@dev",
+        "zizaco/entrust": "1.2.*@dev",
+        "league/commonmark": "0.7.0",
+        "pragmarx/tracker": "0.7.*"
     },
     "require-dev": {
         "way/generators": "~2.0"
@@ -17,7 +19,6 @@
     "autoload": {
         "classmap": [
             "app/commands",
-            "app/controllers",
             "app/database/migrations",
             "app/database/seeds"
         ],
