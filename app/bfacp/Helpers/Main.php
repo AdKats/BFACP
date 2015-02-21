@@ -20,6 +20,7 @@ class Main extends BaseHelper
         if(is_null($message)) $message = 'OK';
         if(is_null($status)) $status = 'success';
         if(is_null($httpcode)) $httpcode = 200;
+        if(is_null($input)) $input = [];
 
         $collection = new Collection([
             'status'         => $status,
@@ -479,10 +480,11 @@ class Main extends BaseHelper
 
     /**
      * Returns the language name if code is specified
-     * @param  string $lang Language Code
+     * @param  string $lang     Language Code
+     * @param  bool   $onlyKeys Only return comma dilimated list
      * @return mixed        String or Array
      */
-    public function languages($lang = '')
+    public function languages($lang = '', $onlyKeys = FALSE)
     {
         $languages = [
             'aa' => 'Afar',
@@ -673,6 +675,11 @@ class Main extends BaseHelper
 
         if(!empty($lang) && array_key_exists($lang, $languages))
             return $languages[$lang];
+
+        if($onlyKeys)
+        {
+            return implode( ',' , array_keys( $languages ) );
+        }
 
         return $languages;
     }

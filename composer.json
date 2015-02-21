@@ -5,13 +5,13 @@
         "geoip2/geoip2": "~2.0",
         "guzzlehttp/guzzle": "~5.0",
         "laravel/framework": "4.2.*",
-        "lavary/laravel-menu": "dev-master",
-        "pda/pheanstalk": "~2.0",
+        "lavary/laravel-menu": "1.5.0",
         "php": ">=5.4.0",
         "zizaco/confide": "~4.3@dev",
         "zizaco/entrust": "1.2.*@dev",
         "league/commonmark": "0.7.0",
-        "pragmarx/tracker": "0.7.*"
+        "pragmarx/tracker": "0.7.*",
+        "vierbergenlars/php-semver": "3.0.0"
     },
     "require-dev": {
         "way/generators": "~2.0"

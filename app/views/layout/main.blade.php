@@ -57,7 +57,7 @@
 
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
-                    <strong>Version</strong> 2.0
+                    <strong>Version</strong> {{ BFACP_VERSION }}
                 </div>
                 <strong>&copy; 2013-{{ date('Y') }} <a href="http://www.adkgamers.com" target="_blank">A Different Kind, LLC</a>. All rights reserved.</strong> <em>{{ MainHelper::executionTime(true) }}</em>
             </footer>

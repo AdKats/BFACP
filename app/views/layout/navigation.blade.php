@@ -1,1 +1,1 @@
-{{ $MainNav->asUl(['class' => 'sidebar-menu']) }}
+@include('layout.menu.custom-menu')

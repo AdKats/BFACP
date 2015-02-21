@@ -17,7 +17,7 @@
                 <tbody>
                     <tr ng-repeat="(serverKey, server) in game.servers" ng-class="populationColor(server.percentage, true)">
                         <td ng-bind="server.ServerName"></td>
-                        <td><span ng-bind="server.usedSlots"></span> / <span ng-bind="server.maxSlots"></span></td>
+                        <td><span ng-bind="server.usedSlots"></span> / <span ng-bind="server.maxSlots"></span> <span ng-if="server.in_queue > 0">({{ server.in_queue }})</span></td>
                         <td ng-bind="server.mapName"></td>
                     </tr>
                 </tbody>
