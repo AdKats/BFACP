@@ -74,7 +74,7 @@ class Setting extends Eloquent
             case "multiline":
                 if(in_array($this->attributes['setting_name'], ['Pre-Message List', 'Server Rule List', 'SpamBot Say List', 'SpamBot Yell List']))
                 {
-                    $value = html_entity_decode($value);
+                    $value = rawurldecode( urldecode( $value ) );
                 }
 
                 $valueArray = explode('|', $value);
