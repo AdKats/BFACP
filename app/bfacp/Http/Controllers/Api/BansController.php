@@ -15,6 +15,8 @@ class BansController extends BaseController
 
     public function __construct(BanRepository $repo)
     {
+        parent::__construct();
+
         $this->repository = $repo;
     }
 

@@ -14,7 +14,8 @@
 
         {{ HTML::style('css/ionicons.min.css') }}
 
-        {{ HTML::style('css/style.css?v=1') }}
+        {{ HTML::style('css/style.min.css?v=1') }}
+        {{ HTML::style('css/skin-blue.min.css?v=1') }}
 
         @yield('styles')
 
@@ -63,8 +64,10 @@
             </footer>
         </div>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript">$.widget.bridge('uibutton', $.ui.button);</script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-messages.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-loader.min.js"></script>
@@ -75,6 +78,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-sanitize.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
+        {{ HTML::script('js/plugins/fastclick/fastclick.min.js') }}
         {{ HTML::script('js/plugins/angular-modules/count-to/count-to.js') }}
         {{ HTML::script('js/boot.js?v=1') }}
         {{ HTML::script('js/app.js?v=1') }}
