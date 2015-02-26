@@ -2,9 +2,6 @@
 
 use BFACP\Battlefield\Server;
 use Exception;
-use GuzzleHttp\Client AS Guzzle;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\RequestException;
 
 class BattlelogServer extends Battlelog
 {
