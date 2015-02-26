@@ -1,5 +1,5 @@
 <?php namespace BFACP\Exceptions;
 
-use Exception;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class MetabansException extends Exception {}
+class MetabansException extends HttpException {}
