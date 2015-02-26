@@ -1,7 +1,5 @@
 <?php namespace BFACP\Repositories;
 
-use Illuminate\Http\Request;
-
 class BaseRepository
 {
     /**
@@ -10,8 +8,8 @@ class BaseRepository
      */
     public $request;
 
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $this->request = $request;
+        $this->request = \App::make('Illuminate\Http\Request');
     }
 }
