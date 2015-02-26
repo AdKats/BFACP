@@ -82,7 +82,12 @@ class Metabans
      */
     protected $guzzle;
 
-    public function __construct(Guzzle $guzzle)
+    /**
+     * Base62
+     */
+    protected $base62;
+
+    public function __construct(Guzzle $guzzle, Base62 $base62)
     {
         $this->key     = Config::get('bfacp.metabans.key', FALSE);
         $this->user    = Config::get('bfacp.metabans.user', FALSE);
@@ -103,6 +108,7 @@ class Metabans
         ];
 
         $this->guzzle = $guzzle;
+        $this->base62 = $base62;
     }
 
     /**
@@ -151,14 +157,25 @@ class Metabans
     {
         if( ! is_numeric($offset)) $offset = 0;
 
-        $assessments = new Collection($this->request([
+        $assessments = $this->request([
             'mbo_assessments' => [
                 'account_name' => $this->account,
                 'offset' => $offset
             ]
-        ]));
+        ]);
 
-        return MainHelper::response($assessments);
+        foreach($assessments['assessments'] as $key => $assessment)
+        {
+            $player_url = sprintf("http://metabans.com/player?i=%s", $this->base62->encode($assessment['player_id']));
+            $assessment_url = sprintf("http://metabans.com/assessment?i=%s", $this->base62->encode($assessment['assessment_id']));
+
+            $assessments['assessments'][$key]['player_url'] = $player_url;
+            $assessments['assessments'][$key]['assessment_url'] = $assessment_url;
+        }
+
+        $assessments = new Collection($assessments);
+
+        return $assessments;
     }
 
     /**
@@ -169,14 +186,25 @@ class Metabans
     {
         if( ! is_numeric($offset)) $offset = 0;
 
-        $feed = new Collection($this->request([
+        $feed = $this->request([
             'mbo_feed' => [
                 'account_name' => $this->account,
                 'offset' => $offset
             ]
-        ])['feed']);
+        ]);
 
-        return MainHelper::response($feed);
+        foreach($feed['feed'] as $key => $f)
+        {
+            $player_url = sprintf("http://metabans.com/player?i=%s", $this->base62->encode($f['player_id']));
+            $assessment_url = sprintf("http://metabans.com/assessment?i=%s", $this->base62->encode($f['assessment_id']));
+
+            $feed['feed'][$key]['player_url'] = $player_url;
+            $feed['feed'][$key]['assessment_url'] = $assessment_url;
+        }
+
+        $feed = new Collection($feed);
+
+        return $feed;
     }
 
     /**
@@ -329,13 +357,10 @@ class Metabans
         } catch(RequestException $e) {
 
             if($e->hasResponse()) {
-                return MainHelper::response($e->getResponse(), 'Error in request', 'error', 400);
+                throw new MetabansException(sprintf("Request encountered an error. %s", $e->getResponse()), 400);
             }
 
-            return MainHelper::response(NULL, 'Error in contacting Metabans API', 'error', 503);
-
-        } catch(MetabansException $e) {
-            return MainHelper::response(['code' => $e->getCode()], $e->getMessage(), 'error', 400);
+            throw new MetabansException("Could not connect to Metabans API");
         }
     }
 
