@@ -146,7 +146,9 @@ class Metabans
             'mb_assess_player' => $data
         ], TRUE);
 
-        return MainHelper::response($assessment);
+        $assessment = new Collection($assessment);
+
+        return $assessment;
     }
 
     /**
