@@ -79,6 +79,18 @@ angular.module('bfacp', [
                 columns: [],
                 data: []
             },
+            metabans: {
+                feed: {
+                    data: []
+                },
+                assessments: {
+                    banned_total: 0,
+                    protected_total: 0,
+                    watched_total: 0,
+                    enforced_bans_total: 0,
+                    data: []
+                }
+            },
             population: {
                 columns: [],
                 title: '',
@@ -115,6 +127,25 @@ angular.module('bfacp', [
         $scope.$watch('results.population.total', function(newValue, oldValue) {
             $scope.results.population.old.total = oldValue;
         });
+
+        $scope.metabans = function() {
+
+            // Fetch feed
+            $http({
+                url: 'api/bans/metabans/feed_assessments',
+                method: 'GET'
+            }).success(function(data, status) {
+                $scope.results.metabans.feed.data = data.data.feed.feed;
+                $scope.results.metabans.assessments.data = data.data.assessments.assessments;
+                $scope.results.metabans.assessments.banned_total = data.data.assessments.banned_total;
+                $scope.results.metabans.assessments.protected_total = data.data.assessments.protected_total;
+                $scope.results.metabans.assessments.watched_total = data.data.assessments.watched_total;
+                $scope.results.metabans.assessments.enforced_bans_total = data.data.assessments.enforced_bans_total;
+            }).error(function(data, status) {
+                $scope.metabans();
+            });
+
+        };
 
         /**
          * Fetchs the latest bans. If personal is true only fetch the users issued bans.
@@ -200,8 +231,6 @@ angular.module('bfacp', [
         // Re-fetch the population every 30 seconds
         $interval($scope.population, 30 * 1000);
 
-        $scope.latestBans();
-        $scope.population();
         $scope.banStats();
 
     }])

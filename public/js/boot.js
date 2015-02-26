@@ -22,12 +22,12 @@ if (typeof jQuery === "undefined") {
  *
  * @type Object
  * @description $.AdminLTE is the main object for the template's app.
- *              It's used for implementing functions and options related
- *              to the template. Keeping everything wrapped in an object
- *              prevents conflict with other plugins and is a better
- *              way to organize our code.
+ *        It's used for implementing functions and options related
+ *        to the template. Keeping everything wrapped in an object
+ *        prevents conflict with other plugins and is a better
+ *        way to organize our code.
  */
-$.AdminLTE = new Object();
+$.AdminLTE = {};
 
 /* --------------------
  * - AdminLTE Options -
@@ -45,13 +45,18 @@ $.AdminLTE.options = {
   sidebarToggleSelector: "[data-toggle='offcanvas']",
   //Activate sidebar push menu
   sidebarPushMenu: true,
-  //Activate sidebar slimscroll if the fixed layout is set
+  //Activate sidebar slimscroll if the fixed layout is set (requires SlimScroll Plugin)
   sidebarSlimScroll: true,
   //BoxRefresh Plugin
   enableBoxRefresh: true,
   //Bootstrap.js tooltip
   enableBSToppltip: true,
   BSTooltipSelector: "[data-toggle='tooltip']",
+  //Enable Fast Click. Fastclick.js creates a more
+  //native touch ecperience with touch devices. If you
+  //choose to enable the plugin, make sure you load the script
+  //before AdminLTE's app.js
+  enableFastclick: true,
   //Box Widget Plugin. Enable this plugin
   //to allow boxes to be collapsed and/or removed
   enableBoxWidget: true,
@@ -89,7 +94,7 @@ $.AdminLTE.options = {
     purple: "#8E24AA",
     maroon: "#D81B60",
     black: "#222222",
-    gray: "#eaeaec"
+    gray: "#d2d6de"
   }
 };
 
@@ -104,11 +109,11 @@ $(function () {
   //Easy access to options
   var o = $.AdminLTE.options;
 
-  //Enable sidebar tree view controls
-  $.AdminLTE.tree('.sidebar');
-
   //Activate the layout maker
   $.AdminLTE.layout.activate();
+
+  //Enable sidebar tree view controls
+  $.AdminLTE.tree('.sidebar');
 
   //Add slimscroll to navbar dropdown
   if (o.navbarMenuSlimscroll && typeof $.fn.slimscroll != 'undefined') {
@@ -132,6 +137,10 @@ $(function () {
   //Activate box widget
   if (o.enableBoxWidget) {
     $.AdminLTE.boxWidget.activate();
+  }
+
+  if(o.enableFastclick && typeof FastClick != 'undefined') {
+    FastClick.attach(document.body);
   }
 
   /*
@@ -169,22 +178,26 @@ $.AdminLTE.layout = {
     var _this = this;
     _this.fix();
     _this.fixSidebar();
-    $(".wrapper").resize(function () {
+    $(window, ".wrapper").resize(function () {
       _this.fix();
       _this.fixSidebar();
     });
   },
   fix: function () {
     //Get window height and the wrapper height
-    var neg = $('.main-header').height() + $('.main-footer').height();
+    var neg = $('.main-header').outerHeight() + $('.main-footer').outerHeight();
     var window_height = $(window).height();
-    var sidebar_height = $(".left-side").height();
+    var sidebar_height = $(".sidebar").height();
     //Set the min-height of the content and sidebar based on the
-    //the maximum height of the document.
-    if (window_height >= sidebar_height) {
-      $(".content-wrapper, .left-side").css('min-height', window_height - neg);
+    //the height of the document.
+    if ($("body").hasClass("fixed")) {
+      $(".content-wrapper, .right-side").css('min-height', window_height - $('.main-footer').outerHeight());
     } else {
-      $(".content-wrapper, .left-side").css('min-height', sidebar_height);
+      if (window_height >= sidebar_height) {
+        $(".content-wrapper, .right-side").css('min-height', window_height - neg);
+      } else {
+        $(".content-wrapper, .right-side").css('min-height', sidebar_height);
+      }
     }
   },
   fixSidebar: function () {
@@ -194,10 +207,14 @@ $.AdminLTE.layout = {
         $(".sidebar").slimScroll({destroy: true}).height("auto");
       }
       return;
+    } else if (typeof $.fn.slimScroll == 'undefined' && console) {
+      console.error("Error: the fixed layout requires the slimscroll plugin!");
     }
     //Enable slimscroll for fixed layout
     if ($.AdminLTE.options.sidebarSlimScroll) {
       if (typeof $.fn.slimScroll != 'undefined') {
+        //Distroy if it exists
+        $(".sidebar").slimScroll({destroy: true}).height("auto");
         //Add slimscroll
         $(".sidebar").slimscroll({
           height: ($(window).height() - $(".main-header").height()) + "px",
@@ -224,6 +241,13 @@ $.AdminLTE.pushMenu = function (toggleBtn) {
     $("body").toggleClass('sidebar-collapse');
     $("body").toggleClass('sidebar-open');
   });
+  $(".content-wrapper").click(function () {
+    //Enable hide menu when clicking on the content-wrapper on small screens
+    if ($(window).width() <= 767 && $("body").hasClass("sidebar-open")) {
+      $("body").removeClass('sidebar-open');
+    }
+  });
+
 };
 
 /* Tree()
@@ -281,7 +305,7 @@ $.AdminLTE.tree = function (menu) {
  *
  * @type Object
  * @usage $.AdminLTE.boxWidget.activate()
- *                              Set all of your option in the main $.AdminLTE.options object
+ *                Set all of your option in the main $.AdminLTE.options object
  */
 $.AdminLTE.boxWidget = {
   activate: function () {
