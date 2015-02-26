@@ -47,7 +47,7 @@ class Player extends Eloquent
      * Models to be loaded automaticly
      * @var array
      */
-    protected $with = ['game'];
+    protected $with = ['game', 'battlelog'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Model
@@ -111,6 +111,23 @@ class Player extends Eloquent
     public function reputation()
     {
         return $this->hasOne('BFACP\Battlefield\Reputation', 'player_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function battlelog()
+    {
+        return $this->hasOne('BFACP\AdKats\Battlelog', 'player_id');
+    }
+
+    /**
+     * Does the player have a battlelog persona id linked
+     * @return boolean
+     */
+    public function hasPersona()
+    {
+        return ! empty($this->battlelog->persona_id);
     }
 
     /**
