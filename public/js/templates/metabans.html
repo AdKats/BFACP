@@ -1,0 +1,49 @@
+<div class="nav-tabs-custom">
+    <ul class="nav nav-tabs pull-right">
+        <li><a href="javascript://" data-target="#mb-feed" data-toggle="tab">Feed</a></li>
+        <li class="active"><a href="javascript://" data-target="#mb-assessments" data-toggle="tab">Assessments</a></li>
+        <li class="pull-left header">Metabans</li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane" id="mb-feed">
+            <table class="table table-striped table-condensed">
+                <thead>
+                    <th>Player</th>
+                    <th>Game</th>
+                    <th>Type</th>
+                    <th>Expiration</th>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="(key, f) in results.metabans.feed.data">
+                        <td><a ng-href="{{ f.assessment_url }}" tooltip="{{ f.text }}" ng-bind="f.player_name" target="_blank"></a></td>
+                        <td ng-bind="f.game_name.replace('_', '')"></td>
+                        <td ng-bind="f.action_type"></td>
+                        <td ng-bind="moment(f.stamp).fromNow()"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tab-pane active" id="mb-assessments">
+            <table class="table table-striped table-condensed">
+                <thead>
+                    <th>Player</th>
+                    <th>Game</th>
+                    <th>Type</th>
+                    <th>Expiration</th>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="(key, assessment) in results.metabans.assessments.data">
+                        <td><a ng-href="{{ assessment.assessment_url }}" tooltip="{{ assessment.reason }}" ng-bind="assessment.player_name" target="_blank"></a></td>
+                        <td ng-bind="assessment.game_name.replace('_', '')"></td>
+                        <td ng-bind="assessment.action_type"></td>
+                        <td ng-bind="moment(assessment.assessment_expires).fromNow()"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
