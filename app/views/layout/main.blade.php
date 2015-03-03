@@ -72,7 +72,6 @@
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-messages.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-loader.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-animate.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-route.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-resource.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-aria.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-sanitize.min.js"></script>

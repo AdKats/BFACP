@@ -54,7 +54,7 @@
                             <td ng-bind="player.PlayerID"></td>
                             <td><span ng-class="player.game.class_css" ng-bind="player.game.Name"></span></td>
                             <td ng-bind="player.GlobalRank"></td>
-                            <td><a ng-href="@{{ player.profile_url }}" ng-bind="player.SoldierName"></a></td>
+                            <td><a ng-href="@{{ player.profile_url }}" ng-bind="player.SoldierName" target="_self"></a></td>
                             <td>
                                 <ng-switch on="player.ban !== null">
                                     <div ng-switch-when="true">

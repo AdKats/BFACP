@@ -281,7 +281,7 @@ angular.module('bfacp', [
             if($scope.main.page > $scope.main.last_page && $scope.main.total !== null) {
                 $scope.alerts.push({
                     type: 'danger',
-                    msg: 'You can\'t go to page ' + $scope.main.page + ' when there  is only ' + $scope.main.last_page + ' page(s).',
+                    msg: 'You can\'t go to page ' + $scope.main.page + ' when there is only ' + $scope.main.last_page + ' page(s).',
                     timeout: 5000
                 });
 
