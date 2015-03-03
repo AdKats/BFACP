@@ -16,14 +16,12 @@ class BaseController extends Controller
         {
             $menu->raw('MAIN NAVIGATION', ['class' => 'header']);
             $menu->add('Dashboard', ['route' => 'home'])
-                ->prepend('<i class="fa fa-dashboard"></i>')
-                ->link->attr(['target' => '_self']);
+                ->prepend('<i class="fa fa-dashboard"></i>');
 
             $menu->raw('ADMIN NAVIGATION', ['class' => 'header']);
 
             $menu->add('AdKats Management', 'javascript:://')
-                ->add('Locale Editor', ['route' => 'admin.adkats.locale.index'])
-                ->link->attr(['target' => '_self']);
+                ->add('Locale Editor', ['route' => 'admin.adkats.locale.index']);
         });
 
         $this->user = \App::make('bfadmincp')->user;
