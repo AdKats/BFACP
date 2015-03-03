@@ -2,8 +2,10 @@
 
 use BFACP\Battlefield\Player;
 use BFACP\Exceptions\PlayerNotFoundException;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class PlayerRepository extends BaseRepository
 {
@@ -122,6 +124,26 @@ class PlayerRepository extends BaseRepository
         });
 
         return intval($count);
+    }
+
+    /**
+     * Gets the total number of players from each country
+     * @return object
+     */
+    public function getPlayersSeenByCountry()
+    {
+        $countryTotals = Cache::remember('player.country.count', 1440, function()
+        {
+            return DB::table('tbl_playerdata')->whereNotIn('CountryCode', ['', '--'])
+                ->whereNotNull('CountryCode')
+                ->where('LastSeenOnServer', '>=', Carbon::now()->subDay())
+                ->join('tbl_server_player', 'tbl_playerdata.PlayerID', '=', 'tbl_server_player.PlayerID')
+                ->join('tbl_playerstats', 'tbl_server_player.StatsID', '=', 'tbl_playerstats.StatsID')
+                ->groupBy('CountryCode')
+                ->select(DB::raw("UPPER(CountryCode) AS 'CountryCode', COUNT(tbl_playerdata.PlayerID) AS 'total'"))->lists('total', 'CountryCode');
+        });
+
+        return $countryTotals;
     }
 
     /**

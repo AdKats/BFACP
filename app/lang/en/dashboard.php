@@ -33,5 +33,7 @@ return [
 			'col3' => 'Issued',
 			'col4' => 'Expires'
 		]
-	]
+	],
+
+	'players_seen_country_past_day' => 'Players Seen by Country (24h)'
 ];

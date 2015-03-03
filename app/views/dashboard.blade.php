@@ -1,5 +1,9 @@
 @extends('layout.main')
 
+@section('styles')
+{{ HTML::style('css/jvectormap/jquery-jvectormap-1.2.2.css') }}
+@stop
+
 @section('content')
 <div ng-controller="DashboardController">
 
@@ -58,7 +62,7 @@
     </div>
 
     <div class="row">
-        <div class="cold-xs-12 col-md-3 col-lg-3">
+        <div class="cold-xs-12 col-md-6 col-lg-3">
             <div class="info-box bg-navy disabled">
                 <span class="info-box-icon"><i class="fa fa-bed"></i></span>
                 <div class="info-box-content">
@@ -76,7 +80,7 @@
             </div>
         </div>
 
-        <div class="cold-xs-12 col-md-3 col-lg-3">
+        <div class="cold-xs-12 col-md-6 col-lg-3">
             <div class="info-box bg-navy disabled">
                 <span class="info-box-icon"><i class="fa fa-trash"></i></span>
                 <div class="info-box-content">
@@ -94,7 +98,7 @@
             </div>
         </div>
 
-        <div class="cold-xs-12 col-md-3 col-lg-3">
+        <div class="cold-xs-12 col-md-6 col-lg-3">
             <div class="info-box bg-navy disabled">
                 <span class="info-box-icon"><i class="ion ion-hammer"></i></span>
                 <div class="info-box-content">
@@ -112,7 +116,7 @@
             </div>
         </div>
 
-        <div class="cold-xs-12 col-md-3 col-lg-3">
+        <div class="cold-xs-12 col-md-6 col-lg-3">
             <div class="info-box bg-navy disabled">
                 <span class="info-box-icon"><i class="fa fa-frown-o"></i></span>
                 <div class="info-box-content">
@@ -132,11 +136,25 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-md-8 col-lg-6" ng-include="'js/templates/serverpopulation.html'" onload="population()"></div>
+        <div class="col-xs-12 col-lg-6" ng-include="'js/templates/serverpopulation.html'" onload="population()"></div>
+        <div class="col-xs-12 col-lg-6">
+            <div class="box box-solid bg-light-blue-gradient">
+                <div class="box-header">
+                    <i class="fa fa-map-marker"></i>
+                    <h3 class="box-title">
+                        {{ Lang::get('dashboard.players_seen_country_past_day') }}
+                    </h3>
+                </div>
+
+                <div class="box-body">
+                    <div id="player-world-map" style="height: 350px"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-md-8 col-lg-6">
+        <div class="col-xs-12 col-md-7 col-lg-6">
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">{{ Lang::get('dashboard.bans.title') }}</h3>
@@ -159,7 +177,42 @@
             </div>
         </div>
 
-        <div class="col-xs-12 col-md-4 col-lg-6" ng-include="'js/templates/metabans.html'" onload="metabans()"></div>
+        <div class="col-xs-12 col-md-5 col-lg-6" ng-include="'js/templates/metabans.html'" onload="metabans()"></div>
     </div>
 </div>
+@stop
+
+@section('scripts')
+{{ HTML::script('js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}
+{{ HTML::script('js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}
+<script type="text/javascript">
+$(function() {
+    var playerVisitorData = {{ json_encode($countryMap, TRUE) }};
+
+    $('#player-world-map').vectorMap({
+        map: 'world_mill_en',
+        backgroundColor: "transparent",
+        regionStyle: {
+            initial: {
+                fill: '#e4e4e4',
+                "fill-opacity": 1,
+                stroke: 'none',
+                "stroke-width": 0,
+                "stroke-opacity": 1
+            }
+        },
+        series: {
+            regions: [{
+                values: playerVisitorData,
+                scale: ["#ebf4f9", "#92c1dc"],
+                normalizeFunction: 'polynomial'
+            }]
+        },
+        onRegionLabelShow: function(e, el, code) {
+            if (typeof playerVisitorData[code] != "undefined")
+                el.html(el.html() + ': ' + playerVisitorData[code].toLocaleString() + ' players');
+        }
+    });
+});
+</script>
 @stop
