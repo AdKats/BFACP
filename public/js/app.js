@@ -229,7 +229,7 @@ angular.module('bfacp', [
         };
 
         /**
-         * Converts assessment type to correct lable
+         * Converts assessment type to correct label
          * @param  object assessment
          * @return string
          */
