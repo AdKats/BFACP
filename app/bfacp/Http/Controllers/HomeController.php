@@ -20,19 +20,8 @@ class HomeController extends BaseController
     {
     	$uniquePlayers = $this->playerRepo->getPlayerCount();
 
-        $adkats_statistics = Cache::remember('adkats.statistics', 10080, function() use($uniquePlayers) {
-            $sql = File::get(storage_path() . '/sql/adkats_statistics.sql');
-
-            $results = DB::select($sql, [
-                $uniquePlayers,
-                $uniquePlayers,
-                $uniquePlayers,
-                $uniquePlayers,
-                $uniquePlayers,
-                $uniquePlayers,
-                $uniquePlayers
-            ]);
-
+        $adkats_statistics = Cache::remember('adkats.statistics', 10080, function() {
+            $results = DB::select( File::get(storage_path() . '/sql/adkats_statistics.sql') );
             return head($results);
         });
 
