@@ -56,6 +56,11 @@ class Setting extends Eloquent
         return $this->belongsTo('BFACP\Battlefield\Server', 'server_id');
     }
 
+    public function scopeServers($query, $ids)
+    {
+        return $query->whereIn('server_id', $ids);
+    }
+
     /**
      * Convert value to correct type
      * @return mixed
@@ -65,17 +70,18 @@ class Setting extends Eloquent
         $value = $this->attributes['setting_value'];
 
         if($this->attributes['setting_name'] == 'Custom HTML Addition')
-        {
             return $value;
-        }
 
         switch($this->setting_type)
         {
             case "multiline":
-                if(in_array($this->attributes['setting_name'], ['Pre-Message List', 'Server Rule List', 'SpamBot Say List', 'SpamBot Yell List']))
-                {
+                if(in_array($this->attributes['setting_name'], [
+                    'Pre-Message List',
+                    'Server Rule List',
+                    'SpamBot Say List',
+                    'SpamBot Yell List'
+                ]))
                     $value = rawurldecode( urldecode( $value ) );
-                }
 
                 $valueArray = explode('|', $value);
 
