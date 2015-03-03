@@ -3,7 +3,7 @@
     @if(is_null($item->url()))
     {{ $item->title }}
     @else
-    <a href="{{ $item->url() }}">
+    <a href="{{ $item->url() }}" target="_self">
         @if(isset($isChild) && $isChild === TRUE)
         <i class="fa fa-angle-double-right"></i>
         @endif
