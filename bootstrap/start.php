@@ -41,15 +41,7 @@ $app->bindInstallPaths(require __DIR__.'/paths.php');
 
 $env = $app->detectEnvironment(function() use($app)
 {
-    // Only used for local develpment.
-    // DO NOT USE THIS FILE IN PRODUCTION
-    if(file_exists($app['path.base'] . "/.env.local.php"))
-        return 'local';
-
-    if(file_exists($app['path.base'] . "/.env.php"))
-        return 'production';
-
-    throw new Exception("Invalid environment, check configurations");
+    return require_once __DIR__ . '/environment.php';
 });
 
 /*
