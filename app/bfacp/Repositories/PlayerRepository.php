@@ -127,11 +127,12 @@ class PlayerRepository extends BaseRepository
     }
 
     /**
-     * Gets the total number of players from each country
-     * @return object
+     * Gets the total number of players seen from each country
+     * @return array
      */
     public function getPlayersSeenByCountry()
     {
+        // Cache for 1 day
         $countryTotals = Cache::remember('player.country.count', 1440, function()
         {
             return DB::table('tbl_playerdata')->whereNotIn('CountryCode', ['', '--'])
