@@ -27,7 +27,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text">{{ Lang::get('dashboard.metro.player_count') }}</span>
                     <span class="info-box-number">
-                        <span count-to="{{ $uniquePlayers }}" value="0" duration="2"></span>
+                        <span count-to="{{ $uniquePlayers }}" value="0" duration="3"></span>
                     </span>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text">{{ Lang::get('dashboard.metro.average_bans') }}</span>
                     <span class="info-box-number">
-                        <span count-to="@{{ results.banstats.average }}" value="0" duration="3"></span>
+                        <span count-to="@{{ results.banstats.average }}" value="0" duration="1"></span>
                     </span>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text">{{ Lang::get('dashboard.metro.yesterday_bans') }}</span>
                     <span class="info-box-number">
-                        <span count-to="@{{ results.banstats.yesterday }}" value="0" duration="3"></span>
+                        <span count-to="@{{ results.banstats.yesterday }}" value="0" duration="1"></span>
                     </span>
                 </div>
             </div>
@@ -66,7 +66,7 @@
             <div class="info-box bg-navy disabled">
                 <span class="info-box-icon"><i class="fa fa-bed"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Players Killed</span>
+                    <span class="info-box-text">{{ Lang::get('dashboard.metro.adkats.titles.killed') }}</span>
                     <span class="info-box-number">{{ number_format($adkats_statistics->PercentageKilled) }}</span>
                     <div class="progress">
                         <div class="progress-bar" style="width: {{ MainHelper::percent($adkats_statistics->PercentageKilled, $uniquePlayers) }}%"></div>
@@ -84,7 +84,7 @@
             <div class="info-box bg-navy disabled">
                 <span class="info-box-icon"><i class="fa fa-trash"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Players Kicked</span>
+                    <span class="info-box-text">{{ Lang::get('dashboard.metro.adkats.titles.kicked') }}</span>
                     <span class="info-box-number">{{ number_format($adkats_statistics->PercentageKicked) }}</span>
                     <div class="progress">
                         <div class="progress-bar" style="width: {{ MainHelper::percent($adkats_statistics->PercentageKicked, $uniquePlayers) }}%"></div>
@@ -102,7 +102,7 @@
             <div class="info-box bg-navy disabled">
                 <span class="info-box-icon"><i class="ion ion-hammer"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Players Banned</span>
+                    <span class="info-box-text">{{ Lang::get('dashboard.metro.adkats.titles.banned') }}</span>
                     <span class="info-box-number">{{ number_format($adkats_statistics->PercentageBanned) }}</span>
                     <div class="progress">
                         <div class="progress-bar" style="width: {{ MainHelper::percent($adkats_statistics->PercentageBanned, $uniquePlayers) }}%"></div>
@@ -120,7 +120,7 @@
             <div class="info-box bg-navy disabled">
                 <span class="info-box-icon"><i class="fa fa-frown-o"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Bans Active</span>
+                    <span class="info-box-text">{{ Lang::get('dashboard.metro.adkats.titles.banned_active') }}</span>
                     <span class="info-box-number">{{ number_format($adkats_statistics->PercentageBanned_Active) }}</span>
                     <div class="progress">
                         <div class="progress-bar" style="width: {{ MainHelper::percent($adkats_statistics->PercentageBanned_Active, $uniquePlayers) }}%"></div>
