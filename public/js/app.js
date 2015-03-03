@@ -165,8 +165,8 @@ angular.module('bfacp', [
                 }
             }).success(function(data, status) {
                 $scope.results.bans.columns = data.data.cols;
-                $scope.results.bans.data = data.data.bans;
-                $scope.loaded.bans = true;
+                $scope.results.bans.data    = data.data.bans;
+                $scope.loaded.bans          = true;
                 $("#latest-ban-refresh-btn").removeClass('fa-spin');
             }).error(function(data, status) {
                 $scope.latestBans();
@@ -179,13 +179,13 @@ angular.module('bfacp', [
          */
         $scope.population = function() {
             $http.get('api/servers/population').success(function(data, status) {
-                $scope.results.population.data = data.data.games;
-                $scope.results.population.online = data.data.online;
-                $scope.results.population.total = data.data.totalSlots;
+                $scope.results.population.data       = data.data.games;
+                $scope.results.population.online     = data.data.online;
+                $scope.results.population.total      = data.data.totalSlots;
                 $scope.results.population.percentage = data.data.percentage;
-                $scope.results.population.columns = data.data.columns;
-                $scope.results.population.title = data.data.title;
-                $scope.results.population.footer = data.data.footer;
+                $scope.results.population.columns    = data.data.columns;
+                $scope.results.population.title      = data.data.title;
+                $scope.results.population.footer     = data.data.footer;
             }).error(function(data, status) {
                 $scope.population();
             });
@@ -198,7 +198,7 @@ angular.module('bfacp', [
         $scope.banStats = function() {
             $http.get('api/bans/stats').success(function(data, status) {
                 $scope.results.banstats.yesterday = data.data.bans.yesterday;
-                $scope.results.banstats.average = data.data.bans.average;
+                $scope.results.banstats.average   = data.data.bans.average;
             }).error(function(data, status) {
                 $scope.banStats();
             });
@@ -226,6 +226,36 @@ angular.module('bfacp', [
             }
 
             return classColor;
+        };
+
+        /**
+         * Converts assessment type to correct lable
+         * @param  object assessment
+         * @return string
+         */
+        $scope.assessmentType = function(assessment) {
+            var typeLabel = '';
+
+            switch(assessment.action_type)
+            {
+                case "none":
+                    typeLabel = "No assessment";
+                    break;
+                case "watch":
+                    typeLabel = "Watched";
+                    break;
+                case "white":
+                    typeLabel = "Protected";
+                    break;
+                case "black":
+                    typeLabel = "Banned";
+                    break;
+                default:
+                    typeLabel = assessment.action_type;
+                    break;
+            }
+
+            return typeLabel;
         };
 
         // Re-fetch the population every 30 seconds

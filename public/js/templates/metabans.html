@@ -19,7 +19,7 @@
                     <tr ng-repeat="(key, f) in results.metabans.feed.data">
                         <td><a ng-href="{{ f.assessment_url }}" tooltip="{{ f.text }}" ng-bind="f.player_name" target="_blank"></a></td>
                         <td ng-bind="f.game_name.replace('_', '')"></td>
-                        <td ng-bind="f.action_type"></td>
+                        <td ng-bind="assessmentType(f)"></td>
                         <td ng-bind="moment(f.stamp).fromNow()"></td>
                     </tr>
                 </tbody>
@@ -39,7 +39,7 @@
                     <tr ng-repeat="(key, assessment) in results.metabans.assessments.data">
                         <td><a ng-href="{{ assessment.assessment_url }}" tooltip="{{ assessment.reason }}" ng-bind="assessment.player_name" target="_blank"></a></td>
                         <td ng-bind="assessment.game_name.replace('_', '')"></td>
-                        <td ng-bind="assessment.action_type"></td>
+                        <td ng-bind="assessmentType(assessment)"></td>
                         <td ng-bind="moment(assessment.assessment_expires).fromNow()"></td>
                     </tr>
                 </tbody>
