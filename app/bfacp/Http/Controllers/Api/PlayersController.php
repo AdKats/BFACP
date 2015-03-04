@@ -36,10 +36,10 @@ class PlayersController extends BaseController
     public function show($id)
     {
         // Check if we have a cached version of the player stats
-        $isCached = Cache::has(sprintf('players.%s', $id));
+        $isCached = Cache::has(sprintf('players.api.%s', $id));
 
         // Cache for 10 minutes and get the player stats
-        $player = Cache::remember(sprintf('players.%s', $id), 10, function() use($id) {
+        $player = Cache::remember(sprintf('players.api.%s', $id), 10, function() use($id) {
             return $this->repository->getPlayerById($id);
         });
 
