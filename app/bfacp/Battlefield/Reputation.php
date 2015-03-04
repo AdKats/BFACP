@@ -40,7 +40,7 @@ class Reputation extends Eloquent
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = [];
+    protected $appends = ['color'];
 
     /**
      * Models to be loaded automaticly
@@ -53,6 +53,24 @@ class Reputation extends Eloquent
         return $query->whereHas('game', function($q) use($game) {
             return $q->where('Name', $game);
         });
+    }
+
+    /**
+     * Gets the class name for the view
+     * @return string
+     */
+    public function getColorAttribute()
+    {
+        $color = 'text-blue';
+
+        if($this->total_rep_co > 100)
+            $color = 'text-green';
+        elseif($this->total_rep_co < -100)
+            $color = 'text-red';
+        elseif($this->total_rep_co >= -100 && $this->total_rep_co <= 100)
+            $color = 'text-yellow';
+
+        return $color;
     }
 
     /**
