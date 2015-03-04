@@ -43,13 +43,13 @@ class Server extends Eloquent
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = ['percentage', 'ip', 'port', 'in_queue'];
+    protected $appends = ['percentage', 'ip', 'port', 'server_name_short', 'in_queue'];
 
     /**
      * Models to be loaded automaticly
      * @var array
      */
-    protected $with = ['game'];
+    protected $with = ['game', 'setting'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Model
@@ -92,6 +92,21 @@ class Server extends Eloquent
     }
 
     /**
+     * Returns the server name with the strings that are
+     * to be removed from it.
+     * @return string/null
+     */
+    public function getServerNameShortAttribute()
+    {
+        if( empty($this->setting->name_strip) )
+            return NULL;
+
+        $strings = explode(',', $this->setting->name_strip);
+
+        return preg_replace('/\s+/', ' ',  trim( str_replace($strings, NULL, $this->ServerName) ) );
+    }
+
+    /**
      * Calculates how full the server is represented by a percentage
      * @return float
      */
@@ -126,11 +141,11 @@ class Server extends Eloquent
      */
     public function getInQueueAttribute()
     {
-        $result = Cache::remember('server.' . $this->ServerID . '.queue', 1, function()
+        $result = Cache::remember('server.' . $this->ServerID . '.queue', 2, function()
         {
             $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogServer');
 
-            return $battlelog->server($this->ServerID)->inQueue();
+            return $battlelog->server($this)->inQueue();
         });
 
         return $result;
