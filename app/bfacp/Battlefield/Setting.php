@@ -24,6 +24,12 @@ class Setting extends Eloquent
     protected $fillable = ['*'];
 
     /**
+     * The attributes excluded form the models JSON response.
+     * @var array
+     */
+    protected $hidden = ['rcon_pass_hash', 'uptime_robot_id'];
+
+    /**
      * Date fields to convert to carbon instances
      * @var array
      */
