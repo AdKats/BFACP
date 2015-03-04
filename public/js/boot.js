@@ -7,25 +7,25 @@
  * @Author  Almsaeed Studio
  * @Support <http://www.almsaeedstudio.com>
  * @Email   <support@almsaeedstudio.com>
- * @version 2.0
+ * @version 2.0.3
  * @license MIT <http://opensource.org/licenses/MIT>
  */
+
+'use strict';
 
 //Make sure jQuery has been loaded before app.js
 if (typeof jQuery === "undefined") {
   throw new Error("AdminLTE requires jQuery");
 }
 
-'use strict';
-
 /* AdminLTE
  *
  * @type Object
  * @description $.AdminLTE is the main object for the template's app.
- *        It's used for implementing functions and options related
- *        to the template. Keeping everything wrapped in an object
- *        prevents conflict with other plugins and is a better
- *        way to organize our code.
+ *              It's used for implementing functions and options related
+ *              to the template. Keeping everything wrapped in an object
+ *              prevents conflict with other plugins and is a better
+ *              way to organize our code.
  */
 $.AdminLTE = {};
 
@@ -53,7 +53,7 @@ $.AdminLTE.options = {
   enableBSToppltip: true,
   BSTooltipSelector: "[data-toggle='tooltip']",
   //Enable Fast Click. Fastclick.js creates a more
-  //native touch ecperience with touch devices. If you
+  //native touch experience with touch devices. If you
   //choose to enable the plugin, make sure you load the script
   //before AdminLTE's app.js
   enableFastclick: true,
@@ -77,6 +77,13 @@ $.AdminLTE.options = {
       collapse: '[data-widget="collapse"]'
     }
   },
+  //Direct Chat plugin options
+  directChat: {
+    //Enable direct chat by default
+    enable: true,
+    //The button to open and close the chat contacts pane
+    contactToggleSelector: '[data-widget="chat-pane-toggle"]'
+  },
   //Define the set of colors to use globally around the website
   colors: {
     lightBlue: "#3c8dbc",
@@ -95,6 +102,15 @@ $.AdminLTE.options = {
     maroon: "#D81B60",
     black: "#222222",
     gray: "#d2d6de"
+  },
+  //The standard screen sizes that bootstrap uses.
+  //If you change these in the variables.less file, change
+  //them here too.
+  screenSizes: {
+    xs: 480,
+    sm: 768,
+    md: 992,
+    lg: 1200
   }
 };
 
@@ -139,8 +155,17 @@ $(function () {
     $.AdminLTE.boxWidget.activate();
   }
 
-  if(o.enableFastclick && typeof FastClick != 'undefined') {
+  //Activate fast click
+  if (o.enableFastclick && typeof FastClick != 'undefined') {
     FastClick.attach(document.body);
+  }
+
+  //Activate direct chat widget
+  if (o.directChat.enable) {
+    $(o.directChat.contactToggleSelector).click(function () {
+      var box = $(this).parents('.direct-chat').first();
+      box.toggleClass('direct-chat-contacts-open');
+    });
   }
 
   /*
@@ -234,16 +259,31 @@ $.AdminLTE.layout = {
  * @usage: $.AdminLTE.pushMenu("[data-toggle='offcanvas']")
  */
 $.AdminLTE.pushMenu = function (toggleBtn) {
+  //Get the screen sizes
+  var screenSizes = this.options.screenSizes;
+
   //Enable sidebar toggle
   $(toggleBtn).click(function (e) {
     e.preventDefault();
+
     //Enable sidebar push menu
-    $("body").toggleClass('sidebar-collapse');
-    $("body").toggleClass('sidebar-open');
+    if ($(window).width() > (screenSizes.sm - 1)) {
+      $("body").toggleClass('sidebar-collapse');
+    }
+    //Handle sidebar push menu for small screens
+    else {
+      if ($("body").hasClass('sidebar-open')) {
+        $("body").removeClass('sidebar-open');
+        $("body").removeClass('sidebar-collapse')
+      } else {
+        $("body").addClass('sidebar-open');
+      }
+    }
   });
+
   $(".content-wrapper").click(function () {
     //Enable hide menu when clicking on the content-wrapper on small screens
-    if ($(window).width() <= 767 && $("body").hasClass("sidebar-open")) {
+    if ($(window).width() <= (screenSizes.sm - 1) && $("body").hasClass("sidebar-open")) {
       $("body").removeClass('sidebar-open');
     }
   });
@@ -259,6 +299,8 @@ $.AdminLTE.pushMenu = function (toggleBtn) {
  * @Usage: $.AdminLTE.tree('.sidebar')
  */
 $.AdminLTE.tree = function (menu) {
+  var _this = this;
+
   $("li a", $(menu)).click(function (e) {
     //Get the clicked link and the next element
     var $this = $(this);
@@ -269,6 +311,8 @@ $.AdminLTE.tree = function (menu) {
       //Close the menu
       checkElement.slideUp('normal', function () {
         checkElement.removeClass('menu-open');
+        //Fix the layout in case the sidebar stretches over the height of the window
+        //_this.layout.fix();
       });
       checkElement.parent("li").removeClass("active");
     }
@@ -289,6 +333,8 @@ $.AdminLTE.tree = function (menu) {
         checkElement.addClass('menu-open');
         parent.find('li.active').removeClass('active');
         parent_li.addClass('active');
+        //Fix the layout in case the sidebar stretches over the height of the window
+        _this.layout.fix();
       });
     }
     //if this isn't a link, prevent the page from being redirected
@@ -305,7 +351,7 @@ $.AdminLTE.tree = function (menu) {
  *
  * @type Object
  * @usage $.AdminLTE.boxWidget.activate()
- *                Set all of your option in the main $.AdminLTE.options object
+ *        Set all of your option in the main $.AdminLTE.options object
  */
 $.AdminLTE.boxWidget = {
   activate: function () {
@@ -362,7 +408,7 @@ $.AdminLTE.boxWidget = {
  * This is a custom plugin to use with the compenet BOX. It allows you to add
  * a refresh button to the box. It converts the box's state to a loading state.
  *
- *  @type plugin
+ * @type plugin
  * @usage $("#box-widget").boxRefresh( options );
  */
 (function ($) {
@@ -384,7 +430,7 @@ $.AdminLTE.boxWidget = {
     }, options);
 
     //The overlay
-    var overlay = $('<div class="overlay"></div><div class="loading-img"></div>');
+    var overlay = $('<div class="overlay"><div class="fa fa-refresh fa-spin"></div></div>');
 
     return this.each(function () {
       //if a source is specified
