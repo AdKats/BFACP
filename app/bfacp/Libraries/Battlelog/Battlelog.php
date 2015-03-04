@@ -33,12 +33,12 @@ class Battlelog
 
     /**
      * Set the server
-     * @param  integer $id
+     * @param  Server $server
      * @return $this
      */
-    public function server($id)
+    public function server(Server $server)
     {
-        $this->server = Server::with('setting')->findOrFail($id);
+        $this->server = $server;
 
         return $this;
     }
