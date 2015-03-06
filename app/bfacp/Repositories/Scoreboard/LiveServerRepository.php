@@ -2,11 +2,15 @@
 
 use BFACP\AdKats\Setting AS AdKatsSetting;
 use BFACP\Battlefield\Server;
+use BFACP\Battlefield\Player;
 use BFACP\Contracts\Scoreboard;
 use BattlefieldHelper;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
 use MainHelper;
 
 class LiveServerRepository
@@ -279,7 +283,8 @@ class LiveServerRepository
         }
 
         $this->data['lockedSquads'] = $lockedSquads;
-        $this->data['teams'] = new Collection($temp);
+        $this->data['teams'] = $temp;
+        $this->getPlayerDBData();
 
         return $this;
     }
@@ -458,6 +463,117 @@ class LiveServerRepository
             $this->TEAM2 = $teamFactions[0][ $teamFactions[1][2] + 1];
             $this->TEAM3 = $teamFactions[0][ $teamFactions[1][3] + 1];
             $this->TEAM4 = $teamFactions[0][ $teamFactions[1][4] + 1];
+        }
+
+        return $this;
+    }
+
+    /**
+     * Gets the players database information
+     * @return void
+     */
+    private function getPlayerDBData()
+    {
+        // If the server is empty do not continue
+        if( $this->data['server']['players']['online'] == 0 )
+            return FALSE;
+
+        $players = [];
+
+        foreach($this->data['teams'] as $teamID => $team)
+        {
+            if( array_key_exists('players', $team) )
+            {
+                foreach($team['players'] as $player)
+                {
+                    $players[] = $player['guid'];
+                }
+            }
+
+            if( array_key_exists('spectators', $team) )
+            {
+                foreach($team['spectators'] as $player)
+                {
+                    $players[] = $player['guid'];
+                }
+            }
+        }
+
+        // If players array is empty do not continue
+        if( empty($players) ) return FALSE;
+
+        $playersDB = Player::where('GameID', $this->gameID)->whereIn('EAGUID', $players)->get();
+
+        $this->playerDBLoop($players, $playersDB);
+        $this->playerDBLoop($players, $playersDB, 'spectators');
+        $this->playerDBLoop($players, $playersDB, 'commander');
+        $this->getOnlineAdmins();
+
+        return $this;
+    }
+
+    /**
+     * Checks the player list for admins currently in-game.
+     *
+     * @return void
+     */
+    private function getOnlineAdmins()
+    {
+        $adminlist = DB::select(
+            File::get( storage_path() . DIRECTORY_SEPARATOR . 'sql' . DIRECTORY_SEPARATOR . 'adminList.sql' ),
+            [$this->gameID]
+        );
+
+        foreach(['players', 'spectators', 'commander'] as $type)
+        {
+            foreach($this->data['teams'] as $teamID => $team)
+            {
+                if( array_key_exists($type, $team) )
+                {
+                    foreach($team[$type] as $index => $player)
+                    {
+                        foreach($adminlist as $index2 => $player2)
+                        {
+                            if($player['guid'] == $player2->EAGUID)
+                            {
+                                $this->data['admins'][$player['name']] = $this->data['teams'][$teamID][$type][$index];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Function to handle assigning of the DB player object to the playerlist
+     * Only used by the getPlayerDBData() function
+     *
+     * @param  array  $players
+     * @param  object $dbPlayers
+     * @param  string $type      Valid types are players, spectators, and commander
+     * @return void
+     */
+    private function playerDBLoop($players, $dbPlayers, $type = 'players')
+    {
+        foreach($this->data['teams'] as $teamID => $team)
+        {
+            if( array_key_exists($type, $team) )
+            {
+                foreach($team[$type] as $index => $player)
+                {
+                    foreach($dbPlayers as $index2 => $player2)
+                    {
+                        if($player['guid'] == $player2->EAGUID)
+                        {
+                            $this->data['teams'][$teamID][$type][$index]['_player'] = $player2;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         return $this;
