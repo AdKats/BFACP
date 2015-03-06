@@ -145,6 +145,11 @@ class LiveServerRepository
      */
     public function attempt()
     {
+        if( ! is_null($this->client) )
+        {
+            return $this;
+        }
+
         switch($this->gameName)
         {
             case "BF3":
