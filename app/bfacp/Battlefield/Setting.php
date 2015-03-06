@@ -1,7 +1,8 @@
 <?php namespace BFACP\Battlefield;
 
-use Illuminate\Database\Eloquent\Model AS Eloquent;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model AS Eloquent;
+use Illuminate\Support\Facades\Crypt;
 
 class Setting extends Eloquent
 {
@@ -60,5 +61,14 @@ class Setting extends Eloquent
     public function server()
     {
         return $this->belongsTo('BFACP\Battlefield\Server', 'server_id');
+    }
+
+    /**
+     * Decypts the RCON Password
+     * @return string
+     */
+    public function getPassword()
+    {
+        return Crypt::decrypt($this->rcon_pass_hash);
     }
 }

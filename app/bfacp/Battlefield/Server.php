@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model AS Eloquent;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use MainHelper;
+use BattlefieldHelper;
 
 class Server extends Eloquent
 {
@@ -43,7 +44,13 @@ class Server extends Eloquent
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = ['percentage', 'ip', 'port', 'server_name_short', 'in_queue'];
+    protected $appends = ['percentage', 'ip', 'port', 'server_name_short', 'in_queue', 'maps_file_path', 'modes_file_path', 'squads_file_path', 'teams_file_path', 'current_map', 'current_gamemode'];
+
+    /**
+     * The attributes excluded form the models JSON response.
+     * @var array
+     */
+    protected $hidden = ['maps_file_path', 'modes_file_path', 'squads_file_path', 'teams_file_path'];
 
     /**
      * Models to be loaded automaticly
@@ -136,6 +143,24 @@ class Server extends Eloquent
     }
 
     /**
+     * Gets the human readable name of the current map
+     * @return string
+     */
+    public function getCurrentMapAttribute()
+    {
+        return BattlefieldHelper::mapName($this->mapName, $this->maps_file_path);
+    }
+
+    /**
+     * Gets the human readable name of the current mode
+     * @return string
+     */
+    public function getCurrentGamemodeAttribute()
+    {
+        return BattlefieldHelper::playmodeName($this->Gamemode, $this->modes_file_path);
+    }
+
+    /**
      * Gets the number of players currently in queue and caches the result for 1 minute
      * @return integer
      */
@@ -149,5 +174,61 @@ class Server extends Eloquent
         });
 
         return $result;
+    }
+
+    /**
+     * Gets the path of the maps xml file
+     * @return string
+     */
+    public function getMapsFilePathAttribute()
+    {
+        $path = app_path() .
+            DIRECTORY_SEPARATOR . 'bfacp' .
+            DIRECTORY_SEPARATOR . 'ThirdParty' .
+            DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
+            DIRECTORY_SEPARATOR . 'mapNames.xml';
+        return $path;
+    }
+
+    /**
+     * Gets the path of the gamemodes xml file
+     * @return string
+     */
+    public function getModesFilePathAttribute()
+    {
+        $path = app_path() .
+            DIRECTORY_SEPARATOR . 'bfacp' .
+            DIRECTORY_SEPARATOR . 'ThirdParty' .
+            DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
+            DIRECTORY_SEPARATOR . 'playModes.xml';
+        return $path;
+    }
+
+    /**
+     * Gets the path of the squads xml file
+     * @return string
+     */
+    public function getSquadsFilePathAttribute()
+    {
+        $path = app_path() .
+            DIRECTORY_SEPARATOR . 'bfacp' .
+            DIRECTORY_SEPARATOR . 'ThirdParty' .
+            DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
+            DIRECTORY_SEPARATOR . 'squadNames.xml';
+        return $path;
+    }
+
+    /**
+     * Gets the path of the teams xml file
+     * @return string
+     */
+    public function getTeamsFilePathAttribute()
+    {
+        $path = app_path() .
+            DIRECTORY_SEPARATOR . 'bfacp' .
+            DIRECTORY_SEPARATOR . 'ThirdParty' .
+            DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
+            DIRECTORY_SEPARATOR . 'teamNames.xml';
+        return $path;
     }
 }

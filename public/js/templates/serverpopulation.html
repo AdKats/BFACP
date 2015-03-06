@@ -10,15 +10,18 @@
                     <tr>
                         <th ng-bind="results.population.columns.col1"></th>
                         <th ng-bind="results.population.columns.col2"></th>
-                        <th ng-bind="results.population.columns.col3"></th>
+                        <th ng-bind="results.population.columns.col3" style="width:180px"></th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr ng-repeat="(serverKey, server) in game.servers" ng-class="populationColor(server.percentage, true)">
-                        <td ng-bind="server.ServerName"></td>
+                        <td ng-switch on="server.server_name_short !== null">
+                            <span ng-switch-when="true" ng-bind="server.server_name_short"></span>
+                            <span ng-switch-default ng-bind="server.ServerName"></span>
+                        </td>
                         <td><span ng-bind="server.usedSlots"></span> / <span ng-bind="server.maxSlots"></span> <span ng-if="server.in_queue > 0">({{ server.in_queue }})</span></td>
-                        <td ng-bind="server.mapName"></td>
+                        <td ng-bind="server.current_map"></td>
                     </tr>
                 </tbody>
 

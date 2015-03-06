@@ -235,4 +235,32 @@ class Battlefield extends Main
 
         return intval($startingRoundTimer);
     }
+
+    public function mapName($mapURI, $xmlFilePath)
+    {
+        $mapNamesXML = simplexml_load_file($xmlFilePath);
+        $mapName = "MapNameNotFoundError";
+
+        for($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
+            if(strcasecmp($mapURI, $mapNamesXML->map[$i]->attributes()->uri) == 0) {
+                $mapName = $mapNamesXML->map[$i]->attributes()->name;
+            }
+        }
+
+        return head($mapName);
+    }
+
+    public function playmodeName($playmodeURI, $xmlFilePath)
+    {
+        $playModesXML = simplexml_load_file($xmlFilePath);
+        $playmodeName = "PlaymodeNameNotFoundError";
+
+        for($i = 0; $i <= (count($playModesXML->playmode) - 1); $i++) {
+            if($playmodeURI == $playModesXML->playmode[$i]->attributes()->uri) {
+                $playmodeName = $playModesXML->playmode[$i]->attributes()->name;
+            }
+        }
+
+        return head($playmodeName);
+    }
 }

@@ -56,6 +56,19 @@ class Setting extends Eloquent
         return $this->belongsTo('BFACP\Battlefield\Server', 'server_id');
     }
 
+    /**
+     * Quick way of selecting specific commands
+     * @param  array $names Command Names
+     */
+    public function scopeSettings($query, $names)
+    {
+        return $query->whereIn('setting_name', $names);
+    }
+
+    /**
+     * Quick way of selecting servers
+     * @param  array $ids   Array of server ids
+     */
     public function scopeServers($query, $ids)
     {
         return $query->whereIn('server_id', $ids);
