@@ -1,5 +1,6 @@
 <?php namespace BFACP\Libraries;
 
+use BFACP\Battlefield\Server;
 use Illuminate\Support\Facades\Lang;
 
 /*
@@ -39,8 +40,6 @@ use Illuminate\Support\Facades\Lang;
  * Modified for Battlefield 4 by Prophet of ADKGamers
  *
  */
-
-use BFACP\Battlefield\Server;
 
 class BF4Conn
 {
@@ -1747,6 +1746,15 @@ class BF4Conn
     }
 
     /**
+     * Get all squads that have players in them on a specific team
+     * @param  integer $teamID
+     * @return array
+     */
+    function adminSquadListActive($teamID) {
+        return $this->_clientRequest("squad.listActive " . $teamID);
+    }
+
+    /**
      * ends the current round, declaring the given teamId as winner
      *
      * @param $teamId
@@ -1841,28 +1849,6 @@ class BF4Conn
      */
     function adminVarGetTeambalance() {
         return $this->_array2boolean($this->_clientRequest("vars.autoBalance"));
-    }
-
-    /**
-     * sets the banner url to given address
-     * [ The banner url needs to be less than 64 characters long.<br />
-     * The banner needs to be a 512x64 picture and smaller than 127kbytes. ]
-     *
-     * @param String
-     *
-     * @return String
-     */
-    function adminVarSetBannerURL($string) {
-        return $this->_array2String($this->_clientRequest("vars.bannerUrl " . $string), 0);
-    }
-
-    /**
-     * gets the banner url
-     *
-     * @return String
-     */
-    function adminVarGetBannerURL() {
-        return $this->_array2String($this->_clientRequest("vars.bannerUrl"));
     }
 
     /**
@@ -2436,6 +2422,15 @@ class BF4Conn
      */
     function adminVarGetServerType() {
         return $this->_array2String($this->_clientRequest("vars.serverType"));
+    }
+
+    /**
+     * gets true/false, if server is noob only. If true, only players with rank <= 10 can join
+     *
+     * @return boolean
+     */
+    function adminVarGetNoobJoin() {
+        return $this->_array2boolean($this->_clientRequest("vars.IsNoobOnlyJoin"));
     }
 
     /**

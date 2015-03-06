@@ -1,5 +1,8 @@
 <?php namespace BFACP\Libraries;
 
+use BFACP\Battlefield\Server;
+use Illuminate\Support\Facades\Lang;
+
 /*
  * BF3Conn - PHP class for communicating with a Battlefield 3 gameserver
  * http://sf.net/p/bf3conn/
@@ -35,8 +38,6 @@
  * @version 0.91b
  *
  */
-
-use BFACP\Battlefield\Server;
 
 class BF3Conn
 {
