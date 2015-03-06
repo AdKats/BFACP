@@ -13,5 +13,6 @@
 	<playmode uri="CarrierAssaultLarge0" name="Carrier Assault Large" />
 	<playmode uri="CarrierAssaultSmall0" name="Carrier Assault Small" />
 	<playmode uri="Chainlink0" name="Chainlink" />
+	<playmode uri="SquadObliteration0" name="Squad Obliteration" />
 
 </playmodes>
