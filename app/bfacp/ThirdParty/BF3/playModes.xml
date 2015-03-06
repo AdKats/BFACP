@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- powered by: BF3Conn - PHP class for communicating with a gameserver
+         visit http://sf.net/p/bf3conn/ for updates, support & more! -->
+<playmodes>
+    <playmode uri="ConquestLarge0" name="Conquest Large" />
+    <playmode uri="ConquestSmall0" name="Conquest" />
+    <playmode uri="RushLarge0" name="Rush" />
+    <playmode uri="SquadRush0" name="Squad Rush" />
+    <playmode uri="SquadDeathMatch0" name="Squad DM" />
+    <playmode uri="TeamDeathMatch0" name="Team DM" />
+    <playmode uri="ConquestAssaultSmall1" name="Conquest Assault Alt. 2" />
+    <playmode uri="ConquestAssaultSmall10" name="Conquest Assault" />
+    <playmode uri="ConquestAssaultLarge0" name="Conquest Assault64" />
+    <playmode uri="TankSuperiority0" name="Tank Superiority" />
+    <playmode uri="GunMaster0" name="Gun Master" />
+    <playmode uri="Scavenger0" name="Scavenger" />
+    <playmode uri="Domination0" name="Domination" />
+    <playmode uri="AirSuperiority0" name="Air Superiority" />
+    <playmode uri="CaptureTheFlag0" name="CTF" />
+</playmodes>

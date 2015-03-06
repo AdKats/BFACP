@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- powered by: BF3Conn - PHP class for communicating with a gameserver
+         visit http://sf.net/p/bf3conn/ for updates, support & more! -->
+<mapNames>
+    <!-- BATTLEFIELD 3 -->
+    <!-- ConquestLarge0, 9 maps -->
+    <map uri="MP_001" name="Grand Bazaar" playmode="ConquestLarge0" />
+    <map uri="MP_003" name="Teheran Highway" playmode="ConquestLarge0" />
+    <map uri="MP_007" name="Caspian Border" playmode="ConquestLarge0" />
+    <map uri="MP_011" name="Seine Crossing" playmode="ConquestLarge0" />
+    <map uri="MP_012" name="Operation Firestorm" playmode="ConquestLarge0" />
+    <map uri="MP_013" name="Damavand Peak" playmode="ConquestLarge0" />
+    <map uri="MP_017" name="Noshahar Canals" playmode="ConquestLarge0" />
+    <map uri="MP_018" name="Kharg Island" playmode="ConquestLarge0" />
+    <map uri="MP_Subway" name="Operation Metro" playmode="ConquestLarge0" />
+    <map uri="XP1_001" name="Strike at Karkand" playmode="ConquestLarge0" />
+    <map uri="XP1_002" name="Gulf of Oman" playmode="ConquestLarge0" />
+    <map uri="XP1_003" name="Sharqui Peninsula" playmode="ConquestLarge0" />
+    <map uri="XP1_004" name="Wake Island" playmode="ConquestLarge0" />
+    <map uri="XP3_Alborz" name="Alborz Mountains" playmode="ConquestLarge0" />
+    <map uri="XP3_Desert" name="Bandar Desert" playmode="ConquestLarge0" />
+    <map uri="XP3_Shield" name="Armored Shield" playmode="ConquestLarge0" />
+    <map uri="XP3_Valley" name="Death Valley" playmode="ConquestLarge0" />
+    <map uri="XP4_FD" name="Markaz Monolith" playmode="ConquestLarge0" />
+    <map uri="XP4_Parl" name="Azadi Palace" playmode="ConquestLarge0" />
+    <map uri="XP4_Quake" name="Epicenter" playmode="ConquestLarge0" />
+    <map uri="XP4_Rubble" name="Talah Market" playmode="ConquestLarge0" />
+    <map uri="XP5_001" name="Operation Riverside" playmode="ConquestLarge0" />
+    <map uri="XP5_002" name="Nebandan Flats" playmode="ConquestLarge0" />
+    <map uri="XP5_003" name="Kiasar Railroad" playmode="ConquestLarge0" />
+    <map uri="XP5_004" name="Sabalan Pipeline" playmode="ConquestLarge0" />
+
+    <!-- ConquestSmall0, 9 maps -->
+    <map uri="MP_001" name="Grand Bazaar" playmode="ConquestSmall0" />
+    <map uri="MP_003" name="Teheran Highway" playmode="ConquestSmall0" />
+    <map uri="MP_007" name="Caspian Border" playmode="ConquestSmall0" />
+    <map uri="MP_011" name="Seine Crossing" playmode="ConquestSmall0" />
+    <map uri="MP_012" name="Operation Firestorm" playmode="ConquestSmall0" />
+    <map uri="MP_013" name="Damavand Peak" playmode="ConquestSmall0" />
+    <map uri="MP_017" name="Noshahar Canals" playmode="ConquestSmall0" />
+    <map uri="MP_018" name="Kharg Island" playmode="ConquestSmall0" />
+    <map uri="MP_Subway" name="Operation Metro" playmode="ConquestSmall0" />
+    <map uri="XP1_001" name="Strike at Karkand" playmode="ConquestSmall0" />
+    <map uri="XP1_002" name="Gulf of Oman" playmode="ConquestSmall0" />
+    <map uri="XP1_003" name="Sharqui Peninsula" playmode="ConquestSmall0" />
+    <map uri="XP1_004" name="Wake Island" playmode="ConquestSmall0" />
+    <map uri="XP3_Alborz" name="Alborz Mountains" playmode="ConquestSmall0" />
+    <map uri="XP3_Desert" name="Bandar Desert" playmode="ConquestSmall0" />
+    <map uri="XP3_Shield" name="Armored Shield" playmode="ConquestSmall0" />
+    <map uri="XP3_Valley" name="Death Valley" playmode="ConquestSmall0" />
+    <map uri="XP4_FD" name="Markaz Monolith" playmode="ConquestSmall0" />
+    <map uri="XP4_Parl" name="Azadi Palace" playmode="ConquestSmall0" />
+    <map uri="XP4_Quake" name="Epicenter" playmode="ConquestSmall0" />
+    <map uri="XP4_Rubble" name="Talah Market" playmode="ConquestSmall0" />
+    <map uri="XP5_001" name="Operation Riverside" playmode="ConquestSmall0" />
+    <map uri="XP5_002" name="Nebandan Flats" playmode="ConquestSmall0" />
+    <map uri="XP5_003" name="Kiasar Railroad" playmode="ConquestSmall0" />
+    <map uri="XP5_004" name="Sabalan Pipeline" playmode="ConquestSmall0" />
+
+    <!-- RushLarge0, 9 maps -->
+    <map uri="MP_001" name="Grand Bazaar" playmode="RushLarge0" />
+    <map uri="MP_003" name="Teheran Highway" playmode="RushLarge0" />
+    <map uri="MP_007" name="Caspian Border" playmode="RushLarge0" />
+    <map uri="MP_011" name="Seine Crossing" playmode="RushLarge0" />
+    <map uri="MP_012" name="Operation Firestorm" playmode="RushLarge0" />
+    <map uri="MP_013" name="Damavand Peak" playmode="RushLarge0" />
+    <map uri="MP_017" name="Noshahar Canals" playmode="RushLarge0" />
+    <map uri="MP_018" name="Kharg Island" playmode="RushLarge0" />
+    <map uri="MP_Subway" name="Operation Metro" playmode="RushLarge0" />
+    <map uri="XP1_001" name="Strike at Karkand" playmode="RushLarge0" />
+    <map uri="XP1_002" name="Gulf of Oman" playmode="RushLarge0" />
+    <map uri="XP1_003" name="Sharqui Peninsula" playmode="RushLarge0" />
+    <map uri="XP1_004" name="Wake Island" playmode="RushLarge0" />
+    <map uri="XP3_Alborz" name="Alborz Mountains" playmode="RushLarge0" />
+    <map uri="XP3_Desert" name="Bandar Desert" playmode="RushLarge0" />
+    <map uri="XP3_Shield" name="Armored Shield" playmode="RushLarge0" />
+    <map uri="XP3_Valley" name="Death Valley" playmode="RushLarge0" />
+    <map uri="XP4_FD" name="Markaz Monolith" playmode="RushLarge0" />
+    <map uri="XP4_Parl" name="Azadi Palace" playmode="RushLarge0" />
+    <map uri="XP4_Quake" name="Epicenter" playmode="RushLarge0" />
+    <map uri="XP4_Rubble" name="Talah Market" playmode="RushLarge0" />
+
+    <!-- SquadRush0, 9 maps -->
+    <map uri="MP_001" name="Grand Bazaar" playmode="SquadRush0" />
+    <map uri="MP_003" name="Teheran Highway" playmode="SquadRush0" />
+    <map uri="MP_007" name="Caspian Border" playmode="SquadRush0" />
+    <map uri="MP_011" name="Seine Crossing" playmode="SquadRush0" />
+    <map uri="MP_012" name="Operation Firestorm" playmode="SquadRush0" />
+    <map uri="MP_013" name="Damavand Peak" playmode="SquadRush0" />
+    <map uri="MP_017" name="Noshahar Canals" playmode="SquadRush0" />
+    <map uri="MP_018" name="Kharg Island" playmode="SquadRush0" />
+    <map uri="MP_Subway" name="Operation Metro" playmode="SquadRush0" />
+    <map uri="XP1_001" name="Strike at Karkand" playmode="SquadRush0" />
+    <map uri="XP1_002" name="Gulf of Oman" playmode="SquadRush0" />
+    <map uri="XP1_003" name="Sharqui Peninsula" playmode="SquadRush0" />
+    <map uri="XP1_004" name="Wake Island" playmode="SquadRush0" />
+    <map uri="XP3_Alborz" name="Alborz Mountains" playmode="SquadRush0" />
+    <map uri="XP3_Desert" name="Bandar Desert" playmode="SquadRush0" />
+    <map uri="XP3_Shield" name="Armored Shield" playmode="SquadRush0" />
+    <map uri="XP3_Valley" name="Death Valley" playmode="SquadRush0" />
+    <map uri="XP4_FD" name="Markaz Monolith" playmode="SquadRush0" />
+    <map uri="XP4_Parl" name="Azadi Palace" playmode="SquadRush0" />
+    <map uri="XP4_Quake" name="Epicenter" playmode="SquadRush0" />
+    <map uri="XP4_Rubble" name="Talah Market" playmode="SquadRush0" />
+
+    <!-- SquadDeathMatch0, 9 maps -->
+    <map uri="MP_001" name="Grand Bazaar" playmode="SquadDeathMatch0" />
+    <map uri="MP_003" name="Teheran Highway" playmode="SquadDeathMatch0" />
+    <map uri="MP_007" name="Caspian Border" playmode="SquadDeathMatch0" />
+    <map uri="MP_011" name="Seine Crossing" playmode="SquadDeathMatch0" />
+    <map uri="MP_012" name="Operation Firestorm" playmode="SquadDeathMatch0" />
+    <map uri="MP_013" name="Damavand Peak" playmode="SquadDeathMatch0" />
+    <map uri="MP_017" name="Noshahar Canals" playmode="SquadDeathMatch0" />
+    <map uri="MP_018" name="Kharg Island" playmode="SquadDeathMatch0" />
+    <map uri="MP_Subway" name="Operation Metro" playmode="SquadDeathMatch0" />
+    <map uri="XP1_001" name="Strike at Karkand" playmode="SquadDeathMatch0" />
+    <map uri="XP1_002" name="Gulf of Oman" playmode="SquadDeathMatch0" />
+    <map uri="XP1_003" name="Sharqui Peninsula" playmode="SquadDeathMatch0" />
+    <map uri="XP1_004" name="Wake Island" playmode="SquadDeathMatch0" />
+    <map uri="XP2_Factory" name="Scrapmetal" playmode="SquadDeathMatch0" />
+    <map uri="XP2_Office" name="Operation 925" playmode="SquadDeathMatch0" />
+    <map uri="XP2_Palace" name="Donya Fortress" playmode="SquadDeathMatch0" />
+    <map uri="XP2_Skybar" name="Ziba Tower" playmode="SquadDeathMatch0" />
+    <map uri="XP3_Alborz" name="Alborz Mountains" playmode="SquadDeathMatch0" />
+    <map uri="XP3_Desert" name="Bandar Desert" playmode="SquadDeathMatch0" />
+    <map uri="XP3_Shield" name="Armored Shield" playmode="SquadDeathMatch0" />
+    <map uri="XP3_Valley" name="Death Valley" playmode="SquadDeathMatch0" />
+    <map uri="XP4_FD" name="Markaz Monolith" playmode="SquadDeathMatch0" />
+    <map uri="XP4_Parl" name="Azadi Palace" playmode="SquadDeathMatch0" />
+    <map uri="XP4_Quake" name="Epicenter" playmode="SquadDeathMatch0" />
+    <map uri="XP4_Rubble" name="Talah Market" playmode="SquadDeathMatch0" />
+    <map uri="XP5_001" name="Operation Riverside" playmode="SquadDeathMatch0" />
+    <map uri="XP5_002" name="Nebandan Flats" playmode="SquadDeathMatch0" />
+    <map uri="XP5_003" name="Kiasar Railroad" playmode="SquadDeathMatch0" />
+    <map uri="XP5_004" name="Sabalan Pipeline" playmode="SquadDeathMatch0" />
+
+    <!-- TankSuperiority0 -->
+    <map uri="XP3_Alborz" name="Alborz Mountains" playmode="TankSuperiority0" />
+    <map uri="XP3_Desert" name="Bandar Desert" playmode="TankSuperiority0" />
+    <map uri="XP3_Shield" name="Armored Shield" playmode="TankSuperiority0" />
+    <map uri="XP3_Valley" name="Death Valley" playmode="TankSuperiority0" />
+
+    <!-- Scavenger0 -->
+    <map uri="XP4_FD" name="Markaz Monolith" playmode="Scavenger0" />
+    <map uri="XP4_Parl" name="Azadi Palace" playmode="Scavenger0" />
+    <map uri="XP4_Quake" name="Epicenter" playmode="Scavenger0" />
+    <map uri="XP4_Rubble" name="Talah Market" playmode="Scavenger0" />
+
+    <!-- Domination0 -->
+    <map uri="XP2_Factory" name="Scrapmetal" playmode="Domination0" />
+    <map uri="XP2_Office" name="Operation 925" playmode="Domination0" />
+    <map uri="XP2_Palace" name="Donya Fortress" playmode="Domination0" />
+    <map uri="XP2_Skybar" name="Ziba Tower" playmode="Domination0" />
+
+    <!-- GunMaster0 -->
+    <map uri="XP2_Factory" name="Scrapmetal" playmode="GunMaster0" />
+    <map uri="XP2_Office" name="Operation 925" playmode="GunMaster0" />
+    <map uri="XP2_Palace" name="Donya Fortress" playmode="GunMaster0" />
+    <map uri="XP4_FD" name="Markaz Monolith" playmode="GunMaster0" />
+    <map uri="XP4_Parl" name="Azadi Palace" playmode="GunMaster0" />
+    <map uri="XP4_Quake" name="Epicenter" playmode="GunMaster0" />
+    <map uri="XP4_Rubble" name="Talah Market" playmode="GunMaster0" />
+
+    <!-- TeamDeathMatch0, 25 maps -->
+    <map uri="MP_001" name="Grand Bazaar" playmode="TeamDeathMatch0" />
+    <map uri="MP_003" name="Teheran Highway" playmode="TeamDeathMatch0" />
+    <map uri="MP_007" name="Caspian Border" playmode="TeamDeathMatch0" />
+    <map uri="MP_011" name="Seine Crossing" playmode="TeamDeathMatch0" />
+    <map uri="MP_012" name="Operation Firestorm" playmode="TeamDeathMatch0" />
+    <map uri="MP_013" name="Damavand Peak" playmode="TeamDeathMatch0" />
+    <map uri="MP_017" name="Noshahar Canals" playmode="TeamDeathMatch0" />
+    <map uri="MP_018" name="Kharg Island" playmode="TeamDeathMatch0" />
+    <map uri="MP_Subway" name="Operation Metro" playmode="TeamDeathMatch0" />
+    <map uri="XP1_001" name="Strike at Karkand" playmode="TeamDeathMatch0" />
+    <map uri="XP1_002" name="Gulf of Oman" playmode="TeamDeathMatch0" />
+    <map uri="XP1_003" name="Sharqui Peninsula" playmode="TeamDeathMatch0" />
+    <map uri="XP1_004" name="Wake Island" playmode="TeamDeathMatch0" />
+    <map uri="XP3_Alborz" name="Alborz Mountains" playmode="TeamDeathMatch0" />
+    <map uri="XP3_Desert" name="Bandar Desert" playmode="TeamDeathMatch0" />
+    <map uri="XP3_Shield" name="Armored Shield" playmode="TeamDeathMatch0" />
+    <map uri="XP3_Valley" name="Death Valley" playmode="TeamDeathMatch0" />
+    <map uri="XP4_FD" name="Markaz Monolith" playmode="TeamDeathMatch0" />
+    <map uri="XP4_Parl" name="Azadi Palace" playmode="TeamDeathMatch0" />
+    <map uri="XP4_Quake" name="Epicenter" playmode="TeamDeathMatch0" />
+    <map uri="XP4_Rubble" name="Talah Market" playmode="TeamDeathMatch0" />
+    <map uri="XP5_001" name="Operation Riverside" playmode="TeamDeathMatch0" />
+    <map uri="XP5_002" name="Nebandan Flats" playmode="TeamDeathMatch0" />
+    <map uri="XP5_003" name="Kiasar Railroad" playmode="TeamDeathMatch0" />
+    <map uri="XP5_004" name="Sabalan Pipeline" playmode="TeamDeathMatch0" />
+
+    <!-- TeamDeathMatchC0 -->
+    <map uri="MP_001" name="Grand Bazaar" playmode="TeamDeathMatchC0" />
+    <map uri="MP_003" name="Teheran Highway" playmode="TeamDeathMatchC0" />
+    <map uri="MP_007" name="Caspian Border" playmode="TeamDeathMatchC0" />
+    <map uri="MP_011" name="Seine Crossing" playmode="TeamDeathMatchC0" />
+    <map uri="MP_012" name="Operation Firestorm" playmode="TeamDeathMatchC0" />
+    <map uri="MP_013" name="Damavand Peak" playmode="TeamDeathMatchC0" />
+    <map uri="MP_017" name="Noshahar Canals" playmode="TeamDeathMatchC0" />
+    <map uri="MP_018" name="Kharg Island" playmode="TeamDeathMatchC0" />
+    <map uri="MP_Subway" name="Operation Metro" playmode="TeamDeathMatchC0" />
+    <map uri="XP1_001" name="Strike at Karkand" playmode="TeamDeathMatchC0" />
+    <map uri="XP1_002" name="Gulf of Oman" playmode="TeamDeathMatchC0" />
+    <map uri="XP1_003" name="Sharqui Peninsula" playmode="TeamDeathMatchC0" />
+    <map uri="XP1_004" name="Wake Island" playmode="TeamDeathMatchC0" />
+    <map uri="XP3_Alborz" name="Alborz Mountains" playmode="TeamDeathMatchC0" />
+    <map uri="XP3_Desert" name="Bandar Desert" playmode="TeamDeathMatchC0" />
+    <map uri="XP3_Shield" name="Armored Shield" playmode="TeamDeathMatchC0" />
+    <map uri="XP3_Valley" name="Death Valley" playmode="TeamDeathMatchC0" />
+    <map uri="XP4_FD" name="Markaz Monolith" playmode="TeamDeathMatchC0" />
+    <map uri="XP4_Parl" name="Azadi Palace" playmode="TeamDeathMatchC0" />
+    <map uri="XP4_Quake" name="Epicenter" playmode="TeamDeathMatchC0" />
+    <map uri="XP4_Rubble" name="Talah Market" playmode="TeamDeathMatchC0" />
+    <map uri="XP5_001" name="Operation Riverside" playmode="TeamDeathMatchC0" />
+    <map uri="XP5_002" name="Nebandan Flats" playmode="TeamDeathMatchC0" />
+    <map uri="XP5_003" name="Kiasar Railroad" playmode="TeamDeathMatchC0" />
+    <map uri="XP5_004" name="Sabalan Pipeline" playmode="TeamDeathMatchC0" />
+
+    <!-- AirSuperiority0 -->
+    <map uri="XP5_001" name="Operation Riverside" playmode="AirSuperiority0" />
+    <map uri="XP5_002" name="Nebandan Flats" playmode="AirSuperiority0" />
+    <map uri="XP5_003" name="Kiasar Railroad" playmode="AirSuperiority0" />
+    <map uri="XP5_004" name="Sabalan Pipeline" playmode="AirSuperiority0" />
+
+    <!-- CaptureTheFlag0 -->
+    <map uri="XP5_001" name="Operation Riverside" playmode="CaptureTheFlag0" />
+    <map uri="XP5_002" name="Nebandan Flats" playmode="CaptureTheFlag0" />
+    <map uri="XP5_003" name="Kiasar Railroad" playmode="CaptureTheFlag0" />
+    <map uri="XP5_004" name="Sabalan Pipeline" playmode="CaptureTheFlag0" />
+</mapNames>
