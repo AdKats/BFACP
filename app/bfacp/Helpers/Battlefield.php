@@ -108,73 +108,82 @@ class Battlefield extends Main
                     case "Chainlink0":
                         $defaultTickets = 1000;
                     break;
+
                     case "ConquestLarge0":
                         $defaultTickets = 800;
                     break;
+
                     case "ConquestSmall0":
                         $defaultTickets = 400;
                     break;
+
                     case "TeamDeathMatch0":
-                        $defaultTickets = 100;
-                    break;
-                    case "Domination0":
-                        $defaultTickets = 300;
-                    break;
                     case "Elimination0":
                     case "Obliteration":
-                        $defaultTickets = 100;
-                    break;
-                    case "RushLarge0":
-                        $defaultTickets = 75;
-                    break;
-                    case "SquadDeathMatch0":
-                        $defaultTickets = 50;
-                    break;
-                    case "AirSuperiority0":
-                        $defaultTickets = 300;
-                    break;
-                    case "CaptureTheFlag0":
-                        $defaultTickets = 3;
-                    break;
                     case "CarrierAssaultLarge0":
                     case "CarrierAssaultSmall0":
                         $defaultTickets = 100;
                     break;
+
+                    case "RushLarge0":
+                        $defaultTickets = 75;
+                    break;
+
+                    case "SquadDeathMatch0":
+                        $defaultTickets = 50;
+                    break;
+
+                    case "Domination0":
+                    case "AirSuperiority0":
+                        $defaultTickets = 300;
+                    break;
+
+                    case "CaptureTheFlag0":
+                        $defaultTickets = 3;
+                    break;
+
                     default:
                         return NULL;
                 }
             break;
+
             case "BF3":
                 switch($gamemode)
                 {
                     case "ConquestLarge0":
                         $defaultTickets = 800;
                     break;
+
                     case "ConquestSmall0":
                         $defaultTickets = 400;
                     break;
+
                     case "TeamDeathMatch0":
                         $defaultTickets = 100;
                     break;
+
                     case "Domination0":
-                        $defaultTickets = 300;
-                    break;
-                    case "RushLarge0":
-                        $defaultTickets = 75;
-                    break;
-                    case "SquadDeathMatch0":
-                        $defaultTickets = 50;
-                    break;
                     case "AirSuperiority0":
                         $defaultTickets = 300;
                     break;
+
+                    case "RushLarge0":
+                        $defaultTickets = 75;
+                    break;
+
+                    case "SquadDeathMatch0":
+                        $defaultTickets = 50;
+                    break;
+
                     case "CaptureTheFlag0":
                         $defaultTickets = 3;
                     break;
+
                     default:
                         return NULL;
                 }
             break;
+
             default:
                 return NULL;
         }
@@ -201,6 +210,7 @@ class Battlefield extends Main
                     case "Chainlink0":
                         $defaultTime = 1200;
                     break;
+
                     case "ConquestLarge0":
                     case "ConquestSmall0":
                     case "TeamDeathMatch0":
@@ -210,23 +220,26 @@ class Battlefield extends Main
                     case "RushLarge0":
                         $defaultTime = 3600;
                     break;
+
                     case "Elimination0":
                         $defaultTime = 600;
                     break;
+
                     case "Obliteration":
-                        $defaultTime = 1800;
-                    break;
-                    case "CaptureTheFlag0":
-                        $defaultTime = 1200;
-                    break;
                     case "CarrierAssaultLarge0":
                     case "CarrierAssaultSmall0":
                         $defaultTime = 1800;
                     break;
+
+                    case "CaptureTheFlag0":
+                        $defaultTime = 1200;
+                    break;
+
                     default:
                         return NULL;
                 }
             break;
+
             default:
                 return NULL;
         }
