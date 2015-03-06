@@ -161,12 +161,12 @@ class Server extends Eloquent
     }
 
     /**
-     * Gets the number of players currently in queue and caches the result for 1 minute
+     * Gets the number of players currently in queue and caches the result for 5 minutes
      * @return integer
      */
     public function getInQueueAttribute()
     {
-        $result = Cache::remember('server.' . $this->ServerID . '.queue', 2, function()
+        $result = Cache::remember('server.' . $this->ServerID . '.queue', 5, function()
         {
             $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogServer');
 
