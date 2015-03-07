@@ -8,7 +8,7 @@ use File;
 
 class HomeController extends BaseController
 {
-	private $playerRepo;
+    private $playerRepo;
 
     public function __construct(PlayerRepository $playerRepo)
     {
@@ -18,7 +18,7 @@ class HomeController extends BaseController
 
     public function index()
     {
-    	$uniquePlayers = $this->playerRepo->getPlayerCount();
+        $uniquePlayers = $this->playerRepo->getPlayerCount();
 
         $adkats_statistics = Cache::remember('adkats.statistics', 10080, function() {
             $results = DB::select( File::get(storage_path() . '/sql/adkats_statistics.sql') );
