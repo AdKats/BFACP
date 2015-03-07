@@ -203,7 +203,8 @@ class LiveServerRepository
      */
     private function teams()
     {
-        $this->setFactions();
+        if($this->gameName == 'BF4')
+            $this->setFactions();
 
         $players = $this->client->tabulate( $this->client->adminGetPlayerlist() )['players'];
 
@@ -264,12 +265,15 @@ class LiveServerRepository
 
             $temp[$teamID]['team'] = $teamName;
 
-            if(count($this->serverinfo) >= 26 && count($this->serverinfo) <= 28)
+            if(
+                (count($this->serverinfo) >= 26 && count($this->serverinfo) <= 28 && $this->gameName == 'BF4') ||
+                (count($this->serverinfo) == 25 && $this->gameName == 'BF3')
+            )
                 $temp[$teamID]['score'] = $score;
             else
                 $temp[$teamID]['score'] = 0;
 
-            switch($player['type'])
+            switch( array_key_exists('type', $player) ? $player['type'] : 0)
             {
                 case 1:
                     $temp[$teamID]['spectators'][] = $player;
@@ -306,46 +310,92 @@ class LiveServerRepository
 
         $length = count($info);
 
-        switch($info[4])
+        if($this->gameName == 'BF4')
         {
-            case "SquadDeathMatch0":
-            case "TeamDeathMatch0":
-                $ticketcap = $length < 28 ? NULL : intval($info[13]);
-                $uptime    = $length < 28 ? (int) $info[14] : (int) $info[18];
-                $round     = $length < 28 ? (int) $info[15] : (int) $info[19];
-            break;
+            switch($info[4])
+            {
+                case "SquadDeathMatch0":
+                case "TeamDeathMatch0":
+                    $ticketcap = $length < 28 ? NULL : intval($info[13]);
+                    $uptime    = $length < 28 ? (int) $info[14] : (int) $info[18];
+                    $round     = $length < 28 ? (int) $info[15] : (int) $info[19];
+                break;
 
-            case "CaptureTheFlag0":
-            case "Obliteration":
-            case "Chainlink0":
-            case "RushLarge0":
-            case "Domination0":
-            case "ConquestLarge0":
-            case "ConquestSmall0":
-                if($info[4] == 'CaptureTheFlag0')
+                case "CaptureTheFlag0":
+                case "Obliteration":
+                case "Chainlink0":
+                case "RushLarge0":
+                case "Domination0":
+                case "ConquestLarge0":
+                case "ConquestSmall0":
+                    if($info[4] == 'CaptureTheFlag0')
+                        $ticketcap = NULL;
+                    else
+                        $ticketcap = $length < 26 ? NULL : intval($info[11]);
+
+                    $uptime    = $length < 26 ? (int) $info[14] : (int) $info[16];
+                    $round     = $length < 26 ? (int) $info[15] : (int) $info[17];
+                break;
+
+                default:
                     $ticketcap = NULL;
-                else
-                    $ticketcap = $length < 26 ? NULL : intval($info[11]);
+                    $uptime    = NULL;
+                    $round     = NULL;
+                break;
+            }
+        }
+        elseif($this->gameName == 'BF3')
+        {
+            switch($info[4])
+            {
+                case "SquadDeathMatch0":
+                case "TeamDeathMatch0":
+                    $ticketcap = $length < 25 ? NULL : intval($info[11]);
+                    $uptime    = $length < 25 ? (int) $info[12] : (int) $info[16];
+                    $round     = $length < 25 ? (int) $info[13] : (int) $info[17];
+                break;
 
-                $uptime    = $length < 26 ? (int) $info[14] : (int) $info[16];
-                $round     = $length < 26 ? (int) $info[15] : (int) $info[17];
-            break;
+                case "CaptureTheFlag0":
+                case "Obliteration":
+                case "Chainlink0":
+                case "RushLarge0":
+                case "Domination0":
+                case "ConquestLarge0":
+                case "ConquestSmall0":
+                    if($info[4] == 'CaptureTheFlag0')
+                        $ticketcap = NULL;
+                    else
+                        $ticketcap = $length < 25 ? NULL : intval($info[11]);
 
-            default:
-                $ticketcap = NULL;
-                $uptime    = NULL;
-                $round     = NULL;
-            break;
+                    $uptime    = $length < 25 ? (int) $info[12] : (int) $info[16];
+                    $round     = $length < 25 ? (int) $info[13] : (int) $info[17];
+                break;
+
+                default:
+                    $ticketcap = NULL;
+                    $uptime    = NULL;
+                    $round     = NULL;
+                break;
+            }
         }
 
-        $startingTimer   = BattlefieldHelper::roundStartingTimer($info[4], $this->client->adminVarGetRoundTimeLimit(), $this->gameName);
-        $startingTickets = BattlefieldHelper::startingTickets($info[4], $this->client->adminVarGetGameModeCounter(), $this->gameName);
+        if( method_exists($this->client, 'adminVarGetRoundTimeLimit') ) {
+            $startingTimer   = BattlefieldHelper::roundStartingTimer($info[4], $this->client->adminVarGetRoundTimeLimit(), $this->gameName);
+        } else {
+            $startingTimer   = 0;
+        }
+
+        if( method_exists($this->client, 'adminVarGetGameModeCounter') ) {
+            $startingTickets = BattlefieldHelper::startingTickets($info[4], $this->client->adminVarGetGameModeCounter(), $this->gameName);
+        } else {
+            $startingTickets = 0;
+        }
 
         $this->data['server'] = [
             'name' => $info[1],
             'description' => trim($this->client->adminVarGetServerDescription()),
-            'type' => $this->client->adminVarGetServerType(),
-            'isNoobOnly' => $this->client->adminVarGetNoobJoin(),
+            'type' => method_exists($this->client, 'adminVarGetServerType') ? $this->client->adminVarGetServerType() : NULL,
+            'isNoobOnly' => method_exists($this->client, 'adminVarGetNoobJoin') ? $this->client->adminVarGetNoobJoin() : NULL,
             'game' => $this->server->game,
             'players' => [
                 'online' => (int) $info[2],
@@ -361,7 +411,8 @@ class LiveServerRepository
             'map' => [
                 'name' => head($this->client->getMapName( $info[5] )),
                 'uri'  => $info[5],
-                'next' => $this->getNextMap()
+                'next' => $this->getNextMap(),
+                'images' => $this->server->map_image_paths
             ],
             'tickets_needed' => $ticketcap,
             'tickets_starting' => $startingTickets,
@@ -577,6 +628,36 @@ class LiveServerRepository
                             break;
                         }
                     }
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Added the raw information from the game server.
+     * Used for debugging
+     */
+    public function _addRaw()
+    {
+        $serverinfo = $this->client->getServerInfo();
+
+        $this->data['_raw']['playerlist'] = $this->client->adminGetPlayerlist();
+
+        for($i=0; $i < count($serverinfo); $i++)
+        {
+            $key = 'K' . $i;
+            $this->data['_raw']['serverinfo'][$key] = $serverinfo[$i];
+            if(is_numeric($this->data['_raw']['serverinfo'][$key]))
+            {
+                $this->data['_raw']['serverinfo'][$key] = intval($this->data['_raw']['serverinfo'][$key]);
+            }
+            else
+            {
+                if($this->data['_raw']['serverinfo'][$key] == 'true' || $this->data['_raw']['serverinfo'][$key] == 'false')
+                {
+                    $this->data['_raw']['serverinfo'][$key] = ($this->data['_raw']['serverinfo'][$key] == 'true' ? true : false);
                 }
             }
         }

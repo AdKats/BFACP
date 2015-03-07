@@ -44,7 +44,10 @@ class Server extends Eloquent
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = ['percentage', 'ip', 'port', 'server_name_short', 'in_queue', 'maps_file_path', 'modes_file_path', 'squads_file_path', 'teams_file_path', 'current_map', 'current_gamemode'];
+    protected $appends = [
+        'percentage', 'ip', 'port', 'server_name_short', 'in_queue', 'maps_file_path', 'modes_file_path', 'squads_file_path', 'teams_file_path',
+        'current_map', 'current_gamemode', 'map_image_paths'
+    ];
 
     /**
      * The attributes excluded form the models JSON response.
@@ -230,5 +233,23 @@ class Server extends Eloquent
             DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
             DIRECTORY_SEPARATOR . 'teamNames.xml';
         return $path;
+    }
+
+    /**
+     * Gets the current map image banner
+     * @return string
+     */
+    public function getMapImagePathsAttribute()
+    {
+        $base_path = sprintf('images/games/%s/maps', strtolower($this->game->Name));
+        $image = sprintf('%s.jpg', strtolower($this->mapName));
+
+        $paths = [
+            'large'  => sprintf('%s/large/%s', $base_path, $image),
+            'medium' => sprintf('%s/medium/%s', $base_path, $image),
+            'wide'   => sprintf('%s/wide/%s', $base_path, $image)
+        ];
+
+        return $paths;
     }
 }

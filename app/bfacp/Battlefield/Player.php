@@ -41,7 +41,7 @@ class Player extends Eloquent
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = ['profile_url', 'country_flag', 'country_name'];
+    protected $appends = ['profile_url', 'country_flag', 'country_name', 'rank_image'];
 
     /**
      * Models to be loaded automaticly
@@ -164,5 +164,35 @@ class Player extends Eloquent
             return 'images/flags/24/_unknown.png';
 
         return sprintf("images/flags/24/%s.png", strtoupper($this->CountryCode));
+    }
+
+    /**
+     * Get the rank image
+     * @return string
+     */
+    public function getRankImageAttribute()
+    {
+        switch($this->game->Name)
+        {
+            case "BF3":
+                $rank = $this->GlobalRank;
+
+                if($rank > 45) {
+                    if($rank > 100) $rank = 100;
+                    $path = sprintf('images/games/bf3/ranks/large/ss%u.png', $rank);
+                } else {
+                    $path = sprintf('images/games/bf3/ranks/large/r%u.png', $this->GlobalRank);
+                }
+            break;
+
+            case "BF4":
+                $path = sprintf('images/games/bf4/ranks/r%u.png', $this->GlobalRank);
+            break;
+
+            default:
+                $path = NULL;
+        }
+
+        return $path;
     }
 }
