@@ -352,6 +352,84 @@ angular.module('bfacp', [
 
         $scope.getListing();
 
+    }])
+    .controller('ScoreboardController', ['$scope', '$http', '$timeout', '$location', function($scope, $http, $timeout, $location) {
+
+        // How often the data should be fetched in seconds
+        var refresh = 10;
+
+        var refreshTimeout;
+
+        // Get the server select element
+        var serverSelect = $("#server-select");
+
+        // Init vars
+        $scope.loading = false;
+        $scope.refresh = false;
+
+        $scope.selectedId = -1;
+
+        $scope.server = [];
+        $scope.teams = [];
+
+        $scope.switchServer = function()
+        {
+            $scope.loading = true;
+            $scope.refresh = true;
+            $timeout.cancel(refreshTimeout);
+            $timeout($scope.fetchServerData, 400);
+        };
+
+        $scope.kd = function(kills, deaths)
+        {
+            var ratio = 0;
+
+            try {
+                if(kills === 0 || deaths === 0)
+                    throw new Error('Divide by zero');
+
+                ratio = kills / deaths;
+            } catch(e) {
+                if(kills === 0 && deaths > 0) {
+                    ratio = -deaths;
+                } else {
+                    ratio = kills;
+                }
+            }
+
+            return ratio.toFixed(2);
+        };
+
+        $scope.fetchServerData = function()
+        {
+            if($scope.selectedId == -1) {
+                $scope.loading = false;
+                $scope.refresh = false;
+                return false;
+            }
+
+            if( ! $scope.loading ) {
+                $scope.loading = true;
+            }
+
+            $scope.refresh = true;
+
+            $http({
+                url: 'api/servers/scoreboard/' + $scope.selectedId,
+                method: 'GET',
+                params: {}
+            }).success(function(data, status) {
+                $scope.server = data.data.server;
+                $scope.teams = data.data.teams;
+
+                $scope.refresh = false;
+
+                refreshTimeout = $timeout($scope.fetchServerData, refresh * 1000);
+            }).error(function(data, status) {
+                $scope.fetchServerData();
+            });
+        };
+
     }]);
 
 $('#psearch').submit(function() {
