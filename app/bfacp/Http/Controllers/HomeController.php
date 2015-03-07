@@ -1,10 +1,12 @@
 <?php namespace BFACP\Http\Controllers;
 
+use BFACP\Battlefield\Game;
+use BFACP\Battlefield\Server;
 use BFACP\Repositories\PlayerRepository;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
-use Cache;
-use DB;
-use File;
 
 class HomeController extends BaseController
 {
@@ -29,5 +31,14 @@ class HomeController extends BaseController
 
         return View::make('dashboard', compact('uniquePlayers', 'adkats_statistics', 'countryMap'))
             ->with('page_title', 'Dashboard');
+    }
+
+    public function scoreboard()
+    {
+        $games = Game::with(['servers' => function($query) {
+            $query->active()->orderBy('ServerName');
+        }])->get();
+
+        return View::make('scoreboard', compact('games'))->with('page_title', 'Live Scoreboard');
     }
 }

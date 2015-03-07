@@ -247,7 +247,7 @@ class Server extends Eloquent
         $paths = [
             'large'  => sprintf('%s/large/%s', $base_path, $image),
             'medium' => sprintf('%s/medium/%s', $base_path, $image),
-            'wide'   => sprintf('%s/wide/%s', $base_path, $image)
+            'wide'   => $this->game->Name == 'BF4' ? sprintf('%s/wide/%s', $base_path, $image) : sprintf('%s/large/%s', $base_path, $image)
         ];
 
         return $paths;

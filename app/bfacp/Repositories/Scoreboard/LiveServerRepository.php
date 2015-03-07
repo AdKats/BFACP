@@ -590,7 +590,9 @@ class LiveServerRepository
                     {
                         foreach($adminlist as $index2 => $player2)
                         {
-                            if($player['guid'] == $player2->EAGUID)
+                            $guid = is_array($player) ? $player['guid'] : $player;
+
+                            if($guid == $player2->EAGUID)
                             {
                                 $this->data['admins'][$player['name']] = $this->data['teams'][$teamID][$type][$index];
                             }
@@ -622,9 +624,15 @@ class LiveServerRepository
                 {
                     foreach($dbPlayers as $index2 => $player2)
                     {
-                        if($player['guid'] == $player2->EAGUID)
+                        $guid = is_array($player) ? $player['guid'] : $player;
+
+                        if($guid == $player2->EAGUID)
                         {
+                            if($type == 'commander')
+                                $index = 0;
+
                             $this->data['teams'][$teamID][$type][$index]['_player'] = $player2;
+
                             break;
                         }
                     }

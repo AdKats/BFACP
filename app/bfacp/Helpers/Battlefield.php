@@ -260,7 +260,7 @@ class Battlefield extends Main
             }
         }
 
-        return head($mapName);
+        return ! is_string($mapName) ? head($mapName) : $mapName;
     }
 
     public function playmodeName($playmodeURI, $xmlFilePath)
@@ -274,6 +274,6 @@ class Battlefield extends Main
             }
         }
 
-        return head($playmodeName);
+        return ! is_string($playmodeName) ? head($playmodeName) : $playmodeName;
     }
 }
