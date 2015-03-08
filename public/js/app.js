@@ -8,10 +8,29 @@ angular.module('bfacp', [
         'countTo'
     ])
     .config(['$locationProvider', function($locationProvider) {
-        $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(true).hashPrefix('!');
     }])
     .run(['$rootScope', function($rootScope) {
         $rootScope.moment = function(date) { return moment(date); };
+        $rootScope.divide = function(num1, num2, precision) {
+            if(precision === undefined || precision === null) {
+                precision = 2;
+            }
+
+            var dividedNum = 0;
+
+            try {
+                if(num1 === 0 || num2 === 0) {
+                    throw new Error('Divide by zero');
+                }
+
+                dividedNum = num1 / num2
+            } catch(e) {
+                dividedNum = num1;
+            }
+
+            return dividedNum.toFixed(precision);
+        }
     }])
     .filter('nl2br', function() {
         var span = document.createElement('span');
@@ -353,12 +372,14 @@ angular.module('bfacp', [
         $scope.getListing();
 
     }])
-    .controller('ScoreboardController', ['$scope', '$http', '$timeout', '$location', function($scope, $http, $timeout, $location) {
+    .controller('ScoreboardController', ['$scope', '$rootScope', '$http', '$timeout', '$location', function($scope, $rootScope, $http, $timeout, $location) {
 
         // How often the data should be fetched in seconds
         var refresh = 10;
 
         var refreshTimeout;
+
+        var requestErrorCount = 0;
 
         // Get the server select element
         var serverSelect = $("#server-select");
@@ -366,39 +387,86 @@ angular.module('bfacp', [
         // Init vars
         $scope.loading = false;
         $scope.refresh = false;
+        $scope.requestError = false;
 
         $scope.selectedId = -1;
 
         $scope.server = [];
         $scope.teams = [];
+        $scope.netural = [];
 
         $scope.switchServer = function()
         {
             $scope.loading = true;
             $scope.refresh = true;
+            $scope.server = [];
+            $scope.teams = [];
+
+            if($scope.selectedId == -1) {
+                $location.hash('');
+            }
+            else {
+                $location.hash('id-' + $scope.selectedId);
+            }
+
+            if($scope.requestError) {
+                $scope.requestError = false;
+            }
+
             $timeout.cancel(refreshTimeout);
-            $timeout($scope.fetchServerData, 400);
+            $timeout($scope.fetchServerData, 500);
         };
 
         $scope.kd = function(kills, deaths)
         {
-            var ratio = 0;
+            var ratio = $rootScope.divide(kills, deaths);
 
-            try {
-                if(kills === 0 || deaths === 0)
-                    throw new Error('Divide by zero');
-
-                ratio = kills / deaths;
-            } catch(e) {
-                if(kills === 0 && deaths > 0) {
-                    ratio = -deaths;
-                } else {
-                    ratio = kills;
-                }
+            if(kills === 0 && deaths > 0) {
+                ratio = -deaths.toFixed(2);
             }
 
-            return ratio.toFixed(2);
+            return ratio;
         };
+
+        $scope.avg = function(items, prop)
+        {
+            if(items === null) {
+                return 0;
+            }
+
+            var sum = $scope.sum(items, prop);
+
+            return $rootScope.divide(sum, items.length, 0);
+        };
+
+        $scope.sum = function(items, prop)
+        {
+            if(items === null) {
+                return 0;
+            }
+
+            return items.reduce(function(a, b) {
+                return b[prop] === null ? a : a + b[prop];
+            }, 0);
+        };
+
+        $scope.pingColor = function(ping) {
+            if(ping === null) {
+                return 'bg-blue';
+            }
+
+            var color;
+
+            if(ping < 140) {
+                color = 'bg-green';
+            } else if(ping >= 140 && ping < 250) {
+                color = 'bg-yellow';
+            } else if(ping >= 250 && ping < 65535) {
+                color = 'bg-red';
+            }
+
+            return color;
+        }
 
         $scope.fetchServerData = function()
         {
@@ -422,12 +490,41 @@ angular.module('bfacp', [
                 $scope.server = data.data.server;
                 $scope.teams = data.data.teams;
 
+                if(data.data.teams[0] !== undefined || data.data.teams[0] !== null)
+                {
+                    $scope.netural = data.data.teams[0];
+                    delete $scope.teams[0];
+                }
+
                 $scope.refresh = false;
+
+                if($scope.requestError) {
+                    $scope.requestError = false;
+                    requestErrorCount = 0;
+                }
 
                 refreshTimeout = $timeout($scope.fetchServerData, refresh * 1000);
             }).error(function(data, status) {
+                if(status == 500) {
+                    requestErrorCount++;
+                }
+
+                if(requestErrorCount > 4) {
+                    $scope.refresh = false;
+                    $scope.loading = false;
+                    $scope.requestError = true;
+                    return false;
+                }
+
                 $scope.fetchServerData();
             });
+        };
+
+        if($location.hash() !== '')
+        {
+            var path = $location.hash().split('-');
+            $scope.selectedId = parseInt(path[1], 10);
+            $scope.switchServer();
         };
 
     }]);

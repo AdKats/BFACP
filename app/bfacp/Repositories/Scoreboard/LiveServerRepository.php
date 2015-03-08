@@ -1,16 +1,17 @@
 <?php namespace BFACP\Repositories\Scoreboard;
 
 use BFACP\AdKats\Setting AS AdKatsSetting;
-use BFACP\Battlefield\Server;
 use BFACP\Battlefield\Player;
+use BFACP\Battlefield\Server;
 use BFACP\Contracts\Scoreboard;
 use BattlefieldHelper;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Lang;
 use MainHelper;
 
 class LiveServerRepository
@@ -203,8 +204,7 @@ class LiveServerRepository
      */
     private function teams()
     {
-        if($this->gameName == 'BF4')
-            $this->setFactions();
+        $this->setFactions();
 
         $players = $this->client->tabulate( $this->client->adminGetPlayerlist() )['players'];
 
@@ -272,6 +272,10 @@ class LiveServerRepository
                 $temp[$teamID]['score'] = $score;
             else
                 $temp[$teamID]['score'] = 0;
+
+            if(array_key_exists('ping', $player) && $player['ping'] == 65535) {
+                $player['ping'] = NULL;
+            }
 
             switch( array_key_exists('type', $player) ? $player['type'] : 0)
             {
@@ -503,22 +507,45 @@ class LiveServerRepository
         if( ! $this->check() )
             throw new \Exception("Setting team factions requires RCON login.");
 
-        $teamFactions = $this->client->adminVarGetTeamFaction(NULL);
+        if(method_exists($this->client, 'adminVarGetTeamFaction'))
+        {
+            $teamFactions = $this->client->adminVarGetTeamFaction(NULL);
+        }
+        else
+        {
+            $teamFactions[0] = Lang::get('scoreboard.factions');
+        }
 
-        if(in_array($this->client->getCurrentPlaymode(), ['SquadDeathMatch0']))
+        if(in_array($this->data['server']['mode']['uri'], ['SquadDeathMatch0']))
         {
             $this->TEAM1 = 'Alpha';
             $this->TEAM2 = 'Bravo';
             $this->TEAM3 = 'Charlie';
             $this->TEAM4 = 'Delta';
         }
+        elseif($this->data['server']['mode']['uri'] == 'RushLarge0')
+        {
+            $this->TEAM1 = $teamFactions[0][4];
+            $this->TEAM2 = $teamFactions[0][5];
+        }
         else
         {
-            $this->TEAM0 = $teamFactions[0][0];
-            $this->TEAM1 = $teamFactions[0][ $teamFactions[1][1] + 1];
-            $this->TEAM2 = $teamFactions[0][ $teamFactions[1][2] + 1];
-            $this->TEAM3 = $teamFactions[0][ $teamFactions[1][3] + 1];
-            $this->TEAM4 = $teamFactions[0][ $teamFactions[1][4] + 1];
+            if($this->gameName == 'BF3')
+            {
+                $this->TEAM0 = $teamFactions[0][0];
+                $this->TEAM1 = $teamFactions[0][1];
+                $this->TEAM2 = $teamFactions[0][2];
+                $this->TEAM3 = $teamFactions[0][1];
+                $this->TEAM4 = $teamFactions[0][2];
+            }
+            else
+            {
+                $this->TEAM0 = $teamFactions[0][0];
+                $this->TEAM1 = $teamFactions[0][ $teamFactions[1][1] + 1];
+                $this->TEAM2 = $teamFactions[0][ $teamFactions[1][2] + 1];
+                $this->TEAM3 = $teamFactions[0][ $teamFactions[1][3] + 1];
+                $this->TEAM4 = $teamFactions[0][ $teamFactions[1][4] + 1];
+            }
         }
 
         return $this;
@@ -590,10 +617,15 @@ class LiveServerRepository
                     {
                         foreach($adminlist as $index2 => $player2)
                         {
-                            $guid = is_array($player) ? $player['guid'] : $player;
+                            $guid = ! is_string($player) ? $player['guid'] : $player;
 
                             if($guid == $player2->EAGUID)
                             {
+                                if($type == 'commander')
+                                {
+                                    return false;
+                                }
+
                                 $this->data['admins'][$player['name']] = $this->data['teams'][$teamID][$type][$index];
                             }
                         }
@@ -624,12 +656,24 @@ class LiveServerRepository
                 {
                     foreach($dbPlayers as $index2 => $player2)
                     {
-                        $guid = is_array($player) ? $player['guid'] : $player;
+                        $guid = ! is_string($player) ? $player['guid'] : $player;
 
                         if($guid == $player2->EAGUID)
                         {
                             if($type == 'commander')
                                 $index = 0;
+
+                            if(is_array($player) && array_key_exists('guid', $player))
+                            {
+                                if($player2->GlobalRank != $player['rank'])
+                                {
+                                    \Queue::push(function($job) use($player2, $player)
+                                    {
+                                        $player2->GlobalRank = $player['rank'];
+                                        $player2->save();
+                                    });
+                                }
+                            }
 
                             $this->data['teams'][$teamID][$type][$index]['_player'] = $player2;
 

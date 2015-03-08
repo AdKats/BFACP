@@ -2454,7 +2454,10 @@ class BF3Conn
             $columns[] = $res[$i];
 
         $nRows = $res[9];
-        $rows = [];
+        $rows = [
+            'players' => [],
+            'columns' => []
+        ];
 
         for($n=0; $n < $nRows; $n++)
         {

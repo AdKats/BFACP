@@ -21,7 +21,16 @@ return [
         3 => [
             'full_name' => 'Chinese Army',
             'short_name' => 'CN'
+        ],
+
+        4 => [
+            'full_name' => 'Attackers',
+            'short_name' => 'Attackers'
+        ],
+
+        5 => [
+            'full_name' => 'Defenders',
+            'short_name' => 'Defenders'
         ]
     ]
-
 ];
