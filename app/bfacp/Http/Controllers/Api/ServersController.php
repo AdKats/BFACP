@@ -1,10 +1,13 @@
 <?php namespace BFACP\Http\Controllers\Api;
 
+use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Server;
 use BFACP\Repositories\Scoreboard\DBRepository AS SBDBRepo;
 use BFACP\Repositories\Scoreboard\LiveServerRepository AS SBLiveRepo;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 use MainHelper;
 
@@ -74,5 +77,27 @@ class ServersController extends BaseController
         }
 
         return MainHelper::response(NULL, 'Could not load server', 'error', NULL, FALSE, TRUE);
+    }
+
+    public function chat($id)
+    {
+        $chat = Chat::with('player')->where('ServerID', $id);
+
+        if(Input::has('nospam') && Input::get('nospam') == 1)
+        {
+            $chat = $chat->excludeSpam();
+        }
+
+        if(Input::has('sb') && Input::get('sb') == 1)
+        {
+            $chat = $chat->orderBy('logDate', 'desc')
+                ->take(200)->get();
+        }
+        else
+        {
+            $chat = $chat->simplePaginate(30);
+        }
+
+        return MainHelper::response($chat, NULL, NULL, NULL, FALSE, TRUE);
     }
 }

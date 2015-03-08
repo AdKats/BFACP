@@ -76,6 +76,74 @@
     </div>
 
     <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-comments-o"></i>
+                    <h3 class="box-title">Chat</h3>
+                </div>
+
+                <div class="box-body chat" id="chat-box">
+                    <div class="item" ng-repeat="(key, message) in messages | orderBy: 'logDate': true track by message.ID">
+                        <img ng-src="{{ message.player.rank_image }}" width="128" alt="Player Avatar" class="online" />
+                        <p class="message">
+                            <a ng-href="{{ message.player.profile_url }}" target="_blank" class="name">
+                                <small class="text-muted pull-right" tooltip="{{ moment(message.stamp).format('h:mm:ss a') }}" tooltip-placement="left">
+                                    <i class="fa fa-clock-o"></i>
+                                    <span ng-bind="moment(message.stamp).fromNow()"></span>
+                                </small>
+                                <small ng-class="message.class_css" ng-bind="message.logSubset"></small>
+                                <span ng-bind="message.logSoldierName"></span>
+                            </a>
+
+                            {{ message.logMessage }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="server.game.Name == 'BF4' && netural.spectators" class="col-xs-4 col-sm-3" >
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Spectators</h3>
+                    <div class="box-tools pull-right">
+                        <span ng-if="netural.spectators" class="badge bg-light-blue" ng-bind="netural.spectators.length"></span>
+                    </div>
+                </div>
+
+                <div class="box-body">
+                    <ul class="list-unstyled">
+                        <li ng-repeat="(key, player) in netural.spectators track by player.name">
+                            <a ng-href="{{ player._player.profile_url }}" ng-bind="player.name" target="_blank"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="netural.players" class="col-xs-4 col-sm-3">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Joining</h3>
+                    <div class="box-tools pull-right">
+                        <span ng-if="netural.players" class="badge bg-light-blue" ng-bind="netural.players.length"></span>
+                    </div>
+                </div>
+
+                <div class="box-body">
+                    <ul class="list-unstyled">
+                        <li ng-repeat="(key, player) in netural.players track by player.name">
+                            <i class="fa fa-circle-o-notch fa-spin"></i>
+                            <a ng-href="{{ player._player.profile_url }}" ng-bind="player.name" target="_blank"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-xs-12 col-sm-6" ng-repeat="(teamID, team) in teams track by teamID">
             <div class="box box-primary">
                 <div class="box-header">
@@ -161,6 +229,10 @@
 
                 <div class="box-footer clearfix" ng-if="team.commander">
                     <table class="table table-condensed">
+                        <caption class="text-center">
+                            <h3>Commander</h3>
+                        </caption>
+
                         <thead>
                             <th>&nbsp;</th>
                             <th>Name</th>
@@ -176,7 +248,6 @@
                                     <input type="checkbox" name="chkplayers" value="{{ team.commander.name }}" />
                                 </td>
                                 <td>
-                                    <img ng-if="server.game.Name == 'BF4'" src="images/games/bf4/lbicons_black/KitCommander.png" width="24px" tooltip="Commander" class="hidden-xs hidden-sm">
                                     <span ng-bind="team.commander.name"></span>
                                 </td>
                                 <td ng-bind="team.commander.score | number"></td>
@@ -185,7 +256,7 @@
                                     <span ng-bind="team.commander.deaths"></span>
                                 </td>
                                 <td class="visible-lg" ng-bind="kd(team.commander.kills, team.commander.deaths)"></td>
-                                <td ng-if="server.game.Name == 'BF4'" ng-bind="team.commander.ping"></td>
+                                <td ng-if="server.game.Name == 'BF4'" ng-bind="team.commander.ping || '--'" ng-class="pingColor(team.commander.ping)"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -194,49 +265,6 @@
 
             <div class="clearfix visible-sm-block" ng-if="teamID%2 === 0"></div>
         </div>
-    </div>
-
-    <div class="row">
-
-        <div class="col-xs-4" ng-if="server.game.Name == 'BF4' && netural.spectators">
-            <div class="box box-primary">
-                <div class="box-header">
-                    <h3 class="box-title">Spectators</h3>
-                    <div class="box-tools pull-right">
-                        <span ng-if="netural.spectators" class="badge bg-light-blue" ng-bind="netural.spectators.length"></span>
-                    </div>
-                </div>
-
-                <div class="box-body">
-                    <ul class="list-unstyled">
-                        <li ng-repeat="(key, player) in netural.spectators track by player.name">
-                            <a ng-href="{{ player._player.profile_url }}" ng-bind="player.name" target="_blank"></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div ng-if="netural.players" class="col-xs-4">
-            <div class="box box-primary">
-                <div class="box-header">
-                    <h3 class="box-title">Joining</h3>
-                    <div class="box-tools pull-right">
-                        <span ng-if="netural.players" class="badge bg-light-blue" ng-bind="netural.players.length"></span>
-                    </div>
-                </div>
-
-                <div class="box-body">
-                    <ul class="list-unstyled">
-                        <li ng-repeat="(key, player) in netural.players track by player.name">
-                            <i class="fa fa-circle-o-notch fa-spin"></i>
-                            <a ng-href="{{ player._player.profile_url }}" ng-bind="player.name" target="_blank"></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
     </div>
 
 </section>

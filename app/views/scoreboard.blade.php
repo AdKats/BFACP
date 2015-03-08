@@ -31,3 +31,8 @@
 </div>
 
 @stop
+
+@section('scripts')
+{{ HTML::script('js/plugins/slimScroll/jquery.slimscroll.min.js') }}
+<script type="text/javascript">$('#chat-box').slimScroll({height: '300px'});</script>
+@stop

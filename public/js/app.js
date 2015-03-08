@@ -11,7 +11,13 @@ angular.module('bfacp', [
         $locationProvider.html5Mode(true).hashPrefix('!');
     }])
     .run(['$rootScope', function($rootScope) {
-        $rootScope.moment = function(date) { return moment(date); };
+        $rootScope.moment = function(date) {
+            var d = moment(date);
+            if(d.isDST()) {
+                //d = d.add(1, 'h');
+            }
+            return d;
+        };
         $rootScope.divide = function(num1, num2, precision) {
             if(precision === undefined || precision === null) {
                 precision = 2;
@@ -394,6 +400,7 @@ angular.module('bfacp', [
         $scope.server = [];
         $scope.teams = [];
         $scope.netural = [];
+        $scope.messages = [];
 
         $scope.switchServer = function()
         {
@@ -402,6 +409,7 @@ angular.module('bfacp', [
             $scope.server = [];
             $scope.teams = [];
             $scope.netural = [];
+            $scope.messages = [];
 
             if($scope.selectedId == -1) {
                 $location.hash('');
@@ -518,6 +526,29 @@ angular.module('bfacp', [
                 }
 
                 $scope.fetchServerData();
+            });
+
+            $scope.fetchServerChat();
+        };
+
+        $scope.fetchServerChat = function()
+        {
+            if($scope.selectedId == -1) {
+                $scope.messages = [];
+                return false;
+            }
+
+            $http({
+                url: 'api/servers/chat/' + $scope.selectedId,
+                method: 'GET',
+                params: {
+                    sb: 1,
+                    nospam: 1
+                }
+            }).success(function(data, status) {
+                $scope.messages = data.data;
+            }).error(function(data, status) {
+                $timeout($scope.fetchServerChat, 2 * 1000);
             });
         };
 
