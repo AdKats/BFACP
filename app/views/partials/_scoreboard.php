@@ -150,7 +150,7 @@
                                         <span ng-bind="sum(team.players, 'deaths') | number"></span>
                                     </td>
                                     <td colspan="2">
-                                        <span class="pull-right">Average Ping</span>
+                                        <span class="pull-right" ng-if="server.game.Name == 'BF4'">Average Ping</span>
                                     </td>
                                     <td ng-class="pingColor(avg(team.players, 'ping'))" ng-bind="avg(team.players, 'ping') | number"></td>
                                 </tr>

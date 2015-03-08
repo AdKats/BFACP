@@ -401,6 +401,7 @@ angular.module('bfacp', [
             $scope.refresh = true;
             $scope.server = [];
             $scope.teams = [];
+            $scope.netural = [];
 
             if($scope.selectedId == -1) {
                 $location.hash('');

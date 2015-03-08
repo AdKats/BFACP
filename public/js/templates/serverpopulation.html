@@ -16,9 +16,8 @@
 
                 <tbody>
                     <tr ng-repeat="(serverKey, server) in game.servers" ng-class="populationColor(server.percentage, true)">
-                        <td ng-switch on="server.server_name_short !== null">
-                            <span ng-switch-when="true" ng-bind="server.server_name_short"></span>
-                            <span ng-switch-default ng-bind="server.ServerName"></span>
+                        <td>
+                            <a ng-href="/servers/live#id-{{ server.ServerID }}" style="color: white;" ng-bind="server.server_name_short || server.ServerName" target="_self"></a>
                         </td>
                         <td><span ng-bind="server.usedSlots"></span> / <span ng-bind="server.maxSlots"></span> <span ng-if="server.in_queue > 0">({{ server.in_queue }})</span></td>
                         <td ng-bind="server.current_map"></td>
