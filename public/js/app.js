@@ -11,13 +11,7 @@ angular.module('bfacp', [
         $locationProvider.html5Mode(true).hashPrefix('!');
     }])
     .run(['$rootScope', function($rootScope) {
-        $rootScope.moment = function(date) {
-            var d = moment(date);
-            if(d.isDST()) {
-                //d = d.add(1, 'h');
-            }
-            return d;
-        };
+        $rootScope.moment = function(date) { return moment(date); };
         $rootScope.divide = function(num1, num2, precision) {
             if(precision === undefined || precision === null) {
                 precision = 2;
