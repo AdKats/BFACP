@@ -16,7 +16,7 @@ return array(
 	|
 	*/
 
-	'driver' => getenv('SESSION_DRIVER'),
+	'driver' => getenv('SESSION_DRIVER') ?: 'file',
 
 	/*
 	|--------------------------------------------------------------------------
