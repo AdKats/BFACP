@@ -7,6 +7,8 @@ use BFACP\Repositories\Scoreboard\LiveServerRepository AS SBLiveRepo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 use MainHelper;
@@ -90,8 +92,7 @@ class ServersController extends BaseController
 
         if(Input::has('sb') && Input::get('sb') == 1)
         {
-            $chat = $chat->orderBy('logDate', 'desc')
-                ->take(200)->get();
+            $chat = $chat->orderBy('logDate', 'desc')->take(100)->get();
         }
         else
         {
@@ -99,5 +100,79 @@ class ServersController extends BaseController
         }
 
         return MainHelper::response($chat, NULL, NULL, NULL, FALSE, TRUE);
+    }
+
+    public function scoreboardExtra($id)
+    {
+        $sql = File::get(storage_path() . DIRECTORY_SEPARATOR . 'sql' . DIRECTORY_SEPARATOR . 'sbRoundStats.sql');
+
+        $stats = [
+            [
+                'name' => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Tickets',
+                'data' => [],
+                'visible' => true
+            ],
+            [
+                'name' => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Tickets',
+                'data' => [],
+                'visible' => true
+            ],
+            [
+                'name' => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Players',
+                'data' => [],
+                'visible' => false
+            ],
+            [
+                'name' => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Players',
+                'data' => [],
+                'visible' => false
+            ],
+            [
+                'name' => 'Players Online',
+                'data' => [],
+                'visible' => false
+            ]
+        ];
+
+        $data['roundId'] = null;
+
+        $results = DB::select($sql, [$id]);
+
+        foreach($results as $result)
+        {
+            if( is_null($data['roundId']) )
+            {
+                $data['roundId'] = $result->round_id;
+            }
+
+            $stats[0]['data'][] = [
+                strtotime($result->roundstat_time) * 1000,
+                (int) $result->team1_tickets
+            ];
+
+            $stats[1]['data'][] = [
+                strtotime($result->roundstat_time) * 1000,
+                (int) $result->team2_tickets
+            ];
+
+            $stats[2]['data'][] = [
+                strtotime($result->roundstat_time) * 1000,
+                (int) $result->team1_count
+            ];
+
+            $stats[3]['data'][] = [
+                strtotime($result->roundstat_time) * 1000,
+                (int) $result->team2_count
+            ];
+
+            $stats[4]['data'][] = [
+                strtotime($result->roundstat_time) * 1000,
+                (int) ($result->team1_count + $result->team2_count)
+            ];
+        }
+
+        $data['stats'] = $stats;
+
+        return MainHelper::response($data, NULL, NULL, NULL, FALSE, TRUE);
     }
 }
