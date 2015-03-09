@@ -69,6 +69,10 @@ class Battlefield extends Main
         try {
             return round( ($kills / $deaths), $precision );
         } catch(Exception $e) {
+            if($kills === 0 && $deaths > 0) {
+                return -$deaths;
+            }
+
             return $kills;
         }
     }
