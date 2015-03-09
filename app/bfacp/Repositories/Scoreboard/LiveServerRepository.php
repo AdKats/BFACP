@@ -654,6 +654,11 @@ class LiveServerRepository
             {
                 foreach($team[$type] as $index => $player)
                 {
+                    if(is_array($player) && array_key_exists('kills', $player) && array_key_exists('deaths', $player))
+                    {
+                        $this->data['teams'][$teamID][$type][$index]['kd'] = BattlefieldHelper::kd($player['kills'], $player['deaths']);
+                    }
+
                     foreach($dbPlayers as $index2 => $player2)
                     {
                         $guid = ! is_string($player) ? $player['guid'] : $player;
