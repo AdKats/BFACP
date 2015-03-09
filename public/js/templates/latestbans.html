@@ -13,7 +13,7 @@
             <tr ng-repeat="(key, ban) in results.bans.data">
                 <td>
                     <span ng-class="ban.player.game.class_css" ng-bind="ban.player.game.Name"></span>
-                    <a ng-href="{{ ban.player.profile_url }}" tooltip="{{ ban.record.record_message }}" ng-bind="ban.player.SoldierName"></a>
+                    <a ng-href="{{ ban.player.profile_url }}" tooltip="{{ ban.record.record_message }}" ng-bind="ban.player.SoldierName" target="_self"></a>
                 </td>
                 <td class="hidden-xs" ng-bind="ban.record.source_name"></td>
                 <td><span ng-bind="moment(ban.ban_issued).fromNow()" tooltip="{{ ban.ban_issued | date:'medium' }}"></span></td>

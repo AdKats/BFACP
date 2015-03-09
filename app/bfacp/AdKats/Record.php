@@ -40,7 +40,7 @@ class Record extends Eloquent
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = ['is_web'];
+    protected $appends = ['is_web', 'stamp'];
 
     /**
      * Models to be loaded automaticly
@@ -105,5 +105,10 @@ class Record extends Eloquent
     public function getIsWebAttribute()
     {
         return $this->attributes['adkats_web'] == 1;
+    }
+
+    public function getStampAttribute()
+    {
+        return $this->record_time->toIso8601String();
     }
 }

@@ -115,7 +115,8 @@ class Ban extends Eloquent
     public function previous()
     {
         return $this->hasMany('BFACP\AdKats\Record', 'target_id')
-            ->whereIn('command_action', [7,8,72,73]);
+            ->whereIn('command_action', [7,8,72,73])
+            ->orderBy('record_time', 'desc');
     }
 
     public function getBanIssuedAttribute()
