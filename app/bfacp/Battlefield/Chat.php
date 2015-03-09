@@ -86,11 +86,19 @@ class Chat extends Eloquent
         ]);
     }
 
+    /**
+     * Converts the chat timestamp to an ISO 8601 stamp
+     * @return string
+     */
     public function getStampAttribute()
     {
         return $this->logDate->toIso8601String();
     }
 
+    /**
+     * Returns the class that should be applied based on the chat visibility
+     * @return string
+     */
     public function getClassCssAttribute()
     {
         switch($this->logSubset)
