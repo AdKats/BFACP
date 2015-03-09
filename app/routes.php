@@ -27,6 +27,8 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
     {
         Route::get('population', ['as' => 'api.servers.population', 'uses' => 'ServersController@population']);
         Route::get('scoreboard/{id}', ['as' => 'api.servers.scoreboard', 'uses' => 'ServersController@scoreboard'])->where('id', '[0-9]+');
+        Route::get('scoreboard/roundstats/{id}', ['as' => 'api.servers.scoreboard.roundstats', 'uses' => 'ServersController@scoreboardExtra'])
+            ->where('id', '[0-9]+');
         Route::get('chat/{id}', ['as' => 'api.servers.chat', 'uses' => 'ServersController@chat'])->where('id', '[0-9]+');
     });
 });

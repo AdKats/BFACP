@@ -1,3 +1,4 @@
+moment.locale(navigator.language.split('-')[0]);
 angular.module('bfacp', [
         'ngResource',
         'ngMessages',
@@ -12,6 +13,7 @@ angular.module('bfacp', [
     }])
     .run(['$rootScope', function($rootScope) {
         $rootScope.moment = function(date) { return moment(date); };
+        $rootScope.momentDuration = function(duration, type) { return moment.duration(duration, type).humanize(); };
         $rootScope.divide = function(num1, num2, precision) {
             if(precision === undefined || precision === null) {
                 precision = 2;
@@ -385,9 +387,8 @@ angular.module('bfacp', [
         $scope.loading = false;
         $scope.refresh = false;
         $scope.requestError = false;
-
         $scope.selectedId = -1;
-
+        $scope.roundId = null;
 
         $scope.sort = {
             column: 'score',
@@ -421,6 +422,7 @@ angular.module('bfacp', [
 
             $timeout.cancel(refreshTimeout);
             $timeout($scope.fetchServerData, 500);
+            $scope.fetchRoundStats();
         };
 
         $scope.kd = function(kills, deaths)
@@ -434,7 +436,7 @@ angular.module('bfacp', [
             return ratio;
         };
 
-        $scope.avg = function(items, prop)
+        $scope.avg = function(items, prop, precision)
         {
             if(items === null) {
                 return 0;
@@ -442,7 +444,7 @@ angular.module('bfacp', [
 
             var sum = $scope.sum(items, prop);
 
-            return $rootScope.divide(sum, items.length, 0);
+            return $rootScope.divide(sum, items.length, precision || 0);
         };
 
         $scope.sum = function(items, prop)
@@ -575,6 +577,90 @@ angular.module('bfacp', [
 
             return cssClass;
         };
+
+        $scope.isSelectAll = function(e) {
+            var table = $(e.target).closest('table');
+            if($('thead th input:checkbox', table).is(':checked')) {
+                $('thead th input:checkbox', table).prop('checked', false);
+            }
+        }
+
+        $scope.selectAll = function(e) {
+            var table = $(e.target).closest('table');
+            $('tbody td input:checkbox', table).prop('checked', e.target.checked);
+        };
+
+        $scope.fetchRoundStats = function()
+        {
+            var chart = $("#round-graph").highcharts();
+            if($scope.selectedId == -1) {
+                chart.series.setData([]);
+                return false;
+            }
+
+            $http({
+                url: 'api/servers/scoreboard/roundstats/' + $scope.selectedId,
+                method: 'GET',
+                params: {}
+            }).success(function(data, status) {
+                for(var i=0; i < data.data.stats.length; i++) {
+                    if(chart.series[i] === undefined || chart.series[i] === null) {
+                        chart.addSeries(data.data['stats'][i]);
+                    } else {
+                        if($scope.roundId != data.data.roundId) {
+                            chart.series[i].setData([]);
+                        }
+
+                        chart.series[i].setData(data.data['stats'][i].data);
+                    }
+                }
+                chart.redraw();
+
+                $timeout($scope.fetchRoundStats, 30 * 1000);
+            }).error(function(data, status) {
+                $timeout($scope.fetchRoundStats, 2 * 1000);
+            });
+        };
+
+        $("#round-graph").highcharts({
+            chart:  {
+                type: 'spline',
+                zoomType: 'x'
+            },
+            title: {
+                text: 'Round Stats'
+            },
+            subtitle: {
+                text: 'Times shown in UTC'
+            },
+            xAxis: {
+                type: 'datetime',
+                title: {
+                    text: 'Time'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                },
+                min: 0
+            },
+            tooltip: {
+                headerFormat: '<b>{series.name}</b> - <small>{point.x:%H:%M:%S}</small><br>',
+                pointFormat: '{point.y}'
+            },
+            plotOptions: {
+                spline: {
+                    marker: {
+                        enabled: true
+                    },
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            series: []
+        });
 
         if($location.hash() !== '')
         {

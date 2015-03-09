@@ -80,6 +80,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
         {{ HTML::script('js/plugins/fastclick/fastclick.min.js') }}
         {{ HTML::script('js/plugins/angular-modules/count-to/count-to.js') }}
+        {{ HTML::script('js/plugins/highcharts/highcharts.js') }}
         {{ HTML::script('js/boot.js?v=1') }}
         {{ HTML::script('js/app.js?v=1') }}
 

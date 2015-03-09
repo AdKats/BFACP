@@ -57,9 +57,9 @@
                                         <span ng-bind="server.map.next.map.name"></span> /
                                         <span ng-bind="server.map.next.mode.name"></span>
                                     </td>
-                                    <td ng-bind="server.times.round.humanize"></td>
-                                    <td ng-bind="server.times.remaining.humanize" ng-if="server.game.Name == 'BF4'"></td>
-                                    <td ng-bind="server.times.uptime.humanize"></td>
+                                    <td ng-bind="momentDuration(server.times.round.seconds, 'seconds')"></td>
+                                    <td ng-bind="momentDuration(server.times.remaining.seconds, 'seconds')" ng-if="server.game.Name == 'BF4'"></td>
+                                    <td ng-bind="momentDuration(server.times.uptime.seconds, 'seconds')"></td>
                                     <td ng-bind="server.tickets_starting | number"></td>
                                     <td ng-if="server.game.Name == 'BF4'" ng-bind="server.type"></td>
                                 </tr>
@@ -170,7 +170,7 @@
                         <table class="table table-condensed table-striped table-hover">
                             <thead>
                                 <th>
-                                    <input type="checkbox" id="chk_{{ teamID }}">
+                                    <input type="checkbox" ng-click="selectAll($event)" />
                                 </th>
                                 <th ng-click="colSort('name')">
                                     <i ng-class="colSortClass('name')"></i>&nbsp;Name
@@ -198,7 +198,7 @@
                             <tbody>
                                 <tr ng-repeat="(key, player) in team.players | orderBy:sort.column:sort.desc track by player.name">
                                     <td>
-                                        <input type="checkbox" name="chkplayers" value="{{ player.name }}" />
+                                        <input type="checkbox" name="chkplayers" value="{{ player.name }}" ng-click="isSelectAll($event)" />
                                     </td>
                                     <td>
                                         <img ng-src="{{ player._player.rank_image }}" width="24px" tooltip="Rank {{ player.rank }}" class="hidden-xs hidden-sm">
@@ -232,7 +232,8 @@
                                         <span ng-bind="sum(team.players, 'kills') | number"></span> /
                                         <span ng-bind="sum(team.players, 'deaths') | number"></span>
                                     </td>
-                                    <td colspan="2">
+                                    <td ng-bind="avg(team.players, 'kd', 2)"></td>
+                                    <td>
                                         <span class="pull-right" ng-if="server.game.Name == 'BF4'">Average Ping</span>
                                     </td>
                                     <td ng-class="pingColor(avg(team.players, 'ping'))" ng-bind="avg(team.players, 'ping') | number"></td>
@@ -279,6 +280,16 @@
             </div>
 
             <div class="clearfix visible-sm-block" ng-if="teamID%2 === 0"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div id="round-graph" style="width: 99%"></div>
+                </div>
+            </div>
         </div>
     </div>
 
