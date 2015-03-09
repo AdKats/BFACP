@@ -381,15 +381,18 @@ angular.module('bfacp', [
 
         var requestErrorCount = 0;
 
-        // Get the server select element
-        var serverSelect = $("#server-select");
-
         // Init vars
         $scope.loading = false;
         $scope.refresh = false;
         $scope.requestError = false;
 
         $scope.selectedId = -1;
+
+
+        $scope.sort = {
+            column: 'score',
+            desc: true
+        };
 
         $scope.server = [];
         $scope.teams = [];
@@ -544,6 +547,33 @@ angular.module('bfacp', [
             }).error(function(data, status) {
                 $timeout($scope.fetchServerChat, 2 * 1000);
             });
+        };
+
+        $scope.colSort = function(col)
+        {
+            var sort = $scope.sort;
+
+            if(sort.column == col) {
+                sort.desc = ! sort.desc;
+            } else {
+                sort.column = col;
+                sort.desc = false;
+            }
+        };
+
+        $scope.colSortClass = function(col)
+        {
+            if($scope.sort.column == col) {
+                if($scope.sort.desc) {
+                    cssClass = 'fa fa-sort-desc';
+                } else {
+                    cssClass = 'fa fa-sort-asc';
+                }
+            } else {
+                cssClass = 'fa fa-sort';
+            }
+
+            return cssClass;
         };
 
         if($location.hash() !== '')

@@ -80,7 +80,7 @@
             <div class="box box-success">
                 <div class="box-header">
                     <i class="fa fa-comments-o"></i>
-                    <h3 class="box-title">Chat</h3>
+                    <h3 class="box-title">Chat <span class="badge bg-green" ng-bind="messages.length"></span></h3>
                 </div>
 
                 <div class="box-body chat" id="chat-box">
@@ -172,16 +172,31 @@
                                 <th>
                                     <input type="checkbox" id="chk_{{ teamID }}">
                                 </th>
-                                <th>Name</th>
-                                <th>Score</th>
-                                <th>K/D</th>
+                                <th ng-click="colSort('name')">
+                                    <i ng-class="colSortClass('name')"></i>&nbsp;Name
+                                </th>
+                                <th ng-click="colSort('score')">
+                                    <i ng-class="colSortClass('score')"></i>&nbsp;Score
+                                </th>
+                                <th>
+                                    <span ng-click="colSort('kills')">
+                                        <i ng-class="colSortClass('kills')"></i>&nbsp;K
+                                    </span> /
+                                    <span ng-click="colSort('deaths')">
+                                        <i ng-class="colSortClass('deaths')"></i>&nbsp;D
+                                    </span>
+                                </th>
                                 <th class="visible-lg">KD Ratio</th>
-                                <th class="hidden-xs hidden-sm">Squad</th>
-                                <th ng-if="server.game.Name == 'BF4'">Ping</th>
+                                <th ng-click="colSort('squadId')" class="hidden-xs hidden-sm">
+                                    <i ng-class="colSortClass('squadId')"></i>&nbsp;Squad
+                                </th>
+                                <th ng-if="server.game.Name == 'BF4'" ng-click="colSort('ping')">
+                                    <i ng-class="colSortClass('ping')"></i>&nbsp;Ping
+                                </th>
                             </thead>
 
                             <tbody>
-                                <tr ng-repeat="(key, player) in team.players | orderBy: 'score':true track by player.name">
+                                <tr ng-repeat="(key, player) in team.players | orderBy:sort.column:sort.desc track by player.name">
                                     <td>
                                         <input type="checkbox" name="chkplayers" value="{{ player.name }}" />
                                     </td>
