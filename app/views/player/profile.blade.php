@@ -5,17 +5,17 @@
 <div class="row">
 
     <!-- Player Basic -->
-    <div class="col-xs-12 col-md-6">
+    <div class="col-xs-12 col-lg-6">
         <div class="box box-primary">
             <div class="box-header">
-                <div class="box-title">Details</div>
+                <div class="box-title">{{ Lang::get('player.profile.details.title') }}</div>
             </div>
 
             <div class="box-body">
                 <div class="form-horizontal">
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">ID</label>
+                        <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.id') }}</label>
                         <div class="col-sm-9">
                             <p class="form-control-static">{{{ $player->PlayerID }}}</p>
                             {{ Form::hidden('player_id', $player->PlayerID) }}
@@ -23,14 +23,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Game</label>
+                        <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.game') }}</label>
                         <div class="col-sm-9">
                             <p class="form-control-static">{{{ $player->game->Name }}}</p>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">EA GUID</label>
+                        <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.eaguid') }}</label>
                         <div class="col-sm-9">
                             <p class="form-control-static">
                                 @if( ! empty($player->EAGUID) )
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">PB GUID</label>
+                        <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.pbguid') }}</label>
                         <div class="col-sm-9">
                             <p class="form-control-static">
                                 @if( ! empty($player->PBGUID) )
@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">IP</label>
+                        <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.ip') }}</label>
                         <div class="col-sm-9">
                             <p class="form-control-static">
                                 @if( ! empty($player->IP_Address) )
@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Country</label>
+                        <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.country') }}</label>
                         <div class="col-sm-9">
                             <p class="form-control-static">
                                 {{ HTML::image($player->country_flag, $player->country_name) }}
@@ -85,7 +85,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Reputation</label>
+                        <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.reputation') }}</label>
                         <div class="col-sm-9">
                             <p class="form-control-static">
                                 <span class="{{ $player->reputation->color }}">
@@ -104,7 +104,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Rank</label>
+                        <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.rank') }}</label>
                         <div class="col-sm-9">
                             <p class="form-control-static">
                                 {{ HTML::image($player->rank_image, sprintf('Rank %u', $player->GlobalRank), ['width' => '128px']) }}
@@ -119,12 +119,12 @@
     </div>
     <!-- END Player Basic -->
 
-    <div class="col-xs-12 col-md-6">
+    <div class="col-xs-12 col-lg-6">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="javascript://" data-target="#infractions" data-toggle="tab">Infractions</a></li>
-                <li><a href="javascript://" data-target="#ban-current" data-toggle="tab">Current Ban</a></li>
-                <li><a href="javascript://" data-target="#ban-previous" data-toggle="tab">Previous Bans</a></li>
+                <li class="active"><a href="javascript://" data-target="#infractions" data-toggle="tab">{{ Lang::get('player.profile.infractions.title') }}</a></li>
+                <li><a href="javascript://" data-target="#ban-current" data-toggle="tab">{{ Lang::get('player.profile.bans.current.title') }}</a></li>
+                <li><a href="javascript://" data-target="#ban-previous" data-toggle="tab">{{ Lang::get('player.profile.bans.previous.title') }}</a></li>
             </ul>
 
             <div class="tab-content">
@@ -132,16 +132,24 @@
                     @if( ! is_null($player->infractions_global) && ! is_null($player->infractions_server))
                     <table class="table table-striped table-condensed">
                         <thead>
-                            <th>Server</th>
-                            <th>Punishes</th>
-                            <th>Forgives</th>
-                            <th>Total</th>
+                            <th>{{ Lang::get('player.profile.infractions.table.col1') }}</th>
+                            <th>{{ Lang::get('player.profile.infractions.table.col2') }}</th>
+                            <th>{{ Lang::get('player.profile.infractions.table.col3') }}</th>
+                            <th>{{ Lang::get('player.profile.infractions.table.col4') }}</th>
                         </thead>
 
                         <tbody>
                             @foreach($player->infractions_server as $infraction)
                             <tr>
-                                <td>{{ $infraction->server->server_name_short or str_limit($infraction->server->ServerName, 30) }}</td>
+                                <td>
+                                    @if($infraction->server->is_active)
+                                    <a href="servers/live#id-{{ $infraction->server->ServerID }}" target="_blank" tooltip="{{ $infraction->server->ServerName }}">
+                                        {{ $infraction->server->server_name_short or str_limit($infraction->server->ServerName, 30) }}
+                                    </a>
+                                    @else
+                                    <span tooltip="{{ $infraction->server->ServerName }}">{{ $infraction->server->server_name_short or str_limit($infraction->server->ServerName, 30) }}</span>
+                                    @endif
+                                </td>
                                 <td>{{ $infraction->punish_points }}</td>
                                 <td>{{ $infraction->forgive_points }}</td>
                                 <td>{{ $infraction->total_points }}</td>
@@ -151,7 +159,7 @@
 
                         <tfoot>
                             <tr>
-                                <td><span class="pull-right">Total</span></td>
+                                <td><span class="pull-right">{{ Lang::get('player.profile.infractions.overall.title') }}</span></td>
                                 <td>{{ $player->infractions_global->punish_points }}</td>
                                 <td>{{ $player->infractions_global->forgive_points }}</td>
                                 <td>{{ $player->infractions_global->total_points }}</td>
@@ -160,21 +168,21 @@
                     </table>
                     @else
                     <div class="alert alert-success">
-                        <i class="fa fa-check"></i> No infractions on file
+                        <i class="fa fa-check"></i> {{ Lang::get('player.profile.infractions.none') }}
                     </div>
                     @endif
                 </div>
 
                 <div class="tab-pane" id="ban-current">
                     @if( ! is_null($player->ban) )
-                    <table class="table table-striped table-condensed">
+                    <table class="table table-condensed">
                         <thead>
-                            <th>Issued</th>
-                            <th>Expires</th>
-                            <th>Server</th>
-                            <th>Type</th>
-                            <th>Status</th>
-                            <th width="25%">Reason</th>
+                            <th>{{ Lang::get('player.profile.bans.current.table.col1') }}</th>
+                            <th>{{ Lang::get('player.profile.bans.current.table.col2') }}</th>
+                            <th>{{ Lang::get('player.profile.bans.current.table.col3') }}</th>
+                            <th>{{ Lang::get('player.profile.bans.current.table.col4') }}</th>
+                            <th>{{ Lang::get('player.profile.bans.current.table.col5') }}</th>
+                            <th width="25%">{{ Lang::get('player.profile.bans.current.table.col6') }}</th>
                         </thead>
 
                         <tbody>
@@ -185,21 +193,29 @@
                                 <td>
                                     <span ng-bind="moment('{{ $player->ban->ban_expires }}').fromNow()" tooltip="<?php echo '{{'; ?> moment('<?php echo $player->ban->ban_expires; ?>').format('lll') <?php echo '}}'; ?>"></span>
                                 </td>
-                                <td>{{ $player->ban->record->server->server_name_short or str_limit($player->ban->record->server->ServerName, 30) }}</td>
+                                <td>
+                                    @if($player->ban->record->server->is_active)
+                                    <a href="servers/live#id-{{ $player->ban->record->server->ServerID }}" target="_blank" tooltip="{{ $player->ban->record->server->ServerName }}">
+                                        {{ $player->ban->record->server->server_name_short or str_limit($player->ban->record->server->ServerName, 30) }}
+                                    </a>
+                                    @else
+                                    <span tooltip="{{ $player->ban->record->server->ServerName }}">{{ $player->ban->record->server->server_name_short or str_limit($player->ban->record->server->ServerName, 30) }}</span>
+                                    @endif
+                                </td>
                                 <td>
                                     @if($player->ban->is_perm)
-                                    <label class="label label-danger">Perm</label>
+                                    <label class="label label-danger">{{ Lang::get('player.profile.bans.type.permanent.short') }}</label>
                                     @else
-                                    <label class="label label-warning">Temp</label>
+                                    <label class="label label-warning">{{ Lang::get('player.profile.bans.type.temporary.short') }}</label>
                                     @endif
                                 </td>
                                 <td>
                                     @if($player->ban->is_active)
-                                    <label class="label label-danger">Enabled</label>
+                                    <label class="label label-danger">{{ Lang::get('player.profile.bans.status.enabled') }}</label>
                                     @elseif($player->ban->is_expired)
-                                    <label class="label label-success">Expired</label>
+                                    <label class="label label-success">{{ Lang::get('player.profile.bans.status.expired') }}</label>
                                     @elseif( ! $player->ban->is_active && ! $player->ban->is_expired)
-                                    <label class="label label-primary">Disabled</label>
+                                    <label class="label label-primary">{{ Lang::get('player.profile.bans.disabled') }}</label>
                                     @endif
                                 </td>
                                 <td>{{ $player->ban->record->record_message }}</td>
@@ -208,20 +224,20 @@
                     </table>
                     @else
                     <div class="alert alert-success">
-                        <i class="fa fa-check"></i> No ban on file
+                        <i class="fa fa-check"></i> {{ Lang::get('player.profile.bans.current.none') }}
                     </div>
                     @endif
                 </div>
 
                 <div class="tab-pane" id="ban-previous">
-                    @if( ! is_null($player->ban) && ! is_null($player->ban->previous) && $player->ban->latest_record_id != $player->ban->previous[0]->record_id )
+                    @if( ! is_null($player->ban) && ! is_null($player->ban->previous) && count($player->ban->previous) > 1 )
                     <table class="table table-striped table-condensed">
                         <thead>
-                            <th>Issued</th>
-                            <th>Expired</th>
-                            <th>Server</th>
-                            <th>Type</th>
-                            <th width="25%">Reason</th>
+                            <th>{{ Lang::get('player.profile.bans.previous.table.col1') }}</th>
+                            <th>{{ Lang::get('player.profile.bans.previous.table.col2') }}</th>
+                            <th>{{ Lang::get('player.profile.bans.previous.table.col3') }}</th>
+                            <th>{{ Lang::get('player.profile.bans.previous.table.col4') }}</th>
+                            <th width="25%">{{ Lang::get('player.profile.bans.previous.table.col5') }}</th>
                         </thead>
 
                         <tbody>
@@ -234,12 +250,20 @@
                                 <td>
                                     <span ng-bind="moment('{{ $ban->record_time->addMinutes($ban->command_numeric)->toIso8601String() }}').fromNow()" tooltip="<?php echo '{{'; ?> moment('<?php echo $ban->record_time->addMinutes($ban->command_numeric)->toIso8601String(); ?>').format('lll') <?php echo '}}'; ?>"></span>
                                 </td>
-                                <td>{{ $ban->server->server_name_short or str_limit($ban->server->ServerName, 30) }}</td>
+                                <td>
+                                    @if($ban->server->is_active)
+                                    <a href="servers/live#id-{{ $ban->server->ServerID }}" target="_blank" tooltip="{{ $ban->server->ServerName }}">
+                                        {{ $ban->server->server_name_short or str_limit($ban->server->ServerName, 30) }}
+                                    </a>
+                                    @else
+                                    <span tooltip="{{ $ban->server->ServerName }}">{{ $ban->server->server_name_short or str_limit($ban->server->ServerName, 30) }}</span>
+                                    @endif
+                                </td>
                                 <td>
                                     @if($ban->command_action == 73)
-                                    <label class="label label-danger">Perm</label>
+                                    <label class="label label-danger">{{ Lang::get('player.profile.bans.type.permanent.short') }}</label>
                                     @else
-                                    <label class="label label-warning">Temp</label>
+                                    <label class="label label-warning">{{ Lang::get('player.profile.bans.type.temporary.short') }}</label>
                                     @endif
                                 </td>
                                 <td>{{ $ban->record_message }}</td>
@@ -249,9 +273,32 @@
                     </table>
                     @else
                     <div class="alert alert-success">
-                        <i class="fa fa-check"></i> No previous bans on file
+                        <i class="fa fa-check"></i> {{ Lang::get('player.profile.bans.previous.none') }}
                     </div>
                     @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-xs-12">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="javascript://" data-target="#server-stats-active" data-toggle="tab">Server Stats &ndash; <span class="badge bg-green">Active</span></a></li>
+                <li><a href="javascript://" data-target="#server-stats-inactive" data-toggle="tab">Server Stats &ndash; <span class="badge bg-gray">Inactive</span></a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="server-stats-active">
+                    @include('partials._player-server-stats', ['stats' => $player->stats, 'unless' => TRUE])
+                </div>
+
+                <div class="tab-pane" id="server-stats-inactive">
+                    @include('partials._player-server-stats', ['stats' => $player->stats, 'unless' => FALSE])
                 </div>
             </div>
         </div>
