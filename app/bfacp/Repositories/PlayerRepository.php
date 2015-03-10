@@ -150,12 +150,19 @@ class PlayerRepository extends BaseRepository
     /**
      * Sets which relations should be returned
      * @param  array $opts
+     * @param  bool  $custom
      * @return $this
      */
-    public function setopts($opts = [])
+    public function setopts($opts = [], $custom = FALSE)
     {
         if(empty($opts))
             return $this;
+
+        if($custom)
+        {
+            $this->opts = $opts;
+            return $this;
+        }
 
         if(is_string($opts))
             $opts = explode(',', $opts);
