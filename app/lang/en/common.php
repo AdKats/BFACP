@@ -1,16 +1,28 @@
 <?php
 
 return [
-
-    'no_ban'         => 'No ban on file',
-    'no_infractions' => 'No infractions on file',
-    'ban_disabled'   => 'Ban Disabled',
-    'ban_permanent'  => 'Permanently Banned',
-    'ban_expired'    => 'Ban expired',
-    'ban_expire_in'  => 'Expires',
+    'version' => 'Version',
 
     'login' => 'Login',
     'logout' => 'Logout',
+
+    'metabans' => [
+        'title' => 'Metabans',
+        'assessments' => 'Assessments',
+        'feed' => 'Feed',
+        'columns' => [
+            'col1' => 'Player',
+            'col2' => 'Game',
+            'col3' => 'Type',
+            'expiration' => 'Expiration'
+        ],
+        'type' => [
+            'none' => 'No Assessment',
+            'watch' => 'Watched',
+            'white' => 'Protected',
+            'black' => 'Banned'
+        ]
+    ],
 
     'nav' => [
         'extras' => [

@@ -10,7 +10,7 @@ return [
             'col4' => 'Player',
             'col5' => 'Ban',
             'col6' => 'Reputation',
-            'col7' => 'Infractions',
+            'col7' => 'Total Infractions',
             'col8' => 'Country'
         ],
         'button_next' => 'Next',
