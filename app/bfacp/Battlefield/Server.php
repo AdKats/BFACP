@@ -46,7 +46,7 @@ class Server extends Eloquent
      */
     protected $appends = [
         'percentage', 'ip', 'port', 'server_name_short', 'in_queue', 'maps_file_path', 'modes_file_path', 'squads_file_path', 'teams_file_path',
-        'current_map', 'current_gamemode', 'map_image_paths'
+        'current_map', 'current_gamemode', 'map_image_paths', 'is_active'
     ];
 
     /**
@@ -251,5 +251,14 @@ class Server extends Eloquent
         ];
 
         return $paths;
+    }
+
+    /**
+     * Is the server enabled?
+     * @return bool
+     */
+    public function getIsActiveAttribute()
+    {
+        return $this->ConnectionState == 'on';
     }
 }
