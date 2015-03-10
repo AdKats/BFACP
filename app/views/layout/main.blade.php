@@ -58,7 +58,7 @@
 
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
-                    <strong>Version</strong> {{ BFACP_VERSION }}
+                    <strong>{{ Lang::get('common.version') }}</strong> {{ BFACP_VERSION }}
                 </div>
                 <strong>&copy; 2013-{{ date('Y') }} <a href="http://www.adkgamers.com" target="_blank">A Different Kind, LLC</a>. All rights reserved.</strong> <em>{{ MainHelper::executionTime(true) }}</em>
             </footer>
@@ -67,7 +67,6 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="//code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-        <script type="text/javascript">$.widget.bridge('uibutton', $.ui.button);</script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-messages.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-loader.min.js"></script>
@@ -82,6 +81,15 @@
         {{ HTML::script('js/plugins/angular-modules/count-to/count-to.js') }}
         {{ HTML::script('js/plugins/highcharts/highcharts.js') }}
         {{ HTML::script('js/boot.js?v=1') }}
+        <script type="text/javascript">
+            @if(Config::get('app.locale') != 'en')
+            var lang = "{{ Config::get('app.locale') }}";
+            @else
+            var lang = null;
+            @endif
+            moment.locale( lang || navigator.language.split('-')[0] );
+            $.widget.bridge('uibutton', $.ui.button);
+        </script>
         {{ HTML::script('js/app.js?v=1') }}
 
         @yield('scripts')
