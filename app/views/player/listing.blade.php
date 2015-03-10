@@ -61,40 +61,44 @@
                                         <div ng-if="player.ban.is_active">
                                             <div ng-switch on="player.ban.is_perm">
                                                 <span ng-switch-when="true" ng-cloak class="label bg-red" tooltip="@{{ player.ban.record.record_message }}">
-                                                    {{ Lang::get('common.ban_permanent') }}
+                                                    {{ Lang::get('player.profile.bans.type.permanent.long') }}
                                                 </span>
                                                 <span ng-switch-default class="label bg-purple">
-                                                    {{ Lang::get('common.ban_expire_in') }} <span ng-cloak ng-bind="moment(player.ban.ban_expires).fromNow()" tooltip="@{{ player.ban.ban_expires | date: 'medium' }}"></span>
+                                                    {{ Lang::get('player.profile.bans.status.expire') }} <span ng-cloak ng-bind="moment(player.ban.ban_expires).fromNow()" tooltip="@{{ player.ban.ban_expires | date: 'medium' }}"></span>
                                                 </span>
                                             </div>
                                         </div>
 
                                         <div ng-if="player.ban.ban_status == 'Disabled'">
                                             <span class="label label-default">
-                                                {{ Lang::get('common.ban_disabled') }}
+                                                {{ Lang::get('player.profile.bans.status.disabled') }}
                                             </span>
                                         </div>
 
                                         <span ng-if="player.ban.is_expired" ng-cloak class="label bg-blue" tooltip="@{{ player.ban.ban_expires | date: 'medium' }}">
-                                            {{ Lang::get('common.ban_expired') }} @{{ moment(player.ban.ban_expires).fromNow() }}
+                                            {{ Lang::get('player.profile.bans.status.expired') }} <span ng-bind="moment(player.ban.ban_expires).fromNow()"></span>
                                         </span>
                                     </div>
 
                                     <div ng-switch-default>
-                                        <span class="label bg-green">{{ Lang::get('common.no_ban') }}</span>
+                                        <span class="label bg-green">{{ Lang::get('player.profile.bans.current.none') }}</span>
                                     </div>
                                 </ng-switch>
                             </td>
                             <td class="hidden-xs hidden-sm">
                                 <ng-switch on="player.reputation !== null">
-                                    <span class="label" ng-switch-when="true" ng-class="reputation(player.reputation.total_rep_co)" ng-bind="player.reputation.total_rep_co.toFixed(2)"></span>
+                                    <span class="label" ng-switch-when="true" ng-class="player.reputation.color">
+                                        <i class="fa" ng-class="{'fa-caret-up': player.reputation.total_rep_co > 0, 'fa-caret-down': player.reputation.total_rep_co < 0, 'fa-caret-left': player.reputation.total_rep_co === 0}"></i>
+
+                                        <span ng-bind="player.reputation.total_rep_co.toFixed(2)"></span>
+                                    </span>
                                     <span ng-switch-default class="label label-default">???</span>
                                 </ng-switch>
                             </td>
                             <td class="hidden-xs hidden-sm">
                                 <ng-switch on="player.infractions_global !== null">
                                     <span ng-switch-when="true" ng-bind="player.infractions_global.total_points" class="label bg-navy"></span>
-                                    <span ng-switch-default class="label bg-green">{{ Lang::get('common.no_infractions') }}</span>
+                                    <span ng-switch-default class="label bg-green">{{ Lang::get('player.profile.infractions.none') }}</span>
                                 </ng-switch>
                             </td>
                             <td class="hidden-xs"><img ng-src="@{{ player.country_flag }}" tooltip="@{{ player.country_name }}"></td>
