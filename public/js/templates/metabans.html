@@ -1,18 +1,18 @@
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs pull-right">
-        <li><a href="javascript://" data-target="#mb-feed" data-toggle="tab">Feed</a></li>
-        <li class="active"><a href="javascript://" data-target="#mb-assessments" data-toggle="tab">Assessments</a></li>
-        <li class="pull-left header">Metabans</li>
+        <li><a href="javascript://" data-target="#mb-feed" data-toggle="tab" ng-bind="results.metabans.locales.feed"></a></li>
+        <li class="active"><a href="javascript://" data-target="#mb-assessments" data-toggle="tab" ng-bind="results.metabans.locales.assessments"></a></li>
+        <li class="pull-left header" ng-bind="results.metabans.locales.title"></li>
     </ul>
 
     <div class="tab-content">
         <div class="tab-pane" id="mb-feed">
             <table class="table table-striped table-condensed">
                 <thead>
-                    <th>Player</th>
-                    <th>Game</th>
-                    <th>Type</th>
-                    <th>Expiration</th>
+                    <th ng-bind="results.metabans.locales.columns.col1"></th>
+                    <th ng-bind="results.metabans.locales.columns.col2"></th>
+                    <th ng-bind="results.metabans.locales.columns.col3"></th>
+                    <th ng-bind="results.metabans.locales.columns.col4"></th>
                 </thead>
 
                 <tbody>
@@ -29,10 +29,10 @@
         <div class="tab-pane active" id="mb-assessments">
             <table class="table table-striped table-condensed">
                 <thead>
-                    <th>Player</th>
-                    <th>Game</th>
-                    <th>Type</th>
-                    <th>Expiration</th>
+                    <th ng-bind="results.metabans.locales.columns.col1"></th>
+                    <th ng-bind="results.metabans.locales.columns.col2"></th>
+                    <th ng-bind="results.metabans.locales.columns.col3"></th>
+                    <th ng-bind="results.metabans.locales.columns.col4"></th>
                 </thead>
 
                 <tbody>

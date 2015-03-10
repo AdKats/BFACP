@@ -1,4 +1,3 @@
-moment.locale(navigator.language.split('-')[0]);
 angular.module('bfacp', [
         'ngResource',
         'ngMessages',
@@ -109,7 +108,8 @@ angular.module('bfacp', [
                     protected_total: 0,
                     watched_total: 0,
                     enforced_bans_total: 0,
-                    data: []
+                    data: [],
+                    locales: []
                 }
             },
             population: {
@@ -162,6 +162,7 @@ angular.module('bfacp', [
                 $scope.results.metabans.assessments.protected_total = data.data.assessments.protected_total;
                 $scope.results.metabans.assessments.watched_total = data.data.assessments.watched_total;
                 $scope.results.metabans.assessments.enforced_bans_total = data.data.assessments.enforced_bans_total;
+                $scope.results.metabans.locales = data.data.locales;
             }).error(function(data, status) {
                 $scope.metabans();
             });
@@ -260,16 +261,16 @@ angular.module('bfacp', [
             switch(assessment.action_type)
             {
                 case "none":
-                    typeLabel = "No assessment";
+                    typeLabel = $scope.results.metabans.locales.type.none;
                     break;
                 case "watch":
-                    typeLabel = "Watched";
+                    typeLabel = $scope.results.metabans.locales.type.watch;
                     break;
                 case "white":
-                    typeLabel = "Protected";
+                    typeLabel = $scope.results.metabans.locales.type.white;
                     break;
                 case "black":
-                    typeLabel = "Banned";
+                    typeLabel = $scope.results.metabans.locales.type.black;
                     break;
                 default:
                     typeLabel = assessment.action_type;
