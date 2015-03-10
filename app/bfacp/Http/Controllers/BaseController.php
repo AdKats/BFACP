@@ -2,6 +2,7 @@
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
 use Lavary\Menu\Facade AS Menu;
 
@@ -14,14 +15,14 @@ class BaseController extends Controller
     {
         Menu::make('MainNav', function($menu)
         {
-            $menu->raw('MAIN NAVIGATION', ['class' => 'header']);
-            $menu->add('Dashboard', ['route' => 'home'])
+            $menu->raw(strtoupper(Lang::get('navigation.main.title')), ['class' => 'header']);
+            $menu->add(Lang::get('navigation.main.items.dashboard'), ['route' => 'home'])
                 ->prepend('<i class="fa fa-dashboard"></i>');
 
-            $menu->raw('ADMIN NAVIGATION', ['class' => 'header']);
+            $menu->raw(strtoupper(Lang::get('navigation.admin.title')), ['class' => 'header']);
 
-            $menu->add('AdKats Management', 'javascript:://')
-                ->add('Locale Editor', ['route' => 'admin.adkats.locale.index']);
+            $menu->add(Lang::get('navigation.admin.adkats.title'), 'javascript:://')
+                ->add(Lang::get('navigation.admin.adkats.items.locale_editor'), ['route' => 'admin.adkats.locale.index']);
         });
 
         $this->user = \App::make('bfadmincp')->user;
