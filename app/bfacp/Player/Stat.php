@@ -40,7 +40,7 @@ class Stat extends Eloquent
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = [];
+    protected $appends = ['first_seen', 'last_seen'];
 
     /**
      * Models to be loaded automaticly
@@ -62,5 +62,15 @@ class Stat extends Eloquent
     public function weapons()
     {
         return $this->belongsToMany('BFACP\Player\Weapon', 'tbl_server_player', 'StatsID', 'StatsID');
+    }
+
+    public function getFirstSeenAttribute()
+    {
+        return $this->FirstSeenOnServer->toIso8601String();
+    }
+
+    public function getLastSeenAttribute()
+    {
+        return $this->LastSeenOnServer->toIso8601String();
     }
 }

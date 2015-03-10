@@ -40,7 +40,7 @@ class Session extends Eloquent
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = [];
+    protected $appends = ['session_start', 'session_end'];
 
     /**
      * Models to be loaded automaticly
@@ -53,6 +53,16 @@ class Session extends Eloquent
      */
     public function server()
     {
-        return $this->belongsToMany('BFACP\Battlefield\Server', 'tbl_server_player');
+        return $this->belongsToMany('BFACP\Battlefield\Server', 'tbl_server_player', 'StatsID', 'ServerID');
+    }
+
+    public function getSessionStartAttribute()
+    {
+        return $this->StartTime->toIso8601String();
+    }
+
+    public function getSessionEndAttribute()
+    {
+        return $this->EndTime->toIso8601String();
     }
 }
