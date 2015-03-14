@@ -40,7 +40,7 @@ class Chat extends Eloquent
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = ['stamp', 'class_css'];
+    protected $appends = ['stamp', 'class_css', 'profile_url'];
 
     /**
      * Models to be loaded automaticly
@@ -62,6 +62,18 @@ class Chat extends Eloquent
     public function player()
     {
         return $this->belongsTo('BFACP\Battlefield\Player', 'logPlayerID');
+    }
+
+    /**
+     * Gets the URL to the players profile
+     * @return string
+     */
+    public function getProfileUrlAttribute()
+    {
+        return ! is_null($this->logPlayerID) ? route('player.show', [
+            'id' => $this->logPlayerID,
+            'name' => $this->logSoldierName
+        ]) : NULL;
     }
 
     /**
