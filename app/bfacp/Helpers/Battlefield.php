@@ -130,7 +130,7 @@ class Battlefield extends Main
                     break;
 
                     case "RushLarge0":
-                        $defaultTickets = 75;
+                        $defaultTickets = 100;
                     break;
 
                     case "SquadDeathMatch0":
@@ -221,8 +221,11 @@ class Battlefield extends Main
                     case "SquadDeathMatch0":
                     case "Domination0":
                     case "AirSuperiority0":
-                    case "RushLarge0":
                         $defaultTime = 3600;
+                    break;
+
+                    case "RushLarge0":
+                        $defaultTime = 900 * 3;
                     break;
 
                     case "Elimination0":
