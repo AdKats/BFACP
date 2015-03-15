@@ -403,10 +403,15 @@ angular.module('bfacp', [
         $scope.netural = [];
         $scope.messages = [];
         $scope.winning = {
-            1: false,
-            2: false,
-            3: false,
-            4: false
+            '1': false,
+            '2': false,
+            '3': false,
+            '4': false
+        };
+
+        $scope.search = {
+            chat: '',
+            scoreboard: ''
         };
 
         var addAlert = function(message, alertType)
@@ -499,12 +504,12 @@ angular.module('bfacp', [
         };
 
         $scope.setWinningTeam = function() {
-            var team1 = $scope.teams[1] || {score: -1};
-            var team2 = $scope.teams[2] || {score: -1};
-            var team3 = $scope.teams[3] || {score: -1};
-            var team4 = $scope.teams[4] || {score: -1};
+            var team1 = $scope.teams[1] || {score: null};
+            var team2 = $scope.teams[2] || {score: null};
+            var team3 = $scope.teams[3] || {score: null};
+            var team4 = $scope.teams[4] || {score: null};
             var tickets_needed = $scope.server.tickets_needed;
-            var tickets_starting = $scope.server.starting;
+            var tickets_starting = $scope.server.tickets_starting;
             var mode = $scope.server.mode;
             var num = null;
 
@@ -517,10 +522,33 @@ angular.module('bfacp', [
                 return false;
             }
 
+            var teamTickets = [];
+
+            if(team1.score !== null) {
+                teamTickets.push(team1.score);
+            }
+
+            if(team2.score !== null) {
+                teamTickets.push(team2.score);
+            }
+
+            if(team3.score !== null) {
+                teamTickets.push(team3.score);
+            }
+
+            if(team4.score !== null) {
+                teamTickets.push(team4.score);
+            }
+
             if(tickets_needed > 0) {
-                num = Math.max(team1.score, team2.score, team3.score, team4.score);
+                if(mode.uri == "TeamDeathMatch0") {
+                    num = Math.max.apply(null, teamTickets);
+                } else {
+                    num = Math.min.apply(null, teamTickets);
+                }
+
             } else {
-                num = Math.min(team1.score, team2.score, team3.score, team4.score);
+                num = Math.max.apply(null, teamTickets);
             }
 
             switch(mode.uri) {
@@ -529,11 +557,15 @@ angular.module('bfacp', [
                 case "Chainlink0":
                 case "ConquestLarge0":
                 case "ConquestSmall0":
+                case "TeamDeathMatch0":
                     if(team1.score < 0 || team2.score < 0) {
                         return false;
                     }
 
-                    if(num == team1.score) {
+                    if(team1.score == tickets_starting && team2.score.tickets_starting) {
+                        $scope.winning[1] = false;
+                        $scope.winning[2] = false;
+                    } else if(num == team1.score) {
                         $scope.winning[1] = true;
                         $scope.winning[2] = false;
                     } else if(num == team2.score) {
@@ -578,7 +610,7 @@ angular.module('bfacp', [
                 break;
 
                 default:
-                    console.error('Unknown gametype: ' + mode.uri);
+                    console.debug('Unknown gametype: ' + mode.uri);
                 break;
             }
         };

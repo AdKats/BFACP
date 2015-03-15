@@ -76,15 +76,18 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-sm-6">
+        <div class="col-xs-12 col-md-6">
             <div class="box box-success">
                 <div class="box-header">
                     <i class="fa fa-comments-o"></i>
                     <h3 class="box-title">Chat <span class="badge bg-green" ng-bind="messages.length"></span></h3>
+                    <div class="box-tools pull-right">
+                        <input class="form-control" type="text" ng-model="search.chat" placeholder="Filter Players..." />
+                    </div>
                 </div>
 
                 <div class="box-body chat scoreboard-chat" id="chat-box">
-                    <div class="item" ng-repeat="(key, message) in messages | orderBy: 'logDate': true track by message.ID">
+                    <div class="item" ng-repeat="(key, message) in messages | filter: { logSoldierName: search.chat } | orderBy: 'logDate': true track by message.ID">
                         <img ng-src="{{ message.player.rank_image }}" width="128" alt="Player Avatar" class="online" />
                         <p class="message">
                             <a ng-href="{{ message.player.profile_url }}" target="_blank" class="name">
@@ -144,7 +147,15 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-sm-6" ng-repeat="(teamID, team) in teams track by teamID">
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                <input class="form-control" type="text" ng-model="search.scoreboard" placeholder="Filter Players..." />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6" ng-repeat="(teamID, team) in teams track by teamID">
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">
@@ -154,7 +165,7 @@
                     </h3>
 
                     <div class="box-tools pull-right" ng-if="server.mode.uri != 'CaptureTheFlag0'">
-                        <span class="badge bg-light-blue" >
+                        <span class="badge bg-light-blue">
                             <div ng-switch on="server.mode.uri">
                                 <div ng-switch-when="RushLarge0">
                                     <span ng-if="teamID == 2">&infin;</span>
@@ -197,7 +208,7 @@
                             </thead>
 
                             <tbody>
-                                <tr ng-repeat="(key, player) in team.players | orderBy:sort.column:sort.desc track by player.name">
+                                <tr ng-repeat="(key, player) in team.players | filter: { name: search.scoreboard } | orderBy:sort.column:sort.desc track by player.name">
                                     <td>
                                         <input type="checkbox" name="chkplayers" value="{{ player.name }}" ng-click="isSelectAll($event)" />
                                     </td>
@@ -233,8 +244,8 @@
                                         <span ng-bind="sum(team.players, 'kills') | number"></span> /
                                         <span ng-bind="sum(team.players, 'deaths') | number"></span>
                                     </td>
-                                    <td ng-bind="avg(team.players, 'kd', 2)"></td>
-                                    <td>
+                                    <td class="visible-lg" ng-bind="avg(team.players, 'kd', 2)"></td>
+                                    <td class="hidden-xs hidden-sm">
                                         <span class="pull-right" ng-if="server.game.Name == 'BF4'">Average Ping</span>
                                     </td>
                                     <td ng-class="pingColor(avg(team.players, 'ping'))" ng-bind="avg(team.players, 'ping') | number"></td>
