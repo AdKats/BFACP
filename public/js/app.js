@@ -529,7 +529,7 @@ angular.module('bfacp', [
                 case "Chainlink0":
                 case "ConquestLarge0":
                 case "ConquestSmall0":
-                    if(team1 < 0 || team2 < 0) {
+                    if( team1.hasOwnProperty('score') !== undefined || team2.hasOwnProperty('score') !== undefined && team1 < 0 || team2 < 0) {
                         return false;
                     }
 
