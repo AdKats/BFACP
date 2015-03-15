@@ -24,6 +24,8 @@
 
         @yield('styles')
 
+        @yield('header-scripts')
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -84,6 +86,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
         {{ HTML::script('js/plugins/fastclick/fastclick.min.js') }}
         {{ HTML::script('js/plugins/angular-modules/count-to/count-to.js') }}
+        {{ HTML::script('js/plugins/angular-modules/ng-idle/angular-idle.min.js') }}
         {{ HTML::script('js/plugins/highcharts/highcharts.js') }}
         {{ HTML::script('js/plugins/iCheck/icheck.min.js') }}
         {{ HTML::script('js/boot.js?v=1') }}

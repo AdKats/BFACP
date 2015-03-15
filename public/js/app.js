@@ -1,14 +1,18 @@
+'use strict';
 angular.module('bfacp', [
         'ngResource',
         'ngMessages',
         'ngAnimate',
         'ngAria',
         'ngSanitize',
+        'ngIdle',
         'ui.bootstrap',
         'countTo'
     ])
-    .config(['$locationProvider', function($locationProvider) {
+    .config(['$locationProvider', '$idleProvider', function($locationProvider, $idleProvider) {
         $locationProvider.html5Mode(true).hashPrefix('!');
+        $idleProvider.idleDuration(window.idleDurationSeconds || 60);
+        $idleProvider.warningDuration(window.warningDurationSeconds || 60);
     }])
     .run(['$rootScope', function($rootScope) {
         $rootScope.moment = function(date) { return moment(date); };
@@ -31,7 +35,7 @@ angular.module('bfacp', [
             }
 
             return dividedNum.toFixed(precision);
-        }
+        };
     }])
     .filter('nl2br', function() {
         var span = document.createElement('span');
@@ -375,14 +379,92 @@ angular.module('bfacp', [
         $scope.getListing();
 
     }])
-    .controller('ScoreboardController', ['$scope', '$rootScope', '$http', '$timeout', '$location', function($scope, $rootScope, $http, $timeout, $location) {
+    .controller('ScoreboardController', ['$scope', '$rootScope', '$http', '$timeout', '$location', '$idle', '$modal',
+        function($scope, $rootScope, $http, $timeout, $location, $idle, $modal) {
 
         // How often the data should be fetched in seconds
         var refresh = 10;
-
         var refreshTimeout;
-
         var requestErrorCount = 0;
+
+        // Idle Detector
+        $scope.idleStarted = false;
+        $scope.idleWarning = null;
+        $scope.idleTimedOut = null;
+        $scope.idleServerId = null;
+
+        function closeModels() {
+            if($scope.idleWarning) {
+                $scope.idleWarning.close();
+                $scope.idleWarning = null;
+            }
+
+            if($scope.idleTimedOut) {
+                $scope.idleTimedOut.close();
+                $scope.idleTimedOut = null;
+            }
+        }
+
+        $scope.$on('$idleStart', function() {
+            closeModels();
+
+            $scope.idleWarning = $modal.open({
+                templateUrl: 'warning-dialog.html',
+                windowClass: 'modal-warning'
+            });
+        });
+
+        $scope.$on('$idleEnd', function() {
+            closeModels();
+
+            if($scope.idleServerId !== null) {
+                setTimeout(function() {
+                    $scope.$apply(function() {
+                        $scope.selectedId = $scope.idleServerId;
+                        $scope.idleServerId = null;
+                    });
+
+                    $scope.switchServer();
+                }, 100);
+            }
+        });
+
+        $scope.$on('$idleTimeout', function() {
+            closeModels();
+
+            setTimeout(function() {
+                $scope.$apply(function() {
+                    $scope.idleServerId = $scope.selectedId;
+                    $scope.selectedId = -1;
+                    $scope.roundId = null;
+                });
+
+            }, 100);
+
+            $scope.disableServerRequests();
+
+            $scope.idleTimedOut = $modal.open({
+                templateUrl: 'timedout-dialog.html',
+                windowClass: 'modal-danger'
+            });
+        });
+
+        $scope.$watch('selectedId', function() {
+            if($scope.selectedId != -1) {
+                if( ! $scope.idleStarted) {
+                    $idle.watch();
+                    $scope.idleStarted = true;
+                }
+            } else {
+                if($scope.idleStarted && $scope.idleServerId !== null) {
+                    // Do nothing
+                    return false;
+                }
+
+                $idle.unwatch();
+                $scope.idleStarted = false;
+            }
+        });
 
         // Init vars
         $scope.loading = false;
@@ -425,6 +507,23 @@ angular.module('bfacp', [
         $scope.closeAlert = function(index)
         {
             $scope.alerts.splice(index, 1);
+        };
+
+        $scope.disableServerRequests = function()
+        {
+            $scope.loading = false;
+            $scope.refresh = false;
+            $scope.server = [];
+            $scope.teams = [];
+            $scope.netural = [];
+            $scope.messages = [];
+            $location.hash('');
+
+            if($scope.requestError) {
+                $scope.requestError = false;
+            }
+
+            $timeout.cancel(refreshTimeout);
         };
 
         $scope.switchServer = function()
@@ -728,6 +827,8 @@ angular.module('bfacp', [
 
         $scope.colSortClass = function(col)
         {
+            var cssClass = '';
+
             if($scope.sort.column == col) {
                 if($scope.sort.desc) {
                     cssClass = 'fa fa-sort-desc';
@@ -757,7 +858,6 @@ angular.module('bfacp', [
         {
             var chart = $("#round-graph").highcharts();
             if($scope.selectedId == -1) {
-                chart.series.setData([]);
                 return false;
             }
 
