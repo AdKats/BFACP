@@ -499,10 +499,10 @@ angular.module('bfacp', [
         };
 
         $scope.setWinningTeam = function() {
-            var team1 = $scope.teams[1] || -1;
-            var team2 = $scope.teams[2] || -1;
-            var team3 = $scope.teams[3] || -1;
-            var team4 = $scope.teams[4] || -1;
+            var team1 = $scope.teams[1] || {score: -1};
+            var team2 = $scope.teams[2] || {score: -1};
+            var team3 = $scope.teams[3] || {score: -1};
+            var team4 = $scope.teams[4] || {score: -1};
             var tickets_needed = $scope.server.tickets_needed;
             var tickets_starting = $scope.server.starting;
             var mode = $scope.server.mode;
@@ -529,7 +529,7 @@ angular.module('bfacp', [
                 case "Chainlink0":
                 case "ConquestLarge0":
                 case "ConquestSmall0":
-                    if( team1.hasOwnProperty('score') !== undefined || team2.hasOwnProperty('score') !== undefined && team1 < 0 || team2 < 0) {
+                    if(team1.score < 0 || team2.score < 0) {
                         return false;
                     }
 
@@ -545,7 +545,7 @@ angular.module('bfacp', [
                 case "SquadDeathMatch0":
 
                     // Team 1 Is Winning
-                    if(team1 > team2 && team1 > team3 && team1 > team4 || num == team1) {
+                    if(team1.score > team2.score && team1.score > team3.score && team1.score > team4.score || num == team1.score) {
                         $scope.winning[1] = true;
                         $scope.winning[2] = false;
                         $scope.winning[3] = false;
@@ -553,7 +553,7 @@ angular.module('bfacp', [
                     }
 
                     // Team 2 Is Winning
-                    else if(team2 > team1 && team2 > team3 && team2 > team4 || num == team2) {
+                    else if(team2.score > team1.score && team2.score > team3.score && team2.score > team4.score || num == team2.score) {
                         $scope.winning[1] = false;
                         $scope.winning[2] = true;
                         $scope.winning[3] = false;
@@ -561,7 +561,7 @@ angular.module('bfacp', [
                     }
 
                     // Team 3 Is Winning
-                    else if(team3 > team1 && team3 > team2 && team3 > team4 || num == team3) {
+                    else if(team3.score > team1.score && team3.score > team2.score && team3.score > team4.score || num == team3.score) {
                         $scope.winning[1] = false;
                         $scope.winning[2] = false;
                         $scope.winning[3] = true;
@@ -569,7 +569,7 @@ angular.module('bfacp', [
                     }
 
                     // Team 4 Is Winning
-                    else if(team4 > team1 && team4 > team2 && team4 > team3 || num == team4) {
+                    else if(team4.score > team1.score && team4.score > team2.score && team4.score > team3.score || num == team4.score) {
                         $scope.winning[1] = false;
                         $scope.winning[2] = false;
                         $scope.winning[3] = false;
