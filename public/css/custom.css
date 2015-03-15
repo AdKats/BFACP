@@ -1,0 +1,81 @@
+@keyframes hightlightFlash {
+    0% {
+        background-color: none;
+    }
+    50% {
+        background-color: #ffff00;
+    }
+    100% {
+        background-color: none;
+    }
+}
+
+@-webkit-keyframes hightlightFlash {
+    0% {
+        background-color: none;
+    }
+    50% {
+        background-color: #ffff00;
+    }
+    100% {
+        background-color: none;
+    }
+}
+
+@-moz-keyframes hightlightFlash {
+    0% {
+        background-color: none;
+    }
+    50% {
+        background-color: #ffff00;
+    }
+    100% {
+        background-color: none;
+    }
+}
+
+@-ms-keyframes hightlightFlash {
+    0% {
+        background-color: none;
+    }
+    50% {
+        background-color: #ffff00;
+    }
+    100% {
+        background-color: none;
+    }
+}
+
+#chat-box > div.ng-enter {
+    -webkit-animation: bounceInRight 1s;
+    -moz-animation: bounceInRight 1s;
+    -ms-animation: bounceInRight 1s;
+    animation: bounceInRight 1s;
+}
+#chat-box > div.ng-leave {
+    -webkit-animation: bounceOutLeft 1s;
+    -moz-animation: bounceOutLeft 1s;
+    -ms-animation: bounceOutLeft 1s;
+    animation: bounceOutLeft 1s;
+}
+
+table.scoreboard > tbody > tr.ng-enter {
+    -webkit-animation: fadeIn 1s;
+    -moz-animation: fadeIn 1s;
+    -ms-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+table.scoreboard > tbody > tr.ng-move {
+    -webkit-animation: hightlightFlash 2s;
+    -moz-animation: hightlightFlash 2s;
+    -ms-animation: hightlightFlash 2s;
+    animation: hightlightFlash 2s;
+}
+
+table.scoreboard > tbody > tr.ng-leave {
+    -webkit-animation: fadeOut 1s;
+    -moz-animation: fadeOut 1s;
+    -ms-animation: fadeOut 1s;
+    animation: fadeOut 1s;
+}

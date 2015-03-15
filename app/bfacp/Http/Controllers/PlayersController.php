@@ -32,10 +32,12 @@ class PlayersController extends BaseController
         // Cache for 10 minutes and get the player
         $player = Cache::remember(sprintf('players.%s', $id), 10, function() use($id) {
             return $this->repository->setopts([
-                    'bans',
+                    'ban.previous',
                     'reputation',
-                    'infractions'
-                ])->getPlayerById($id);
+                    'infractionsGlobal',
+                    'infractionsServer.server',
+                    'stats.server'
+                ], TRUE)->getPlayerById($id);
         });
 
         $page_title = ! empty($player->ClanTag) ?

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 use MainHelper;
+use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 
 class ServersController extends BaseController
 {
@@ -70,12 +71,19 @@ class ServersController extends BaseController
 
     public function scoreboard($id)
     {
-        $server = Server::remember(10)->findOrFail($id);
-        $scoreboard = new SBLiveRepo($server);
-
-        if( $scoreboard->attempt()->check() )
+        try
         {
-            return MainHelper::response($scoreboard->get(), NULL, NULL, NULL, FALSE, TRUE);
+            $server = Server::remember(10)->findOrFail($id);
+            $scoreboard = new SBLiveRepo($server);
+
+            if( $scoreboard->attempt()->check() )
+            {
+                return MainHelper::response($scoreboard->get(), NULL, NULL, NULL, FALSE, TRUE);
+            }
+        }
+        catch(\Exception $e)
+        {
+            throw new GoneHttpException("Could not connect to server. It may be offline. Please try again later.");
         }
 
         return MainHelper::response(NULL, 'Could not load server', 'error', NULL, FALSE, TRUE);

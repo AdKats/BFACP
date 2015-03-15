@@ -83,7 +83,7 @@
                     <h3 class="box-title">Chat <span class="badge bg-green" ng-bind="messages.length"></span></h3>
                 </div>
 
-                <div class="box-body chat" id="chat-box">
+                <div class="box-body chat scoreboard-chat" id="chat-box">
                     <div class="item" ng-repeat="(key, message) in messages | orderBy: 'logDate': true track by message.ID">
                         <img ng-src="{{ message.player.rank_image }}" width="128" alt="Player Avatar" class="online" />
                         <p class="message">
@@ -150,6 +150,7 @@
                     <h3 class="box-title">
                         <span ng-bind="team.team.full_name || team.team"></span>
                         (<span ng-bind="team.players.length"></span>)
+                        <i class="fa fa-trophy" ng-class="{'text-success': winning[teamID]  }"></i>
                     </h3>
 
                     <div class="box-tools pull-right" ng-if="server.mode.uri != 'CaptureTheFlag0'">
@@ -167,7 +168,7 @@
 
                 <div class="box-body">
                     <div class="table-responsive">
-                        <table class="table table-condensed table-striped table-hover">
+                        <table class="table table-condensed table-striped table-hover scoreboard">
                             <thead>
                                 <th>
                                     <input type="checkbox" ng-click="selectAll($event)" />

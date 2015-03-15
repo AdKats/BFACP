@@ -499,8 +499,10 @@ class BF4Conn
         if(function_exists("socket_create") && function_exists("socket_connect") && function_exists("socket_strerror") && function_exists("socket_last_error") && function_exists("socket_set_block") && function_exists("socket_read") && function_exists("socket_write") && function_exists("socket_close")) {
             $this->_sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 
-            socket_set_option($this->_sock, SOL_SOCKET, SO_RCVTIMEO, array('sec' => 5, 'usec' => 0));
-            socket_set_option($this->_sock, SOL_SOCKET, SO_SNDTIMEO, array('sec' => 5, 'usec' => 0));
+            if(function_exists('socket_set_option')) {
+                socket_set_option($this->_sock, SOL_SOCKET, SO_RCVTIMEO, array('sec' => 5, 'usec' => 0));
+                socket_set_option($this->_sock, SOL_SOCKET, SO_SNDTIMEO, array('sec' => 5, 'usec' => 0));
+            }
 
             @$connection = socket_connect($this->_sock, $this->_serverIP, $this->_serverRconQueryPort);
             if($debug == "-d") {

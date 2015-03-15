@@ -16,6 +16,11 @@
 
         {{ HTML::style('css/style.min.css?v=1') }}
         {{ HTML::style('css/skin-blue.min.css?v=1') }}
+        {{ HTML::style('css/custom.css?v=1') }}
+        {{ HTML::style('css/iCheck/all.css') }}
+        {{ HTML::style('css/daterangepicker/daterangepicker-bs3.css') }}
+        {{ HTML::style('css/timepicker/bootstrap-timepicker.min.css') }}
+        {{ HTML::style('css/animate.css') }}
 
         @yield('styles')
 
@@ -80,6 +85,7 @@
         {{ HTML::script('js/plugins/fastclick/fastclick.min.js') }}
         {{ HTML::script('js/plugins/angular-modules/count-to/count-to.js') }}
         {{ HTML::script('js/plugins/highcharts/highcharts.js') }}
+        {{ HTML::script('js/plugins/iCheck/icheck.min.js') }}
         {{ HTML::script('js/boot.js?v=1') }}
         <script type="text/javascript">
             @if(Config::get('app.locale') != 'en')

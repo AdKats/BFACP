@@ -391,6 +391,8 @@ angular.module('bfacp', [
         $scope.selectedId = -1;
         $scope.roundId = null;
 
+        $scope.alerts = [];
+
         $scope.sort = {
             column: 'score',
             desc: true
@@ -400,6 +402,25 @@ angular.module('bfacp', [
         $scope.teams = [];
         $scope.netural = [];
         $scope.messages = [];
+        $scope.winning = {
+            1: false,
+            2: false,
+            3: false,
+            4: false
+        };
+
+        var addAlert = function(message, alertType)
+        {
+            $scope.alerts.push({
+                msg: message,
+                type: alertType
+            });
+        };
+
+        $scope.closeAlert = function(index)
+        {
+            $scope.alerts.splice(index, 1);
+        };
 
         $scope.switchServer = function()
         {
@@ -475,7 +496,92 @@ angular.module('bfacp', [
             }
 
             return color;
-        }
+        };
+
+        $scope.setWinningTeam = function() {
+            var team1 = $scope.teams[1] || -1;
+            var team2 = $scope.teams[2] || -1;
+            var team3 = $scope.teams[3] || -1;
+            var team4 = $scope.teams[4] || -1;
+            var tickets_needed = $scope.server.tickets_needed;
+            var tickets_starting = $scope.server.starting;
+            var mode = $scope.server.mode;
+            var num = null;
+
+            if(tickets_needed == null || mode.uri == "RushLarge0") {
+                $scope.winning[1] = false;
+                $scope.winning[2] = false;
+                $scope.winning[3] = false;
+                $scope.winning[4] = false;
+
+                return false;
+            }
+
+            if(tickets_needed > 0) {
+                num = Math.max(team1.score, team2.score, team3.score, team4.score);
+            } else {
+                num = Math.min(team1.score, team2.score, team3.score, team4.score);
+            }
+
+            switch(mode) {
+                case "Domination0":
+                case "Obliteration":
+                case "Chainlink0":
+                case "ConquestLarge0":
+                case "ConquestSmall0":
+                    if(team1 < 0 || team2 < 0) {
+                        return false;
+                    }
+
+                    if(num == team1.score) {
+                        $scope.winning[1] = true;
+                        $scope.winning[2] = false;
+                    } else if(num == team2.score) {
+                        $scope.winning[1] = false;
+                        $scope.winning[2] = true;
+                    }
+                    break;
+
+                case "SquadDeathMatch0":
+
+                    // Team 1 Is Winning
+                    if(team1 > team2 && team1 > team3 && team1 > team4 || num == team1) {
+                        $scope.winning[1] = true;
+                        $scope.winning[2] = false;
+                        $scope.winning[3] = false;
+                        $scope.winning[4] = false;
+                    }
+
+                    // Team 2 Is Winning
+                    else if(team2 > team1 && team2 > team3 && team2 > team4 || num == team2) {
+                        $scope.winning[1] = false;
+                        $scope.winning[2] = true;
+                        $scope.winning[3] = false;
+                        $scope.winning[4] = false;
+                    }
+
+                    // Team 3 Is Winning
+                    else if(team3 > team1 && team3 > team2 && team3 > team4 || num == team3) {
+                        $scope.winning[1] = false;
+                        $scope.winning[2] = false;
+                        $scope.winning[3] = true;
+                        $scope.winning[4] = false;
+                    }
+
+                    // Team 4 Is Winning
+                    else if(team4 > team1 && team4 > team2 && team4 > team3 || num == team4) {
+                        $scope.winning[1] = false;
+                        $scope.winning[2] = false;
+                        $scope.winning[3] = false;
+                        $scope.winning[4] = true;
+                    }
+                break;
+
+                default:
+                    console.error('Unknown gametype: ' + mode);
+                break;
+            }
+        };
 
         $scope.fetchServerData = function()
         {
@@ -496,8 +602,13 @@ angular.module('bfacp', [
                 method: 'GET',
                 params: {}
             }).success(function(data, status) {
+                if($scope.alerts.length > 0) {
+                    $scope.alerts = [];
+                }
+
                 $scope.server = data.data.server;
                 $scope.teams = data.data.teams;
+                $scope.setWinningTeam();
 
                 if(data.data.teams[0] !== undefined || data.data.teams[0] !== null)
                 {
@@ -512,8 +623,27 @@ angular.module('bfacp', [
                     requestErrorCount = 0;
                 }
 
+                var chart = $("#round-graph").highcharts();
+
+                if($scope.server.mode.uri == 'RushLarge0' && (chart.series[1] !== undefined || chart.series[1] !== null) && chart.series[1].visible) {
+                    chart.series[1].hide();
+                }
+
                 refreshTimeout = $timeout($scope.fetchServerData, refresh * 1000);
             }).error(function(data, status) {
+                if(status == 410) {
+                    $scope.refresh = false;
+                    $scope.loading = false;
+                    addAlert(data.message, 'danger');
+                    setTimeout(function() {
+                        $scope.$apply(function() {
+                            $scope.selectedId = -1;
+                        });
+                    }, 800);
+
+                    return false;
+                }
+
                 if(status == 500) {
                     requestErrorCount++;
                 }
@@ -615,6 +745,7 @@ angular.module('bfacp', [
                         chart.series[i].setData(data.data['stats'][i].data);
                     }
                 }
+
                 chart.redraw();
 
                 $timeout($scope.fetchRoundStats, 30 * 1000);

@@ -31,11 +31,19 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
             ->where('id', '[0-9]+');
         Route::get('chat/{id}', ['as' => 'api.servers.chat', 'uses' => 'ServersController@chat'])->where('id', '[0-9]+');
     });
+
+    Route::group(['prefix' => 'chatlogs'], function()
+    {
+        Route::get('/', ['as' => 'api.chatlogs.index', 'uses' => 'ChatlogController@getIndex']);
+    });
 });
 
 Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
 {
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
+
+    Route::get('chatlogs', ['as' => 'chatlog.search', 'uses' => 'HomeController@chatlogs']);
+
     Route::group(['prefix' => 'players'], function()
     {
         Route::get('/', ['as' => 'player.listing', 'uses' => 'PlayersController@listing']);

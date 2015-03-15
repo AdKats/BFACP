@@ -27,6 +27,12 @@
         </div>
     </div>
 
+    <div class="row" ng-if="alerts.length > 0">
+        <div class="col-xs-12">
+            <alert ng-repeat="alert in alerts" type="@{{ alert.type }}" close="closeAlert($index)">@{{ alert.msg }}</alert>
+        </div>
+    </div>
+
     @include('partials._scoreboard')
 </div>
 
