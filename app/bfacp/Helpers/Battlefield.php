@@ -67,13 +67,13 @@ class Battlefield extends Main
     public function kd($kills = 0, $deaths = 0, $precision = 2)
     {
         try {
-            return round( ($kills / $deaths), $precision );
+            return number_format( ($kills / $deaths), $precision );
         } catch(Exception $e) {
             if($kills === 0 && $deaths > 0) {
-                return -$deaths;
+                return number_format(-$deaths, $precision);
             }
 
-            return $kills;
+            return number_format($kills, $precision);
         }
     }
 
