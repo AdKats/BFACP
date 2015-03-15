@@ -523,7 +523,7 @@ angular.module('bfacp', [
                 num = Math.min(team1.score, team2.score, team3.score, team4.score);
             }
 
-            switch(mode) {
+            switch(mode.uri) {
                 case "Domination0":
                 case "Obliteration":
                 case "Chainlink0":
@@ -578,7 +578,7 @@ angular.module('bfacp', [
                 break;
 
                 default:
-                    console.error('Unknown gametype: ' + mode);
+                    console.error('Unknown gametype: ' + mode.uri);
                 break;
             }
         };
