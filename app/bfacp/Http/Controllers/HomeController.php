@@ -41,4 +41,13 @@ class HomeController extends BaseController
 
         return View::make('scoreboard', compact('games'))->with('page_title', 'Live Scoreboard');
     }
+
+    public function chatlogs()
+    {
+        $games = Game::with(['servers' => function($query) {
+            $query->active()->orderBy('ServerName');
+        }])->get();
+
+        return View::make('chatlogs', compact('games'))->with('page_title', 'Chatlogs');
+    }
 }
