@@ -198,7 +198,9 @@
                                         <i ng-class="colSortClass('deaths')"></i>&nbsp;D
                                     </span>
                                 </th>
-                                <th class="visible-lg">KD Ratio</th>
+                                <th class="visible-lg" ng-click="colSort('kd')">
+                                    <i ng-class="colSortClass('kd')"></i>&nbsp;KD Ratio
+                                </th>
                                 <th ng-click="colSort('squadId')" class="hidden-xs hidden-sm">
                                     <i ng-class="colSortClass('squadId')"></i>&nbsp;Squad
                                 </th>
@@ -225,7 +227,7 @@
                                         <span ng-bind="player.kills"></span> /
                                         <span ng-bind="player.deaths"></span>
                                     </td>
-                                    <td class="visible-lg" ng-bind="kd(player.kills, player.deaths)"></td>
+                                    <td class="visible-lg" ng-bind="player.kd"></td>
                                     <td class="hidden-xs hidden-sm">
                                         <i class="fa fa-lock" ng-if="player.isSquadLocked">&nbsp;</i>
                                         <span ng-bind="player.squadName"></span>
