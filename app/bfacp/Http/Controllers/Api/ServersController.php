@@ -83,8 +83,7 @@ class ServersController extends BaseController
         }
         catch(\Exception $e)
         {
-            throw $e;
-            //throw new GoneHttpException("Could not connect to server. It may be offline. Please try again later.");
+            throw new GoneHttpException("Could not connect to server. It may be offline. Please try again later.");
         }
 
         return MainHelper::response(NULL, 'Could not load server', 'error', NULL, FALSE, TRUE);
