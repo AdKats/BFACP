@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playmodes>
+	<playmode uri="TurfWarLarge0" name="Conquest Large" />
+	<playmode uri="TurfWarSmall0" name="Conquest Small" />
+	<playmode uri="Heist0" name="Heist" />
+	<playmode uri="Hotwire0" name="Hotwire" />
+	<playmode uri="Bloodmoney0" name="Bloodmoney" />
+	<playmode uri="Hit0" name="Crosshair" />
+	<playmode uri="Hostage0" name="Rescue" />
+	<playmode uri="TeamDeathMatch0" name="Team Deathmatch" />
+</playmodes>

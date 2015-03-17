@@ -4,6 +4,7 @@ use BFACP\AdKats\Setting AS AdKatsSetting;
 use BFACP\Battlefield\Player;
 use BFACP\Battlefield\Server;
 use BFACP\Contracts\Scoreboard;
+use BFACP\Exceptions\RconException;
 use BattlefieldHelper;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
@@ -167,18 +168,37 @@ class LiveServerRepository
                 ]);
             break;
 
+            case "BFHL":
+                $this->client = App::make('BFACP\Libraries\BFHConn', [
+                    $this->server,
+                    FALSE
+                ]);
+            break;
+
             default:
-                throw new \Exception(sprintf('Unsupported game %s', $this->gameName));
+                throw new RconException(500, sprintf('Unsupported game %s', $this->gameName));
         }
 
         // Update connection state
         $this->connected = $this->client->isConnected();
+
+        // If we are not connected throw exception and abort
+        if( ! $this->connected )
+        {
+            throw new RconException(410, "Could not connect to server. It may be offline. Please try again later.");
+        }
 
         // Attempt to login with provided RCON password
         $this->client->loginSecure( $this->server->setting->getPassword() );
 
         // Update authentication state
         $this->authenticated = $this->client->isLoggedIn();
+
+        // If we are connected but not logged in throw exception and abort
+        if( ! $this->authenticated )
+        {
+            throw new RconException(401, "Incorrect RCON Password. Please contact the site administrator.");
+        }
 
         $this->serverinfo()->teams();
 
@@ -266,7 +286,7 @@ class LiveServerRepository
             $temp[$teamID]['team'] = $teamName;
 
             if(
-                (count($this->serverinfo) >= 26 && count($this->serverinfo) <= 28 && $this->gameName == 'BF4') ||
+                (count($this->serverinfo) >= 26 && count($this->serverinfo) <= 28 && in_array($this->gameName, ['BF4', 'BFH', 'BFHL'])) ||
                 (count($this->serverinfo) == 25 && $this->gameName == 'BF3')
             )
                 $temp[$teamID]['score'] = $score;
@@ -308,6 +328,7 @@ class LiveServerRepository
      */
     private function serverinfo()
     {
+        $this->_addRaw();
         $info = $this->client->getServerInfo();
 
         $this->serverinfo = $info;
@@ -343,8 +364,8 @@ class LiveServerRepository
 
                 default:
                     $ticketcap = NULL;
-                    $uptime    = NULL;
-                    $round     = NULL;
+                    $uptime    = -1;
+                    $round     = -1;
                 break;
             }
         }
@@ -377,8 +398,35 @@ class LiveServerRepository
 
                 default:
                     $ticketcap = NULL;
-                    $uptime    = NULL;
-                    $round     = NULL;
+                    $uptime    = -1;
+                    $round     = -1;
+                break;
+            }
+        }
+        elseif($this->gameName == 'BFHL' || $this->gameName == 'BFH')
+        {
+            switch($info[4])
+            {
+                case "TeamDeathMatch0":
+                    $ticketcap = $length < 25 ? NULL : intval($info[11]);
+                    $uptime    = $length < 25 ? (int) $info[14] : (int) $info[16];
+                    $round     = $length < 25 ? (int) $info[15] : (int) $info[17];
+                break;
+
+                case "TurfWarLarge0":
+                case "TurfWarSmall0":
+                case "Heist0":
+                case "Hotwire0":
+                case "Bloodmoney0":
+                case "Hit0":
+                case "Hostage0":
+                    //
+                break;
+
+                default:
+                    $ticketcap = NULL;
+                    $uptime    = -1;
+                    $round     = -1;
                 break;
             }
         }
@@ -537,6 +585,11 @@ class LiveServerRepository
                 $this->TEAM2 = $teamFactions[0][2];
                 $this->TEAM3 = $teamFactions[0][1];
                 $this->TEAM4 = $teamFactions[0][2];
+            }
+            elseif($this->gameName == 'BFHL' || $this->gameName == 'BFH')
+            {
+                $this->TEAM1 = 'Cops';
+                $this->TEAM2 = 'Criminals';
             }
             else
             {

@@ -2,6 +2,7 @@
 
 use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Server;
+use BFACP\Exceptions\RconException;
 use BFACP\Repositories\Scoreboard\DBRepository AS SBDBRepo;
 use BFACP\Repositories\Scoreboard\LiveServerRepository AS SBLiveRepo;
 use Carbon\Carbon;
@@ -81,9 +82,13 @@ class ServersController extends BaseController
                 return MainHelper::response($scoreboard->get(), NULL, NULL, NULL, FALSE, TRUE);
             }
         }
+        catch(RconException $e)
+        {
+            throw $e;
+        }
         catch(\Exception $e)
         {
-            throw new GoneHttpException("Could not connect to server. It may be offline. Please try again later.");
+            throw $e;
         }
 
         return MainHelper::response(NULL, 'Could not load server', 'error', NULL, FALSE, TRUE);

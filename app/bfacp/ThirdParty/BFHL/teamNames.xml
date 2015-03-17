@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- powered by: BF3Conn - PHP class for communicating with a gameserver
+	     visit http://sf.net/p/bf3conn/ for updates, support & more! -->
+<teamNames>
+	<teamName case="default">
+		<playMode uri="ConquestLarge0">
+			<team id="0">
+				<name>Conquest Neutral</name>
+			</team>
+			<team id="1">
+				<name>U.S. Army</name>
+			</team>
+			<team id="2">
+				<name>Russian Army</name>
+			</team>
+		</playMode>
+		<playMode uri="ConquestSmall0">
+			<team id="0">
+				<name>Conquest Neutral</name>
+			</team>
+			<team id="1">
+				<name>U.S. Army</name>
+			</team>
+			<team id="2">
+				<name>Russian Army</name>
+			</team>
+		</playMode>
+		<playMode uri="RushLarge0">
+			<team id="0">
+				<name>Rush Neutral</name>
+			</team>
+			<team id="1">
+				<name>Attackers</name>
+			</team>
+			<team id="2">
+				<name>Defenders</name>
+			</team>
+		</playMode>
+		<playMode uri="SquadRush0">
+			<team id="0">
+				<name>Squad Rush Neutral</name>
+			</team>
+			<team id="1">
+				<name>U.S. Army</name>
+			</team>
+			<team id="2">
+				<name>Russian Army</name>
+			</team>
+		</playMode>
+		<playMode uri="SquadDeathMatch0">
+			<team id="0">
+				<name>Squad DM Neutral</name>
+			</team>
+			<team id="1">
+				<name>Alpha Squad</name>
+			</team>
+			<team id="2">
+				<name>Bravo Squad</name>
+			</team>
+			<team id="3">
+				<name>Charlie Squad</name>
+			</team>
+			<team id="4">
+				<name>Delta Squad</name>
+			</team>
+		</playMode>
+		<playMode uri="TeamDeathMatch0">
+			<team id="0">
+				<name>Team DM Neutral</name>
+			</team>
+			<team id="1">
+				<name>Team 1</name>
+			</team>
+			<team id="2">
+				<name>Team 2</name>
+			</team>
+		</playMode>
+	</teamName>
+</teamNames>

@@ -68,6 +68,11 @@ class Game extends Eloquent
                 $class = 'label bg-blue';
             break;
 
+            case "BFH":
+            case "BFHL":
+                $class = 'label bg-green';
+            break;
+
             default:
                 $class = 'label bg-yellow';
         }

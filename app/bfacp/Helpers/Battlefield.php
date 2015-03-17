@@ -188,6 +188,13 @@ class Battlefield extends Main
                 }
             break;
 
+            case "BFH":
+            case "BFHL":
+                case "TeamDeathMatch0":
+                    $defaultTickets = 100;
+                break;
+            break;
+
             default:
                 return NULL;
         }
@@ -245,6 +252,13 @@ class Battlefield extends Main
                     default:
                         return NULL;
                 }
+            break;
+
+            case "BFH":
+            case "BFHL":
+                case "TeamDeathMatch0":
+                    $defaultTime = 3600;
+                break;
             break;
 
             default:
