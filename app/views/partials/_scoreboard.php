@@ -38,7 +38,7 @@
                                         <span ng-switch-default>Starting Tickets</span>
                                     </div>
                                 </th>
-                                <th ng-if="server.game.Name == 'BF4'">Type</th>
+                                <th ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL' || server.game.Name == 'BFH'">Type</th>
                             </thead>
 
                             <tbody>
@@ -61,7 +61,7 @@
                                     <td ng-bind="momentDuration(server.times.remaining.seconds, 'seconds')" ng-if="server.game.Name == 'BF4'"></td>
                                     <td ng-bind="momentDuration(server.times.uptime.seconds, 'seconds')"></td>
                                     <td ng-bind="server.tickets_starting | number"></td>
-                                    <td ng-if="server.game.Name == 'BF4'" ng-bind="server.type"></td>
+                                    <td ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL' || server.game.Name == 'BFH'" ng-bind="server.type"></td>
                                 </tr>
                             </tbody>
                         </table>
