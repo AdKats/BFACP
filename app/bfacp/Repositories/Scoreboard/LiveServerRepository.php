@@ -407,12 +407,6 @@ class LiveServerRepository
         {
             switch($info[4])
             {
-                case "TeamDeathMatch0":
-                    $ticketcap = $length < 25 ? NULL : intval($info[11]);
-                    $uptime    = $length < 25 ? (int) $info[14] : (int) $info[16];
-                    $round     = $length < 25 ? (int) $info[15] : (int) $info[17];
-                break;
-
                 case "TurfWarLarge0":
                 case "TurfWarSmall0":
                 case "Heist0":
@@ -420,7 +414,10 @@ class LiveServerRepository
                 case "Bloodmoney0":
                 case "Hit0":
                 case "Hostage0":
-                    //
+                case "TeamDeathMatch0":
+                    $ticketcap = $length < 25 ? NULL : intval($info[11]);
+                    $uptime    = $length < 25 ? (int) $info[14] : (int) $info[16];
+                    $round     = $length < 25 ? (int) $info[15] : (int) $info[17];
                 break;
 
                 default:

@@ -67,13 +67,13 @@ class Battlefield extends Main
     public function kd($kills = 0, $deaths = 0, $precision = 2)
     {
         try {
-            return (float) number_format( ($kills / $deaths), $precision );
+            return round( ($kills / $deaths), $precision );
         } catch(Exception $e) {
             if($kills === 0 && $deaths > 0) {
-                return (float) number_format(-$deaths, $precision);
+                return -$deaths;
             }
 
-            return (float) number_format($kills, $precision);
+            return $kills;
         }
     }
 
@@ -190,6 +190,13 @@ class Battlefield extends Main
 
             case "BFH":
             case "BFHL":
+                case "TurfWarLarge0":
+                case "TurfWarSmall0":
+                case "Heist0":
+                case "Hotwire0":
+                case "Bloodmoney0":
+                case "Hit0":
+                case "Hostage0":
                 case "TeamDeathMatch0":
                     $defaultTickets = 100;
                 break;
@@ -256,6 +263,14 @@ class Battlefield extends Main
 
             case "BFH":
             case "BFHL":
+                case "TurfWarLarge0":
+                case "TurfWarSmall0":
+                case "Heist0":
+                case "Hotwire0":
+                case "Bloodmoney0":
+                case "Hit0":
+                case "Hostage0":
+                case "TeamDeathMatch0":
                 case "TeamDeathMatch0":
                     $defaultTime = 3600;
                 break;

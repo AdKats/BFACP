@@ -28,7 +28,7 @@
                                 <th>Map</th>
                                 <th class="hidden-xs hidden-sm">Next Map</th>
                                 <th>Round</th>
-                                <th ng-if="server.game.Name == 'BF4'">Time Left</th>
+                                <th ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'">Time Left</th>
                                 <th>Uptime</th>
                                 <th>
                                     <div ng-switch on="server.mode.uri">
@@ -38,7 +38,7 @@
                                         <span ng-switch-default>Starting Tickets</span>
                                     </div>
                                 </th>
-                                <th ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL' || server.game.Name == 'BFH'">Type</th>
+                                <th ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'">Type</th>
                             </thead>
 
                             <tbody>
@@ -58,10 +58,10 @@
                                         <span ng-bind="server.map.next.mode.name"></span>
                                     </td>
                                     <td ng-bind="momentDuration(server.times.round.seconds, 'seconds')"></td>
-                                    <td ng-bind="momentDuration(server.times.remaining.seconds, 'seconds')" ng-if="server.game.Name == 'BF4'"></td>
+                                    <td ng-bind="momentDuration(server.times.remaining.seconds, 'seconds')" ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'"></td>
                                     <td ng-bind="momentDuration(server.times.uptime.seconds, 'seconds')"></td>
                                     <td ng-bind="server.tickets_starting | number"></td>
-                                    <td ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL' || server.game.Name == 'BFH'" ng-bind="server.type"></td>
+                                    <td ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'" ng-bind="server.type"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -106,7 +106,7 @@
             </div>
         </div>
 
-        <div ng-if="server.game.Name == 'BF4' && netural.spectators" class="col-xs-4 col-sm-3" >
+        <div ng-if="(server.game.Name == 'BF4' || server.game.Name == 'BFHL') && netural.spectators" class="col-xs-4 col-sm-3" >
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">Spectators</h3>
@@ -166,8 +166,8 @@
 
                     <div class="box-tools pull-right" ng-if="server.mode.uri != 'CaptureTheFlag0'">
                         <span class="badge bg-light-blue">
-                            <div ng-switch on="server.mode.uri">
-                                <div ng-switch-when="RushLarge0">
+                            <div ng-switch on="(server.mode.uri == 'RushLarge0' || (server.mode.uri == 'Heist0')">
+                                <div ng-switch-when="true">
                                     <span ng-if="teamID == 2">&infin;</span>
                                     <span ng-if="teamID != 2" ng-bind="team.score | number"></span>
                                 </div>
@@ -204,7 +204,7 @@
                                 <th ng-click="colSort('squadId')" class="hidden-xs hidden-sm">
                                     <i ng-class="colSortClass('squadId')"></i>&nbsp;Squad
                                 </th>
-                                <th ng-if="server.game.Name == 'BF4'" ng-click="colSort('ping')">
+                                <th ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'" ng-click="colSort('ping')">
                                     <i ng-class="colSortClass('ping')"></i>&nbsp;Ping
                                 </th>
                             </thead>
@@ -232,7 +232,7 @@
                                         <i class="fa fa-lock" ng-if="player.isSquadLocked">&nbsp;</i>
                                         <span ng-bind="player.squadName"></span>
                                     </td>
-                                    <td ng-if="server.game.Name == 'BF4'" ng-bind="player.ping || '--'" ng-class="pingColor(player.ping)"></td>
+                                    <td ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'" ng-bind="player.ping || '--'" ng-class="pingColor(player.ping)"></td>
                                 </tr>
                             </tbody>
 
@@ -247,10 +247,11 @@
                                         <span ng-bind="sum(team.players, 'deaths') | number"></span>
                                     </td>
                                     <td class="visible-lg" ng-bind="avg(team.players, 'kd', 2)"></td>
-                                    <td class="hidden-xs hidden-sm">
-                                        <span class="pull-right" ng-if="server.game.Name == 'BF4'">Average Ping</span>
+                                    <td class="hidden-xs hidden-sm" ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'">
+                                        <span class="pull-right">Average Ping</span>
                                     </td>
-                                    <td ng-class="pingColor(avg(team.players, 'ping'))" ng-bind="avg(team.players, 'ping') | number"></td>
+                                    <td  ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'"
+                                        ng-class="pingColor(avg(team.players, 'ping'))" ng-bind="avg(team.players, 'ping') | number"></td>
                                 </tr>
                             </tfoot>
                         </table>

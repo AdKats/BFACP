@@ -612,7 +612,7 @@ angular.module('bfacp', [
             var mode = $scope.server.mode;
             var num = null;
 
-            if(tickets_needed == null || mode.uri == "RushLarge0") {
+            if(tickets_needed == null || mode.uri == "RushLarge0" || mode.uri == "Heist0") {
                 $scope.winning[1] = false;
                 $scope.winning[2] = false;
                 $scope.winning[3] = false;
@@ -640,7 +640,7 @@ angular.module('bfacp', [
             }
 
             if(tickets_needed > 0) {
-                if(mode.uri == "TeamDeathMatch0") {
+                if(mode.uri == "TeamDeathMatch0" || mode.uri == "Bloodmoney0") {
                     num = Math.max.apply(null, teamTickets);
                 } else {
                     num = Math.min.apply(null, teamTickets);
@@ -657,6 +657,13 @@ angular.module('bfacp', [
                 case "ConquestLarge0":
                 case "ConquestSmall0":
                 case "TeamDeathMatch0":
+                case "TurfWarLarge0":
+                case "TurfWarSmall0":
+                case "Heist0":
+                case "Hotwire0":
+                case "Bloodmoney0":
+                case "Hit0":
+                case "Hostage0":
                     if(team1.score < 0 || team2.score < 0) {
                         return false;
                     }
@@ -756,7 +763,8 @@ angular.module('bfacp', [
 
                 var chart = $("#round-graph").highcharts();
 
-                if($scope.server.mode.uri == 'RushLarge0' && (chart.series[1] !== undefined || chart.series[1] !== null) && chart.series[1].visible) {
+                if(
+                    ($scope.server.mode.uri == 'RushLarge0' || $scope.server.mode.uri == 'Heist0') && (chart.series[1] !== undefined || chart.series[1] !== null) && chart.series[1].visible) {
                     chart.series[1].hide();
                 }
 
@@ -783,6 +791,7 @@ angular.module('bfacp', [
                     $scope.refresh = false;
                     $scope.loading = false;
                     $scope.requestError = true;
+                    ddAlert(data.message, 'danger');
                     return false;
                 }
 
