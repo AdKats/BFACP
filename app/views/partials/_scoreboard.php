@@ -166,7 +166,7 @@
 
                     <div class="box-tools pull-right" ng-if="server.mode.uri != 'CaptureTheFlag0'">
                         <span class="badge bg-light-blue">
-                            <div ng-switch on="(server.mode.uri == 'RushLarge0' || (server.mode.uri == 'Heist0')">
+                            <div ng-switch on="(server.mode.uri == 'RushLarge0') || (server.mode.uri == 'Heist0')">
                                 <div ng-switch-when="true">
                                     <span ng-if="teamID == 2">&infin;</span>
                                     <span ng-if="teamID != 2" ng-bind="team.score | number"></span>
