@@ -136,7 +136,7 @@ class PlayerRepository extends BaseRepository
                                               ->join('tbl_server_player', 'tbl_playerdata.PlayerID', '=', 'tbl_server_player.PlayerID')
                                               ->join('tbl_playerstats', 'tbl_server_player.StatsID', '=', 'tbl_playerstats.StatsID')
                                               ->groupBy('CountryCode')
-                                              ->select(DB::raw('UPPER(CountryCode) AS 'CountryCode', COUNT(tbl_playerdata.PlayerID) AS 'total''))
+                                              ->select(DB::raw('UPPER(CountryCode) AS `CountryCode`, COUNT(tbl_playerdata.PlayerID) AS `total`'))
                                               ->lists('total', 'CountryCode');
         });
 
