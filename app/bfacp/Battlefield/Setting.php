@@ -1,5 +1,6 @@
 <?php namespace BFACP\Battlefield;
 
+use BFACP\Exceptions\RconException;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model AS Eloquent;
 use Illuminate\Support\Facades\Crypt;
@@ -69,6 +70,10 @@ class Setting extends Eloquent
      */
     public function getPassword()
     {
+        if(empty($this->rcon_pass_hash)) {
+            throw new RconException(500, "RCON Password Not Set");
+        }
+
         return Crypt::decrypt($this->rcon_pass_hash);
     }
 }
