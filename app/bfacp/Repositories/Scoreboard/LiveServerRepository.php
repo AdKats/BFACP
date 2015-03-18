@@ -188,6 +188,10 @@ class LiveServerRepository
             throw new RconException(410, "Could not connect to server. It may be offline. Please try again later.");
         }
 
+        if(is_null($this->server->setting)) {
+            throw new RconException(500, "Server is not configured yet. Please contact the site administrator.");
+        }
+
         // Attempt to login with provided RCON password
         $this->client->loginSecure( $this->server->setting->getPassword() );
 
