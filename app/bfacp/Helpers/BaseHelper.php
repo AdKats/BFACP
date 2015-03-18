@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use GuzzleHttp\Client as Guzzle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Response;
 
 class BaseHelper
