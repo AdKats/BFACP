@@ -791,7 +791,7 @@ angular.module('bfacp', [
                     $scope.refresh = false;
                     $scope.loading = false;
                     $scope.requestError = true;
-                    ddAlert(data.message, 'danger');
+                    addAlert(data.message, 'danger');
                     return false;
                 }
 
@@ -866,7 +866,7 @@ angular.module('bfacp', [
         $scope.fetchRoundStats = function()
         {
             var chart = $("#round-graph").highcharts();
-            if($scope.selectedId == -1) {
+            if($scope.selectedId == -1 || $scope.requestError) {
                 return false;
             }
 
