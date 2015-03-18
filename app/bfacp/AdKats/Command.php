@@ -1,9 +1,9 @@
 <?php namespace BFACP\AdKats;
 
-use Illuminate\Database\Eloquent\Model AS Eloquent;
+use BFACP\Elegant;
 use Carbon\Carbon;
 
-class Command extends Eloquent
+class Command extends Elegant
 {
     /**
      * Table name
@@ -34,7 +34,7 @@ class Command extends Eloquent
      *
      * @var boolean
      */
-    public $timestamps = FALSE;
+    public $timestamps = false;
 
     /**
      * Append custom attributes to output

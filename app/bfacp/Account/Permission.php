@@ -39,7 +39,7 @@ class Permission extends EntrustPermission
      *
      * @var boolean
      */
-    public $timestamps = TRUE;
+    public $timestamps = true;
 
     /**
      * Append custom attributes to output

@@ -1,13 +1,13 @@
 <?php namespace BFACP\Battlefield;
 
+use BattlefieldHelper;
+use BFACP\Elegant;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model AS Eloquent;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use MainHelper;
-use BattlefieldHelper;
 
-class Server extends Eloquent
+class Server extends Elegant
 {
     /**
      * Table name
@@ -38,15 +38,26 @@ class Server extends Eloquent
      *
      * @var boolean
      */
-    public $timestamps = FALSE;
+    public $timestamps = false;
 
     /**
      * Append custom attributes to output
      * @var array
      */
     protected $appends = [
-        'percentage', 'ip', 'port', 'server_name_short', 'in_queue', 'maps_file_path', 'modes_file_path', 'squads_file_path', 'teams_file_path',
-        'current_map', 'current_gamemode', 'map_image_paths', 'is_active'
+        'percentage',
+        'ip',
+        'port',
+        'server_name_short',
+        'in_queue',
+        'maps_file_path',
+        'modes_file_path',
+        'squads_file_path',
+        'teams_file_path',
+        'current_map',
+        'current_gamemode',
+        'map_image_paths',
+        'is_active'
     ];
 
     /**
@@ -108,12 +119,13 @@ class Server extends Eloquent
      */
     public function getServerNameShortAttribute()
     {
-        if( empty($this->setting->name_strip) )
-            return NULL;
+        if (empty($this->setting->name_strip)) {
+            return;
+        }
 
         $strings = explode(',', $this->setting->name_strip);
 
-        return preg_replace('/\s+/', ' ',  trim( str_replace($strings, NULL, $this->ServerName) ) );
+        return preg_replace('/\s+/', ' ', trim(str_replace($strings, null, $this->ServerName)));
     }
 
     /**
@@ -131,7 +143,7 @@ class Server extends Eloquent
      */
     public function getIPAttribute()
     {
-        $host = explode(":", $this->IP_Address)[0];
+        $host = explode(':', $this->IP_Address)[0];
         return gethostbyname($host);
     }
 
@@ -141,7 +153,7 @@ class Server extends Eloquent
      */
     public function getPortAttribute()
     {
-        $port = explode(":", $this->IP_Address)[1];
+        $port = explode(':', $this->IP_Address)[1];
         return (int) $port;
     }
 
@@ -169,8 +181,7 @@ class Server extends Eloquent
      */
     public function getInQueueAttribute()
     {
-        $result = Cache::remember('server.' . $this->ServerID . '.queue', 5, function()
-        {
+        $result = Cache::remember('server.' . $this->ServerID . '.queue', 5, function () {
             $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogServer');
 
             return $battlelog->server($this)->inQueue();
@@ -186,10 +197,10 @@ class Server extends Eloquent
     public function getMapsFilePathAttribute()
     {
         $path = app_path() .
-            DIRECTORY_SEPARATOR . 'bfacp' .
-            DIRECTORY_SEPARATOR . 'ThirdParty' .
-            DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
-            DIRECTORY_SEPARATOR . 'mapNames.xml';
+        DIRECTORY_SEPARATOR . 'bfacp' .
+        DIRECTORY_SEPARATOR . 'ThirdParty' .
+        DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
+        DIRECTORY_SEPARATOR . 'mapNames.xml';
         return $path;
     }
 
@@ -200,10 +211,10 @@ class Server extends Eloquent
     public function getModesFilePathAttribute()
     {
         $path = app_path() .
-            DIRECTORY_SEPARATOR . 'bfacp' .
-            DIRECTORY_SEPARATOR . 'ThirdParty' .
-            DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
-            DIRECTORY_SEPARATOR . 'playModes.xml';
+        DIRECTORY_SEPARATOR . 'bfacp' .
+        DIRECTORY_SEPARATOR . 'ThirdParty' .
+        DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
+        DIRECTORY_SEPARATOR . 'playModes.xml';
         return $path;
     }
 
@@ -214,10 +225,10 @@ class Server extends Eloquent
     public function getSquadsFilePathAttribute()
     {
         $path = app_path() .
-            DIRECTORY_SEPARATOR . 'bfacp' .
-            DIRECTORY_SEPARATOR . 'ThirdParty' .
-            DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
-            DIRECTORY_SEPARATOR . 'squadNames.xml';
+        DIRECTORY_SEPARATOR . 'bfacp' .
+        DIRECTORY_SEPARATOR . 'ThirdParty' .
+        DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
+        DIRECTORY_SEPARATOR . 'squadNames.xml';
         return $path;
     }
 
@@ -228,10 +239,10 @@ class Server extends Eloquent
     public function getTeamsFilePathAttribute()
     {
         $path = app_path() .
-            DIRECTORY_SEPARATOR . 'bfacp' .
-            DIRECTORY_SEPARATOR . 'ThirdParty' .
-            DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
-            DIRECTORY_SEPARATOR . 'teamNames.xml';
+        DIRECTORY_SEPARATOR . 'bfacp' .
+        DIRECTORY_SEPARATOR . 'ThirdParty' .
+        DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
+        DIRECTORY_SEPARATOR . 'teamNames.xml';
         return $path;
     }
 
@@ -242,14 +253,19 @@ class Server extends Eloquent
     public function getMapImagePathsAttribute()
     {
         $base_path = sprintf('images/games/%s/maps', strtolower($this->game->Name));
-        $image = sprintf('%s.jpg', strtolower($this->mapName));
+
+        if ($this->game->Name == 'BFHL') {
+            $image = sprintf('%s.png', strtolower($this->mapName));
+        } else {
+            $image = sprintf('%s.jpg', strtolower($this->mapName));
+        }
 
         $paths = [
             'large'  => sprintf('%s/large/%s', $base_path, $image),
             'medium' => sprintf('%s/medium/%s', $base_path, $image),
             'wide'   => in_array($this->game->Name, ['BF4', 'BFHL']) ?
-                        sprintf('%s/wide/%s', $base_path, $image) :
-                        sprintf('%s/large/%s', $base_path, $image)
+            sprintf('%s/wide/%s', $base_path, $image) :
+            sprintf('%s/large/%s', $base_path, $image)
         ];
 
         return $paths;

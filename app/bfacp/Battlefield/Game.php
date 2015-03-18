@@ -1,9 +1,9 @@
 <?php namespace BFACP\Battlefield;
 
-use Illuminate\Database\Eloquent\Model AS Eloquent;
+use BFACP\Elegant;
 use Carbon\Carbon;
 
-class Game extends Eloquent
+class Game extends Elegant
 {
     /**
      * Table name
@@ -34,7 +34,7 @@ class Game extends Eloquent
      *
      * @var boolean
      */
-    public $timestamps = FALSE;
+    public $timestamps = false;
 
     /**
      * Append custom attributes to output
@@ -58,20 +58,19 @@ class Game extends Eloquent
 
     public function getClassCssAttribute()
     {
-        switch($this->Name)
-        {
-            case "BF3":
+        switch ($this->Name) {
+            case 'BF3':
                 $class = 'label bg-purple';
-            break;
+                break;
 
-            case "BF4":
+            case 'BF4':
                 $class = 'label bg-blue';
-            break;
+                break;
 
-            case "BFH":
-            case "BFHL":
+            case 'BFH':
+            case 'BFHL':
                 $class = 'label bg-green';
-            break;
+                break;
 
             default:
                 $class = 'label bg-yellow';

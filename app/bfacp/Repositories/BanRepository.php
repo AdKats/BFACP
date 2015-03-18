@@ -1,9 +1,7 @@
 <?php namespace BFACP\Repositories;
 
-use BFACP\Battlefield\Player;
 use BFACP\AdKats\Ban;
-use BFACP\Exceptions\PlayerNotFoundException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use BFACP\Battlefield\Player;
 use Illuminate\Support\Facades\Cache;
 
 class BanRepository extends BaseRepository
@@ -16,7 +14,7 @@ class BanRepository extends BaseRepository
      */
     public function getLatestBans($cacheKey = 'bans.latest', $ttl = 1)
     {
-        $bans = Cache::remember($cacheKey, $ttl, function() {
+        $bans = Cache::remember($cacheKey, $ttl, function () {
             return Ban::with('player', 'record')->latest(30)->get()->toArray();
         });
 

@@ -1,10 +1,10 @@
 <?php namespace BFACP\Battlefield;
 
-use Illuminate\Database\Eloquent\Model AS Eloquent;
+use BFACP\Elegant;
 use Carbon\Carbon;
 use MainHelper;
 
-class Player extends Eloquent
+class Player extends Elegant
 {
     /**
      * Table name
@@ -35,7 +35,7 @@ class Player extends Eloquent
      *
      * @var boolean
      */
-    public $timestamps = FALSE;
+    public $timestamps = false;
 
     /**
      * Append custom attributes to output
@@ -127,7 +127,7 @@ class Player extends Eloquent
      */
     public function hasPersona()
     {
-        return ! empty($this->battlelog->persona_id);
+        return !empty($this->battlelog->persona_id);
     }
 
     /**
@@ -137,7 +137,7 @@ class Player extends Eloquent
     public function getProfileUrlAttribute()
     {
         return route('player.show', [
-            'id' => $this->PlayerID,
+            'id'   => $this->PlayerID,
             'name' => $this->SoldierName
         ]);
     }
@@ -148,8 +148,9 @@ class Player extends Eloquent
      */
     public function getCountryNameAttribute()
     {
-        if($this->CountryCode == '--' || empty($this->CountryCode))
+        if ($this->CountryCode == '--' || empty($this->CountryCode)) {
             return 'Unknown';
+        }
 
         return MainHelper::countries($this->CountryCode);
     }
@@ -160,10 +161,11 @@ class Player extends Eloquent
      */
     public function getCountryFlagAttribute()
     {
-        if($this->CountryCode == '--' || empty($this->CountryCode))
+        if ($this->CountryCode == '--' || empty($this->CountryCode)) {
             return 'images/flags/24/_unknown.png';
+        }
 
-        return sprintf("images/flags/24/%s.png", strtoupper($this->CountryCode));
+        return sprintf('images/flags/24/%s.png', strtoupper($this->CountryCode));
     }
 
     /**
@@ -172,26 +174,31 @@ class Player extends Eloquent
      */
     public function getRankImageAttribute()
     {
-        switch($this->game->Name)
-        {
-            case "BF3":
+        switch ($this->game->Name) {
+            case 'BF3':
                 $rank = $this->GlobalRank;
 
-                if($rank > 45) {
-                    if($rank > 100) $rank = 100;
+                if ($rank > 45) {
+                    if ($rank > 100) {
+                        $rank = 100;
+                    }
+
                     $path = sprintf('images/games/bf3/ranks/large/ss%u.png', $rank);
                 } else {
                     $path = sprintf('images/games/bf3/ranks/large/r%u.png', $this->GlobalRank);
                 }
-            break;
+                break;
 
-            case "BF4":
-            case "BFHL":
+            case 'BF4':
                 $path = sprintf('images/games/bf4/ranks/r%u.png', $this->GlobalRank);
-            break;
+                break;
+
+            case 'BFHL':
+                $path = sprintf('images/games/bfhl/ranks/r%u.png', $this->GlobalRank);
+                break;
 
             default:
-                $path = NULL;
+                $path = null;
         }
 
         return $path;

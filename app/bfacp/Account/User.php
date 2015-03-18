@@ -1,11 +1,12 @@
 <?php namespace BFACP\Account;
 
+use BFACP\Elegant;
 use Illuminate\Support\Facades\Config;
 use Zizaco\Confide\ConfideUser;
 use Zizaco\Confide\ConfideUserInterface;
 use Zizaco\Entrust\HasRole;
 
-class User extends \Eloquent implements ConfideUserInterface
+class User extends Elegant implements ConfideUserInterface
 {
     use ConfideUser;
     use HasRole;
@@ -45,7 +46,7 @@ class User extends \Eloquent implements ConfideUserInterface
      *
      * @var boolean
      */
-    public $timestamps = TRUE;
+    public $timestamps = true;
 
     /**
      * Append custom attributes to output
@@ -148,9 +149,9 @@ class User extends \Eloquent implements ConfideUserInterface
     public function getGravatarAttribute()
     {
         $email = $this->setting->gravatar ?: $this->email;
-        $url = '//www.gravatar.com/avatar/';
-        $url .= md5( strtolower( trim( $email ) ) );
-        $url .= "?s=80&d=mm&r=x";
+        $url   = '//www.gravatar.com/avatar/';
+        $url .= md5(strtolower(trim($email)));
+        $url .= '?s=80&d=mm&r=x';
 
         return $url;
     }

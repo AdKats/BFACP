@@ -1,9 +1,9 @@
 <?php namespace BFACP\Player;
 
-use Illuminate\Database\Eloquent\Model AS Eloquent;
+use BFACP\Elegant;
 use Carbon\Carbon;
 
-class Stat extends Eloquent
+class Stat extends Elegant
 {
     /**
      * Table name
@@ -34,7 +34,7 @@ class Stat extends Eloquent
      *
      * @var boolean
      */
-    public $timestamps = FALSE;
+    public $timestamps = false;
 
     /**
      * Append custom attributes to output

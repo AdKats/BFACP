@@ -1,10 +1,10 @@
 <?php namespace BFACP\Battlefield\Scoreboard;
 
-use Illuminate\Database\Eloquent\Model AS Eloquent;
-use Carbon\Carbon;
 use BattlefieldHelper;
+use BFACP\Elegant;
+use Carbon\Carbon;
 
-class Scoreboard extends Eloquent
+class Scoreboard extends Elegant
 {
     /**
      * Table name
@@ -35,7 +35,7 @@ class Scoreboard extends Eloquent
      *
      * @var boolean
      */
-    public $timestamps = FALSE;
+    public $timestamps = false;
 
     /**
      * Append custom attributes to output

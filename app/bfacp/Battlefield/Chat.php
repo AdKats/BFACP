@@ -1,9 +1,9 @@
 <?php namespace BFACP\Battlefield;
 
-use Illuminate\Database\Eloquent\Model AS Eloquent;
+use BFACP\Elegant;
 use Carbon\Carbon;
 
-class Chat extends Eloquent
+class Chat extends Elegant
 {
     /**
      * Table name
@@ -34,7 +34,7 @@ class Chat extends Eloquent
      *
      * @var boolean
      */
-    public $timestamps = FALSE;
+    public $timestamps = false;
 
     /**
      * Append custom attributes to output
@@ -70,10 +70,10 @@ class Chat extends Eloquent
      */
     public function getProfileUrlAttribute()
     {
-        return ! is_null($this->logPlayerID) ? route('player.show', [
-            'id' => $this->logPlayerID,
+        return !is_null($this->logPlayerID) ? route('player.show', [
+            'id'   => $this->logPlayerID,
             'name' => $this->logSoldierName
-        ]) : NULL;
+        ]) : null;
     }
 
     /**
@@ -113,19 +113,18 @@ class Chat extends Eloquent
      */
     public function getClassCssAttribute()
     {
-        switch($this->logSubset)
-        {
-            case "Global":
+        switch ($this->logSubset) {
+            case 'Global':
                 $class = 'label bg-teal';
-            break;
+                break;
 
-            case "Team":
+            case 'Team':
                 $class = 'label bg-blue';
-            break;
+                break;
 
-            case "Squad":
+            case 'Squad':
                 $class = 'label bg-orange';
-            break;
+                break;
 
             default:
                 $class = 'label bg-yellow';

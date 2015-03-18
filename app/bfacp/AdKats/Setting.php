@@ -1,9 +1,9 @@
 <?php namespace BFACP\AdKats;
 
-use Illuminate\Database\Eloquent\Model AS Eloquent;
+use BFACP\Elegant;
 use Carbon\Carbon;
 
-class Setting extends Eloquent
+class Setting extends Elegant
 {
     /**
      * Table name
@@ -34,7 +34,7 @@ class Setting extends Eloquent
      *
      * @var boolean
      */
-    public $timestamps = FALSE;
+    public $timestamps = false;
 
     /**
      * Append custom attributes to output
@@ -82,41 +82,41 @@ class Setting extends Eloquent
     {
         $value = $this->attributes['setting_value'];
 
-        if($this->attributes['setting_name'] == 'Custom HTML Addition')
+        if ($this->attributes['setting_name'] == 'Custom HTML Addition') {
             return $value;
+        }
 
-        switch($this->setting_type)
-        {
-            case "multiline":
-                if(in_array($this->attributes['setting_name'], [
+        switch ($this->setting_type) {
+            case 'multiline':
+                if (in_array($this->attributes['setting_name'], [
                     'Pre-Message List',
                     'Server Rule List',
                     'SpamBot Say List',
                     'SpamBot Yell List'
-                ]))
-                    $value = rawurldecode( urldecode( $value ) );
+                ])) {
+                    $value = rawurldecode(urldecode($value));
+                }
 
                 $valueArray = explode('|', $value);
 
-                if(count($valueArray) == 1)
-                {
+                if (count($valueArray) == 1) {
                     return head($valueArray);
                 }
 
                 return $valueArray;
-            break;
+                break;
 
-            case "bool":
+            case 'bool':
                 return $value == 'True';
-            break;
+                break;
 
-            case "int":
+            case 'int':
                 return (int) $value;
-            break;
+                break;
 
-            case "double":
+            case 'double':
                 return (float) $value;
-            break;
+                break;
 
             default:
                 return $value;

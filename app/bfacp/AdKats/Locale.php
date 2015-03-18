@@ -34,7 +34,7 @@ class Locale extends Elegant
      *
      * @var boolean
      */
-    public $timestamps = TRUE;
+    public $timestamps = true;
 
     /**
      * Append custom attributes to output
@@ -63,9 +63,9 @@ class Locale extends Elegant
         $query = sprintf('%s,locale_message,NULL,locale_id,locale_subset,%s,locale_lang,%s', $this->table, $this->locale_subset, $this->locale_lang);
 
         static::$rules = [
-            'locale_subset' => 'required|alpha|min:1',
+            'locale_subset'  => 'required|alpha|min:1',
             'locale_message' => 'required|min:4|unique:' . $query,
-            'locale_lang' => 'required|max:2|in:' . \MainHelper::languages(NULL, TRUE)
+            'locale_lang'    => 'required|max:2|in:' . \MainHelper::languages(null, true)
         ];
     }
 }

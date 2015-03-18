@@ -1,9 +1,9 @@
 <?php namespace BFACP\Battlefield\Scoreboard;
 
-use Illuminate\Database\Eloquent\Model AS Eloquent;
+use BFACP\Elegant;
 use Carbon\Carbon;
 
-class Scores extends Eloquent
+class Scores extends Elegant
 {
     /**
      * Table name
@@ -34,7 +34,7 @@ class Scores extends Eloquent
      *
      * @var boolean
      */
-    public $timestamps = FALSE;
+    public $timestamps = false;
 
     /**
      * Append custom attributes to output

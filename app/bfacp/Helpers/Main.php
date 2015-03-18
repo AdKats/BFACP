@@ -15,12 +15,23 @@ class Main extends BaseHelper
      * @param  boolean $collectionOnly
      * @return \Illuminate\Support\Facades\Response
      */
-    public function response($input = [], $message = 'OK', $status = 'success', $httpcode = 200, $cached = FALSE, $collectionOnly = FALSE)
+    public function response($input = [], $message = 'OK', $status = 'success', $httpcode = 200, $cached = false, $collectionOnly = false)
     {
-        if(is_null($message)) $message = 'OK';
-        if(is_null($status)) $status = 'success';
-        if(is_null($httpcode)) $httpcode = 200;
-        if(is_null($input)) $input = [];
+        if (is_null($message)) {
+            $message = 'OK';
+        }
+
+        if (is_null($status)) {
+            $status = 'success';
+        }
+
+        if (is_null($httpcode)) {
+            $httpcode = 200;
+        }
+
+        if (is_null($input)) {
+            $input = [];
+        }
 
         $collection = new Collection([
             'status'         => $status,
@@ -30,13 +41,14 @@ class Main extends BaseHelper
             'data'           => $input
         ]);
 
-        if($collectionOnly)
+        if ($collectionOnly) {
             return $collection;
+        }
 
         return $this->response->json($collection, $httpcode)
-            ->header('X-Robots-Tag', 'noindex')
-            ->header('Cache-Control', 'no-cache, must-revalidate')
-            ->header('Expires', $this->carbon->now()->subYears(10)->format("D, d M Y H:i:s \G\M\T"));
+                    ->header('X-Robots-Tag', 'noindex')
+                    ->header('Cache-Control', 'no-cache, must-revalidate')
+                    ->header('Expires', $this->carbon->now()->subYears(10)->format("D, d M Y H:i:s \G\M\T"));
     }
 
     /**
@@ -44,12 +56,15 @@ class Main extends BaseHelper
      *
      * @return string
      */
-    public function executionTime($isPage = FALSE)
+    public function executionTime($isPage = false)
     {
-        $time = round( (microtime(true) - LARAVEL_START), 2);
+        $time = round((microtime(true) - LARAVEL_START), 2);
 
-        if($isPage) $string = "Page generated in ";
-        else $string = "Data crunched in ";
+        if ($isPage) {
+            $string = 'Page generated in ';
+        } else {
+            $string = 'Data crunched in ';
+        }
 
         return $string . $this->secToStr($time);
     }
@@ -66,8 +81,8 @@ class Main extends BaseHelper
     public function divide($num1 = 0, $num2 = 0, $precision = 2)
     {
         try {
-            return round( ($num1 / $num2), $precision );
-        } catch(Exception $e) {
+            return round(($num1 / $num2), $precision);
+        } catch (Exception $e) {
             return 0;
         }
     }
@@ -84,8 +99,8 @@ class Main extends BaseHelper
     public function percent($num1 = 0, $num2 = 0, $precision = 2)
     {
         try {
-            return round( ($num1 / $num2) * 100, $precision );
-        } catch(Exception $e) {
+            return round(($num1 / $num2) * 100, $precision);
+        } catch (Exception $e) {
             return 0;
         }
     }
@@ -106,74 +121,101 @@ class Main extends BaseHelper
      * @param  boolean $shothand Short version time/date string
      * @return string
      */
-    public function secToStr($secs = NULL, $shorthand = FALSE)
+    public function secToStr($secs = null, $shorthand = false)
     {
         $output = '';
 
         // If $secs is null throw an error
-        if(is_null($secs)) throw new Exception("Empty value not accepted");
+        if (is_null($secs)) {
+            throw new Exception('Empty value not accepted');
+        }
 
         // If $secs is not a number throw an error
-        if(!is_numeric($secs)) throw new Exception("Input not numeric");
+        if (!is_numeric($secs)) {
+            throw new Exception('Input not numeric');
+        }
 
         // If $secs is less than zero default to zero
-        if($secs < 0) $secs = 0;
+        if ($secs < 0) {
+            $secs = 0;
+        }
 
         // Week
-        if($secs >= 604800)
-        {
-            $week = floor($secs/604800);
-            $secs = $secs%604800;
+        if ($secs >= 604800) {
+            $week   = floor($secs / 604800);
+            $secs   = $secs % 604800;
             $output = $week . ' week';
-            if($week != 1 && !$shorthand) $output .= 's';
-            if($secs > 0) $output .= ', ';
+            if ($week != 1 && !$shorthand) {
+                $output .= 's';
+            }
+
+            if ($secs > 0) {
+                $output .= ', ';
+            }
+
         }
 
         // Day
-        if($secs >= 86400)
-        {
-            $days   = floor($secs/86400);
-            $secs   = $secs%86400;
+        if ($secs >= 86400) {
+            $days = floor($secs / 86400);
+            $secs = $secs % 86400;
             $output .= $days . ' day';
-            if($days != 1 && !$shorthand) $output .= 's';
-            if($secs > 0) $output .= ', ';
+            if ($days != 1 && !$shorthand) {
+                $output .= 's';
+            }
+
+            if ($secs > 0) {
+                $output .= ', ';
+            }
+
         }
 
         // Hour
-        if($secs >= 3600)
-        {
-            $hours  = floor($secs/3600);
-            $secs   = $secs%3600;
+        if ($secs >= 3600) {
+            $hours = floor($secs / 3600);
+            $secs  = $secs % 3600;
             $output .= $hours . ' hour';
-            if($hours != 1 && !$shorthand) $output .= 's';
-            if($secs > 0) $output .= ', ';
+            if ($hours != 1 && !$shorthand) {
+                $output .= 's';
+            }
+
+            if ($secs > 0) {
+                $output .= ', ';
+            }
+
         }
 
         // Minute
-        if($secs >= 60)
-        {
-            $minutes = floor($secs/60);
-            $secs    = $secs%60;
-            $output  .= $minutes . ' minute';
-            if($minutes != 1 && !$shorthand) $output .= 's';
-            if($secs > 0) $output .= ', ';
+        if ($secs >= 60) {
+            $minutes = floor($secs / 60);
+            $secs    = $secs % 60;
+            $output .= $minutes . ' minute';
+            if ($minutes != 1 && !$shorthand) {
+                $output .= 's';
+            }
+
+            if ($secs > 0) {
+                $output .= ', ';
+            }
+
         }
 
         // Second
-        if($secs > 0)
-        {
-            $output .= $secs.' second';
+        if ($secs > 0) {
+            $output .= $secs . ' second';
 
-            if($secs != 1 && !$shorthand) $output .= 's';
+            if ($secs != 1 && !$shorthand) {
+                $output .= 's';
+            }
+
         }
 
         // If short version is requested replace all
         // long values with the abbreviation
-        if($shorthand)
-        {
+        if ($shorthand) {
             $output = str_replace(
-                array(" day", " hour", " minute", " second", " week"),
-                array("d", "h", "m", "s", "w"),
+                array(' day', ' hour', ' minute', ' second', ' week'),
+                array('d', 'h', 'm', 's', 'w'),
                 $output
             );
         }
@@ -188,25 +230,21 @@ class Main extends BaseHelper
      * @param  boolean $short If true it will just return without the page title
      * @return string
      */
-    public function getTitle($page, $clan = NULL, $short = FALSE)
+    public function getTitle($page, $clan = null, $short = false)
     {
-    	$title = '';
+        $title = '';
 
-    	if(!$short)
-    	{
-    		$title .= $page . ' | ';
-    	}
+        if (!$short) {
+            $title .= $page . ' | ';
+        }
 
-    	if(!is_null($clan))
-    	{
-    		$title .= $clan;
-    	}
-    	else
-    	{
-    		$title .= 'BFAdminCP';
-    	}
+        if (!is_null($clan)) {
+            $title .= $clan;
+        } else {
+            $title .= 'BFAdminCP';
+        }
 
-    	return $title;
+        return $title;
     }
 
     /**
@@ -214,7 +252,7 @@ class Main extends BaseHelper
      * @param  string $code Two digit country code
      * @return string
      */
-    public function countries($code = NULL, $list = FALSE)
+    public function countries($code = null, $list = false)
     {
         $countries = [
             'AF' => 'Afghanistan',
@@ -463,19 +501,17 @@ class Main extends BaseHelper
             'ZM' => 'Zambia',
             'ZW' => 'Zimbabwe'];
 
-        if(is_null($code) && $list)
-        {
+        if (is_null($code) && $list) {
             return $countries;
         }
 
         $code = strtoupper($code);
 
-        if(array_key_exists($code, $countries))
-        {
+        if (array_key_exists($code, $countries)) {
             return $countries[$code];
         }
 
-        return NULL;
+        return;
     }
 
     /**
@@ -484,7 +520,7 @@ class Main extends BaseHelper
      * @param  bool   $onlyKeys Only return comma dilimated list
      * @return mixed        String or Array
      */
-    public function languages($lang = '', $onlyKeys = FALSE)
+    public function languages($lang = '', $onlyKeys = false)
     {
         $languages = [
             'aa' => 'Afar',
@@ -673,12 +709,12 @@ class Main extends BaseHelper
             'zu' => 'Zulu'
         ];
 
-        if(!empty($lang) && array_key_exists($lang, $languages))
+        if (!empty($lang) && array_key_exists($lang, $languages)) {
             return $languages[$lang];
+        }
 
-        if($onlyKeys)
-        {
-            return implode( ',' , array_keys( $languages ) );
+        if ($onlyKeys) {
+            return implode(',', array_keys($languages));
         }
 
         return $languages;

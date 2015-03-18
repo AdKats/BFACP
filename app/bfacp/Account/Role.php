@@ -40,7 +40,7 @@ class Role extends EntrustRole
      *
      * @var boolean
      */
-    public $timestamps = TRUE;
+    public $timestamps = true;
 
     /**
      * Append custom attributes to output

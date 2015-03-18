@@ -11,45 +11,113 @@ class Battlefield extends Main
      */
     public function squad($id)
     {
-        if(is_string($id) && !is_numeric($id))
+        if (is_string($id) && !is_numeric($id)) {
             throw new Exception('Invalid squad id: ' . $id);
+        }
 
-        switch(intval($id))
-        {
-            case 0:  $sq = 'None'; break;
-            case 1:  $sq = 'Alpha'; break;
-            case 2:  $sq = 'Bravo'; break;
-            case 3:  $sq = 'Charlie'; break;
-            case 4:  $sq = 'Delta'; break;
-            case 5:  $sq = 'Echo'; break;
-            case 6:  $sq = 'Foxtrot'; break;
-            case 7:  $sq = 'Golf'; break;
-            case 8:  $sq = 'Hotel'; break;
-            case 9:  $sq = 'India'; break;
-            case 10: $sq = 'Juliet'; break;
-            case 11: $sq = 'Kilo'; break;
-            case 12: $sq = 'Lima'; break;
-            case 13: $sq = 'Mike'; break;
-            case 14: $sq = 'November'; break;
-            case 15: $sq = 'Oscar'; break;
-            case 16: $sq = 'Papa'; break;
-            case 17: $sq = 'Quebec'; break;
-            case 18: $sq = 'Romeo'; break;
-            case 19: $sq = 'Sierra'; break;
-            case 20: $sq = 'Tango'; break;
-            case 21: $sq = 'Uniform'; break;
-            case 22: $sq = 'Victor'; break;
-            case 23: $sq = 'Whiskey'; break;
-            case 24: $sq = 'Xray'; break;
-            case 25: $sq = 'Yankee'; break;
-            case 26: $sq = 'Zulu'; break;
-            case 27: $sq = 'Haggard'; break;
-            case 28: $sq = 'Sweetwater'; break;
-            case 29: $sq = 'Preston'; break;
-            case 30: $sq = 'Redford'; break;
-            case 31: $sq = 'Faith'; break;
-            case 32: $sq = 'Celeste'; break;
-            default: $sq = NULL; break;
+        switch (intval($id)) {
+            case 0:
+                $sq = 'None';
+                break;
+            case 1:
+                $sq = 'Alpha';
+                break;
+            case 2:
+                $sq = 'Bravo';
+                break;
+            case 3:
+                $sq = 'Charlie';
+                break;
+            case 4:
+                $sq = 'Delta';
+                break;
+            case 5:
+                $sq = 'Echo';
+                break;
+            case 6:
+                $sq = 'Foxtrot';
+                break;
+            case 7:
+                $sq = 'Golf';
+                break;
+            case 8:
+                $sq = 'Hotel';
+                break;
+            case 9:
+                $sq = 'India';
+                break;
+            case 10:
+                $sq = 'Juliet';
+                break;
+            case 11:
+                $sq = 'Kilo';
+                break;
+            case 12:
+                $sq = 'Lima';
+                break;
+            case 13:
+                $sq = 'Mike';
+                break;
+            case 14:
+                $sq = 'November';
+                break;
+            case 15:
+                $sq = 'Oscar';
+                break;
+            case 16:
+                $sq = 'Papa';
+                break;
+            case 17:
+                $sq = 'Quebec';
+                break;
+            case 18:
+                $sq = 'Romeo';
+                break;
+            case 19:
+                $sq = 'Sierra';
+                break;
+            case 20:
+                $sq = 'Tango';
+                break;
+            case 21:
+                $sq = 'Uniform';
+                break;
+            case 22:
+                $sq = 'Victor';
+                break;
+            case 23:
+                $sq = 'Whiskey';
+                break;
+            case 24:
+                $sq = 'Xray';
+                break;
+            case 25:
+                $sq = 'Yankee';
+                break;
+            case 26:
+                $sq = 'Zulu';
+                break;
+            case 27:
+                $sq = 'Haggard';
+                break;
+            case 28:
+                $sq = 'Sweetwater';
+                break;
+            case 29:
+                $sq = 'Preston';
+                break;
+            case 30:
+                $sq = 'Redford';
+                break;
+            case 31:
+                $sq = 'Faith';
+                break;
+            case 32:
+                $sq = 'Celeste';
+                break;
+            default:
+                $sq = null;
+                break;
         }
 
         // Returns the squad name
@@ -67,9 +135,9 @@ class Battlefield extends Main
     public function kd($kills = 0, $deaths = 0, $precision = 2)
     {
         try {
-            return round( ($kills / $deaths), $precision );
-        } catch(Exception $e) {
-            if($kills === 0 && $deaths > 0) {
+            return round(($kills / $deaths), $precision);
+        } catch (Exception $e) {
+            if ($kills === 0 && $deaths > 0) {
                 return -$deaths;
             }
 
@@ -88,8 +156,8 @@ class Battlefield extends Main
     public function hsk($headshots = 0, $kills = 0, $precision = 2)
     {
         try {
-            return round( ($headshots / $kills), $precision );
-        } catch(Exception $e) {
+            return round(($headshots / $kills), $precision);
+        } catch (Exception $e) {
             return $headshots;
         }
     }
@@ -104,109 +172,104 @@ class Battlefield extends Main
      */
     public function startingTickets($gamemode, $modifier, $gameName)
     {
-        switch($gameName)
-        {
-            case "BF4":
-                switch($gamemode)
-                {
-                    case "Chainlink0":
+        switch ($gameName) {
+            case 'BF4':
+                switch ($gamemode) {
+                case 'Chainlink0':
                         $defaultTickets = 1000;
-                    break;
+                        break;
 
-                    case "ConquestLarge0":
+                case 'ConquestLarge0':
                         $defaultTickets = 800;
-                    break;
+                        break;
 
-                    case "ConquestSmall0":
+                case 'ConquestSmall0':
                         $defaultTickets = 400;
-                    break;
+                        break;
 
-                    case "TeamDeathMatch0":
-                    case "Elimination0":
-                    case "Obliteration":
-                    case "CarrierAssaultLarge0":
-                    case "CarrierAssaultSmall0":
+                case 'TeamDeathMatch0':
+                case 'Elimination0':
+                case 'Obliteration':
+                case 'CarrierAssaultLarge0':
+                case 'CarrierAssaultSmall0':
                         $defaultTickets = 100;
-                    break;
+                        break;
 
-                    case "RushLarge0":
+                case 'RushLarge0':
                         $defaultTickets = 100;
-                    break;
+                        break;
 
-                    case "SquadDeathMatch0":
+                case 'SquadDeathMatch0':
                         $defaultTickets = 50;
-                    break;
+                        break;
 
-                    case "Domination0":
-                    case "AirSuperiority0":
+                case 'Domination0':
+                case 'AirSuperiority0':
                         $defaultTickets = 300;
-                    break;
+                        break;
 
-                    case "CaptureTheFlag0":
+                case 'CaptureTheFlag0':
                         $defaultTickets = 3;
-                    break;
+                        break;
 
-                    default:
-                        return NULL;
+                default:
+                        return;
                 }
-            break;
-
-            case "BF3":
-                switch($gamemode)
-                {
-                    case "ConquestLarge0":
-                        $defaultTickets = 800;
-                    break;
-
-                    case "ConquestSmall0":
-                        $defaultTickets = 400;
-                    break;
-
-                    case "TeamDeathMatch0":
-                        $defaultTickets = 100;
-                    break;
-
-                    case "Domination0":
-                    case "AirSuperiority0":
-                        $defaultTickets = 300;
-                    break;
-
-                    case "RushLarge0":
-                        $defaultTickets = 75;
-                    break;
-
-                    case "SquadDeathMatch0":
-                        $defaultTickets = 50;
-                    break;
-
-                    case "CaptureTheFlag0":
-                        $defaultTickets = 3;
-                    break;
-
-                    default:
-                        return NULL;
-                }
-            break;
-
-            case "BFH":
-            case "BFHL":
-                case "TurfWarLarge0":
-                case "TurfWarSmall0":
-                case "Heist0":
-                case "Hotwire0":
-                case "Bloodmoney0":
-                case "Hit0":
-                case "Hostage0":
-                case "TeamDeathMatch0":
-                    $defaultTickets = 100;
                 break;
-            break;
 
+            case 'BF3':
+                switch ($gamemode) {
+                case 'ConquestLarge0':
+                        $defaultTickets = 800;
+                        break;
+
+                case 'ConquestSmall0':
+                        $defaultTickets = 400;
+                        break;
+
+                case 'TeamDeathMatch0':
+                        $defaultTickets = 100;
+                        break;
+
+                case 'Domination0':
+                case 'AirSuperiority0':
+                        $defaultTickets = 300;
+                        break;
+
+                case 'RushLarge0':
+                        $defaultTickets = 75;
+                        break;
+
+                case 'SquadDeathMatch0':
+                        $defaultTickets = 50;
+                        break;
+
+                case 'CaptureTheFlag0':
+                        $defaultTickets = 3;
+                        break;
+
+                default:
+                        return;
+                }
+                break;
+
+            case 'BFH':
+            case 'BFHL':
+            case 'TurfWarLarge0':
+            case 'TurfWarSmall0':
+            case 'Heist0':
+            case 'Hotwire0':
+            case 'Bloodmoney0':
+            case 'Hit0':
+            case 'Hostage0':
+            case 'TeamDeathMatch0':
+                $defaultTickets = 100;
+                break;
             default:
-                return NULL;
+                return;
         }
 
-        $startingTicketCount = ( $this->divide( $defaultTickets, 100 ) * $modifier);
+        $startingTicketCount = ($this->divide($defaultTickets, 100) * $modifier);
 
         return intval($startingTicketCount);
     }
@@ -220,70 +283,67 @@ class Battlefield extends Main
      */
     public function roundStartingTimer($gamemode, $modifier, $gameName)
     {
-        switch($gameName)
-        {
-            case "BF4":
-                switch($gamemode)
-                {
-                    case "Chainlink0":
+        switch ($gameName) {
+            case 'BF4':
+                switch ($gamemode) {
+                case 'Chainlink0':
                         $defaultTime = 1200;
-                    break;
+                        break;
 
-                    case "ConquestLarge0":
-                    case "ConquestSmall0":
-                    case "TeamDeathMatch0":
-                    case "SquadDeathMatch0":
-                    case "Domination0":
-                    case "AirSuperiority0":
+                case 'ConquestLarge0':
+                case 'ConquestSmall0':
+                case 'TeamDeathMatch0':
+                case 'SquadDeathMatch0':
+                case 'Domination0':
+                case 'AirSuperiority0':
                         $defaultTime = 3600;
-                    break;
+                        break;
 
-                    case "RushLarge0":
+                case 'RushLarge0':
                         $defaultTime = 900 * 3;
-                    break;
+                        break;
 
-                    case "Elimination0":
+                case 'Elimination0':
                         $defaultTime = 600;
-                    break;
+                        break;
 
-                    case "Obliteration":
-                    case "CarrierAssaultLarge0":
-                    case "CarrierAssaultSmall0":
+                case 'Obliteration':
+                case 'CarrierAssaultLarge0':
+                case 'CarrierAssaultSmall0':
                         $defaultTime = 1800;
-                    break;
+                        break;
 
-                    case "CaptureTheFlag0":
+                case 'CaptureTheFlag0':
                         $defaultTime = 1200;
-                    break;
+                        break;
 
-                    default:
-                        return NULL;
+                default:
+                        return;
                 }
-            break;
-
-            case "BFH":
-            case "BFHL":
-                case "TurfWarLarge0":
-                case "TurfWarSmall0":
-                case "Heist0":
-                case "Hotwire0":
-                case "Hit0":
-                case "Hostage0":
-                case "TeamDeathMatch0":
-                case "TeamDeathMatch0":
-                    $defaultTime = 3600;
                 break;
 
-                case "Bloodmoney0":
-                    $defaultTime = 1200;
+            case 'BFH':
+            case 'BFHL':
+            case 'TurfWarLarge0':
+            case 'TurfWarSmall0':
+            case 'Heist0':
+            case 'Hotwire0':
+            case 'Hit0':
+            case 'Hostage0':
+            case 'TeamDeathMatch0':
+            case 'TeamDeathMatch0':
+                $defaultTime = 3600;
                 break;
-            break;
+
+            case 'Bloodmoney0':
+                $defaultTime = 1200;
+                break;
 
             default:
-                return NULL;
+                return;
         }
 
-        $startingRoundTimer = ( $this->divide( $defaultTime, 100 ) * $modifier);
+        $startingRoundTimer = ($this->divide($defaultTime, 100) * $modifier);
 
         return intval($startingRoundTimer);
     }
@@ -291,28 +351,28 @@ class Battlefield extends Main
     public function mapName($mapURI, $xmlFilePath)
     {
         $mapNamesXML = simplexml_load_file($xmlFilePath);
-        $mapName = "MapNameNotFoundError";
+        $mapName     = 'MapNameNotFoundError';
 
-        for($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
-            if(strcasecmp($mapURI, $mapNamesXML->map[$i]->attributes()->uri) == 0) {
+        for ($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
+            if (strcasecmp($mapURI, $mapNamesXML->map[$i]->attributes()->uri) == 0) {
                 $mapName = $mapNamesXML->map[$i]->attributes()->name;
             }
         }
 
-        return ! is_string($mapName) ? head($mapName) : $mapName;
+        return !is_string($mapName) ? head($mapName) : $mapName;
     }
 
     public function playmodeName($playmodeURI, $xmlFilePath)
     {
         $playModesXML = simplexml_load_file($xmlFilePath);
-        $playmodeName = "PlaymodeNameNotFoundError";
+        $playmodeName = 'PlaymodeNameNotFoundError';
 
-        for($i = 0; $i <= (count($playModesXML->playmode) - 1); $i++) {
-            if($playmodeURI == $playModesXML->playmode[$i]->attributes()->uri) {
+        for ($i = 0; $i <= (count($playModesXML->playmode) - 1); $i++) {
+            if ($playmodeURI == $playModesXML->playmode[$i]->attributes()->uri) {
                 $playmodeName = $playModesXML->playmode[$i]->attributes()->name;
             }
         }
 
-        return ! is_string($playmodeName) ? head($playmodeName) : $playmodeName;
+        return !is_string($playmodeName) ? head($playmodeName) : $playmodeName;
     }
 }

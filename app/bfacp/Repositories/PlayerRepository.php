@@ -27,9 +27,11 @@ class PlayerRepository extends BaseRepository
      * Returns a paginate result of all players
      * @return
      */
-    public function getAllPlayers($limit = 100, $names = NULL)
+    public function getAllPlayers($limit = 100, $names = null)
     {
-        if($limit === FALSE || $limit > 100) $limit = 100;
+        if ($limit === false || $limit > 100) {
+            $limit = 100;
+        }
 
         $query = Player::with(
             'ban',
@@ -38,37 +40,30 @@ class PlayerRepository extends BaseRepository
             'reputation'
         );
 
-        if( ! empty($names) )
-        {
-            $query->where(function($q) use($names)
-            {
-                foreach(explode(',', $names) as $name)
-                {
+        if (!empty($names)) {
+            $query->where(function ($q) use ($names) {
+                foreach (explode(',', $names) as $name) {
                     // Checks if string is an EAGUID
-                    if(preg_match("/^EA_([0-9A-Z]{32}+)$/", $name, $matches))
-                    {
-                        $eaguid = sprintf("EA_%s", $matches[1]);
+                    if (preg_match('/^EA_([0-9A-Z]{32}+)$/', $name, $matches)) {
+                        $eaguid = sprintf('EA_%s', $matches[1]);
                         $q->orWhere('EAGUID', '=', $eaguid);
                     }
 
                     // Checks if string is a PBGUID
-                    elseif(preg_match("/^([a-f0-9]+)$/", $name, $matches))
-                    {
+                    elseif (preg_match('/^([a-f0-9]+)$/', $name, $matches)) {
                         $pbguid = trim($matches[1]);
                         $q->orWhere('PBGUID', '=', $pbguid);
                     }
 
                     // Checks if string is an IPv4 Address
-                    elseif(preg_match("/^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|[0-9])$/", $name, $matches))
-                    {
+                    elseif (preg_match("/^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|[0-9])$/", $name, $matches)) {
                         $ip = trim($name);
                         $q->orWhere('IP_Address', '=', $ip);
                     }
 
                     // Checks if string is a player name
-                    elseif(preg_match("/^([a-zA-Z0-9_\-]+)$/", $name, $matches))
-                    {
-                        $name = sprintf("%s%%", $matches[1]);
+                    elseif (preg_match("/^([a-zA-Z0-9_\-]+)$/", $name, $matches)) {
+                        $name = sprintf('%s%%', $matches[1]);
                         $q->orWhere('SoldierName', 'LIKE', $name);
                     }
                 }
@@ -93,8 +88,8 @@ class PlayerRepository extends BaseRepository
     {
         try {
             return Player::with($this->opts)->findOrFail($id);
-        } catch(ModelNotFoundException $e) {
-            throw new PlayerNotFoundException(404, "Player Not Found");
+        } catch (ModelNotFoundException $e) {
+            throw new PlayerNotFoundException(404, 'Player Not Found');
         }
     }
 
@@ -107,10 +102,11 @@ class PlayerRepository extends BaseRepository
     {
         $player = Player::with($this->opts)->where('EAGUID', $guid)->get();
 
-        if($player->count() > 0)
+        if ($player->count() > 0) {
             return $player;
+        }
 
-        throw new PlayerNotFoundException(404, "Player Not Found");
+        throw new PlayerNotFoundException(404, 'Player Not Found');
     }
 
     /**
@@ -119,7 +115,7 @@ class PlayerRepository extends BaseRepository
      */
     public function getPlayerCount()
     {
-        $count = Cache::remember('player.count', 60, function() {
+        $count = Cache::remember('player.count', 60, function () {
             return Player::count();
         });
 
@@ -133,15 +129,15 @@ class PlayerRepository extends BaseRepository
     public function getPlayersSeenByCountry()
     {
         // Cache for 1 day
-        $countryTotals = Cache::remember('player.country.count', 1440, function()
-        {
+        $countryTotals = Cache::remember('player.country.count', 1440, function () {
             return DB::table('tbl_playerdata')->whereNotIn('CountryCode', ['', '--'])
-                ->whereNotNull('CountryCode')
-                ->where('LastSeenOnServer', '>=', Carbon::now()->subDay())
-                ->join('tbl_server_player', 'tbl_playerdata.PlayerID', '=', 'tbl_server_player.PlayerID')
-                ->join('tbl_playerstats', 'tbl_server_player.StatsID', '=', 'tbl_playerstats.StatsID')
-                ->groupBy('CountryCode')
-                ->select(DB::raw("UPPER(CountryCode) AS 'CountryCode', COUNT(tbl_playerdata.PlayerID) AS 'total'"))->lists('total', 'CountryCode');
+                                              ->whereNotNull('CountryCode')
+                                              ->where('LastSeenOnServer', '>=', Carbon::now()->subDay())
+                                              ->join('tbl_server_player', 'tbl_playerdata.PlayerID', '=', 'tbl_server_player.PlayerID')
+                                              ->join('tbl_playerstats', 'tbl_server_player.StatsID', '=', 'tbl_playerstats.StatsID')
+                                              ->groupBy('CountryCode')
+                                              ->select(DB::raw('UPPER(CountryCode) AS 'CountryCode', COUNT(tbl_playerdata.PlayerID) AS 'total''))
+                                              ->lists('total', 'CountryCode');
         });
 
         return $countryTotals;
@@ -153,34 +149,40 @@ class PlayerRepository extends BaseRepository
      * @param  bool  $custom
      * @return $this
      */
-    public function setopts($opts = [], $custom = FALSE)
+    public function setopts($opts = [], $custom = false)
     {
-        if(empty($opts))
+        if (empty($opts)) {
             return $this;
+        }
 
-        if($custom)
-        {
+        if ($custom) {
             $this->opts = $opts;
             return $this;
         }
 
-        if(is_string($opts))
+        if (is_string($opts)) {
             $opts = explode(',', $opts);
+        }
 
-        if( ! in_array('bans', $opts))
+        if (!in_array('bans', $opts)) {
             unset($this->opts[0]);
+        }
 
-        if( ! in_array('reputation', $opts))
+        if (!in_array('reputation', $opts)) {
             unset($this->opts[1]);
+        }
 
-        if( ! in_array('infractions', $opts))
+        if (!in_array('infractions', $opts)) {
             unset($this->opts[2], $this->opts[3]);
+        }
 
-        if( ! in_array('stats', $opts))
+        if (!in_array('stats', $opts)) {
             unset($this->opts[4], $this->opts[5], $this->opts[6]);
+        }
 
-        if( in_array('none', $opts))
+        if (in_array('none', $opts)) {
             $this->opts = [];
+        }
 
         return $this;
     }

@@ -1,9 +1,9 @@
 <?php namespace BFACP\AdKats\Infractions;
 
-use Illuminate\Database\Eloquent\Model AS Eloquent;
+use BFACP\Elegant;
 use Carbon\Carbon;
 
-class Overall extends Eloquent
+class Overall extends Elegant
 {
     /**
      * Table name
@@ -34,7 +34,7 @@ class Overall extends Eloquent
      *
      * @var boolean
      */
-    public $timestamps = FALSE;
+    public $timestamps = false;
 
     /**
      * Append custom attributes to output

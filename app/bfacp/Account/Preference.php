@@ -1,6 +1,8 @@
 <?php namespace BFACP\Account;
 
-class Preference extends \Eloquent
+use BFACP\Elegant;
+
+class Preference extends Elegant
 {
     /**
      * Table name
@@ -37,7 +39,7 @@ class Preference extends \Eloquent
      *
      * @var boolean
      */
-    public $timestamps = TRUE;
+    public $timestamps = true;
 
     /**
      * Append custom attributes to output
@@ -74,11 +76,11 @@ class Preference extends \Eloquent
     {
         $ids = [];
 
-        if($this->bf3player) {
+        if ($this->bf3player) {
             $ids[] = $this->bf3player->PlayerID;
         }
 
-        if($this->bf4player) {
+        if ($this->bf4player) {
             $ids[] = $this->bf4player->PlayerID;
         }
 

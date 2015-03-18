@@ -1,9 +1,9 @@
 <?php namespace BFACP\Battlefield;
 
-use Illuminate\Database\Eloquent\Model AS Eloquent;
+use BFACP\Elegant;
 use Carbon\Carbon;
 
-class Reputation extends Eloquent
+class Reputation extends Elegant
 {
     /**
      * Table name
@@ -34,7 +34,7 @@ class Reputation extends Eloquent
      *
      * @var boolean
      */
-    public $timestamps = FALSE;
+    public $timestamps = false;
 
     /**
      * Append custom attributes to output
@@ -50,7 +50,7 @@ class Reputation extends Eloquent
 
     public function scopeOfGame($query, $game)
     {
-        return $query->whereHas('game', function($q) use($game) {
+        return $query->whereHas('game', function ($q) use ($game) {
             return $q->where('Name', $game);
         });
     }
@@ -63,12 +63,13 @@ class Reputation extends Eloquent
     {
         $color = 'text-blue';
 
-        if($this->total_rep_co > 100)
+        if ($this->total_rep_co > 100) {
             $color = 'text-green';
-        elseif($this->total_rep_co < -100)
+        } elseif ($this->total_rep_co < -100) {
             $color = 'text-red';
-        elseif($this->total_rep_co >= -100 && $this->total_rep_co <= 100)
+        } elseif ($this->total_rep_co >= -100 && $this->total_rep_co <= 100) {
             $color = 'text-yellow';
+        }
 
         return $color;
     }
