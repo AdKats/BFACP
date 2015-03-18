@@ -186,6 +186,7 @@ class Player extends Eloquent
             break;
 
             case "BF4":
+            case "BFHL":
                 $path = sprintf('images/games/bf4/ranks/r%u.png', $this->GlobalRank);
             break;
 

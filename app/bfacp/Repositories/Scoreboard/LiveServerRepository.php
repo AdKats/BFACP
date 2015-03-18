@@ -286,7 +286,7 @@ class LiveServerRepository
             $temp[$teamID]['team'] = $teamName;
 
             if(
-                (count($this->serverinfo) >= 26 && count($this->serverinfo) <= 28 && in_array($this->gameName, ['BF4', 'BFH', 'BFHL'])) ||
+                (count($this->serverinfo) >= 26 && count($this->serverinfo) <= 28 && in_array($this->gameName, ['BF4', 'BFHL'])) ||
                 (count($this->serverinfo) == 25 && $this->gameName == 'BF3')
             )
                 $temp[$teamID]['score'] = $score;
@@ -403,7 +403,7 @@ class LiveServerRepository
                 break;
             }
         }
-        elseif($this->gameName == 'BFHL' || $this->gameName == 'BFH')
+        elseif($this->gameName == 'BFHL')
         {
             switch($info[4])
             {
@@ -583,7 +583,7 @@ class LiveServerRepository
                 $this->TEAM3 = $teamFactions[0][1];
                 $this->TEAM4 = $teamFactions[0][2];
             }
-            elseif($this->gameName == 'BFHL' || $this->gameName == 'BFH')
+            elseif($this->gameName == 'BFHL')
             {
                 $this->TEAM1 = 'Cops';
                 $this->TEAM2 = 'Criminals';

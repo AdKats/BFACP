@@ -270,7 +270,7 @@
                             <th>Score</th>
                             <th>K/D</th>
                             <th class="visible-lg">KD Ratio</th>
-                            <th ng-if="server.game.Name == 'BF4'">Ping</th>
+                            <th ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'">Ping</th>
                         </thead>
 
                         <tbody>
@@ -287,7 +287,7 @@
                                     <span ng-bind="team.commander.deaths"></span>
                                 </td>
                                 <td class="visible-lg" ng-bind="kd(team.commander.kills, team.commander.deaths)"></td>
-                                <td ng-if="server.game.Name == 'BF4'" ng-bind="team.commander.ping || '--'" ng-class="pingColor(team.commander.ping)"></td>
+                                <td ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'" ng-bind="team.commander.ping || '--'" ng-class="pingColor(team.commander.ping)"></td>
                             </tr>
                         </tbody>
                     </table>
