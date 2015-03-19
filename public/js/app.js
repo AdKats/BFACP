@@ -668,7 +668,7 @@ angular.module('bfacp', [
                         return false;
                     }
 
-                    if(team1.score == tickets_starting && team2.score.tickets_starting) {
+                    if(team1.score == team2.score) {
                         $scope.winning[1] = false;
                         $scope.winning[2] = false;
                     } else if(num == team1.score) {

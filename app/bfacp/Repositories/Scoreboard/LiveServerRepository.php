@@ -842,7 +842,7 @@ class LiveServerRepository extends BaseRepository
                 ],
                 'remaining' => [
                     'humanize' => $info[2] >= 4 ? MainHelper::secToStr($startingTimer - $round, true) : 'PreMatch',
-                    'seconds'  => $startingTimer - $round
+                    'seconds'  => $info[2] >= 4 ? $startingTimer - $round : $startingTimer
                 ]
             ]
         ];
@@ -928,7 +928,7 @@ class LiveServerRepository extends BaseRepository
             $squadName = BattlefieldHelper::squad($squadID);
 
             if (array_key_exists($squadName, $lockedSquads[$teamID]) !== true) {
-                $lockedSquads[$teamID][$squadName] = $this->client->adminIsSquadPrivate($teamID, $squadID);
+                $lockedSquads[$teamID][$squadName] = $this->client->adminGetSquadPrivate($teamID, $squadID);
             }
 
             $additional = [
