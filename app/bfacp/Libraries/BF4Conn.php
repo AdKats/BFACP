@@ -1845,10 +1845,23 @@ class BF4Conn
      * @param  integer $squadID
      * @return boolean
      */
-    public function adminIsSquadPrivate($teamID, $squadID)
+    public function adminGetSquadPrivate($teamID, $squadID)
     {
         return $this->_array2boolean($this->_clientRequest('squad.private ' .
             $teamID . ' ' . $squadID));
+    }
+
+    /**
+     * Set the squad to private or not
+     * @param  integer $teamID
+     * @param  integer $squadID
+     * @param  boolean $private
+     * @return boolean
+     */
+    public function adminSetSquadPrivate($teamID, $squadID, $private = true)
+    {
+        return $this->_array2boolean($this->_clientRequest('squad.private ' .
+            $teamID . ' ' . $squadID . ' ' . $this->_bool2String($private)));
     }
 
     /**
@@ -1859,6 +1872,17 @@ class BF4Conn
     public function adminSquadListActive($teamID)
     {
         return $this->_clientRequest('squad.listActive ' . $teamID);
+    }
+
+    /**
+     * Get player count and names of soldiers in a specific squad
+     * @param  integer $teamID
+     * @param  integer $squadID
+     * @return array
+     */
+    public function adminSquadListPlayer($teamID, $squadID)
+    {
+        return $this->_clientRequest('squad.listPlayers ' . $teamID . ' ' . $squadID);
     }
 
     /**

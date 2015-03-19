@@ -1,15 +1,13 @@
 <?php namespace BFACP\Repositories;
 
+use Illuminate\Support\Facades\App;
+
 class BaseRepository
 {
-    /**
-     * Instance of Illuminate\Http\Request
-     * @var class
-     */
-    public $request;
+    protected $user;
 
     public function __construct()
     {
-        $this->request = \App::make('Illuminate\Http\Request');
+        $this->user = App::make('bfadmincp');
     }
 }

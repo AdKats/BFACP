@@ -2,23 +2,44 @@
 
 use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Server;
+use BFACP\Exceptions\PlayerNotFoundException;
 use BFACP\Exceptions\RconException;
-use BFACP\Repositories\Scoreboard\DBRepository AS SBDBRepo;
-use BFACP\Repositories\Scoreboard\LiveServerRepository AS SBLiveRepo;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cache;
+use BFACP\Repositories\Scoreboard\LiveServerRepository;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 use MainHelper;
-use Symfony\Component\HttpKernel\Exception\GoneHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ServersController extends BaseController
 {
     /**
      * Gathers the population for all servers
+     * @return array
+     */
+    public function chat($id)
+    {
+        $chat = Chat::with('player')->where('ServerID', $id);
+
+        if (Input::has('nospam') && Input::get('nospam') == 1) {
+            $chat = $chat->excludeSpam();
+        }
+
+        if (Input::has('sb') && Input::get('sb') == 1) {
+            $chat = $chat->orderBy('logDate', 'desc')->take(100)->get();
+        } else {
+            $chat = $chat->simplePaginate(30);
+        }
+
+        return MainHelper::response($chat, null, null, null, false, true);
+    }
+
+    /**
+     * Live Scoreboard
+     * @param  integer $id Server ID
      * @return array
      */
     public function population()
@@ -35,8 +56,7 @@ class ServersController extends BaseController
         // Init array
         $newCollection = [];
 
-        foreach($servers as $server)
-        {
+        foreach ($servers as $server) {
             // Convert the game name to lowercase
             $gameKey = strtolower($server->game->Name);
 
@@ -44,19 +64,17 @@ class ServersController extends BaseController
             $newCollection[$gameKey]['servers'][] = $server;
         }
 
-        foreach($newCollection as $key => $collection)
-        {
+        foreach ($newCollection as $key => $collection) {
             $online = 0;
-            $total = 0;
+            $total  = 0;
 
-            foreach($collection['servers'] as $server)
-            {
+            foreach ($collection['servers'] as $server) {
                 $online += $server->usedSlots;
                 $total += $server->maxSlots;
             }
 
             $newCollection[$key]['stats'] = [
-                'online' => $online,
+                'online'     => $online,
                 'totalSlots' => $total,
                 'percentage' => MainHelper::percent($online, $total)
             ];
@@ -67,52 +85,33 @@ class ServersController extends BaseController
             'totalSlots' => $totalSlots,
             'percentage' => MainHelper::percent($usedSlots, $totalSlots),
             'games'      => $newCollection
-        ] + Lang::get('dashboard.population'), NULL, NULL, NULL, FALSE, TRUE);
+        ] + Lang::get('dashboard.population'), null, null, null, false, true);
     }
 
     public function scoreboard($id)
     {
         try
         {
-            $server = Server::remember(10)->findOrFail($id);
-            $scoreboard = new SBLiveRepo($server);
+            $scoreboard = new LiveServerRepository(Server::findOrFail($id));
 
-            if( $scoreboard->attempt()->check() )
-            {
-                return MainHelper::response($scoreboard->get(), NULL, NULL, NULL, FALSE, TRUE);
+            if ($scoreboard->attempt()->check()) {
+                if (Input::has('verbose') && Input::get('verbose') == 1) {
+                    $useVerbose = true;
+                } else {
+                    $useVerbose = false;
+                }
+
+                $data = $scoreboard->teams()->get($useVerbose);
+
+                return MainHelper::response($data, null, null, null, false, true);
             }
-        }
-        catch(RconException $e)
-        {
+        } catch (RconException $e) {
+            throw $e;
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundHttpException(sprintf('No server found with id %s', $id));
+        } catch (Exception $e) {
             throw $e;
         }
-        catch(\Exception $e)
-        {
-            throw $e;
-        }
-
-        return MainHelper::response(NULL, 'Could not load server', 'error', NULL, FALSE, TRUE);
-    }
-
-    public function chat($id)
-    {
-        $chat = Chat::with('player')->where('ServerID', $id);
-
-        if(Input::has('nospam') && Input::get('nospam') == 1)
-        {
-            $chat = $chat->excludeSpam();
-        }
-
-        if(Input::has('sb') && Input::get('sb') == 1)
-        {
-            $chat = $chat->orderBy('logDate', 'desc')->take(100)->get();
-        }
-        else
-        {
-            $chat = $chat->simplePaginate(30);
-        }
-
-        return MainHelper::response($chat, NULL, NULL, NULL, FALSE, TRUE);
     }
 
     public function scoreboardExtra($id)
@@ -121,28 +120,28 @@ class ServersController extends BaseController
 
         $stats = [
             [
-                'name' => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Tickets',
-                'data' => [],
+                'name'    => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Tickets',
+                'data'    => [],
                 'visible' => true
             ],
             [
-                'name' => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Tickets',
-                'data' => [],
+                'name'    => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Tickets',
+                'data'    => [],
                 'visible' => true
             ],
             [
-                'name' => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Players',
-                'data' => [],
+                'name'    => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Players',
+                'data'    => [],
                 'visible' => false
             ],
             [
-                'name' => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Players',
-                'data' => [],
+                'name'    => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Players',
+                'data'    => [],
                 'visible' => false
             ],
             [
-                'name' => 'Players Online',
-                'data' => [],
+                'name'    => 'Players Online',
+                'data'    => [],
                 'visible' => false
             ]
         ];
@@ -151,10 +150,8 @@ class ServersController extends BaseController
 
         $results = DB::select($sql, [$id]);
 
-        foreach($results as $result)
-        {
-            if( is_null($data['roundId']) )
-            {
+        foreach ($results as $result) {
+            if (is_null($data['roundId'])) {
                 $data['roundId'] = $result->round_id;
             }
 
@@ -186,6 +183,182 @@ class ServersController extends BaseController
 
         $data['stats'] = $stats;
 
-        return MainHelper::response($data, NULL, NULL, NULL, FALSE, TRUE);
+        return MainHelper::response($data, null, null, null, false, true);
+    }
+
+    public function scoreboardAdmin()
+    {
+        try
+        {
+            $id = Input::get('server_id');
+
+            if(!is_numeric($id) || $id <= 0) {
+                throw new NotFoundHttpException('Invalid Server ID');
+            }
+
+            $allowedMethods = [
+                'yell',
+                'say',
+                'kill',
+                'move',
+                'kick'
+            ];
+
+            if(!Input::has('__method') || !in_array(Input::get('__method'), $allowedMethods)) {
+                throw new NotFoundHttpException;
+            }
+
+            $scoreboard = new LiveServerRepository(Server::findOrFail($id));
+
+            if ($scoreboard->attempt()->check()) {
+
+                $players = [];
+
+                if(Input::has('players')) {
+                    $players = explode(',' , Input::get('players'));
+                }
+
+                switch(Input::get('__method')) {
+                    case "yell":
+                        if(Input::get('type') == 'Player' && Input::has('players')) {
+                            foreach($players as $player) {
+                                $scoreboard->adminYell(
+                                    Input::get('message', null),
+                                    $player,
+                                    null,
+                                    Input::get('duration', 5),
+                                    'Player'
+                                );
+                            }
+                        } else {
+                            $scoreboard->adminYell(
+                                Input::get('message', null),
+                                Input::get('player', null),
+                                Input::get('team', null),
+                                Input::get('duration', 5),
+                                Input::get('type', 'All')
+                            );
+                        }
+                        break;
+
+                    case "say":
+                        if(Input::get('type') == 'Player' && Input::has('players')) {
+                            foreach($players as $player) {
+                                $scoreboard->adminSay(
+                                    Input::get('message', null),
+                                    $player,
+                                    null,
+                                    'Player'
+                                );
+                            }
+                        } else {
+                            $scoreboard->adminSay(
+                                Input::get('message', null),
+                                Input::get('player', null),
+                                Input::get('team', null),
+                                Input::get('type', 'All')
+                            );
+                        }
+                        break;
+
+                    case "kill":
+                        if(Input::has('players')) {
+                            $unkilled = [];
+
+                            foreach($players as $player) {
+                                try {
+                                    $scoreboard->adminKill($player, Input::get('message', null));
+                                } catch(PlayerNotFoundException $e) {
+                                    $unkilled[] = [
+                                        'name' => $player,
+                                        'reason' => $e->getMessage()
+                                    ];
+                                }
+                            }
+
+                            if(!empty($unkilled)) {
+                                $data = $unkilled;
+                            }
+
+                        } else {
+                            throw new RconException(400, 'No players selected.');
+                        }
+                        break;
+
+                    case "kick":
+                        if(Input::has('players')) {
+                            $unkicked = [];
+
+                            foreach($players as $player) {
+                                try {
+                                    $scoreboard->adminKick($player, Input::get('message', null));
+                                } catch(PlayerNotFoundException $e) {
+                                    $unkicked[] = [
+                                        'name' => $player,
+                                        'reason' => $e->getMessage()
+                                    ];
+                                }
+                            }
+
+                            if(!empty($unkicked)) {
+                                $data = $unkicked;
+                            }
+                        } else {
+                            throw new RconException(400, 'No player selected.');
+                        }
+                        break;
+
+                    case "move":
+                        if(Input::has('players')) {
+                            $unmoved = [];
+
+                            foreach($players as $player) {
+                                try {
+                                    $scoreboard->adminMovePlayer(
+                                        $player,
+                                        Input::get('team', null),
+                                        Input::get('squad', null)
+                                    );
+                                } catch(PlayerNotFoundException $e) {
+                                    $unmoved[] = [
+                                        'name' => $player,
+                                        'reason' => $e->getMessage()
+                                    ];
+                                } catch(RconException $e) {
+                                    $unmoved[] = [
+                                        'name' => $player,
+                                        'reason' => $e->getMessage()
+                                    ];
+                                }
+                            }
+
+                            if(!empty($unmoved)) {
+                                $data = $unmoved;
+                            }
+
+                        } else {
+                            throw new RconException(400, 'No player selected.');
+                        }
+                        break;
+
+                    default:
+                        throw new NotFoundHttpException;
+                }
+
+                if(!isset($data)) {
+                    $data = null;
+                }
+
+                return MainHelper::response($data, null, null, null, false, true);
+            }
+        } catch (RconException $e) {
+            throw $e;
+        } catch (PlayerNotFoundException $e) {
+            return MainHelper::response(null, $e->getMessage(), 'error', null, false, true);
+        } catch (ModelNotFoundException $e) {
+            throw new NotFoundHttpException(sprintf('No server found with id %s', $id));
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 }
