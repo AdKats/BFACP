@@ -7,9 +7,8 @@
     <map uri="MP_Downtown" name="Downtown" playmode="TurfWarLarge0" />
     <map uri="MP_Eastside" name="Derailed" playmode="TurfWarLarge0" />
     <map uri="MP_Glades" name="Everglades" playmode="TurfWarLarge0" />
-    <map uri="MP_Growhouse" name="Growhouse" playmode="TurfWarLarge0" />
-    <map uri="MP_Hills" name="Hollywood" playmode="TurfWarLarge0" />
-    <map uri="MP_Offshore" name="Riptide" playmode="TurfWarLarge0" />
+    <map uri="MP_Hills" name="Hollywood Heights" playmode="TurfWarLarge0" />
+    <map uri="MP_OffShore" name="Riptide" playmode="TurfWarLarge0" />
 
     <!-- Small Conquest Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="TurfWarSmall0" />
@@ -19,8 +18,8 @@
     <map uri="MP_Eastside" name="Derailed" playmode="TurfWarSmall0" />
     <map uri="MP_Glades" name="Everglades" playmode="TurfWarSmall0" />
     <map uri="MP_Growhouse" name="Growhouse" playmode="TurfWarSmall0" />
-    <map uri="MP_Hills" name="Hollywood" playmode="TurfWarSmall0" />
-    <map uri="MP_Offshore" name="Riptide" playmode="TurfWarSmall0" />
+    <map uri="MP_Hills" name="Hollywood Heights" playmode="TurfWarSmall0" />
+    <map uri="MP_OffShore" name="Riptide" playmode="TurfWarSmall0" />
 
     <!-- Hiest Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="Heist0" />
@@ -30,13 +29,15 @@
     <map uri="MP_Eastside" name="Derailed" playmode="Heist0" />
     <map uri="MP_Glades" name="Everglades" playmode="Heist0" />
     <map uri="MP_Growhouse" name="Growhouse" playmode="Heist0" />
-    <map uri="MP_Hills" name="Hollywood" playmode="Heist0" />
-    <map uri="MP_Offshore" name="Riptide" playmode="Heist0" />
+    <map uri="MP_Hills" name="Hollywood Heights" playmode="Heist0" />
+    <map uri="MP_OffShore" name="Riptide" playmode="Heist0" />
 
     <!-- Hotwire Maps -->
     <map uri="MP_Desert05" name="Dust Bowl" playmode="Hotwire0" />
     <map uri="MP_Downtown" name="Downtown" playmode="Hotwire0" />
     <map uri="MP_Glades" name="Everglades" playmode="Hotwire0" />
+    <map uri="MP_Eastside" name="Derailed" playmode="Hotwire0" />
+    <map uri="MP_OffShore" name="Riptide" playmode="Hotwire0" />
 
     <!-- Bloodmoney Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="BloodMoney0" />
@@ -46,8 +47,8 @@
     <map uri="MP_Eastside" name="Derailed" playmode="BloodMoney0" />
     <map uri="MP_Glades" name="Everglades" playmode="BloodMoney0" />
     <map uri="MP_Growhouse" name="Growhouse" playmode="BloodMoney0" />
-    <map uri="MP_Hills" name="Hollywood" playmode="BloodMoney0" />
-    <map uri="MP_Offshore" name="Riptide" playmode="BloodMoney0" />
+    <map uri="MP_Hills" name="Hollywood Heights" playmode="BloodMoney0" />
+    <map uri="MP_OffShore" name="Riptide" playmode="BloodMoney0" />
 
     <!-- Crosshair Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="Hit0" />
@@ -57,8 +58,8 @@
     <map uri="MP_Eastside" name="Derailed" playmode="Hit0" />
     <map uri="MP_Glades" name="Everglades" playmode="Hit0" />
     <map uri="MP_Growhouse" name="Growhouse" playmode="Hit0" />
-    <map uri="MP_Hills" name="Hollywood" playmode="Hit0" />
-    <map uri="MP_Offshore" name="Riptide" playmode="Hit0" />
+    <map uri="MP_Hills" name="Hollywood Heights" playmode="Hit0" />
+    <map uri="MP_OffShore" name="Riptide" playmode="Hit0" />
 
     <!-- Rescue Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="Hostage0" />
@@ -68,8 +69,8 @@
     <map uri="MP_Eastside" name="Derailed" playmode="Hostage0" />
     <map uri="MP_Glades" name="Everglades" playmode="Hostage0" />
     <map uri="MP_Growhouse" name="Growhouse" playmode="Hostage0" />
-    <map uri="MP_Hills" name="Hollywood" playmode="Hostage0" />
-    <map uri="MP_Offshore" name="Riptide" playmode="Hostage0" />
+    <map uri="MP_Hills" name="Hollywood Heights" playmode="Hostage0" />
+    <map uri="MP_OffShore" name="Riptide" playmode="Hostage0" />
 
     <!-- Team Deathmatch Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="TeamDeathMatch0" />
@@ -79,6 +80,6 @@
     <map uri="MP_Eastside" name="Derailed" playmode="TeamDeathMatch0" />
     <map uri="MP_Glades" name="Everglades" playmode="TeamDeathMatch0" />
     <map uri="MP_Growhouse" name="Growhouse" playmode="TeamDeathMatch0" />
-    <map uri="MP_Hills" name="Hollywood" playmode="TeamDeathMatch0" />
-    <map uri="MP_Offshore" name="Riptide" playmode="TeamDeathMatch0" />
+    <map uri="MP_Hills" name="Hollywood Heights" playmode="TeamDeathMatch0" />
+    <map uri="MP_OffShore" name="Riptide" playmode="TeamDeathMatch0" />
 </mapNames>
