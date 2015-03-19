@@ -14,8 +14,6 @@
 ClassLoader::addDirectories(array(
 
 	app_path().'/commands',
-	app_path().'/controllers',
-	app_path().'/models',
 	app_path().'/database/seeds',
 
 ));
@@ -50,8 +48,7 @@ App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
 
-    if(Config::get('app.debug') == FALSE)
-    {
+    if(!Config::get('app.debug')) {
         return Response::view('system.error', compact('exception'), 500);
     }
 });
