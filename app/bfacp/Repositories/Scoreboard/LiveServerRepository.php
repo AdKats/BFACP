@@ -475,7 +475,7 @@ class LiveServerRepository
                 case 'TurfWarSmall0':
                 case 'Heist0':
                 case 'Hotwire0':
-                case 'Bloodmoney0':
+                case 'BloodMoney0':
                 case 'Hit0':
                 case 'Hostage0':
                 case 'TeamDeathMatch0':

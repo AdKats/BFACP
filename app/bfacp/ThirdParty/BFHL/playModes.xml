@@ -4,7 +4,7 @@
 	<playmode uri="TurfWarSmall0" name="Conquest Small" />
 	<playmode uri="Heist0" name="Heist" />
 	<playmode uri="Hotwire0" name="Hotwire" />
-	<playmode uri="Bloodmoney0" name="Bloodmoney" />
+	<playmode uri="BloodMoney0" name="Bloodmoney" />
 	<playmode uri="Hit0" name="Crosshair" />
 	<playmode uri="Hostage0" name="Rescue" />
 	<playmode uri="TeamDeathMatch0" name="Team Deathmatch" />

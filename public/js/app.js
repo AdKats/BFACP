@@ -640,7 +640,7 @@ angular.module('bfacp', [
             }
 
             if(tickets_needed > 0) {
-                if(mode.uri == "TeamDeathMatch0" || mode.uri == "Bloodmoney0") {
+                if(mode.uri == "TeamDeathMatch0" || mode.uri == "BloodMoney0") {
                     num = Math.max.apply(null, teamTickets);
                 } else {
                     num = Math.min.apply(null, teamTickets);
@@ -661,7 +661,7 @@ angular.module('bfacp', [
                 case "TurfWarSmall0":
                 case "Heist0":
                 case "Hotwire0":
-                case "Bloodmoney0":
+                case "BloodMoney0":
                 case "Hit0":
                 case "Hostage0":
                     if(team1.score < 0 || team2.score < 0) {
