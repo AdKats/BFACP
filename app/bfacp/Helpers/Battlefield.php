@@ -11,7 +11,7 @@ class Battlefield extends Main
      */
     public function squad($id)
     {
-        if (is_string($id) && !is_numeric($id)) {
+        if (!is_numeric($id)) {
             throw new Exception('Invalid squad id: ' . $id);
         }
 
