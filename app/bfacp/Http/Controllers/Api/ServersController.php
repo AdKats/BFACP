@@ -204,7 +204,7 @@ class ServersController extends BaseController
                 'kick'
             ];
 
-            if(!Input::has('__method') || !in_array(Input::get('__method'), $allowedMethods)) {
+            if(!Input::has('method') || !in_array(Input::get('method'), $allowedMethods)) {
                 throw new NotFoundHttpException;
             }
 
@@ -218,7 +218,7 @@ class ServersController extends BaseController
                     $players = explode(',' , Input::get('players'));
                 }
 
-                switch(Input::get('__method')) {
+                switch(Input::get('method')) {
                     case "yell":
                         if(Input::get('type') == 'Player' && Input::has('players')) {
                             foreach($players as $player) {
