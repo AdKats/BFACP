@@ -397,7 +397,7 @@ class LiveServerRepository extends BaseRepository
                 throw new PlayerNotFoundException(200, 'Player was already dead.');
             }
 
-            $this->adminTell($player, $message);
+            $this->adminTell($player, $message, 5);
         } else {
             throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
         }
@@ -508,7 +508,6 @@ class LiveServerRepository extends BaseRepository
     }
 
     /*-----  End of Admin Commands  ------*/
-
 
 
     /*===============================================
