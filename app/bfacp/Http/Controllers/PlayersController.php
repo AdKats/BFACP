@@ -26,17 +26,23 @@ class PlayersController extends BaseController
 
     public function profile($id, $name = '')
     {
-        $player = $this->repository->setopts([
+        // Check if we have a cached version of the player
+        $isCached = Cache::has(sprintf('players.%s', $id));
+
+        // Cache for 5 minutes and get the player
+        $player = Cache::remember(sprintf('players.%s', $id), 5, function() use($id) {
+            return $this->repository->setopts([
                     'ban.previous',
                     'reputation',
                     'infractionsGlobal',
                     'infractionsServer.server',
                     'stats.server'
-                ], true)->getPlayerById($id);
+                ], TRUE)->getPlayerById($id);
+        });
 
         $page_title = ! empty($player->ClanTag) ?
             sprintf('[%s] %s', $player->ClanTag, $player->SoldierName) : $player->SoldierName;
 
-        return View::make('player.profile', compact('player', 'page_title'));
+        return View::make('player.profile', compact('player', 'isCached', 'page_title'));
     }
 }
