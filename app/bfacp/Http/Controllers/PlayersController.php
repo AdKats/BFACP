@@ -32,7 +32,7 @@ class PlayersController extends BaseController
                     'infractionsGlobal',
                     'infractionsServer.server',
                     'stats.server'
-                ], TRUE)->getPlayerById($id);
+                ], true)->getPlayerById($id);
 
         $page_title = ! empty($player->ClanTag) ?
             sprintf('[%s] %s', $player->ClanTag, $player->SoldierName) : $player->SoldierName;

@@ -77,7 +77,7 @@ class Server extends Elegant
      */
     public function game()
     {
-        return $this->belongsTo('BFACP\Battlefield\Game', 'GameID')->remember(10);
+        return $this->belongsTo('BFACP\Battlefield\Game', 'GameID');
     }
 
     /**
