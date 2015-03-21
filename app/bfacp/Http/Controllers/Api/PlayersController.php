@@ -35,14 +35,15 @@ class PlayersController extends BaseController
      */
     public function show($id)
     {
-        // Check if we have a cached version of the player stats
-        $isCached = Cache::has(sprintf('players.api.%s', $id));
+        $player = $this->repository->setopts([
+                    'ban.previous',
+                    'reputation',
+                    'infractionsGlobal',
+                    'infractionsServer.server',
+                    'stats.server',
+                    'sessions.server'
+                ], true)->getPlayerById($id);
 
-        // Cache for 10 minutes and get the player stats
-        $player = Cache::remember(sprintf('players.api.%s', $id), 10, function() use($id) {
-            return $this->repository->getPlayerById($id);
-        });
-
-        return MainHelper::response($player, NULL, NULL, NULL, $isCached, TRUE);
+        return MainHelper::response($player, NULL, NULL, NULL, FALSE, TRUE);
     }
 }

@@ -6,6 +6,7 @@ angular.module('bfacp', [
         'ngAria',
         'ngSanitize',
         'ngIdle',
+        'ngTable',
         'ui.bootstrap',
         'countTo'
     ])
@@ -377,6 +378,38 @@ angular.module('bfacp', [
         };
 
         $scope.getListing();
+
+    }])
+    .controller('PlayerController', ['$scope', '$resource', '$filter', 'ngTableParams', '$modal', function($scope, $resource, $filter, ngTableParams, $modal) {
+
+        var Player = $resource('api/players/:playerId', {
+            playerId: '@id'
+        });
+
+        var player_id = $("input[name='player_id']").val();
+
+        $scope.player = [];
+
+        Player.get({playerId: player_id}, function(data) {
+            $scope.player = data.data;
+
+            $scope.tableParams = new ngTableParams({
+                page: 1,
+                count: 10,
+                sorting: {
+                    session_end: 'desc'
+                }
+            }, {
+                total: $scope.player.sessions.length,
+                getData: function($defer, params) {
+                    var orderedData = params.sorting() ? $filter('orderBy')($scope.player.sessions, params.orderBy()) : $scope.player.sessions
+
+                    $defer.resolve(
+                        orderedData.slice( (params.page() - 1) * params.count(), params.page() * params.count() )
+                    );
+                }
+            });
+        });
 
     }])
     .controller('ScoreboardController', ['$scope', '$rootScope', '$http', '$timeout', '$location', '$idle', '$modal',

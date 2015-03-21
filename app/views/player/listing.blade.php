@@ -53,8 +53,15 @@
                         <tr ng-repeat="(key, player) in players">
                             <td ng-bind="player.PlayerID"></td>
                             <td><span ng-class="player.game.class_css" ng-bind="player.game.Name"></span></td>
-                            <td ng-bind="player.GlobalRank"></td>
-                            <td><a ng-href="@{{ player.profile_url }}" ng-bind="player.SoldierName" target="_self"></a></td>
+                            <td>
+                                <img ng-src="@{{ player.rank_image }}" tooltip="Rank @{{ player.GlobalRank }}" width="32px">
+                            </td>
+                            <td>
+                                <span ng-if="player.ClanTag !== null">
+                                    [<span ng-bind="player.ClanTag"></span>]
+                                </span>
+                                <a ng-href="@{{ player.profile_url }}" ng-bind="player.SoldierName" target="_self"></a>
+                            </td>
                             <td>
                                 <ng-switch on="player.ban !== null">
                                     <div ng-switch-when="true">

@@ -21,6 +21,7 @@
         {{ HTML::style('css/daterangepicker/daterangepicker-bs3.css') }}
         {{ HTML::style('css/timepicker/bootstrap-timepicker.min.css') }}
         {{ HTML::style('css/animate.css') }}
+        {{ HTML::style('css/ng-table/ng-table.min.css') }}
 
         @yield('styles')
 
@@ -87,6 +88,7 @@
         {{ HTML::script('js/plugins/fastclick/fastclick.min.js') }}
         {{ HTML::script('js/plugins/angular-modules/count-to/count-to.js') }}
         {{ HTML::script('js/plugins/angular-modules/ng-idle/angular-idle.min.js') }}
+        {{ HTML::script('js/plugins/angular-modules/ng-table/ng-table.min.js') }}
         {{ HTML::script('js/plugins/highcharts/highcharts.js') }}
         {{ HTML::script('js/plugins/iCheck/icheck.min.js') }}
         {{ HTML::script('js/boot.js?v=1') }}
