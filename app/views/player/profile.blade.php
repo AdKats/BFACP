@@ -291,7 +291,7 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="javascript://" data-target="#server-stats-active" data-toggle="tab">Server Stats &ndash; <span class="badge bg-green">Active</span></a></li>
                     <li><a href="javascript://" data-target="#server-stats-inactive" data-toggle="tab">Server Stats &ndash; <span class="badge bg-gray">Inactive</span></a></li>
-                    <li><a href="javascript://" data-target="#sessions" data-toggle="tab">Sessions</a></li>
+                    <li><a href="javascript://" data-target="#sessions" data-toggle="tab"><span ng-if="refresh.sessions"><i class="fa fa-refresh fa-spin"></i>&nbsp;</span>Sessions</a></li>
                 </ul>
 
                 <div class="tab-content">

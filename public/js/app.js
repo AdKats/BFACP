@@ -389,11 +389,16 @@ angular.module('bfacp', [
         var player_id = $("input[name='player_id']").val();
 
         $scope.player = [];
+        $scope.refresh = {
+            sessions: true
+        };
 
         Player.get({playerId: player_id}, function(data) {
-            $scope.player = data.data;
 
-            $scope.tableParams = new ngTableParams({
+            $scope.player = data.data;
+            $scope.refresh.sessions = false;
+
+            $scope.sessionTable = new ngTableParams({
                 page: 1,
                 count: 10,
                 sorting: {

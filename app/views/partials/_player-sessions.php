@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table table-striped table-condensed" ng-table="tableParams" show-filter="true">
+    <table class="table table-striped table-condensed" ng-table="sessionTable" show-filter="true">
         <tbody>
             <tr ng-repeat="(key, session) in $data">
                 <td ng-bind="moment(session.session_start).format('lll')" sortable="'session_start'" data-title="'<?php echo Lang::get('player.profile.stats.server.table.col1'); ?>'"></td>

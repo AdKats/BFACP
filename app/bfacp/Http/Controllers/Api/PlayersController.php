@@ -35,15 +35,24 @@ class PlayersController extends BaseController
      */
     public function show($id)
     {
-        $player = $this->repository->setopts([
-                    'ban.previous',
-                    'reputation',
-                    'infractionsGlobal',
-                    'infractionsServer.server',
-                    'stats.server',
-                    'sessions.server'
-                ], true)->getPlayerById($id);
+        // Cache key
+        $key = sprintf('api.player.%u', $id);
 
-        return MainHelper::response($player, NULL, NULL, NULL, FALSE, TRUE);
+        // Is there already a cached version for the player
+        $isCached = Cache::has($key);
+
+        // Get or Set cache for player
+        $player = Cache::remember($key, 5, function() use($id) {
+            return $this->repository->setopts([
+                'ban.previous',
+                'reputation',
+                'infractionsGlobal',
+                'infractionsServer.server',
+                'stats.server',
+                'sessions.server'
+            ], true)->getPlayerById($id)->toArray();
+        });
+
+        return MainHelper::response($player, NULL, NULL, NULL, $isCached, TRUE);
     }
 }
