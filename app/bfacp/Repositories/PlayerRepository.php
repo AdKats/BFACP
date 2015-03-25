@@ -1,11 +1,14 @@
 <?php namespace BFACP\Repositories;
 
+use BFACP\AdKats\Record;
+use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Player;
 use BFACP\Exceptions\PlayerNotFoundException;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 class PlayerRepository extends BaseRepository
 {
@@ -130,17 +133,95 @@ class PlayerRepository extends BaseRepository
     {
         // Cache for 1 day
         $countryTotals = Cache::remember('player.country.count', 1440, function () {
-            return DB::table('tbl_playerdata')->whereNotIn('CountryCode', ['', '--'])
-                                              ->whereNotNull('CountryCode')
-                                              ->where('LastSeenOnServer', '>=', Carbon::now()->subDay())
-                                              ->join('tbl_server_player', 'tbl_playerdata.PlayerID', '=', 'tbl_server_player.PlayerID')
-                                              ->join('tbl_playerstats', 'tbl_server_player.StatsID', '=', 'tbl_playerstats.StatsID')
-                                              ->groupBy('CountryCode')
-                                              ->select(DB::raw('UPPER(CountryCode) AS `CountryCode`, COUNT(tbl_playerdata.PlayerID) AS `total`'))
-                                              ->lists('total', 'CountryCode');
+            return DB::table('tbl_playerdata')
+            ->whereNotIn('CountryCode', ['', '--'])
+            ->whereNotNull('CountryCode')
+            ->where('LastSeenOnServer', '>=', Carbon::now()->subDay())
+            ->join('tbl_server_player', 'tbl_playerdata.PlayerID', '=', 'tbl_server_player.PlayerID')
+            ->join('tbl_playerstats', 'tbl_server_player.StatsID', '=', 'tbl_playerstats.StatsID')
+            ->groupBy('CountryCode')
+            ->select(DB::raw('UPPER(CountryCode) AS `CountryCode`, COUNT(tbl_playerdata.PlayerID) AS `total`'))
+            ->lists('total', 'CountryCode');
         });
 
         return $countryTotals;
+    }
+
+    /**
+     * Returns the player record history
+     * @param  integer $id    Player ID
+     * @param  integer $limit Results to return
+     * @return object
+     */
+    public function getPlayerRecords($id, $limit = 25)
+    {
+        $records = Record::with('target', 'source', 'type', 'action')
+            ->orderBy('record_time', 'desc')
+            ->where(function ($query) use ($id) {
+                $query->where('target_id', $id);
+                $query->orWhere('source_id', $id);
+            });
+
+        // If a command id is present we are going to only pull records
+        // that have the specific id
+        if (Input::has('cmdid')) {
+            $cmdid = Input::get('cmdid', null);
+
+            // Make sure the input is a number and greater than zero
+            if (!is_null($cmdid) && is_numeric($cmdid) && $cmdid > 0) {
+                $records->where(function ($query) use ($cmdid) {
+                    $query->where('command_type', $cmdid);
+                    $query->orWhere('command_action', $cmdid);
+                });
+            }
+        }
+
+        return $records->paginate($limit);
+    }
+
+    /**
+     * Returns the player chatlogs
+     * @param  integer $id    Player ID
+     * @param  integer $limit Results to return
+     * @return object
+     */
+    public function getPlayerChat($id, $limit = 30)
+    {
+        $chatlogs = Chat::with('server')
+            ->where('logPlayerID', $id)
+            ->excludeSpam()
+            ->orderBy('logDate', 'desc');
+
+        // If a server is specifed then we only pull logs from that server
+        if (Input::has('server')) {
+            $serverId = Input::get('server', null);
+
+            if (!is_null($serverId) && is_numeric($serverId) && $serverId > 0) {
+                $chatlogs->where('ServerID', $serverId);
+            }
+        }
+
+        // If user has entered keywords only pull logs that contain those keywords
+        if (Input::has('keywords')) {
+            $keywords = trim(Input::get('keywords', null));
+
+            if (!is_null($keywords) && $keywords != '') {
+
+                // Remove spaces before and after the comma
+                $keywords = preg_replace('/\s*,\s*/', ',', $keywords);
+
+                // Explode into an array
+                $keywords = explode(',', $keywords);
+
+                $chatlogs->where(function ($query) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $query->orWhere('logMessage', 'LIKE', '%' . $keyword . '%');
+                    }
+                });
+            }
+        }
+
+        return $chatlogs->paginate($limit);
     }
 
     /**
@@ -151,12 +232,12 @@ class PlayerRepository extends BaseRepository
      */
     public function setopts($opts = [], $custom = false)
     {
-        if (empty($opts)) {
-            return $this;
-        }
+        if (empty($opts) || $custom) {
 
-        if ($custom) {
-            $this->opts = $opts;
+            if ($custom) {
+                $this->opts = $opts;
+            }
+
             return $this;
         }
 

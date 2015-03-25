@@ -386,18 +386,52 @@ angular.module('bfacp', [
             playerId: '@id'
         });
 
+        var Records = $resource('api/players/:playerId/records?page=:pageNum', {
+            playerId: '@id',
+            pageNum: '@id'
+        });
+
+        $scope.playerName = $("input[name='player_name']").val();
+
         var player_id = $("input[name='player_id']").val();
 
         $scope.player = [];
-        $scope.refresh = {
-            sessions: true
+        $scope.records = {
+            current_page: 1,
+            from: 1,
+            last_page: null,
+            per_page: null,
+            to: null,
+            total: null,
+            data: []
         };
 
-        Player.get({playerId: player_id}, function(data) {
+        $scope.refresh = {
+            sessions: true,
+            records: true
+        };
 
+        $scope.fetchRecords = function() {
+            $scope.refresh.records = true;
+
+            Records.get({
+                playerId: player_id,
+                pageNum: $scope.records.current_page
+            }, function(data) {
+                $scope.refresh.records = false;
+                $scope.records = data.data;
+
+            }, function(e) {
+                $scope.fetchRecords();
+                console.error('fatal error', e);
+            });
+        };
+
+        $scope.fetchRecords();
+
+        Player.get({playerId: player_id}, function(data) {
             $scope.player = data.data;
             $scope.refresh.sessions = false;
-
             $scope.sessionTable = new ngTableParams({
                 page: 1,
                 count: 10,
@@ -415,7 +449,6 @@ angular.module('bfacp', [
                 }
             });
         });
-
     }])
     .controller('ScoreboardController', ['$scope', '$rootScope', '$http', '$timeout', '$location', '$idle', '$modal',
         function($scope, $rootScope, $http, $timeout, $location, $idle, $modal) {

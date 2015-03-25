@@ -5,8 +5,9 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
     Route::group(['prefix' => 'players'], function()
     {
         Route::get('/', ['as' => 'api.players.index', 'uses' => 'PlayersController@index']);
-        Route::get('{id}', ['as' => 'api.players.show', 'uses' => 'PlayersController@show'])
-            ->where('id', '[0-9]+');
+        Route::get('{id}', ['as' => 'api.players.show', 'uses' => 'PlayersController@show'])->where('id', '[0-9]+');
+        Route::get('{id}/records', ['api.players.show.records', 'uses' => 'PlayersController@showRecords'])->where('id', '[0-9]+');
+        Route::get('{id}/chatlogs', ['api.players.show.chatlogs', 'uses' => 'PlayersController@showChatlogs'])->where('id', '[0-9]+');
     });
 
     Route::group(['prefix' => 'bans'], function()

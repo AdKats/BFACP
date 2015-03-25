@@ -20,6 +20,7 @@
                             <div class="col-sm-9">
                                 <p class="form-control-static">{{{ $player->PlayerID }}}</p>
                                 {{ Form::hidden('player_id', $player->PlayerID) }}
+                                {{ Form::hidden('player_name', $player->SoldierName) }}
                             </div>
                         </div>
 
@@ -37,6 +38,8 @@
                                     @if( ! empty($player->EAGUID) )
                                     {{ link_to_route('player.listing', $player->EAGUID, [
                                         'player' => $player->EAGUID
+                                    ], [
+                                        'target' => '_blank'
                                     ]) }}
                                     @else
                                     <span class="text-red">N/A</span>
@@ -52,6 +55,8 @@
                                     @if( ! empty($player->PBGUID) )
                                     {{ link_to_route('player.listing', $player->PBGUID, [
                                         'player' => $player->PBGUID
+                                    ], [
+                                        'target' => '_blank'
                                     ]) }}
                                     @else
                                     <span class="text-red">N/A</span>
@@ -67,6 +72,8 @@
                                     @if( ! empty($player->IP_Address) )
                                     {{ link_to_route('player.listing', $player->IP_Address, [
                                         'player' => $player->IP_Address
+                                    ], [
+                                        'target' => '_blank'
                                     ]) }}
                                     @else
                                     <span class="text-red">N/A</span>
@@ -285,7 +292,6 @@
     </div>
 
     <div class="row">
-
         <div class="col-xs-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
@@ -296,20 +302,45 @@
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="server-stats-active">
-                        @include('partials._player-server-stats', ['stats' => $player->stats, 'unless' => TRUE])
+                        @include('partials.player.profile._serverstats', ['stats' => $player->stats, 'unless' => TRUE])
                     </div>
 
                     <div class="tab-pane" id="server-stats-inactive">
-                        @include('partials._player-server-stats', ['stats' => $player->stats, 'unless' => FALSE])
+                        @include('partials.player.profile._serverstats', ['stats' => $player->stats, 'unless' => FALSE])
                     </div>
 
                     <div class="tab-pane" id="sessions">
-                        @include('partials._player-sessions')
+                        @include('partials.player.profile._sessions')
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Records</h3>
+
+                    <div class="box-tools pull-right">
+                        <pagination class="pagination-sm inline" total-items="records.total" ng-change="fetchRecords()" ng-model="records.current_page" max-size="5" boundary-links="true" items-per-page="records.per_page"></pagination>
+                    </div>
+                </div>
+
+                <div class="box-body">
+                    @include('partials.player.profile._records')
+                </div>
+
+                <div class="box-footer">
+                    Viewing records <span ng-bind="records.from | number"></span> through <span ng-bind="records.to | number"></span> out of <span ng-bind="records.total | number"></span>.
+                </div>
+
+                <div class="overlay" ng-if="refresh.records">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 

@@ -1,11 +1,7 @@
 <?php namespace BFACP\Http\Controllers\Api;
 
 use BFACP\Repositories\PlayerRepository;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Lang;
 use MainHelper;
 
 class PlayersController extends BaseController
@@ -20,13 +16,13 @@ class PlayersController extends BaseController
 
     public function index()
     {
-        $limit = $this->request->get('limit', FALSE);
+        $limit = $this->request->get('limit', false);
 
-        $name = $this->request->get('player', NULL);
+        $name = $this->request->get('player', null);
 
         $players = $this->repository->getAllPlayers($limit, $name);
 
-        return MainHelper::response($players, NULL, NULL, NULL, FALSE, TRUE);
+        return MainHelper::response($players, null, null, null, false, true);
     }
 
     /**
@@ -42,7 +38,7 @@ class PlayersController extends BaseController
         $isCached = Cache::has($key);
 
         // Get or Set cache for player
-        $player = Cache::remember($key, 5, function() use($id) {
+        $player = Cache::remember($key, 5, function () use ($id) {
             return $this->repository->setopts([
                 'ban.previous',
                 'reputation',
@@ -53,6 +49,28 @@ class PlayersController extends BaseController
             ], true)->getPlayerById($id)->toArray();
         });
 
-        return MainHelper::response($player, NULL, NULL, NULL, $isCached, TRUE);
+        return MainHelper::response($player, null, null, null, $isCached, true);
+    }
+
+    /**
+     * Gets the players record history
+     * @param  integer $id
+     */
+    public function showRecords($id)
+    {
+        $records = $this->repository->getPlayerRecords($id);
+
+        return MainHelper::response($records, null, null, null, false, true);
+    }
+
+    /**
+     * Gets the players chatlogs
+     * @param  integer $id
+     */
+    public function showChatlogs($id)
+    {
+        $chatlogs = $this->repository->getPlayerChat($id);
+
+        return MainHelper::response($chatlogs, null, null, null, false, true);
     }
 }
