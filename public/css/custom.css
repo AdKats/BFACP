@@ -79,3 +79,15 @@ table.scoreboard > tbody > tr.ng-leave {
     -ms-animation: fadeOut 1s;
     animation: fadeOut 1s;
 }
+
+.expands {
+    width: 200px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.expands:hover {
+    width: auto;
+}
