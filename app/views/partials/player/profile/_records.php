@@ -7,7 +7,7 @@
             <th>Target</th>
             <th class="hidden-sm">Source</th>
             <th class="hidden-sm">Server</th>
-            <th width="25%">Message</th>
+            <th>Message</th>
         </thead>
         <tbody>
             <tr ng-repeat="(key, record) in records.data">
