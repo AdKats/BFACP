@@ -7,7 +7,7 @@
             <th>Target</th>
             <th class="hidden-sm">Source</th>
             <th class="hidden-sm">Server</th>
-            <th width="500px">Message</th>
+            <th width="25%">Message</th>
         </thead>
         <tbody>
             <tr ng-repeat="(key, record) in records.data">
@@ -15,13 +15,13 @@
                 <td class="hidden-sm" ng-bind="record.type.command_name"></td>
                 <td ng-bind="record.action.command_name"></td>
                 <td>
-                    <ng-switch on="record.target !== null && record.target.SoldierName != playerName">
+                    <ng-switch on="record.target !== null && record.target.PlayerID != playerId">
                         <a ng-switch-when="true" ng-href="{{ record.target.profile_url }}" target="_blank" ng-bind="record.target.SoldierName"></a>
                         <span ng-switch-default ng-bind="record.target_name"></span>
                     </ng-switch>
                 </td>
                 <td class="hidden-sm">
-                    <ng-switch on="record.source !== null && record.source.SoldierName != playerName">
+                    <ng-switch on="record.source !== null && record.source.PlayerID != playerId">
                         <a ng-switch-when="true" ng-href="{{ record.source.profile_url }}" target="_blank" ng-bind="record.source.SoldierName"></a>
                         <span ng-switch-default ng-bind="record.source_name"></span>
                     </ng-switch>

@@ -391,9 +391,7 @@ angular.module('bfacp', [
             pageNum: '@id'
         });
 
-        $scope.playerName = $("input[name='player_name']").val();
-
-        var player_id = $("input[name='player_id']").val();
+        $scope.playerId = $("input[name='player_id']").val();
 
         $scope.player = [];
         $scope.records = {
@@ -415,7 +413,7 @@ angular.module('bfacp', [
             $scope.refresh.records = true;
 
             Records.get({
-                playerId: player_id,
+                playerId: $scope.playerId,
                 pageNum: $scope.records.current_page
             }, function(data) {
                 $scope.refresh.records = false;
@@ -429,7 +427,7 @@ angular.module('bfacp', [
 
         $scope.fetchRecords();
 
-        Player.get({playerId: player_id}, function(data) {
+        Player.get({playerId: $scope.playerId}, function(data) {
             $scope.player = data.data;
             $scope.refresh.sessions = false;
             $scope.sessionTable = new ngTableParams({
