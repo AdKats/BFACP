@@ -30,19 +30,22 @@ class Battlelog
             'overview'      => '%s/warsawoverviewpopulate/%u/1/',
             'weapons'       => '%s/warsawWeaponsPopulateStats/%u/1/stats/',
             'vehicles'      => '%s/warsawvehiclesPopulateStats/%u/1/stats/',
-            'battlereports' => '%s/warsawbattlereportspopulate/%u/2048/1/'
+            'battlereports' => '%s/warsawbattlereportspopulate/%u/2048/1/',
+            'soldier'       => '%s/soldier/%u/stats/%u/pc/'
         ],
         'bf3'     => [
             'overview' => '%s/overviewPopulateStats/%u/bf3-ru-assault/1/',
             'weapons'  => '%s/weaponsPopulateStats/%u/1/stats/',
-            'vehicles' => '%s/vehiclesPopulateStats/%u/1/stats/'
-            //'battlereports' => '%s/warsawbattlereportspopulate/%u/2048/1/'
+            'vehicles' => '%s/vehiclesPopulateStats/%u/1/stats/',
+            //'battlereports' => '%s/warsawbattlereportspopulate/%u/2048/1/',
+            'soldier'       => '%s/soldier/%u/stats/%u/pc/'
         ],
         'bfh'     => [
             'overview'      => '%s/bfhoverviewpopulate/%u/1/',
             'weapons'       => '%s/BFHWeaponsPopulateStats/%u/1/stats/',
             'vehicles'      => '%s/bfhvehiclesPopulateStats/%u/1/stats/',
-            'battlereports' => '%s/warsawbattlereportspopulate/%u/8192/1/'
+            'battlereports' => '%s/warsawbattlereportspopulate/%u/8192/1/',
+            'soldier'       => '%s/soldier/%u/stats/%u/pc/'
         ],
         'generic' => [
             'profile' => '%s/user/%s',

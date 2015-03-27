@@ -3,6 +3,7 @@
 use BFACP\Battlefield\Player;
 use BFACP\Exceptions\BattlelogException;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
 use MainHelper;
 
 class BPlayer extends Battlelog
@@ -66,6 +67,8 @@ class BPlayer extends Battlelog
             $this->personaUserID   = $this->player->battlelog->user_id;
             $this->personaGravatar = $this->player->battlelog->gravatar;
         }
+
+        $this->getSoldierAndUpdate();
     }
 
     /**
@@ -239,5 +242,39 @@ class BPlayer extends Battlelog
         $battlereports = new Collection($results['gameReports']);
 
         return $battlereports;
+    }
+
+    /**
+     * Gets the soldier information so we can update the clantag and name if needed
+     * @return mixed
+     */
+    private function getSoldierAndUpdate()
+    {
+        // Generate URI for request
+        $uri = sprintf($this->uris[$this->game]['soldier'], $this->game, $this->personaUserID, $this->personaID);
+
+        // Send request
+        $results = $this->sendRequest($uri);
+
+        $oldName = $this->player->SoldierName;
+        $oldClan = $this->player->ClanTag;
+
+        $persona = $results['context']['statsPersona'];
+
+        if ($this->player->SoldierName != $persona['personaName']) {
+            $this->player->SoldierName = $persona['personaName'];
+        }
+
+        if ($this->player->ClanTag != $persona['clanTag']) {
+            $this->player->ClanTag = empty($persona['clanTag']) ? null : $persona['clanTag'];
+        }
+
+        if ($oldName != $persona['personaName'] || $oldClan != $persona['clanTag']) {
+            Cache::forget(sprintf('api.player.%u', $this->player->PlayerID));
+            Cache::forget(sprintf('player.%u', $this->player->PlayerID));
+            $this->player->save();
+        }
+
+        return $this;
     }
 }
