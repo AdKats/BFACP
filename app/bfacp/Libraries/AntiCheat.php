@@ -4,6 +4,7 @@ use BFACP\Battlefield\Player;
 use BFACP\Libraries\Battlelog\BPlayer;
 use Illuminate\Support\Facades\Cache;
 use MainHelper;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AntiCheat
 {
@@ -110,8 +111,8 @@ class AntiCheat
      */
     public function parse($weapons)
     {
-        if(!array_key_exists($this->game, $this->weapons)) {
-            throw new Exception(sprintf('The game "%s" is not supported.', $this->game));
+        if (!array_key_exists($this->game, $this->weapons)) {
+            throw new HttpException(500, sprintf('The game "%s" is not supported.', $this->game));
         }
 
         foreach ($weapons as $weapon) {
