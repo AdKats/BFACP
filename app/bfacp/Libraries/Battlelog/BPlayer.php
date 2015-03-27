@@ -82,7 +82,7 @@ class BPlayer extends Battlelog
 
         // If the persona object is empty throw a BattlelogException
         if (empty($this->profile['context']['profilePersonas'])) {
-            throw new BattlelogException(sprintf('No player by the name "%s" exists on battlelog.', $this->player->SoldierName));
+            throw new BattlelogException(404, sprintf('No player by the name "%s" exists on battlelog.', $this->player->SoldierName));
         }
 
         // Set the gravtar of the player

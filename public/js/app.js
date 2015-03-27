@@ -400,7 +400,9 @@ angular.module('bfacp', [
         $scope.player = [];
 
         $scope.weapons = {
-            acs: []
+            acs: [],
+            acsError: false,
+            acsErrorMsg: null
         };
 
         $scope.records = {
@@ -460,6 +462,11 @@ angular.module('bfacp', [
 
         ACS.get({playerId: $scope.playerId}, function(data) {
             $scope.weapons.acs = data.data;
+            $scope.refresh.acs = false;
+        }, function(e) {
+            console.log(e);
+            $scope.weapons.acsError = true;
+            $scope.weapons.acsErrorMsg = e.message;
             $scope.refresh.acs = false;
         });
     }])

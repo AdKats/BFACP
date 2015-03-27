@@ -1,5 +1,6 @@
-<alert type="success" ng-if="weapons.acs.length === 0 && !refresh.acs"><i class="fa fa-check"></i>&nbsp;No Suspicious Weapons Found</alert>
-<alert type="info" ng-if="weapons.acs.length === 0 && refresh.acs"><i class="fa fa-spinner fa-pulse"></i>&nbsp;Checking player&hellip;</alert>
+<alert type="success" ng-if="weapons.acs.length === 0 && !refresh.acs && !weapons.acsError"><i class="fa fa-check"></i>&nbsp;No Suspicious Weapons Found</alert>
+<alert type="info" ng-if="weapons.acs.length === 0 && refresh.acs && !weapons.acsError"><i class="fa fa-spinner fa-pulse"></i>&nbsp;Checking player&hellip;</alert>
+<alert type="error" ng-if="!refresh.acs && weapons.acsError"><i class="fa fa-times"></i>&nbsp;{{ weapons.acsErrorMsg }}</alert>
 
 <div class="table-responsive" ng-if="weapons.acs.length > 0">
     <table class="table table-striped table-condensed">
