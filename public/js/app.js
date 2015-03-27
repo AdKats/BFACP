@@ -466,7 +466,7 @@ angular.module('bfacp', [
         }, function(e) {
             console.log(e);
             $scope.weapons.acsError = true;
-            $scope.weapons.acsErrorMsg = e.message;
+            $scope.weapons.acsErrorMsg = e.data.message;
             $scope.refresh.acs = false;
         });
     }])
