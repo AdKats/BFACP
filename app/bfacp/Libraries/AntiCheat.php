@@ -119,6 +119,7 @@ class AntiCheat
             $category = str_replace(' ', '_', strtolower(trim($weapon['category'])));
 
             if (!in_array($category, $this->allowedCategorys[$this->game]) ||
+                !array_key_exists($category, $this->weapons[$this->game]) ||
                 !array_key_exists($weapon['slug'], $this->weapons[$this->game][$category]) ||
                 $this->weapons[$this->game][$category][$weapon['slug']]['max'] >= $this->triggers['DPS']) {
                 continue;
