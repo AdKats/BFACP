@@ -136,7 +136,7 @@ class BPlayer extends Battlelog
         // Loop over the weapons and add them to the weapons array
         foreach ($results['mainWeaponStats'] as $weapon) {
 
-            if ($this->game == 'BF3') {
+            if ($this->game == 'bf3') {
                 $weaponURI = sprintf('%s/soldier/%s/iteminfo/%s/%u/pc/',
                     $this->game,
                     $this->player->SoldierName,
