@@ -14,11 +14,9 @@ class BattlelogServer extends Battlelog
         try {
             $game = strtolower($this->server->game->Name);
 
-            $uri = sprintf("%s/servers/%s/pc/%s", $game, $this->uris['bf4']['players_online'], $this->server->setting->battlelog_server_guid);
+            $uri = sprintf($this->uris['generic']['servers']['players_online'], $game, $this->server->setting->battlelog_server_guid)
 
-            $response = $this->guzzle->get(static::BLOG . $uri);
-
-            $response = $response->json();
+            $response = $this->sendRequest($uri);
 
             return (int) $response['slots'][1]['current'];
         } catch(Exception $e) {
