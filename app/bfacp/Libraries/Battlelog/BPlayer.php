@@ -135,6 +135,12 @@ class BPlayer extends Battlelog
 
         // Loop over the weapons and add them to the weapons array
         foreach ($results['mainWeaponStats'] as $weapon) {
+            $weaponURI = sprintf('%s/soldier/%s/weapons/%u/pc/#%s',
+                $this->game,
+                $this->player->SoldierName,
+                $this->personaID,
+                strtolower($weapon['slug']));
+
             $weapons->push([
                 'slug'         => $weapon['slug'],
                 'category'     => $weapon['category'],
@@ -147,7 +153,9 @@ class BPlayer extends Battlelog
                 'timeEquipped' => $weapon['timeEquipped'],
                 'accuracy'     => MainHelper::percent($weapon['shotsHit'], $weapon['shotsFired']),
                 'kpm'          => MainHelper::divide($weapon['kills'], MainHelper::divide($weapon['timeEquipped'], 60)),
-                'hskp'         => MainHelper::percent($weapon['headshots'], $weapon['kills'])
+                'hskp'         => MainHelper::percent($weapon['headshots'], $weapon['kills']),
+                'dps'          => MainHelper::percent($weapon['kills'], $weapon['shotsHit']),
+                'weapon_link'  => static::BLOG . $weaponURI
             ]);
         }
 
