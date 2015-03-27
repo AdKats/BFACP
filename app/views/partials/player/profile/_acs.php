@@ -17,7 +17,7 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="(key, weapon) in weapons.acs">
+            <tr ng-repeat="(key, weapon) in weapons.acs | orderBy:'kills':true">
                 <td>
                     <a ng-href="{{ weapon.weapon_link }}" class="pull-left" ng-bind="weapon.slug | uppercase" target="_blank"></a>
                     <span class="pull-right" ng-bind="weapon.category.replace('_', ' ')"></span>
