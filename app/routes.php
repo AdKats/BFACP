@@ -43,6 +43,13 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
 
                 return MainHelper::response($battlelog->getBattleReports(), null, null, null, false, true);
             }])->where('player', '[0-9]+');
+
+            Route::get('{player}/acs', ['as' => 'api.battlelog.players.acs', function(BFACP\Battlefield\Player $player)
+            {
+                $acs = App::make('BFACP\Libraries\AntiCheat', [$player]);
+                $data = $acs->parse($acs->battlelog->getWeaponStats())->get();
+                return MainHelper::response($data, null, null, null, false, true);
+            }])->where('player', '[0-9]+');
         });
     });
 
