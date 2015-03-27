@@ -210,7 +210,7 @@ class BPlayer extends Battlelog
     public function getBattleReports()
     {
         if ($this->game == 'bf3') {
-            return false;
+            throw new BattlelogException(404, 'Reports for Battlefield 3 are not supported.');
         }
 
         // Generate URI for request
