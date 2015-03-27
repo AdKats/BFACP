@@ -14,7 +14,7 @@ class BattlelogServer extends Battlelog
         try {
             $game = strtolower($this->server->game->Name);
 
-            $uri = sprintf($this->uris['generic']['servers']['players_online'], $game, $this->server->setting->battlelog_server_guid)
+            $uri = sprintf($this->uris['generic']['servers']['players_online'], $game, $this->server->setting->battlelog_server_guid);
 
             $response = $this->sendRequest($uri);
 
