@@ -110,6 +110,10 @@ class AntiCheat
      */
     public function parse($weapons)
     {
+        if(!array_key_exists($this->game, $this->weapons)) {
+            throw new Exception(sprintf('The game "%s" is not supported.', $this->game));
+        }
+
         foreach ($weapons as $weapon) {
             $category = str_replace(' ', '_', strtolower(trim($weapon['category'])));
 
