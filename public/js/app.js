@@ -391,9 +391,18 @@ angular.module('bfacp', [
             pageNum: '@id'
         });
 
+        var ACS = $resource('api/battlelog/players/:playerId/acs', {
+            playerId: '@id'
+        });
+
         $scope.playerId = $("input[name='player_id']").val();
 
         $scope.player = [];
+
+        $scope.weapons = {
+            acs: []
+        };
+
         $scope.records = {
             current_page: 1,
             from: 1,
@@ -406,7 +415,8 @@ angular.module('bfacp', [
 
         $scope.refresh = {
             sessions: true,
-            records: true
+            records: true,
+            acs: true
         };
 
         $scope.fetchRecords = function() {
@@ -446,6 +456,11 @@ angular.module('bfacp', [
                     );
                 }
             });
+        });
+
+        ACS.get({playerId: $scope.playerId}, function(data) {
+            $scope.weapons.acs = data.data;
+            $scope.refresh.acs = false;
         });
     }])
     .controller('ScoreboardController', ['$scope', '$rootScope', '$http', '$timeout', '$location', '$idle', '$modal',

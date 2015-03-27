@@ -298,6 +298,12 @@
                     <li class="active"><a href="javascript://" data-target="#server-stats-active" data-toggle="tab">Server Stats &ndash; <span class="badge bg-green">Active</span></a></li>
                     <li><a href="javascript://" data-target="#server-stats-inactive" data-toggle="tab">Server Stats &ndash; <span class="badge bg-gray">Inactive</span></a></li>
                     <li><a href="javascript://" data-target="#sessions" data-toggle="tab"><span ng-if="refresh.sessions"><i class="fa fa-refresh fa-spin"></i>&nbsp;</span>Sessions</a></li>
+                    <li><a href="javascript://" data-target="#acs" data-toggle="tab"><span ng-if="refresh.acs">
+                        <i class="fa fa-refresh fa-spin"></i>&nbsp;</span>
+                        <span class="badge" ng-class="{'bg-green': weapons.acs.length===0, 'bg-red': weapons.acs.length > 0}" ng-bind="weapons.acs.length"></span>
+                        Suspicious Weapons
+                        </a>
+                    </li>
                 </ul>
 
                 <div class="tab-content">
@@ -311,6 +317,10 @@
 
                     <div class="tab-pane" id="sessions">
                         @include('partials.player.profile._sessions')
+                    </div>
+
+                    <div class="tab-pane" id="acs">
+                        @include('partials.player.profile._acs')
                     </div>
                 </div>
             </div>
