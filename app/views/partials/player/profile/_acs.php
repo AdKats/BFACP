@@ -5,7 +5,7 @@
 <div class="table-responsive" ng-if="weapons.acs.length > 0">
     <table class="table table-striped table-condensed">
         <thead>
-            <th width="200px"><span class="pull-left">Weapon</span><span class="pull-right">Class</span></th>
+            <th width="250px"><span class="pull-left">Weapon</span><span class="pull-right">Category</span></th>
             <th>Kills</th>
             <th>Headshots</th>
             <th>Fired</th>
@@ -27,9 +27,9 @@
                 <td ng-bind="weapon.headshots | number"></td>
                 <td ng-bind="weapon.fired | number"></td>
                 <td ng-bind="weapon.hit | number"></td>
-                <td>{{ weapon.accuracy }}%</td>
+                <td>{{ weapon.accuracy }}&percnt;</td>
                 <td ng-bind="momentDuration(weapon.timeEquipped, 'seconds')"></td>
-                <td ng-class="{'bg-green': !weapon.triggered.DPS, 'bg-red': weapon.triggered.DPS}">&plus;{{ weapon.dps }}%</td>
+                <td ng-class="{'bg-green': !weapon.triggered.DPS, 'bg-red': weapon.triggered.DPS}"><span ng-if="weapon.triggered.DPS">&plus;</span>{{ weapon.dps }}%</td>
                 <td ng-class="{'bg-green': !weapon.triggered.HKP, 'bg-red': weapon.triggered.HKP}">{{ weapon.hskp }}%</td>
                 <td ng-class="{'bg-green': !weapon.triggered.KPM, 'bg-red': weapon.triggered.KPM}">{{ weapon.kpm }}</td>
             </tr>
