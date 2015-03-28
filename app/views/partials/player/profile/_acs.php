@@ -29,7 +29,7 @@
                 <td ng-bind="weapon.hit | number"></td>
                 <td>{{ weapon.accuracy }}%</td>
                 <td ng-bind="momentDuration(weapon.timeEquipped, 'seconds')"></td>
-                <td ng-class="{'bg-green': !weapon.triggered.DPS, 'bg-red': weapon.triggered.DPS}">{{ weapon.dps }}%</td>
+                <td ng-class="{'bg-green': !weapon.triggered.DPS, 'bg-red': weapon.triggered.DPS}">&plus;{{ weapon.dps }}%</td>
                 <td ng-class="{'bg-green': !weapon.triggered.HKP, 'bg-red': weapon.triggered.HKP}">{{ weapon.hskp }}%</td>
                 <td ng-class="{'bg-green': !weapon.triggered.KPM, 'bg-red': weapon.triggered.KPM}">{{ weapon.kpm }}</td>
             </tr>
