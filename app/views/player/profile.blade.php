@@ -321,6 +321,13 @@
 
                     <div class="tab-pane" id="acs">
                         @include('partials.player.profile._acs')
+
+                        <alert type="info">
+                            <i class="fa fa-info-circle"></i>&nbsp;
+                            Weapons shown are not always suspicious and is only there to help you decided if the player is cheating.
+                            Shotguns may trigger more frequently due to the damage they do.
+                            False-positives can still occur.
+                        </alert>
                     </div>
                 </div>
             </div>
