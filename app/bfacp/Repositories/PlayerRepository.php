@@ -162,6 +162,7 @@ class PlayerRepository extends BaseRepository
     {
         $records = Record::with('target', 'source', 'type', 'action')
             ->orderBy('record_time', 'desc')
+            ->whereNotIn('command_type', [48, 49, 85, 86])
             ->where(function ($query) use ($id) {
                 $query->where('target_id', $id);
                 $query->orWhere('source_id', $id);
