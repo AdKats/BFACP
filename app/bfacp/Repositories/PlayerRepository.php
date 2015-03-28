@@ -90,7 +90,12 @@ class PlayerRepository extends BaseRepository
     public function getPlayerById($id)
     {
         try {
-            return Player::with($this->opts)->findOrFail($id);
+            $player = Player::with($this->opts)->findOrFail($id);
+
+            \App::make('BFACP\Libraries\Reputation')->setPlayer($player)->createOrUpdate();
+
+            return $player;
+
         } catch (ModelNotFoundException $e) {
             throw new PlayerNotFoundException(404, 'Player Not Found');
         }

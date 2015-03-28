@@ -21,7 +21,7 @@ class Reputation extends Elegant
      * Fields allowed to be mass assigned
      * @var array
      */
-    protected $fillable = ['*'];
+    protected $guarded = ['player_id'];
 
     /**
      * Date fields to convert to carbon instances

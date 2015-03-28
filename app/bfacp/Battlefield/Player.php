@@ -116,6 +116,22 @@ class Player extends Elegant
     /**
      * @return \Illuminate\Database\Eloquent\Model
      */
+    public function recordsBy()
+    {
+        return $this->hasMany('BFACP\AdKats\Record', 'source_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function recordsOn()
+    {
+        return $this->hasMany('BFACP\AdKats\Record', 'target_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
     public function battlelog()
     {
         return $this->hasOne('BFACP\AdKats\Battlelog', 'player_id');
@@ -127,7 +143,12 @@ class Player extends Elegant
      */
     public function hasPersona()
     {
-        return !empty($this->battlelog->persona_id);
+        return !empty($this->battlelog);
+    }
+
+    public function hasReputation()
+    {
+        return !empty($this->reputation);
     }
 
     /**
