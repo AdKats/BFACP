@@ -58,6 +58,7 @@ return [
             'current' => [
                 'title' => 'Current Ban',
                 'none' => 'No bans on file',
+                'inactive' => 'No ban currently in effect. Status&colon; <strong>:status</strong>',
                 'table' => [
                     'col1' => 'Issued',
                     'col2' => 'Expires',
@@ -90,6 +91,7 @@ return [
              * Player Server Stats
              */
             'server' => [
+                'title' => 'Server Stats',
                 'table' => [
                     'col1' => 'First Seen',
                     'col2' => 'Last Seen',
@@ -113,6 +115,54 @@ return [
                         'wlr' => 'W/L'
                     ]
                 ]
+            ],
+
+            /**
+             * Player sessions
+             */
+            'sessions' => [
+                'title' => 'Sessions'
+            ]
+        ],
+
+        /**
+         * Anti-Cheat System
+         */
+        'acs' => [
+            'title' => 'Suspicious Weapons',
+            'help' => 'Weapons shown are not always suspicious and is only there to help you decided if the player is cheating. Shotguns may trigger more frequently due to the damage they do. False-positives can still occur.',
+            'none' => 'No Suspicious Weapons Found',
+            'checking' => 'Checking player&hellip;',
+            'table' => [
+                'col1' => 'Weapon',
+                'col2' => 'Category',
+                'col3' => 'Kills',
+                'col4' => 'Headshots',
+                'col5' => 'Fired',
+                'col6' => 'Hit',
+                'col7' => 'Accuracy',
+                'col8' => 'Playtime',
+                'col9' => 'DPS',
+                'col10' => 'HSKP',
+                'col11' => 'KPM'
+            ]
+        ],
+
+        'records' => [
+            'title' => 'Record History',
+            'viewing' => [
+                'p1' => 'Viewing records',
+                'p2' => 'through',
+                'p3' => 'out of'
+            ],
+            'table' => [
+                'col1' => 'Date',
+                'col2' => 'CMD Issued',
+                'col3' => 'CMD Taken',
+                'col4' => 'Target',
+                'col5' => 'Source',
+                'col6' => 'Server',
+                'col7' => 'Message'
             ]
         ]
     ]

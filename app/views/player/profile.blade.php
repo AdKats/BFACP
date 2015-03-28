@@ -182,7 +182,7 @@
                     </div>
 
                     <div class="tab-pane" id="ban-current">
-                        @if( ! is_null($player->ban) )
+                        @if( ! is_null($player->ban) && $player->ban->is_active )
                         <table class="table table-condensed">
                             <thead>
                                 <th>{{ Lang::get('player.profile.bans.current.table.col1') }}</th>
@@ -230,10 +230,14 @@
                                 </tr>
                             </tbody>
                         </table>
+                        @elseif( ! is_null($player->ban) && (!$player->ban->is_active || $player->ban->is_expired))
+                        <alert type="info">
+                            <i class="fa fa-info-circle"></i>&nbsp;{{ Lang::get('player.profile.bans.current.inactive', ['status' => $player->ban->ban_status]) }}
+                        </alert>
                         @else
-                        <div class="alert alert-success">
+                        <alert type="success">
                             <i class="fa fa-check"></i> {{ Lang::get('player.profile.bans.current.none') }}
-                        </div>
+                        </alert>
                         @endif
                     </div>
 
@@ -295,13 +299,13 @@
         <div class="col-xs-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="javascript://" data-target="#server-stats-active" data-toggle="tab">Server Stats &ndash; <span class="badge bg-green">Active</span></a></li>
-                    <li><a href="javascript://" data-target="#server-stats-inactive" data-toggle="tab">Server Stats &ndash; <span class="badge bg-gray">Inactive</span></a></li>
-                    <li><a href="javascript://" data-target="#sessions" data-toggle="tab"><span ng-if="refresh.sessions"><i class="fa fa-refresh fa-spin"></i>&nbsp;</span>Sessions</a></li>
+                    <li class="active"><a href="javascript://" data-target="#server-stats-active" data-toggle="tab">{{ Lang::get('player.profile.stats.server.title') }} &ndash; <span class="badge bg-green">Active</span></a></li>
+                    <li><a href="javascript://" data-target="#server-stats-inactive" data-toggle="tab">{{ Lang::get('player.profile.stats.server.title') }} &ndash; <span class="badge bg-gray">Inactive</span></a></li>
+                    <li><a href="javascript://" data-target="#sessions" data-toggle="tab"><span ng-if="refresh.sessions"><i class="fa fa-refresh fa-spin"></i>&nbsp;</span>{{ Lang::get('player.profile.stats.sessions.title') }}</a></li>
                     <li><a href="javascript://" data-target="#acs" data-toggle="tab"><span ng-if="refresh.acs">
                         <i class="fa fa-refresh fa-spin"></i>&nbsp;</span>
-                        <span class="badge" ng-class="{'bg-green': weapons.acs.length===0, 'bg-red': weapons.acs.length > 0}" ng-bind="weapons.acs.length"></span>
-                        Suspicious Weapons
+                        <span class="badge" ng-class="{'bg-green': weapons.acs.length === 0, 'bg-red': weapons.acs.length > 0}" ng-bind="weapons.acs.length"></span>
+                        {{ Lang::get('player.profile.acs.title') }}
                         </a>
                     </li>
                 </ul>
@@ -322,11 +326,9 @@
                     <div class="tab-pane" id="acs">
                         @include('partials.player.profile._acs')
 
-                        <alert type="info">
+                        <alert type="info" class="hidden-xs hidden-sm">
                             <i class="fa fa-info-circle"></i>&nbsp;
-                            Weapons shown are not always suspicious and is only there to help you decided if the player is cheating.
-                            Shotguns may trigger more frequently due to the damage they do.
-                            False-positives can still occur.
+                            {{ Lang::get('player.profile.acs.help') }}
                         </alert>
                     </div>
                 </div>
@@ -338,7 +340,7 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">Records</h3>
+                    <h3 class="box-title">{{ Lang::get('player.profile.records.title') }}</h3>
 
                     <div class="box-tools pull-right">
                         <pagination class="pagination-sm inline" total-items="records.total" ng-change="fetchRecords()" ng-model="records.current_page" max-size="5" boundary-links="true" items-per-page="records.per_page"></pagination>
@@ -350,7 +352,7 @@
                 </div>
 
                 <div class="box-footer">
-                    Viewing records <span ng-bind="records.from | number"></span> through <span ng-bind="records.to | number"></span> out of <span ng-bind="records.total | number"></span>.
+                    {{ Lang::get('player.profile.records.viewing.p1') }} <span ng-bind="records.from | number"></span> {{ Lang::get('player.profile.records.viewing.p2') }} <span ng-bind="records.to | number"></span> {{ Lang::get('player.profile.records.viewing.p3') }} <span ng-bind="records.total | number"></span>.
                 </div>
 
                 <div class="overlay" ng-if="refresh.records">

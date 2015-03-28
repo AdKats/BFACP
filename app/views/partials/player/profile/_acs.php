@@ -5,16 +5,16 @@
 <div class="table-responsive" ng-if="weapons.acs.length > 0">
     <table class="table table-striped table-condensed">
         <thead>
-            <th width="250px"><span class="pull-left">Weapon</span><span class="pull-right">Category</span></th>
-            <th>Kills</th>
-            <th>Headshots</th>
-            <th>Fired</th>
-            <th>Hit</th>
-            <th>Accuracy</th>
-            <th>Playtime</th>
-            <th>DPS</th>
-            <th>HSKP</th>
-            <th>KPM</th>
+            <th width="250px"><span class="pull-left"><?php echo Lang::get('player.profile.acs.table.col1'); ?></span><span class="pull-right"><?php echo Lang::get('player.profile.acs.table.col2'); ?></span></th>
+            <th><?php echo Lang::get('player.profile.acs.table.col3'); ?></th>
+            <th><?php echo Lang::get('player.profile.acs.table.col4'); ?></th>
+            <th><?php echo Lang::get('player.profile.acs.table.col5'); ?></th>
+            <th><?php echo Lang::get('player.profile.acs.table.col6'); ?></th>
+            <th><?php echo Lang::get('player.profile.acs.table.col7'); ?></th>
+            <th><?php echo Lang::get('player.profile.acs.table.col8'); ?></th>
+            <th><?php echo Lang::get('player.profile.acs.table.col9'); ?></th>
+            <th><?php echo Lang::get('player.profile.acs.table.col10'); ?></th>
+            <th><?php echo Lang::get('player.profile.acs.table.col11'); ?></th>
         </thead>
 
         <tbody>

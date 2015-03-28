@@ -1,13 +1,13 @@
 <div class="table-responsive">
     <table class="table table-striped table-condensed">
         <thead>
-            <th>Date</th>
-            <th class="hidden-sm">CMD Issued</th>
-            <th>CMD Taken</th>
-            <th>Target</th>
-            <th class="hidden-sm">Source</th>
-            <th class="hidden-sm">Server</th>
-            <th>Message</th>
+            <th><?php echo Lang::get('player.profile.records.table.col1'); ?></th>
+            <th class="hidden-sm"><?php echo Lang::get('player.profile.records.table.col2'); ?></th>
+            <th><?php echo Lang::get('player.profile.records.table.col3'); ?></th>
+            <th><?php echo Lang::get('player.profile.records.table.col4'); ?></th>
+            <th class="hidden-sm"><?php echo Lang::get('player.profile.records.table.col5'); ?></th>
+            <th class="hidden-sm"><?php echo Lang::get('player.profile.records.table.col6'); ?></th>
+            <th><?php echo Lang::get('player.profile.records.table.col7'); ?></th>
         </thead>
         <tbody>
             <tr ng-repeat="(key, record) in records.data">
