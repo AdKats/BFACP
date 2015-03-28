@@ -86,6 +86,9 @@ class Reputation
                 $reputation->total_rep    = $this->totalReputation;
                 $reputation->total_rep_co = $this->finalReputation;
                 $reputation->save();
+
+                // Reload the relationship
+                $this->player->load('reputation');
             }
         } else {
             $this->player->reputation()->save(new \BFACP\Battlefield\Reputation([
