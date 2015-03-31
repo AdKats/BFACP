@@ -105,7 +105,7 @@ class Metabans
         ];
 
         $this->guzzle = \App::make('GuzzleHttp\Client');
-        $this->base62 = \App::make('Base62');
+        $this->base62 = \App::make('BFACP\Libraries\Base62');
     }
 
     /**

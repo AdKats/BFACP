@@ -48,7 +48,7 @@ class AntiCheat
      * @var array
      */
     private $allowedCategorys = [
-        'BF3' => ['carbines', 'machine_guns', 'assault_rifles', 'sub_machine_gunes', 'handheld_weapons'],
+        'BF3' => ['carbines', 'machine_guns', 'assault_rifles', 'sub_machine_guns', 'handheld_weapons'],
         'BF4' => ['carbines', 'lmgs', 'assault_rifles', 'pdws', 'handguns', 'shotguns'],
         'BFH' => [
             'assault_rifles',
