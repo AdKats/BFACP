@@ -154,7 +154,7 @@
         $('#unban-form').submit(function(e) {
             e.preventDefault();
 
-            var unban = prompt("<?php echo Lang::get('adkats.bans.edit.unban.prompt'); ?>", "Unbanning {{ $ban->player->SoldierName; ?>");
+            var unban = prompt("<?php echo Lang::get('adkats.bans.edit.unban.prompt'); ?>", "Unbanning <?php echo $ban->player->SoldierName; ?>");
             var btn = $(this).find('button');
 
             if(unban !== null) {
