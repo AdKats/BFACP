@@ -9,7 +9,7 @@ class Role extends EntrustRole
      * Table name
      * @var string
      */
-    protected $table = 'bfadmincp_roles';
+    protected $table = 'bfacp_roles';
 
     /**
      * Table primary key
@@ -59,7 +59,7 @@ class Role extends EntrustRole
      * @var array
      */
     public static $rules = [
-        'name' => 'required|unique:bfadmincp_roles,name|between:4,255'
+        'name' => 'required|unique:bfacp_roles,name|between:4,255'
     ];
 
     /**

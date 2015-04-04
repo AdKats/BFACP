@@ -8,7 +8,7 @@ class Permission extends EntrustPermission
      * Table name
      * @var string
      */
-    protected $table = 'bfadmincp_permissions';
+    protected $table = 'bfacp_permissions';
 
     /**
      * Table primary key

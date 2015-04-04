@@ -25,6 +25,41 @@ class CreateBaseTables extends Migration {
 			$table->timestamp('lastseen_at');
 		});
 
+        // Creates the user settings table
+        Schema::create('bfacp_settings_users', function(Blueprint $table) {
+            $table->integer('user_id')->unsigned()->primary();
+            $table->string('lang', 3)->default('en')->index();
+            $table->string('timezone')->default('UTC')->index();
+            $table->boolean('notifications')->default(true);
+            $table->boolean('notifications_alert')->default(true);
+            $table->string('notifications_alert_sound', 30)->default('alert0');
+            $table->timestamps();
+        });
+
+        // Creates the user soldiers table
+        Schema::create('bfacp_users_soldiers', function(Blueprint $table) {
+            $table->integer('user_id')->unsigned()->index();
+            $table->integer('player_id')->unsigned()->index();
+            $table->primary(['user_id', 'player_id']);
+            $table->foreign('user_id')->references('id')->on('bfacp_users')
+                      ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('player_id')->references('PlayerID')->on('tbl_playerdata')
+                      ->onUpdate('cascade')->onDelete('cascade');
+        });
+
+        // Create servers settings table
+        Schema::create('bfacp_settings_servers', function(Blueprint $table) {
+            $table->smallInteger('server_id')->unsigned()->primary();
+            $table->text('rcon_password')->nullable();
+            $table->string('filter')->nullable();
+            $table->integer('monitor_key')->unsigned()->nullable();
+            $table->string('battlelog_guid', 100)->nullable();
+            $table->timestamps();
+
+            $table->foreign('server_id')->references('ServerID')->on('tbl_server')
+                      ->onUpdate('cascade')->onDelete('cascade');
+        });
+
 		// Creates password reminders table
 		Schema::create('bfacp_password_reminders', function(Blueprint $table) {
 			$table->string('email');
@@ -44,9 +79,9 @@ class CreateBaseTables extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('role_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('bfacp__users')
+            $table->foreign('user_id')->references('id')->on('bfacp_users')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('role_id')->references('id')->on('bfacp_roles');
         });
 
         // Creates the permissions table
@@ -63,8 +98,22 @@ class CreateBaseTables extends Migration {
             $table->integer('permission_id')->unsigned();
             $table->integer('role_id')->unsigned();
             $table->foreign('permission_id')->references('id')->on('bfacp_permissions'); // assumes a users table
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('role_id')->references('id')->on('bfacp_roles');
         });
+
+        // Creates the adkats battlelog players table if it doesn't exist
+        if(!Schema::hasTable('adkats_battlelog_players')) {
+            Schema::create('adkats_battlelog_players', function(Blueprint $table) {
+                $table->integer('player_id')->unsigned()->primary();
+                $table->bigInteger('persona_id')->unsigned()->index();
+                $table->bigInteger('user_id')->unsigned()->index();
+                $table->string('gravatar', 32)->nullable();
+                $table->boolean('persona_banned')->default(false);
+                $table->unique(['player_id', 'persona_id']);
+                $table->foreign('player_id')->references('PlayerID')->on('tbl_playerdata')
+                      ->onUpdate('cascade')->onDelete('cascade');
+            });
+        }
 	}
 
 
@@ -85,10 +134,22 @@ class CreateBaseTables extends Migration {
             $table->dropForeign('bfacp_permission_role_role_id_foreign');
         });
 
+        Schema::table('bfacp_users_soldiers', function (Blueprint $table) {
+            $table->dropForeign('bfacp_users_soldiers_user_id_foreign');
+            $table->dropForeign('bfacp_users_soldiers_player_id_foreign');
+        });
+
+        Schema::table('bfacp_settings_servers', function (Blueprint $table) {
+            $table->dropForeign('bfacp_settings_servers_server_id_foreign');
+        });
+
+        Schema::dropIfExists('bfacp_settings_servers');
         Schema::dropIfExists('bfacp_assigned_roles');
         Schema::dropIfExists('bfacp_permission_role');
         Schema::dropIfExists('bfacp_roles');
         Schema::dropIfExists('bfacp_permissions');
+        Schema::dropIfExists('bfacp_users_soldiers');
+        Schema::dropIfExists('bfacp_settings_users');
 		Schema::dropIfExists('bfacp_users');
 		Schema::dropIfExists('bfacp_password_reminders');
 	}

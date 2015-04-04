@@ -15,7 +15,7 @@ class User extends Elegant implements ConfideUserInterface
      * Table name
      * @var string
      */
-    protected $table = 'bfadmincp_users';
+    protected $table = 'bfacp_users';
 
     /**
      * Table primary key
@@ -27,19 +27,19 @@ class User extends Elegant implements ConfideUserInterface
      * Fields allowed to be mass assigned
      * @var array
      */
-    protected $fillable = ['username', 'email', 'password', 'confirmed'];
+    protected $guarded = ['id'];
 
     /**
      * Date fields to convert to carbon instances
      * @var array
      */
-    protected $dates = [];
+    protected $dates = ['lastseen_at'];
 
     /**
      * The attributes excluded form the models JSON response.
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['password', 'remember_token', 'confirmation_code'];
 
     /**
      * Should model handle timestamps
@@ -65,8 +65,8 @@ class User extends Elegant implements ConfideUserInterface
      * @var array
      */
     public static $rules = [
-        'username'              => 'required|unique:bfadmincp_users,username|alpha_num',
-        'email'                 => 'required|unique:bfadmincp_users,email|email',
+        'username'              => 'required|unique:bfacp_users,username|alpha_num',
+        'email'                 => 'required|unique:bfacp_users,email|email',
         'password'              => 'required|between:8,32|confirmed',
         'password_confirmation' => 'required_with:password|between:8,32'
     ];
@@ -129,12 +129,12 @@ class User extends Elegant implements ConfideUserInterface
      */
     public function roles()
     {
-        return $this->belongsToMany('BFACP\Account\Role', Config::get('entrust::assigned_roles_table'))->remember(10);
+        return $this->belongsToMany('BFACP\Account\Role', Config::get('entrust::assigned_roles_table'));
     }
 
     public function setting()
     {
-        return $this->hasOne('BFACP\Account\Preference', 'user_id');
+        return $this->hasOne('BFACP\Account\Setting', 'user_id');
     }
 
     public function getConfirmedAttribute()

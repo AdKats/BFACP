@@ -70,7 +70,7 @@ return array(
     |
     */
 
-    'migrations' => 'migrations',
+    'migrations' => 'bfacp_migrations',
 
     /*
     |--------------------------------------------------------------------------

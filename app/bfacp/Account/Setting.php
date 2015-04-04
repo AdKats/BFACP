@@ -2,13 +2,13 @@
 
 use BFACP\Elegant;
 
-class Preference extends Elegant
+class Setting extends Elegant
 {
     /**
      * Table name
      * @var string
      */
-    protected $table = 'bfadmincp_user_preferences';
+    protected $table = 'bfacp_settings_users';
 
     /**
      * Table primary key
@@ -20,7 +20,7 @@ class Preference extends Elegant
      * Fields allowed to be mass assigned
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $guarded = ['user_id'];
 
     /**
      * Date fields to convert to carbon instances
@@ -51,17 +51,16 @@ class Preference extends Elegant
      * Models to be loaded automaticly
      * @var array
      */
-    protected $with = ['bf3player', 'bf4player'];
+    protected $with = [];
 
     /**
      * Validation rules
      * @var array
      */
     public static $rules = [
-        'gravatar'     => 'email',
-        'timezone'     => 'timezone',
-        'bf3_playerid' => 'exists:tbl_playerdata,PlayerID',
-        'bf4_playerid' => 'exists:tbl_playerdata,PlayerID'
+        'gravatar' => 'email',
+        'timezone' => 'timezone',
+        'lang'     => 'string'
     ];
 
     /**
@@ -70,36 +69,5 @@ class Preference extends Elegant
     public function user()
     {
         return $this->belongsTo('BFACP\Account\User', 'user_id');
-    }
-
-    public function playerIds()
-    {
-        $ids = [];
-
-        if ($this->bf3player) {
-            $ids[] = $this->bf3player->PlayerID;
-        }
-
-        if ($this->bf4player) {
-            $ids[] = $this->bf4player->PlayerID;
-        }
-
-        return $ids;
-    }
-
-    /**
-     * @return Illuminate\Database\Eloquent\Model
-     */
-    public function bf3player()
-    {
-        return $this->belongsTo('BFACP\Battlefield\Player', 'bf3_playerid')->remember(10);
-    }
-
-    /**
-     * @return Illuminate\Database\Eloquent\Model
-     */
-    public function bf4player()
-    {
-        return $this->belongsTo('BFACP\Battlefield\Player', 'bf4_playerid')->remember(10);
     }
 }

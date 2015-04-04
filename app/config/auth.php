@@ -41,7 +41,7 @@ return array(
 	|
 	*/
 
-	'table' => 'bfadmincp_users',
+	'table' => 'bfacp_users',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -62,7 +62,7 @@ return array(
 
 		'email' => 'emails.auth.reminder',
 
-		'table' => 'bfadmincp_password_reminders',
+		'table' => 'bfacp_password_reminders',
 
 		'expire' => 60,
 

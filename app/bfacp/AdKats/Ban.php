@@ -15,7 +15,7 @@ class Ban extends Elegant
      * Table primary key
      * @var string
      */
-    protected $primaryKey = 'player_id';
+    protected $primaryKey = 'ban_id';
 
     /**
      * Fields not allowed to be mass assigned
@@ -40,7 +40,7 @@ class Ban extends Elegant
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = ['is_active', 'is_expired', 'is_perm', 'ban_enforceName', 'ban_enforceGUID', 'ban_enforceIP', 'ban_issued', 'ban_expires'];
+    protected $appends = ['is_active', 'is_expired', 'is_unbanned', 'is_perm', 'ban_enforceName', 'ban_enforceGUID', 'ban_enforceIP', 'ban_issued', 'ban_expires'];
 
     /**
      * Models to be loaded automaticly
@@ -112,7 +112,7 @@ class Ban extends Elegant
      */
     public function previous()
     {
-        return $this->hasMany('BFACP\AdKats\Record', 'target_id')
+        return $this->hasMany('BFACP\AdKats\Record', 'target_id', 'player_id')
                     ->whereIn('command_action', [7, 8, 72, 73])
                     ->orderBy('record_time', 'desc');
     }
@@ -170,6 +170,15 @@ class Ban extends Elegant
     public function getIsExpiredAttribute()
     {
         return $this->attributes['ban_status'] == 'Expired';
+    }
+
+    /**
+     * Is unbanned
+     * @return bool
+     */
+    public function getIsUnbannedAttribute()
+    {
+        return $this->attributes['ban_status'] == 'Disabled' || $this->attributes['ban_status'] == 'Expired';
     }
 
     /**
