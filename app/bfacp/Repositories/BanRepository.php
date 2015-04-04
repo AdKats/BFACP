@@ -32,4 +32,28 @@ class BanRepository extends BaseRepository
 
         return $bans;
     }
+
+    /**
+     * Gets the banlist
+     * @param  integer $limit Results to return
+     * @return objects
+     */
+    public function getBanList($limit = 100)
+    {
+        $bans = Ban::with('player', 'record')->orderBy('ban_startTime', 'desc')->paginate($limit);
+
+        return $bans;
+    }
+
+    /**
+     * Gets a ban by their ID
+     * @param  integer $id Ban ID
+     * @return object
+     */
+    public function getBanById($id)
+    {
+        $ban = Ban::with('player', 'record')->findOrFail($id);
+
+        return $ban;
+    }
 }

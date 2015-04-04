@@ -93,8 +93,7 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
     Route::group(['prefix' => 'players'], function()
     {
         Route::get('/', ['as' => 'player.listing', 'uses' => 'PlayersController@listing']);
-    	Route::get('{id}/{name?}', ['as' => 'player.show', 'uses' => 'PlayersController@profile'])
-            ->where('id', '[0-9]+');
+    	Route::get('{id}/{name?}', ['as' => 'player.show', 'uses' => 'PlayersController@profile'])->where('id', '[0-9]+');
     });
 
     Route::group(['prefix' => 'servers'], function()
@@ -108,6 +107,17 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
         {
             Route::get('locale', ['as' => 'admin.adkats.locale.index', 'uses' => 'LocaleController@showIndex']);
             Route::post('locale', ['as' => 'admin.adkats.locale.save', 'uses' => 'LocaleController@save']);
+
+            // AdKats Bans Routes
+            Route::resource('bans', 'BansController', [
+                'names' => [
+                    'index'   => 'admin.adkats.bans.index',
+                    'edit'    => 'admin.adkats.bans.edit',
+                    'update'  => 'admin.adkats.bans.update',
+                    'destroy' => 'admin.adkats.bans.destroy'
+                ],
+                'only' => ['index', 'edit', 'update', 'destroy']
+            ]);
         });
 
         Route::get('updater', ['as' => 'admin.updater.index', 'uses' => 'UpdaterController@index']);

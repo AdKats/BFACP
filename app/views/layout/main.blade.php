@@ -60,6 +60,26 @@
                 </section>
 
                 <section class="content">
+                    @foreach(Session::get('messages', []) as $message)
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <alert type="info">
+                                <i class="fa fa-info-circle"></i>&nbsp;{{ $message }}
+                            </alert>
+                        </div>
+                    </div>
+                    @endforeach
+
+                    @foreach($errors->all() as $message)
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <alert type="error">
+                                <i class="fa fa-times"></i>&nbsp;{{ $message }}
+                            </alert>
+                        </div>
+                    </div>
+                    @endforeach
+
                     @yield('content')
                 </section>
             </div>

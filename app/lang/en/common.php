@@ -14,7 +14,7 @@ return [
             'col1' => 'Player',
             'col2' => 'Game',
             'col3' => 'Type',
-            'expiration' => 'Expiration'
+            'col4' => 'Expiration'
         ],
         'type' => [
             'none' => 'No Assessment',
