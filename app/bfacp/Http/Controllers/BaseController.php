@@ -1,5 +1,6 @@
 <?php namespace BFACP\Http\Controllers;
 
+use Entrust;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Facades\Lang;
