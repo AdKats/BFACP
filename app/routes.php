@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Route Model Bindings
+ */
 Route::model('player', 'BFACP\Battlefield\Player');
 
+/**
+ * Route Registering
+ */
 Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], function()
 {
     Route::group(['prefix' => 'players'], function()
@@ -105,9 +111,6 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
     {
         Route::group(['prefix' => 'adkats', 'namespace' => 'AdKats'], function()
         {
-            Route::get('locale', ['as' => 'admin.adkats.locale.index', 'uses' => 'LocaleController@showIndex']);
-            Route::post('locale', ['as' => 'admin.adkats.locale.save', 'uses' => 'LocaleController@save']);
-
             // AdKats Bans Routes
             Route::resource('bans', 'BansController', [
                 'names' => [
@@ -123,3 +126,10 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
         Route::get('updater', ['as' => 'admin.updater.index', 'uses' => 'UpdaterController@index']);
     });
 });
+
+/**
+ * Route Permissions
+ */
+Entrust::routeNeedsPermission('admin/adkats/bans', 'admin.adkats.bans.view');
+Entrust::routeNeedsPermission('admin/adkats/bans/*', 'admin.adkats.bans.edit');
+Entrust::routeNeedsPermission('chatlogs', 'chatlogs');

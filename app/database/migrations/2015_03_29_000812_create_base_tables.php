@@ -63,7 +63,6 @@ class CreateBaseTables extends Migration
             $table->integer('monitor_key')->unsigned()->nullable();
             $table->string('battlelog_guid', 100)->nullable();
             $table->timestamps();
-
             $table->foreign('server_id')->references('ServerID')->on('tbl_server')->onUpdate('cascade')->onDelete('cascade');
         });
 
