@@ -260,7 +260,7 @@
                                         <span ng-bind="moment('{{ $ban->stamp }}').fromNow()" tooltip="<?php echo '{{'; ?> moment('<?php echo $ban->stamp; ?>').format('lll') <?php echo '}}'; ?>"></span>
                                     </td>
                                     <td>
-                                        <span ng-bind="moment('{{ Carbon::parse($ban->record_time)->addMinutes($ban->command_numeric)->toIso8601String() }}').fromNow()" tooltip="<?php echo '{{'; ?> moment('<?php echo Carbon::parse($ban->record_time)->addMinutes($ban->command_numeric)->toIso8601String(); ?>').format('lll') <?php echo '}}'; ?>"></span>
+                                        <span ng-bind="momentDuration({{ $ban->command_numeric }}, 'minutes')"></span>
                                     </td>
                                     <td>
                                         @if($ban->server->is_active)

@@ -74,7 +74,7 @@ return [
                 'none' => 'No previous bans on file',
                 'table' => [
                     'col1' => 'Issued',
-                    'col2' => 'Expires',
+                    'col2' => 'Duration',
                     'col3' => 'Server',
                     'col4' => 'Type',
                     'col5' => 'Reason'
