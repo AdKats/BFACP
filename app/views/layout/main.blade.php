@@ -3,7 +3,7 @@
     <head>
         <base href="/">
         <meta charset="UTF-8">
-        <title>{{{ MainHelper::getTitle($page_title, NULL) }}}</title>
+        <title>{{{ MainHelper::getTitle($page_title, Config::get('bfacp.site.title')) }}}</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
         @yield('meta')
@@ -38,7 +38,7 @@
     <body class="skin-blue">
         <div class="wrapper">
             <header class="main-header">
-                {{ link_to_route('home', MainHelper::getTitle($page_title, NULL, TRUE), [], ['class' => 'logo', 'target' => '_self']) }}
+                {{ link_to_route('home', MainHelper::getTitle($page_title, Config::get('bfacp.site.title'), true), [], ['class' => 'logo', 'target' => '_self']) }}
 
                 <nav class="navbar navbar-static-top" role="navigation">
                     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">

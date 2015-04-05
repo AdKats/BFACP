@@ -9,7 +9,13 @@ $format = function(&$options, $keys, $value) use(&$format) {
 };
 
 foreach(Option::all() as $option) {
-    $format($options, explode('.', $option->option_key), $option->option_value);
+    if($option->option_value === 1 || $option->option_value === '1' || $option->option_value === 'true') {
+        $format($options, explode('.', $option->option_key), true);
+    } elseif($option->option_value === 0 || $option->option_value === '0' || $option->option_value === 'false') {
+        $format($options, explode('.', $option->option_key), false);
+    } else {
+        $format($options, explode('.', $option->option_key), $option->option_value);
+    }
 }
 
 return $options;
