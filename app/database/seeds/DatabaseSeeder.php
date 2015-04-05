@@ -14,10 +14,8 @@ class DatabaseSeeder extends Seeder {
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
         $this->call('OptionsTableSeeder');
-        $this->command->info("Options table seeded");
-
-        //$this->call('RolesPermissionsTableSeeder');
-        //$this->command->info("Roles table seeded");
+        $this->call('RolesTableSeeder');
+        $this->call('PermissionsTableSeeder');
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
 	}

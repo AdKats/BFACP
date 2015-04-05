@@ -20,7 +20,7 @@ class Permission extends EntrustPermission
      * Fields allowed to be mass assigned
      * @var array
      */
-    protected $fillable = ['name', 'display_name'];
+    protected $guarded = ['id'];
 
     /**
      * Date fields to convert to carbon instances
@@ -58,6 +58,6 @@ class Permission extends EntrustPermission
      * @var array
      */
     public static $rules = [
-        'name' => 'required|unique:bfadmincp_permissions,name|between:3,32'
+        'name' => 'required|unique:bfacp_permissions,name|between:3,255'
     ];
 }

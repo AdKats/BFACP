@@ -3,39 +3,40 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateBaseTables extends Migration {
+class CreateBaseTables extends Migration
+{
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
         // Create the BFACP Settings table
-        Schema::create('bfacp_options', function(Blueprint $table) {
+        Schema::create('bfacp_options', function (Blueprint $table) {
             $table->increments('option_id');
             $table->string('option_key', 64)->unique();
             $table->string('option_title', 100);
-            $table->longText('option_value');
-            $table->string('option_description')->default('');
+            $table->longText('option_value')->nullable();
+            $table->string('option_description')->nullable();
         });
 
-		// Creates the users table
-		Schema::create('bfacp_users', function(Blueprint $table) {
-			$table->increments('id');
-			$table->string('username', 20)->unique();
-			$table->string('email')->unique();
-			$table->string('password');
-			$table->string('confirmation_code');
-			$table->string('remember_token')->nullable();
-			$table->boolean('confirmed')->default(false);
-			$table->timestamps();
-			$table->timestamp('lastseen_at');
-		});
+        // Creates the users table
+        Schema::create('bfacp_users', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('username', 20)->unique();
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('confirmation_code');
+            $table->string('remember_token')->nullable();
+            $table->boolean('confirmed')->default(false);
+            $table->timestamps();
+            $table->timestamp('lastseen_at');
+        });
 
         // Creates the user settings table
-        Schema::create('bfacp_settings_users', function(Blueprint $table) {
+        Schema::create('bfacp_settings_users', function (Blueprint $table) {
             $table->integer('user_id')->unsigned()->primary();
             $table->string('lang', 3)->default('en')->index();
             $table->string('timezone')->default('UTC')->index();
@@ -46,18 +47,16 @@ class CreateBaseTables extends Migration {
         });
 
         // Creates the user soldiers table
-        Schema::create('bfacp_users_soldiers', function(Blueprint $table) {
+        Schema::create('bfacp_users_soldiers', function (Blueprint $table) {
             $table->integer('user_id')->unsigned()->index();
             $table->integer('player_id')->unsigned()->index();
             $table->primary(['user_id', 'player_id']);
-            $table->foreign('user_id')->references('id')->on('bfacp_users')
-                      ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('player_id')->references('PlayerID')->on('tbl_playerdata')
-                      ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('bfacp_users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('player_id')->references('PlayerID')->on('tbl_playerdata')->onUpdate('cascade')->onDelete('cascade');
         });
 
         // Create servers settings table
-        Schema::create('bfacp_settings_servers', function(Blueprint $table) {
+        Schema::create('bfacp_settings_servers', function (Blueprint $table) {
             $table->smallInteger('server_id')->unsigned()->primary();
             $table->text('rcon_password')->nullable();
             $table->string('filter')->nullable();
@@ -65,18 +64,17 @@ class CreateBaseTables extends Migration {
             $table->string('battlelog_guid', 100)->nullable();
             $table->timestamps();
 
-            $table->foreign('server_id')->references('ServerID')->on('tbl_server')
-                      ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('server_id')->references('ServerID')->on('tbl_server')->onUpdate('cascade')->onDelete('cascade');
         });
 
-		// Creates password reminders table
-		Schema::create('bfacp_password_reminders', function(Blueprint $table) {
-			$table->string('email');
-			$table->string('token');
-			$table->timestamp('created_at');
-		});
+        // Creates password reminders table
+        Schema::create('bfacp_password_reminders', function (Blueprint $table) {
+            $table->string('email');
+            $table->string('token');
+            $table->timestamp('created_at');
+        });
 
-		// Creates the roles table
+        // Creates the roles table
         Schema::create('bfacp_roles', function ($table) {
             $table->increments('id')->unsigned();
             $table->string('name')->unique();
@@ -88,9 +86,8 @@ class CreateBaseTables extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('role_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('bfacp_users')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('bfacp_roles');
+            $table->foreign('user_id')->references('id')->on('bfacp_users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('bfacp_roles')->onUpdate('cascade')->onDelete('cascade');
         });
 
         // Creates the permissions table
@@ -106,34 +103,32 @@ class CreateBaseTables extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('permission_id')->unsigned();
             $table->integer('role_id')->unsigned();
-            $table->foreign('permission_id')->references('id')->on('bfacp_permissions'); // assumes a users table
-            $table->foreign('role_id')->references('id')->on('bfacp_roles');
+            $table->foreign('permission_id')->references('id')->on('bfacp_permissions')->onUpdate('cascade')->onDelete('cascade'); // assumes a users table
+            $table->foreign('role_id')->references('id')->on('bfacp_roles')->onUpdate('cascade')->onDelete('cascade');
         });
 
         // Creates the adkats battlelog players table if it doesn't exist
-        if(!Schema::hasTable('adkats_battlelog_players')) {
-            Schema::create('adkats_battlelog_players', function(Blueprint $table) {
+        if (!Schema::hasTable('adkats_battlelog_players')) {
+            Schema::create('adkats_battlelog_players', function (Blueprint $table) {
                 $table->integer('player_id')->unsigned()->primary();
                 $table->bigInteger('persona_id')->unsigned()->index();
                 $table->bigInteger('user_id')->unsigned()->index();
                 $table->string('gravatar', 32)->nullable();
                 $table->boolean('persona_banned')->default(false);
                 $table->unique(['player_id', 'persona_id']);
-                $table->foreign('player_id')->references('PlayerID')->on('tbl_playerdata')
-                      ->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('player_id')->references('PlayerID')->on('tbl_playerdata')->onUpdate('cascade')->onDelete('cascade');
             });
         }
-	}
+    }
 
-
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::table('bfacp_assigned_roles', function (Blueprint $table) {
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('bfacp_assigned_roles', function (Blueprint $table) {
             $table->dropForeign('bfacp_assigned_roles_user_id_foreign');
             $table->dropForeign('bfacp_assigned_roles_role_id_foreign');
         });
@@ -160,8 +155,8 @@ class CreateBaseTables extends Migration {
         Schema::dropIfExists('bfacp_permissions');
         Schema::dropIfExists('bfacp_users_soldiers');
         Schema::dropIfExists('bfacp_settings_users');
-		Schema::dropIfExists('bfacp_users');
-		Schema::dropIfExists('bfacp_password_reminders');
-	}
+        Schema::dropIfExists('bfacp_users');
+        Schema::dropIfExists('bfacp_password_reminders');
+    }
 
 }
