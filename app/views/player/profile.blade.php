@@ -35,7 +35,7 @@
                             <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.eaguid') }}</label>
                             <div class="col-sm-9">
                                 <p class="form-control-static">
-                                    @if( ! empty($player->EAGUID) )
+                                    @if( ! empty($player->EAGUID) && Entrust::can('player.view.guids') )
                                     {{ link_to_route('player.listing', $player->EAGUID, [
                                         'player' => $player->EAGUID
                                     ], [
@@ -52,7 +52,7 @@
                             <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.pbguid') }}</label>
                             <div class="col-sm-9">
                                 <p class="form-control-static">
-                                    @if( ! empty($player->PBGUID) )
+                                    @if( ! empty($player->PBGUID) && Entrust::can('player.view.guids') )
                                     {{ link_to_route('player.listing', $player->PBGUID, [
                                         'player' => $player->PBGUID
                                     ], [
@@ -69,7 +69,7 @@
                             <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.ip') }}</label>
                             <div class="col-sm-9">
                                 <p class="form-control-static">
-                                    @if( ! empty($player->IP_Address) )
+                                    @if( ! empty($player->IP_Address) && Entrust::can('player.view.ip') )
                                     {{ link_to_route('player.listing', $player->IP_Address, [
                                         'player' => $player->IP_Address
                                     ], [
