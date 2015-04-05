@@ -177,7 +177,7 @@
             </div>
         </div>
 
-        @if(Config::get('bfacp.metabans.key', FALSE) !== FALSE)
+        @if(Config::get('bfacp.metabans.enabled'))
         <div class="col-xs-12 col-md-5 col-lg-6" ng-include="'js/templates/metabans.html'" onload="metabans()"></div>
         @endif
     </div>

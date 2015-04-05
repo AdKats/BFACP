@@ -87,12 +87,16 @@ class Metabans
 
     public function __construct()
     {
-        $this->key     = Config::get('bfacp.metabans.key', false);
-        $this->user    = Config::get('bfacp.metabans.user', false);
-        $this->account = Config::get('bfacp.metabans.account', false);
+        $this->key     = Config::get('bfacp.metabans.key', null);
+        $this->user    = Config::get('bfacp.metabans.user', null);
+        $this->account = Config::get('bfacp.metabans.account', null);
 
-        if ($this->key === false || $this->user === false || $this->account === false) {
-            throw new MetabansException('Metabans settings are not configured. Please update the configuration in the site settings.');
+        if (!Config::get('bfacp.metabans.enabled')) {
+            throw new MetabansException(500, 'Metabans integration is not enabled.');
+        }
+
+        if (empty($this->key) || empty($this->user) || empty($this->account)) {
+            throw new MetabansException(500, 'Metabans settings are not configured. Please update the configuration in the site settings.');
         }
 
         $this->salt = mt_rand(10000, 99999);

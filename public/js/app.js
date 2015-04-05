@@ -169,6 +169,10 @@ angular.module('bfacp', [
                 $scope.results.metabans.assessments.enforced_bans_total = data.data.assessments.enforced_bans_total;
                 $scope.results.metabans.locales = data.data.locales;
             }).error(function(data, status) {
+                if(data.status_code == 500) {
+                    return false;
+                }
+
                 $scope.metabans();
             });
 

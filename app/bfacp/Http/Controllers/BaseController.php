@@ -19,13 +19,13 @@ class BaseController extends Controller
 
         Menu::make('MainNav', function ($menu) {
             $menu->raw(strtoupper(Lang::get('navigation.main.title')), ['class' => 'header']);
-            $menu->add(Lang::get('navigation.main.items.dashboard'), ['route' => 'home'])->prepend(HTML::ficon('fa-dashboard'));
+            $menu->add(Lang::get('navigation.main.items.dashboard'), ['route' => 'home'])->prepend(HTML::faicon('fa-dashboard'));
 
-            if (!$this->isLoggedIn) {
+            if ($this->isLoggedIn) {
                 $menu->raw(strtoupper(Lang::get('navigation.admin.title')), ['class' => 'header']);
 
                 if (Entrust::can('admin.adkats.bans.view')) {
-                    $menu->add(Lang::get('navigation.main.items.banlist'), ['route' => 'admin.adkats.bans.index'])->prepend(HTML::ficon('fa-hammer'));
+                    $menu->add(Lang::get('navigation.admin.adkats.items.banlist'), ['route' => 'admin.adkats.bans.index'])->prepend(HTML::ionicon('ion-hammer'));
                 }
             }
         });
