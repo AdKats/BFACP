@@ -14,7 +14,7 @@ class RolesTableSeeder extends Seeder
 
         Role::truncate();
 
-        foreach($roles as $role) {
+        foreach ($roles as $role) {
             Role::create(['name' => $role]);
         }
     }

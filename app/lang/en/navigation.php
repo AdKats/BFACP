@@ -13,7 +13,7 @@ return [
         'adkats' => [
             'title' => 'AdKats Management',
             'items' => [
-                'locale_editor' => 'Locale Editor'
+                'banlist' => 'Banlist'
             ]
         ]
     ]

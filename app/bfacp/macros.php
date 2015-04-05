@@ -10,3 +10,8 @@ HTML::macro('moment', function($timestamp = null, $duration = null, $durationFor
         return sprintf('{{ momentDuration(%u, \'%s\') }}', (int) $duration, $durationFormat);
     }
 });
+
+HTML::macro('ficon', function($icon)
+{
+    return sprintf('<i class="fa %s"></i>', $icon);
+});

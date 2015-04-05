@@ -13,20 +13,22 @@ class BaseController extends Controller
 
     public function __construct()
     {
+        $this->user = \App::make('bfadmincp')->user;
+        $this->isLoggedIn = \App::make('bfadmincp')->isLoggedIn;
+
         Menu::make('MainNav', function($menu)
         {
             $menu->raw(strtoupper(Lang::get('navigation.main.title')), ['class' => 'header']);
-            $menu->add(Lang::get('navigation.main.items.dashboard'), ['route' => 'home'])
-                ->prepend('<i class="fa fa-dashboard"></i>');
+            $menu->add(Lang::get('navigation.main.items.dashboard'), ['route' => 'home'])->prepend(HTML::ficon('fa-dashboard'));
 
-            $menu->raw(strtoupper(Lang::get('navigation.admin.title')), ['class' => 'header']);
+            if(!$this->isLoggedIn) {
+                $menu->raw(strtoupper(Lang::get('navigation.admin.title')), ['class' => 'header']);
 
-            $menu->add(Lang::get('navigation.admin.adkats.title'), 'javascript:://')
-                ->add(Lang::get('navigation.admin.adkats.items.locale_editor'), ['route' => 'admin.adkats.locale.index']);
+                if(Entrust::can('admin.adkats.bans.view')) {
+                    $menu->add(Lang::get('navigation.main.items.banlist'), ['route' => 'admin.adkats.bans.index'])->prepend(HTML::ficon('fa-hammer'));
+                }
+            }
         });
-
-        $this->user = \App::make('bfadmincp')->user;
-        $this->isLoggedIn = \App::make('bfadmincp')->isLoggedIn;
     }
 
     /**
