@@ -81,3 +81,5 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+require $app['path.base'] . '/app/bfacp/macros.php';

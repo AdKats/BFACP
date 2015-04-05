@@ -12,6 +12,15 @@ class CreateBaseTables extends Migration {
 	 */
 	public function up()
 	{
+        // Create the BFACP Settings table
+        Schema::create('bfacp_options', function(Blueprint $table) {
+            $table->increments('option_id');
+            $table->string('option_key', 64)->unique();
+            $table->string('option_title', 100);
+            $table->longText('option_value');
+            $table->string('option_description')->default('');
+        });
+
 		// Creates the users table
 		Schema::create('bfacp_users', function(Blueprint $table) {
 			$table->increments('id');
@@ -143,6 +152,7 @@ class CreateBaseTables extends Migration {
             $table->dropForeign('bfacp_settings_servers_server_id_foreign');
         });
 
+        Schema::dropIfExists('bfacp_options');
         Schema::dropIfExists('bfacp_settings_servers');
         Schema::dropIfExists('bfacp_assigned_roles');
         Schema::dropIfExists('bfacp_permission_role');

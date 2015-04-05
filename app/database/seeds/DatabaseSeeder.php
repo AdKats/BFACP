@@ -10,6 +10,16 @@ class DatabaseSeeder extends Seeder {
 	public function run()
 	{
 		Eloquent::unguard();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
+        $this->call('OptionsTableSeeder');
+        $this->command->info("Options table seeded");
+
+        //$this->call('RolesPermissionsTableSeeder');
+        //$this->command->info("Roles table seeded");
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
 	}
 
 }

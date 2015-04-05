@@ -196,10 +196,10 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <span ng-bind="moment('{{ $player->ban->ban_issued }}').fromNow()" tooltip="<?php echo '{{'; ?> moment('<?php echo $player->ban->ban_issued; ?>').format('lll') <?php echo '}}'; ?>"></span>
+                                        <span ng-bind="moment('{{ $player->ban->ban_issued }}').fromNow()" tooltip="{{ HTML::moment($player->ban->ban_issued) }}"></span>
                                     </td>
                                     <td>
-                                        <span ng-bind="moment('{{ $player->ban->ban_expires }}').fromNow()" tooltip="<?php echo '{{'; ?> moment('<?php echo $player->ban->ban_expires; ?>').format('lll') <?php echo '}}'; ?>"></span>
+                                        <span ng-bind="moment('{{ $player->ban->ban_expires }}').fromNow()" tooltip="{{ HTML::moment($player->ban->ban_expires) }}"></span>
                                     </td>
                                     <td>
                                         @if($player->ban->record->server->is_active)
@@ -257,7 +257,7 @@
                                 <?php if($player->ban->latest_record_id == $ban->record_id) continue; ?>
                                 <tr>
                                     <td>
-                                        <span ng-bind="moment('{{ $ban->stamp }}').fromNow()" tooltip="<?php echo '{{'; ?> moment('<?php echo $ban->stamp; ?>').format('lll') <?php echo '}}'; ?>"></span>
+                                        <span ng-bind="moment('{{ $ban->stamp }}').fromNow()" tooltip="{{ HTML::moment($ban->stamp) }}"></span>
                                     </td>
                                     <td>
                                         <span ng-bind="momentDuration({{ $ban->command_numeric }}, 'minutes')"></span>
@@ -272,7 +272,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($ban->command_action == 73)
+                                        @if(in_array($ban->command_action, [8, 73]))
                                         <label class="label label-danger">{{ Lang::get('player.profile.bans.type.permanent.short') }}</label>
                                         @else
                                         <label class="label label-warning">{{ Lang::get('player.profile.bans.type.temporary.short') }}</label>
