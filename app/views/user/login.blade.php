@@ -29,10 +29,17 @@
             </div>
 
             <div class="login-box-body">
+                @if(Session::has('error'))
+                <div class="alert alert-error">
+                    {{ HTML::faicon('fa-times') }} {{ Session::get('error') }}
+                </div>
+                @endif
+
                 {{ Former::vertical_open()
                     ->method('POST')
+                    ->route('user.login.post')
                     ->rules([
-                        'username' => 'required|alpha_num',
+                        'username' => 'required',
                         'password' => 'required'
                     ]) }}
 
@@ -43,7 +50,7 @@
                         <div class="col-xs-8">
                             <div class="checkbox icheck">
                                 <label>
-                                    {{ Form::checkbox('remember', Input::old('remember')) }} Remember Me
+                                    {{ Form::checkbox('remember') }} Remember Me
                                 </label>
                             </div>
                         </div>

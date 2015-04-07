@@ -38,14 +38,14 @@
                     </div>
 
                     <div class="pull-right">
-                        {{ HTML::link('/logout', 'Logout', ['class' => 'btn btn-default btn-flat']) }}
+                        {{ link_to_route('user.logout', 'Logout', [], ['class' => 'btn btn-default btn-flat', 'target' => '_self']) }}
                     </div>
                 </li>
             </ul>
         </li>
         @else
         <li>
-            <a href="{{ URL::to('/login') }}">
+            <a href="{{ route('user.login') }}" target="_self">
                 {{ HTML::faicon('fa-sign-in') }}
                 <span>Login</span>
             </a>

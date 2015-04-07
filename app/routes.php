@@ -99,7 +99,9 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
     Route::get('login', ['as' => 'user.login', 'uses' => 'UsersController@showLogin', 'before' => 'guest']);
+    Route::get('logout', ['as' => 'user.logout', 'uses' => 'UsersController@logout', 'before' => 'auth']);
     Route::get('register', ['as' => 'user.register', 'uses' => 'UsersController@showLogin', 'before' => 'guest|user.register.enabled']);
+    Route::post('login', ['as' => 'user.login.post', 'uses' => 'UsersController@login', 'before' => 'guest|csrf']);
 
     Route::get('chatlogs', ['as' => 'chatlog.search', 'uses' => 'HomeController@chatlogs']);
 
