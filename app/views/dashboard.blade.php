@@ -136,7 +136,7 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-lg-6" ng-include="'js/templates/serverpopulation.html'" onload="population()"></div>
+        <div ng-include="'js/templates/serverpopulation.html'" onload="population()"></div>
         <div class="col-xs-12 col-lg-6">
             <div class="box box-solid bg-light-blue-gradient">
                 <div class="box-header">

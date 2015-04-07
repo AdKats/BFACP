@@ -1,40 +1,41 @@
-<div class="box box-info" ng-repeat-start="(gameKey, game) in results.population.data">
-    <div class="box-header with-border">
-        <h3 class="box-title"><span ng-bind="gameKey | uppercase"></span>&nbsp;<span ng-bind="results.population.title"></span></h3>
-    </div>
+<div class="col-xs-12 col-lg-6" ng-repeat-start="(gameKey, game) in results.population.data">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title"><span ng-bind="gameKey | uppercase"></span>&nbsp;<span ng-bind="results.population.title"></span></h3>
+        </div>
 
-    <div class="box-body">
-        <div class="table-responsive">
-            <table class="table no-margin table-condensed">
-                <thead>
-                    <tr>
-                        <th ng-bind="results.population.columns.col1"></th>
-                        <th ng-bind="results.population.columns.col2"></th>
-                        <th ng-bind="results.population.columns.col3" style="width:180px"></th>
-                    </tr>
-                </thead>
+        <div class="box-body">
+            <div class="table-responsive">
+                <table class="table no-margin table-condensed">
+                    <thead>
+                        <tr>
+                            <th ng-bind="results.population.columns.col1"></th>
+                            <th ng-bind="results.population.columns.col2"></th>
+                            <th ng-bind="results.population.columns.col3" style="width:180px"></th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    <tr ng-repeat="(serverKey, server) in game.servers" ng-class="populationColor(server.percentage, true)">
-                        <td>
-                            <a ng-href="/servers/live#id-{{ server.ServerID }}" style="color: white;" ng-bind="server.server_name_short || server.ServerName" target="_self"></a>
-                        </td>
-                        <td><span ng-bind="server.usedSlots"></span> / <span ng-bind="server.maxSlots"></span> <span ng-if="server.in_queue > 0">({{ server.in_queue }})</span></td>
-                        <td ng-bind="server.current_map"></td>
-                    </tr>
-                </tbody>
+                    <tbody>
+                        <tr ng-repeat="(serverKey, server) in game.servers" ng-class="populationColor(server.percentage, true)">
+                            <td>
+                                <a ng-href="/servers/live#id-{{ server.ServerID }}" style="color: white;" ng-bind="server.server_name_short || server.ServerName" target="_self"></a>
+                            </td>
+                            <td><span ng-bind="server.usedSlots"></span> / <span ng-bind="server.maxSlots"></span> <span ng-if="server.in_queue > 0">({{ server.in_queue }})</span></td>
+                            <td ng-bind="server.current_map"></td>
+                        </tr>
+                    </tbody>
 
-                <tfoot>
-                    <td><span class="pull-right" ng-bind="results.population.footer"></span></td>
-                    <td colspan="2"><span ng-bind="game.stats.online"></span> / <span ng-bind="game.stats.totalSlots"></span></td>
-                </tfoot>
-            </table>
+                    <tfoot>
+                        <td><span class="pull-right" ng-bind="results.population.footer"></span></td>
+                        <td colspan="2"><span ng-bind="game.stats.online"></span> / <span ng-bind="game.stats.totalSlots"></span></td>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div class="box-footer clearfix">
+            <progressbar class="progress-striped active" value="game.stats.percentage" type="{{ populationColor(game.stats.percentage) }}" max="100"><span ng-bind="game.stats.percentage"></span>%</progressbar>
         </div>
     </div>
-
-    <div class="box-footer clearfix">
-        <progressbar class="progress-striped active" value="game.stats.percentage" type="{{ populationColor(game.stats.percentage) }}" max="100"><span ng-bind="game.stats.percentage"></span>%</progressbar>
-    </div>
 </div>
-
 <div ng-repeat-end></div>

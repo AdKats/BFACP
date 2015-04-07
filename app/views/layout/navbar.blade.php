@@ -8,17 +8,17 @@
                 <span>{{{ $user->username }}} <i class="caret"></i></span>
             </a>
             <ul class="dropdown-menu">
-                <li class="user-header bg-black">
+                <li class="user-header bg-light-blue">
                     {{ HTML::image($user->gravatar, NULL, ['class' => 'img-circle']) }}
                     <p>
                         {{{ $user->roles[0]->name }}}
-                        <small>Member since {{ $user->created_at->format('M. Y') }}</small>
+                        <small>Member since <span ng-bind="moment('{{ $user->created_at->toIso8601String() }}').format('MMMM YYYY')"></span></small>
                     </p>
                 </li>
 
                 <li class="user-body">
                     @forelse($user->soldiers as $soldier)
-                    <div class="col-xs-3">
+                    <div class="col-xs-4">
                     {{ link_to_route('player.show', $soldier->player->game->Name, [
                         $soldier->player->PlayerID,
                         $soldier->player->SoldierName
