@@ -1,12 +1,11 @@
 <?php namespace BFACP\Account;
 
-use BFACP\Elegant;
 use Illuminate\Support\Facades\Config;
 use Zizaco\Confide\ConfideUser;
 use Zizaco\Confide\ConfideUserInterface;
 use Zizaco\Entrust\HasRole;
 
-class User extends Elegant implements ConfideUserInterface
+class User extends \Eloquent implements ConfideUserInterface
 {
     use ConfideUser;
     use HasRole;
@@ -58,7 +57,7 @@ class User extends Elegant implements ConfideUserInterface
      * Models to be loaded automaticly
      * @var array
      */
-    protected $with = ['setting', 'roles'];
+    protected $with = ['setting', 'roles', 'soldiers'];
 
     /**
      * Validation rules
@@ -67,8 +66,7 @@ class User extends Elegant implements ConfideUserInterface
     public static $rules = [
         'username'              => 'required|unique:bfacp_users,username|alpha_num',
         'email'                 => 'required|unique:bfacp_users,email|email',
-        'password'              => 'required|between:8,32|confirmed',
-        'password_confirmation' => 'required_with:password|between:8,32'
+        'password'              => 'required|min:8|confirmed'
     ];
 
     /**
@@ -119,6 +117,10 @@ class User extends Elegant implements ConfideUserInterface
         $this->remember_token = $value;
     }
 
+    /**
+     * Returns the name of the remember token
+     * @return string
+     */
     public function getRememberTokenName()
     {
         return 'remember_token';
@@ -132,11 +134,26 @@ class User extends Elegant implements ConfideUserInterface
         return $this->belongsToMany('BFACP\Account\Role', Config::get('entrust::assigned_roles_table'));
     }
 
+    /**
+     * @return Illuminate\Database\Eloquent\Model
+     */
     public function setting()
     {
         return $this->hasOne('BFACP\Account\Setting', 'user_id');
     }
 
+    /**
+     * @return Illuminate\Database\Eloquent\Model
+     */
+    public function soldiers()
+    {
+        return $this->hasMany('BFACP\Account\Soldier', 'user_id');
+    }
+
+    /**
+     * Has user confirmed their account
+     * @return boolean
+     */
     public function getConfirmedAttribute()
     {
         return $this->attributes['confirmed'] == 1;
@@ -148,9 +165,8 @@ class User extends Elegant implements ConfideUserInterface
      */
     public function getGravatarAttribute()
     {
-        $email = $this->setting->gravatar ?: $this->email;
-        $url   = '//www.gravatar.com/avatar/';
-        $url .= md5(strtolower(trim($email)));
+        $url = '//www.gravatar.com/avatar/';
+        $url .= md5(strtolower(trim($this->email)));
         $url .= '?s=80&d=mm&r=x';
 
         return $url;

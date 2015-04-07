@@ -1,9 +1,9 @@
-<aside class="left-side">
+<aside class="main-sidebar">
     <section class="sidebar">
         <div class="user-panel">
-            @if($user->isLoggedIn)
+            @if(Auth::check())
             <div class="pull-left image">
-                {{ HTML::image($user->gravatar, NULL, ['class' => 'img-circle']) }}
+                {{ HTML::image($user->gravatar, null, ['class' => 'img-circle']) }}
             </div>
             <div class="pull-left info">
                 <p>{{{ $user->username }}}</p>
@@ -15,7 +15,7 @@
             </div>
             @else
             <div class="pull-left image">
-                {{ HTML::image("https://www.gravatar.com/avatar/", NULL, ['class' => 'img-circle']) }}
+                {{ HTML::image("https://www.gravatar.com/avatar/", null, ['class' => 'img-circle']) }}
             </div>
             <div class="pull-left info">
                 <p>Hello, Guest</p>

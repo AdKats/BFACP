@@ -20,21 +20,23 @@
                     @if($user->setting->bf3player)
                     <div class="col-xs-6 text-center">
                         <a href="{{ $user->setting->bf3player->profile_url }}">
-                            {{ sprintf("[%s] %s", 
+                            {{ sprintf("[%s] %s",
                             $user->setting->bf3player->game->Name,
                             $user->setting->bf3player->SoldierName) }}
                         </a>
                     </div>
                     @endif
-                    @if($user->setting->bf4player)
-                    <div class="col-xs-6 text-center">
-                        <a href="{{ $user->setting->bf4player->profile_url }}">
-                            {{ sprintf("[%s] %s", 
-                            $user->setting->bf4player->game->Name,
-                            $user->setting->bf4player->SoldierName) }}
-                        </a>
+
+                    @forelse($user->soldiers as $soldier)
+                    <div class="col-xs-3">
+                    {{ link_to_route('player.show', $soldier->player->game->Name, [
+                        $soldier->player->PlayerID,
+                        $soldier->player->SoldierName
+                    ], ['target' => '_self', 'class' => $soldier->player->game->class_css, 'style' => 'color: white !important']) }}
                     </div>
-                    @endif
+                    @empty
+                    <alert type="info">No soldiers found.</alert>
+                    @endforelse
                 </li>
 
                 <li class="user-footer">

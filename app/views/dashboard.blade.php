@@ -159,12 +159,6 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">{{ Lang::get('dashboard.bans.title') }}</h3>
                     <div class="box-tools pull-right">
-                        @if($user->isLoggedIn)
-                        <label>
-                            Display Only My Bans
-                            <input type="checkbox" ng-model="opts.bans.personal" ng-change="latestBans()">
-                        </label>
-                        @endif
                         <button class="btn btn-box-tool" ng-click="latestBans()" tooltip="Refresh" id="latest-ban-refresh-btn"><i class="fa fa-refresh"></i></button>
                     </div>
                 </div>

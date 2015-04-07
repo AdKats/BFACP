@@ -34,22 +34,19 @@ App::before(function($request)
     {
         $app = new stdClass;
 
-        if(Auth::check())
-        {
-            $app->user = Auth::user();
+        $app->isLoggedIn = Auth::check();
+        $app->user = null;
 
-            $app->isLoggedIn = TRUE;
-        }
-        else
-        {
-            $app->user = NULL;
-            $app->isLoggedIn = FALSE;
+        if($app->isLoggedIn) {
+            $app->user = Auth::user();
         }
 
         return $app;
     });
 
-    View::share('user', App::make('bfadmincp'));
+    $bfacp = App::make('bfadmincp');
+
+    View::share('user', $bfacp->user);
 });
 
 
@@ -123,4 +120,15 @@ Route::filter('csrf', function()
     {
         throw new Illuminate\Session\TokenMismatchException;
     }
+});
+
+/*
+|--------------------------------------------------------------------------
+| Custom Filters
+|--------------------------------------------------------------------------
+*/
+
+Route::filter('user.register.enabled', function()
+{
+    if(!Config::get('bfacp.site.registration')) return Redirect::route('home');
 });

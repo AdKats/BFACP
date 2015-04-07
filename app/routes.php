@@ -6,7 +6,7 @@
 Route::model('player', 'BFACP\Battlefield\Player');
 
 /**
- * Route Registering
+ * Route API Registering
  */
 Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], function()
 {
@@ -90,9 +90,16 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
     });
 });
 
+
+/**
+ * Route Application Registering
+ */
 Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
 {
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
+
+    Route::get('login', ['as' => 'user.login', 'uses' => 'UsersController@showLogin', 'before' => 'guest']);
+    Route::get('register', ['as' => 'user.register', 'uses' => 'UsersController@showLogin', 'before' => 'guest|user.register.enabled']);
 
     Route::get('chatlogs', ['as' => 'chatlog.search', 'uses' => 'HomeController@chatlogs']);
 

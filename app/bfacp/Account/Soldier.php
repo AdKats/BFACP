@@ -1,27 +1,26 @@
 <?php namespace BFACP\Account;
 
-use Illuminate\Support\Facades\Config;
-use Zizaco\Entrust\EntrustRole;
+use BFACP\Elegant;
 
-class Role extends EntrustRole
+class Soldier extends Elegant
 {
     /**
      * Table name
      * @var string
      */
-    protected $table = 'bfacp_roles';
+    protected $table = 'bfacp_users_soldiers';
 
     /**
      * Table primary key
      * @var string
      */
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'user_id';
 
     /**
      * Fields allowed to be mass assigned
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['user_id', 'player_id'];
 
     /**
      * Date fields to convert to carbon instances
@@ -40,7 +39,7 @@ class Role extends EntrustRole
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     /**
      * Append custom attributes to output
@@ -52,21 +51,21 @@ class Role extends EntrustRole
      * Models to be loaded automaticly
      * @var array
      */
-    protected $with = [];
-
-    /**
-     * Validation rules
-     * @var array
-     */
-    public static $rules = [
-        'name' => 'required|unique:bfacp_roles,name|between:4,255'
-    ];
+    protected $with = ['player'];
 
     /**
      * @return Illuminate\Database\Eloquent\Model
      */
-    public function permissions()
+    public function user()
     {
-        return $this->belongsToMany('BFACP\Account\Permission', Config::get('entrust::permission_role_table'));
+        return $this->belongsTo('BFACP\Account\User', 'user_id');
+    }
+
+    /**
+     * @return Illuminate\Database\Eloquent\Model
+     */
+    public function player()
+    {
+        return $this->belongsTo('BFACP\Battlefield\Player', 'player_id');
     }
 }

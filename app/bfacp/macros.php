@@ -13,10 +13,10 @@ HTML::macro('moment', function($timestamp = null, $duration = null, $durationFor
 
 HTML::macro('faicon', function($icon)
 {
-    return sprintf('<i class="fa %s"></i>', $icon);
+    return sprintf('<i class="fa %s"></i><span>', $icon);
 });
 
 HTML::macro('ionicon', function($icon)
 {
-    return sprintf('<i class="ion %s"></i>', $icon);
+    return sprintf('<i class="ion %s"></i><span>', $icon);
 });

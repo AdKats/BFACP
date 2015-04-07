@@ -14,8 +14,8 @@
 
         {{ HTML::style('css/ionicons.min.css') }}
 
-        {{ HTML::style('css/style.min.css?v=1') }}
-        {{ HTML::style('css/skin-blue.min.css?v=1') }}
+        {{ HTML::style('css/style.css?v=1') }}
+        {{ HTML::style('css/_all-skins.min.css?v=1') }}
         {{ HTML::style('css/custom.css?v=1') }}
         {{ HTML::style('css/iCheck/all.css') }}
         {{ HTML::style('css/daterangepicker/daterangepicker-bs3.css') }}
@@ -35,17 +35,18 @@
         <![endif]-->
     </head>
 
-    <body class="skin-blue">
+    <body class="skin-blue sidebar-mini">
         <div class="wrapper">
             <header class="main-header">
-                {{ link_to_route('home', MainHelper::getTitle($page_title, Config::get('bfacp.site.title'), true), [], ['class' => 'logo', 'target' => '_self']) }}
+
+                <a href="{{ route('home') }}" class="logo">
+                    <span class="logo-mini">ACP</span>
+                    <span class="logo-lg">{{ MainHelper::getTitle($page_title, Config::get('bfacp.site.title'), true) }}</span>
+                </a>
 
                 <nav class="navbar navbar-static-top" role="navigation">
                     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                         <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
                     </a>
 
                     @include('layout.navbar')
