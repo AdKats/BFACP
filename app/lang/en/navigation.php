@@ -4,12 +4,14 @@ return [
     'main' => [
         'title' => 'Main Navigation',
         'items' => [
-            'dashboard' => 'Dashboard'
+            'dashboard' => 'Dashboard',
+            'chatlogs' => 'Chatlogs',
+            'scoreboard' => 'Live Scoreboard'
         ]
     ],
 
     'admin' => [
-        'title' => 'AdKats Management',
+        'title' => 'Site Management',
         'adkats' => [
             'title' => 'AdKats Management',
             'items' => [

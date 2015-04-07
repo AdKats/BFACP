@@ -11,12 +11,20 @@ HTML::macro('moment', function($timestamp = null, $duration = null, $durationFor
     }
 });
 
-HTML::macro('faicon', function($icon)
+HTML::macro('faicon', function($icon, $openSpan = false)
 {
-    return sprintf('<i class="fa %s"></i><span>', $icon);
+    if($openSpan) {
+        return sprintf('<i class="fa %s"></i><span>', $icon);
+    }
+
+    return sprintf('<i class="fa %s"></i>', $icon);
 });
 
-HTML::macro('ionicon', function($icon)
+HTML::macro('ionicon', function($icon, $openSpan = false)
 {
-    return sprintf('<i class="ion %s"></i><span>', $icon);
+    if($openSpan) {
+        return sprintf('<i class="ion %s"></i><span>', $icon);
+    }
+
+    return sprintf('<i class="ion %s"></i>', $icon);
 });

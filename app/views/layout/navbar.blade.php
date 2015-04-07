@@ -22,10 +22,12 @@
                     {{ link_to_route('player.show', $soldier->player->game->Name, [
                         $soldier->player->PlayerID,
                         $soldier->player->SoldierName
-                    ], ['target' => '_self', 'class' => $soldier->player->game->class_css, 'style' => 'color: white !important']) }}
+                    ], ['target' => '_self', 'class' => $soldier->player->game->class_css, 'style' => 'color: white !important', 'tooltip' => $soldier->player->SoldierName]) }}
                     </div>
                     @empty
-                    <alert type="info">No soldiers found.</alert>
+                    <alert type="info">
+                        {{ HTML::faicon('fa-info-circle') }} No soldiers found.
+                    </alert>
                     @endforelse
                 </li>
 
@@ -44,7 +46,7 @@
         @else
         <li>
             <a href="{{ URL::to('/login') }}">
-                <i class="fa fa-fw fa-sign-in"></i>
+                {{ HTML::faicon('fa-sign-in') }}
                 <span>Login</span>
             </a>
         </li>

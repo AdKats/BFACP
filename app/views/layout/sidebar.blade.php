@@ -9,7 +9,7 @@
                 <p>{{{ $user->username }}}</p>
 
                 <a href="{{ URL::to('/logout') }}">
-                    <i class="fa fa-fw fa-sign-out"></i>
+                    {{ HTML::faicon('fa-sign-out') }}
                     <span>{{ Lang::get('common.logout') }}</span>
                 </a>
             </div>
@@ -20,7 +20,7 @@
             <div class="pull-left info">
                 <p>Hello, Guest</p>
                 <a href="{{ URL::to('/login') }}">
-                    <i class="fa fa-fw fa-sign-in"></i>
+                    {{ HTML::faicon('fa-sign-in') }}
                     <span>{{ Lang::get('common.login') }}</span>
                 </a>
             </div>

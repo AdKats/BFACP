@@ -35,21 +35,35 @@ class BaseController extends Controller
 
         Menu::make('MainNav', function ($menu) {
             $menu->raw(strtoupper(Lang::get('navigation.main.title')), ['class' => 'header']);
-            $menu->add(Lang::get('navigation.main.items.dashboard'), ['route' => 'home'])->prepend(HTML::faicon('fa-dashboard'));
+            $menu->add(Lang::get('navigation.main.items.dashboard'), ['route' => 'home'])->prepend(HTML::faicon('fa-dashboard', true));
+            $menu->add(Lang::get('navigation.main.items.scoreboard'), ['route' => 'servers.live'])->prepend(HTML::faicon('fa-server', true));
 
+            // If the role can access the chatlogs we can add the item to the navigation list
+            if(Entrust::can('chatlogs')) {
+                $menu->add(Lang::get('navigation.main.items.chatlogs'), ['route' => 'chatlog.search'])->prepend(HTML::faicon('fa-comments', true));
+            }
+
+            // Only show these if the user is logged in
             if ($this->isLoggedIn) {
 
-                /**
-                 * AdKats Section
-                 */
-                if ($this->user->ability(null, $this->adminPermsList['_admin'])) {
-                    $menu->raw(strtoupper(Lang::get('navigation.admin.title')), ['class' => 'header']);
-                }
+                /*===============================================
+                =            AdKats Admin Navigation            =
+                ===============================================*/
 
                 if ($this->user->ability(null, $this->adminPermsList['adkats'])) {
+                    $menu->raw(strtoupper(Lang::get('navigation.admin.adkats.title')), ['class' => 'header']);
+
                     if (Entrust::can('admin.adkats.bans.view')) {
-                        $menu->add(Lang::get('navigation.admin.adkats.items.banlist'), ['route' => 'admin.adkats.bans.index'])->prepend(HTML::ionicon('ion-hammer'));
+                        $menu->add(Lang::get('navigation.admin.adkats.items.banlist'), ['route' => 'admin.adkats.bans.index'])->prepend(HTML::ionicon('ion-hammer', true));
                     }
+                }
+
+                /*=============================================
+                =            Site Admin Navigation            =
+                =============================================*/
+
+                if ($this->user->ability(null, $this->adminPermsList['site'])) {
+                    $menu->raw(strtoupper(Lang::get('navigation.admin.title')), ['class' => 'header']);
                 }
             }
         });
