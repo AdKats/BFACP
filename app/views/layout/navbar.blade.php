@@ -17,16 +17,6 @@
                 </li>
 
                 <li class="user-body">
-                    @if($user->setting->bf3player)
-                    <div class="col-xs-6 text-center">
-                        <a href="{{ $user->setting->bf3player->profile_url }}">
-                            {{ sprintf("[%s] %s",
-                            $user->setting->bf3player->game->Name,
-                            $user->setting->bf3player->SoldierName) }}
-                        </a>
-                    </div>
-                    @endif
-
                     @forelse($user->soldiers as $soldier)
                     <div class="col-xs-3">
                     {{ link_to_route('player.show', $soldier->player->game->Name, [
