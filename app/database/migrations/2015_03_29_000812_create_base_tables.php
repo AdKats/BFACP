@@ -44,6 +44,7 @@ class CreateBaseTables extends Migration
             $table->boolean('notifications_alert')->default(true);
             $table->string('notifications_alert_sound', 30)->default('alert0');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('bfacp_users')->onUpdate('cascade')->onDelete('cascade');
         });
 
         // Creates the user soldiers table
@@ -140,6 +141,10 @@ class CreateBaseTables extends Migration
         Schema::table('bfacp_users_soldiers', function (Blueprint $table) {
             $table->dropForeign('bfacp_users_soldiers_user_id_foreign');
             $table->dropForeign('bfacp_users_soldiers_player_id_foreign');
+        });
+
+        Schema::table('bfacp_settings_users', function (Blueprint $table) {
+            $table->dropForeign('bfacp_settings_users_user_id_foreign');
         });
 
         Schema::table('bfacp_settings_servers', function (Blueprint $table) {
