@@ -111,7 +111,7 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
 
     /*-----  End of Auth Routes  ------*/
 
-    Route::get('chatlogs', ['as' => 'chatlog.search', 'uses' => 'HomeController@chatlogs']);
+    Route::get('chatlogs', ['as' => 'chatlog.search', 'uses' => 'HomeController@chatlogs', 'before' => 'chatlogs']);
 
     Route::group(['prefix' => 'players'], function()
     {
@@ -149,4 +149,3 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
  */
 Entrust::routeNeedsPermission('admin/adkats/bans', 'admin.adkats.bans.view');
 Entrust::routeNeedsPermission('admin/adkats/bans/*', 'admin.adkats.bans.edit');
-Entrust::routeNeedsPermission('chatlogs', 'chatlogs');

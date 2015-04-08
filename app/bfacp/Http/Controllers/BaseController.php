@@ -1,9 +1,9 @@
 <?php namespace BFACP\Http\Controllers;
 
 use BFACP\Account\Permission;
-use Entrust;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
@@ -39,7 +39,7 @@ class BaseController extends Controller
             $menu->add(Lang::get('navigation.main.items.scoreboard'), ['route' => 'servers.live'])->prepend(HTML::faicon('fa-server', true));
 
             // If the role can access the chatlogs we can add the item to the navigation list
-            if(Entrust::can('chatlogs')) {
+            if (($this->isLoggedIn && $this->user->ability(null, 'chatlogs')) || Config::get('site.chatlogs.guest')) {
                 $menu->add(Lang::get('navigation.main.items.chatlogs'), ['route' => 'chatlog.search'])->prepend(HTML::faicon('fa-comments', true));
             }
 
@@ -53,7 +53,7 @@ class BaseController extends Controller
                 if ($this->user->ability(null, $this->adminPermsList['adkats'])) {
                     $menu->raw(strtoupper(Lang::get('navigation.admin.adkats.title')), ['class' => 'header']);
 
-                    if (Entrust::can('admin.adkats.bans.view')) {
+                    if ($this->user->ability(null, 'admin.adkats.bans.view')) {
                         $menu->add(Lang::get('navigation.admin.adkats.items.banlist'), ['route' => 'admin.adkats.bans.index'])->prepend(HTML::ionicon('ion-hammer', true));
                     }
                 }
