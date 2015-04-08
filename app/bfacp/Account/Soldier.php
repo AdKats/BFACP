@@ -20,7 +20,7 @@ class Soldier extends Elegant
      * Fields allowed to be mass assigned
      * @var array
      */
-    protected $fillable = ['user_id', 'player_id'];
+    protected $guarded = ['user_id'];
 
     /**
      * Date fields to convert to carbon instances

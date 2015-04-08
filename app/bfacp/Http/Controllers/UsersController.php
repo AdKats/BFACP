@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 
@@ -26,6 +27,66 @@ class UsersController extends BaseController
     public function showLogin()
     {
         return View::make('user.login');
+    }
+
+    /**
+     * Shows the signup form
+     * @return Illuminate\Support\Facades\View
+     */
+    public function showSignup()
+    {
+        return View::make('user.register');
+    }
+
+    /**
+     * Attempt to confirm the account with code
+     * @param  string $code
+     * @return Illuminate\Support\Facades\Redirect
+     */
+    public function confirm($code)
+    {
+        // If the code is valid then redirect to the login page.
+        if ($this->repository->confirm($code)) {
+            return Redirect::route('user.login')->with('messages', [
+                Lang::get('confide::confide.alerts.confirmation')
+            ]);
+        }
+
+        return Redirect::route('user.login')->with('error', Lang::get('confide::confide.alerts.wrong_confirmation'));
+    }
+
+    /**
+     * Create a new user
+     * @return Illuminate\Support\Facades\Redirect
+     */
+    public function signup()
+    {
+        $input = Input::all();
+
+        $user = $this->repository->signup($input);
+
+        if (is_null($user->id)) {
+            return Redirect::route('user.register')
+                ->withInput(Input::except('password', 'password_confirmation'))
+                ->withErrors($user->errors());
+        }
+
+        if (Config::get('confide::signup_email')) {
+            Mail::queueOn(
+                Config::get('confide::email_queue'),
+                'emails.user.signup',
+                compact('user'),
+                function ($message) use ($user) {
+                    $message
+                    ->to($user->email, $user->username)
+                    ->subject(Lang::get('confide::confide.email.account_confirmation.subject'));
+                }
+            );
+        }
+
+        return Redirect::route('user.login')->with('messages', [
+            Lang::get('confide::confide.alerts.account_created')
+        ]);
     }
 
     /**

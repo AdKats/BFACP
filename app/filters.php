@@ -39,6 +39,7 @@ App::before(function($request)
 
         if($app->isLoggedIn) {
             $app->user = Auth::user();
+            App::setLocale(Auth::user()->setting->lang);
         }
 
         return $app;

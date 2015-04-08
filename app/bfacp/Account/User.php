@@ -38,7 +38,7 @@ class User extends \Eloquent implements ConfideUserInterface
      * The attributes excluded form the models JSON response.
      * @var array
      */
-    protected $hidden = ['password', 'remember_token', 'confirmation_code'];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * Should model handle timestamps
@@ -64,7 +64,7 @@ class User extends \Eloquent implements ConfideUserInterface
      * @var array
      */
     public static $rules = [
-        'username'              => 'required|unique:bfacp_users,username|alpha_num',
+        'username'              => 'required|unique:bfacp_users,username|alpha_num|min:4',
         'email'                 => 'required|unique:bfacp_users,email|email',
         'password'              => 'required|min:8|confirmed'
     ];

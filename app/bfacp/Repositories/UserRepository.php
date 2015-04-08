@@ -2,10 +2,13 @@
 
 use BFACP\Account\Role;
 use BFACP\Account\Setting;
+use BFACP\Account\Soldier;
 use BFACP\Account\User;
+use BFACP\Battlefield\Player;
 use Carbon\Carbon;
 use Confide;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository
 {
@@ -41,7 +44,18 @@ class UserRepository
 
         if (!is_null($user->id)) {
             $user->roles()->attach($role);
-            $user->setting()->save(Setting::create([]));
+            $user->setting()->save(new Setting([
+                'lang' => array_get($input, 'lang', 'en')
+            ]));
+
+            if (!empty(array_get($input, 'ign'))) {
+                $players = Player::where('SoldierName', array_get($input, 'ign'))->get();
+
+                foreach ($players as $player) {
+                    $soldier = new Soldier(['player_id' => $player->PlayerID]);
+                    $soldier->user()->associate($user)->save();
+                }
+            }
         }
 
         return $user;
@@ -128,5 +142,22 @@ class UserRepository
         }
 
         return $result;
+    }
+
+    /**
+     * Attempt to confirm the account with code
+     *
+     * @param  string $code
+     * @return boolean
+     */
+    public function confirm($code)
+    {
+        $user = User::where('confirmation_code', $code)->first();
+
+        if (!$user['confirmed']) {
+            return Confide::confirm($code);
+        }
+
+        return false;
     }
 }

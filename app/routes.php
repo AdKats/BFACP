@@ -98,10 +98,18 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
 {
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
+    /*===================================
+    =            Auth Routes            =
+    ===================================*/
+
     Route::get('login', ['as' => 'user.login', 'uses' => 'UsersController@showLogin', 'before' => 'guest']);
     Route::get('logout', ['as' => 'user.logout', 'uses' => 'UsersController@logout', 'before' => 'auth']);
-    Route::get('register', ['as' => 'user.register', 'uses' => 'UsersController@showLogin', 'before' => 'guest|user.register.enabled']);
+    Route::get('register', ['as' => 'user.register', 'uses' => 'UsersController@showSignup', 'before' => 'guest|user.register.enabled']);
+    Route::get('user/confirm/{code}', ['as' => 'user.confirm', 'uses' => 'UsersController@confirm', 'before' => 'guest']);
     Route::post('login', ['as' => 'user.login.post', 'uses' => 'UsersController@login', 'before' => 'guest|csrf']);
+    Route::post('register', ['as' => 'user.register.post', 'uses' => 'UsersController@signup', 'before' => 'guest|csrf']);
+
+    /*-----  End of Auth Routes  ------*/
 
     Route::get('chatlogs', ['as' => 'chatlog.search', 'uses' => 'HomeController@chatlogs']);
 

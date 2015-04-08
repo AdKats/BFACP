@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="bfacp">
+<html>
     <head>
         <base href="/">
         <meta charset="UTF-8">
@@ -27,6 +27,16 @@
             <div class="login-logo">
                 <a href="{{ route('home') }}"><strong>BFAdmin</strong>CP</a>
             </div>
+
+            @foreach(Session::get('messages', []) as $message)
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="alert alert-info">
+                        <i class="fa fa-info-circle"></i>&nbsp;{{ $message }}
+                    </div>
+                </div>
+            </div>
+            @endforeach
 
             <div class="login-box-body">
                 @if(Session::has('error'))
