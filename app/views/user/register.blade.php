@@ -31,18 +31,11 @@
             <div class="login-box-body">
                 {{ Former::vertical_open()
                     ->method('POST')
-                    ->route('user.register.post')
-                    ->rules([
-                        'username'              => 'required|alpha_num|min:4',
-                        'email'                 => 'required|email',
-                        'password'              => 'required|min:8',
-                        'password_confirmation' => 'required|min:8',
-                        'ign'                   => 'regex:/^([a-zA-Z0-9_\-]+)$/'
-                    ]) }}
+                    ->route('user.register.post') }}
 
-                    {{ Former::text('username')->placeholder('Username') }}
+                    {{ Former::text('username')->placeholder('Username')->help('Username must be 4 or more characters') }}
                     {{ Former::email('email')->placeholder('Email') }}
-                    {{ Former::password('password')->placeholder('Password') }}
+                    {{ Former::password('password')->placeholder('Password')->help('Password must be 8 or more characters') }}
                     {{ Former::password('password_confirmation')->placeholder('Retype password') }}
 
                     <hr>

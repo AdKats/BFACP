@@ -1,10 +1,12 @@
 <?php namespace BFACP\Http\Controllers;
 
+use BFACP\Account\User;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
 class UsersController extends BaseController
@@ -62,6 +64,16 @@ class UsersController extends BaseController
     public function signup()
     {
         $input = Input::all();
+
+        $v = Validator::make($input, array_merge(User::$rules, [
+            'ign' => 'regex:/^([a-zA-Z0-9_\-]+)$/'
+        ]));
+
+        if($v->fails()) {
+            return Redirect::route('user.register')
+                ->withInput(Input::except('password', 'password_confirmation'))
+                ->withErrors($v);
+        }
 
         $user = $this->repository->signup($input);
 

@@ -49,11 +49,13 @@ class UserRepository
             ]));
 
             if (!empty(array_get($input, 'ign'))) {
-                $players = Player::where('SoldierName', array_get($input, 'ign'))->get();
+                $players = Player::where('SoldierName', array_get($input, 'ign'))->lists('PlayerID');
 
                 foreach ($players as $player) {
-                    $soldier = new Soldier(['player_id' => $player->PlayerID]);
-                    $soldier->user()->associate($user)->save();
+                    if(Soldier::where('player_id', $player)->count() == 0) {
+                        $soldier = new Soldier(['player_id' => $player]);
+                        $soldier->user()->associate($user)->save();
+                    }
                 }
             }
         }
