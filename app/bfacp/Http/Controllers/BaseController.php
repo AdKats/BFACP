@@ -39,7 +39,7 @@ class BaseController extends Controller
             $menu->add(Lang::get('navigation.main.items.scoreboard'), ['route' => 'servers.live'])->prepend(HTML::faicon('fa-server', true));
 
             // If the role can access the chatlogs we can add the item to the navigation list
-            if (($this->isLoggedIn && $this->user->ability(null, 'chatlogs')) || Config::get('site.chatlogs.guest')) {
+            if (($this->isLoggedIn && $this->user->ability(null, 'chatlogs')) || Config::get('bfacp.site.chatlogs.guest')) {
                 $menu->add(Lang::get('navigation.main.items.chatlogs'), ['route' => 'chatlog.search'])->prepend(HTML::faicon('fa-comments', true));
             }
 

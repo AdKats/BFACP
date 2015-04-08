@@ -124,7 +124,7 @@ Route::filter('user.register.enabled', function () {
 });
 
 Route::filter('chatlogs', function () {
-    if ((Auth::guest() && !Config::get('site.chatlogs.guest')) || (Auth::check() && !Auth::user()->ability(null, 'chatlogs'))) {
+    if ((Auth::guest() && !Config::get('bfacp.site.chatlogs.guest')) || (Auth::check() && !Auth::user()->ability(null, 'chatlogs'))) {
         return Redirect::route('home');
     }
 });
