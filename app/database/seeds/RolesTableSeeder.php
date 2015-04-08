@@ -8,11 +8,8 @@ class RolesTableSeeder extends Seeder
     {
         $roles = [
             'Administrator',
-            'Registered',
-            'Guest'
+            'Registered'
         ];
-
-        Role::truncate();
 
         foreach ($roles as $role) {
             Role::create(['name' => $role]);

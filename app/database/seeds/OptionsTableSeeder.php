@@ -6,8 +6,6 @@ class OptionsTableSeeder extends Seeder
 {
     public function run()
     {
-        Option::truncate();
-
         $options = [
             [
                 'option_key'         => 'metabans.key',
@@ -62,6 +60,12 @@ class OptionsTableSeeder extends Seeder
                 'option_title'       => 'Allow User Registration',
                 'option_value'       => true,
                 'option_description' => 'Enable user registrations. Default: Enabled'
+            ],
+            [
+                'option_key'         => 'site.chatlogs.guest',
+                'option_title'       => 'Allow Guest Viewing of Chatlogs',
+                'option_value'       => true,
+                'option_description' => 'Should users be allowed to view the chatlogs when not logged in.'
             ],
             [
                 'option_key'         => 'uptimerobot.key',
