@@ -17,7 +17,7 @@ return [
             'killed' => ':killed% of players have been killed',
             'kicked' => ':kicked% of players have been kicked',
             'banned' => ':banned% of players have been banned',
-            'banned_active' => ':banned% players are banned'
+            'banned_active' => ':banned% of players are banned'
         ]
     ],
 
