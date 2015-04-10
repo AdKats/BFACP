@@ -2,6 +2,7 @@
 
 use BFACP\AdKats\Record;
 use BFACP\Battlefield\Server;
+use BFACP\Exceptions\MetabansException;
 use BFACP\Http\Controllers\BaseController;
 use BFACP\Repositories\BanRepository;
 use Carbon\Carbon;
@@ -27,11 +28,21 @@ class BansController extends BaseController
      */
     protected $messages = [];
 
+    /**
+     * Metabans Class
+     * @var BFACP\Libraries\Metabans
+     */
+    protected $metabans = null;
+
     public function __construct()
     {
         parent::__construct();
 
         $this->repository = new BanRepository;
+
+        try {
+            $this->metabans = \App::make('BFACP\Libraries\Metabans');
+        } catch (MetabansException $e) {}
     }
 
     /**
@@ -113,7 +124,8 @@ class BansController extends BaseController
             }
 
             // Stores how long the ban is in minutes
-            $ban_duration = $ban->ban_startTime->diffInMinutes($ban->ban_endTime);
+            $ban_duration         = $ban->ban_startTime->diffInMinutes($ban->ban_endTime);
+            $ban_duration_seconds = $ban->ban_startTime->diffInSeconds($ban->ban_endTime);
 
             $oldRecord = $ban->record;
 
@@ -158,6 +170,12 @@ class BansController extends BaseController
 
                     // Update the ban record and save the changes
                     $ban->record()->associate($record);
+
+                    try {
+                        if (!is_null($this->metabans)) {
+                            $this->metabans->assess($ban->player->game->Name, $ban->player->EAGUID, 'Black', $ban_message, $ban_duration_seconds);
+                        }
+                    } catch (MetabansException $e) {}
                 }
 
                 // Save any changes made on the old record
@@ -228,6 +246,12 @@ class BansController extends BaseController
             $ban->record()->associate($record);
             $ban->ban_status = 'Disabled';
             $ban->save();
+
+            try {
+                if (!is_null($this->metabans)) {
+                    $this->metabans->assess($ban->player->game->Name, $ban->player->EAGUID, 'None', Input::get('message', 'Unbanned'));
+                }
+            } catch (MetabansException $e) {}
 
             return MainHelper::response();
         } catch (ModelNotFoundException $e) {

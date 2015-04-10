@@ -12,7 +12,7 @@ class Metabans
     /**
      * Metabans API URL
      */
-    const URL = 'http://www.metabans.com/api';
+    const URL = 'http://metabans.com/mb-api.php';
 
     /**
      * API Key Hash
@@ -68,11 +68,12 @@ class Metabans
      * @var array
      */
     public $supported_games = [
-        'BF_BC2',
-        'MOH_2010',
-        'MOH_2012',
-        'BF_3',
-        'BF_4'
+        'BFBC2' => 'BF_BC2',
+        'MOH'   => 'MOH_2010',
+        'MOHW'  => 'MOH_2012',
+        'BF3'   => 'BF_3',
+        'BF4'   => 'BF_4',
+        'BFHL'  => 'BF_H'
     ];
 
     /**
@@ -133,7 +134,7 @@ class Metabans
         $data = [
             'assessment_length' => $duration,
             'assessment_type'   => strtolower($type),
-            'game_name'         => $game,
+            'game_name'         => $this->supported_games[$game],
             'player_uid'        => $GUID,
             'reason'            => $reason
         ];
@@ -318,7 +319,7 @@ class Metabans
             $parsed[] = array_merge(['action' => $action], $param);
         }
 
-        $request = ['requests' => $parsed];
+        $request = ['requests' => $parsed, 'options' => 'mirror'];
 
         if ($auth) {
             $request = array_merge($request, $this->auth);
@@ -337,17 +338,21 @@ class Metabans
         try {
             $request = $this->guzzle->post(self::URL, [
                 'headers' => [
-                    'User-Agent' => 'PRoCon Metabans Plugin/1.0.6.0'
+                    'User-Agent' => sprintf('BFAdminCP/%s', BFACP_VERSION)
                 ],
                 'body'    => $payload
             ]);
 
             $response = $request->json();
 
+            if (empty($response['responses'])) {
+                throw new MetabansException(400, 'Metabans did not return a response.');
+            }
+
             if (array_key_exists('error', $response['responses'][0])) {
                 throw new MetabansException(
-                    $response['responses'][0]['error']['message'],
-                    $response['responses'][0]['error']['code']
+                    400,
+                    $response['responses'][0]['error']['message']
                 );
             }
 
@@ -362,10 +367,10 @@ class Metabans
         } catch (RequestException $e) {
 
             if ($e->hasResponse()) {
-                throw new MetabansException(sprintf('Request encountered an error. %s', $e->getResponse()), 400);
+                throw new MetabansException(400, sprintf('Request encountered an error. %s', $e->getResponse()));
             }
 
-            throw new MetabansException('Could not connect to Metabans API');
+            throw new MetabansException(400, 'Could not connect to Metabans API');
         }
     }
 
