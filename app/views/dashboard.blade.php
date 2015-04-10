@@ -8,7 +8,7 @@
 <div ng-controller="DashboardController">
 
     <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon" ng-class="populationColor(results.population.percentage, true)"><i class="ion ion-ios-people-outline"></i></span>
                 <div class="info-box-content">
@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-green"><i class="ion ion-stats-bars"></i></span>
                 <div class="info-box-content">
@@ -35,7 +35,7 @@
 
         <div class="clearfix visible-sm-block"></div>
 
-        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-red"><i class="ion ion-hammer"></i></span>
                 <div class="info-box-content">
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-sm-6 col-xs-12">
             <div class="info-box">
                 <span class="info-box-icon bg-red"><i class="ion ion-hammer"></i></span>
                 <div class="info-box-content">
@@ -62,12 +62,12 @@
     </div>
 
     <div class="row">
-        <div class="cold-xs-12 col-md-6 col-lg-3">
+        <div class="cold-xs-12 col-sm-6 col-lg-3">
             <div class="info-box bg-navy disabled">
-                <span class="info-box-icon"><i class="fa fa-bed"></i></span>
+                <span class="info-box-icon">&#9760;</span>
                 <div class="info-box-content">
                     <span class="info-box-text">{{ Lang::get('dashboard.metro.adkats.titles.killed') }}</span>
-                    <span class="info-box-number">{{ number_format($adkats_statistics->PercentageKilled) }}</span>
+                    <span class="info-box-number" ng-bind="{{ (int) $adkats_statistics->PercentageKilled }} | number"></span>
                     <div class="progress">
                         <div class="progress-bar" style="width: {{ MainHelper::percent($adkats_statistics->PercentageKilled, $uniquePlayers) }}%"></div>
                     </div>
@@ -80,12 +80,12 @@
             </div>
         </div>
 
-        <div class="cold-xs-12 col-md-6 col-lg-3">
+        <div class="cold-xs-12 col-sm-6 col-lg-3">
             <div class="info-box bg-navy disabled">
                 <span class="info-box-icon"><i class="fa fa-trash"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">{{ Lang::get('dashboard.metro.adkats.titles.kicked') }}</span>
-                    <span class="info-box-number">{{ number_format($adkats_statistics->PercentageKicked) }}</span>
+                    <span class="info-box-number" ng-bind="{{ (int) $adkats_statistics->PercentageKicked }} | number"></span>
                     <div class="progress">
                         <div class="progress-bar" style="width: {{ MainHelper::percent($adkats_statistics->PercentageKicked, $uniquePlayers) }}%"></div>
                     </div>
@@ -98,12 +98,14 @@
             </div>
         </div>
 
-        <div class="cold-xs-12 col-md-6 col-lg-3">
+        <div class="clearfix visible-sm-block"></div>
+
+        <div class="cold-xs-12 col-sm-6 col-lg-3">
             <div class="info-box bg-navy disabled">
                 <span class="info-box-icon"><i class="ion ion-hammer"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">{{ Lang::get('dashboard.metro.adkats.titles.banned') }}</span>
-                    <span class="info-box-number">{{ number_format($adkats_statistics->PercentageBanned) }}</span>
+                    <span class="info-box-number" ng-bind="{{ (int) $adkats_statistics->PercentageBanned }} | number"></span>
                     <div class="progress">
                         <div class="progress-bar" style="width: {{ MainHelper::percent($adkats_statistics->PercentageBanned, $uniquePlayers) }}%"></div>
                     </div>
@@ -116,12 +118,12 @@
             </div>
         </div>
 
-        <div class="cold-xs-12 col-md-6 col-lg-3">
+        <div class="cold-xs-12 col-sm-6 col-lg-3">
             <div class="info-box bg-navy disabled">
                 <span class="info-box-icon"><i class="fa fa-frown-o"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">{{ Lang::get('dashboard.metro.adkats.titles.banned_active') }}</span>
-                    <span class="info-box-number">{{ number_format($adkats_statistics->PercentageBanned_Active) }}</span>
+                    <span class="info-box-number" ng-bind="{{ (int) $adkats_statistics->PercentageBanned_Active }} | number"></span>
                     <div class="progress">
                         <div class="progress-bar" style="width: {{ MainHelper::percent($adkats_statistics->PercentageBanned_Active, $uniquePlayers) }}%"></div>
                     </div>
