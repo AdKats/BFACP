@@ -52,14 +52,16 @@ class BaseController extends Controller
                 ===============================================*/
 
                 if ($this->user->ability(null, $this->adminPermsList['adkats'])) {
-                    $menu->raw(strtoupper(Lang::get('navigation.admin.adkats.title')), ['class' => 'header']);
+                    $adkats = $menu->raw(strtoupper(Lang::get('navigation.admin.adkats.title')));
 
                     if ($this->user->ability(null, 'admin.adkats.bans.view')) {
-                        $menu->add(Lang::get('navigation.admin.adkats.items.banlist.title'), ['route' => 'admin.adkats.bans.index'])->prepend(HTML::ionicon(Lang::get('navigation.admin.adkats.items.banlist.icon.ion'), true));
+                        $adkats->add(Lang::get('navigation.admin.adkats.items.banlist.title'), ['route' => 'admin.adkats.bans.index'])
+                            ->prepend(HTML::ionicon(Lang::get('navigation.admin.adkats.items.banlist.icon.ion'), true));
                     }
 
                     if ($this->user->ability(null, 'admin.adkats.user.view')) {
-                        $menu->add(Lang::get('navigation.admin.adkats.items.users.title'), ['route' => 'admin.adkats.users.index'])->prepend(HTML::faicon(Lang::get('navigation.admin.adkats.items.users.icon.fa'), true));
+                        $adkats->add(Lang::get('navigation.admin.adkats.items.users.title'), ['route' => 'admin.adkats.users.index'])
+                            ->prepend(HTML::faicon(Lang::get('navigation.admin.adkats.items.users.icon.fa'), true));
                     }
                 }
 
@@ -68,7 +70,7 @@ class BaseController extends Controller
                 =============================================*/
 
                 if ($this->user->ability(null, $this->adminPermsList['site'])) {
-                    $menu->raw(strtoupper(Lang::get('navigation.admin.title')), ['class' => 'header']);
+                    $site = $menu->raw(strtoupper(Lang::get('navigation.admin.title')), ['class' => 'header']);
                 }
             }
         });

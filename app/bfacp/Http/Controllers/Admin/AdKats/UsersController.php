@@ -5,14 +5,15 @@ use BFACP\AdKats\Account\Soldier;
 use BFACP\AdKats\Account\User;
 use BFACP\Battlefield\Player;
 use BFACP\Http\Controllers\BaseController;
+use Carbon\Carbon;
 use Former;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\View;
+use MainHelper;
 
 class UsersController extends BaseController
 {
@@ -23,6 +24,9 @@ class UsersController extends BaseController
         parent::__construct();
     }
 
+    /**
+     * Show the user listing
+     */
     public function index()
     {
         $users = User::with('role', 'soldiers.player')->orderBy('user_name')->get();
@@ -30,6 +34,33 @@ class UsersController extends BaseController
         return View::make('admin.adkats.users.index', compact('users'))->with('page_title', Lang::get('navigation.admin.adkats.items.users.title'));
     }
 
+    /**
+     * Create a new user
+     */
+    public function store()
+    {
+        $v = Validator::make(Input::all(), [
+            'username' => 'required|unique:adkats_users,user_name|alpha_dash'
+        ]);
+
+        if ($v->fails()) {
+            return MainHelper::response(null, $v->messages()->first('username'), 'error', 400);
+        }
+
+        $user            = new User;
+        $user->user_name = Input::get('username');
+        $user->user_role = 1;
+        $user->save();
+
+        return MainHelper::response([
+            'url' => route('admin.adkats.users.edit', $user->user_id)
+        ]);
+    }
+
+    /**
+     * SHow the editing page
+     * @param  integer $id User ID
+     */
     public function edit($id)
     {
         try {
@@ -49,6 +80,10 @@ class UsersController extends BaseController
         }
     }
 
+    /**
+     * Update user
+     * @param  integer $id User ID
+     */
     public function update($id)
     {
         try {
@@ -68,23 +103,23 @@ class UsersController extends BaseController
                 'user_notes' => 'max:1000'
             ]);
 
-            if($v->fails()) {
+            if ($v->fails()) {
                 return Redirect::route('admin.adkats.users.edit', [$id])->withErrors($v)->withInput();
             }
 
-            if(Input::has('user_name') && $user->user_name != $username) {
+            if (Input::has('user_name') && $user->user_name != $username) {
                 $user->user_name = $username;
             }
 
-            if(Input::has('user_email') && $user->user_email != $email) {
+            if (Input::has('user_email') && $user->user_email != $email) {
                 $user->user_email = $email;
             }
 
-            if($user->user_role != $roleId) {
+            if ($user->user_role != $roleId) {
                 $user->user_role = $roleId;
             }
 
-            if(Input::has('user_expiration')) {
+            if (Input::has('user_expiration')) {
                 $user->user_expiration = Carbon::parse($expiration)->toDateTimeString();
             } else {
                 $user->user_expiration = Carbon::now()->addYears(20)->toDateTimeString();
@@ -97,23 +132,23 @@ class UsersController extends BaseController
 
             $user->soldiers()->delete();
 
-            if(Input::has('soldiers')) {
-                foreach($soldiers as $soldier) {
+            if (Input::has('soldiers')) {
+                foreach ($soldiers as $soldier) {
                     $soldier_ids[] = new Soldier(['player_id' => $soldier]);
                 }
             }
 
-            if(Input::has('soldier')) {
+            if (Input::has('soldier')) {
                 $players = Player::where('SoldierName', Input::get('soldier'))->lists('PlayerID');
 
-                foreach($players as $player) {
-                    if(!in_array($player, $soldiers)) {
+                foreach ($players as $player) {
+                    if (!in_array($player, $soldiers)) {
                         $soldier_ids[] = new Soldier(['player_id' => $player]);
                     }
                 }
             }
 
-            if(!empty($soldier_ids)) {
+            if (!empty($soldier_ids)) {
                 $user->soldiers()->saveMany($soldier_ids);
             }
 
@@ -123,6 +158,25 @@ class UsersController extends BaseController
 
             return Redirect::route('admin.adkats.users.edit', [$id])->with('messages', $this->messages);
 
+        } catch (ModelNotFoundException $e) {
+            return Redirect::route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
+        }
+    }
+
+    /**
+     * Delete user
+     * @param  integer $id User ID
+     */
+    public function destroy($id)
+    {
+        try {
+            $user     = User::findOrFail($id);
+            $username = $user->user_name;
+            $user->delete();
+
+            return MainHelper::response([
+                'url' => route('admin.adkats.users.index')
+            ], sprintf('%s was deleted', $username));
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
         }

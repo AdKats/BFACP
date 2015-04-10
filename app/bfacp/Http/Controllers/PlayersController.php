@@ -40,9 +40,9 @@ class PlayersController extends BaseController
                     'infractionsGlobal',
                     'infractionsServer.server',
                     'stats.server'
-                ], true)->getPlayerById($id)->toJson();
+                ], true)->getPlayerById($id)->toArray();
 
-            return json_decode($json);
+            return $json;
         });
 
         $page_title = ! empty($player->ClanTag) ?
