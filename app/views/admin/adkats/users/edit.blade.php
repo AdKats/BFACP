@@ -47,6 +47,7 @@
 
                 {{ Former::text('soldier')->label('Player Name')->help('To have the system add the player, type in the player name. This will add any player with the name provided.') }}
 
+                @if($user->soldiers->count() > 0)
                 <table class="table table-condensed table-striped">
                     <thead>
                         <th>ID</th>
@@ -54,7 +55,7 @@
                         <th>Name</th>
                     </thead>
                     <tbody>
-                        @forelse($user->soldiers as $soldier)
+                        @foreach($user->soldiers as $soldier)
                         <tr>
                             <td>{{ $soldier->player->PlayerID }}</td>
                             <td><label class="{{ $soldier->player->game->class_css }}">{{ $soldier->player->game->Name }}</label></td>
@@ -63,13 +64,14 @@
                                 $soldier->player->SoldierName
                             ], ['target' => '_blank']) }}</td>
                         </tr>
-                        @empty
-                        <alert type="info">
-                                {{ HTML::faicon('fa-info-circle') }} No soldiers found.
-                            </alert>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
+                @else
+                <alert type="info">
+                    {{ HTML::faicon('fa-info-circle') }} No soldiers found.
+                </alert>
+                @endif
             </div>
         </div>
     </div>
