@@ -15,7 +15,8 @@ return [
         'adkats' => [
             'title' => 'AdKats Management',
             'items' => [
-                'banlist' => 'Banlist'
+                'banlist' => 'Banlist',
+                'users' => 'Users'
             ]
         ]
     ]

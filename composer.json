@@ -10,7 +10,8 @@
         "zizaco/confide": "~4.3@dev",
         "zizaco/entrust": "1.2.*@dev",
         "league/commonmark": "0.7.0",
-        "vierbergenlars/php-semver": "3.0.0"
+        "vierbergenlars/php-semver": "3.0.0",
+        "davejamesmiller/laravel-breadcrumbs": "2.*"
     },
     "require-dev": {
         "way/generators": "~2.0"

@@ -1036,6 +1036,9 @@ angular.module('bfacp', [
             $scope.switchServer();
         };
 
+    }])
+    .controller('ChatlogController', ['$scope', '$resource', '$http', function($scope, $resource, $http) {
+        //
     }]);
 
 $('#psearch').submit(function() {

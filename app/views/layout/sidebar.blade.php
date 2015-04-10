@@ -3,10 +3,10 @@
         <div class="user-panel">
             @if(Auth::check())
             <div class="pull-left image">
-                {{ HTML::image($user->gravatar, null, ['class' => 'img-circle']) }}
+                {{ HTML::image($bfacp->user->gravatar, null, ['class' => 'img-circle']) }}
             </div>
             <div class="pull-left info">
-                <p>{{{ $user->username }}}</p>
+                <p>{{{ $bfacp->user->username }}}</p>
 
                 <a href="{{ route('user.logout') }}" target="_self">
                     {{ HTML::faicon('fa-sign-out') }}

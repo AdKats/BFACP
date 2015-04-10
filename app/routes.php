@@ -14,8 +14,8 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
     {
         Route::get('/', ['as' => 'api.players.index', 'uses' => 'PlayersController@index']);
         Route::get('{id}', ['as' => 'api.players.show', 'uses' => 'PlayersController@show'])->where('id', '[0-9]+');
-        Route::get('{id}/records', ['api.players.show.records', 'uses' => 'PlayersController@showRecords'])->where('id', '[0-9]+');
-        Route::get('{id}/chatlogs', ['api.players.show.chatlogs', 'uses' => 'PlayersController@showChatlogs'])->where('id', '[0-9]+');
+        Route::get('{id}/records', ['as' => 'api.players.show.records', 'uses' => 'PlayersController@showRecords'])->where('id', '[0-9]+');
+        Route::get('{id}/chatlogs', ['as' => 'api.players.show.chatlogs', 'uses' => 'PlayersController@showChatlogs'])->where('id', '[0-9]+');
     });
 
     Route::group(['prefix' => 'battlelog'], function()
@@ -138,6 +138,16 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
                 ],
                 'only' => ['index', 'edit', 'update', 'destroy']
             ]);
+
+            // AdKats Users
+            Route::resource('users', 'UsersController', [
+                'names' => [
+                    'index'  => 'admin.adkats.users.index',
+                    'edit'   => 'admin.adkats.users.edit',
+                    'update' => 'admin.adkats.users.update'
+                ],
+                'only' => ['index', 'edit', 'update']
+            ]);
         });
 
         Route::get('updater', ['as' => 'admin.updater.index', 'uses' => 'UpdaterController@index']);
@@ -147,5 +157,15 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
 /**
  * Route Permissions
  */
+
+/*===================================
+=            AdKats Bans            =
+===================================*/
 Entrust::routeNeedsPermission('admin/adkats/bans', 'admin.adkats.bans.view');
 Entrust::routeNeedsPermission('admin/adkats/bans/*', 'admin.adkats.bans.edit');
+
+/*====================================
+=            AdKats Users            =
+====================================*/
+Entrust::routeNeedsPermission('admin/adkats/users', 'admin.adkats.user.view');
+Entrust::routeNeedsPermission('admin/adkats/users/*', 'admin.adkats.user.edit');

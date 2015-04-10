@@ -54,7 +54,7 @@ class BansController extends BaseController
             $ban     = $this->repository->getBanById($id);
             $servers = Server::where('GameID', $ban->player->GameID)->active()->lists('ServerName', 'ServerID');
 
-            return View::make('admin.adkats.bans.show', compact('ban', 'servers'))->with('page_title', sprintf('Ban #%u', $id));
+            return View::make('admin.adkats.bans.edit', compact('ban', 'servers'))->with('page_title', sprintf('Ban #%u', $id));
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.adkats.bans.index')->withErrors([sprintf('Ban #%u doesn\'t exist.', $id)]);
         }

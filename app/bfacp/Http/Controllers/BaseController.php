@@ -56,6 +56,10 @@ class BaseController extends Controller
                     if ($this->user->ability(null, 'admin.adkats.bans.view')) {
                         $menu->add(Lang::get('navigation.admin.adkats.items.banlist'), ['route' => 'admin.adkats.bans.index'])->prepend(HTML::ionicon('ion-hammer', true));
                     }
+
+                    if ($this->user->ability(null, 'admin.adkats.user.view')) {
+                        $menu->add(Lang::get('navigation.admin.adkats.items.users'), ['route' => 'admin.adkats.users.index'])->prepend(HTML::faicon('fa-users', true));
+                    }
                 }
 
                 /*=============================================

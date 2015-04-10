@@ -1,0 +1,129 @@
+<?php namespace BFACP\Http\Controllers\Admin\AdKats;
+
+use BFACP\AdKats\Account\Role;
+use BFACP\AdKats\Account\Soldier;
+use BFACP\AdKats\Account\User;
+use BFACP\Battlefield\Player;
+use BFACP\Http\Controllers\BaseController;
+use Former;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+
+class UsersController extends BaseController
+{
+    private $messages = [];
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function index()
+    {
+        $users = User::with('role', 'soldiers.player')->orderBy('user_name')->get();
+
+        return View::make('admin.adkats.users.index', compact('users'))->with('page_title', 'AdKats Users');
+    }
+
+    public function edit($id)
+    {
+        try {
+
+            $user = User::with('role', 'soldiers.player')->findOrFail($id);
+
+            $roles = Role::lists('role_name', 'role_id');
+
+            $page_title = sprintf('Editing %s', $user->user_name);
+
+            Former::populate($user);
+
+            return View::make('admin.adkats.users.edit', compact('user', 'page_title', 'roles'));
+
+        } catch (ModelNotFoundException $e) {
+            return Redirect::route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
+        }
+    }
+
+    public function update($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+
+            $username   = trim(Input::get('user_name', null));
+            $email      = trim(Input::get('user_email', null));
+            $roleId     = trim(Input::get('user_role', null));
+            $expiration = trim(Input::get('user_expiration', null));
+            $notes      = trim(Input::get('user_notes', 'No Notes'));
+            $soldiers   = explode(',', Input::get('soldiers', ''));
+
+            $v = Validator::make(Input::all(), [
+                'user_name'  => 'required|alpha_dash',
+                'user_email' => 'email',
+                'user_role'  => 'required|exists:adkats_roles,role_id',
+                'user_notes' => 'max:1000'
+            ]);
+
+            if($v->fails()) {
+                return Redirect::route('admin.adkats.users.edit', [$id])->withErrors($v)->withInput();
+            }
+
+            if(Input::has('user_name') && $user->user_name != $username) {
+                $user->user_name = $username;
+            }
+
+            if(Input::has('user_email') && $user->user_email != $email) {
+                $user->user_email = $email;
+            }
+
+            if($user->user_role != $roleId) {
+                $user->user_role = $roleId;
+            }
+
+            if(Input::has('user_expiration')) {
+                $user->user_expiration = Carbon::parse($expiration)->toDateTimeString();
+            } else {
+                $user->user_expiration = Carbon::now()->addYears(20)->toDateTimeString();
+            }
+
+            // Always save the notes field
+            $user->user_notes = $notes;
+
+            $soldier_ids = [];
+
+            $user->soldiers()->delete();
+
+            if(Input::has('soldiers')) {
+                foreach($soldiers as $soldier) {
+                    $soldier_ids[] = new Soldier(['player_id' => $soldier]);
+                }
+            }
+
+            if(Input::has('soldier')) {
+                $players = Player::where('SoldierName', Input::get('soldier'))->lists('PlayerID');
+
+                foreach($players as $player) {
+                    if(!in_array($player, $soldiers)) {
+                        $soldier_ids[] = new Soldier(['player_id' => $player]);
+                    }
+                }
+            }
+
+            if(!empty($soldier_ids)) {
+                $user->soldiers()->saveMany($soldier_ids);
+            }
+
+            $user->save();
+
+            $this->messages[] = sprintf('Changes Saved!');
+
+            return Redirect::route('admin.adkats.users.edit', [$id])->with('messages', $this->messages);
+
+        } catch (ModelNotFoundException $e) {
+            return Redirect::route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
+        }
+    }
+}

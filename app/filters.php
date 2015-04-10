@@ -45,7 +45,7 @@ App::before(function ($request) {
 
     $bfacp = App::make('bfadmincp');
 
-    View::share('user', $bfacp->user);
+    View::share('bfacp', $bfacp);
 });
 
 App::after(function ($request, $response) {
