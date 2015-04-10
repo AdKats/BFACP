@@ -144,9 +144,11 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
                 'names' => [
                     'index'  => 'admin.adkats.users.index',
                     'edit'   => 'admin.adkats.users.edit',
-                    'update' => 'admin.adkats.users.update'
+                    'store' => 'admin.adkats.users.store',
+                    'update' => 'admin.adkats.users.update',
+                    'destroy' => 'admin.adkats.users.destroy'
                 ],
-                'only' => ['index', 'edit', 'update']
+                'only' => ['index', 'edit', 'update', 'destroy', 'store']
             ]);
         });
 

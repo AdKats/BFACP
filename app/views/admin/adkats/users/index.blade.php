@@ -4,6 +4,16 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
+            @if($bfacp->user->ability(null, 'admin.adkats.user.edit'))
+            <div class="box-header">
+                <h3 class="box-title">&nbsp;</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn bg-green" id="create-user">
+                        <i class="fa fa-plus"></i>&nbsp;<span>{{ Lang::get('adkats.users.listing.buttons.create') }}</span>
+                    </button>
+                </div>
+            </div>
+            @endif
             <div class="box-body">
                 <div class="table-responsive">
                     <table class="table table-condensed table-striped">
@@ -57,4 +67,47 @@
         </div>
     </div>
 </div>
+@stop
+
+@section('scripts')
+@if($bfacp->user->ability(null, 'admin.adkats.user.edit'))
+<script type="text/javascript">
+    $('#create-user').click(function(e) {
+        e.preventDefault();
+
+        var btn = $(this);
+
+        var promptVal = prompt('Enter Username', '');
+
+        if(promptVal === '') {
+            alert('Username can\'t be blank.');
+            return false;
+        }
+
+        if(promptVal !== null) {
+            btn.find('i').removeClass('fa-plus').addClass('fa-spinner fa-pulse');
+            btn.attr('disabled', true);
+            $.ajax({
+                url: "{{ route('admin.adkats.users.store') }}",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    username: promptVal
+                }
+            })
+            .done(function(data) {
+                window.location.href = data.data.url;
+            })
+            .fail(function(xhr) {
+                var response = xhr.responseJSON;
+                alert(response.message);
+            })
+            .always(function() {
+                btn.find('i').removeClass('fa-spinner fa-pulse').addClass('fa-plus');
+                btn.attr('disabled', false);
+            });
+        }
+    });
+</script>
+@endif
 @stop

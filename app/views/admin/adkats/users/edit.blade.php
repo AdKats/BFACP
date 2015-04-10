@@ -26,7 +26,10 @@
                         <button type="submit" class="btn bg-green">
                             <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ Lang::get('adkats.users.edit.buttons.save') }}</span>
                         </button>
-                        {{ link_to_route('admin.adkats.users.index', Lang::get('adkats.users.edit.buttons.cancel'), [], ['class' => 'btn bg-red']) }}
+                        {{ link_to_route('admin.adkats.users.index', Lang::get('adkats.users.edit.buttons.cancel'), [], ['class' => 'btn bg-blue']) }}
+                        <button class="btn bg-red" id="delete-user">
+                            <i class="fa fa-trash"></i>&nbsp;<span>{{ Lang::get('adkats.users.edit.buttons.delete') }}</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -77,4 +80,33 @@
     </div>
 </div>
 {{ Former::close() }}
+@stop
+
+@section('scripts')
+<script type="text/javascript">
+    $('#delete-user').click(function(e) {
+        e.preventDefault();
+
+        var btn = $(this);
+
+        if(confirm('Are you sure you want to delete {{ $user->user_name }}? This can\'t be undone.')) {
+            btn.find('i').removeClass('fa-trash').addClass('fa-spinner fa-pulse');
+            btn.parent().find('button').attr('disabled', true);
+            $.ajax({
+                url: "{{ route('admin.adkats.users.destroy', $user->user_id) }}",
+                type: 'DELETE',
+            })
+            .done(function(data) {
+                window.location.href = data.data.url;
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                btn.find('i').removeClass('fa-spinner fa-pulse').addClass('fa-trash');
+                btn.parent().find('button').attr('disabled', false);
+            });
+        }
+    });
+</script>
 @stop

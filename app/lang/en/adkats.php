@@ -54,6 +54,9 @@ return [
         'no_users' => 'No users found.',
         'soldiers' => 'Soldiers',
         'listing' => [
+            'buttons' => [
+                'create' => 'Add User'
+            ],
             'table' => [
                 'col1' => 'User',
                 'col2' => 'Email',
@@ -67,7 +70,8 @@ return [
             'details' => 'Details',
             'buttons' => [
                 'save' => 'Save Changes',
-                'cancel' => 'Cancel'
+                'cancel' => 'Cancel',
+                'delete' => 'Delete User'
             ],
             'inputs' => [
                 'username' => [
