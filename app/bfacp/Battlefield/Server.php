@@ -25,7 +25,7 @@ class Server extends Elegant
      * Fields not allowed to be mass assigned
      * @var array
      */
-    protected $guarded = ['*'];
+    protected $guarded = ['ServerID'];
 
     /**
      * Date fields to convert to carbon instances
