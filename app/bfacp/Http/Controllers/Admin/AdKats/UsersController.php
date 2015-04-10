@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
@@ -26,7 +27,7 @@ class UsersController extends BaseController
     {
         $users = User::with('role', 'soldiers.player')->orderBy('user_name')->get();
 
-        return View::make('admin.adkats.users.index', compact('users'))->with('page_title', 'AdKats Users');
+        return View::make('admin.adkats.users.index', compact('users'))->with('page_title', Lang::get('navigation.admin.adkats.items.users.title'));
     }
 
     public function edit($id)
@@ -37,7 +38,7 @@ class UsersController extends BaseController
 
             $roles = Role::lists('role_name', 'role_id');
 
-            $page_title = sprintf('Editing %s', $user->user_name);
+            $page_title = Lang::get('navigation.admin.adkats.items.users.items.edit.title', ['id' => $id]);
 
             Former::populate($user);
 

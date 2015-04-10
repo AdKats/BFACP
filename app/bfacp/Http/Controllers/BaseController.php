@@ -35,12 +35,13 @@ class BaseController extends Controller
 
         Menu::make('MainNav', function ($menu) {
             $menu->raw(strtoupper(Lang::get('navigation.main.title')), ['class' => 'header']);
-            $menu->add(Lang::get('navigation.main.items.dashboard'), ['route' => 'home'])->prepend(HTML::faicon('fa-dashboard', true));
-            $menu->add(Lang::get('navigation.main.items.scoreboard'), ['route' => 'servers.live'])->prepend(HTML::faicon('fa-server', true));
+            $menu->add(Lang::get('navigation.main.items.dashboard.title'), ['route' => 'home'])->prepend(HTML::faicon(Lang::get('navigation.main.items.dashboard.icon.fa'), true));
+            $menu->add(Lang::get('navigation.main.items.scoreboard.title'), ['route' => 'servers.live'])->prepend(HTML::faicon(Lang::get('navigation.main.items.scoreboard.icon.fa'), true));
+            $menu->add(Lang::get('navigation.main.items.playerlist.title'), ['route' => 'player.listing'])->prepend(HTML::faicon(Lang::get('navigation.main.items.playerlist.icon.fa'), true));
 
             // If the role can access the chatlogs we can add the item to the navigation list
             if (($this->isLoggedIn && $this->user->ability(null, 'chatlogs')) || Config::get('bfacp.site.chatlogs.guest')) {
-                $menu->add(Lang::get('navigation.main.items.chatlogs'), ['route' => 'chatlog.search'])->prepend(HTML::faicon('fa-comments', true));
+                $menu->add(Lang::get('navigation.main.items.chatlogs.title'), ['route' => 'chatlog.search'])->prepend(HTML::faicon(Lang::get('navigation.main.items.chatlogs.icon.fa'), true));
             }
 
             // Only show these if the user is logged in
@@ -54,11 +55,11 @@ class BaseController extends Controller
                     $menu->raw(strtoupper(Lang::get('navigation.admin.adkats.title')), ['class' => 'header']);
 
                     if ($this->user->ability(null, 'admin.adkats.bans.view')) {
-                        $menu->add(Lang::get('navigation.admin.adkats.items.banlist'), ['route' => 'admin.adkats.bans.index'])->prepend(HTML::ionicon('ion-hammer', true));
+                        $menu->add(Lang::get('navigation.admin.adkats.items.banlist.title'), ['route' => 'admin.adkats.bans.index'])->prepend(HTML::ionicon(Lang::get('navigation.admin.adkats.items.banlist.icon.ion'), true));
                     }
 
                     if ($this->user->ability(null, 'admin.adkats.user.view')) {
-                        $menu->add(Lang::get('navigation.admin.adkats.items.users'), ['route' => 'admin.adkats.users.index'])->prepend(HTML::faicon('fa-users', true));
+                        $menu->add(Lang::get('navigation.admin.adkats.items.users.title'), ['route' => 'admin.adkats.users.index'])->prepend(HTML::faicon(Lang::get('navigation.admin.adkats.items.users.icon.fa'), true));
                     }
                 }
 

@@ -6,6 +6,7 @@ use BFACP\Repositories\PlayerRepository;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
 
 class HomeController extends BaseController
@@ -30,7 +31,7 @@ class HomeController extends BaseController
         $countryMap = $this->playerRepo->getPlayersSeenByCountry();
 
         return View::make('dashboard', compact('uniquePlayers', 'adkats_statistics', 'countryMap'))
-            ->with('page_title', 'Dashboard');
+            ->with('page_title', Lang::get('navigation.main.items.dashboard.title'));
     }
 
     public function scoreboard()
@@ -39,15 +40,15 @@ class HomeController extends BaseController
             $query->active()->orderBy('ServerName');
         }])->get();
 
-        return View::make('scoreboard', compact('games'))->with('page_title', 'Live Scoreboard');
+        return View::make('scoreboard', compact('games'))->with('page_title', Lang::get('navigation.main.items.scoreboard.title'));
     }
 
     public function chatlogs()
     {
         $games = Game::with(['servers' => function($query) {
-            $query->active()->orderBy('ServerName');
+            $query->active();
         }])->get();
 
-        return View::make('chatlogs', compact('games'))->with('page_title', 'Chatlogs');
+        return View::make('chatlogs', compact('games'))->with('page_title', Lang::get('navigation.main.items.chatlogs.title'));
     }
 }

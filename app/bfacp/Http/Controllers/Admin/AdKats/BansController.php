@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use MainHelper;
@@ -40,7 +41,7 @@ class BansController extends BaseController
     {
         $bans = $this->repository->getBanList();
 
-        return View::make('admin.adkats.bans.index', compact('bans'))->with('page_title', 'Banlist');
+        return View::make('admin.adkats.bans.index', compact('bans'))->with('page_title', Lang::get('navigation.admin.adkats.items.banlist.title'));
     }
 
     /**
@@ -54,7 +55,7 @@ class BansController extends BaseController
             $ban     = $this->repository->getBanById($id);
             $servers = Server::where('GameID', $ban->player->GameID)->active()->lists('ServerName', 'ServerID');
 
-            return View::make('admin.adkats.bans.edit', compact('ban', 'servers'))->with('page_title', sprintf('Ban #%u', $id));
+            return View::make('admin.adkats.bans.edit', compact('ban', 'servers'))->with('page_title', Lang::get('navigation.admin.adkats.items.banlist.items.edit.title', ['id' => $id]));
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.adkats.bans.index')->withErrors([sprintf('Ban #%u doesn\'t exist.', $id)]);
         }

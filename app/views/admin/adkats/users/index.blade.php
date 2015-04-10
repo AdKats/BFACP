@@ -30,14 +30,19 @@
                                             {{ link_to_route('player.show', $soldier->player->game->Name, [
                                                 $soldier->player->PlayerID,
                                                 $soldier->player->SoldierName
-                                            ], ['target' => '_blank', 'class' => $soldier->player->game->class_css, 'style' => 'color: white !important', 'tooltip' => $soldier->player->SoldierName]) }}
+                                            ], [
+                                                'target' => '_blank',
+                                                'class' => $soldier->player->game->class_css,
+                                                'style' => 'color: white !important',
+                                                'tooltip' => $soldier->player->SoldierName
+                                            ]) }}
                                         </li>
                                         @empty
                                         <label class="label bg-blue">No Soldiers Assigned</label>
                                         @endforelse
                                     </ul>
                                 </td>
-                                <td><span tooltip="{{ $user->user_notes }}">{{ str_limit($user->user_notes, 60) }}</span></td>
+                                <td><span popover-placement="left" popover="{{ $user->user_notes }}" popover-trigger="mouseenter">{{ str_limit($user->user_notes, 60) }}</span></td>
                             </tr>
                             @empty
                             <alert type="info">

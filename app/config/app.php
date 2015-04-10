@@ -128,6 +128,7 @@ return array(
         'Zizaco\Entrust\EntrustServiceProvider',
         'Dingo\Api\Provider\ApiServiceProvider',
         'BFACP\Providers\HelpersProvider',
+        'DaveJamesMiller\Breadcrumbs\ServiceProvider',
     ),
 
     /*
@@ -200,7 +201,8 @@ return array(
         'Validator'         => 'Illuminate\Support\Facades\Validator',
         'View'              => 'Illuminate\Support\Facades\View',
         'version'           => 'vierbergenlars\SemVer\version',
-        'Menu'              => 'Lavary\Menu\Facade'
+        'Menu'              => 'Lavary\Menu\Facade',
+        'Breadcrumbs'       => 'DaveJamesMiller\Breadcrumbs\Facade',
 
     ),
 

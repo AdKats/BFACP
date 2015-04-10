@@ -39,7 +39,7 @@
         <div class="wrapper">
             <header class="main-header">
 
-                <a href="{{ route('home') }}" class="logo">
+                <a href="{{ route('home') }}" class="logo" target="_self">
                     <span class="logo-mini">ACP</span>
                     <span class="logo-lg">{{ MainHelper::getTitle($page_title, Config::get('bfacp.site.title'), true) }}</span>
                 </a>
@@ -58,6 +58,8 @@
             <div class="content-wrapper">
                 <section class="content-header">
                     <h1>{{{ $page_title }}}</h1>
+
+                    {{ Breadcrumbs::render() }}
                 </section>
 
                 <section class="content">
