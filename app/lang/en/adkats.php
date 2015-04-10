@@ -47,6 +47,60 @@ return [
                 'prompt' => 'Enter unban reason'
             ]
         ]
+    ],
+
+    'users' => [
+        'no_soldiers' => 'No Soldiers Assigned.',
+        'no_users' => 'No users found.',
+        'soldiers' => 'Soldiers',
+        'listing' => [
+            'table' => [
+                'col1' => 'User',
+                'col2' => 'Email',
+                'col3' => 'Role',
+                'col4' => 'Expiration',
+                'col5' => 'Soldiers',
+                'col6' => 'Notes'
+            ]
+        ],
+        'edit' => [
+            'details' => 'Details',
+            'buttons' => [
+                'save' => 'Save Changes',
+                'cancel' => 'Cancel'
+            ],
+            'inputs' => [
+                'username' => [
+                    'label' => 'Username'
+                ],
+                'email' => [
+                    'label' => 'Email'
+                ],
+                'role' => [
+                    'label' => 'Role'
+                ],
+                'expiration' => [
+                    'label' => 'Expiration',
+                    'help' => 'Leave date blank to set default expire date.'
+                ],
+                'notes' => [
+                    'label' => 'Notes'
+                ],
+                'soldiers' => [
+                    'label' => 'Player IDs',
+                    'help' => 'Seprate IDs by a comma to add more players. Remove IDs to delete them from the user.'
+                ],
+                'soldier' => [
+                    'label' => 'Player Name',
+                    'help' => 'To have the system add the player, type in the player name. This will add any player with the name provided.'
+                ]
+            ],
+            'table' => [
+                'col1' => 'ID',
+                'col2' => 'Game',
+                'col3' => 'Name'
+            ]
+        ]
     ]
 
 ];

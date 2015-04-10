@@ -6,27 +6,27 @@
     <div class="col-xs-6">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Details</h3>
+                <h3 class="box-title">{{ Lang::get('adkats.users.edit.details') }}</h3>
             </div>
 
             <div class="box-body">
-                {{ Former::text('user_name')->label('Username') }}
-                {{ Former::email('user_email')->label('Email') }}
-                {{ Former::select('user_role')->options($roles)->label('Role') }}
+                {{ Former::text('user_name')->label(Lang::get('adkats.users.edit.inputs.username.label')) }}
+                {{ Former::email('user_email')->label(Lang::get('adkats.users.edit.inputs.email.label')) }}
+                {{ Former::select('user_role')->options($roles)->label(Lang::get('adkats.users.edit.inputs.role.label')) }}
                 {{ Former::date('user_expiration')
                     ->forceValue($user->user_expiration->toDateString())
                     ->min(Carbon::now()->toDateString())
                     ->max(Carbon::now()->addYears(30)->toDateString())
-                    ->label('Expiration')
-                    ->help('Leave date blank to set default expire date.') }}
-                {{ Former::text('user_notes')->maxlength(1000)->label('Notes') }}
+                    ->label(Lang::get('adkats.users.edit.inputs.expiration.label'))
+                    ->help(Lang::get('adkats.users.edit.inputs.expiration.help')) }}
+                {{ Former::text('user_notes')->maxlength(1000)->label(Lang::get('adkats.users.edit.inputs.notes.label')) }}
 
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-sm-offset-4 col-lg-10 col-sm-8">
                         <button type="submit" class="btn bg-green">
-                            <i class="fa fa-floppy-o"></i>&nbsp;<span>Save Changes</span>
+                            <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ Lang::get('adkats.users.edit.buttons.save') }}</span>
                         </button>
-                        {{ link_to_route('admin.adkats.users.index', 'Cancel', [], ['class' => 'btn bg-red']) }}
+                        {{ link_to_route('admin.adkats.users.index', Lang::get('adkats.users.edit.buttons.cancel'), [], ['class' => 'btn bg-red']) }}
                     </div>
                 </div>
             </div>
@@ -36,23 +36,23 @@
     <div class="col-xs-6">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Soldiers</h3>
+                <h3 class="box-title">{{ Lang::get('adkats.users.soldiers') }}</h3>
             </div>
 
             <div class="box-body">
                 {{ Former::text('soldiers')
                     ->forceValue(implode(',', $user->soldiers()->lists('player_id')))
-                    ->label('Player IDs')
-                    ->help('Seprate IDs by a comma to add more players. Remove IDs to delete them from the user.') }}
+                    ->label(Lang::get('adkats.users.edit.inputs.soldiers.label'))
+                    ->help(Lang::get('adkats.users.edit.inputs.soldiers.help')) }}
 
-                {{ Former::text('soldier')->label('Player Name')->help('To have the system add the player, type in the player name. This will add any player with the name provided.') }}
+                {{ Former::text('soldier')->label(Lang::get('adkats.users.edit.inputs.soldier.label'))->help(Lang::get('adkats.users.edit.inputs.soldier.help')) }}
 
                 @if($user->soldiers->count() > 0)
                 <table class="table table-condensed table-striped">
                     <thead>
-                        <th>ID</th>
-                        <th>Game</th>
-                        <th>Name</th>
+                        <th>{{ Lang::get('adkats.users.edit.table.col1') }}</th>
+                        <th>{{ Lang::get('adkats.users.edit.table.col2') }}</th>
+                        <th>{{ Lang::get('adkats.users.edit.table.col3') }}</th>
                     </thead>
                     <tbody>
                         @foreach($user->soldiers as $soldier)
@@ -69,7 +69,7 @@
                 </table>
                 @else
                 <alert type="info">
-                    {{ HTML::faicon('fa-info-circle') }} No soldiers found.
+                    {{ HTML::faicon('fa-info-circle') }} {{ Lang::get('adkats.users.no_soldiers') }}
                 </alert>
                 @endif
             </div>

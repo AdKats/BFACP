@@ -8,12 +8,12 @@
                 <div class="table-responsive">
                     <table class="table table-condensed table-striped">
                         <thead>
-                            <th>User</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Expiration</th>
-                            <th>Soldiers</th>
-                            <th>Notes</th>
+                            <th>{{ Lang::get('adkats.users.listing.table.col1') }}</th>
+                            <th>{{ Lang::get('adkats.users.listing.table.col2') }}</th>
+                            <th>{{ Lang::get('adkats.users.listing.table.col3') }}</th>
+                            <th>{{ Lang::get('adkats.users.listing.table.col4') }}</th>
+                            <th>{{ Lang::get('adkats.users.listing.table.col5') }}</th>
+                            <th>{{ Lang::get('adkats.users.listing.table.col6') }}</th>
                         </thead>
 
                         <tbody>
@@ -38,7 +38,7 @@
                                             ]) }}
                                         </li>
                                         @empty
-                                        <label class="label bg-blue">No Soldiers Assigned</label>
+                                        <label class="label bg-red">{{ Lang::get('adkats.users.no_soldiers') }}</label>
                                         @endforelse
                                     </ul>
                                 </td>
@@ -47,7 +47,7 @@
                             @empty
                             <alert type="info">
                                 {{ HTML::faicon('fa-info') }}
-                                No users found.
+                                {{ Lang::get('adkats.users.no_users') }}
                             </alert>
                             @endforelse
                         </tbody>
