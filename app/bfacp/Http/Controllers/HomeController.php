@@ -21,14 +21,18 @@ class HomeController extends BaseController
 
     public function index()
     {
-        $uniquePlayers = $this->playerRepo->getPlayerCount();
+        $uniquePlayers = Cache::remember('players.unique.total', 60 * 24, function() {
+            return $this->playerRepo->getPlayerCount();
+        });
 
-        $adkats_statistics = Cache::remember('adkats.statistics', 10080, function() {
+        $adkats_statistics = Cache::remember('adkats.statistics', 60 * 24 , function() {
             $results = DB::select( File::get(storage_path() . '/sql/adkats_statistics.sql') );
             return head($results);
         });
 
-        $countryMap = $this->playerRepo->getPlayersSeenByCountry();
+        $countryMap = Cache::remember('players.seen.country', 60 * 24, function() {
+            return $this->playerRepo->getPlayersSeenByCountry();
+        });
 
         return View::make('dashboard', compact('uniquePlayers', 'adkats_statistics', 'countryMap'))
             ->with('page_title', Lang::get('navigation.main.items.dashboard.title'));
