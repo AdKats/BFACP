@@ -1,8 +1,6 @@
 <?php namespace BFACP\Http\Controllers;
 
 use BFACP\Battlefield\Game;
-use BFACP\Battlefield\Server;
-use BFACP\Repositories\PlayerRepository;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -11,45 +9,61 @@ use Illuminate\Support\Facades\View;
 
 class HomeController extends BaseController
 {
-    private $playerRepo;
+    /**
+     * Player Repository
+     * @var BFACP\Repositories\PlayerRepository
+     */
+    private $repository;
 
-    public function __construct(PlayerRepository $playerRepo)
+    public function __construct()
     {
-        $this->playerRepo = $playerRepo;
         parent::__construct();
+        $this->repository = \App::make('BFACP\Repositories\PlayerRepository');
     }
 
+    /**
+     * Shows the dashboard
+     */
     public function index()
     {
-        $uniquePlayers = Cache::remember('players.unique.total', 60 * 24, function() {
-            return $this->playerRepo->getPlayerCount();
+        // Cache results for 1 day
+        $uniquePlayers = Cache::remember('players.unique.total', 60 * 24, function () {
+            return $this->repository->getPlayerCount();
         });
 
-        $adkats_statistics = Cache::remember('adkats.statistics', 60 * 24 , function() {
-            $results = DB::select( File::get(storage_path() . '/sql/adkats_statistics.sql') );
+        // Cache results for 1 day
+        $adkats_statistics = Cache::remember('adkats.statistics', 60 * 24, function () {
+            $results = DB::select(File::get(storage_path() . '/sql/adkats_statistics.sql'));
             return head($results);
         });
 
-        $countryMap = Cache::remember('players.seen.country', 60 * 24, function() {
-            return $this->playerRepo->getPlayersSeenByCountry();
+        // Cache results for 1 day
+        $countryMap = Cache::remember('players.seen.country', 60 * 24, function () {
+            return $this->repository->getPlayersSeenByCountry();
         });
 
         return View::make('dashboard', compact('uniquePlayers', 'adkats_statistics', 'countryMap'))
             ->with('page_title', Lang::get('navigation.main.items.dashboard.title'));
     }
 
+    /**
+     * Shows the live scoreboard
+     */
     public function scoreboard()
     {
-        $games = Game::with(['servers' => function($query) {
+        $games = Game::with(['servers' => function ($query) {
             $query->active()->orderBy('ServerName');
         }])->get();
 
         return View::make('scoreboard', compact('games'))->with('page_title', Lang::get('navigation.main.items.scoreboard.title'));
     }
 
+    /**
+     * Shows the chatlog searching
+     */
     public function chatlogs()
     {
-        $games = Game::with(['servers' => function($query) {
+        $games = Game::with(['servers' => function ($query) {
             $query->active();
         }])->get();
 
