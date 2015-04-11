@@ -46,6 +46,10 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 
 App::error(function(Exception $exception, $code)
 {
+    if($code == 403) {
+        return Redirect::route('home');
+    }
+
 	Log::error($exception);
 
     if(!Config::get('app.debug')) {
