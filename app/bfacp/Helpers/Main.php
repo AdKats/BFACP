@@ -234,7 +234,7 @@ class Main extends BaseHelper
     {
         $title = '';
 
-        if (!$short) {
+        if (!$short && $page !== false) {
             $title .= $page . ' | ';
         }
 

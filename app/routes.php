@@ -171,3 +171,9 @@ Entrust::routeNeedsPermission('admin/adkats/bans/*', 'admin.adkats.bans.edit');
 ====================================*/
 Entrust::routeNeedsPermission('admin/adkats/users', 'admin.adkats.user.view');
 Entrust::routeNeedsPermission('admin/adkats/users/*', 'admin.adkats.user.edit');
+
+/*================================================
+=            Require the Menu Builder            =
+================================================*/
+
+require $app['path.base'] . '/app/menu.php';

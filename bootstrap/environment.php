@@ -1,7 +1,7 @@
 <?php
 
 // Only used for local develpment.
-    // DO NOT USE THIS FILE IN PRODUCTION
+// DO NOT USE THIS FILE IN PRODUCTION
 if(file_exists($app['path.base'] . "/.env.local.php"))
     return 'local';
 

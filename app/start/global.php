@@ -49,8 +49,15 @@ App::error(function(Exception $exception, $code)
 	Log::error($exception);
 
     if(!Config::get('app.debug')) {
+        View::share('page_title', false);
         return Response::view('system.error', compact('exception'), 500);
     }
+});
+
+App::missing(function($exception)
+{
+    View::share('page_title', false);
+    return Response::view('system.notfound', [], 404);
 });
 
 /*

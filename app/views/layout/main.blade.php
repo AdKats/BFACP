@@ -59,7 +59,7 @@
                 <section class="content-header">
                     <h1>{{{ $page_title }}}</h1>
 
-                    {{ Breadcrumbs::render() }}
+                    {{ Breadcrumbs::renderIfExists() }}
                 </section>
 
                 <section class="content">
