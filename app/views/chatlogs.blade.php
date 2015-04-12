@@ -95,7 +95,7 @@
                                     <span class="{{ $message->class_css }}">{{ $message->logSubset }}</span>
                                     @endif
                                 </td>
-                                <td><span popover="{{ $message->logMessage }}" popover-trigger="mouseenter">{{ str_limit($message->logMessage, 30) }}</span></td>
+                                <td><span popover="{{ $message->logMessage }}" popover-trigger="mouseenter">{{ str_limit($message->logMessage, 50) }}</span></td>
                                 <td ng-bind="moment('{{ $message->stamp }}').format('LLL')"></td>
                                 @else
                                 <td>
@@ -110,7 +110,7 @@
                                     <span class="{{ $message->class_css }}">{{ $message->logSubset }}</span>
                                     @endif
                                 </td>
-                                <td><span popover="{{ $message->logMessage }}" popover-trigger="mouseenter">{{ str_limit($message->logMessage, 30) }}</span></td>
+                                <td><span popover="{{ $message->logMessage }}" popover-trigger="mouseenter">{{ str_limit($message->logMessage, 90) }}</span></td>
                                 <td ng-bind="moment('{{ $message->stamp }}').format('LLL')"></td>
                                 @endif
                             </tr>
