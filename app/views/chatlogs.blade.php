@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-xs-12 col-md-4">
+    <div class="col-xs-12 col-lg-4">
         <div class="box box-primary">
             <div class="box-body">
                 {{ Former::open()->route('chatlog.search')->method('GET') }}
@@ -52,7 +52,7 @@
     </div>
 
     @if(isset($chat))
-    <div class="col-xs-12 col-md-8">
+    <div class="col-xs-12 col-lg-8">
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">Results</h3>
