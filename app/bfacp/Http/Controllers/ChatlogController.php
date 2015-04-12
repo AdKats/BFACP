@@ -33,7 +33,7 @@ class ChatlogController extends BaseController
         if ($this->hasInput()) {
 
             // If the hide spam checkbox was checked then exclude it
-            if (Input::has('nospam')) {
+            if (!Input::has('showspam')) {
                 $chat = $chat->excludeSpam();
             }
 

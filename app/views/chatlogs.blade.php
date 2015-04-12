@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-xs-12 col-lg-4">
+    <div class="col-xs-12 col-lg-5">
         <div class="box box-primary">
             <div class="box-body">
                 {{ Former::open()->route('chatlog.search')->method('GET') }}
@@ -26,8 +26,8 @@
                     </div>
                 </div>
 
-                {{ Former::text('players')->label('Players')->help('Seperate multiple players by a comma (,). Partal names accepted.') }}
-                {{ Former::text('keywords')->label('Keywords')->help('Seperate multiple keywords by a comma (,).') }}
+                {{ Former::text('players')->label('Players')->help('Separate multiple players with a comma (,). Partial names accepted.') }}
+                {{ Former::text('keywords')->label('Keywords')->help('Separate multiple keywords with a comma (,).') }}
 
                 <div class="form-group" id="date-range-container">
                     <label class="control-label col-lg-2 col-sm-4">Date</label>
@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                {{ Former::checkbox('nospam')->label('Hide Spam') }}
+                {{ Former::checkbox('showspam')->label('Show Spam') }}
 
                 {{ Former::actions()->success_submit('Search') }}
 
@@ -52,19 +52,17 @@
     </div>
 
     @if(isset($chat))
-    <div class="col-xs-12 col-lg-8">
+    <div class="col-xs-12 col-lg-7">
         <div class="box box-primary">
-            <div class="box-header">
-                <h3 class="box-title">Results</h3>
-            </div>
-
             <div class="box-body">
                 <div class="table-responsive">
                     <table class="table table-striped table-condensed">
                         <thead>
                             <th>Date</th>
+                            @if(Input::get('server', -1) <= 0)
                             <th>Game</th>
                             <th>Server</th>
+                            @endif
                             <th>Subset</th>
                             <th>Player</th>
                             <th>Message</th>
@@ -74,12 +72,14 @@
                             @forelse($chat as $message)
                             <tr>
                                 <td ng-bind="moment('{{ $message->stamp }}').format('LLL')"></td>
+                                @if(Input::get('server', -1) <= 0)
                                 <td><span class="{{ $message->server->game->class_css }}">{{ $message->server->game->Name }}</span></td>
                                 <td>
                                     <span tooltip="{{ $message->server->ServerName }}">
                                         {{ $message->server->server_name_short or str_limit($message->server->ServerName, 30) }}
                                     </span>
                                 </td>
+                                @endif
                                 <td><span class="{{ $message->class_css }}">{{ $message->logSubset }}</span></td>
                                 <td>
                                     @if(is_null($message->logPlayerID))
@@ -92,7 +92,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5">
+                                <td <?php echo Input::get('server', -1) <= 0 ? 'colspan="4"' : 'colspan="6"'; ?>>
                                     <alert type="info">{{ HTML::faicon('fa-info-circle') }}&nbsp;No results returned</alert>
                                 </td>
                             </tr>
