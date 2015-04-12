@@ -123,7 +123,7 @@ class Chat extends Elegant
                 break;
 
             case 'Squad':
-                $class = 'label bg-orange';
+                $class = 'label bg-green';
                 break;
 
             default:
