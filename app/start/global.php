@@ -46,15 +46,25 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 
 App::error(function(Exception $exception, $code)
 {
-    if($code == 403) {
-        return Redirect::route('home');
+    switch($code) {
+        case 403:
+            return Redirect::route('home')->withErrors([
+                'Access Forbidden!'
+            ]);
+        break;
+
+        case 405:
+            return Redirect::intended(route('home'))->withErrors([
+                'No Method Available'
+            ]);
+        break;
     }
 
 	Log::error($exception);
 
-    if(!Config::get('app.debug')) {
+    if(Config::get('app.debug')) {
         View::share('page_title', false);
-        return Response::view('system.error', compact('exception'), 500);
+        return Response::view('system.error', compact('exception', 'code'), 500);
     }
 });
 
