@@ -48,9 +48,13 @@ App::error(function(Exception $exception, $code)
 {
     switch($code) {
         case 403:
-            return Redirect::route('home')->withErrors([
-                'Access Forbidden!'
-            ]);
+            if(Auth::check()) {
+                return Redirect::route('home')->withErrors([
+                    'Access Forbidden!'
+                ]);
+            }
+
+            return Redirect::guest(route('user.login'));
         break;
 
         case 405:
@@ -62,7 +66,7 @@ App::error(function(Exception $exception, $code)
 
 	Log::error($exception);
 
-    if(Config::get('app.debug')) {
+    if(!Config::get('app.debug')) {
         View::share('page_title', false);
         return Response::view('system.error', compact('exception', 'code'), 500);
     }

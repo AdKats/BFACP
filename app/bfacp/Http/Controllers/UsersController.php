@@ -109,7 +109,7 @@ class UsersController extends BaseController
         $input = Input::all();
 
         if ($this->repository->login($input)) {
-            return Redirect::intended('/');
+            return Redirect::intended();
         }
 
         if ($this->repository->isThrottled($input)) {
