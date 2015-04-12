@@ -90,7 +90,11 @@
                                     {{ link_to_route('player.show', $message->player->SoldierName, [$message->player->PlayerID, $message->player->SoldierName]) }}
                                     @endif
                                 </td>
-                                <td><span class="{{ $message->class_css }}">{{ $message->logSubset }}</span></td>
+                                <td>
+                                    @if($message->logSubset != 'Global')
+                                    <span class="{{ $message->class_css }}">{{ $message->logSubset }}</span>
+                                    @endif
+                                </td>
                                 <td><span popover="{{ $message->logMessage }}" popover-trigger="mouseenter">{{ str_limit($message->logMessage, 30) }}</span></td>
                                 <td ng-bind="moment('{{ $message->stamp }}').format('LLL')"></td>
                                 @else
@@ -101,7 +105,11 @@
                                     {{ link_to_route('player.show', $message->player->SoldierName, [$message->player->PlayerID, $message->player->SoldierName]) }}
                                     @endif
                                 </td>
-                                <td><span class="{{ $message->class_css }}">{{ $message->logSubset }}</span></td>
+                                <td>
+                                    @if($message->logSubset != 'Global')
+                                    <span class="{{ $message->class_css }}">{{ $message->logSubset }}</span>
+                                    @endif
+                                </td>
                                 <td><span popover="{{ $message->logMessage }}" popover-trigger="mouseenter">{{ str_limit($message->logMessage, 30) }}</span></td>
                                 <td ng-bind="moment('{{ $message->stamp }}').format('LLL')"></td>
                                 @endif
