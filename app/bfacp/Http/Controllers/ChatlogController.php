@@ -32,8 +32,8 @@ class ChatlogController extends BaseController
         // Check if user hit the submit button
         if ($this->hasInput()) {
 
-            // If the hide spam checkbox was checked then exclude it
-            if (!Input::has('showspam')) {
+            // If the show spam checkbox was not checked then exclude it
+            if (Input::has('showspam') == false) {
                 $chat = $chat->excludeSpam();
             }
 
