@@ -111,7 +111,7 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
 
     /*-----  End of Auth Routes  ------*/
 
-    Route::get('chatlogs', ['as' => 'chatlog.search', 'uses' => 'HomeController@chatlogs', 'before' => 'chatlogs']);
+    Route::get('chatlogs', ['as' => 'chatlog.search', 'uses' => 'ChatlogController@index', 'before' => 'chatlogs']);
 
     Route::group(['prefix' => 'players'], function()
     {

@@ -5,86 +5,159 @@
     <div class="col-xs-12 col-md-4">
         <div class="box box-primary">
             <div class="box-body">
+                {{ Former::open()->route('chatlog.search')->method('GET') }}
 
                 <div class="form-group">
-                    <label>Server</label>
-                    <select class="form-control">
-                        <option value="-1" selected>Select Server...</option>
-                        @foreach($games as $game)
-                        <optgroup label="{{ $game->Name }}">
-                            @foreach($game->servers as $server)
-                            <option value="{{ $server->ServerID }}">{{{ $server->ServerName }}}</option>
+                    <label class="control-label col-lg-2 col-sm-4">Server</label>
+
+                    <div class="col-lg-10 col-sm-8">
+                        <select class="form-control" name="server" id="server">
+                            <option value="-1" <?php echo Input::has('server') && Input::get('server') == -1 ? 'selected' : '' ?>>Select Server...</option>
+                            @foreach($games as $game)
+                            <optgroup label="{{ $game->Name }}">
+                                @foreach($game->servers as $server)
+                                <option value="{{ $server->ServerID }}"<?php echo Input::has('server') && Input::get('server') == $server->ServerID ? 'selected' : '' ?>>
+                                    {{{ $server->ServerName }}}
+                                </option>
+                                @endforeach
+                            </optgroup>
                             @endforeach
-                        </optgroup>
-                        @endforeach
-                    </select>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Players</label>
-                    {{ Former::text('players') }}
-                    <p class="help-block">Seperate multiple players by a comma (,). Partal names accepted.</p>
-                </div>
+                {{ Former::text('players')->label('Players')->help('Seperate multiple players by a comma (,). Partal names accepted.') }}
+                {{ Former::text('keywords')->label('Keywords')->help('Seperate multiple keywords by a comma (,).') }}
 
-                <div class="form-group">
-                    <label>Keywords</label>
-                    {{ Former::text('keywords') }}
-                    <p class="help-block">
-                        Seperate multiple keywords by a comma (,).
-                    </p>
-                </div>
-
-                <div class="form-group">
-                    <label>Date &amp; Time Range</label>
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <i class="fa fa-clock-o"></i>
+                <div class="form-group" id="date-range-container">
+                    <label class="control-label col-lg-2 col-sm-4">Date</label>
+                    <div class="col-lg-10 col-sm-8">
+                        <div id="date-range">
+                            <i class="fa fa-calendar fa-lg"></i>&nbsp;
+                            <span></span> <strong class="caret"></strong>
                         </div>
-                        {{ Former::text('between')
-                            ->addClass('pull-right') }}
-                    </div>
-                    <p class="help-block" id="between-display"></p>
-                </div>
 
-                <div class="form-group">
-                    <div class="checkbox">
-                        {{ Former::checkbox('nospam')->text('Exclude Server &amp; Commo Rose Spam') }}
+                        {{ Former::hidden('StartDateTime', '') }}
+                        {{ Former::hidden('EndDateTime', '') }}
                     </div>
                 </div>
 
+                {{ Former::checkbox('nospam')->label('Hide Spam') }}
+
+                {{ Former::actions()->success_submit('Search') }}
+
+                {{ Former::close() }}
             </div>
         </div>
     </div>
 
+    @if(isset($chat))
     <div class="col-xs-12 col-md-8">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Results</h3>
+            </div>
 
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <th>Date</th>
+                            <th>Game</th>
+                            <th>Server</th>
+                            <th>Subset</th>
+                            <th>Player</th>
+                            <th>Message</th>
+                        </thead>
+
+                        <tbody>
+                            @forelse($chat as $message)
+                            <tr>
+                                <td ng-bind="moment('{{ $message->stamp }}').format('LLL')"></td>
+                                <td><span class="{{ $message->server->game->class_css }}">{{ $message->server->game->Name }}</span></td>
+                                <td>
+                                    <span tooltip="{{ $message->server->ServerName }}">
+                                        {{ $message->server->server_name_short or str_limit($message->server->ServerName, 30) }}
+                                    </span>
+                                </td>
+                                <td><span class="{{ $message->class_css }}">{{ $message->logSubset }}</span></td>
+                                <td>
+                                    @if(is_null($message->logPlayerID))
+                                    {{ $message->logSoldierName }}
+                                    @else
+                                    {{ link_to_route('player.show', $message->player->SoldierName, [$message->player->PlayerID, $message->player->SoldierName]) }}
+                                    @endif
+                                </td>
+                                <td><span popover="{{ $message->logMessage }}" popover-trigger="mouseenter">{{ str_limit($message->logMessage, 30) }}</span></td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="5">
+                                    <alert type="info">{{ HTML::faicon('fa-info-circle') }}&nbsp;No results returned</alert>
+                                </td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td><span class="pull-right">Total</span></td>
+                                <td><span class="pull-left" ng-bind="{{ (int) $chat->getTotal() }} | number"></span></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <div class="box-footer">
+                {{ $chat->appends(Input::except('page'))->links('pagination::simple') }}
+            </div>
+        </div>
     </div>
+    @endif
 </div>
 @stop
 
 @section('scripts')
 {{ HTML::script('js/plugins/daterangepicker/daterangepicker.js') }}
-{{ HTML::script('js/plugins/timepicker/bootstrap-timepicker.min.js') }}
 <script type="text/javascript">
-    $('#between').daterangepicker({
+function updateDateRangeDisplay(date1, date2) {
+    $('#date-range span').html(moment(date1).format('LLL') + '&nbsp;&ndash;&nbsp;' + moment(date2).format('LLL'));
+    $("input[name='StartDateTime']").val(moment(date1).format());
+    $("input[name='EndDateTime']").val(moment(date2).format());
+}
+
+$(function() {
+    var startDate = <?php if(Input::has('StartDateTime')) : ?>moment('{{ Input::get("StartDateTime") }}');<?php else : ?>moment().startOf('day');<?php endif; ?>
+    var endDate = <?php if(Input::has('EndDateTime')) : ?>moment('{{ Input::get("EndDateTime") }}').endOf('day');<?php else : ?>moment().endOf('day');<?php endif; ?>
+
+    updateDateRangeDisplay(startDate, endDate);
+
+    $('#date-range').daterangepicker({
         ranges: {
-            'Today': [ moment(), moment() ],
-            'Yesterday': [ moment().subtract(1, 'days'), moment().subtract(1, 'days') ],
-            'Last 7 Days': [ moment().subtract(6, 'days'), moment() ],
-            'Last 30 Days': [ moment().subtract(29, 'days'), moment() ],
+            'Today': [ moment().startOf('day'), moment().endOf('day') ],
+            'Yesterday': [ moment().subtract(1, 'days').startOf('day'), moment().subtract(1, 'days').endOf('day') ],
+            'Last 7 Days': [ moment().subtract(6, 'days').startOf('day'), moment().endOf('day') ],
+            'Last 30 Days': [ moment().subtract(29, 'days').startOf('day'), moment().endOf('day') ],
             'This Month': [ moment().startOf('month'), moment().endOf('month') ],
-            'Last Month': [ moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('Month') ]
+            'Last Month': [ moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month') ]
         },
-        startDate: moment().subtract(29, 'days'),
-        endDate: moment()
-    }, function(start, end) {
-        $('#between-display').html(start.format('lll') + ' - ' + end.format('lll'));
+        startDate: startDate,
+        endDate: endDate,
+        timePicker: true,
+        timePickerIncrement: 5,
+        timePicker12Hour: true,
+        timePickerSeconds: false,
+        showDropdowns: true
+    }, function(startDate, endDate) {
+        updateDateRangeDisplay(startDate, endDate);
     });
 
     $('input').iCheck({
-        checkboxClass: 'icheckbox_minimal-blue',
-        radioClass: 'iradio_minimal-blue',
-        increaseArea: '-10%'
+        checkboxClass: 'icheckbox_flat-blue',
+        radioClass: 'iradio_flat-blue'
     });
+});
 </script>
 @stop

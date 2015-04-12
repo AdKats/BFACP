@@ -57,16 +57,4 @@ class HomeController extends BaseController
 
         return View::make('scoreboard', compact('games'))->with('page_title', Lang::get('navigation.main.items.scoreboard.title'));
     }
-
-    /**
-     * Shows the chatlog searching
-     */
-    public function chatlogs()
-    {
-        $games = Game::with(['servers' => function ($query) {
-            $query->active();
-        }])->get();
-
-        return View::make('chatlogs', compact('games'))->with('page_title', Lang::get('navigation.main.items.chatlogs.title'));
-    }
 }
