@@ -98,14 +98,6 @@
                             </tr>
                             @endforelse
                         </tbody>
-
-                        <tfoot>
-                            <tr>
-                                <td colspan="3"></td>
-                                <td><span class="pull-right">Total</span></td>
-                                <td><span class="pull-left" ng-bind="{{ (int) $chat->getTotal() }} | number"></span></td>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>
