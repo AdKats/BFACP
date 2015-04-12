@@ -29,13 +29,13 @@ class ChatlogController extends BaseController
 
         $chat = $this->chat->with('player', 'server')->orderBy('logDate', 'desc');
 
+        // If the show spam checkbox was not checked then exclude it
+        if (!Input::has('showspam')) {
+            $chat = $chat->excludeSpam();
+        }
+
         // Check if user hit the submit button
         if ($this->hasInput()) {
-
-            // If the show spam checkbox was not checked then exclude it
-            if (Input::has('showspam') == false) {
-                $chat = $chat->excludeSpam();
-            }
 
             // Filtering by dates
             if (Input::has('StartDateTime') && Input::has('EndDateTime')) {
@@ -93,7 +93,7 @@ class ChatlogController extends BaseController
         return Input::has('server') ||
         Input::has('players') ||
         Input::has('keywords') ||
-        Input::has('nospam') ||
+        Input::has('showspam') ||
         (Input::has('StartDateTime') && Input::has('EndDateTime'));
     }
 }

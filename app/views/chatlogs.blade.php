@@ -58,20 +58,24 @@
                 <div class="table-responsive">
                     <table class="table table-striped table-condensed">
                         <thead>
-                            <th>Date</th>
                             @if(Input::get('server', -1) <= 0)
                             <th>Game</th>
                             <th>Server</th>
-                            @endif
-                            <th>Subset</th>
                             <th>Player</th>
+                            <th>Subset</th>
                             <th>Message</th>
+                            <th>Date</th>
+                            @else
+                            <th>Player</th>
+                            <th>Subset</th>
+                            <th>Message</th>
+                            <th>Date</th>
+                            @endif
                         </thead>
 
                         <tbody>
                             @forelse($chat as $message)
                             <tr>
-                                <td ng-bind="moment('{{ $message->stamp }}').format('LLL')"></td>
                                 @if(Input::get('server', -1) <= 0)
                                 <td><span class="{{ $message->server->game->class_css }}">{{ $message->server->game->Name }}</span></td>
                                 <td>
@@ -79,8 +83,6 @@
                                         {{ $message->server->server_name_short or str_limit($message->server->ServerName, 30) }}
                                     </span>
                                 </td>
-                                @endif
-                                <td><span class="{{ $message->class_css }}">{{ $message->logSubset }}</span></td>
                                 <td>
                                     @if(is_null($message->logPlayerID))
                                     {{ $message->logSoldierName }}
@@ -88,7 +90,21 @@
                                     {{ link_to_route('player.show', $message->player->SoldierName, [$message->player->PlayerID, $message->player->SoldierName]) }}
                                     @endif
                                 </td>
+                                <td><span class="{{ $message->class_css }}">{{ $message->logSubset }}</span></td>
                                 <td><span popover="{{ $message->logMessage }}" popover-trigger="mouseenter">{{ str_limit($message->logMessage, 30) }}</span></td>
+                                <td ng-bind="moment('{{ $message->stamp }}').format('LLL')"></td>
+                                @else
+                                <td>
+                                    @if(is_null($message->logPlayerID))
+                                    {{ $message->logSoldierName }}
+                                    @else
+                                    {{ link_to_route('player.show', $message->player->SoldierName, [$message->player->PlayerID, $message->player->SoldierName]) }}
+                                    @endif
+                                </td>
+                                <td><span class="{{ $message->class_css }}">{{ $message->logSubset }}</span></td>
+                                <td><span popover="{{ $message->logMessage }}" popover-trigger="mouseenter">{{ str_limit($message->logMessage, 30) }}</span></td>
+                                <td ng-bind="moment('{{ $message->stamp }}').format('LLL')"></td>
+                                @endif
                             </tr>
                             @empty
                             <tr>
