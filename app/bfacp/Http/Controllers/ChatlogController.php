@@ -39,8 +39,8 @@ class ChatlogController extends BaseController
 
             // Filtering by dates
             if (Input::has('StartDateTime') && Input::has('EndDateTime')) {
-                $startDate = Carbon::parse(Input::get('StartDateTime'));
-                $endDate   = Carbon::parse(Input::get('EndDateTime'));
+                $startDate = Carbon::parse(Input::get('StartDateTime'))->setTimezone(new \DateTimeZone('UTC'));
+                $endDate   = Carbon::parse(Input::get('EndDateTime'))->setTimezone(new \DateTimeZone('UTC'));
                 $chat      = $chat->whereBetween('logDate', [$startDate, $endDate]);
             }
 
