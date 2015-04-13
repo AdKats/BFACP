@@ -65,9 +65,12 @@ class PlayerRepository extends BaseRepository
                     }
 
                     // Checks if string is a player name
-                    elseif (preg_match("/^([a-zA-Z0-9_\-]+)$/", $name, $matches)) {
+                    elseif (preg_match("/^([a-zA-Z0-9\_\-\|]+)$/", $name, $matches)) {
                         $name = sprintf('%s%%', $matches[1]);
-                        $q->orWhere('SoldierName', 'LIKE', $name);
+
+                        if(isset($matches[1]) && !empty($matches[1])) {
+                            $q->orWhere('SoldierName', 'LIKE', $name);
+                        }
                     }
                 }
             });
