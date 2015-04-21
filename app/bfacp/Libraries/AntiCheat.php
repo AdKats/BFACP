@@ -48,9 +48,9 @@ class AntiCheat
      * @var array
      */
     private $allowedCategorys = [
-        'BF3' => ['carbines', 'machine_guns', 'assault_rifles', 'sub_machine_guns', 'handheld_weapons'],
-        'BF4' => ['carbines', 'lmgs', 'assault_rifles', 'pdws', 'handguns', 'shotguns'],
-        'BFH' => [
+        'BF3'  => ['carbines', 'machine_guns', 'assault_rifles', 'sub_machine_guns', 'handheld_weapons'],
+        'BF4'  => ['carbines', 'lmgs', 'assault_rifles', 'pdws', 'handguns', 'shotguns'],
+        'BFHL' => [
             'assault_rifles',
             'ar_standard',
             'sr_standard',
@@ -82,16 +82,7 @@ class AntiCheat
         $this->battlelog = new BPlayer($player);
         $this->player    = $player;
         $this->guzzle    = \App::make('GuzzleHttp\Client');
-
-        switch ($this->player->game->Name) {
-            case 'BFHL':
-                $this->game = 'BFH';
-                break;
-
-            default:
-                $this->game = strtoupper($this->player->game->Name);
-        }
-
+        $this->game      = strtoupper($this->player->game->Name);
         $this->fetchWeaponDamages();
     }
 
