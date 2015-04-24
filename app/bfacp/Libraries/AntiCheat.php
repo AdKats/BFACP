@@ -48,8 +48,22 @@ class AntiCheat
      * @var array
      */
     private $allowedCategorys = [
-        'BF3'  => ['carbines', 'machine_guns', 'assault_rifles', 'sub_machine_guns', 'handheld_weapons'],
-        'BF4'  => ['carbines', 'lmgs', 'assault_rifles', 'pdws', 'handguns', 'shotguns'],
+        'BF3'  => [
+            'carbines',
+            'machine_guns',
+            'assault_rifles',
+            'sub_machine_guns',
+            'handheld_weapons'
+        ],
+        'BF4'  => [
+            'carbines',
+            'lmgs',
+            'assault_rifles',
+            'pdws',
+            'handguns',
+            'shotguns',
+            'sniper_rifles'
+        ],
         'BFHL' => [
             'assault_rifles',
             'ar_standard',
@@ -111,8 +125,7 @@ class AntiCheat
 
             if (!in_array($category, $this->allowedCategorys[$this->game]) ||
                 !array_key_exists($category, $this->weapons[$this->game]) ||
-                !array_key_exists($weapon['slug'], $this->weapons[$this->game][$category]) ||
-                $this->weapons[$this->game][$category][$weapon['slug']]['max'] >= $this->triggers['DPS']) {
+                !array_key_exists($weapon['slug'], $this->weapons[$this->game][$category])) {
                 continue;
             }
 
