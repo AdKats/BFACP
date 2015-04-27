@@ -51,7 +51,7 @@ class User extends \Eloquent implements ConfideUserInterface
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = ['gravatar'];
+    protected $appends = ['gravatar', 'stamp'];
 
     /**
      * Models to be loaded automaticly
@@ -157,6 +157,11 @@ class User extends \Eloquent implements ConfideUserInterface
     public function getConfirmedAttribute()
     {
         return $this->attributes['confirmed'] == 1;
+    }
+
+    public function getStampAttribute()
+    {
+        return $this->created_at->toIso8601String();
     }
 
     /**
