@@ -62,7 +62,8 @@ class AntiCheat
             'pdws',
             'handguns',
             'shotguns',
-            'sniper_rifles'
+            'sniper_rifles',
+            'dmrs'
         ],
         'BFHL' => [
             'assault_rifles',
