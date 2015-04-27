@@ -152,6 +152,16 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function()
             ]);
         });
 
+        Route::group(['prefix' => 'site', 'namespace' => 'Site'], function()
+        {
+            Route::resource('users', 'UsersController', [
+                'names' => [
+                    'index' => 'admin.site.users.index'
+                ],
+                'only' => ['index']
+            ]);
+        });
+
         Route::get('updater', ['as' => 'admin.updater.index', 'uses' => 'UpdaterController@index']);
     });
 });

@@ -36,7 +36,7 @@ Menu::make('MainNav', function ($menu) use($adminPermsList) {
         ===============================================*/
 
         if (Auth::user()->ability(null, $adminPermsList['adkats'])) {
-            $adkats = $menu->raw(strtoupper(Lang::get('navigation.admin.adkats.title')));
+            $adkats = $menu->raw(Lang::get('navigation.admin.adkats.title'));
 
             if (Auth::user()->ability(null, 'admin.adkats.bans.view')) {
                 $adkats->add(Lang::get('navigation.admin.adkats.items.banlist.title'), ['route' => 'admin.adkats.bans.index'])
@@ -54,7 +54,12 @@ Menu::make('MainNav', function ($menu) use($adminPermsList) {
         =============================================*/
 
         if (Auth::user()->ability(null, $adminPermsList['site'])) {
-            $site = $menu->raw(strtoupper(Lang::get('navigation.admin.title')), ['class' => 'header']);
+            $site = $menu->raw(Lang::get('navigation.admin.site.title'));
+
+            if(Auth::user()->ability(null, 'admin.site.users')) {
+                $site->add(Lang::get('navigation.admin.site.items.users.title'), ['route' => 'admin.site.users.index'])
+                     ->prepend(HTML::faicon(Lang::get('navigation.admin.site.items.users.icon.fa'), true));
+            }
         }
     }
 });

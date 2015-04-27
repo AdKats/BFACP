@@ -37,6 +37,11 @@ Breadcrumbs::register('admin.adkats', function($b) {
     $b->push(Lang::get('navigation.admin.adkats.title'), null);
 });
 
+Breadcrumbs::register('admin.site', function($b) {
+    $b->parent('home');
+    $b->push(Lang::get('navigation.admin.site.title'), null);
+});
+
 /*===================================
 =            AdKats Bans            =
 ===================================*/
@@ -67,4 +72,15 @@ Breadcrumbs::register('admin.adkats.users.index', function($b) {
 Breadcrumbs::register('admin.adkats.users.edit', function($b, $id) {
     $b->parent('admin.adkats.users.index');
     $b->push(Lang::get('navigation.admin.adkats.items.users.items.edit.title', ['id' => $id]));
+});
+
+/*==================================
+=            Site Users            =
+==================================*/
+
+Breadcrumbs::register('admin.site.users.index', function($b) {
+    $b->parent('admin.site');
+    $b->push(Lang::get('navigation.admin.site.items.users.title'), route('admin.site.users.index'), [
+        'icon' => HTML::faicon(Lang::get('navigation.admin.site.items.users.icon.fa'))
+    ]);
 });

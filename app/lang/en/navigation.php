@@ -36,7 +36,23 @@ return [
     ],
 
     'admin' => [
-        'title' => 'Site Management',
+        'site' => [
+            'title' => 'Site Management',
+            'items' => [
+                'users' => [
+                    'title' => 'Users',
+                    'icon' => [
+                        'fa' => 'fa-users',
+                        'ion' => null
+                    ],
+                    'items' => [
+                        'edit' => [
+                            'title' => 'Editing User :username'
+                        ]
+                    ]
+                ]
+            ]
+        ],
         'adkats' => [
             'title' => 'AdKats Management',
             'items' => [
@@ -63,7 +79,7 @@ return [
                             'title' => 'Editing User #:id'
                         ]
                     ]
-                ],
+                ]
             ]
         ]
     ]
