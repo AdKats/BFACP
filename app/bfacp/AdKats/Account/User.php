@@ -63,6 +63,7 @@ class User extends Elegant
     {
         return $this->hasMany('BFACP\AdKats\Account\Soldier', 'user_id');
     }
+
     public function getStampAttribute()
     {
         return $this->user_expiration->toIso8601String();
