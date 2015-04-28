@@ -719,4 +719,37 @@ class Main extends BaseHelper
 
         return $languages;
     }
+
+    /**
+     * Returns the correct soldier assigned to user for the correct game.
+     *
+     * @param  BFACP\Account\User  $user
+     * @param  integer             $gameID
+     * @return BFACP\Battlefield\Player
+     */
+    public function getAdminPlayer(\BFACP\Account\User $user, $gameID)
+    {
+        $soldiers = $user->soldiers->filter(function($soldier) use($gameID) {
+            // Only return true if the user has a matching soldier with the game
+            if ($soldier->player->game->GameID == $gameID) {
+                return true;
+            }
+        });
+
+        // Check if we have a soldier.
+        if (!empty($soldiers)) {
+            if (count($soldiers) > 1) {
+                // Found multiple players. We need to preform a levenshtein to find the closest match.
+
+                // On TODO List
+            } else {
+
+                $soldier = head(array_flatten($soldiers));
+                return $soldier->player;
+            }
+        }
+
+        // Return null if no match was able too be met.
+        return null;
+    }
 }

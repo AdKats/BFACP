@@ -82,6 +82,9 @@ class BansController extends BaseController
             // Fetch the ban
             $ban = $this->repository->getBanById($id);
 
+            $bfacp = \App::make('bfadmincp');
+            $admin = MainHelper::getAdminPlayer($bfacp->user, $ban->player->game->GameID);
+
             // Purge the cache for the player
             Cache::forget(sprintf('api.player.%u', $ban->player_id));
             Cache::forget(sprintf('player.%u', $ban->player_id));
@@ -163,6 +166,8 @@ class BansController extends BaseController
                     $record->command_action  = $ban_type;
                     $record->command_numeric = $ban_duration;
                     $record->server_id       = $ban_server;
+                    $record->source_id       = is_null($admin) ? null : $admin->PlayerID;
+                    $record->source_name     = is_null($admin) ? Auth::user()->username : $admin->SoldierName;
                     $record->record_message  = $ban_message;
                     $record->record_time     = Carbon::now();
                     $record->adkats_web      = true;
@@ -223,7 +228,11 @@ class BansController extends BaseController
             // Fetch the ban
             $ban = $this->repository->getBanById($id);
 
+            $bfacp = \App::make('bfadmincp');
+
             $oldRecord = $ban->record;
+
+            $admin = MainHelper::getAdminPlayer($bfacp->user, $ban->player->game->GameID);
 
             // Only modify the old record if the command action is a temp or perma ban.
             if (in_array($oldRecord->command_action, [7, 8])) {
@@ -237,6 +246,8 @@ class BansController extends BaseController
             $record                 = $ban->record->replicate();
             $record->command_type   = 37;
             $record->command_action = 37;
+            $record->source_id      = is_null($admin) ? null : $admin->PlayerID;
+            $record->source_name    = is_null($admin) ? Auth::user()->username : $admin->SoldierName;
             $record->record_message = Input::get('message', 'Unbanned');
             $record->record_time    = Carbon::now();
             $record->adkats_web     = true;
