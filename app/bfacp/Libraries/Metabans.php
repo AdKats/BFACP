@@ -338,7 +338,7 @@ class Metabans
         try {
             $request = $this->guzzle->post(self::URL, [
                 'headers' => [
-                    'User-Agent' => sprintf('BFAdminCP/%s', BFACP_VERSION)
+                    'User-Agent' => 'PRoCon Metabans Plugin/1.1.0.0'
                 ],
                 'body'    => $payload
             ]);
