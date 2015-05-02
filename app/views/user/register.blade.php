@@ -41,7 +41,7 @@
                     <hr>
 
                     {{ Former::text('ign')->placeholder('In-Game Name') }}
-                    {{ Former::select('lang')->options(['en' => 'English', 'de' => 'German'], 'en') }}
+                    {{ Former::select('lang')->options(Config::get('bfacp.site.languages'), 'en') }}
 
                     <div class="row">
                         <div class="col-xs-12">
