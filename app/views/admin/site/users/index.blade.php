@@ -12,26 +12,26 @@
                 <div class="table-responsive">
                     <table class="table table-striped table-condensed">
                         <thead>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Lang</th>
-                            <th>Status</th>
-                            <th>Created</th>
+                            <th>{{ Lang::get('site.admin.users.listing.table.col1') }}</th>
+                            <th>{{ Lang::get('site.admin.users.listing.table.col2') }}</th>
+                            <th>{{ Lang::get('site.admin.users.listing.table.col3') }}</th>
+                            <th>{{ Lang::get('site.admin.users.listing.table.col4') }}</th>
+                            <th>{{ Lang::get('site.admin.users.listing.table.col5') }}</th>
+                            <th>{{ Lang::get('site.admin.users.listing.table.col6') }}</th>
                         </thead>
 
                         <tbody>
                             @foreach($users as $user)
                             <tr>
-                                <td>{{ $user->username }}</td>
+                                <td>{{ link_to_route('admin.site.users.edit', $user->username, $user->id) }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->roles[0]->name }}</td>
                                 <td>{{ $user->setting->lang }}</td>
                                 <td>
                                     @if($user->confirmed)
-                                    <span class="label bg-green">Active</span>
+                                    <span class="label bg-green">{{ Lang::get('site.admin.users.listing.status.active') }}</span>
                                     @else
-                                    <span class="label bg-red">Inactive</span>
+                                    <span class="label bg-red">{{ Lang::get('site.admin.users.listing.status.inactive') }}</span>
                                     @endif
                                 </td>
                                 <td ng-bind="moment('{{ $user->stamp }}').format('LLL')"></td>
