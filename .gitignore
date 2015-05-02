@@ -7,4 +7,4 @@ composer.lock
 Thumbs.db
 /resources
 /public/AdminLTE-master
-/app/bfacp/oracle.sqlite
+oracle.sqlite
