@@ -214,8 +214,8 @@ class Main extends BaseHelper
         // long values with the abbreviation
         if ($shorthand) {
             $output = str_replace(
-                array(' day', ' hour', ' minute', ' second', ' week'),
-                array('d', 'h', 'm', 's', 'w'),
+                [' day', ' hour', ' minute', ' second', ' week'],
+                ['d', 'h', 'm', 's', 'w'],
                 $output
             );
         }
@@ -729,7 +729,7 @@ class Main extends BaseHelper
      */
     public function getAdminPlayer(\BFACP\Account\User $user, $gameID)
     {
-        $soldiers = $user->soldiers->filter(function($soldier) use($gameID) {
+        $soldiers = $user->soldiers->filter(function ($soldier) use ($gameID) {
             // Only return true if the user has a matching soldier with the game
             if ($soldier->player->game->GameID == $gameID) {
                 return true;
@@ -750,6 +750,6 @@ class Main extends BaseHelper
         }
 
         // Return null if no match was able too be met.
-        return null;
+        return;
     }
 }

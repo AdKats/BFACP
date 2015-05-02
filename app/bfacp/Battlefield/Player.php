@@ -196,8 +196,8 @@ class Player extends Elegant
     public function getRankImageAttribute()
     {
         // If we don't have a game object return null
-        if(is_null($this->game)) {
-            return null;
+        if (is_null($this->game)) {
+            return;
         }
 
         switch ($this->game->Name) {
