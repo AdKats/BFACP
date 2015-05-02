@@ -58,8 +58,8 @@ class UsersController extends BaseController
     }
 
     /**
-     * SHow the editing page
-     * @param  integer $id User ID
+     * Show the editing page
+     * @param integer $id User ID
      */
     public function edit($id)
     {
