@@ -1,18 +1,23 @@
 <?php namespace BFACP\Repositories\Scoreboard;
 
+use BattlefieldHelper;
+use BFACP\Adkats\Command;
+use BFACP\Adkats\Record;
+use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Player;
 use BFACP\Battlefield\Server;
 use BFACP\Contracts\Scoreboard;
 use BFACP\Exceptions\PlayerNotFoundException;
 use BFACP\Exceptions\RconException;
 use BFACP\Repositories\BaseRepository;
-use BattlefieldHelper;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Queue;
 use MainHelper;
 
 class LiveServerRepository extends BaseRepository
@@ -123,6 +128,18 @@ class LiveServerRepository extends BaseRepository
      */
     private $TEAM4 = 'RU Army';
 
+    /**
+     * Stores the admin player object
+     * @var BFACP\Battlefield\Player
+     */
+    protected $admin;
+
+    /**
+     * Stores the current user object
+     * @var BFACP\Account\User
+     */
+    protected $user;
+
     public function __construct(Server $server)
     {
         parent::__construct();
@@ -133,6 +150,14 @@ class LiveServerRepository extends BaseRepository
         $this->serverID = $server->ServerID;
         $this->serverIP = $server->ip;
         $this->port     = $server->port;
+
+        // Set the current user
+        $bfacp      = \App::make('bfadmincp');
+        $this->user = $bfacp->user;
+
+        if (!is_null($this->user)) {
+            $this->setAdmin();
+        }
     }
 
     /**
@@ -177,7 +202,7 @@ class LiveServerRepository extends BaseRepository
 
         // If we are not connected throw exception and abort
         if (!$this->connected) {
-            throw new RconException(410, 'Could not connect to server. It may be offline. Please try again later.');
+            throw new RconException(410, 'Could not connect to server. It may be offline or port is closed. Please try again later.');
         }
 
         if (is_null($this->server->setting)) {
@@ -218,7 +243,6 @@ class LiveServerRepository extends BaseRepository
     =            Admin Commands            =
     ======================================*/
 
-
     /*==========  Say/Yell  ==========*/
 
     /**
@@ -231,56 +255,62 @@ class LiveServerRepository extends BaseRepository
      * @param  string  $type      All, Team, Player
      * @return boolean            Returns true if it was successful
      */
-    public function adminYell($message = '', $player = null, $teamId = null, $duration = 5, $type = 'All')
+    public function adminYell($message = '', $player = null, $teamId = null, $duration = 5, $type = 'All', $skipLog = false)
     {
         // Checks if the message is blank
-        if(empty($message)) {
+        if (empty($message)) {
             throw new RconException(400, 'No message provided.');
         }
 
-        if($this->gameName == 'BFHL') {
+        if ($this->gameName == 'BFHL') {
             $message = str_limit($message, 100);
         }
 
-        switch($type) {
-            case "All":
+        switch ($type) {
+            case 'All':
                 $response = $this->client->adminYellMessage($message, '{%all%}', $duration);
-            break;
 
-            case "Team":
+                $this->log(null, 'admin_yell', $message, $duration);
+                break;
+
+            case 'Team':
                 // Checks if a team id was sent
-                if(empty($teamId)) {
+                if (empty($teamId)) {
                     throw new RconException(400, 'No team id specified.');
                 }
 
                 // Checks if the team id is a number or not in valid id list
-                if(!is_numeric($teamId) || !in_array($teamId, [1, 2, 3, 4])) {
+                if (!is_numeric($teamId) || !in_array($teamId, [1, 2, 3, 4])) {
                     throw new RconException(400, sprintf('"%s" is not a valid team id', $teamId));
                 }
 
                 $response = $this->client->adminYellMessageToTeam($message, $teamId, $duration);
-            break;
+                break;
 
-            case "Player":
+            case 'Player':
                 // Remove extra whitespace
                 $player = trim($player);
 
                 // Checks if name provided is blank
-                if(empty($player)) {
+                if (empty($player)) {
                     throw new RconException(400, 'No player name specified.');
                 }
 
-                if($this->isValidName($player)) {
+                if ($this->isValidName($player)) {
                     $response = $this->client->adminYellMessage($message, $player, $duration);
 
                     // Check if the server returned a player not found error
-                    if($response == 'PlayerNotFound') {
+                    if ($response == 'PlayerNotFound') {
                         throw new PlayerNotFoundException(200, sprintf('No player found with the name "%s"', $player));
+                    }
+
+                    if (!$skipLog) {
+                        $this->log($player, 'player_yell', $message, $duration);
                     }
                 } else {
                     throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
                 }
-            break;
+                break;
 
             default:
                 throw new RconException(400, sprintf('"%s" is not a valid type.', $type));
@@ -298,52 +328,74 @@ class LiveServerRepository extends BaseRepository
      * @param  string  $type      All, Team, Player
      * @return boolean            Returns true if it was successful
      */
-    public function adminSay($message = '', $player = null, $teamId = null, $type = 'All')
+    public function adminSay($message = '', $player = null, $teamId = null, $type = 'All', $displayAdminName = true, $skipLog = false)
     {
         // Checks if the message is blank
-        if(empty($message)) {
+        if (empty($message)) {
             throw new RconException(400, 'No message provided.');
         }
 
-        switch($type) {
-            case "All":
-                $response = $this->client->adminSayMessageToAll($message);
-            break;
+        $adminName = is_null($this->admin) ? $this->user->username : $this->admin->SoldierName;
 
-            case "Team":
+        switch ($type) {
+            case 'All':
+
+                if ($displayAdminName) {
+                    $response = $this->client->adminSayMessageToAll(sprintf('[%s] %s', $adminName, $message));
+                } else {
+                    $response = $this->client->adminSayMessageToAll($message);
+                }
+
+                $this->log(null, 'admin_say', $message);
+                break;
+
+            case 'Team':
                 // Checks if a team id was sent
-                if(empty($teamId)) {
+                if (empty($teamId)) {
                     throw new RconException(400, 'No team id specified.');
                 }
 
                 // Checks if the team id is a number or not in valid id list
-                if(!is_numeric($teamId) || !in_array($teamId, [1, 2, 3, 4])) {
+                if (!is_numeric($teamId) || !in_array($teamId, [1, 2, 3, 4])) {
                     throw new RconException(400, sprintf('"%s" is not a valid team id', $teamId));
                 }
 
-                $response = $this->client->adminSayMessageToTeam($teamId, $message);
-            break;
+                if ($displayAdminName) {
+                    $response = $this->client->adminSayMessageToTeam($teamId, sprintf('[%s] %s', $adminName, $message));
+                } else {
+                    $response = $this->client->adminSayMessageToTeam($teamId, $message);
+                }
+                break;
 
-            case "Player":
+            case 'Player':
                 // Remove extra whitespace
                 $player = trim($player);
 
                 // Checks if name provided is blank
-                if(empty($player)) {
+                if (empty($player)) {
                     throw new RconException(400, 'No player name specified.');
                 }
 
-                if($this->isValidName($player)) {
-                    $response = $this->client->adminSayMessageToPlayer($player, $message);
+                if ($this->isValidName($player)) {
+
+                    if ($displayAdminName) {
+                        $response = $this->client->adminSayMessageToPlayer($player, sprintf('[%s] %s', $adminName, $message));
+                    } else {
+                        $response = $this->client->adminSayMessageToPlayer($player, $message);
+                    }
 
                     // Check if the server returned a player not found error
-                    if($response == 'PlayerNotFound') {
+                    if ($response == 'PlayerNotFound') {
                         throw new PlayerNotFoundException(200, sprintf('No player found with the name "%s"', $player));
+                    }
+
+                    if (!$skipLog) {
+                        $this->log($player, 'player_say', $message);
                     }
                 } else {
                     throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
                 }
-            break;
+                break;
 
             default:
                 throw new RconException(400, sprintf('"%s" is not a valid type.', $type));
@@ -360,10 +412,14 @@ class LiveServerRepository extends BaseRepository
      * @param  integer $yellDuration Seconds for yell to stay up
      * @return void
      */
-    public function adminTell($player, $message, $yellDuration = 10)
+    public function adminTell($player, $message, $yellDuration = 10, $displayAdminName = true, $skipLog = false)
     {
-        $this->adminSay($message, $player, null, 'Player');
-        $this->adminYell($message, $player, null, $yellDuration, 'Player');
+        $this->adminSay($message, $player, null, 'Player', $displayAdminName, $skipLog);
+        $this->adminYell($message, $player, null, $yellDuration, 'Player', $skipLog);
+
+        if (!$skipLog) {
+            $this->log($player, 'player_tell', $message);
+        }
 
         return;
     }
@@ -379,25 +435,26 @@ class LiveServerRepository extends BaseRepository
      */
     public function adminKill($player, $message = null)
     {
-        if(!empty($message)) {
+        if (!empty($message)) {
             $message = sprintf('You were killed by an admin. Reason: %s', $message);
         } else {
             $message = 'You were killed by an admin.';
         }
 
-        if($this->isValidName($player)) {
+        if ($this->isValidName($player)) {
             $response = $this->client->adminKillPlayer($player);
 
             // Check if the server returned a player not found error
-            if($response == 'InvalidPlayerName') {
+            if ($response == 'InvalidPlayerName') {
                 throw new PlayerNotFoundException(200, sprintf('No player found with the name "%s"', $player));
             }
 
-            if($response == 'SoldierNotAlive') {
+            if ($response == 'SoldierNotAlive') {
                 throw new PlayerNotFoundException(200, 'Player was already dead.');
             }
 
-            $this->adminTell($player, $message, 5);
+            $this->adminTell($player, $message, 5, false, true);
+            $this->log($player, 'player_kill', $message);
         } else {
             throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
         }
@@ -414,34 +471,34 @@ class LiveServerRepository extends BaseRepository
      */
     public function adminMovePlayer($player, $teamId = null, $squadId = 0)
     {
-        if(!is_numeric($squadId) || empty($squadId) || !in_array($squadId, range(0, 32))) {
+        if (!is_numeric($squadId) || empty($squadId) || !in_array($squadId, range(0, 32))) {
             $squadId = 0;
         }
 
-        if(!is_numeric($teamId) || empty($teamId) || !in_array($teamId, range(1, 4))) {
+        if (!is_numeric($teamId) || empty($teamId) || !in_array($teamId, range(1, 4))) {
             $teamId = $this->client->getPlayerTeamId($player);
         }
 
         $teamName  = $this->getTeamName($teamId);
         $squadName = BattlefieldHelper::squad($squadId);
 
-        if(is_array($teamName)) {
+        if (is_array($teamName)) {
             $teamName = $teamName['full_name'];
         }
 
-        if($this->isValidName($player)) {
-            if(method_exists($this->client, 'adminGetSquadPrivate') && method_exists($this->client, 'adminSetSquadPrivate')) {
+        if ($this->isValidName($player)) {
+            if (method_exists($this->client, 'adminGetSquadPrivate') && method_exists($this->client, 'adminSetSquadPrivate')) {
                 // Check if squad is private
-                if($squadId != 0 && $this->client->adminGetSquadPrivate($teamId, $squadId)) {
+                if ($squadId != 0 && $this->client->adminGetSquadPrivate($teamId, $squadId)) {
                     // Check if squad is full
-                    if($playersInSquad = $this->client->adminSquadListPlayer($teamId, $squadId)[1]) {
-                        // If squad is full throw an exception with an error message
-                        // else unlock the squad so we can move them in.
-                        if($playersInSquad == 5) {
-                            throw new RconException(200, sprintf('%s squad is full. Cannot switch %s to squad.', $squadName, $player));
-                        } else {
-                            $this->client->adminSetSquadPrivate($teamId, $squadId, false);
-                        }
+                    $playersInSquad = $this->client->adminSquadListPlayer($teamId, $squadId)[1];
+
+                    // If squad is full throw an exception with an error message
+                    // else unlock the squad so we can move them in.
+                    if ($playersInSquad == 5) {
+                        throw new RconException(200, sprintf('%s squad is full. Cannot switch %s to squad.', $squadName, $player));
+                    } else {
+                        $this->client->adminSetSquadPrivate($teamId, $squadId, false);
                     }
                 }
             }
@@ -449,21 +506,22 @@ class LiveServerRepository extends BaseRepository
             $response = $this->client->adminMovePlayerSwitchSquad($player, (int) $squadId, true, (int) $teamId);
 
             // Check if the server returned a player not found error
-            if($response == 'InvalidPlayerName') {
+            if ($response == 'InvalidPlayerName') {
                 throw new PlayerNotFoundException(200, sprintf('No player found with the name "%s"', $player));
             }
 
-            if($response == 'SetSquadFailed') {
+            if ($response == 'SetSquadFailed') {
                 $squadId = 0;
             }
 
-            if($squadId == 0) {
+            if ($squadId == 0) {
                 $message = sprintf('You were switched to team %s and not placed in a squad.', $teamName);
             } else {
                 $message = sprintf('You were switched to team %s and placed in squad %s.', $teamName, $squadName);
             }
 
-            $this->adminTell($player, $message, 5);
+            $this->adminTell($player, $message, 5, false, true);
+            $this->log($player, 'player_fmove', $message);
 
         } else {
             throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
@@ -482,24 +540,25 @@ class LiveServerRepository extends BaseRepository
      */
     public function adminKick($player, $message = null, $isBan = false)
     {
-        if(empty($message)) {
+        if (empty($message)) {
             $message = 'Kicked by administrator';
         }
 
-        if($this->isValidName($player)) {
+        if ($this->isValidName($player)) {
             $response = $this->client->adminKickPlayerWithReason($player, $message);
 
             // Check if the server returned a player not found error
-            if($response == 'PlayerNotFound') {
+            if ($response == 'PlayerNotFound') {
                 throw new PlayerNotFoundException(200, sprintf('No player found with the name "%s"', $player));
             }
 
             // If adminKick was called from the adminBan function do not send the kick message
-            if(!$isBan) {
+            if (!$isBan) {
                 // Send a general message to the server about the kicked player
-                $this->adminSay(sprintf('%s was kicked from the server. Reason: %s', $player, $message));
+                $this->adminSay(sprintf('%s was kicked from the server. Reason: %s', $player, $message), null, null, 'All', false, true);
             }
 
+            $this->log($player, 'player_kick', $message);
         } else {
             throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
         }
@@ -507,13 +566,86 @@ class LiveServerRepository extends BaseRepository
         return true;
     }
 
-    /*-----  End of Admin Commands  ------*/
+    /**
+     * Punish player
+     *
+     * @param  string $player  Name of player
+     * @param  string $message Message to be sent
+     * @return boolean
+     */
+    public function adminPunish($player, $message)
+    {
+        if ($this->isValidName($player)) {
+            $this->log($player, 'player_punish', $message, 0, false, true);
+        } else {
+            throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
+        }
 
+        return true;
+    }
+
+    /**
+     * Forgive player
+     * @param  string  $player  Name of player
+     * @param  string  $message Message to be sent
+     * @param  integer $count   How many forgives should be issued
+     * @return boolean
+     */
+    public function adminForgive($player, $message, $count = 1)
+    {
+        if ($this->isValidName($player)) {
+            $player = Player::where('GameID', $this->gameID)->where('SoldierName', $player)->first();
+        } else {
+            throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
+        }
+
+        return true;
+    }
+
+    private function log($player, $command, $message = 'No Message', $duration = 0, $sys = true)
+    {
+        $timestamp = Carbon::now();
+
+        if (!is_null($player)) {
+            $player = Player::where('GameID', $this->gameID)->where('SoldierName', $player)->first();
+        }
+
+        $command = Command::where('command_key', $command)->first();
+
+        if ($command == 'admin_say') {
+            Chat::create([
+                'ServerID'       => $this->serverID,
+                'logDate'        => $timestamp,
+                'logMessage'     => $message,
+                'logPlayerID'    => is_null($this->admin) ? null : $this->admin->PlayerID,
+                'logSoldierName' => is_null($this->admin) ? $this->user->username : $this->admin->SoldierName,
+                'logSubset'      => 'Global'
+            ]);
+        }
+
+        $record                  = new Record();
+        $record->adkats_read     = $sys ? 'Y' : 'N';
+        $record->adkats_web      = true;
+        $record->command_action  = $command->command_id;
+        $record->command_type    = $command->command_id;
+        $record->command_numeric = $duration;
+        $record->record_message  = $message;
+        $record->record_time     = $timestamp;
+        $record->server_id       = $this->serverID;
+        $record->source_name     = is_null($this->admin) ? $this->user->username : $this->admin->SoldierName;
+        $record->source_id       = is_null($this->admin) ? null : $this->admin->PlayerID;
+        $record->target_name     = is_null($player) ? 'Server' : $player->SoldierName;
+        $record->target_id       = is_null($player) ? null : $player->PlayerID;
+        $record->save();
+
+        return $record;
+    }
+
+    /*-----  End of Admin Commands  ------*/
 
     /*===============================================
     =            General Server Commands            =
     ===============================================*/
-
 
     /**
      * Loops over the players and sorts them into teams
@@ -521,7 +653,7 @@ class LiveServerRepository extends BaseRepository
      */
     public function get($verbose = false)
     {
-        if($verbose) {
+        if ($verbose) {
             $this->verbose();
         }
 
@@ -575,6 +707,8 @@ class LiveServerRepository extends BaseRepository
             }
 
         }
+
+        return;
     }
 
     /**
@@ -675,12 +809,24 @@ class LiveServerRepository extends BaseRepository
                             }
 
                             if (is_array($player) && array_key_exists('guid', $player)) {
-                                if ($player2->GlobalRank != $player['rank']) {
-                                    \Queue::push(function ($job) use ($player2, $player) {
+
+                                Queue::push(function ($job) use ($player, $player2) {
+
+                                    // If player rank doesn't match the database update it
+                                    if ($player2->GlobalRank != $player['rank']) {
                                         $player2->GlobalRank = $player['rank'];
+                                    }
+
+                                    // If player name doesn't match the database update it
+                                    if ($player2->SoldierName != $player['name']) {
+                                        $player2->SoldierName = $player['name'];
+                                    }
+
+                                    // If player name or rank are changed save changes to database
+                                    if ($player2->SoldierName != $player['name'] || $player2->GlobalRank != $player['rank']) {
                                         $player2->save();
-                                    });
-                                }
+                                    }
+                                });
                             }
 
                             $this->data['teams'][$teamID][$type][$index]['_player'] = $player2;
@@ -701,9 +847,9 @@ class LiveServerRepository extends BaseRepository
      */
     private function serverinfo()
     {
-        $info = $this->client->getServerInfo();
+        $info             = $this->client->getServerInfo();
         $this->serverinfo = $info;
-        $length = count($info);
+        $length           = count($info);
 
         if ($this->gameName == 'BF4') {
             switch ($info[4]) {
@@ -937,23 +1083,23 @@ class LiveServerRepository extends BaseRepository
 
             switch ($teamID) {
                 case 0:
-                    $score    = null;
+                    $score = null;
                     break;
 
                 case 1:
-                    $score    = (int) $this->serverinfo[9];
+                    $score = (int) $this->serverinfo[9];
                     break;
 
                 case 2:
-                    $score    = (int) $this->serverinfo[10];
+                    $score = (int) $this->serverinfo[10];
                     break;
 
                 case 3:
-                    $score    = (int) $this->serverinfo[11];
+                    $score = (int) $this->serverinfo[11];
                     break;
 
                 case 4:
-                    $score    = (int) $this->serverinfo[12];
+                    $score = (int) $this->serverinfo[12];
                     break;
             }
 
@@ -999,6 +1145,11 @@ class LiveServerRepository extends BaseRepository
 
     /*-----  End of General Server Commands  ------*/
 
+    /**
+     * Simply returns the correct team name by their ID
+     * @param  integer $teamID Team ID
+     * @return string
+     */
     protected function getTeamName($teamID)
     {
         switch ($teamID) {
@@ -1040,6 +1191,16 @@ class LiveServerRepository extends BaseRepository
     protected function isValidName($player)
     {
         return preg_match('/^[a-zA-Z0-9_\\-]+$/', $player);
+    }
+
+    /**
+     * Sets the admin for future use
+     */
+    private function setAdmin()
+    {
+        $this->admin = MainHelper::getAdminPlayer($this->user, $this->gameID);
+
+        return;
     }
 
     /**
