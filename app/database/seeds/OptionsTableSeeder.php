@@ -68,6 +68,12 @@ class OptionsTableSeeder extends Seeder
                 'option_description' => 'Should users be allowed to view the chatlogs when not logged in.'
             ],
             [
+                'option_key'         => 'site.languages',
+                'option_title'       => 'Available Languages',
+                'option_value'       => implode(',', ['en', 'de']),
+                'option_description' => 'List of languages compatible with the BFACP.'
+            ],
+            [
                 'option_key'         => 'uptimerobot.key',
                 'option_title'       => 'Uptime Robot API Key',
                 'option_value'       => null,
