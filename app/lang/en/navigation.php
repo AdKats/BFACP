@@ -1,53 +1,53 @@
 <?php
 
 return [
-    'main' => [
+    'main'  => [
         'title' => 'Main Navigation',
         'items' => [
-            'dashboard' => [
+            'dashboard'  => [
                 'title' => 'Dashboard',
-                'icon' => [
-                    'fa' => 'fa-dashboard',
+                'icon'  => [
+                    'fa'  => 'fa-dashboard',
                     'ion' => null
                 ]
             ],
-            'chatlogs' => [
+            'chatlogs'   => [
                 'title' => 'Chatlogs',
-                'icon' => [
-                    'fa' => 'fa-comments',
+                'icon'  => [
+                    'fa'  => 'fa-comments',
                     'ion' => null
                 ]
             ],
             'scoreboard' => [
                 'title' => 'Live Scoreboard',
-                'icon' => [
-                    'fa' => 'fa-server',
+                'icon'  => [
+                    'fa'  => 'fa-server',
                     'ion' => null
                 ]
             ],
             'playerlist' => [
                 'title' => 'Playerlist',
-                'icon' => [
-                    'fa' => 'fa-users',
+                'icon'  => [
+                    'fa'  => 'fa-users',
                     'ion' => null
                 ]
-            ],
+            ]
         ]
     ],
 
     'admin' => [
-        'site' => [
+        'site'   => [
             'title' => 'Site Management',
             'items' => [
                 'users' => [
                     'title' => 'Users',
-                    'icon' => [
-                        'fa' => 'fa-users',
+                    'icon'  => [
+                        'fa'  => 'fa-users',
                         'ion' => null
                     ],
                     'items' => [
                         'edit' => [
-                            'title' => 'Editing User :username'
+                            'title' => 'Editing User #:id'
                         ]
                     ]
                 ]
@@ -58,8 +58,8 @@ return [
             'items' => [
                 'banlist' => [
                     'title' => 'Banlist',
-                    'icon' => [
-                        'fa' => null,
+                    'icon'  => [
+                        'fa'  => null,
                         'ion' => 'ion-hammer'
                     ],
                     'items' => [
@@ -68,10 +68,10 @@ return [
                         ]
                     ]
                 ],
-                'users' => [
+                'users'   => [
                     'title' => 'Users',
-                    'icon' => [
-                        'fa' => 'fa-users',
+                    'icon'  => [
+                        'fa'  => 'fa-users',
                         'ion' => null
                     ],
                     'items' => [

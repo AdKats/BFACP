@@ -20,7 +20,7 @@ class UserRepository
      */
     public function signup($input = [], $role = 2, $confirmed = false)
     {
-        $user = new User;
+        $user = new User();
 
         $user->username = array_get($input, 'username');
         $user->email    = array_get($input, 'email');
@@ -52,7 +52,10 @@ class UserRepository
                 $players = Player::where('SoldierName', array_get($input, 'ign'))->lists('PlayerID');
 
                 foreach ($players as $player) {
-                    if(Soldier::where('player_id', $player)->count() == 0) {
+
+                    // Check if an existing user already has claimed the player
+                    // and if so do not associate with the new account.
+                    if (Soldier::where('player_id', $player)->count() == 0) {
                         $soldier = new Soldier(['player_id' => $player]);
                         $soldier->user()->associate($user)->save();
                     }
