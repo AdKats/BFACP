@@ -9,14 +9,14 @@
 | load your controllers and models. This is useful for keeping all of
 | your classes in the "global" namespace without Composer updating.
 |
-*/
+ */
 
-ClassLoader::addDirectories(array(
+ClassLoader::addDirectories([
 
-	app_path().'/commands',
-	app_path().'/database/seeds',
+    app_path() . '/commands',
+    app_path() . '/database/seeds'
 
-));
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -27,9 +27,9 @@ ClassLoader::addDirectories(array(
 | is built on top of the wonderful Monolog library. By default we will
 | build a basic log file setup which creates a single file for logs.
 |
-*/
+ */
 
-Log::useFiles(storage_path().'/logs/laravel.log');
+Log::useDailyFiles(storage_path() . '/logs/laravel.log');
 
 /*
 |--------------------------------------------------------------------------
@@ -42,38 +42,36 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 | exceptions. If nothing is returned, the default error view is
 | shown, which includes a detailed stack trace during debug.
 |
-*/
+ */
 
-App::error(function(Exception $exception, $code)
-{
-    switch($code) {
+App::error(function (Exception $exception, $code) {
+    switch ($code) {
         case 403:
-            if(Auth::check()) {
+            if (Auth::check()) {
                 return Redirect::route('home')->withErrors([
                     'Access Forbidden!'
                 ]);
             }
 
             return Redirect::guest(route('user.login'));
-        break;
+            break;
 
         case 405:
             return Redirect::intended(route('home'))->withErrors([
                 'No Method Available'
             ]);
-        break;
+            break;
     }
 
-	Log::error($exception);
+    Log::error($exception);
 
-    if(!Config::get('app.debug')) {
+    if (!Config::get('app.debug')) {
         View::share('page_title', false);
         return Response::view('system.error', compact('exception', 'code'), 500);
     }
 });
 
-App::missing(function($exception)
-{
+App::missing(function ($exception) {
     View::share('page_title', false);
     return Response::view('system.notfound', [], 404);
 });
@@ -87,11 +85,10 @@ App::missing(function($exception)
 | into maintenance mode. Here, you will define what is displayed back
 | to the user if maintenance mode is in effect for the application.
 |
-*/
+ */
 
-App::down(function()
-{
-	return Response::make("Be right back!", 503);
+App::down(function () {
+    return Response::make('Be right back!', 503);
 });
 
 /*
@@ -103,8 +100,8 @@ App::down(function()
 | a nice separate location to store our route and application filter
 | definitions instead of putting them all in the main routes file.
 |
-*/
+ */
 
-require app_path().'/filters.php';
+require app_path() . '/filters.php';
 
 require $app['path.base'] . '/app/bfacp/macros.php';

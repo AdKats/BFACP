@@ -2,8 +2,6 @@
 
 define('BFACP_VERSION', '2.0.0');
 
-$_SERVER['REMOTE_ADDR'] = isset($_SERVER["HTTP_CF_CONNECTING_IP"]) ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER["REMOTE_ADDR"];
-
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -15,7 +13,7 @@ $_SERVER['REMOTE_ADDR'] = isset($_SERVER["HTTP_CF_CONNECTING_IP"]) ? $_SERVER["H
 |
  */
 
-$app = new Illuminate\Foundation\Application;
+$app = new Illuminate\Foundation\Application();
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +40,7 @@ $app->bindInstallPaths(require __DIR__ . '/paths.php');
  */
 
 $env = $app->detectEnvironment(function () use ($app) {
-	return require_once __DIR__ . '/environment.php';
+    return require_once __DIR__ . '/environment.php';
 });
 
 /*
@@ -60,6 +58,10 @@ $framework = $app['path.base'] .
 '/vendor/laravel/framework/src';
 
 require $framework . '/Illuminate/Foundation/start.php';
+
+if (!$app->runningInConsole()) {
+    $_SERVER['REMOTE_ADDR'] = isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : $_SERVER['REMOTE_ADDR'];
+}
 
 /*
 |--------------------------------------------------------------------------

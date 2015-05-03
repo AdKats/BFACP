@@ -1,4 +1,21 @@
 {
+    "name": "adkgamers/bfadmincp",
+    "description": "A web based admin tool for Battlefield 3, Battlefield 4, and soon Battlefield Hardline integrated with AdKats and XPKillers Stat Logger plugins for ProCon.",
+    "keywords": ["adkgamers", "battlefield 3", "webrcon", "adkats", "battlefield 4", "battlefield hardline", "bf3", "bf4", "bfh"],
+    "license": "proprietary",
+    "type": "project",
+    "homepage": "https://github.com/Prophet731/BFAdminCP",
+    "support": {
+        "forum": "http://www.adkgamers.com/forum/265-adk-web-dev-support/",
+        "issues": "https://github.com/Prophet731/BFAdminCP/issues",
+        "source": "https://github.com/Prophet731/BFAdminCP"
+    },
+    "authors": [
+        {
+            "name": "Prophet731",
+            "role": "Head Developer"
+        }
+    ],
     "require": {
         "anahkiasen/former": "~3.5",
         "dingo/api": "0.8.*",

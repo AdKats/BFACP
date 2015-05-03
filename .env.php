@@ -9,6 +9,16 @@
  */
 $allowedIps = ['127.0.0.1'];
 
+if (isset($_SERVER['REMOTE_ADDR'])) {
+    if (in_array($_SERVER['REMOTE_ADDR'], $allowedIps)) {
+        $debug = true;
+    } else {
+        $debug = false;
+    }
+} else {
+    $debug = false;
+}
+
 return [
 
     /**
@@ -16,7 +26,7 @@ return [
      * you know what you're doing
      */
     'APP_ENV'        => 'production',
-    'APP_DEBUG'      => in_array($_SERVER['REMOTE_ADDR'], $allowedIps) ? true : false,
+    'APP_DEBUG'      => $debug,
     'SESSION_DRIVER' => 'file',
     'CACHE_DRIVER'   => 'file',
 
@@ -31,5 +41,5 @@ return [
     /**
      * Set your app key here
      */
-    'APP_KEY'        => '',
+    'APP_KEY'        => ''
 ];
