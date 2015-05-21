@@ -64,9 +64,9 @@ class User extends \Eloquent implements ConfideUserInterface
      * @var array
      */
     public static $rules = [
-        'username'              => 'required|unique:bfacp_users,username|alpha_num|min:4',
-        'email'                 => 'required|unique:bfacp_users,email|email',
-        'password'              => 'required|min:8|confirmed'
+        'username' => 'required|unique:bfacp_users,username|alpha_num|min:4',
+        'email'    => 'required|unique:bfacp_users,email|email',
+        'password' => 'required|min:8|confirmed'
     ];
 
     /**
@@ -161,7 +161,11 @@ class User extends \Eloquent implements ConfideUserInterface
 
     public function getStampAttribute()
     {
-        return $this->created_at->toIso8601String();
+        if ($this->created_at instanceof Carbon\Carbon) {
+            return $this->created_at->toIso8601String();
+        }
+
+        return $this->created_at;
     }
 
     /**
