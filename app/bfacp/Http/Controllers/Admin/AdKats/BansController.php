@@ -7,6 +7,8 @@ use BFACP\Http\Controllers\BaseController;
 use BFACP\Repositories\BanRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\App as App;
+use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
@@ -38,7 +40,7 @@ class BansController extends BaseController
     {
         parent::__construct();
 
-        $this->repository = new BanRepository;
+        $this->repository = new BanRepository();
 
         try {
             $this->metabans = \App::make('BFACP\Libraries\Metabans');
@@ -263,6 +265,10 @@ class BansController extends BaseController
                     $this->metabans->assess($ban->player->game->Name, $ban->player->EAGUID, 'None', Input::get('message', 'Unbanned'));
                 }
             } catch (MetabansException $e) {}
+
+            // Purge the cache for the player
+            Cache::forget(sprintf('api.player.%u', $ban->player_id));
+            Cache::forget(sprintf('player.%u', $ban->player_id));
 
             return MainHelper::response();
         } catch (ModelNotFoundException $e) {
