@@ -106,6 +106,11 @@ class BPlayer extends Battlelog
 
         // If we don't have an existing stored persona we need to create one
         if (!$this->player->hasPersona()) {
+
+            // Clear old cache for player
+            Cache::forget(sprintf('api.player.%u', $this->player->PlayerID));
+            Cache::forget(sprintf('player.%u', $this->player->PlayerID));
+
             // Assign a relationship for them and save to the database
             $this->player->battlelog()->save(new \BFACP\AdKats\Battlelog([
                 'gravatar'       => $this->personaGravatar,
@@ -134,7 +139,7 @@ class BPlayer extends Battlelog
         $results = $this->sendRequest($uri)['data'];
 
         // Create weapons array
-        $weapons = new Collection;
+        $weapons = new Collection();
 
         // Loop over the weapons and add them to the weapons array
         foreach ($results['mainWeaponStats'] as $weapon) {
@@ -204,7 +209,7 @@ class BPlayer extends Battlelog
         $results = $this->sendRequest($uri)['data'];
 
         // Create vehicles array
-        $vehicles = new Collection;
+        $vehicles = new Collection();
 
         foreach ($results['mainVehicleStats'] as $vehicle) {
             $vehicles->push([
