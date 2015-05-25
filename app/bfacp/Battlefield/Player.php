@@ -41,7 +41,7 @@ class Player extends Elegant
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = ['profile_url', 'country_flag', 'country_name', 'rank_image'];
+    protected $appends = ['profile_url', 'country_flag', 'country_name', 'rank_image', 'links'];
 
     /**
      * Models to be loaded automaticly
@@ -174,6 +174,54 @@ class Player extends Elegant
         }
 
         return MainHelper::countries($this->CountryCode);
+    }
+
+    /**
+     * Generates links to external/internal systems.
+     * @return array
+     */
+    public function getLinksAttribute()
+    {
+        if (is_null($this->game)) {
+            return;
+        }
+
+        switch ($this->game->Name) {
+            case 'BFHL':
+                $game = 'BFH';
+                break;
+
+            default:
+                $game = $this->game->Name;
+        }
+
+        $links = [];
+
+        // Battlelog URL
+        if (is_null($this->battlelog)) {
+            $links['battlelog'] = sprintf('http://battlelog.battlefield.com/%s/user/%s', strtolower($game), $this->SoldierName);
+        } else {
+            if ($game == 'BFH') {
+                $links['battlelog'] = sprintf('http://battlelog.battlefield.com/%s/agent/%s/stats/%u/pc/', strtolower($game), $this->SoldierName, $this->battlelog->persona_id);
+            } else {
+                $links['battlelog'] = sprintf('http://battlelog.battlefield.com/%s/soldier/%s/stats/%u/pc/', strtolower($game), $this->SoldierName, $this->battlelog->persona_id);
+            }
+        }
+
+        $links[] = [
+            'bf3stats' => $game == 'BF3' ? sprintf('http://bf3stats.com/stats_pc/%s', $this->SoldierName) : null,
+            'bf4stats' => $game == 'BF4' ? sprintf('http://bf4stats.com/pc/%s', $this->SoldierName) : null,
+            'bfhstats' => $game == 'BFH' ? sprintf('http://bfhstats.com/pc/%s', $this->SoldierName) : null,
+            'istats'   => sprintf('http://i-stats.net/index.php?action=pcheck&player=%s&game=%s&sub=Check+Player', $this->SoldierName, $game),
+            'metabans' => sprintf('http://metabans.com/search/?phrase=%s', $this->SoldierName),
+            'bf4db'    => $game == 'BF4' ? sprintf('http://bf4db.com/players?name=%s', $this->SoldierName) : null,
+            'chatlogs' => route('chatlog.search', ['pid' => $this->PlayerID])
+        ];
+
+        $links = array_merge($links, $links[0]);
+        unset($links[0]);
+
+        return $links;
     }
 
     /**

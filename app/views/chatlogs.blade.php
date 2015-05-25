@@ -12,11 +12,11 @@
 
                     <div class="col-lg-10 col-sm-8">
                         <select class="form-control" name="server" id="server">
-                            <option value="-1" <?php echo Input::has('server') && Input::get('server') == -1 ? 'selected' : '' ?>>Select Server...</option>
+                            <option value="-1" <?php echo Input::has('server') && Input::get('server') == -1 ? 'selected' : ''?>>Select Server...</option>
                             @foreach($games as $game)
                             <optgroup label="{{ $game->Name }}">
                                 @foreach($game->servers as $server)
-                                <option value="{{ $server->ServerID }}"<?php echo Input::has('server') && Input::get('server') == $server->ServerID ? 'selected' : '' ?>>
+                                <option value="{{ $server->ServerID }}"<?php echo Input::has('server') && Input::get('server') == $server->ServerID ? 'selected' : ''?>>
                                     {{{ $server->ServerName }}}
                                 </option>
                                 @endforeach
@@ -43,6 +43,8 @@
                 </div>
 
                 {{ Former::checkbox('showspam')->label('Show Spam') }}
+
+                {{ Former::hidden('pid', Input::get('pid', '')) }}
 
                 {{ Former::actions()->success_submit('Search') }}
 
@@ -116,7 +118,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td <?php echo Input::get('server', -1) <= 0 ? 'colspan="4"' : 'colspan="6"'; ?>>
+                                <td <?php echo Input::get('server', -1) <= 0 ? 'colspan="4"' : 'colspan="6"';?>>
                                     <alert type="info">{{ HTML::faicon('fa-info-circle') }}&nbsp;No results returned</alert>
                                 </td>
                             </tr>
@@ -145,8 +147,8 @@ function updateDateRangeDisplay(date1, date2) {
 }
 
 $(function() {
-    var startDate = <?php if(Input::has('StartDateTime')) : ?>moment('{{ Input::get("StartDateTime") }}');<?php else : ?>moment().startOf('day');<?php endif; ?>
-    var endDate = <?php if(Input::has('EndDateTime')) : ?>moment('{{ Input::get("EndDateTime") }}').endOf('day');<?php else : ?>moment().endOf('day');<?php endif; ?>
+    var startDate = <?php if (Input::has('StartDateTime')): ?>moment('{{ Input::get("StartDateTime") }}');<?php else: ?>moment().startOf('day');<?php endif;?>
+    var endDate = <?php if (Input::has('EndDateTime')): ?>moment('{{ Input::get("EndDateTime") }}').endOf('day');<?php else: ?>moment().endOf('day');<?php endif;?>
 
     updateDateRangeDisplay(startDate, endDate);
 

@@ -7,7 +7,7 @@ return [
         /**
          * Details Block
          */
-        'details' => [
+        'details'     => [
             'title' => 'Details',
             'items' => [
                 'id'         => 'ID',
@@ -21,16 +21,39 @@ return [
             ]
         ],
 
+        'links'       => [
+            'title' => 'Links',
+            'items' => [
+
+                /**
+                 * External Links
+                 */
+                'battlelog'    => 'Battlelog',
+                'istats'       => 'I-Stats',
+                'anticheatinc' => 'Anticheat Inc.',
+                'bf4db'        => 'BF4DB',
+                'bf3stats'     => 'BF3 Stats',
+                'bf4stats'     => 'BF4 Stats',
+                'bfhstats'     => 'BFH Stats',
+                'metabans'     => 'Metabans',
+
+                /**
+                 * Internal LInks
+                 */
+                'chatlogs'     => 'Chatlogs'
+            ]
+        ],
+
         /**
          * Infractions and Bans Blocks
          */
         'infractions' => [
-            'title' => 'Infractions',
-            'none' => 'No infractions on file',
+            'title'   => 'Infractions',
+            'none'    => 'No infractions on file',
             'overall' => [
                 'title' => 'Total'
             ],
-            'table' => [
+            'table'   => [
                 'col1' => 'Server',
                 'col2' => 'Punishes',
                 'col3' => 'Forgives',
@@ -38,28 +61,28 @@ return [
             ]
         ],
 
-        'bans' => [
-            'type' => [
+        'bans'        => [
+            'type'     => [
                 'temporary' => [
-                    'long' => 'Temporary',
+                    'long'  => 'Temporary',
                     'short' => 'Temp'
                 ],
                 'permanent' => [
-                    'long' => 'Permanent',
+                    'long'  => 'Permanent',
                     'short' => 'Perm'
                 ]
             ],
-            'status' => [
-                'enabled' => 'Enabled',
+            'status'   => [
+                'enabled'  => 'Enabled',
                 'disabled' => 'Disabled',
-                'expired' => 'Expired',
-                'expire' => 'Expire'
+                'expired'  => 'Expired',
+                'expire'   => 'Expire'
             ],
-            'current' => [
-                'title' => 'Current Ban',
-                'none' => 'No bans on file',
+            'current'  => [
+                'title'    => 'Current Ban',
+                'none'     => 'No bans on file',
                 'inactive' => 'No ban currently in effect. Status&colon; <strong>:status</strong>',
-                'table' => [
+                'table'    => [
                     'col1' => 'Issued',
                     'col2' => 'Expires',
                     'col3' => 'Server',
@@ -71,7 +94,7 @@ return [
 
             'previous' => [
                 'title' => 'Previous Bans',
-                'none' => 'No previous bans on file',
+                'none'  => 'No previous bans on file',
                 'table' => [
                     'col1' => 'Issued',
                     'col2' => 'Duration',
@@ -85,23 +108,23 @@ return [
         /**
          * Stats
          */
-        'stats' => [
+        'stats'       => [
 
             /**
              * Player Server Stats
              */
-            'server' => [
+            'server'   => [
                 'title' => 'Server Stats',
                 'table' => [
-                    'col1' => 'First Seen',
-                    'col2' => 'Last Seen',
-                    'col3' => 'Overall Score',
-                    'col4' => 'Highest Score',
-                    'col5' => 'Kills',
-                    'col6' => 'HS',
-                    'col7' => 'Deaths',
-                    'col8' => 'Suicides',
-                    'col9' => 'Tks',
+                    'col1'  => 'First Seen',
+                    'col2'  => 'Last Seen',
+                    'col3'  => 'Overall Score',
+                    'col4'  => 'Highest Score',
+                    'col5'  => 'Kills',
+                    'col6'  => 'HS',
+                    'col7'  => 'Deaths',
+                    'col8'  => 'Suicides',
+                    'col9'  => 'Tks',
                     'col10' => 'Playtime',
                     'col11' => 'Rounds',
                     'col12' => 'Killstreak',
@@ -110,9 +133,9 @@ return [
                     'col15' => 'Losses',
                     'col16' => 'Server',
                     'extra' => [
-                        'kd' => 'K/D',
+                        'kd'   => 'K/D',
                         'hskr' => 'HSKR',
-                        'wlr' => 'W/L'
+                        'wlr'  => 'W/L'
                     ]
                 ]
             ],
@@ -128,34 +151,34 @@ return [
         /**
          * Anti-Cheat System
          */
-        'acs' => [
-            'title' => 'Suspicious Weapons',
-            'help' => 'Weapons shown are not always suspicious and is only there to help you decided if the player is cheating. Shotguns may trigger more frequently due to the damage they do. False-positives can still occur.',
-            'none' => 'No Suspicious Weapons Found',
+        'acs'         => [
+            'title'    => 'Suspicious Weapons',
+            'help'     => 'Weapons shown are not always suspicious and is only there to help you decided if the player is cheating. Shotguns may trigger more frequently due to the damage they do. False-positives can still occur.',
+            'none'     => 'No Suspicious Weapons Found',
             'checking' => 'Checking player&hellip;',
-            'table' => [
-                'col1' => 'Weapon',
-                'col2' => 'Category',
-                'col3' => 'Kills',
-                'col4' => 'Headshots',
-                'col5' => 'Fired',
-                'col6' => 'Hit',
-                'col7' => 'Accuracy',
-                'col8' => 'Playtime',
-                'col9' => 'DPS',
+            'table'    => [
+                'col1'  => 'Weapon',
+                'col2'  => 'Category',
+                'col3'  => 'Kills',
+                'col4'  => 'Headshots',
+                'col5'  => 'Fired',
+                'col6'  => 'Hit',
+                'col7'  => 'Accuracy',
+                'col8'  => 'Playtime',
+                'col9'  => 'DPS',
                 'col10' => 'HSKP',
                 'col11' => 'KPM'
             ]
         ],
 
-        'records' => [
-            'title' => 'Record History',
+        'records'     => [
+            'title'   => 'Record History',
             'viewing' => [
                 'p1' => 'Viewing records',
                 'p2' => 'through',
                 'p3' => 'out of'
             ],
-            'table' => [
+            'table'   => [
                 'col1' => 'Date',
                 'col2' => 'CMD Issued',
                 'col3' => 'CMD Taken',

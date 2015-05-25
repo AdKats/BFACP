@@ -72,6 +72,12 @@ class ChatlogController extends BaseController
                 $chat = $chat->whereIn('logPlayerID', $playerIds);
             }
 
+            if (Input::has('pid')) {
+                if (Input::get('pid') > 0 && is_numeric(Input::get('pid'))) {
+                    $chat = $chat->where('logPlayerID', Input::get('pid'));
+                }
+            }
+
             // Filter based on server if one is selected
             if (Input::has('server') && is_numeric(Input::get('server')) && Input::get('server') > 0) {
                 $chat = $chat->where('ServerID', Input::get('server'));
@@ -92,6 +98,7 @@ class ChatlogController extends BaseController
     {
         return Input::has('server') ||
         Input::has('players') ||
+        Input::has('pid') ||
         Input::has('keywords') ||
         Input::has('showspam') ||
         (Input::has('StartDateTime') && Input::has('EndDateTime'));

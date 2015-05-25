@@ -133,6 +133,7 @@
                     <li class="active"><a href="javascript://" data-target="#infractions" data-toggle="tab">{{ Lang::get('player.profile.infractions.title') }}</a></li>
                     <li><a href="javascript://" data-target="#ban-current" data-toggle="tab">{{ Lang::get('player.profile.bans.current.title') }}</a></li>
                     <li><a href="javascript://" data-target="#ban-previous" data-toggle="tab">{{ Lang::get('player.profile.bans.previous.title') }}</a></li>
+                    <li><a href="javascript://" data-target="#links" data-toggle="tab">{{ Lang::get('player.profile.links.title') }}</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -254,7 +255,9 @@
 
                             <tbody>
                                 @foreach($player->ban->previous as $ban)
-                                <?php if($player->ban->latest_record_id == $ban->record_id) continue; ?>
+                                @if($player->ban->latest_record_id == $ban->record_id)
+                                {{-- Skip --}}
+                                @else
                                 <tr>
                                     <td>
                                         <span ng-bind="moment('{{ $ban->stamp }}').fromNow()" tooltip="{{ HTML::moment($ban->stamp) }}"></span>
@@ -280,6 +283,7 @@
                                     </td>
                                     <td>{{ $ban->record_message }}</td>
                                 </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>
@@ -288,6 +292,14 @@
                             <i class="fa fa-check"></i> {{ Lang::get('player.profile.bans.previous.none') }}
                         </div>
                         @endif
+                    </div>
+
+                    <div class="tab-pane" id="links">
+                        @foreach($player->links as $key => $link)
+                            @unless(is_null($link))
+                            {{ HTML::link($link, Lang::get(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => '_blank']) }}
+                            @endunless
+                        @endforeach
                     </div>
                 </div>
             </div>
