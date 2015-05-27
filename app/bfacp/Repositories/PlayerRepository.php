@@ -6,6 +6,7 @@ use BFACP\Battlefield\Player;
 use BFACP\Exceptions\PlayerNotFoundException;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\App as App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -144,11 +145,12 @@ class PlayerRepository extends BaseRepository
             return DB::table('tbl_playerdata')
             ->whereNotIn('CountryCode', ['', '--'])
             ->whereNotNull('CountryCode')
-            ->where('LastSeenOnServer', '>=', Carbon::now()->subDay())
+            ->whereIn('StatsID', function ($query) {
+                $query->select('StatsID')->from('tbl_playerstats')->where('LastSeenOnServer', '>=', Carbon::now()->subDay());
+            })
             ->join('tbl_server_player', 'tbl_playerdata.PlayerID', '=', 'tbl_server_player.PlayerID')
-            ->join('tbl_playerstats', 'tbl_server_player.StatsID', '=', 'tbl_playerstats.StatsID')
             ->groupBy('CountryCode')
-            ->select(DB::raw('UPPER(CountryCode) AS `CountryCode`, COUNT(tbl_playerdata.PlayerID) AS `total`'))
+            ->select(DB::raw('UPPER(`CountryCode`) AS `CountryCode`, COUNT(`tbl_playerdata`.`PlayerID`) AS `total`'))
             ->lists('total', 'CountryCode');
         });
 
