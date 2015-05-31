@@ -30,14 +30,7 @@ class ChatlogController extends BaseController
 
         $page_title = Lang::get('navigation.main.items.chatlogs.title');
 
-        // Check if full text is supported
-        $hasFulltextSupport = $this->hasFulltextSupport();
-
-        if ($hasFulltextSupport && Input::has('keywords')) {
-            $chat = $this->chat->with('player', 'server');
-        } else {
-            $chat = $this->chat->with('player', 'server')->orderBy('logDate', 'desc');
-        }
+        $chat = $this->chat->with('player', 'server')->orderBy('logDate', 'desc');
 
         // If the show spam checkbox was not checked then exclude it
         if (!Input::has('showspam')) {
@@ -59,12 +52,9 @@ class ChatlogController extends BaseController
             if (Input::has('keywords')) {
                 $keywords = array_map('trim', explode(',', Input::get('keywords')));
 
-                if ($hasFulltextSupport) {
+                if ($this->hasFulltextSupport()) {
                     $chat = $chat->whereRaw(
                         'MATCH(logMessage) AGAINST(? IN BOOLEAN MODE)',
-                        [implode(' ', $keywords)]
-                    )->orderByRaw(
-                        'MATCH(logMessage) AGAINST(? IN BOOLEAN MODE) DESC',
                         [implode(' ', $keywords)]
                     );
                 } else {
