@@ -4,6 +4,9 @@ use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Game;
 use BFACP\Battlefield\Player;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
@@ -27,7 +30,13 @@ class ChatlogController extends BaseController
 
         $page_title = Lang::get('navigation.main.items.chatlogs.title');
 
-        $chat = $this->chat->with('player', 'server')->orderBy('logDate', 'desc');
+        $hasFulltextSupport = $this->hasFulltextSupport();
+
+        if ($hasFulltextSupport && Input::has('keywords')) {
+            $chat = $this->chat->with('player', 'server');
+        } else {
+            $chat = $this->chat->with('player', 'server')->orderBy('logDate', 'desc');
+        }
 
         // If the show spam checkbox was not checked then exclude it
         if (!Input::has('showspam')) {
@@ -49,11 +58,21 @@ class ChatlogController extends BaseController
             if (Input::has('keywords')) {
                 $keywords = array_map('trim', explode(',', Input::get('keywords')));
 
-                $chat = $chat->where(function ($query) use ($keywords) {
-                    foreach ($keywords as $keyword) {
-                        $query->orWhere('logMessage', 'LIKE', sprintf('%s%%', $keyword));
-                    }
-                });
+                if ($hasFulltextSupport) {
+                    $chat = $chat->whereRaw(
+                        'MATCH(logMessage) AGAINST(? IN BOOLEAN MODE)',
+                        [implode(' ', $keywords)]
+                    )->orderByRaw(
+                        'MATCH(logMessage) AGAINST(? IN BOOLEAN MODE) DESC',
+                        [implode(' ', $keywords)]
+                    );
+                } else {
+                    $chat = $chat->where(function ($query) use ($keywords) {
+                        foreach ($keywords as $keyword) {
+                            $query->orWhere('logMessage', 'LIKE', sprintf('%s%%', $keyword));
+                        }
+                    });
+                }
             }
 
             // Player names the user has typed. Partal names can be provided. Must be seprated
@@ -102,5 +121,26 @@ class ChatlogController extends BaseController
         Input::has('keywords') ||
         Input::has('showspam') ||
         (Input::has('StartDateTime') && Input::has('EndDateTime'));
+    }
+
+    /**
+     * Checks if the message column has fulltext support.
+     * @return boolean
+     */
+    private function hasFulltextSupport()
+    {
+        $sql = File::get(storage_path() . '/sql/fulltextCheck.sql');
+
+        $results = DB::select($sql, [Config::get('database.connections.mysql.database'), 'tbl_chatlog']);
+
+        if (count($results) > 0) {
+            foreach ($results as $result) {
+                if ($result->column_name == 'logMessage') {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
