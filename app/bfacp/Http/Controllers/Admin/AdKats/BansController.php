@@ -52,7 +52,11 @@ class BansController extends BaseController
      */
     public function index()
     {
-        $bans = $this->repository->getBanList();
+        if (Input::has('personal')) {
+            $bans = $this->repository->getPersonalBans($this->user->soldiers->lists('player_id'));
+        } else {
+            $bans = $this->repository->getBanList();
+        }
 
         return View::make('admin.adkats.bans.index', compact('bans'))->with('page_title', Lang::get('navigation.admin.adkats.items.banlist.title'));
     }

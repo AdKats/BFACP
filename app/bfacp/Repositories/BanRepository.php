@@ -3,6 +3,7 @@
 use BFACP\AdKats\Ban;
 use BFACP\Battlefield\Player;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Input;
 
 class BanRepository extends BaseRepository
 {
@@ -28,7 +29,7 @@ class BanRepository extends BaseRepository
      */
     public function getPersonalBans($ids = [])
     {
-        $bans = Ban::with('player', 'record')->personal($ids)->get()->toArray();
+        $bans = Ban::with('player', 'record')->personal($ids)->paginate(100);
 
         return $bans;
     }
@@ -40,9 +41,15 @@ class BanRepository extends BaseRepository
      */
     public function getBanList($limit = 100)
     {
-        $bans = Ban::with('player', 'record')->orderBy('ban_startTime', 'desc')->paginate($limit);
+        $bans = Ban::with('player', 'record')->orderBy('ban_startTime', 'desc');
 
-        return $bans;
+        if (Input::has('player')) {
+            $bans = $bans->whereHas('player', function ($query) {
+                $query->where('SoldierName', 'LIKE', sprintf('%s%%', Input::get('player')));
+            });
+        }
+
+        return $bans->paginate($limit);
     }
 
     /**

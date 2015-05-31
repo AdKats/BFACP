@@ -42,13 +42,13 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <span ng-bind="moment('{{ $ban->ban_issued }}').fromNow()" tooltip="<?php echo '{{'; ?> moment('<?php echo $ban->ban_issued; ?>').format('lll') <?php echo '}}'; ?>"></span>
+                                    <span ng-bind="moment('{{ $ban->ban_issued }}').fromNow()" tooltip="<?php echo '{{';?> moment('<?php echo $ban->ban_issued;?>').format('lll') <?php echo '}}';?>"></span>
                                 </td>
                                 <td>
                                     @if($ban->is_perm)
                                     <label class="label label-danger">{{ Lang::get('player.profile.bans.type.permanent.long') }}</label>
                                     @else
-                                    <span ng-bind="moment('{{ $ban->ban_expires }}').fromNow()" tooltip="<?php echo '{{'; ?> moment('<?php echo $ban->ban_expires; ?>').format('lll') <?php echo '}}'; ?>"></span>
+                                    <span ng-bind="moment('{{ $ban->ban_expires }}').fromNow()" tooltip="<?php echo '{{';?> moment('<?php echo $ban->ban_expires;?>').format('lll') <?php echo '}}';?>"></span>
                                     @endif
                                 </td>
                                 <td class="hidden-sm">
@@ -72,7 +72,7 @@
 
             <div class="box-footer clearfix">
                 <div class="pull-left">Total: <span ng-bind="{{ $bans->getTotal() }} | number"></span></div>
-                <div class="pull-right">{{ $bans->links() }}</div>
+                <div class="pull-right">{{ $bans->appends(Input::except('page'))->links() }}</div>
             </div>
         </div>
     </div>
