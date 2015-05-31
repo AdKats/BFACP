@@ -22,7 +22,7 @@ Menu::make('MainNav', function ($menu) use ($adminPermsList) {
     $menu->add(Lang::get('navigation.main.items.scoreboard.title'), ['route' => 'servers.live'])
     ->prepend(HTML::faicon(Lang::get('navigation.main.items.scoreboard.icon.fa'), true));
 
-    if (Auth::user()->ability(null, 'admin.adkats.bans.view')) {
+    if (Auth::check() && Auth::user()->ability(null, 'admin.adkats.bans.view')) {
         $menu->add(Lang::get('navigation.admin.adkats.items.banlist.title'), ['route' => 'admin.adkats.bans.index'])
         ->prepend(HTML::ionicon(Lang::get('navigation.admin.adkats.items.banlist.icon.ion'), true));
     }
