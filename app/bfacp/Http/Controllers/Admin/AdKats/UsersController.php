@@ -29,7 +29,11 @@ class UsersController extends BaseController
      */
     public function index()
     {
-        $users = User::with('role', 'soldiers.player')->orderBy('user_name')->get();
+        $users = User::join('adkats_roles AS ar', 'ar.role_id', '=', 'adkats_users.user_role')
+            ->with('role', 'soldiers.player')
+            ->orderBy('ar.role_name')
+            ->orderBy('user_name')
+            ->get();
 
         return View::make('admin.adkats.users.index', compact('users'))->with('page_title', Lang::get('navigation.admin.adkats.items.users.title'));
     }
@@ -47,7 +51,7 @@ class UsersController extends BaseController
             return MainHelper::response(null, $v->messages()->first('username'), 'error', 400);
         }
 
-        $user            = new User;
+        $user            = new User();
         $user->user_name = Input::get('username');
         $user->user_role = 1;
         $user->save();
