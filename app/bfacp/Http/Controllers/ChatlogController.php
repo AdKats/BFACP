@@ -30,6 +30,7 @@ class ChatlogController extends BaseController
 
         $page_title = Lang::get('navigation.main.items.chatlogs.title');
 
+        // Check if full text is supported
         $hasFulltextSupport = $this->hasFulltextSupport();
 
         if ($hasFulltextSupport && Input::has('keywords')) {

@@ -147,8 +147,8 @@ function updateDateRangeDisplay(date1, date2) {
 }
 
 $(function() {
-    var startDate = <?php if (Input::has('StartDateTime')): ?>moment('{{ Input::get("StartDateTime") }}');<?php else: ?>moment().startOf('day');<?php endif;?>
-    var endDate = <?php if (Input::has('EndDateTime')): ?>moment('{{ Input::get("EndDateTime") }}').endOf('day');<?php else: ?>moment().endOf('day');<?php endif;?>
+    var startDate = <?php if (Input::has('StartDateTime')): ?>moment('{{ Input::get("StartDateTime") }}');<?php else: ?>moment().startOf('month');<?php endif;?>
+    var endDate = <?php if (Input::has('EndDateTime')): ?>moment('{{ Input::get("EndDateTime") }}').endOf('day');<?php else: ?>moment().endOf('month');<?php endif;?>
 
     updateDateRangeDisplay(startDate, endDate);
 
