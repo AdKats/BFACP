@@ -62,10 +62,10 @@ class ChatlogController extends BaseController
                 if ($hasFulltextSupport) {
                     $chat = $chat->whereRaw(
                         'MATCH(logMessage) AGAINST(? IN BOOLEAN MODE)',
-                        [implode(' ', $keywords)]
+                        [implode(' +', $keywords)]
                     )->orderByRaw(
                         'MATCH(logMessage) AGAINST(? IN BOOLEAN MODE) DESC',
-                        [implode(' ', $keywords)]
+                        [implode(' +', $keywords)]
                     );
                 } else {
                     $chat = $chat->where(function ($query) use ($keywords) {
