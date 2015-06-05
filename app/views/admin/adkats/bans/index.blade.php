@@ -4,6 +4,16 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
+            <div class="box-header">
+                <div class="box-tools">
+                    <div class="pull-right">
+                        {{ Former::text('player')->placeholder('Search for a player...') }}
+                    </div>
+                    <div class="pull-left" style="padding-right: 20px">
+                        {{ Former::checkbox('personal')->text('Personal Bans Only') }}
+                    </div>
+                </div>
+            </div>
             <div class="box-body">
                 <div class="table-responsive">
                     <table class="table table-striped table-condensed">
@@ -77,4 +87,38 @@
         </div>
     </div>
 </div>
+@stop
+
+@section('scripts')
+<script type="text/javascript">
+    $(document).on('change', '#personal', function(e) {
+        if(this.checked) {
+            if(window.location.href.split("?").length > 1) {
+                window.location.href = window.location.href.split("?")[0] + '?personal=1';
+            } else {
+                window.location.href = window.location.href + '?personal=1';
+            }
+        } else {
+            window.location.href = window.location.href.split("?")[0];
+        }
+    });
+
+    $('#player').bind('blur keyup', function(e) {
+        if(e.type == 'blur' || e.keyCode == '13') {
+            var val = $(this).val();
+
+            if(val === '') {
+                if(window.location.href.split("?").length > 1) {
+                    window.location.href = window.location.href.split("?")[0];
+                }
+            } else {
+                if($('#personal').is(':checked')) {
+                    window.location.href = window.location.href.split("?")[0] + '?player=' + val;
+                } else {
+                    window.location.href = window.location.href + '?player=' + val;
+                }
+            }
+        }
+    });
+</script>
 @stop
