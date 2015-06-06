@@ -3,6 +3,7 @@
 use BFACP\Elegant;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App as App;
+use Illuminate\Support\Facades\Route;
 use MainHelper;
 
 class Player extends Elegant
@@ -211,6 +212,10 @@ class Player extends Elegant
 
         if ($game == 'BF4') {
             try {
+                if (Route::currentRouteName() != 'player.show') {
+                    throw new \Exception();
+                }
+
                 $request = \App::make('GuzzleHttp\Client')->get(sprintf('http://api.bf4db.com/api-player.php?%s', http_build_query([
                     'format' => 'json',
                     'guid'   => $this->EAGUID
