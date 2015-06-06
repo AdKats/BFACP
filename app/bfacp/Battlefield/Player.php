@@ -2,6 +2,7 @@
 
 use BFACP\Elegant;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App as App;
 use MainHelper;
 
 class Player extends Elegant
@@ -208,13 +209,38 @@ class Player extends Elegant
             }
         }
 
+        if ($game == 'BF4') {
+            try {
+                $request = \App::make('GuzzleHttp\Client')->get(sprintf('http://api.bf4db.com/api-player.php?%s', http_build_query([
+                    'format' => 'json',
+                    'guid'   => $this->EAGUID
+                ])));
+
+                $response = $request->json();
+
+                if ($response['type'] != 'error') {
+                    $bf4db_profile = [
+                        'url'        => $response['data']['bf4db_url'],
+                        'cheatscore' => $response['data']['cheatscore']
+                    ];
+                } else {
+                    throw new \Exception();
+                }
+            } catch (\Exception $e) {
+                $bf4db_profile = [
+                    'url'        => sprintf('http://bf4db.com/players?name=%s', $this->SoldierName),
+                    'cheatscore' => null
+                ];
+            }
+        }
+
         $links[] = [
             'bf3stats' => $game == 'BF3' ? sprintf('http://bf3stats.com/stats_pc/%s', $this->SoldierName) : null,
             'bf4stats' => $game == 'BF4' ? sprintf('http://bf4stats.com/pc/%s', $this->SoldierName) : null,
             'bfhstats' => $game == 'BFH' ? sprintf('http://bfhstats.com/pc/%s', $this->SoldierName) : null,
             'istats'   => sprintf('http://i-stats.net/index.php?action=pcheck&player=%s&game=%s&sub=Check+Player', $this->SoldierName, $game),
             'metabans' => sprintf('http://metabans.com/search/?phrase=%s', $this->SoldierName),
-            'bf4db'    => $game == 'BF4' ? sprintf('http://bf4db.com/players?name=%s', $this->SoldierName) : null,
+            'bf4db'    => $game == 'BF4' ? $bf4db_profile : null,
             'chatlogs' => route('chatlog.search', ['pid' => $this->PlayerID])
         ];
 

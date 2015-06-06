@@ -1,11 +1,9 @@
 <?php namespace BFACP\Http\Controllers;
 
-use BFACP\Exceptions\PlayerNotFoundException;
 use BFACP\Repositories\PlayerRepository;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
-use MainHelper;
 
 class PlayersController extends BaseController
 {
@@ -33,20 +31,20 @@ class PlayersController extends BaseController
         $isCached = Cache::has($key);
 
         // Get or Set cache for player
-        $player = Cache::remember($key, 5, function() use($id) {
+        $player = Cache::remember($key, 5, function () use ($id) {
             $json = $this->repository->setopts([
-                    'ban.previous',
-                    'reputation',
-                    'infractionsGlobal',
-                    'infractionsServer.server',
-                    'stats.server'
-                ], true)->getPlayerById($id)->toJson();
+                'ban.previous',
+                'reputation',
+                'infractionsGlobal',
+                'infractionsServer.server',
+                'stats.server'
+            ], true)->getPlayerById($id)->toJson();
 
             return json_decode($json);
         });
 
-        $page_title = ! empty($player->ClanTag) ?
-            sprintf('[%s] %s', $player->ClanTag, $player->SoldierName) : $player->SoldierName;
+        $page_title = !empty($player->ClanTag) ?
+        sprintf('[%s] %s', $player->ClanTag, $player->SoldierName) : $player->SoldierName;
 
         return View::make('player.profile', compact('player', 'page_title'));
     }

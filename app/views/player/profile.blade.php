@@ -130,14 +130,14 @@
         <div class="col-xs-12 col-lg-6">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="javascript://" data-target="#infractions" data-toggle="tab">{{ Lang::get('player.profile.infractions.title') }}</a></li>
+                    <li><a href="javascript://" data-target="#infractions" data-toggle="tab">{{ Lang::get('player.profile.infractions.title') }}</a></li>
                     <li><a href="javascript://" data-target="#ban-current" data-toggle="tab">{{ Lang::get('player.profile.bans.current.title') }}</a></li>
                     <li><a href="javascript://" data-target="#ban-previous" data-toggle="tab">{{ Lang::get('player.profile.bans.previous.title') }}</a></li>
-                    <li><a href="javascript://" data-target="#links" data-toggle="tab">{{ Lang::get('player.profile.links.title') }}</a></li>
+                    <li class="active"><a href="javascript://" data-target="#links" data-toggle="tab">{{ Lang::get('player.profile.links.title') }}</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane active" id="infractions">
+                    <div class="tab-pane" id="infractions">
                         @if( ! is_null($player->infractions_global) && ! is_null($player->infractions_server))
                         <table class="table table-striped table-condensed">
                             <thead>
@@ -294,10 +294,18 @@
                         @endif
                     </div>
 
-                    <div class="tab-pane" id="links">
+                    <div class="tab-pane active" id="links">
                         @foreach($player->links as $key => $link)
                             @unless(is_null($link))
-                            {{ HTML::link($link, Lang::get(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => '_blank']) }}
+                                @if($key == 'bf4db')
+                                    @if(!is_null($link->cheatscore))
+                                    {{ HTML::link($link->url, Lang::get(sprintf('player.profile.links.items.%s', $key)) . sprintf(' - %u%%', $link->cheatscore), ['class' => 'btn bg-blue', 'target' => '_blank']) }}
+                                    @else
+                                    {{ HTML::link($link->url, Lang::get(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => '_blank']) }}
+                                    @endif
+                                @else
+                                {{ HTML::link($link, Lang::get(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => '_blank']) }}
+                                @endif
                             @endunless
                         @endforeach
                     </div>
