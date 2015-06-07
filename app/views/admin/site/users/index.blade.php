@@ -26,7 +26,7 @@
                                 <td>{{ link_to_route('admin.site.users.edit', $user->username, $user->id) }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->roles[0]->name }}</td>
-                                <td>{{ $user->setting->lang }}</td>
+                                <td>{{ MainHelper::languages($user->setting->lang) }}</td>
                                 <td>
                                     @if($user->confirmed)
                                     <span class="label bg-green">{{ Lang::get('site.admin.users.listing.status.active') }}</span>

@@ -9,7 +9,7 @@ return [
                     'col1' => 'Username',
                     'col2' => 'Email',
                     'col3' => 'Role',
-                    'col4' => 'Lang',
+                    'col4' => 'Language',
                     'col5' => 'Status',
                     'col6' => 'Created'
                 ],
@@ -31,7 +31,14 @@ return [
                     'email'          => ['label' => 'Email'],
                     'role'           => ['label' => 'Role'],
                     'account_status' => ['label' => 'Status'],
-                    'lang'           => ['label' => 'Language']
+                    'lang'           => ['label' => 'Language'],
+                    'genpass'        => ['label' => 'Generate new password for user']
+                ]
+            ],
+
+            'updates' => [
+                'password' => [
+                    'generated' => ':username (:email) has been emailed with their new password.'
                 ]
             ]
         ]

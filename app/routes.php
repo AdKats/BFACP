@@ -156,10 +156,12 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
         Route::group(['prefix' => 'site', 'namespace' => 'Site'], function () {
             Route::resource('users', 'UsersController', [
                 'names' => [
-                    'index' => 'admin.site.users.index',
-                    'edit'  => 'admin.site.users.edit'
+                    'index'   => 'admin.site.users.index',
+                    'edit'    => 'admin.site.users.edit',
+                    'destroy' => 'admin.site.users.destroy',
+                    'update'  => 'admin.site.users.update'
                 ],
-                'only'  => ['index', 'edit']
+                'only'  => ['index', 'edit', 'destroy', 'update']
             ]);
         });
 
