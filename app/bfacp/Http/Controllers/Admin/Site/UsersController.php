@@ -7,7 +7,6 @@ use BFACP\Battlefield\Player;
 use BFACP\Http\Controllers\BaseController;
 use Former;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
@@ -38,7 +37,6 @@ class UsersController extends BaseController
     public function edit($id)
     {
         try {
-
             // If the user we are editing is the current logged in user don't refetch them.
             if ($this->isLoggedIn && $this->user->id == $id) {
                 $user = $this->user;
@@ -47,9 +45,7 @@ class UsersController extends BaseController
             }
 
             // Get the list of roles
-            $roles = Cache::remember('site.roles.list', 24 * 60, function () {
-                return Role::lists('name', 'id');
-            });
+            $roles = Role::lists('name', 'id');
 
             // Set the page title
             $page_title = Lang::get('navigation.admin.site.items.users.items.edit.title', ['id' => $id]);
@@ -70,7 +66,6 @@ class UsersController extends BaseController
     public function update($id)
     {
         try {
-
             $user = User::findOrFail($id);
 
             $messages = [];
@@ -181,7 +176,6 @@ class UsersController extends BaseController
             $user->save();
 
             return Redirect::route('admin.site.users.edit', [$id])->with('messages', $messages);
-
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.site.users.edit', [$id])->withErrors(['Unable to complete action.']);
         }
