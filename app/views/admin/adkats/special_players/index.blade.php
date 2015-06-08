@@ -19,7 +19,7 @@
                         <tbody>
                             @forelse($players as $player)
                             <tr>
-                                <td>{{ link_to_route('admin.adkats.special_players.edit', $player->specialplayer_id, [$player->specialplayer_id]) }}</td>
+                                <td>{{ $player->specialplayer_id }}</td>
                                 <td>
                                     @if(is_null($player->player))
                                     <span class="label bg-red">N/A</span>
@@ -34,7 +34,7 @@
                                     {{ link_to_route('player.show', $player->player->SoldierName, [$player->player->PlayerID, $player->player->SoldierName]) }}
                                     @endif
                                 </td>
-                                <td>{{ $player->group->group_name }}</td>
+                                <td>{{ Former::select('group')->fromQuery($groups, 'group_name', 'group_key')->value($player->player_group)->data_special_id($player->specialplayer_id) }}</td>
                                 <td>
                                     <span ng-bind="moment('{{ $player->effective_stamp }}').fromNow()" tooltip="<?php echo '{{';?> moment('<?php echo $player->effective_stamp;?>').format('lll') <?php echo '}}';?>"></span>
                                 </td>
@@ -55,4 +55,33 @@
         </div>
     </div>
 </div>
+@stop
+
+@section('scripts')
+<script type="text/javascript">
+    $('select[name="group"]').change(function() {
+        var _this = $(this);
+        var special_id = _this.data('special-id');
+        var request_url = 'admin/adkats/special_players/' + special_id;
+        _this.attr('disabled', true);
+
+        $.ajax({
+            url: request_url,
+            type: 'PUT',
+            dataType: 'json',
+            data: {
+                group: $(this).val()
+            },
+        })
+        .done(function(data) {
+            toastr.success(data.message);
+        })
+        .fail(function(data) {
+            toastr.error(data.responseJSON.message);
+        })
+        .always(function() {
+            _this.attr('disabled', false);
+        });
+    });
+</script>
 @stop

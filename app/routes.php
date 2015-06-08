@@ -154,10 +154,10 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
 
             Route::resource('special_players', 'SpecialPlayersController', [
                 'names' => [
-                    'index' => 'admin.adkats.special_players.index',
-                    'edit'  => 'admin.adkats.special_players.edit'
+                    'index'  => 'admin.adkats.special_players.index',
+                    'update' => 'admin.adkats.special_players.update'
                 ],
-                'only'  => ['index', 'edit']
+                'only'  => ['index', 'update']
             ]);
         });
 
