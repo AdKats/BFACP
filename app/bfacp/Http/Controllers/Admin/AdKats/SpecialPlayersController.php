@@ -3,6 +3,7 @@
 use BFACP\AdKats\Special;
 use BFACP\Http\Controllers\BaseController;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
@@ -26,7 +27,21 @@ class SpecialPlayersController extends BaseController
     public function index()
     {
         $players = Special::all();
-        $groups  = Cache::get('admin.adkats.special.groups');
+
+        $groups = Cache::remember('admin.adkats.special.groups', 60 * 24, function () {
+            try {
+                $request = $this->guzzle->get('https://raw.githubusercontent.com/AdKats/AdKats/master/adkatsspecialgroups.json');
+                $response = $request->json();
+                $data = $response['SpecialGroups'];
+            } catch (RequestException $e) {
+                $request = $this->guzzle->get('http://api.gamerethos.net/adkats/fetch/specialgroups');
+                $response = $request->json();
+                $data = $response['SpecialGroups'];
+            }
+
+            return new Collection($data);
+        });
+
         return View::make('admin.adkats.special_players.index', compact('players', 'groups'))
             ->with('page_title', Lang::get('navigation.admin.adkats.items.special_players.title'));
     }
