@@ -151,6 +151,14 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
                 ],
                 'only'  => ['index', 'edit', 'update', 'destroy', 'store']
             ]);
+
+            Route::resource('special_players', 'SpecialPlayersController', [
+                'names' => [
+                    'index' => 'admin.adkats.special_players.index',
+                    'edit'  => 'admin.adkats.special_players.edit'
+                ],
+                'only'  => ['index', 'edit']
+            ]);
         });
 
         Route::group(['prefix' => 'site', 'namespace' => 'Site'], function () {

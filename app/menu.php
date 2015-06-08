@@ -50,6 +50,9 @@ Menu::make('MainNav', function ($menu) use ($adminPermsList) {
                 $adkats->add(Lang::get('navigation.admin.adkats.items.users.title'), ['route' => 'admin.adkats.users.index'])
                 ->prepend(HTML::faicon(Lang::get('navigation.admin.adkats.items.users.icon.fa'), true));
             }
+
+            $adkats->add(Lang::get('navigation.admin.adkats.items.special_players.title'), ['route' => 'admin.adkats.special_players.index'])
+            ->prepend(HTML::faicon(Lang::get('navigation.admin.adkats.items.special_players.icon.fa'), true));
         }
 
         /*=============================================

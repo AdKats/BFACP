@@ -74,6 +74,17 @@ Breadcrumbs::register('admin.adkats.users.edit', function ($b, $id) {
     $b->push(Lang::get('navigation.admin.adkats.items.users.items.edit.title', ['id' => $id]));
 });
 
+/*==============================================
+=            AdKats Special Players            =
+==============================================*/
+
+Breadcrumbs::register('admin.adkats.special_players.index', function ($b) {
+    $b->parent('admin.adkats');
+    $b->push(Lang::get('navigation.admin.adkats.items.special_players.title'), route('admin.adkats.special_players.index'), [
+        'icon' => HTML::faicon(Lang::get('navigation.admin.adkats.items.special_players.icon.fa'))
+    ]);
+});
+
 /*==================================
 =            Site Users            =
 ==================================*/

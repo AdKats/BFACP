@@ -56,7 +56,8 @@ return [
         'adkats' => [
             'title' => 'AdKats Management',
             'items' => [
-                'banlist' => [
+
+                'banlist'         => [
                     'title' => 'Banlist',
                     'icon'  => [
                         'fa'  => null,
@@ -68,7 +69,8 @@ return [
                         ]
                     ]
                 ],
-                'users'   => [
+
+                'users'           => [
                     'title' => 'Users',
                     'icon'  => [
                         'fa'  => 'fa-users',
@@ -77,6 +79,19 @@ return [
                     'items' => [
                         'edit' => [
                             'title' => 'Editing User #:id'
+                        ]
+                    ]
+                ],
+
+                'special_players' => [
+                    'title' => 'Special Players',
+                    'icon'  => [
+                        'fa'  => 'fa-users',
+                        'ion' => null
+                    ],
+                    'items' => [
+                        'edit' => [
+                            'title' => 'Editing Special Player #:id'
                         ]
                     ]
                 ]
