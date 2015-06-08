@@ -193,6 +193,12 @@ Entrust::routeNeedsPermission('admin/adkats/bans/*', 'admin.adkats.bans.edit');
 Entrust::routeNeedsPermission('admin/adkats/users', 'admin.adkats.user.view');
 Entrust::routeNeedsPermission('admin/adkats/users/*', 'admin.adkats.user.edit');
 
+/*============================================
+=            AdKats Special Users            =
+============================================*/
+Entrust::routeNeedsPermission('admin/adkats/special_players', 'admin.adkats.special.view');
+Entrust::routeNeedsPermission('admin/adkats/special_players/*', 'admin.adkats.special.edit');
+
 /*==================================
 =            Site Users            =
 ==================================*/
