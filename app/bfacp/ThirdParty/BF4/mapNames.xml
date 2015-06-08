@@ -301,4 +301,16 @@
     <map uri="MP_Siege" name="Siege of Shanghai" playmode="SquadObliteration0" />
     <map uri="MP_Tremors" name="Dawnbreaker" playmode="SquadObliteration0" />
 
+    <!-- Gun Master -->
+    <map uri="MP_Abandoned" name="Zavod 311" playmode="GunMaster0" />
+    <map uri="MP_Damage" name="Lancang Dam" playmode="GunMaster0" />
+    <map uri="MP_Flooded" name="Flood Zone" playmode="GunMaster0" />
+    <map uri="MP_Journey" name="Golmud Railway" playmode="GunMaster0" />
+    <map uri="MP_Naval" name="Paracel Storm" playmode="GunMaster0" />
+    <map uri="MP_Prison" name="Operation Locker" playmode="GunMaster0" />
+    <map uri="MP_Resort" name="Hainan Resort" playmode="GunMaster0" />
+    <map uri="MP_Siege" name="Siege of Shanghai" playmode="GunMaster0" />
+    <map uri="MP_TheDish" name="Rogue Transmission" playmode="GunMaster0" />
+    <map uri="MP_Tremors" name="Dawnbreaker" playmode="GunMaster0" />
+
 </mapNames>

@@ -14,5 +14,5 @@
 	<playmode uri="CarrierAssaultSmall0" name="Carrier Assault Small" />
 	<playmode uri="Chainlink0" name="Chainlink" />
 	<playmode uri="SquadObliteration0" name="Squad Obliteration" />
-
+	<playmode uri="GunMaster0" name="Gun Master" />
 </playmodes>
