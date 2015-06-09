@@ -197,7 +197,7 @@ return [
          */
         'charts'      => [
             'command_overview' => [
-                'title' => 'Command Usage',
+                'title' => 'CMD Usage',
                 'chart' => [
                     'title'   => 'Command Usage Overview',
                     'tooltip' => 'Usage'
