@@ -153,7 +153,7 @@ return [
          */
         'acs'         => [
             'title'    => 'Suspicious Weapons',
-            'help'     => 'Weapons shown are not always suspicious and is only there to help you decided if the player is cheating. Shotguns may trigger more frequently due to the damage they do. False-positives can still occur.',
+            'help'     => 'Weapons shown are not always suspicious and is only there to help you decided if the player is cheating. Shotguns and Snipers may trigger more frequently.',
             'none'     => 'No Suspicious Weapons Found',
             'checking' => 'Checking player&hellip;',
             'table'    => [
@@ -171,6 +171,9 @@ return [
             ]
         ],
 
+        /**
+         * Player Records
+         */
         'records'     => [
             'title'   => 'Record History',
             'viewing' => [
@@ -186,6 +189,33 @@ return [
                 'col5' => 'Source',
                 'col6' => 'Server',
                 'col7' => 'Message'
+            ]
+        ],
+
+        /**
+         * Charts
+         */
+        'charts'      => [
+            'command_overview' => [
+                'title' => 'Command Usage',
+                'chart' => [
+                    'title'   => 'Command Usage Overview',
+                    'tooltip' => 'Usage'
+                ]
+            ],
+
+            'aliases'          => [
+                'title' => 'Aliases',
+                'chart' => [
+                    'tooltip' => 'Alias'
+                ]
+            ],
+
+            'ip_history'       => [
+                'title' => 'IP History',
+                'chart' => [
+                    'tooltip' => 'IP'
+                ]
             ]
         ]
     ]

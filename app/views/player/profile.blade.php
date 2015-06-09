@@ -122,7 +122,6 @@
 
                     </div>
                 </div>
-
             </div>
         </div>
         <!-- END Player Basic -->
@@ -130,10 +129,15 @@
         <div class="col-xs-12 col-lg-6">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li><a href="javascript://" data-target="#infractions" data-toggle="tab">{{ Lang::get('player.profile.infractions.title') }}</a></li>
+                    <li><a href="javascript://" data-target="#infractions" data-toggle="tab">{{ Lang::get('player.profile.infractions.title') }} <span class="badge bg-green">{{ $player->infractions_global->total_points or 0 }}</span></a></li>
                     <li><a href="javascript://" data-target="#ban-current" data-toggle="tab">{{ Lang::get('player.profile.bans.current.title') }}</a></li>
                     <li><a href="javascript://" data-target="#ban-previous" data-toggle="tab">{{ Lang::get('player.profile.bans.previous.title') }}</a></li>
                     <li class="active"><a href="javascript://" data-target="#links" data-toggle="tab">{{ Lang::get('player.profile.links.title') }}</a></li>
+                    <li><a href="javascript://" data-target="#command-overview" data-toggle="tab">{{ Lang::get('player.profile.charts.command_overview.title') }} <span class="badge bg-green">{{ $charts['overview']->count() }}</span></a></li>
+                    <li><a href="javascript://" data-target="#aliases" data-toggle="tab">{{ Lang::get('player.profile.charts.aliases.title') }} <span class="badge bg-green">{{ $charts['aliases']->count() }}</span></a></li>
+                    @if(Entrust::can('player.view.ip'))
+                    <li><a href="javascript://" data-target="#ip-history" data-toggle="tab">{{ Lang::get('player.profile.charts.ip_history.title') }} <span class="badge bg-green">{{ $charts['iphistory']->count() }}</span></a></li>
+                    @endif
                 </ul>
 
                 <div class="tab-content">
@@ -309,6 +313,12 @@
                             @endunless
                         @endforeach
                     </div>
+
+                    <div class="tab-pane" id="command-overview"></div>
+                    <div class="tab-pane" id="aliases"></div>
+                    @if(Entrust::can('player.view.ip'))
+                    <div class="tab-pane" id="ip-history"></div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -382,5 +392,105 @@
         </div>
     </div>
 </section>
+@stop
 
+@section('scripts')
+<script type="text/javascript">
+    $(function() {
+        $('#command-overview').highcharts({
+            title: {
+                text: "{{ Lang::get('player.profile.charts.command_overview.chart.title') }}"
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.y})</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: "{{ Lang::get('player.profile.charts.command_overview.chart.tooltip') }}",
+                data: {{ $charts['overview']->toJson() }}
+            }]
+        });
+
+        $('#aliases').highcharts({
+            title: {
+                text: "{{ Lang::get('player.profile.charts.aliases.title') }}"
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.y})</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: "{{ Lang::get('player.profile.charts.aliases.chart.tooltip') }}",
+                data: {{ $charts['aliases']->toJson() }}
+            }]
+        });
+
+        @if(Entrust::can('player.view.ip'))
+        $('#ip-history').highcharts({
+            title: {
+                text: "{{ Lang::get('player.profile.charts.ip_history.title') }}"
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.y})</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: "{{ Lang::get('player.profile.charts.ip_history.chart.tooltip') }}",
+                data: {{ $charts['iphistory']->toJson() }}
+            }]
+        });
+        @endif
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+           var target = $(e.target).data("target");
+
+           switch(target) {
+              case "#command-overview":
+              case "#aliases":
+              case "#ip-history":
+                $(target).highcharts().reflow();
+                break;
+           }
+        });
+    });
+</script>
 @stop
