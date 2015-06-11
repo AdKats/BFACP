@@ -26,7 +26,7 @@ class SpecialPlayersController extends BaseController
 
     public function index()
     {
-        $players = Special::all();
+        $players = Special::with('player', 'game', 'server')->get();
 
         $groups = Cache::remember('admin.adkats.special.groups', 60 * 24, function () {
             try {

@@ -1,5 +1,7 @@
 <?php
 
+use BFACP\Account\Role;
+
 Breadcrumbs::register('home', function ($b) {
     $b->push(Lang::get('navigation.main.items.dashboard.title'), route('home'), [
         'icon' => HTML::faicon(Lang::get('navigation.main.items.dashboard.icon.fa'))
@@ -99,4 +101,20 @@ Breadcrumbs::register('admin.site.users.index', function ($b) {
 Breadcrumbs::register('admin.site.users.edit', function ($b, $id) {
     $b->parent('admin.site.users.index');
     $b->push(Lang::get('navigation.admin.site.items.users.items.edit.title', ['id' => $id]));
+});
+
+/*==================================
+=            Site Roles            =
+==================================*/
+
+Breadcrumbs::register('admin.site.roles.index', function ($b) {
+    $b->parent('admin.site');
+    $b->push(Lang::get('navigation.admin.site.items.roles.title'), route('admin.site.roles.index'), [
+        'icon' => HTML::faicon(Lang::get('navigation.admin.site.items.roles.icon.fa'))
+    ]);
+});
+
+Breadcrumbs::register('admin.site.roles.edit', function ($b, $id) {
+    $b->parent('admin.site.roles.index');
+    $b->push(Lang::get('navigation.admin.site.items.roles.items.edit.title', ['name' => Role::find($id)->name]));
 });

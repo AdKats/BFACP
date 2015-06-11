@@ -171,6 +171,18 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
                 ],
                 'only'  => ['index', 'edit', 'destroy', 'update']
             ]);
+
+            Route::resource('roles', 'RolesController', [
+                'names' => [
+                    'index'   => 'admin.site.roles.index',
+                    'edit'    => 'admin.site.roles.edit',
+                    'destroy' => 'admin.site.roles.destroy',
+                    'update'  => 'admin.site.roles.update',
+                    'create'  => 'admin.site.roles.create',
+                    'store'   => 'admin.site.roles.store'
+                ],
+                'only'  => ['index', 'edit', 'destroy', 'update', 'create', 'store']
+            ]);
         });
 
         Route::get('updater', ['as' => 'admin.updater.index', 'uses' => 'UpdaterController@index']);
@@ -204,6 +216,12 @@ Entrust::routeNeedsPermission('admin/adkats/special_players/*', 'admin.adkats.sp
 ==================================*/
 Entrust::routeNeedsPermission('admin/site/users', 'admin.site.users');
 Entrust::routeNeedsPermission('admin/site/users/*', 'admin.site.users');
+
+/*==================================
+=            Site Roles            =
+==================================*/
+Entrust::routeNeedsPermission('admin/site/roles', 'admin.site.roles');
+Entrust::routeNeedsPermission('admin/site/roles/*', 'admin.site.roles');
 
 /*================================================
 =            Require the Menu Builder            =

@@ -3,6 +3,7 @@
 use BFACP\Elegant;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 
 class Special extends Elegant
@@ -48,7 +49,7 @@ class Special extends Elegant
      * Models to be loaded automatically
      * @var array
      */
-    protected $with = ['player', 'game', 'server'];
+    protected $with = [];
 
     /**
      * @return \Illuminate\Database\Eloquent\Model
@@ -87,12 +88,13 @@ class Special extends Elegant
     public function getGroupAttribute()
     {
         $groups = Cache::remember('admin.adkats.special.groups', 60 * 24, function () {
+            $guzzle = App::make('GuzzleHttp\Client');
             try {
-                $request = $this->guzzle->get('https://raw.githubusercontent.com/AdKats/AdKats/master/adkatsspecialgroups.json');
+                $request = $guzzle->get('https://raw.githubusercontent.com/AdKats/AdKats/master/adkatsspecialgroups.json');
                 $response = $request->json();
                 $data = $response['SpecialGroups'];
             } catch (RequestException $e) {
-                $request = $this->guzzle->get('http://api.gamerethos.net/adkats/fetch/specialgroups');
+                $request = $guzzle->get('http://api.gamerethos.net/adkats/fetch/specialgroups');
                 $response = $request->json();
                 $data = $response['SpecialGroups'];
             }

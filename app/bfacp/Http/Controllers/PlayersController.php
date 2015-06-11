@@ -19,6 +19,9 @@ class PlayersController extends BaseController
         $this->repository = $repository;
     }
 
+    /**
+     * Shows player listing
+     */
     public function listing()
     {
         $page_title = Input::has('player') ? 'Player Search' : 'Player Listing';
@@ -26,6 +29,11 @@ class PlayersController extends BaseController
         return View::make('player.listing', compact('page_title'));
     }
 
+    /**
+     * Shows the player profile
+     * @param  integer $id
+     * @param  string $name
+     */
     public function profile($id, $name = '')
     {
         // Cache key
@@ -41,7 +49,8 @@ class PlayersController extends BaseController
                 'reputation',
                 'infractionsGlobal',
                 'infractionsServer.server',
-                'stats.server'
+                'stats.server',
+                'specialGroups'
             ], true)->getPlayerById($id)->toJson();
 
             return json_decode($json);

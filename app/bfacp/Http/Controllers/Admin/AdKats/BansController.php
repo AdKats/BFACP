@@ -147,7 +147,16 @@ class BansController extends BaseController
                     // Change the server id for the ban record
                     $oldRecord->server_id = $ban_server;
 
-                } else {
+                }
+
+                // If the ban duration is zero, the ban type still set to perm, and the record message didn't change, then only update the command numeric
+                // field on the old record to be the correct duration and prevent creating a new record for simple changes.
+                else if ($oldRecord->command_numeric == 0 && $ban_type == 8 && $ban_message == $oldRecord->record_message) {
+                    $oldRecord->command_numeric = $ban_duration;
+                }
+
+                // Create a new record and update the old record for the ban if the other conditions were not met.
+                else {
 
                     // Only modify the old record if the command action is a temp or perma ban.
                     if (in_array($oldRecord->command_action, [7, 8])) {

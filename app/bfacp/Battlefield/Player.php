@@ -140,6 +140,14 @@ class Player extends Elegant
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function specialGroups()
+    {
+        return $this->hasMany('BFACP\AdKats\Special', 'player_id');
+    }
+
+    /**
      * Does the player have a battlelog persona id linked
      * @return boolean
      */

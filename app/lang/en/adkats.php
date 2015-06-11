@@ -2,7 +2,7 @@
 
 return [
 
-    'bans' => [
+    'bans'            => [
         'listing' => [
             'table' => [
                 'col1' => 'ID',
@@ -17,47 +17,60 @@ return [
             ]
         ],
 
-        'edit' => [
-            'fields' => [
-                'field1' => 'Player',
-                'field2' => 'Admin',
-                'field3' => 'Notes',
-                'field4' => 'Reason',
-                'field5' => 'Server',
-                'field6' => 'Date &amp; Time',
-                'field7' => 'Status',
-                'field8' => 'Ban Type',
-                'field9' => 'Enforce by GUID',
+        'edit'    => [
+            'fields'  => [
+                'field1'  => 'Player',
+                'field2'  => 'Admin',
+                'field3'  => 'Notes',
+                'field4'  => 'Reason',
+                'field5'  => 'Server',
+                'field6'  => 'Date &amp; Time',
+                'field7'  => 'Status',
+                'field8'  => 'Ban Type',
+                'field9'  => 'Enforce by GUID',
                 'field10' => 'Enforce by Name',
                 'field11' => 'Enforce by IP'
             ],
 
             'buttons' => [
-                'submit' => [
+                'submit'  => [
                     'text1' => 'Save Changes',
                     'text2' => 'Please wait...',
                     'text3' => 'Unban'
                 ],
-                'cancel' => 'Cancel',
+                'cancel'  => 'Cancel',
                 'profile' => 'Return to Player Profile'
             ],
 
-            'unban' => [
+            'unban'   => [
                 'request_failed' => 'Request failed. Please try again later.',
-                'prompt' => 'Enter unban reason'
+                'prompt'         => 'Enter unban reason'
             ]
         ]
     ],
 
-    'users' => [
-        'no_soldiers' => 'No Soldiers Assigned.',
-        'no_users' => 'No users found.',
-        'soldiers' => 'Soldiers',
+    'special_players' => [
         'listing' => [
+            'table' => [
+                'col1' => 'ID',
+                'col2' => 'Game',
+                'col3' => 'Player',
+                'col4' => 'Group',
+                'col5' => 'Created',
+                'col6' => 'Expires'
+            ]
+        ]
+    ],
+
+    'users'           => [
+        'no_soldiers' => 'No Soldiers Assigned.',
+        'no_users'    => 'No users found.',
+        'soldiers'    => 'Soldiers',
+        'listing'     => [
             'buttons' => [
                 'create' => 'Add User'
             ],
-            'table' => [
+            'table'   => [
                 'col1' => 'User',
                 'col2' => 'Email',
                 'col3' => 'Role',
@@ -66,40 +79,40 @@ return [
                 'col6' => 'Notes'
             ]
         ],
-        'edit' => [
+        'edit'        => [
             'details' => 'Details',
             'buttons' => [
-                'save' => 'Save Changes',
+                'save'   => 'Save Changes',
                 'cancel' => 'Cancel',
                 'delete' => 'Delete User'
             ],
-            'inputs' => [
-                'username' => [
+            'inputs'  => [
+                'username'   => [
                     'label' => 'Username'
                 ],
-                'email' => [
+                'email'      => [
                     'label' => 'Email'
                 ],
-                'role' => [
+                'role'       => [
                     'label' => 'Role'
                 ],
                 'expiration' => [
                     'label' => 'Expiration',
-                    'help' => 'Leave date blank to set default expire date.'
+                    'help'  => 'Leave date blank to set default expire date.'
                 ],
-                'notes' => [
+                'notes'      => [
                     'label' => 'Notes'
                 ],
-                'soldiers' => [
+                'soldiers'   => [
                     'label' => 'Player IDs',
-                    'help' => 'Seprate IDs by a comma to add more players. Remove IDs to delete them from the user.'
+                    'help'  => 'Seprate IDs by a comma to add more players. Remove IDs to delete them from the user.'
                 ],
-                'soldier' => [
+                'soldier'    => [
                     'label' => 'Player Name',
-                    'help' => 'To have the system add the player, type in the player name. This will add any player with the name provided.'
+                    'help'  => 'To have the system add the player, type in the player name. This will add any player with the name provided.'
                 ]
             ],
-            'table' => [
+            'table'   => [
                 'col1' => 'ID',
                 'col2' => 'Game',
                 'col3' => 'Name'

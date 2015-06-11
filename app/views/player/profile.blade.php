@@ -14,7 +14,6 @@
 
                 <div class="box-body">
                     <div class="form-horizontal">
-
                         <div class="form-group">
                             <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.id') }}</label>
                             <div class="col-sm-9">
@@ -119,7 +118,6 @@
                                 </p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -479,6 +477,8 @@
             }]
         });
         @endif
+
+
 
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
            var target = $(e.target).data("target");

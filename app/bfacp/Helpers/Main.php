@@ -743,7 +743,6 @@ class Main extends BaseHelper
 
                 // On TODO List
             } else {
-
                 $soldier = head(array_flatten($soldiers));
                 return $soldier->player;
             }

@@ -50,6 +50,22 @@ return [
                             'title' => 'Editing User #:id'
                         ]
                     ]
+                ],
+
+                'roles' => [
+                    'title' => 'Roles',
+                    'icon'  => [
+                        'fa'  => 'fa-list-ol',
+                        'ion' => null
+                    ],
+                    'items' => [
+                        'edit'   => [
+                            'title' => 'Editing :name Role'
+                        ],
+                        'create' => [
+                            'title' => 'Create New Role'
+                        ]
+                    ]
                 ]
             ]
         ],

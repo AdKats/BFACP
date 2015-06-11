@@ -8,12 +8,12 @@
                 <div class="table-responsive">
                     <table class="table table-condensed table-striped">
                         <thead>
-                            <th>ID</th>
-                            <th>Game</th>
-                            <th>Player</th>
-                            <th>Group</th>
-                            <th>Created</th>
-                            <th>Expires</th>
+                            <th width="50px">{{ Lang::get('adkats.special_players.listing.table.col1') }}</th>
+                            <th width="50px">{{ Lang::get('adkats.special_players.listing.table.col2') }}</th>
+                            <th width="250px">{{ Lang::get('adkats.special_players.listing.table.col3') }}</th>
+                            <th width="500px">{{ Lang::get('adkats.special_players.listing.table.col4') }}</th>
+                            <th>{{ Lang::get('adkats.special_players.listing.table.col5') }}</th>
+                            <th>{{ Lang::get('adkats.special_players.listing.table.col6') }}</th>
                         </thead>
 
                         <tbody>

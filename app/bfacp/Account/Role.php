@@ -69,4 +69,12 @@ class Role extends EntrustRole
     {
         return $this->belongsToMany('BFACP\Account\Permission', Config::get('entrust::permission_role_table'));
     }
+
+    /**
+     * @return Illuminate\Database\Eloquent\Model
+     */
+    public function users()
+    {
+        return $this->belongsToMany('BFACP\Account\User', Config::get('entrust::assigned_roles_table'));
+    }
 }

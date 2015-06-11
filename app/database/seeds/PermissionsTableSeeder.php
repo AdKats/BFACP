@@ -149,6 +149,12 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at'   => $now
             ],
             [
+                'name'         => 'admin.site.roles',
+                'display_name' => 'Manage Site Roles',
+                'created_at'   => $now,
+                'updated_at'   => $now
+            ],
+            [
                 'name'         => 'admin.site.settings.server',
                 'display_name' => 'Manage Server Settings',
                 'created_at'   => $now,
@@ -169,6 +175,18 @@ class PermissionsTableSeeder extends Seeder
             [
                 'name'         => 'admin.site.users.notify',
                 'display_name' => 'Receive emails on new user registration',
+                'created_at'   => $now,
+                'updated_at'   => $now
+            ],
+            [
+                'name'         => 'admin.player.special.add',
+                'display_name' => 'Add player to the special players table',
+                'created_at'   => $now,
+                'updated_at'   => $now
+            ],
+            [
+                'name'         => 'admin.player.special.remove',
+                'display_name' => 'Remove player from the special players table',
                 'created_at'   => $now,
                 'updated_at'   => $now
             ],
