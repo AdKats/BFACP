@@ -129,6 +129,15 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::group(['prefix' => 'adkats', 'namespace' => 'AdKats'], function () {
 
+            // AdKats Settings
+            Route::resource('settings', 'SettingsController', [
+                'names' => [
+                    'index' => 'admin.adkats.settings.index',
+                    'edit'  => 'admin.adkats.settings.edit'
+                ],
+                'only'  => ['index', 'edit']
+            ]);
+
             // AdKats Bans
             Route::resource('bans', 'BansController', [
                 'names' => [
@@ -210,6 +219,12 @@ Entrust::routeNeedsPermission('admin/adkats/users/*', 'admin.adkats.user.edit');
 ============================================*/
 Entrust::routeNeedsPermission('admin/adkats/special_players', 'admin.adkats.special.view');
 Entrust::routeNeedsPermission('admin/adkats/special_players/*', 'admin.adkats.special.edit');
+
+/*=======================================
+=            AdKats Settings            =
+=======================================*/
+Entrust::routeNeedsPermission('admin/adkats/settings', 'admin.adkats.settings.edit');
+Entrust::routeNeedsPermission('admin/adkats/settings/*', 'admin.adkats.settings.edit');
 
 /*==================================
 =            Site Users            =
