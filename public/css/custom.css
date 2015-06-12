@@ -91,3 +91,47 @@ table.scoreboard > tbody > tr.ng-leave {
 .expands:hover {
     width: auto;
 }
+
+.wysiwyg-color-black {
+    color: black !important;
+}
+
+.wysiwyg-color-silver {
+    color: silver !important;
+}
+
+.wysiwyg-color-gray {
+    color: gray !important;
+}
+
+.wysiwyg-color-maroon {
+    color: maroon !important;
+}
+
+.wysiwyg-color-red {
+    color: red !important;
+}
+
+.wysiwyg-color-purple {
+    color: purple !important;
+}
+
+.wysiwyg-color-green {
+    color: green !important;
+}
+
+.wysiwyg-color-olive {
+    color: olive !important;
+}
+
+.wysiwyg-color-navy {
+    color: navy !important;
+}
+
+.wysiwyg-color-blue {
+    color: blue !important;
+}
+
+.wysiwyg-color-orange {
+    color: orange !important;
+}
