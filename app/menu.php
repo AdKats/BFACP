@@ -73,6 +73,11 @@ Menu::make('MainNav', function ($menu) use ($adminPermsList) {
                 $site->add(Lang::get('navigation.admin.site.items.roles.title'), ['route' => 'admin.site.roles.index'])
                 ->prepend(HTML::faicon(Lang::get('navigation.admin.site.items.roles.icon.fa'), true));
             }
+
+            if (Auth::user()->ability(null, 'admin.site.settings.site')) {
+                $site->add(Lang::get('navigation.admin.site.items.settings.title'), ['route' => 'admin.site.settings.index'])
+                ->prepend(HTML::faicon(Lang::get('navigation.admin.site.items.settings.icon.fa'), true));
+            }
         }
     }
 });

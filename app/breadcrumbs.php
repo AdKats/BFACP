@@ -118,3 +118,14 @@ Breadcrumbs::register('admin.site.roles.edit', function ($b, $id) {
     $b->parent('admin.site.roles.index');
     $b->push(Lang::get('navigation.admin.site.items.roles.items.edit.title', ['name' => Role::find($id)->name]));
 });
+
+/*=====================================
+=            Site Settings            =
+=====================================*/
+
+Breadcrumbs::register('admin.site.settings.index', function ($b) {
+    $b->parent('admin.site');
+    $b->push(Lang::get('navigation.admin.site.items.settings.title'), route('admin.site.settings.index'), [
+        'icon' => HTML::faicon(Lang::get('navigation.admin.site.items.settings.icon.fa'))
+    ]);
+});

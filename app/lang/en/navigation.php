@@ -39,7 +39,7 @@ return [
         'site'   => [
             'title' => 'Site Management',
             'items' => [
-                'users' => [
+                'users'    => [
                     'title' => 'Users',
                     'icon'  => [
                         'fa'  => 'fa-users',
@@ -52,7 +52,7 @@ return [
                     ]
                 ],
 
-                'roles' => [
+                'roles'    => [
                     'title' => 'Roles',
                     'icon'  => [
                         'fa'  => 'fa-list-ol',
@@ -66,6 +66,24 @@ return [
                             'title' => 'Create New Role'
                         ]
                     ]
+                ],
+
+                'settings' => [
+                    'title' => 'Settings',
+                    'icon'  => [
+                        'fa'  => 'fa-cogs',
+                        'ion' => null
+                    ],
+                    'items' => []
+                ],
+
+                'servers'  => [
+                    'title' => 'Servers',
+                    'icon'  => [
+                        'fa'  => 'fa-server',
+                        'ion' => null
+                    ],
+                    'items' => []
                 ]
             ]
         ],
