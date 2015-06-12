@@ -41,5 +41,5 @@ return [
     /**
      * Set your app key here
      */
-    'APP_KEY'        => ''
+    'APP_KEY'        => 'YourSecretKey!!!'
 ];
