@@ -2,6 +2,7 @@
 
 use BFACP\Battlefield\Player as Player;
 use BFACP\Battlefield\Server as Server;
+use BFACP\Exceptions\MetabansException;
 use BFACP\Http\Controllers\BaseController;
 use Carbon\Carbon as Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
