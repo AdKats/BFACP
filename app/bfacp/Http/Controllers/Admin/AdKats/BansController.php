@@ -310,7 +310,7 @@ class BansController extends BaseController
             $admin = MainHelper::getAdminPlayer($bfacp->user, $ban->player->game->GameID);
 
             // Only modify the old record if the command action is a temp or perma ban.
-            if (in_array($oldRecord->command_action, [7, 8])) {
+            if (in_array((int) $oldRecord->command_action, [7, 8])) {
                 // 72 => Previous Temp Ban
                 // 73 => Previous Perm Ban
                 $oldRecord->command_action = $oldRecord->command_action == 8 ? 73 : 72;
