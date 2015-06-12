@@ -1,12 +1,12 @@
 SELECT
     *
 FROM
-    tbl_extendedroundstats a
+    tbl_extendedroundstats
 WHERE
-    a.server_id = ?
-        AND round_id = (SELECT
-            MAX(b.round_id)
-        FROM
-            tbl_extendedroundstats b
-        WHERE
-            b.server_id = a.server_id)
+    server_id = ?
+HAVING round_Id = (SELECT
+        MAX(round_id)
+    FROM
+        tbl_extendedroundstats
+    WHERE
+        server_id = ?)

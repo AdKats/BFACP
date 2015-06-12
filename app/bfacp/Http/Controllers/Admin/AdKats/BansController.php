@@ -1,19 +1,18 @@
 <?php namespace BFACP\Http\Controllers\Admin\AdKats;
 
-use BFACP\AdKats\Record;
-use BFACP\Battlefield\Server;
-use BFACP\Exceptions\MetabansException;
+use BFACP\Battlefield\Player as Player;
+use BFACP\Battlefield\Server as Server;
 use BFACP\Http\Controllers\BaseController;
-use BFACP\Repositories\BanRepository;
-use Carbon\Carbon;
+use Carbon\Carbon as Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App as App;
 use Illuminate\Support\Facades\Auth as Auth;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Cache as Cache;
+use Illuminate\Support\Facades\Event as Event;
+use Illuminate\Support\Facades\Input as Input;
+use Illuminate\Support\Facades\Lang as Lang;
+use Illuminate\Support\Facades\Redirect as Redirect;
+use Illuminate\Support\Facades\View as View;
 use MainHelper;
 
 class BansController extends BaseController
@@ -40,7 +39,7 @@ class BansController extends BaseController
     {
         parent::__construct();
 
-        $this->repository = new BanRepository();
+        $this->repository = \App::make('BFACP\Repositories\BanRepository');
 
         try {
             $this->metabans = \App::make('BFACP\Libraries\Metabans');
@@ -75,6 +74,68 @@ class BansController extends BaseController
             return View::make('admin.adkats.bans.edit', compact('ban', 'servers'))->with('page_title', Lang::get('navigation.admin.adkats.items.banlist.items.edit.title', ['id' => $id]));
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.adkats.bans.index')->withErrors([sprintf('Ban #%u doesn\'t exist.', $id)]);
+        }
+    }
+
+    public function create()
+    {
+        try {
+
+            $player = Player::findOrFail(Input::get('player_id'));
+
+            if (!is_null($player->ban)) {
+                return Redirect::route('admin.adkats.bans.edit', [$player->ban->ban_id]);
+            }
+
+            $servers = Server::where('GameID', $player->game->GameID)->active()->lists('ServerName', 'ServerID');
+            $bfacp   = \App::make('bfadmincp');
+            $admin   = MainHelper::getAdminPlayer($bfacp->user, $player->game->GameID);
+
+            return View::make('admin.adkats.bans.create', compact('player', 'servers', 'admin'))->with('page_title', 'Create New Ban');
+        } catch (ModelNotFoundException $e) {
+            return Redirect::route('admin.adkats.bans.index')->withErrors([sprintf('Player #%u doesn\'t exist.', Input::get('player_id'))]);
+        }
+    }
+
+    public function store()
+    {
+        try {
+            $player = Player::findOrfail(Input::get('player_id'));
+
+            if (!is_null($player->ban)) {
+                return Redirect::route('admin.adkats.bans.edit', [$player->ban->ban_id]);
+            }
+
+            $bfacp = \App::make('bfadmincp');
+            $admin = MainHelper::getAdminPlayer($bfacp->user, $player->game->GameID);
+
+            // Save the POST data
+            $ban_notes        = trim(Input::get('notes', null));
+            $ban_message      = trim(Input::get('message', null));
+            $ban_server       = Input::get('server', null);
+            $ban_start        = Input::get('banStartDateTime', null);
+            $ban_end          = Input::get('banEndDateTime', null);
+            $ban_type         = Input::get('type', null);
+            $ban_enforce_guid = (bool) Input::get('enforce_guid', false) ? 'Y' : 'N';
+            $ban_enforce_name = (bool) Input::get('enforce_name', false) ? 'Y' : 'N';
+            $ban_enforce_ip   = (bool) Input::get('enforce_ip', false) ? 'Y' : 'N';
+
+            $admin_id   = is_null($admin) ? null : $admin->PlayerID;
+            $admin_name = is_null($admin) ? Auth::user()->username : $admin->SoldierName;
+
+            $input = compact(
+                'ban_notes', 'ban_message', 'ban_server', 'ban_start', 'ban_end',
+                'ban_type', 'ban_enforce_guid', 'ban_enforce_name', 'ban_enforce_ip',
+                'admin_id', 'admin_name'
+            );
+
+            $response = Event::fire('player.ban', [$input, $player])[0];
+
+            $this->messages[] = sprintf('Ban #%u has been created.', $response->ban_id);
+
+            return Redirect::route('admin.adkats.bans.edit', [$response->ban_id])->with('messages', $this->messages);
+        } catch (ModelNotFoundException $e) {
+            return Redirect::route('admin.adkats.bans.index')->withErrors([sprintf('Player #%u doesn\'t exist.', Input::get('player_id'))]);
         }
     }
 
@@ -143,10 +204,8 @@ class BansController extends BaseController
 
                 // If just the server changed do not create a new record just update the old one
                 if ($oldRecord->server_id != $ban_server && $ban_message == $oldRecord->record_message && $ban_duration == $oldRecord->command_numeric) {
-
                     // Change the server id for the ban record
                     $oldRecord->server_id = $ban_server;
-
                 }
 
                 // If the ban duration is zero, the ban type still set to perm, and the record message didn't change, then only update the command numeric

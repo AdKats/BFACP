@@ -1,5 +1,25 @@
 <?php
 
+Route::get('test', function () {
+    Auth::loginUsingId(2);
+
+    $input = [
+        'ban_type'    => 8,
+        'ban_server'  => 13,
+        'ban_message' => 'Event Fire Testing 2'
+    ];
+
+    $player = BFACP\Battlefield\Player::find(185477);
+
+    $response = Event::fire('player.ban', [
+        $input,
+        $player,
+        $player->ban
+    ]);
+
+    return $response;
+});
+
 /**
  * Route Model Bindings
  */
@@ -144,9 +164,11 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
                     'index'   => 'admin.adkats.bans.index',
                     'edit'    => 'admin.adkats.bans.edit',
                     'update'  => 'admin.adkats.bans.update',
-                    'destroy' => 'admin.adkats.bans.destroy'
+                    'destroy' => 'admin.adkats.bans.destroy',
+                    'store'   => 'admin.adkats.bans.store',
+                    'create'  => 'admin.adkats.bans.create'
                 ],
-                'only'  => ['index', 'edit', 'update', 'destroy']
+                'only'  => ['index', 'edit', 'update', 'destroy', 'store', 'create']
             ]);
 
             // AdKats Users
@@ -206,6 +228,7 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
 =            AdKats Bans            =
 ===================================*/
 Entrust::routeNeedsPermission('admin/adkats/bans', 'admin.adkats.bans.view');
+Entrust::routeNeedsPermission('admin/adkats/bans/create', 'admin.adkats.bans.create');
 Entrust::routeNeedsPermission('admin/adkats/bans/*', 'admin.adkats.bans.edit');
 
 /*====================================

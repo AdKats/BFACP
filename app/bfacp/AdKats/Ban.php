@@ -178,7 +178,9 @@ class Ban extends Elegant
      */
     public function getIsUnbannedAttribute()
     {
-        return $this->attributes['ban_status'] == 'Disabled' || $this->attributes['ban_status'] == 'Expired';
+        if (array_key_exists('ban_status', $this->attributes)) {
+            return $this->attributes['ban_status'] == 'Disabled' || $this->attributes['ban_status'] == 'Expired';
+        }
     }
 
     /**

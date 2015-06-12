@@ -181,9 +181,11 @@
                     <div class="table-responsive">
                         <table class="table table-condensed table-striped table-hover scoreboard">
                             <thead>
+                                <?php if($bfacp->isLoggedIn) : ?>
                                 <th>
                                     <input type="checkbox" ng-click="selectAll($event)" />
                                 </th>
+                                <?php endif; ?>
                                 <th ng-click="colSort('name')">
                                     <i ng-class="colSortClass('name')"></i>&nbsp;Name
                                 </th>
@@ -211,9 +213,11 @@
 
                             <tbody>
                                 <tr ng-repeat="(key, player) in team.players | filter: { name: search.scoreboard } | orderBy:sort.column:sort.desc track by player.name">
+                                    <?php if($bfacp->isLoggedIn) : ?>
                                     <td>
                                         <input type="checkbox" name="chkplayers" value="{{ player.name }}" ng-click="isSelectAll($event)" />
                                     </td>
+                                    <?php endif; ?>
                                     <td>
                                         <img ng-src="{{ player._player.rank_image }}" width="24px" tooltip="Rank {{ player.rank }}" class="hidden-xs hidden-sm">
                                         <img ng-src="{{ player._player.country_flag }}" width="24px" tooltip="{{ player._player.country_name }}" class="hidden-xs hidden-sm">
@@ -238,7 +242,7 @@
 
                             <tfoot>
                                 <tr>
-                                    <td colspan="2">
+                                    <td colspan="<?php echo !$bfacp->isLoggedIn ? 1 : 2; ?>">
                                         <span class="pull-right">Total</span>
                                     </td>
                                     <td ng-bind="sum(team.players, 'score') | number"></td>

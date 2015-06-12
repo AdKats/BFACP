@@ -242,6 +242,12 @@
                             <i class="fa fa-check"></i> {{ Lang::get('player.profile.bans.current.none') }}
                         </alert>
                         @endif
+
+                        @if(is_null($player->ban) && Auth::user()->ability(null, 'admin.adkats.bans.create'))
+                        {{ link_to_route('admin.adkats.bans.create', 'Create Ban', ['player_id' => $player->PlayerID], ['class' => 'btn btn-xs bg-green', 'target' => '_self']) }}
+                        @elseif(!is_null($player->ban) && Auth::user()->ability(null, 'admin.adkats.bans.edit'))
+                        {{ link_to_route('admin.adkats.bans.edit', 'Edit Ban', [$player->ban->ban_id], ['class' => 'btn btn-xs bg-green', 'target' => '_self']) }}
+                        @endif
                     </div>
 
                     <div class="tab-pane" id="ban-previous">

@@ -11,8 +11,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Cache;
 use MainHelper;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class ServersController extends BaseController
 {
@@ -148,7 +150,7 @@ class ServersController extends BaseController
 
         $data['roundId'] = null;
 
-        $results = DB::select($sql, [$id]);
+        $results = DB::select($sql, [$id, $id]);
 
         foreach ($results as $result) {
             if (is_null($data['roundId'])) {
@@ -201,11 +203,18 @@ class ServersController extends BaseController
                 'say',
                 'kill',
                 'move',
-                'kick'
+                'kick',
+                'punish'
             ];
+
+            $permissions = Cache::get('admin.perm.list');
 
             if(!Input::has('method') || !in_array(Input::get('method'), $allowedMethods)) {
                 throw new NotFoundHttpException;
+            }
+
+            if(!$this->isLoggedIn || !$this->user->ability(null, $permissions['scoreboard'])) {
+                throw new AccessDeniedHttpException;
             }
 
             $scoreboard = new LiveServerRepository(Server::findOrFail($id));
@@ -220,6 +229,8 @@ class ServersController extends BaseController
 
                 switch(Input::get('method')) {
                     case "yell":
+                        $this->hasPermission('admin.scoreboard.yell');
+
                         if(Input::get('type') == 'Player' && Input::has('players')) {
                             foreach($players as $player) {
                                 $scoreboard->adminYell(
@@ -242,6 +253,8 @@ class ServersController extends BaseController
                         break;
 
                     case "say":
+                        $this->hasPermission('admin.scoreboard.say');
+
                         if(Input::get('type') == 'Player' && Input::has('players')) {
                             foreach($players as $player) {
                                 $scoreboard->adminSay(
@@ -262,6 +275,8 @@ class ServersController extends BaseController
                         break;
 
                     case "kill":
+                        $this->hasPermission('admin.scoreboard.kill');
+
                         if(Input::has('players')) {
                             $unkilled = [];
 
@@ -286,6 +301,8 @@ class ServersController extends BaseController
                         break;
 
                     case "kick":
+                        $this->hasPermission('admin.scoreboard.kick');
+
                         if(Input::has('players')) {
                             $unkicked = [];
 
@@ -309,6 +326,8 @@ class ServersController extends BaseController
                         break;
 
                     case "move":
+                        $this->hasPermission('admin.scoreboard.teamswitch');
+
                         if(Input::has('players')) {
                             $unmoved = [];
 
@@ -341,6 +360,36 @@ class ServersController extends BaseController
                         }
                         break;
 
+                    case "punish":
+                        $this->hasPermission('admin.scoreboard.punish');
+
+                        if(Input::has('players')) {
+                            foreach($players as $player) {
+                                $scoreboard->adminPunish(
+                                    $player,
+                                    Input::get('message')
+                                );
+                            }
+                        } else {
+                            throw new RconException(400, 'No player selected.');
+                        }
+                        break;
+
+                    case "forgive":
+                        $this->hasPermission('admin.scoreboard.forgive');
+
+                        if(Input::has('players')) {
+                            foreach($players as $player) {
+                                $scoreboard->adminForgive(
+                                    $player,
+                                    Input::get('message')
+                                );
+                            }
+                        } else {
+                            throw new RconException(400, 'No player selected.');
+                        }
+                        break;
+
                     default:
                         throw new NotFoundHttpException;
                 }
@@ -360,5 +409,20 @@ class ServersController extends BaseController
         } catch (Exception $e) {
             throw $e;
         }
+    }
+
+    /**
+     * Quick function for checking permissions for the scoreboard admin.
+     * @param  string  $permission Name of the permission
+     * @param  string  $message    [description]
+     * @return boolean             [description]
+     */
+    private function hasPermission($permission, $message = 'You do have permission to issue this command')
+    {
+        if(!$this->user->ability(null, $permission)) {
+            throw new AccessDeniedHttpException($message);
+        }
+
+        return true;
     }
 }
