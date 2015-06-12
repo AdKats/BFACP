@@ -255,6 +255,7 @@ Entrust::routeNeedsPermission('admin/site/roles/*', 'admin.site.roles');
 =            Site Settings            =
 =====================================*/
 Entrust::routeNeedsPermission('admin/site/settings', 'admin.site.settings.site');
+Entrust::routeNeedsPermission('admin/updater', 'admin.site.settings.site');
 
 /*================================================
 =            Require the Menu Builder            =
