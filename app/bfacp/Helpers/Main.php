@@ -738,14 +738,8 @@ class Main extends BaseHelper
 
         // Check if we have a soldier.
         if (!empty($soldiers)) {
-            if (count($soldiers) > 1) {
-                // Found multiple players. We need to preform a levenshtein to find the closest match.
-
-                // On TODO List
-            } else {
-                $soldier = head(array_flatten($soldiers));
-                return $soldier->player;
-            }
+            $soldier = head(array_flatten($soldiers));
+            return $soldier->player;
         }
 
         // Return null if no match was able too be met.
@@ -815,5 +809,21 @@ class Main extends BaseHelper
         }
         $dash_str .= $password;
         return $dash_str;
+    }
+
+    /**
+     * Converts a string to a boolean
+     * @param  string $string
+     * @return boolean
+     */
+    public function stringToBool($string)
+    {
+        if ($string === 1 || $string === '1' || $string === 'true') {
+            return true;
+        } else if ($string === 0 || $string === '0' || $string === 'false') {
+            return false;
+        }
+
+        return;
     }
 }
