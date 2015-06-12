@@ -1,25 +1,5 @@
 <?php
 
-Route::get('test', function () {
-    Auth::loginUsingId(2);
-
-    $input = [
-        'ban_type'    => 8,
-        'ban_server'  => 13,
-        'ban_message' => 'Event Fire Testing 2'
-    ];
-
-    $player = BFACP\Battlefield\Player::find(185477);
-
-    $response = Event::fire('player.ban', [
-        $input,
-        $player,
-        $player->ban
-    ]);
-
-    return $response;
-});
-
 /**
  * Route Model Bindings
  */
