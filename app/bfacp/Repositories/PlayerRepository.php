@@ -145,10 +145,11 @@ class PlayerRepository extends BaseRepository
             return DB::table('tbl_playerdata')
             ->whereNotIn('CountryCode', ['', '--'])
             ->whereNotNull('CountryCode')
-            ->whereIn('StatsID', function ($query) {
-                $query->select('StatsID')->from('tbl_playerstats')->where('LastSeenOnServer', '>=', Carbon::now()->subDay());
+            ->whereIn('tbl_playerdata.PlayerID', function ($query) {
+                $query->select('tbl_server_player.PlayerID')->from('tbl_server_player')->whereIn('tbl_server_player.StatsID', function ($query) {
+                    $query->select('StatsID')->from('tbl_playerstats')->where('LastSeenOnServer', '>=', Carbon::now()->subDay());
+                });
             })
-            ->join('tbl_server_player', 'tbl_playerdata.PlayerID', '=', 'tbl_server_player.PlayerID')
             ->groupBy('CountryCode')
             ->select(DB::raw('UPPER(`CountryCode`) AS `CountryCode`, COUNT(`tbl_playerdata`.`PlayerID`) AS `total`'))
             ->lists('total', 'CountryCode');
