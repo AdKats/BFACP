@@ -24,7 +24,7 @@ The Battlefield Admin Control Panel (BFACP) is a web based admin tool designed t
 * Quick DB Stats overview
 * and more!
 
-Download the latest version from [here](https://github.com/Prophet731/BFAdminCP/releases/latest). Once downloaded unzip it to a temporary folder. Next open the `.env.php` file located in the root folder in your favorite text editor. Scroll down to the database settings section and fill in your database connection information.
+Download the latest version from [here](https://github.com/Prophet731/BFAdminCP/releases/latest). Once downloaded unzip it to a temporary folder on your computer. Next open the `.env.php` file located in the root folder in your favorite text editor. Scroll down to the database settings section and fill in your database connection information.
 
 ```PHP
     /**
@@ -45,7 +45,7 @@ Next we need to create a encryption key. This is **IMPORTANT**! The default key 
     'APP_KEY'        => 'YourSecretKey!!!'
 ```
 
-Once completed upload the entire application to your webserver. Once uploaded you will need to modify some file and folder permissions. Change the files and folders permissions under `app/storage` recursively to 0777. This application was designed to run on a subdomain and not from a folder from from TLD. Make sure to create a subdomain and if possable have domain point to the public folder that's located under the root folder.
+Once completed upload the entire application to your webserver. Once uploaded you will need to modify some file and folder permissions. Change the files and folders permissions under `app/storage` recursively to 0777. This application was designed to run on a subdomain and not from a folder from the TLD. Make sure to create a subdomain and if possible have domain point to the public folder that's located under the root folder.
 
 Now load up application in your web browser and it will begin the process of creating the tables. This process will take a few seconds to run on first load. When it completed you should see the dashboard.
 
