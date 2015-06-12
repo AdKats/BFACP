@@ -2,11 +2,27 @@
 
 @section('styles')
 {{ HTML::style('css/jvectormap/jquery-jvectormap-1.2.2.css') }}
+{{ HTML::style('css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}
 @stop
 
 @section('content')
-<div ng-controller="DashboardController">
+@if($bfacp->isLoggedIn && $bfacp->user->ability(null, 'admin.site.motd') && !is_null(Config::get('bfacp.site.motd')))
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-info">
+            <div class="box-header">
+                <h3 class="box-title">Message of the Day</h3>
+            </div>
 
+            <div class="box-body">
+                {{ Config::get('bfacp.site.motd') }}
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
+<div ng-controller="DashboardController">
     <div class="row">
         <div class="col-lg-3 col-sm-6 col-xs-12">
             <div class="info-box">
