@@ -1,18 +1,30 @@
 <?php
 
 return [
+    'version'  => 'Version',
 
-    'no_ban'         => 'Kein Bann vorhanden',
-    'no_infractions' => 'Keine Verstöße vorhanden',
-    'ban_disabled'   => 'Bann deaktiviert',
-    'ban_permanent'  => 'Permanent gebannt',
-    'ban_expired'    => 'Bann abgelaufen',
-    'ban_expire_in'  => 'Läuft ab',
+    'login'    => 'Login',
+    'logout'   => 'Logout',
 
-    'login' => 'Login',
-    'logout' => 'Logout',
+    'metabans' => [
+        'title'       => 'Metabans',
+        'assessments' => 'Beurteilungen',
+        'feed'        => 'Feed',
+        'columns'     => [
+            'col1' => 'Spieler',
+            'col2' => 'Spiel',
+            'col3' => 'Typ',
+            'col4' => 'Ablauf'
+        ],
+        'type'        => [
+            'none'  => 'Keine Bewertung',
+            'watch' => 'Unter Beobachtung',
+            'white' => 'Geschützt',
+            'black' => 'Gebannt'
+        ]
+    ],
 
-    'nav' => [
+    'nav'      => [
         'extras' => [
             'psearch' => [
                 'placeholder' => 'Suche nach dem Spieler...'
