@@ -37,6 +37,7 @@
                                     <ul class="list-inline">
                                         @forelse($user->soldiers as $soldier)
                                         <li>
+                                            @if(!is_null($soldier->player->game))
                                             {{ link_to_route('player.show', $soldier->player->game->Name, [
                                                 $soldier->player->PlayerID,
                                                 $soldier->player->SoldierName
@@ -46,6 +47,9 @@
                                                 'style' => 'color: white !important',
                                                 'tooltip' => $soldier->player->SoldierName
                                             ]) }}
+                                            @else
+                                            {{ $soldier->player->SoldierName }}
+                                            @endif
                                         </li>
                                         @empty
                                         <label class="label bg-red">{{ Lang::get('adkats.users.no_soldiers') }}</label>
