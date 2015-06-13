@@ -27,6 +27,8 @@ return [
      */
     'APP_ENV'        => 'production',
     'APP_DEBUG'      => $debug,
+
+    // Supported: "file", "database", "apc", "memcached", "redis", "array"
     'SESSION_DRIVER' => 'database',
     'CACHE_DRIVER'   => 'file',
 
