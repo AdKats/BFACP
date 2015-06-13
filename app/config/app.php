@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -11,9 +11,9 @@ return array(
     | stack traces will be shown on every error that occurs within your
     | application. If disabled, a simple generic error page is shown.
     |
-    */
+     */
 
-    'debug' => getenv('APP_DEBUG') ?: FALSE,
+    'debug'           => getenv('APP_DEBUG') ?: false,
 
     /*
     |--------------------------------------------------------------------------
@@ -24,9 +24,9 @@ return array(
     | the Artisan command line tool. You should set this to the root of
     | your application so that it is used when running Artisan tasks.
     |
-    */
+     */
 
-    'url' => 'http://localhost',
+    'url'             => 'http://localhost',
 
     /*
     |--------------------------------------------------------------------------
@@ -37,9 +37,9 @@ return array(
     | will be used by the PHP date and date-time functions. We have gone
     | ahead and set this to a sensible default for you out of the box.
     |
-    */
+     */
 
-    'timezone' => 'UTC',
+    'timezone'        => 'UTC',
 
     /*
     |--------------------------------------------------------------------------
@@ -50,9 +50,9 @@ return array(
     | by the translation service provider. You are free to set this value
     | to any of the locales which will be supported by the application.
     |
-    */
+     */
 
-    'locale' => 'en',
+    'locale'          => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -63,7 +63,7 @@ return array(
     | is not available. You may change the value to correspond to any of
     | the language folders that are provided through your application.
     |
-    */
+     */
 
     'fallback_locale' => 'en',
 
@@ -76,11 +76,11 @@ return array(
     | to a random, 32 character string, otherwise these encrypted strings
     | will not be safe. Please do this before deploying an application!
     |
-    */
+     */
 
-    'key' => getenv('APP_KEY') ?: 'YourKeyHere!!!',
+    'key'             => getenv('APP_KEY') ?: 'YourSecretKey!!!',
 
-    'cipher' => MCRYPT_RIJNDAEL_256,
+    'cipher'          => MCRYPT_RIJNDAEL_256,
 
     /*
     |--------------------------------------------------------------------------
@@ -91,9 +91,9 @@ return array(
     | request to your application. Feel free to add your own services to
     | this array to grant expanded functionality to your applications.
     |
-    */
+     */
 
-    'providers' => array(
+    'providers'       => [
 
         'Former\FormerServiceProvider',
         'Illuminate\Auth\AuthServiceProvider',
@@ -128,8 +128,8 @@ return array(
         'Zizaco\Entrust\EntrustServiceProvider',
         'Dingo\Api\Provider\ApiServiceProvider',
         'BFACP\Providers\HelpersProvider',
-        'DaveJamesMiller\Breadcrumbs\ServiceProvider',
-    ),
+        'DaveJamesMiller\Breadcrumbs\ServiceProvider'
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -140,9 +140,9 @@ return array(
     | providers which are not needed for each request, as well to keep a
     | list of all of the services. Here, you may set its storage spot.
     |
-    */
+     */
 
-    'manifest' => storage_path().'/meta',
+    'manifest'        => storage_path() . '/meta',
 
     /*
     |--------------------------------------------------------------------------
@@ -153,9 +153,9 @@ return array(
     | is started. However, feel free to register as many as you wish as
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
-    */
+     */
 
-    'aliases' => array(
+    'aliases'         => [
 
         'API'               => 'Dingo\Api\Facade\API',
         'App'               => 'Illuminate\Support\Facades\App',
@@ -202,8 +202,8 @@ return array(
         'View'              => 'Illuminate\Support\Facades\View',
         'version'           => 'vierbergenlars\SemVer\version',
         'Menu'              => 'Lavary\Menu\Facade',
-        'Breadcrumbs'       => 'DaveJamesMiller\Breadcrumbs\Facade',
+        'Breadcrumbs'       => 'DaveJamesMiller\Breadcrumbs\Facade'
 
-    ),
+    ]
 
-);
+];

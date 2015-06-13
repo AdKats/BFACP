@@ -30,9 +30,6 @@
         "vierbergenlars/php-semver": "3.0.0",
         "davejamesmiller/laravel-breadcrumbs": "2.*"
     },
-    "require-dev": {
-        "way/generators": "~2.0"
-    },
     "autoload": {
         "classmap": [
             "app/commands",

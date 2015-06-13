@@ -62,10 +62,7 @@ require $framework . '/Illuminate/Foundation/start.php';
 if (!$app->runningInConsole()) {
 
     if (file_exists($app['path.base'] . '/app/bfacp/setup.php')) {
-        if (!Schema::hasTable(Config::get('database.migrations'))) {
-            require $app['path.base'] . '/app/bfacp/setup.php';
-        }
-
+        require $app['path.base'] . '/app/bfacp/setup.php';
         die(sprintf('Please delete installer located at %s', $app['path.base'] . '/app/bfacp/setup.php'));
     }
 
