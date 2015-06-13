@@ -5,7 +5,7 @@ if (!is_writable(storage_path())) {
     die(sprintf('All folders under %s must be set to 0777.', storage_path()));
 }
 
-if (version_compare(phpversion(), '5.4.0', '<') || !extension_loaded('mcrypt') || !extension_loaded('pdo')) {
+if (version_compare(phpversion(), '5.5.0', '<') || !extension_loaded('mcrypt') || !extension_loaded('pdo')) {
     die(View::make('system.requirements'));
 }
 
