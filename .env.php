@@ -27,7 +27,7 @@ return [
      */
     'APP_ENV'        => 'production',
     'APP_DEBUG'      => $debug,
-    'SESSION_DRIVER' => 'file',
+    'SESSION_DRIVER' => 'database',
     'CACHE_DRIVER'   => 'file',
 
     /**

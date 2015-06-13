@@ -112,11 +112,7 @@
                     window.location.href = window.location.href.split("?")[0];
                 }
             } else {
-                if($('#personal').is(':checked')) {
-                    window.location.href = window.location.href.split("?")[0] + '?player=' + val;
-                } else {
-                    window.location.href = window.location.href + '?player=' + val;
-                }
+                window.location.href = window.location.href.split("?")[0] + '?player=' + val;
             }
         }
     });

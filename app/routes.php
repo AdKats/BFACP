@@ -269,4 +269,6 @@ Entrust::routeNeedsPermission('admin/site/servers/*', 'admin.site.settings.serve
 =            Require the Menu Builder            =
 ================================================*/
 
-require $app['path.base'] . '/app/menu.php';
+if (!file_exists($app['path.base'] . '/app/bfacp/setup.php')) {
+    require $app['path.base'] . '/app/menu.php';
+}

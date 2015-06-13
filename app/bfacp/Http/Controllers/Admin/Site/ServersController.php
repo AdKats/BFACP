@@ -66,6 +66,9 @@ class ServersController extends BaseController
 
             $setting->save();
 
+            $server->ConnectionState = Input::get('status', 'off');
+            $server->save();
+
             return Redirect::route('admin.site.servers.index')->with('messages', [sprintf('Successfully Updated %s', $server->ServerName)]);
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.site.servers.index')->withErrors(['Server doesn\'t exist.']);

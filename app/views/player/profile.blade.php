@@ -6,7 +6,7 @@
     <div class="row">
 
         <!-- Player Basic -->
-        <div class="col-xs-12 col-lg-6">
+        <div class="col-xs-12 col-lg-5">
             <div class="box box-primary">
                 <div class="box-header">
                     <div class="box-title">{{ Lang::get('player.profile.details.title') }}</div>
@@ -124,7 +124,7 @@
         </div>
         <!-- END Player Basic -->
 
-        <div class="col-xs-12 col-lg-6">
+        <div class="col-xs-12 col-lg-7">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li><a href="javascript://" data-target="#infractions" data-toggle="tab">{{ Lang::get('player.profile.infractions.title') }} <span class="badge bg-green">{{ $player->infractions_global->total_points or 0 }}</span></a></li>

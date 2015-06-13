@@ -19,6 +19,14 @@
                     ->label('Battlelog GUID')
                     ->help('Battlelog GUID of your server. Required for certain information to be displayed.') }}
 
+                {{ Former::inline_radios('server_status')->label('Status')->radios([
+                    'Inactive' => ['name' => 'status', 'value' => 'off'],
+                    'Active'   => ['name' => 'status', 'value' => 'on']
+                ])->check([
+                    'off' => !$server->is_active,
+                    'on' => $server->is_active
+                ]) }}
+
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-sm-offset-4 col-lg-10 col-sm-8">
                         <button type="submit" class="btn bg-green">
