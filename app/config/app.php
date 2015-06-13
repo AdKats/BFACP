@@ -123,7 +123,6 @@ return [
         'Illuminate\View\ViewServiceProvider',
         'Illuminate\Workbench\WorkbenchServiceProvider',
         'Lavary\Menu\ServiceProvider',
-        'Way\Generators\GeneratorsServiceProvider',
         'Zizaco\Confide\ServiceProvider',
         'Zizaco\Entrust\EntrustServiceProvider',
         'Dingo\Api\Provider\ApiServiceProvider',
