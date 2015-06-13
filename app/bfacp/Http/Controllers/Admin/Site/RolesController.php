@@ -69,7 +69,7 @@ class RolesController extends BaseController
             ]);
 
             if ($v->fails()) {
-                return Redirect::route('admin.site.roles.create')->withErrors($v);
+                return Redirect::route('admin.site.roles.create')->withErrors($v)->withInput();
             }
 
             $role->name = trim(Input::get('role_name'));
