@@ -1,0 +1,6 @@
+# Development
+.idea
+
+# Dependencies
+composer.lock
+vendor
