@@ -60,6 +60,15 @@ $framework = $app['path.base'] .
 require $framework . '/Illuminate/Foundation/start.php';
 
 if (!$app->runningInConsole()) {
+
+    if (file_exists($app['path.base'] . '/app/bfacp/setup.php')) {
+        if (!Schema::hasTable(Config::get('database.migrations'))) {
+            require $app['path.base'] . '/app/bfacp/setup.php';
+        }
+
+        die(sprintf('Please delete installer located at %s', $app['path.base'] . '/app/bfacp/setup.php'));
+    }
+
     $_SERVER['REMOTE_ADDR'] = isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : $_SERVER['REMOTE_ADDR'];
 }
 
