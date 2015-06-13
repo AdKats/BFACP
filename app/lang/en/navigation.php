@@ -84,6 +84,15 @@ return [
                         'ion' => null
                     ],
                     'items' => []
+                ],
+
+                'updater'  => [
+                    'title' => 'Updater',
+                    'icon'  => [
+                        'fa'  => 'fa-wrench',
+                        'ion' => null
+                    ],
+                    'items' => []
                 ]
             ]
         ],

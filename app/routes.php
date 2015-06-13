@@ -197,9 +197,11 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
 
             Route::resource('servers', 'ServersController', [
                 'names' => [
-                    'index' => 'admin.site.servers.index'
+                    'index'  => 'admin.site.servers.index',
+                    'edit'   => 'admin.site.servers.edit',
+                    'update' => 'admin.site.servers.update'
                 ],
-                'only'  => ['index']
+                'only'  => ['index', 'edit', 'update']
             ]);
 
             Route::get('settings', ['as' => 'admin.site.settings.index', 'uses' => 'SettingsController@index']);
@@ -256,6 +258,12 @@ Entrust::routeNeedsPermission('admin/site/roles/*', 'admin.site.roles');
 =====================================*/
 Entrust::routeNeedsPermission('admin/site/settings', 'admin.site.settings.site');
 Entrust::routeNeedsPermission('admin/updater', 'admin.site.settings.site');
+
+/*============================================
+=            Site Server Settings            =
+============================================*/
+Entrust::routeNeedsPermission('admin/site/servers', 'admin.site.settings.server');
+Entrust::routeNeedsPermission('admin/site/servers/*', 'admin.site.settings.server');
 
 /*================================================
 =            Require the Menu Builder            =

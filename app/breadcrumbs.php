@@ -1,6 +1,7 @@
 <?php
 
 use BFACP\Account\Role;
+use BFACP\Battlefield\Server;
 
 Breadcrumbs::register('home', function ($b) {
     $b->push(Lang::get('navigation.main.items.dashboard.title'), route('home'), [
@@ -128,4 +129,31 @@ Breadcrumbs::register('admin.site.settings.index', function ($b) {
     $b->push(Lang::get('navigation.admin.site.items.settings.title'), route('admin.site.settings.index'), [
         'icon' => HTML::faicon(Lang::get('navigation.admin.site.items.settings.icon.fa'))
     ]);
+});
+
+/*====================================
+=            Site Updater            =
+====================================*/
+
+Breadcrumbs::register('admin.updater.index', function ($b) {
+    $b->parent('admin.site');
+    $b->push(Lang::get('navigation.admin.site.items.updater.title'), route('admin.updater.index'), [
+        'icon' => HTML::faicon(Lang::get('navigation.admin.site.items.updater.icon.fa'))
+    ]);
+});
+
+/*====================================
+=            Site Servers            =
+====================================*/
+
+Breadcrumbs::register('admin.site.servers.index', function ($b) {
+    $b->parent('admin.site');
+    $b->push(Lang::get('navigation.admin.site.items.servers.title'), route('admin.site.servers.index'), [
+        'icon' => HTML::faicon(Lang::get('navigation.admin.site.items.servers.icon.fa'))
+    ]);
+});
+
+Breadcrumbs::register('admin.site.servers.edit', function ($b, $id) {
+    $b->parent('admin.site.servers.index');
+    $b->push(sprintf('%s', Server::find($id)->ServerName));
 });

@@ -11,7 +11,7 @@ class Setting extends Elegant
      * Table name
      * @var string
      */
-    protected $table = 'bfadmincp_settings_gameserver';
+    protected $table = 'bfacp_settings_servers';
 
     /**
      * Table primary key
@@ -23,13 +23,13 @@ class Setting extends Elegant
      * Fields not allowed to be mass assigned
      * @var array
      */
-    protected $fillable = ['*'];
+    protected $guarded = ['server_id'];
 
     /**
      * The attributes excluded form the models JSON response.
      * @var array
      */
-    protected $hidden = ['rcon_pass_hash', 'uptime_robot_id'];
+    protected $hidden = ['rcon_password', 'monitor_key'];
 
     /**
      * Date fields to convert to carbon instances
@@ -70,10 +70,19 @@ class Setting extends Elegant
      */
     public function getPassword()
     {
-        if (empty($this->rcon_pass_hash)) {
+        if (empty($this->rcon_password)) {
             throw new RconException(500, 'RCON Password Not Set');
         }
 
-        return Crypt::decrypt($this->rcon_pass_hash);
+        return Crypt::decrypt($this->rcon_password);
+    }
+
+    /**
+     * Encrypts the password to be safely stored
+     * @param string $value
+     */
+    public function setRconPasswordAttribute($value)
+    {
+        $this->attributes['rcon_password'] = Crypt::encrypt($value);
     }
 }

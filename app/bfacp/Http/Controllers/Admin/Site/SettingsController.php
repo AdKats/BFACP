@@ -39,6 +39,6 @@ class SettingsController extends BaseController
             }
         }
 
-        return Redirect::route('admin.site.settings.index');
+        return Redirect::route('admin.site.settings.index')->with('messages', ['Settings Saved!']);
     }
 }

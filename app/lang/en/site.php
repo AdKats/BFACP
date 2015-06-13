@@ -3,7 +3,7 @@
 return [
 
     'admin' => [
-        'users' => [
+        'users'   => [
             'listing' => [
                 'table'  => [
                     'col1' => 'Username',
@@ -43,7 +43,7 @@ return [
             ]
         ],
 
-        'roles' => [
+        'roles'   => [
             'edit'   => [
                 'buttons' => [
                     'save'   => 'Save Changes',
@@ -56,6 +56,16 @@ return [
                     'save'   => 'Create Role',
                     'cancel' => 'Cancel',
                     'delete' => 'Delete Role'
+                ]
+            ]
+        ],
+
+        'servers' => [
+            'edit' => [
+                'buttons' => [
+                    'save'   => 'Save Changes',
+                    'cancel' => 'Cancel',
+                    'delete' => 'Delete Server'
                 ]
             ]
         ]

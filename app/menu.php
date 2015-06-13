@@ -77,6 +77,14 @@ Menu::make('MainNav', function ($menu) use ($adminPermsList) {
             if (Auth::user()->ability(null, 'admin.site.settings.site')) {
                 $site->add(Lang::get('navigation.admin.site.items.settings.title'), ['route' => 'admin.site.settings.index'])
                 ->prepend(HTML::faicon(Lang::get('navigation.admin.site.items.settings.icon.fa'), true));
+
+                $site->add(Lang::get('navigation.admin.site.items.updater.title'), ['route' => 'admin.updater.index'])
+                ->prepend(HTML::faicon(Lang::get('navigation.admin.site.items.updater.icon.fa'), true));
+            }
+
+            if (Auth::user()->ability(null, 'admin.site.settings.server')) {
+                $site->add(Lang::get('navigation.admin.site.items.servers.title'), ['route' => 'admin.site.servers.index'])
+                ->prepend(HTML::faicon(Lang::get('navigation.admin.site.items.servers.icon.fa'), true));
             }
         }
     }
