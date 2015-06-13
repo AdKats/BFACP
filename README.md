@@ -6,7 +6,7 @@ The Battlefield Admin Control Panel (BFACP) is a web based admin tool designed t
 * MySQL Database (5.6+)
 * AdKats v6+
 * XpKillers Chat, GUID, Stats and Mapstats Logger v1.0.0.2+
-* PHP 5.4+
+* PHP 5.5+
 * PHP Mcrypt
 * PHP PDO
 
