@@ -54,7 +54,7 @@ Event::listen('player.ban', function ($input, $player, $ban = null) {
     if (array_get($input, 'ban_type') == 7) {
         $ban_start = array_get($input, 'ban_start');
         $ban_end = array_get($input, 'ban_end');
-        if (!empty($ban_start) && !empty($ban_end) {
+        if (!empty($ban_start) && !empty($ban_end)) {
 
             $startDate = Carbon::parse(array_get($input, 'ban_start'))->setTimezone(new \DateTimeZone('UTC'));
             $endDate = Carbon::parse(array_get($input, 'ban_end'))->setTimezone(new \DateTimeZone('UTC'));
