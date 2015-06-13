@@ -243,9 +243,9 @@
                         </alert>
                         @endif
 
-                        @if(is_null($player->ban) && Auth::user()->ability(null, 'admin.adkats.bans.create'))
+                        @if(is_null($player->ban) && $bfacp->isLoggedIn && Auth::user()->ability(null, 'admin.adkats.bans.create'))
                         {{ link_to_route('admin.adkats.bans.create', 'Create Ban', ['player_id' => $player->PlayerID], ['class' => 'btn btn-xs bg-green', 'target' => '_self']) }}
-                        @elseif(!is_null($player->ban) && Auth::user()->ability(null, 'admin.adkats.bans.edit'))
+                        @elseif(!is_null($player->ban) && $bfacp->isLoggedIn && Auth::user()->ability(null, 'admin.adkats.bans.edit'))
                         {{ link_to_route('admin.adkats.bans.edit', 'Edit Ban', [$player->ban->ban_id], ['class' => 'btn btn-xs bg-green', 'target' => '_self']) }}
                         @endif
                     </div>
@@ -311,6 +311,8 @@
                                     @else
                                     {{ HTML::link($link->url, Lang::get(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => '_blank']) }}
                                     @endif
+                                @elseif($key == 'chatlogs' && ((Auth::guest() && !Config::get('bfacp.site.chatlogs.guest')) || (Auth::check() && !Auth::user()->ability(null, 'chatlogs'))))
+                                {{-- Do not show the chatlogs button --}}
                                 @else
                                 {{ HTML::link($link, Lang::get(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => '_blank']) }}
                                 @endif

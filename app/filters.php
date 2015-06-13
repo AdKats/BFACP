@@ -29,8 +29,36 @@ App::before(function ($request) {
         '104.16.0.0/12'
     ]);
 
+    // If request is not secured and force secured connection is enabled
+    // then we need to redirect the user to a secure link.
+    if (!Request::secure() && Config::get('bfacp.site.ssl')) {
+        $path = Request::path();
+
+        if (strlen(Request::server('QUERY_STRING')) > 0) {
+            $path .= '?' . Request::server('QUERY_STRING');
+        }
+
+        $status = in_array(Request::getMethod(), ['POST', 'PUT', 'DELETE']) ? 307 : 302;
+
+        return Redirect::secure($path, $status);
+    }
+
+    if (Config::get('bfacp.site.auth') && !Auth::check()) {
+        $path = explode('/', Request::path());
+
+        if (count($path) > 1) {
+            $route = $path[0] . '/' . $path[1];
+        } else {
+            $route = $path[0];
+        }
+
+        if (!in_array($route, ['login', 'register', 'user/confirm'])) {
+            return Redirect::route('user.login');
+        }
+    }
+
     App::singleton('bfadmincp', function () {
-        $app = new stdClass;
+        $app = new stdClass();
 
         $app->isLoggedIn = Auth::check();
         $app->user = null;
@@ -105,7 +133,7 @@ Route::filter('guest', function () {
 
 Route::filter('csrf', function () {
     if (Session::token() !== Input::get('_token')) {
-        throw new Illuminate\Session\TokenMismatchException;
+        throw new Illuminate\Session\TokenMismatchException();
     }
 });
 
