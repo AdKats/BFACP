@@ -2,28 +2,28 @@
 
 return [
 
-    'metro'                         => [
-        'players_online' => 'Spieler Online',
-        'average_bans'   => 'Durchschnittliche Banns pro Tag',
+    'metro' => [
+        'players_online' => 'Spieler auf den Servern',
+        'average_bans' => 'Durchschnittliche Banns pro Tag',
         'yesterday_bans' => 'Banns gestern',
-        'player_count'   => 'Spezifische Spieler',
-        'adkats'         => [
-            'titles'        => [
-                'killed'        => 'Getötete Spieler',
-                'kicked'        => 'Gekickte Spieler',
-                'banned'        => 'Gebannte Spieler',
+        'player_count' => 'Spieler insgesamt',
+        'adkats' => [
+            'titles' => [
+                'killed' => 'Getötete Spieler',
+                'kicked' => 'Gekickte Spieler',
+                'banned' => 'Gebannte Spieler',
                 'banned_active' => 'Aktive Banns'
             ],
-            'killed'        => '%:killed der Spieler wurden getötet',
-            'kicked'        => '%:kicked der Spieler wurden gekickt',
-            'banned'        => '%:banned der Spieler wurden gebannt',
+            'killed' => '%:killed der Spieler wurden getötet',
+            'kicked' => '%:kicked der Spieler wurden gekickt',
+            'banned' => '%:banned der Spieler wurden gebannt',
             'banned_active' => '%:banned der Spieler sind gebannt'
         ]
     ],
 
-    'population'                    => [
-        'title'   => 'Population',
-        'footer'  => 'Gesamt',
+    'population' => [
+        'title'  => 'Population',
+        'footer' => 'Gesamt',
         'columns' => [
             'col1' => 'Server',
             'col2' => 'Online',
@@ -31,8 +31,8 @@ return [
         ]
     ],
 
-    'bans'                          => [
-        'title'   => 'Neuste Banns',
+    'bans' => [
+        'title' => 'Neuste Banns',
         'columns' => [
             'col1' => 'Spieler',
             'col2' => 'Admin',

@@ -79,7 +79,7 @@ return [
                 'expire'   => 'läuft ab'
             ],
             'current'  => [
-                'title'    => 'Laufender Bann',
+                'title'    => 'Aktueller Bann',
                 'none'     => 'Keine Banns vorhanden',
                 'inactive' => 'Kein Bann aktuell aktiviert. Status&colon; <strong>:status</strong>',
                 'table'    => [
@@ -94,7 +94,7 @@ return [
 
             'previous' => [
                 'title' => 'Vorherige Banns',
-                'none'  => 'Keine vorherigen Banns vorhanden',
+                'none'  => 'Keine vorherigen Banns vorhanden,
                 'table' => [
                     'col1' => 'Ausgeführt',
                     'col2' => 'Dauer',
@@ -153,7 +153,7 @@ return [
          */
         'acs'         => [
             'title'    => 'Auffällige Waffen',
-            'help'     => 'Die angezeigten Waffen sind nicht immer auffällig und sollen nur helfen, sich zu entschieden ob der Spieler cheated. Schrotflinten und Scharfschützengewehre tauchen öfter auf.',
+            'help'     => 'Bei den rot markierten Waffen muss es sich nicht zwangsläufig um Cheat-Verdächtige Waffen handeln. Daher müssen diese Stats hier besonders bei Schrotflinten und Scharfschützengewehren mit Vorsicht verwendet werden.
             'none'     => 'Keine auffälligen Waffen gefunden',
             'checking' => 'Überprüfe Spieler&hellip;',
             'table'    => [
@@ -175,7 +175,7 @@ return [
          * Player Records
          */
         'records'     => [
-            'title'   => 'Aufzeichnungshistorie',
+            'title'   => 'Historie',
             'viewing' => [
                 'p1' => 'Anzeigen der Datensätze',
                 'p2' => 'durch',
@@ -212,7 +212,7 @@ return [
             ],
 
             'ip_history'       => [
-                'title' => 'IP Vergangenheit',
+                'title' => 'IP Historie',
                 'chart' => [
                     'tooltip' => 'IP'
                 ]

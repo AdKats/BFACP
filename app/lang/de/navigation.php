@@ -2,10 +2,10 @@
 
 return [
     'main'  => [
-        'title' => 'Hauptnavigation',
+        'title' => 'Navigationsleiste',
         'items' => [
             'dashboard'  => [
-                'title' => 'Dashboard',
+                'title' => 'Übersicht',
                 'icon'  => [
                     'fa'  => 'fa-dashboard',
                     'ion' => null
@@ -39,7 +39,7 @@ return [
         'site'   => [
             'title' => 'Webadmin-Einstellungen',
             'items' => [
-                'users'    => [
+                'users' => [
                     'title' => 'Benutzer',
                     'icon'  => [
                         'fa'  => 'fa-users',
@@ -52,7 +52,7 @@ return [
                     ]
                 ],
 
-                'roles'    => [
+                'roles' => [
                     'title' => 'Rollen',
                     'icon'  => [
                         'fa'  => 'fa-list-ol',
@@ -67,7 +67,7 @@ return [
                         ]
                     ]
                 ],
-
+				
                 'settings' => [
                     'title' => 'Einstellungen',
                     'icon'  => [
@@ -76,7 +76,7 @@ return [
                     ],
                     'items' => []
                 ],
-
+				
                 'servers'  => [
                     'title' => 'Server',
                     'icon'  => [
@@ -85,7 +85,7 @@ return [
                     ],
                     'items' => []
                 ],
-
+				
                 'updater'  => [
                     'title' => 'Updater',
                     'icon'  => [
