@@ -12,7 +12,7 @@ return [
                 'col5' => 'Status',
                 'col6' => 'Ausgeführt',
                 'col7' => 'Läuft ab',
-                'col8' => 'Vollstreckung',
+                'col8' => 'Gebannt per',
                 'col9' => 'Grund'
             ]
         ],

@@ -3,7 +3,7 @@
 return [
 
     'admin' => [
-        'users'   => [
+        'users' => [
             'listing' => [
                 'table'  => [
                     'col1' => 'Benutzername',
@@ -14,8 +14,8 @@ return [
                     'col6' => 'Erstellt'
                 ],
                 'status' => [
-                    'active'   => 'Active',
-                    'inactive' => 'Inactive'
+                    'active'   => 'Aktiv',
+                    'inactive' => 'Inaktiv'
                 ]
             ],
 
@@ -43,7 +43,7 @@ return [
             ]
         ],
 
-        'roles'   => [
+        'roles' => [
             'edit'   => [
                 'buttons' => [
                     'save'   => 'Änderungen speichern',
@@ -58,7 +58,7 @@ return [
                     'delete' => 'Rolle löschen'
                 ]
             ]
-        ],
+		],
 
         'servers' => [
             'edit' => [
