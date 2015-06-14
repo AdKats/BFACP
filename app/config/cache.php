@@ -84,6 +84,6 @@ return [
     |
      */
 
-    'prefix'     => 'bfacp_' . isset($_SERVER['HTTP_HOST']) ? md5($_SERVER['HTTP_HOST']) : 'local'
+    'prefix'     => 'bfacp_' . (array_key_exists('HTTP_HOST', $_SERVER) ? md5($_SERVER['HTTP_HOST']) : 'local')
 
 ];

@@ -2756,5 +2756,179 @@
             "rest",
             "web service"
         ]
+    },
+    {
+        "name": "symfony/var-dumper",
+        "version": "v2.7.1",
+        "version_normalized": "2.7.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/var-dumper.git",
+            "reference": "c509921f260353bf07b257f84017777c8b0aa4bc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/var-dumper/zipball/c509921f260353bf07b257f84017777c8b0aa4bc",
+            "reference": "c509921f260353bf07b257f84017777c8b0aa4bc",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9"
+        },
+        "require-dev": {
+            "symfony/phpunit-bridge": "~2.7"
+        },
+        "suggest": {
+            "ext-symfony_debug": ""
+        },
+        "time": "2015-06-08 09:37:21",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.7-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "Resources/functions/dump.php"
+            ],
+            "psr-4": {
+                "Symfony\\Component\\VarDumper\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony mechanism for exploring and dumping PHP variables",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "debug",
+            "dump"
+        ]
+    },
+    {
+        "name": "pragmarx/support",
+        "version": "v0.6.1",
+        "version_normalized": "0.6.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/antonioribeiro/support.git",
+            "reference": "c86b1e7b1a6b5c21e90f799263bf9b5a6934da5f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/antonioribeiro/support/zipball/c86b1e7b1a6b5c21e90f799263bf9b5a6934da5f",
+            "reference": "c86b1e7b1a6b5c21e90f799263bf9b5a6934da5f",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/filesystem": "~4.0|~5.0",
+            "php": ">=5.4.0",
+            "symfony/var-dumper": "~2.6"
+        },
+        "suggest": {
+            "laravel/framework": "Laravel framework."
+        },
+        "time": "2015-03-10 18:55:24",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.7.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "PragmaRX\\Support\\": "src/"
+            },
+            "files": [
+                "src/helpers.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Antonio Carlos Ribeiro",
+                "email": "acr@antoniocarlosribeiro.com",
+                "role": "Creator"
+            }
+        ],
+        "description": "PragmaRX components support package",
+        "keywords": [
+            "laravel",
+            "pragmarx"
+        ]
+    },
+    {
+        "name": "pragmarx/firewall",
+        "version": "v0.5.2",
+        "version_normalized": "0.5.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/antonioribeiro/firewall.git",
+            "reference": "5c0659d96a41658c05b2a93d28d6fce93d330ee6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/antonioribeiro/firewall/zipball/5c0659d96a41658c05b2a93d28d6fce93d330ee6",
+            "reference": "5c0659d96a41658c05b2a93d28d6fce93d330ee6",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/cache": "~4|~5",
+            "illuminate/filesystem": "~4|~5",
+            "illuminate/support": "~4|~5",
+            "php": ">=5.3.7",
+            "pragmarx/support": "~0.5"
+        },
+        "suggest": {
+            "geoip/geoip": "~1.14"
+        },
+        "time": "2015-03-11 01:50:11",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.5.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "PragmaRX\\Firewall\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Antonio Carlos Ribeiro",
+                "email": "acr@antoniocarlosribeiro.com",
+                "role": "Creator"
+            }
+        ],
+        "description": "A Laravel 4.1+ IP whitelisting and blacklisting",
+        "keywords": [
+            "blacklist",
+            "firewall",
+            "laravel",
+            "whitelist"
+        ]
     }
 ]

@@ -1,0 +1,42 @@
+{
+    "name": "pragmarx/support",
+
+    "description": "PragmaRX components support package",
+
+    "keywords": ["pragmarx","laravel"],
+
+    "license": "BSD-3-Clause",
+
+    "authors": [
+        {
+            "name": "Antonio Carlos Ribeiro",
+            "email": "acr@antoniocarlosribeiro.com",
+            "role": "Creator"
+        }
+    ],
+
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/filesystem": "~4.0|~5.0",
+        "symfony/var-dumper": "~2.6"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "PragmaRX\\Support\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+
+    "suggest": {
+        "laravel/framework": "Laravel framework."
+    },
+
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.7.x-dev"
+        }
+    }
+}
