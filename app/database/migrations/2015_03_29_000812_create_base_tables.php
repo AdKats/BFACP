@@ -15,6 +15,7 @@ class CreateBaseTables extends Migration
     {
         // Create the BFACP Settings table
         Schema::create('bfacp_options', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('option_id');
             $table->string('option_key', 64)->unique();
             $table->string('option_title', 100);
@@ -24,6 +25,7 @@ class CreateBaseTables extends Migration
 
         // Creates the users table
         Schema::create('bfacp_users', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('username', 20)->unique();
             $table->string('email')->unique();
@@ -37,6 +39,7 @@ class CreateBaseTables extends Migration
 
         // Creates the user settings table
         Schema::create('bfacp_settings_users', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->integer('user_id')->unsigned()->primary();
             $table->string('lang', 3)->default('en')->index();
             $table->string('timezone')->default('UTC')->index();
@@ -49,6 +52,7 @@ class CreateBaseTables extends Migration
 
         // Creates the user soldiers table
         Schema::create('bfacp_users_soldiers', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->integer('user_id')->unsigned()->index();
             $table->integer('player_id')->unsigned()->index();
             $table->primary(['user_id', 'player_id']);
@@ -58,6 +62,7 @@ class CreateBaseTables extends Migration
 
         // Create servers settings table
         Schema::create('bfacp_settings_servers', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->smallInteger('server_id')->unsigned()->primary();
             $table->text('rcon_password')->nullable();
             $table->string('filter')->nullable();
@@ -69,6 +74,7 @@ class CreateBaseTables extends Migration
 
         // Creates password reminders table
         Schema::create('bfacp_password_reminders', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->string('email');
             $table->string('token');
             $table->timestamp('created_at');
@@ -76,6 +82,7 @@ class CreateBaseTables extends Migration
 
         // Creates the roles table
         Schema::create('bfacp_roles', function ($table) {
+            $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->string('name')->unique();
             $table->timestamps();
@@ -83,6 +90,7 @@ class CreateBaseTables extends Migration
 
         // Creates the assigned_roles (Many-to-Many relation) table
         Schema::create('bfacp_assigned_roles', function ($table) {
+            $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('role_id')->unsigned();
@@ -92,6 +100,7 @@ class CreateBaseTables extends Migration
 
         // Creates the permissions table
         Schema::create('bfacp_permissions', function ($table) {
+            $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->string('name')->unique();
             $table->string('display_name');
@@ -100,6 +109,7 @@ class CreateBaseTables extends Migration
 
         // Creates the permission_role (Many-to-Many relation) table
         Schema::create('bfacp_permission_role', function ($table) {
+            $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->integer('permission_id')->unsigned();
             $table->integer('role_id')->unsigned();
@@ -110,6 +120,7 @@ class CreateBaseTables extends Migration
         // Creates the adkats battlelog players table if it doesn't exist
         if (!Schema::hasTable('adkats_battlelog_players')) {
             Schema::create('adkats_battlelog_players', function (Blueprint $table) {
+                $table->engine = 'InnoDB';
                 $table->integer('player_id')->unsigned()->primary();
                 $table->bigInteger('persona_id')->unsigned()->index();
                 $table->bigInteger('user_id')->unsigned()->index();
