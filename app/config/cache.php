@@ -84,6 +84,6 @@ return [
     |
      */
 
-    'prefix'     => 'bfacp_' . isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'local'
+    'prefix'     => 'bfacp_' . isset($_SERVER['HTTP_HOST']) ? md5($_SERVER['HTTP_HOST']) : 'local'
 
 ];
