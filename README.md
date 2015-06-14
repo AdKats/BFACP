@@ -62,3 +62,5 @@ If you have any questions or need help setting this up please post it [here](htt
 Please create a ticket for bugs/requests. [here](https://github.com/Prophet731/BFAdminCP/issues).
 
 [FAQ](https://github.com/Prophet731/BFAdminCP/wiki/FAQ)
+
+<a href="https://goo.gl/8BlTk2" target="_blank"><img src="https://raw.githubusercontent.com/ColColonCleaner/AdKats/master/images/AdKats_Docs_Donate.jpg"></a>
