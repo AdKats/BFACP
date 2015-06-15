@@ -69,7 +69,7 @@ class UsersController extends BaseController
             'ign' => 'regex:/^([a-zA-Z0-9_\-]+)$/'
         ]));
 
-        if($v->fails()) {
+        if ($v->fails()) {
             return Redirect::route('user.register')
                 ->withInput(Input::except('password', 'password_confirmation'))
                 ->withErrors($v);
@@ -97,7 +97,8 @@ class UsersController extends BaseController
         }
 
         return Redirect::route('user.login')->with('messages', [
-            Lang::get('confide::confide.alerts.account_created')
+            Lang::get('confide::confide.alerts.account_created'),
+            Lang::get('confide::confide.alerts.instructions_sent')
         ]);
     }
 
