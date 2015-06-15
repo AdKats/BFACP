@@ -19,6 +19,17 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
     $debug = false;
 }
 
+/**
+ * If Memcached exists then use that instead for better preformance.
+ */
+if (class_exists('Memcached')) {
+    $session_driver = 'memcached';
+    $cache_driver   = 'memcached';
+} else {
+    $session_driver = 'database';
+    $cache_driver   = 'file';
+}
+
 return [
 
     /**
@@ -29,8 +40,8 @@ return [
     'APP_DEBUG'      => $debug,
 
     // Supported: "file", "database", "apc", "memcached", "redis", "array"
-    'SESSION_DRIVER' => 'database',
-    'CACHE_DRIVER'   => 'file',
+    'SESSION_DRIVER' => $session_driver,
+    'CACHE_DRIVER'   => $cache_driver,
 
     /**
      * Database Settings
