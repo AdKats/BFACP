@@ -8,8 +8,8 @@ return [
          * Details Block
          */
         'details'     => [
-            'title' => 'Details',
-            'items' => [
+            'title'  => 'Details',
+            'items'  => [
                 'id'         => 'ID',
                 'game'       => 'Game',
                 'eaguid'     => 'EA GUID',
@@ -18,7 +18,8 @@ return [
                 'country'    => 'Country',
                 'reputation' => 'Reputation',
                 'rank'       => 'Rank'
-            ]
+            ],
+            'cached' => 'Viewing Cached Version'
         ],
 
         'links'       => [

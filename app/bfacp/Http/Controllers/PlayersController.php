@@ -97,6 +97,6 @@ class PlayersController extends BaseController
 
         $page_title = !empty($player->ClanTag) ? sprintf('[%s] %s', $player->ClanTag, $player->SoldierName) : $player->SoldierName;
 
-        return View::make('player.profile', compact('player', 'page_title', 'charts'));
+        return View::make('player.profile', compact('player', 'page_title', 'charts', 'isCached'));
     }
 }

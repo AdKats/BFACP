@@ -44,7 +44,7 @@ class Player extends Elegant
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = ['profile_url', 'country_flag', 'country_name', 'rank_image', 'links', 'is_cached'];
+    protected $appends = ['profile_url', 'country_flag', 'country_name', 'rank_image', 'links'];
 
     /**
      * Models to be loaded automaticly
@@ -176,15 +176,6 @@ class Player extends Elegant
         Cache::forget(sprintf('player.%u', $this->PlayerID));
 
         return $this;
-    }
-
-    /**
-     * Is the player result cached
-     * @return boolean
-     */
-    public function getIsCachedAttribute()
-    {
-        return Cache::has(sprintf('api.player.%u', $this->PlayerID));
     }
 
     /**

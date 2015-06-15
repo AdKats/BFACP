@@ -10,6 +10,11 @@
             <div class="box box-primary">
                 <div class="box-header">
                     <div class="box-title">{{ Lang::get('player.profile.details.title') }}</div>
+                    <div class="box-tools">
+                        @if($isCached)
+                        <label class="label bg-green">{{ Lang::get('player.profile.details.cached') }}</label>
+                        @endif
+                    </div>
                 </div>
 
                 <div class="box-body">
