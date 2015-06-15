@@ -119,11 +119,11 @@ class Server extends Elegant
      */
     public function getServerNameShortAttribute()
     {
-        if (empty($this->setting->name_strip)) {
+        if (empty($this->setting->filter)) {
             return;
         }
 
-        $strings = explode(',', $this->setting->name_strip);
+        $strings = explode(',', $this->setting->filter);
 
         return preg_replace('/\s+/', ' ', trim(str_replace($strings, null, $this->ServerName)));
     }
