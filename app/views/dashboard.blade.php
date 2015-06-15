@@ -160,12 +160,33 @@
                 <div class="box-header">
                     <i class="fa fa-map-marker"></i>
                     <h3 class="box-title">
-                        {{ Lang::get('dashboard.players_seen_country_past_day') }}
+                        {{ Lang::get('dashboard.players_seen_country_past_day.title') }}
                     </h3>
                 </div>
 
                 <div class="box-body">
                     <div id="player-world-map" style="height: 350px"></div>
+                </div>
+
+                <div class="box-footer no-border" style="color: black">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <th>{{ Lang::get('dashboard.players_seen_country_past_day.table.col1') }}</th>
+                            <th>{{ Lang::get('dashboard.players_seen_country_past_day.table.col2') }}</th>
+                        </thead>
+
+                        <tbody>
+                            @foreach($countryMapTable as $country)
+                            <tr>
+                                <td>
+                                    {{ HTML::image(sprintf('images/flags/24/%s.png', strtoupper($country->CountryCode)), MainHelper::countries($country->CountryCode)) }}
+                                    {{ MainHelper::countries($country->CountryCode) }}
+                                </td>
+                                <td ng-bind="{{ (int) $country->total }} | number"></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -201,7 +222,7 @@
 {{ HTML::script('js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}
 <script type="text/javascript">
 $(function() {
-    var playerVisitorData = {{ json_encode($countryMap, TRUE) }};
+    var playerVisitorData = {{ json_encode($countryMap->lists('total', 'CountryCode')) }};
 
     $('#player-world-map').vectorMap({
         map: 'world_mill_en',

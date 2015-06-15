@@ -2,28 +2,28 @@
 
 return [
 
-    'metro' => [
+    'metro'                         => [
         'players_online' => 'Players Online',
-        'average_bans' => 'Average Bans Per Day',
+        'average_bans'   => 'Average Bans Per Day',
         'yesterday_bans' => 'Bans Yesterday',
-        'player_count' => 'Unique Players',
-        'adkats' => [
-            'titles' => [
-                'killed' => 'Players Killed',
-                'kicked' => 'Players Kicked',
-                'banned' => 'Players Banned',
+        'player_count'   => 'Unique Players',
+        'adkats'         => [
+            'titles'        => [
+                'killed'        => 'Players Killed',
+                'kicked'        => 'Players Kicked',
+                'banned'        => 'Players Banned',
                 'banned_active' => 'Active Bans'
             ],
-            'killed' => ':killed% of players have been killed',
-            'kicked' => ':kicked% of players have been kicked',
-            'banned' => ':banned% of players have been banned',
+            'killed'        => ':killed% of players have been killed',
+            'kicked'        => ':kicked% of players have been kicked',
+            'banned'        => ':banned% of players have been banned',
             'banned_active' => ':banned% of players are banned'
         ]
     ],
 
-    'population' => [
-        'title'  => 'Population',
-        'footer' => 'Total',
+    'population'                    => [
+        'title'   => 'Population',
+        'footer'  => 'Total',
         'columns' => [
             'col1' => 'Server',
             'col2' => 'Online',
@@ -31,8 +31,8 @@ return [
         ]
     ],
 
-    'bans' => [
-        'title' => 'Latest Bans',
+    'bans'                          => [
+        'title'   => 'Latest Bans',
         'columns' => [
             'col1' => 'Player',
             'col2' => 'Admin',
@@ -41,5 +41,11 @@ return [
         ]
     ],
 
-    'players_seen_country_past_day' => 'Players Seen by Country (24h)'
+    'players_seen_country_past_day' => [
+        'title' => 'Players Seen by Country (24h)',
+        'table' => [
+            'col1' => 'Country',
+            'col2' => 'Visits'
+        ]
+    ]
 ];

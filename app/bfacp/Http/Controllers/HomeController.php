@@ -42,7 +42,9 @@ class HomeController extends BaseController
             return $this->repository->getPlayersSeenByCountry();
         });
 
-        return View::make('dashboard', compact('uniquePlayers', 'adkats_statistics', 'countryMap'))
+        $countryMapTable = $countryMap->sortByDesc('total')->take(5);
+
+        return View::make('dashboard', compact('uniquePlayers', 'adkats_statistics', 'countryMap', 'countryMapTable'))
             ->with('page_title', Lang::get('navigation.main.items.dashboard.title'));
     }
 
