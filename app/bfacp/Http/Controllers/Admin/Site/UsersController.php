@@ -55,7 +55,8 @@ class UsersController extends BaseController
 
             return View::make('admin.site.users.edit', compact('user', 'page_title', 'roles'));
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.site.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
+            $this->messages[] = Lang::get('alerts.user.invlid', ['userid' => $id]);
+            return Redirect::route('admin.site.users.index')->withErrors($this->messages);
         }
     }
 
@@ -67,8 +68,6 @@ class UsersController extends BaseController
     {
         try {
             $user = User::findOrFail($id);
-
-            $messages = [];
 
             $username = trim(Input::get('username', null));
             $email    = trim(Input::get('email', null));
@@ -87,29 +86,6 @@ class UsersController extends BaseController
 
             if ($v->fails()) {
                 return Redirect::route('admin.site.users.edit', [$id])->withErrors($v)->withInput();
-            }
-
-            if (Input::has('generate_pass')) {
-
-                // Generate a new password
-                $newPassword = MainHelper::generateStrongPassword(12);
-
-                // Send the email to the user with their new password
-                Mail::send(
-                    'emails.user.passwordchange',
-                    compact('user', 'newPassword'),
-                    function ($message) use ($user) {
-                        $message
-                        ->to($user->email, $user->username)
-                        ->subject(Lang::get('email.password_changed.subject'));
-                    }
-                );
-
-                // Change the user password
-                $user->password              = $newPassword;
-                $user->password_confirmation = $newPassword;
-
-                $messages[] = Lang::get('site.admin.users.updates.password.generated', ['username' => $user->username, 'email' => $user->email]);
             }
 
             // Update the user role if it's been changed
@@ -140,6 +116,29 @@ class UsersController extends BaseController
                 $user->email = $email;
             }
 
+            if (Input::has('generate_pass')) {
+
+                // Generate a new password
+                $newPassword = MainHelper::generateStrongPassword(12);
+
+                // Send the email to the user with their new password
+                Mail::send(
+                    'emails.user.passwordchange',
+                    compact('user', 'newPassword'),
+                    function ($message) use ($user) {
+                        $message
+                        ->to($user->email, $user->username)
+                        ->subject(Lang::get('email.password_changed.subject'));
+                    }
+                );
+
+                // Change the user password
+                $user->password              = $newPassword;
+                $user->password_confirmation = $newPassword;
+
+                $this->messages[] = Lang::get('site.admin.users.updates.password.generated', ['username' => $user->username, 'email' => $user->email]);
+            }
+
             $soldier_ids = [];
 
             $user->soldiers()->delete();
@@ -166,6 +165,7 @@ class UsersController extends BaseController
                     // Check if an existing user already has claimed the player
                     // and if so do not associate with the account.
                     if (Soldier::where('player_id', $soldier->player_id)->count() == 1) {
+                        $this->messages[] = Lang::get('alerts.user.soldier_taken', ['playerid' => $soldier->player_id]);
                         unset($soldier_ids[$key]);
                     }
                 }
@@ -175,9 +175,10 @@ class UsersController extends BaseController
 
             $user->save();
 
-            return Redirect::route('admin.site.users.edit', [$id])->with('messages', $messages);
+            return Redirect::route('admin.site.users.edit', [$id])->withMessages($this->messages);
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.site.users.edit', [$id])->withErrors(['Unable to complete action.']);
+            $this->messages[] = Lang::get('alerts.user.invlid', ['userid' => $id]);
+            return Redirect::route('admin.site.users.edit', [$id])->withErrors($this->messages);
         }
     }
 
@@ -194,9 +195,10 @@ class UsersController extends BaseController
 
             return MainHelper::response([
                 'url' => route('admin.site.users.index')
-            ], sprintf('%s was deleted', $username));
+            ], Lang::get('alerts.user.deleted', compact('username')));
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.site.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
+            $this->messages[] = Lang::get('alerts.user.invlid', ['userid' => $id]);
+            return Redirect::route('admin.site.users.index')->withErrors($this->messages);
         }
     }
 }
