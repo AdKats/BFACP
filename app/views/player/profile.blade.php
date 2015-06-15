@@ -393,7 +393,13 @@
                 </div>
 
                 <div class="box-footer">
-                    {{ Lang::get('player.profile.records.viewing.p1') }} <span ng-bind="records.from | number"></span> {{ Lang::get('player.profile.records.viewing.p2') }} <span ng-bind="records.to | number"></span> {{ Lang::get('player.profile.records.viewing.p3') }} <span ng-bind="records.total | number"></span>.
+                    <div class="pull-left">
+                        {{ Lang::get('player.profile.records.viewing.p1') }} <span ng-bind="records.from | number"></span> {{ Lang::get('player.profile.records.viewing.p2') }} <span ng-bind="records.to | number"></span> {{ Lang::get('player.profile.records.viewing.p3') }} <span ng-bind="records.total | number"></span>.
+                    </div>
+
+                    <div class="pull-right">
+                        <pagination class="pagination-sm inline" total-items="records.total" ng-change="fetchRecords()" ng-model="records.current_page" max-size="5" boundary-links="true" items-per-page="records.per_page"></pagination>
+                    </div>
                 </div>
 
                 <div class="overlay" ng-if="refresh.records">
