@@ -737,7 +737,7 @@ class Main extends BaseHelper
         });
 
         // Check if we have a soldier.
-        if (!empty($soldiers)) {
+        if (!empty($soldiers) && count($soldiers) > 0) {
             $soldier = head(array_flatten($soldiers));
             return $soldier->player;
         }
