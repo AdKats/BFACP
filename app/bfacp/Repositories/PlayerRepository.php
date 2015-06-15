@@ -96,7 +96,7 @@ class PlayerRepository extends BaseRepository
         try {
             $player = Player::with($this->opts)->findOrFail($id);
 
-            \App::make('BFACP\Libraries\Reputation')->setPlayer($player)->createOrUpdate();
+            App::make('BFACP\Libraries\Reputation')->setPlayer($player)->createOrUpdate();
 
             return $player;
 
