@@ -1,16 +1,32 @@
 <?php namespace BFACP\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\App as App;
 use Illuminate\Support\Facades\View;
 
 class BaseController extends Controller
 {
+    /**
+     * BFACP\Account\User
+     * @var object
+     */
     public $user;
-    public $isLoggedIn;
+
+    /**
+     * Is the user logged in
+     * @var boolean
+     */
+    public $isLoggedIn = false;
+
+    /**
+     * Messages to be sent to the view
+     * @var array
+     */
+    public $messages = [];
 
     public function __construct()
     {
-        $bfacp            = \App::make('bfadmincp');
+        $bfacp            = App::make('bfadmincp');
         $this->user       = $bfacp->user;
         $this->isLoggedIn = $bfacp->isLoggedIn;
     }
