@@ -56,43 +56,47 @@ class PlayersController extends BaseController
             return json_decode($json);
         });
 
-        $charts             = [];
-        $charts['overview'] = new Collection(DB::select(File::get(storage_path() . '/sql/playerCommandOverview.sql'), [$id]));
-        $charts['spline']   = new Collection(DB::select(File::get(storage_path() . '/sql/playerCommandHistory.sql'), [$id]));
-        $charts['aliases']  = Record::where('command_type', 48)
+        $charts = Cache::remember(sprintf('player.%u.charts', $id), 5, function () use ($id) {
+            $charts = [];
+            $charts['overview'] = new Collection(DB::select(File::get(storage_path() . '/sql/playerCommandOverview.sql'), [$id]));
+            $charts['spline'] = new Collection(DB::select(File::get(storage_path() . '/sql/playerCommandHistory.sql'), [$id]));
+            $charts['aliases'] = Record::where('command_type', 48)
             ->where('target_id', $id)
             ->select(DB::raw('record_message AS `player_name`, COUNT(record_id) AS `seen`'))
             ->groupBy('player_name')->get();
 
-        $charts['iphistory'] = Record::where('command_type', 49)
+            $charts['iphistory'] = Record::where('command_type', 49)
             ->where('target_id', $id)
             ->where('record_message', '!=', 'No previous IP on record')
             ->select(DB::raw('record_message AS `ip`, COUNT(record_id) AS `seen`'))
             ->groupBy('ip')->get();
 
-        $charts['overview'] = $charts['overview']->filter(function ($command) {
-            if (intval($command->value) > 0) {
-                return true;
-            }
-        })->map(function ($command) {
-            return [
-                $command->label,
-                intval($command->value)
-            ];
-        });
+            $charts['overview'] = $charts['overview']->filter(function ($command) {
+                if (intval($command->value) > 0) {
+                    return true;
+                }
+            })->map(function ($command) {
+                return [
+                    $command->label,
+                    intval($command->value)
+                ];
+            });
 
-        $charts['aliases'] = $charts['aliases']->map(function ($a) {
-            return [
-                $a->player_name,
-                intval($a->seen)
-            ];
-        });
+            $charts['aliases'] = $charts['aliases']->map(function ($a) {
+                return [
+                    $a->player_name,
+                    intval($a->seen)
+                ];
+            });
 
-        $charts['iphistory'] = $charts['iphistory']->map(function ($ip) {
-            return [
-                $ip->ip,
-                intval($ip->seen)
-            ];
+            $charts['iphistory'] = $charts['iphistory']->map(function ($ip) {
+                return [
+                    $ip->ip,
+                    intval($ip->seen)
+                ];
+            });
+
+            return $charts;
         });
 
         $page_title = !empty($player->ClanTag) ? sprintf('[%s] %s', $player->ClanTag, $player->SoldierName) : $player->SoldierName;
