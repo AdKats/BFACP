@@ -104,5 +104,5 @@ App::down(function () {
 
 require app_path() . '/filters.php';
 
-require $app['path.base'] . '/app/bfacp/macros.php';
-require $app['path.base'] . '/app/bfacp/events.php';
+require app_path() . '/bfacp/macros.php';
+require app_path() . '/bfacp/events.php';
