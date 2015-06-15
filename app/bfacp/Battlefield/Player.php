@@ -3,6 +3,7 @@
 use BFACP\Elegant;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App as App;
+use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Route;
 use MainHelper;
 
@@ -43,7 +44,7 @@ class Player extends Elegant
      * Append custom attributes to output
      * @var array
      */
-    protected $appends = ['profile_url', 'country_flag', 'country_name', 'rank_image', 'links'];
+    protected $appends = ['profile_url', 'country_flag', 'country_name', 'rank_image', 'links', 'is_cached'];
 
     /**
      * Models to be loaded automaticly
@@ -156,9 +157,34 @@ class Player extends Elegant
         return !empty($this->battlelog);
     }
 
+    /**
+     * Checks if player has a reputation record
+     * @return boolean
+     */
     public function hasReputation()
     {
         return !empty($this->reputation);
+    }
+
+    /**
+     * Purge the cache for the player
+     * @return this
+     */
+    public function forget()
+    {
+        Cache::forget(sprintf('api.player.%u', $this->PlayerID));
+        Cache::forget(sprintf('player.%u', $this->PlayerID));
+
+        return $this;
+    }
+
+    /**
+     * Is the player result cached
+     * @return boolean
+     */
+    public function getIsCachedAttribute()
+    {
+        return Cache::has(sprintf('api.player.%u', $this->PlayerID));
     }
 
     /**
@@ -224,7 +250,7 @@ class Player extends Elegant
                     throw new \Exception();
                 }
 
-                $request = \App::make('GuzzleHttp\Client')->get(sprintf('http://api.bf4db.com/api-player.php?%s', http_build_query([
+                $request = App::make('GuzzleHttp\Client')->get(sprintf('http://api.bf4db.com/api-player.php?%s', http_build_query([
                     'format' => 'json',
                     'guid'   => $this->EAGUID
                 ])));
