@@ -30,9 +30,19 @@ Breadcrumbs::register('player.listing', function ($b) {
     ]);
 });
 
-Breadcrumbs::register('player.show', function ($b, $id, $name) {
+Breadcrumbs::register('player.show', function ($b, $id, $name = null) {
     $b->parent('player.listing');
-    $b->push($name);
+
+    if (empty($name)) {
+        if (Cache::has(sprintf('player.%u', $id))) {
+            $player = Cache::get(sprintf('player.%u', $id));
+            $b->push($player->SoldierName);
+        } else {
+            $b->push(sprintf('#%u', $id));
+        }
+    } else {
+        $b->push($name);
+    }
 });
 
 Breadcrumbs::register('admin.adkats', function ($b) {
