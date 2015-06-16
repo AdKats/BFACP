@@ -246,7 +246,11 @@ class Reputation
     private function fetchWeights()
     {
         $this->weights = Cache::remember('reputation.weights', 60 * 24, function () {
-            $request = $this->guzzle->get('https://raw.githubusercontent.com/AdKats/AdKats/master/adkatsreputationstats.json');
+            try {
+                $request = $this->guzzle->get('https://raw.githubusercontent.com/AdKats/AdKats/master/adkatsreputationstats.json');
+            } catch (\Exception $e) {
+                $request = $this->guzzle->get('http://api.gamerethos.net/adkats/fetch/reputation');
+            }
 
             return $request->json();
         });
