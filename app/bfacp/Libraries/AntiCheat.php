@@ -171,9 +171,13 @@ class AntiCheat
     private function fetchWeaponDamages()
     {
         $this->weapons = Cache::remember('acs.weapons', 60 * 24, function () {
-            $request = $this->guzzle->get('https://raw.githubusercontent.com/AdKats/AdKats/master/adkatsblweaponstats.json');
-            $response = $request->json();
-            return $response;
+            try {
+                $request = $this->guzzle->get('https://raw.githubusercontent.com/AdKats/AdKats/master/adkatsblweaponstats.json');
+            } catch (\Exception $e) {
+                $request = $this->guzzle->get('http://api.gamerethos.net/adkats/fetch/weapons');
+            }
+
+            return $request->json();
         });
 
         return;
