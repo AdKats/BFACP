@@ -71,6 +71,10 @@ App::before(function ($request) {
         return $app;
     });
 
+    App::singleton('geo', function () {
+        return App::make('BFACP\Repositories\GeoRepository');
+    });
+
     View::share('bfacp', App::make('bfadmincp'));
 });
 

@@ -57,7 +57,8 @@ class Server extends Elegant
         'current_map',
         'current_gamemode',
         'map_image_paths',
-        'is_active'
+        'is_active',
+        'geo'
     ];
 
     /**
@@ -278,5 +279,20 @@ class Server extends Elegant
     public function getIsActiveAttribute()
     {
         return $this->ConnectionState == 'on';
+    }
+
+    /**
+     * Returns geo information
+     * @return array
+     */
+    public function getGeoAttribute()
+    {
+        try {
+            $geo = App::make('geo')->set($this->ip);
+
+            return $geo->all();
+        } catch (Exception $e) {
+            return;
+        }
     }
 }
