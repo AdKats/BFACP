@@ -28,25 +28,25 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
     Route::group(['prefix' => 'battlelog'], function () {
         Route::group(['prefix' => 'players'], function () {
             Route::get('{player}/weapons', ['as' => 'api.battlelog.players.weapons', function (BFACP\Battlefield\Player $player) {
-                $battlelog = App::make('BFACP\Libraries\Battlelog\BPlayer', [$player]);
+                $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogPlayer', [$player]);
 
                 return MainHelper::response($battlelog->getWeaponStats(), null, null, null, false, true);
             }])->where('player', '[0-9]+');
 
             Route::get('{player}/overview', ['as' => 'api.battlelog.players.overview', function (BFACP\Battlefield\Player $player) {
-                $battlelog = App::make('BFACP\Libraries\Battlelog\BPlayer', [$player]);
+                $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogPlayer', [$player]);
 
                 return MainHelper::response($battlelog->getOverviewStats(), null, null, null, false, true);
             }])->where('player', '[0-9]+');
 
             Route::get('{player}/vehicles', ['as' => 'api.battlelog.players.vehicles', function (BFACP\Battlefield\Player $player) {
-                $battlelog = App::make('BFACP\Libraries\Battlelog\BPlayer', [$player]);
+                $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogPlayer', [$player]);
 
                 return MainHelper::response($battlelog->getVehicleStats(), null, null, null, false, true);
             }])->where('player', '[0-9]+');
 
             Route::get('{player}/reports', ['as' => 'api.battlelog.players.reports', function (BFACP\Battlefield\Player $player) {
-                $battlelog = App::make('BFACP\Libraries\Battlelog\BPlayer', [$player]);
+                $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogPlayer', [$player]);
 
                 return MainHelper::response($battlelog->getBattleReports(), null, null, null, false, true);
             }])->where('player', '[0-9]+');
