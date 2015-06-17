@@ -38,7 +38,7 @@ class Battlelog
             'weapons'  => '%s/weaponsPopulateStats/%u/1/stats/',
             'vehicles' => '%s/vehiclesPopulateStats/%u/1/stats/',
             //'battlereports' => '%s/warsawbattlereportspopulate/%u/2048/1/',
-            'soldier'       => '%s/soldier/%u/stats/%u/pc/'
+            'soldier'  => '%s/soldier/%u/stats/%u/pc/'
         ],
         'bfh'     => [
             'overview'      => '%s/bfhoverviewpopulate/%u/1/',
@@ -50,7 +50,8 @@ class Battlelog
         'generic' => [
             'profile' => '%s/user/%s',
             'servers' => [
-                'players_online' => '%s/servers/getNumPlayersOnServer/pc/%s'
+                'players_online' => '%s/servers/getNumPlayersOnServer/pc/%s',
+                'server_browser' => '%s/servers/pc/?%s'
             ]
         ]
     ];

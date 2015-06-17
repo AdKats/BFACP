@@ -3,10 +3,9 @@
 use BFACP\Battlefield\Player;
 use BFACP\Exceptions\BattlelogException;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Cache;
 use MainHelper;
 
-class BPlayer extends Battlelog
+class BattlelogPlayer extends Battlelog
 {
     /**
      * Persona ID
@@ -108,8 +107,7 @@ class BPlayer extends Battlelog
         if (!$this->player->hasPersona()) {
 
             // Clear old cache for player
-            Cache::forget(sprintf('api.player.%u', $this->player->PlayerID));
-            Cache::forget(sprintf('player.%u', $this->player->PlayerID));
+            $this->player->forget();
 
             // Assign a relationship for them and save to the database
             $this->player->battlelog()->save(new \BFACP\AdKats\Battlelog([
@@ -275,8 +273,7 @@ class BPlayer extends Battlelog
         }
 
         if ($oldName != $persona['personaName'] || $oldClan != $persona['clanTag']) {
-            Cache::forget(sprintf('api.player.%u', $this->player->PlayerID));
-            Cache::forget(sprintf('player.%u', $this->player->PlayerID));
+            $this->player->forget();
             $this->player->save();
         }
 

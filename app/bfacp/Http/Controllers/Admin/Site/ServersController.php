@@ -5,6 +5,7 @@ use BFACP\Battlefield\Setting as Setting;
 use BFACP\Http\Controllers\BaseController;
 use Former\Facades\Former as Former;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\App as App;
 use Illuminate\Support\Facades\Input as Input;
 use Illuminate\Support\Facades\Redirect as Redirect;
 use Illuminate\Support\Facades\View as View;
@@ -26,7 +27,8 @@ class ServersController extends BaseController
 
             // If no setting entry exists for the server we need to create it
             if (is_null($server->setting)) {
-                $setting = new Setting(['server_id' => $id]);
+                $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogServer')->server($server);
+                $setting   = new Setting(['server_id' => $id, 'battlelog_guid' => $battlelog->guid()]);
                 $setting->server()->associate($server)->save();
                 $server->load('setting');
             }

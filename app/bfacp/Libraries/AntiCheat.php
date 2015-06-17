@@ -1,7 +1,7 @@
 <?php namespace BFACP\Libraries;
 
 use BFACP\Battlefield\Player;
-use BFACP\Libraries\Battlelog\BPlayer;
+use BFACP\Libraries\Battlelog\BattlelogPlayer;
 use Illuminate\Support\Facades\Cache;
 use MainHelper;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class AntiCheat
 {
     /**
-     * @var BFACP\Libraries\Battlelog\BPlayer
+     * @var BFACP\Libraries\Battlelog\BattlelogPlayer
      */
     public $battlelog;
 
@@ -94,7 +94,7 @@ class AntiCheat
 
     public function __construct(Player $player)
     {
-        $this->battlelog = new BPlayer($player);
+        $this->battlelog = new BattlelogPlayer($player);
         $this->player    = $player;
         $this->guzzle    = \App::make('GuzzleHttp\Client');
         $this->game      = strtoupper($this->player->game->Name);
