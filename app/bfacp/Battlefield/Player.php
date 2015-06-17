@@ -2,10 +2,13 @@
 
 use BFACP\Elegant;
 use Carbon\Carbon;
+use GeoIp2\Database\Reader;
+use GeoIp2\Exception\AddressNotFoundException;
 use Illuminate\Support\Facades\App as App;
 use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Route;
 use MainHelper;
+use MaxMind\Db\InvalidDatabaseException;
 
 class Player extends Elegant
 {
@@ -196,11 +199,35 @@ class Player extends Elegant
      */
     public function getCountryNameAttribute()
     {
-        if ($this->CountryCode == '--' || empty($this->CountryCode)) {
-            return 'Unknown';
-        }
+        $dbPath = app_path() . '/bfacp/ThirdParty/GeoIP2/GeoLite2-City.mmdb';
 
-        return MainHelper::countries($this->CountryCode);
+        try {
+            if (file_exists($dbPath)) {
+                $reader = new Reader($dbPath);
+
+                if (!empty($this->IP_Address)) {
+                    $record = $reader->city($this->IP_Address);
+
+                    return $record->country->name;
+                } else {
+                    throw new AddressNotFoundException();
+                }
+            } else {
+                throw new InvalidDatabaseException();
+            }
+        } catch (AddressNotFoundException $e) {
+            if ($this->CountryCode == '--' || empty($this->CountryCode)) {
+                return 'Unknown';
+            }
+
+            return MainHelper::countries($this->CountryCode);
+        } catch (InvalidDatabaseException $e) {
+            if ($this->CountryCode == '--' || empty($this->CountryCode)) {
+                return 'Unknown';
+            }
+
+            return MainHelper::countries($this->CountryCode);
+        }
     }
 
     /**
@@ -286,11 +313,31 @@ class Player extends Elegant
      */
     public function getCountryFlagAttribute()
     {
-        if ($this->CountryCode == '--' || empty($this->CountryCode)) {
-            return 'images/flags/24/_unknown.png';
-        }
+        $dbPath = app_path() . '/bfacp/ThirdParty/GeoIP2/GeoLite2-City.mmdb';
 
-        return sprintf('images/flags/24/%s.png', strtoupper($this->CountryCode));
+        try {
+            if (file_exists($dbPath)) {
+                $reader = new Reader($dbPath);
+
+                if (!empty($this->IP_Address)) {
+                    $record = $reader->city($this->IP_Address);
+
+                    return sprintf('images/flags/24/%s.png', strtoupper($record->country->isoCode));
+                } else {
+                    throw new AddressNotFoundException();
+                }
+            } else {
+                throw new InvalidDatabaseException();
+            }
+        } catch (AddressNotFoundException $e) {
+            if ($this->CountryCode == '--' || empty($this->CountryCode)) {
+                return 'images/flags/24/_unknown.png';
+            }
+        } catch (InvalidDatabaseException $e) {
+            if ($this->CountryCode == '--' || empty($this->CountryCode)) {
+                return 'images/flags/24/_unknown.png';
+            }
+        }
     }
 
     /**
