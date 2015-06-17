@@ -32,6 +32,7 @@ return array(
     'BFACP\\Battlefield\\Server' => $baseDir . '/app/bfacp/Battlefield/Server.php',
     'BFACP\\Battlefield\\Setting' => $baseDir . '/app/bfacp/Battlefield/Setting.php',
     'BFACP\\Battlefield\\Weapon' => $baseDir . '/app/bfacp/Battlefield/Weapon.php',
+    'BFACP\\Commands\\Upgrade' => $baseDir . '/app/bfacp/Commands/Upgrade.php',
     'BFACP\\Elegant' => $baseDir . '/app/bfacp/Elegant.php',
     'BFACP\\Exceptions\\BattlelogException' => $baseDir . '/app/bfacp/Exceptions/BattlelogException.php',
     'BFACP\\Exceptions\\MetabansException' => $baseDir . '/app/bfacp/Exceptions/MetabansException.php',
