@@ -1,5 +1,5 @@
 SELECT
-    command_name as 'label', SUM(command_count) AS 'value'
+    command_name AS 'label', SUM(command_count) AS 'value'
 FROM
     ((SELECT
         tb2.command_name, COUNT(tb1.record_id) AS command_count
@@ -16,3 +16,4 @@ FROM
         adkats_commands.command_playerInteraction = 1
             AND command_active = 'Active')) x
 GROUP BY command_name
+HAVING `value` > 0

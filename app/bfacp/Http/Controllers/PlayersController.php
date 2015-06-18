@@ -71,11 +71,7 @@ class PlayersController extends BaseController
             ->select(DB::raw('record_message AS `ip`, COUNT(record_id) AS `seen`'))
             ->groupBy('ip')->get();
 
-            $charts['overview'] = $charts['overview']->filter(function ($command) {
-                if (intval($command->value) > 0) {
-                    return true;
-                }
-            })->map(function ($command) {
+            $charts['overview'] = $charts['overview']->map(function ($command) {
                 return [
                     $command->label,
                     intval($command->value)
