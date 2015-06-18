@@ -8,12 +8,12 @@
                 <div class="table-responsive">
                     <table class="table table-striped table-condensed">
                         <thead>
-                            <th>ID</th>
-                            <th>Server</th>
-                            <th>Type</th>
+                            <th width="50px">ID</th>
+                            <th width="250px">Server</th>
+                            <th width="150px">Time</th>
+                            <th width="190px">Type</th>
                             <th>Source</th>
                             <th>Target</th>
-                            <th>Time</th>
                             <th>Message</th>
                         </thead>
 
@@ -21,11 +21,26 @@
                             @foreach($reports as $report)
                             <tr>
                                 <td>{{ $report->record_id }}</td>
-                                <td>{{ $report->server->server_name_short or $report->server->ServerName }}</td>
-                                <td>{{ $report->action->command_name }}</td>
-                                <td>{{ link_to_route('player.show', $report->source_name, [$report->source_id, $report->source_name]) }}</td>
-                                <td>{{ link_to_route('player.show', $report->target_name, [$report->target_id, $report->target_name]) }}</td>
+                                <td>
+                                    <span tooltip="{{ $report->server->ServerName }}">
+                                    {{ $report->server->server_name_short or str_limit($report->server->ServerName, 30) }}
+                                    </span>
+                                </td>
                                 <td><span ng-bind="moment('{{ $report->stamp }}').fromNow()" tooltip="<?php echo '{{';?> moment('<?php echo $report->stamp;?>').format('lll') <?php echo '}}';?>"></span></td>
+                                <td>{{ Former::select('report_action')->options($commands)->placeholder('Select Action')->addClass('input-sm') }}</td>
+                                <td>
+                                    @if(is_null($report->source_id))
+                                    {{ $report->source_name }}
+                                    @else
+                                    {{ link_to_route('player.show', $report->source_name, [$report->source_id, $report->source_name]) }}</td>
+                                    @endif
+                                <td>
+                                    @if(is_null($report->target_id))
+                                    {{ $report->target_name }}
+                                    @else
+                                    {{ link_to_route('player.show', $report->target_name, [$report->target_id, $report->target_name]) }}
+                                    @endif
+                                </td>
                                 <td>{{ $report->record_message }}</td>
                             </tr>
                             @endforeach
