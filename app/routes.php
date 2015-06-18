@@ -170,6 +170,13 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
                 ],
                 'only'  => ['index', 'update']
             ]);
+
+            Route::resource('reports', 'ReportsController', [
+                'names' => [
+                    'index' => 'admin.adkats.reports.index'
+                ],
+                'only'  => ['index']
+            ]);
         });
 
         Route::group(['prefix' => 'site', 'namespace' => 'Site'], function () {
