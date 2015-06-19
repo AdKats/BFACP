@@ -14,7 +14,7 @@ class ReportsController extends BaseController
             ->orderBy('record_id', 'desc')
             ->paginate(30);
 
-        $commands = Command::whereIn('command_id', [9, 10, 19, 42, 62])->lists('command_name', 'command_id');
+        $commands = Command::whereIn('command_id', [3, 6, 7, 8, 9, 10, 11, 40, 41, 61])->lists('command_name', 'command_id');
 
         return View::make('admin.adkats.reports.index', compact('reports', 'commands'))->with('page_title', false);
     }

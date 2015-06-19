@@ -8,26 +8,23 @@
                 <div class="table-responsive">
                     <table class="table table-striped table-condensed">
                         <thead>
-                            <th width="50px">ID</th>
                             <th width="250px">Server</th>
                             <th width="150px">Time</th>
-                            <th width="190px">Type</th>
                             <th>Source</th>
                             <th>Target</th>
-                            <th>Message</th>
+                            <th>Reason</th>
+                            <th width="190px">Action</th>
                         </thead>
 
                         <tbody>
                             @foreach($reports as $report)
                             <tr>
-                                <td>{{ $report->record_id }}</td>
                                 <td>
                                     <span tooltip="{{ $report->server->ServerName }}">
                                     {{ $report->server->server_name_short or str_limit($report->server->ServerName, 30) }}
                                     </span>
                                 </td>
                                 <td><span ng-bind="moment('{{ $report->stamp }}').fromNow()" tooltip="<?php echo '{{';?> moment('<?php echo $report->stamp;?>').format('lll') <?php echo '}}';?>"></span></td>
-                                <td>{{ Former::select('report_action')->options($commands)->placeholder('Select Action')->addClass('input-sm') }}</td>
                                 <td>
                                     @if(is_null($report->source_id))
                                     {{ $report->source_name }}
@@ -42,6 +39,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $report->record_message }}</td>
+                                <td>{{ Former::select('report_action')->options($commands)->placeholder('Select Action')->addClass('input-sm') }}</td>
                             </tr>
                             @endforeach
                         </tbody>
