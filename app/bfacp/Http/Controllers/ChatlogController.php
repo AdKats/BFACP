@@ -60,7 +60,7 @@ class ChatlogController extends BaseController
                 } else {
                     $chat = $chat->where(function ($query) use ($keywords) {
                         foreach ($keywords as $keyword) {
-                            $query->orWhere('logMessage', 'LIKE', sprintf('%s%%', $keyword));
+                            $query->orWhere('logMessage', 'LIKE', '%' . $keyword . '%');
                         }
                     });
                 }
