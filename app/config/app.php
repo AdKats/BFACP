@@ -127,8 +127,7 @@ return [
         'Zizaco\Entrust\EntrustServiceProvider',
         'Dingo\Api\Provider\ApiServiceProvider',
         'BFACP\Providers\HelpersProvider',
-        'DaveJamesMiller\Breadcrumbs\ServiceProvider',
-        'PragmaRX\Firewall\Vendor\Laravel\ServiceProvider'
+        'DaveJamesMiller\Breadcrumbs\ServiceProvider'
     ],
 
     /*
@@ -202,8 +201,7 @@ return [
         'View'              => 'Illuminate\Support\Facades\View',
         'version'           => 'vierbergenlars\SemVer\version',
         'Menu'              => 'Lavary\Menu\Facade',
-        'Breadcrumbs'       => 'DaveJamesMiller\Breadcrumbs\Facade',
-        'Firewall'          => 'PragmaRX\Firewall\Vendor\Laravel\Facade'
+        'Breadcrumbs'       => 'DaveJamesMiller\Breadcrumbs\Facade'
     ]
 
 ];

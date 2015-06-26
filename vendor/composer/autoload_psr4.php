@@ -8,12 +8,10 @@ $baseDir = dirname($vendorDir);
 return array(
     'Zizaco\\Entrust\\' => array($vendorDir . '/zizaco/entrust/src/Entrust'),
     'Zizaco\\Confide\\' => array($vendorDir . '/zizaco/confide/src/Confide'),
-    'Symfony\\Component\\VarDumper\\' => array($vendorDir . '/symfony/var-dumper'),
     'Symfony\\Component\\Filesystem\\' => array($vendorDir . '/symfony/filesystem'),
     'Symfony\\Component\\EventDispatcher\\' => array($vendorDir . '/symfony/event-dispatcher'),
     'React\\Promise\\' => array($vendorDir . '/react/promise/src'),
-    'PragmaRX\\Support\\' => array($vendorDir . '/pragmarx/support/src'),
-    'PragmaRX\\Firewall\\' => array($vendorDir . '/pragmarx/firewall/src'),
+    'Patchwork\\' => array($vendorDir . '/patchwork/utf8/src/Patchwork'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'League\\Fractal\\' => array($vendorDir . '/league/fractal/src'),
     'League\\CommonMark\\' => array($vendorDir . '/league/commonmark/src'),
