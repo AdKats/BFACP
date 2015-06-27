@@ -128,7 +128,8 @@ return [
         'Dingo\Api\Provider\ApiServiceProvider',
         'BFACP\Providers\HelpersProvider',
         'DaveJamesMiller\Breadcrumbs\ServiceProvider',
-        'Kmd\Logviewer\LogviewerServiceProvider'
+        'Kmd\Logviewer\LogviewerServiceProvider',
+        'Barryvdh\Debugbar\ServiceProvider'
     ],
 
     /*

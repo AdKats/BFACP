@@ -73,6 +73,20 @@ if (!$app->runningInConsole()) {
     $_SERVER['REMOTE_ADDR'] = isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : $_SERVER['REMOTE_ADDR'];
 }
 
+App::singleton('bfadmincp', function () {
+    $app = new stdClass();
+
+    $app->isLoggedIn = Auth::check();
+    $app->user = null;
+
+    if ($app->isLoggedIn) {
+        $app->user = Auth::user();
+        App::setLocale($app->user->setting->lang);
+    }
+
+    return $app;
+});
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

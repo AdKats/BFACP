@@ -57,20 +57,6 @@ App::before(function ($request) {
         }
     }
 
-    App::singleton('bfadmincp', function () {
-        $app = new stdClass();
-
-        $app->isLoggedIn = Auth::check();
-        $app->user = null;
-
-        if ($app->isLoggedIn) {
-            $app->user = Auth::user();
-            App::setLocale(Auth::user()->setting->lang);
-        }
-
-        return $app;
-    });
-
     App::singleton('geo', function () {
         return App::make('BFACP\Repositories\GeoRepository');
     });

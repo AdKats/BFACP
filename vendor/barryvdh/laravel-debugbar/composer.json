@@ -1,0 +1,32 @@
+{
+    "name": "barryvdh/laravel-debugbar",
+    "description": "PHP Debugbar integration for Laravel",
+    "keywords": ["laravel", "debugbar", "profiler", "debug", "webprofiler"],
+    "license": "MIT",
+
+    "authors": [
+        {
+            "name": "Barry vd. Heuvel",
+            "email": "barryvdh@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.*",
+        "symfony/finder": "~2.3",
+        "maximebf/debugbar": "~1.10.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Barryvdh\\Debugbar\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-v1.x": "1.8-dev"
+        }
+    }
+}

@@ -29,7 +29,8 @@
         "league/commonmark": "0.7.0",
         "vierbergenlars/php-semver": "3.0.0",
         "davejamesmiller/laravel-breadcrumbs": "2.*",
-        "kmd/logviewer": "1.2.*"
+        "kmd/logviewer": "1.2.*",
+        "barryvdh/laravel-debugbar": "~1.8"
     },
     "autoload": {
         "classmap": [

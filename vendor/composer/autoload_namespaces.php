@@ -39,6 +39,7 @@ return array(
     'Guzzle' => array($vendorDir . '/guzzle/guzzle/src'),
     'GeoIp2' => array($vendorDir . '/geoip2/geoip2/src'),
     'File' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
+    'DebugBar' => array($vendorDir . '/maximebf/debugbar/src'),
     'DaveJamesMiller\\Breadcrumbs' => array($vendorDir . '/davejamesmiller/laravel-breadcrumbs/src'),
     'Crypt' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'ClassPreloader' => array($vendorDir . '/classpreloader/classpreloader/src'),

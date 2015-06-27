@@ -1,6 +1,6 @@
 <div class="navbar-custom-menu">
     <ul class="nav navbar-nav">
-        @if(Auth::check())
+        @if($bfacp->isLoggedIn)
         <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="glyphicon glyphicon-user"></i>

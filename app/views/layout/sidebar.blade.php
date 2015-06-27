@@ -1,7 +1,7 @@
 <aside class="main-sidebar">
     <section class="sidebar">
         <div class="user-panel">
-            @if(Auth::check())
+            @if($bfacp->isLoggedIn)
             <div class="pull-left image">
                 {{ HTML::image($bfacp->user->gravatar, null, ['class' => 'img-circle']) }}
             </div>
