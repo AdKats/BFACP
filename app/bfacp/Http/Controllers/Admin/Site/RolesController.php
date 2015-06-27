@@ -139,7 +139,7 @@ class RolesController extends BaseController
             // Update role permissions
             $role->permissions()->sync($permissions->toArray());
 
-            if (Input::get('display_name') != $role->name) {
+            if (Input::get('display_name') != $role->name && !in_array($role->id, [1, 2])) {
                 $role->name = trim(Input::get('display_name'));
                 $role->save();
             } else {
@@ -163,6 +163,10 @@ class RolesController extends BaseController
 
             // Get role
             $role = Role::findOrFail($id);
+
+            if (in_array($role->id, [1, 2])) {
+                return MainHelper::response(null, sprintf('You can\'t delete the %s role.', $role->name), 'error');
+            }
 
             // Save role name
             $roleName = $role->name;
