@@ -3,7 +3,7 @@
     <head>
         <base href="/">
         <meta charset="UTF-8">
-        <title>{{{ MainHelper::getTitle($page_title, Config::get('bfacp.site.title')) }}}</title>
+        <title>{{{ MainHelper::getTitle(isset($page_title) ? $page_title : false, Config::get('bfacp.site.title')) }}}</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
         @yield('meta')
@@ -42,7 +42,7 @@
 
                 <a href="{{ route('home') }}" class="logo" target="_self">
                     <span class="logo-mini">ACP</span>
-                    <span class="logo-lg">{{ MainHelper::getTitle($page_title, Config::get('bfacp.site.title'), true) }}</span>
+                    <span class="logo-lg">{{ MainHelper::getTitle(isset($page_title) ? $page_title : false, Config::get('bfacp.site.title'), true) }}</span>
                 </a>
 
                 <nav class="navbar navbar-static-top" role="navigation">
@@ -58,7 +58,7 @@
 
             <div class="content-wrapper">
                 <section class="content-header">
-                    <h1>{{{ $page_title }}}</h1>
+                    <h1>{{ (isset($page_title) ? $page_title : false) }}</h1>
 
                     {{ Breadcrumbs::renderIfExists() }}
                 </section>
