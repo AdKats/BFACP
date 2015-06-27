@@ -17,8 +17,6 @@ use MainHelper;
 
 class UsersController extends BaseController
 {
-    private $messages = [];
-
     public function __construct()
     {
         parent::__construct();
