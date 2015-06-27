@@ -2,6 +2,8 @@
 
 define('BFACP_VERSION', '2.0.1');
 
+$_SERVER['REMOTE_ADDR'] = isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : $_SERVER['REMOTE_ADDR'];
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -69,8 +71,6 @@ if (!$app->runningInConsole()) {
             die(sprintf('Please delete installer located at %s', $setupFilePath));
         }
     }
-
-    $_SERVER['REMOTE_ADDR'] = isset($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : $_SERVER['REMOTE_ADDR'];
 }
 
 App::singleton('bfadmincp', function () {
