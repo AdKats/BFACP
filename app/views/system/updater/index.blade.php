@@ -7,12 +7,14 @@
 
         <div class="box box-info">
             <div class="box-header with-border">
-                <h4 class="box-title">Latest release</h4>
+                <h4 class="box-title">Latest release &ndash; {{ $latest_release['name'] }}</h4>
                 <div class="pull-right">
                     @if($outofdate)
                     <small class="label label-danger">Out of Date!</small>
+                    @elseif($unreleased)
+                    <small class="label label-warning">You're running an unreleased version.</small>
                     @else
-                    <small class="label label-success">You have the latest version</small>
+                    <small class="label label-success">You're running the latest version</small>
                     @endif
                 </div>
             </div>
