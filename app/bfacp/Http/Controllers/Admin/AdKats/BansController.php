@@ -25,12 +25,6 @@ class BansController extends BaseController
     protected $repository;
 
     /**
-     * Response messages
-     * @var array
-     */
-    protected $messages = [];
-
-    /**
      * Metabans Class
      * @var BFACP\Libraries\Metabans
      */
