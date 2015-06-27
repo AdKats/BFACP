@@ -2761,5 +2761,58 @@
             "utf-8",
             "utf8"
         ]
+    },
+    {
+        "name": "kmd/logviewer",
+        "version": "1.2.1",
+        "version_normalized": "1.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mikemand/logviewer.git",
+            "reference": "cf546420b27e2c9d8d43e14fdd4e5306013e70a5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/mikemand/logviewer/zipball/cf546420b27e2c9d8d43e14fdd4e5306013e70a5",
+            "reference": "cf546420b27e2c9d8d43e14fdd4e5306013e70a5",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/filesystem": "~4.0",
+            "illuminate/support": "~4.0",
+            "php": ">=5.3.7",
+            "psr/log": "~1.0",
+            "symfony/finder": "~2.3"
+        },
+        "require-dev": {
+            "mockery/mockery": "~0.9",
+            "phpunit/phpunit": "~4.0"
+        },
+        "time": "2014-10-09 10:45:09",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [],
+            "psr-0": {
+                "Kmd\\Logviewer": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Micheal Mand - KMDWebDesigns",
+                "email": "micheal@kmdwebdesigns.com"
+            }
+        ],
+        "description": "Laravel 4 log file viewer.",
+        "keywords": [
+            "laravel",
+            "log",
+            "log viewer",
+            "logviewer"
+        ]
     }
 ]

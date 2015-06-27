@@ -1,0 +1,38 @@
+{
+    "name": "kmd/logviewer",
+    "description": "Laravel 4 log file viewer.",
+    "keywords": [
+        "laravel",
+        "log viewer",
+        "log",
+        "logviewer"
+    ],
+    "authors": [
+        {
+            "name": "Micheal Mand - KMDWebDesigns",
+            "email": "micheal@kmdwebdesigns.com"
+        }
+    ],
+    "license": [
+        "MIT"
+    ],
+    "require": {
+        "php": ">=5.3.7",
+        "illuminate/support": "~4.0",
+        "illuminate/filesystem": "~4.0",
+        "symfony/finder": "~2.3",
+        "psr/log": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "mockery/mockery": "~0.9"
+    },
+    "autoload": {
+        "classmap": [
+
+        ],
+        "psr-0": {
+            "Kmd\\Logviewer": "src/"
+        }
+    }
+}

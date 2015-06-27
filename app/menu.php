@@ -86,6 +86,11 @@ Menu::make('MainNav', function ($menu) use ($adminPermsList) {
                 $site->add(Lang::get('navigation.admin.site.items.servers.title'), ['route' => 'admin.site.servers.index'])
                 ->prepend(HTML::faicon(Lang::get('navigation.admin.site.items.servers.icon.fa'), true));
             }
+
+            if (Auth::user()->ability(null, 'admin.site.system.logs')) {
+                $site->add(Lang::get('navigation.admin.site.items.system.logs.title'), Config::get('logviewer::base_url'))
+                ->prepend(HTML::faicon(Lang::get('navigation.admin.site.items.system.logs.icon.fa'), true));
+            }
         }
     }
 });

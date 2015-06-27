@@ -31,6 +31,7 @@ return array(
     'Math' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'Lavary\\Menu\\' => array($vendorDir . '/lavary/laravel-menu/src'),
     'LaravelBook\\Ardent' => array($vendorDir . '/laravelbook/ardent/src'),
+    'Kmd\\Logviewer' => array($vendorDir . '/kmd/logviewer/src'),
     'JsonSerializable' => array($vendorDir . '/geoip2/geoip2/compat'),
     'Jeremeamia\\SuperClosure' => array($vendorDir . '/jeremeamia/SuperClosure/src'),
     'Illuminate' => array($vendorDir . '/laravel/framework/src'),

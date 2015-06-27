@@ -179,6 +179,12 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at'   => $now
             ],
             [
+                'name'         => 'admin.site.system.logs',
+                'display_name' => 'View the application logs.',
+                'created_at'   => $now,
+                'updated_at'   => $now
+            ],
+            [
                 'name'         => 'admin.player.special.add',
                 'display_name' => 'Add player to the special players table',
                 'created_at'   => $now,

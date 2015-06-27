@@ -127,7 +127,8 @@ return [
         'Zizaco\Entrust\EntrustServiceProvider',
         'Dingo\Api\Provider\ApiServiceProvider',
         'BFACP\Providers\HelpersProvider',
-        'DaveJamesMiller\Breadcrumbs\ServiceProvider'
+        'DaveJamesMiller\Breadcrumbs\ServiceProvider',
+        'Kmd\Logviewer\LogviewerServiceProvider'
     ],
 
     /*

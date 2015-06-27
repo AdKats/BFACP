@@ -272,6 +272,12 @@ Entrust::routeNeedsPermission('admin/updater', 'admin.site.settings.site');
 Entrust::routeNeedsPermission('admin/site/servers', 'admin.site.settings.server');
 Entrust::routeNeedsPermission('admin/site/servers/*', 'admin.site.settings.server');
 
+/*========================================
+=            Site System Logs            =
+========================================*/
+Entrust::routeNeedsPermission(Config::get('logviewer::base_url'), 'admin.site.system.logs');
+Entrust::routeNeedsPermission(Config::get('logviewer::base_url') . '/*', 'admin.site.system.logs');
+
 /*================================================
 =            Require the Menu Builder            =
 ================================================*/

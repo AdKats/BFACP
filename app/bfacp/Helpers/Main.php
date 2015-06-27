@@ -826,4 +826,34 @@ class Main extends BaseHelper
 
         return;
     }
+
+    /**
+     * Converts log error codes to correct css styles
+     * @param  string $name Exception Level
+     * @return string
+     */
+    public function alertToBoxClass($name = null)
+    {
+        switch ($name) {
+            case 'emergency':
+            case 'alert':
+            case 'critical':
+            case 'error':
+                $style = 'danger';
+                break;
+
+            case 'notice':
+                $style = 'warning';
+                break;
+
+            case 'debug':
+                $style = 'info';
+                break;
+
+            default:
+                $style = $name;
+        }
+
+        return $style;
+    }
 }

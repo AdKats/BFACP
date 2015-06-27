@@ -93,6 +93,16 @@ return [
                         'ion' => null
                     ],
                     'items' => []
+                ],
+
+                'system'   => [
+                    'logs' => [
+                        'title' => 'System Logs',
+                        'icon'  => [
+                            'fa'  => 'fa-file',
+                            'ion' => null
+                        ]
+                    ]
                 ]
             ]
         ],
