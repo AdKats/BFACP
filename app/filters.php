@@ -13,21 +13,12 @@
 
 App::before(function ($request) {
     // CloudFlare IP addresses to trust
-    Request::setTrustedProxies([
-        '199.27.128.0/21',
-        '173.245.48.0/20',
-        '103.21.244.0/22',
-        '103.22.200.0/22',
-        '103.31.4.0/22',
-        '141.101.64.0/18',
-        '108.162.192.0/18',
-        '190.93.240.0/20',
-        '188.114.96.0/20',
-        '197.234.240.0/22',
-        '198.41.128.0/17',
-        '162.158.0.0/15',
-        '104.16.0.0/12'
-    ]);
+    // Proxies obtained from https://www.cloudflare.com/ips-v4
+    Request::setTrustedProxies(Cache::remember('cloudflare.ips', 24 * 60 * 7, function () {
+        $request = App::make('GuzzleHttp\Client')->get('https://www.cloudflare.com/ips-v4');
+        $response = $request->getBody();
+        return explode("\n", $response);
+    }));
 
     // If request is not secured and force secured connection is enabled
     // then we need to redirect the user to a secure link.
