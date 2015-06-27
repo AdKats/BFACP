@@ -10,7 +10,14 @@
 $allowedIps = ['127.0.0.1'];
 
 if (isset($_SERVER['REMOTE_ADDR'])) {
-    if (in_array($_SERVER['REMOTE_ADDR'], $allowedIps)) {
+    // Check for cloudflare use
+    if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+        $ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
+    } else {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+
+    if (in_array($ip, $allowedIps)) {
         $debug = true;
     } else {
         $debug = false;
