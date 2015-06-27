@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-xs-12 col-lg-5">
+    <div class="col-xs-12 col-lg-4">
         <div class="box box-primary">
             <div class="box-body">
                 {{ Former::open()->route('chatlog.search')->method('GET') }}
@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                {{ Former::checkbox('showspam')->label('Show Spam') }}
+                {{ Former::checkbox('showspam')->label('&nbsp;')->text('View Spam Messages') }}
 
                 {{ Former::hidden('pid', Input::get('pid', '')) }}
 
@@ -54,7 +54,7 @@
     </div>
 
     @if(isset($chat))
-    <div class="col-xs-12 col-lg-7">
+    <div class="col-xs-12 col-lg-8">
         <div class="box box-primary">
             <div class="box-body">
                 <div class="table-responsive">
@@ -170,11 +170,6 @@ $(function() {
         showDropdowns: true
     }, function(startDate, endDate) {
         updateDateRangeDisplay(startDate, endDate);
-    });
-
-    $('input').iCheck({
-        checkboxClass: 'icheckbox_flat-blue',
-        radioClass: 'iradio_flat-blue'
     });
 });
 </script>
