@@ -29,7 +29,9 @@ ClassLoader::addDirectories([
 |
  */
 
-Log::useDailyFiles(storage_path() . '/logs/laravel.log');
+$logFile = sprintf('log-%s.txt', php_sapi_name());
+
+Log::useDailyFiles(storage_path() . '/logs/' . $logFile);
 
 /*
 |--------------------------------------------------------------------------
@@ -72,7 +74,7 @@ App::error(function (Exception $exception, $code) {
 });
 
 App::missing(function ($exception) {
-    View::share('page_title', false);
+    View::share('page_title', 'Page Not Found');
     return Response::view('system.notfound', [], 404);
 });
 
