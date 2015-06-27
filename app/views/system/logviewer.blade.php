@@ -21,7 +21,7 @@
         </nav>
     </div>
 </div>
-{{ Config::get('logviewer::base_url') }}
+
 <div class="row">
     <div class="col-xs-12 col-sm-4 col-md-3">
         @if(!$empty)
