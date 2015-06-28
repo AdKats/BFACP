@@ -61,7 +61,7 @@ If you have any questions or need help setting this up please post it [here](htt
 
 Please create a ticket for bugs/requests. [here](https://github.com/Prophet731/BFAdminCP/issues).
 
-# Installing from shell
+## Installing from the command line (Linux Only)
 
 This method is only for those who have shell access to their web server or VPS. This will download and extract the files to your current directory.
 
