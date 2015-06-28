@@ -50,8 +50,12 @@ App::error(function (Exception $exception, $code) {
     Log::error($exception);
 
     if (!Config::get('app.debug')) {
-        View::share('page_title', false);
-        return Response::view('system.error', compact('exception', 'code'), 500);
+        if (Request::ajax()) {
+            return MainHelper::response(null, $exception->getMessage(), 'error', 500);
+        } else {
+            View::share('page_title', 'Fatal Error');
+            return Response::view('system.error', compact('exception', 'code'), 500);
+        }
     }
 });
 
