@@ -61,12 +61,19 @@ require $framework . '/Illuminate/Foundation/start.php';
 
 if (!$app->runningInConsole()) {
     $setupFilePath = $app['path.base'] . '/app/bfacp/setup.php';
+    $jsBuildsPath  = $app['path.public'] . '/js/builds';
 
     if (file_exists($setupFilePath)) {
         require_once $setupFilePath;
 
         if (!unlink($setupFilePath)) {
             die(sprintf('Please delete installer located at %s', $setupFilePath));
+        }
+    }
+
+    if (!is_writable($jsBuildsPath)) {
+        if (!chmod($jsBuildsPath, 0755)) {
+            die(sprintf('Directory "%s" is not writeable. Please change permissions to 0755', $jsBuildsPath));
         }
     }
 
