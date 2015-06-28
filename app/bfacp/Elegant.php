@@ -1,9 +1,10 @@
 <?php namespace BFACP;
 
-use Illuminate\Database\Eloquent\Model AS Eloquent;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 
-class Elegant extends Eloquent
+class Elegant extends Model
 {
     /**
      * Validation rules
@@ -33,11 +34,11 @@ class Elegant extends Eloquent
      */
     protected $validator;
 
-    public function __construct(array $attributes = array(), Validator $validator = null)
+    public function __construct(array $attributes = [], Validator $validator = null)
     {
         parent::__construct($attributes);
 
-        $this->validator = $validator ?: \App::make('validator');
+        $this->validator = $validator ?: App::make('validator');
     }
 
     /**
@@ -47,8 +48,7 @@ class Elegant extends Eloquent
     {
         parent::boot();
 
-        static::saving(function($model)
-        {
+        static::saving(function ($model) {
             return $model->validate();
         });
     }
@@ -60,13 +60,12 @@ class Elegant extends Eloquent
     {
         $v = $this->validator->make($this->attributes, static::$rules, static::$messages);
 
-        if ($v->fails())
-        {
+        if ($v->fails()) {
             $this->setErrors($v->messages());
-            return FALSE;
+            return false;
         }
 
-        return TRUE;
+        return true;
     }
 
     /**
@@ -92,7 +91,7 @@ class Elegant extends Eloquent
      */
     public function hasErrors()
     {
-        return ! empty($this->errors);
+        return !empty($this->errors);
     }
 
     /**
