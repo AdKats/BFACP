@@ -61,6 +61,16 @@ If you have any questions or need help setting this up please post it [here](htt
 
 Please create a ticket for bugs/requests. [here](https://github.com/Prophet731/BFAdminCP/issues).
 
+# Installing from shell
+
+This method is only for those who have shell access to their web server or VPS. This will download and extract the files to your current directory.
+
+```bash
+wget -O v2.0.0.tar.gz https://github.com/Prophet731/BFAdminCP/archive/v2.0.0.tar.gz
+tar -xzf v2.0.0.tar.gz --strip-components=1
+rm -f v2.0.0.tar.gz
+```
+
 [FAQ](https://github.com/Prophet731/BFAdminCP/wiki/FAQ)
 
 <a href="https://goo.gl/8BlTk2" target="_blank"><img src="https://raw.githubusercontent.com/ColColonCleaner/AdKats/master/images/AdKats_Docs_Donate.jpg"></a>
