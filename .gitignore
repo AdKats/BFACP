@@ -8,3 +8,4 @@ Thumbs.db
 /public/AdminLTE-master
 oracle.sqlite
 *.sublime-*
+/vendor
