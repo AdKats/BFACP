@@ -34,6 +34,7 @@ return array(
     'Kmd\\Logviewer' => array($vendorDir . '/kmd/logviewer/src'),
     'JsonSerializable' => array($vendorDir . '/geoip2/geoip2/compat'),
     'Jeremeamia\\SuperClosure' => array($vendorDir . '/jeremeamia/SuperClosure/src'),
+    'JShrink' => array($vendorDir . '/tedivm/jshrink/src'),
     'Illuminate' => array($vendorDir . '/laravel/framework/src'),
     'Guzzle\\Tests' => array($vendorDir . '/guzzle/guzzle/tests'),
     'Guzzle' => array($vendorDir . '/guzzle/guzzle/src'),
@@ -43,6 +44,7 @@ return array(
     'DaveJamesMiller\\Breadcrumbs' => array($vendorDir . '/davejamesmiller/laravel-breadcrumbs/src'),
     'Crypt' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'ClassPreloader' => array($vendorDir . '/classpreloader/classpreloader/src'),
+    'CeesVanEgmond\\Minify' => array($vendorDir . '/ceesvanegmond/minify/src'),
     'Carbon' => array($vendorDir . '/nesbot/carbon/src'),
     'Boris' => array($vendorDir . '/d11wtq/boris/lib'),
 );
