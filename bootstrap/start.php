@@ -72,7 +72,11 @@ if (!$app->runningInConsole()) {
     }
 
     if (!is_writable($jsBuildsPath)) {
-        if (!chmod($jsBuildsPath, 0755)) {
+        try {
+            if (!chmod($jsBuildsPath, 0755)) {
+                die(sprintf('Directory "%s" is not writeable. Please change permissions to 0755', $jsBuildsPath));
+            }
+        } catch (Exception $e) {
             die(sprintf('Directory "%s" is not writeable. Please change permissions to 0755', $jsBuildsPath));
         }
     }
