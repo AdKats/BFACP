@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Log as Log;
 use Illuminate\Support\Facades\Queue;
 use MainHelper;
 
@@ -575,13 +576,22 @@ class LiveServerRepository extends BaseRepository
      */
     public function adminPunish($player, $message)
     {
+        Log::debug('Entering Live Scoreboard Administration - Punish', ['server' => $this->server->ServerName]);
+
         if ($this->isValidName($player)) {
-            $this->log($player, 'player_punish', $message, 0, false, true);
-        } else {
-            throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
+            Log::debug('Fetching player object', ['player' => $player]);
+
+            $p = Player::where('GameID', $this->gameID)->where('SoldierName', $player)->first();
+
+            if (!$p) {
+                Log::error('Unable to fetch player object. Aborting!', ['player' => $player]);
+                throw new RconException(400, 'Unable to punish player. No match found.');
+            }
+
+            return $this->log($player, 'player_punish', $message, 0, false, true);
         }
 
-        return true;
+        throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
     }
 
     /**
@@ -811,19 +821,22 @@ class LiveServerRepository extends BaseRepository
                             if (is_array($player) && array_key_exists('guid', $player)) {
 
                                 Queue::push(function ($job) use ($player, $player2) {
+                                    $updated = false;
 
                                     // If player rank doesn't match the database update it
                                     if ($player2->GlobalRank != $player['rank']) {
                                         $player2->GlobalRank = $player['rank'];
+                                        $updated = true;
                                     }
 
                                     // If player name doesn't match the database update it
                                     if ($player2->SoldierName != $player['name']) {
                                         $player2->SoldierName = $player['name'];
+                                        $updated = true;
                                     }
 
                                     // If player name or rank are changed save changes to database
-                                    if ($player2->SoldierName != $player['name'] || $player2->GlobalRank != $player['rank']) {
+                                    if ($updated) {
                                         $player2->save();
                                     }
                                 });
@@ -1190,7 +1203,15 @@ class LiveServerRepository extends BaseRepository
      */
     protected function isValidName($player)
     {
-        return preg_match('/^[a-zA-Z0-9_\\-]+$/', $player);
+        $v = preg_match('/^[a-zA-Z0-9_\\-]+$/', $player);
+
+        if ($v) {
+            Log::debug('Name passed validation', ['player' => $player, 'server' => $this->server->ServerName, 'auth' => $this->user->username]);
+        } else {
+            Log::debug('Name failed validation', ['player' => $player, 'server' => $this->server->ServerName, 'auth' => $this->user->username]);
+        }
+
+        return $v;
     }
 
     /**
@@ -1199,8 +1220,6 @@ class LiveServerRepository extends BaseRepository
     private function setAdmin()
     {
         $this->admin = MainHelper::getAdminPlayer($this->user, $this->gameID);
-
-        return;
     }
 
     /**
