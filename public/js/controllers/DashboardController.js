@@ -1,4 +1,4 @@
-angular.controller('DashboardController', ['$scope', '$http', '$interval', function($scope, $http, $interval) {
+angular.module('bfacp').controller('DashboardController', ['$scope', '$http', '$interval', function($scope, $http, $interval) {
     $scope.results = {
         bans: {
             columns: [],
@@ -69,7 +69,7 @@ angular.controller('DashboardController', ['$scope', '$http', '$interval', funct
             $scope.results.metabans.assessments.enforced_bans_total = data.data.assessments.enforced_bans_total;
             $scope.results.metabans.locales = data.data.locales;
         }).error(function(data, status) {
-            if(data.status_code == 500) {
+            if (data.status_code == 500) {
                 return false;
             }
 
@@ -83,21 +83,21 @@ angular.controller('DashboardController', ['$scope', '$http', '$interval', funct
      * @return void
      */
     $scope.latestBans = function() {
-        if($scope.loaded.bans) {
+        if ($scope.loaded.bans) {
             $("#latest-ban-refresh-btn").addClass('fa-spin');
             $scope.loaded.bans = false;
         }
 
         $http({
             url: 'api/bans/latest',
-            method:'GET',
-            params:{
+            method: 'GET',
+            params: {
                 personal: $scope.opts.bans.personal
             }
         }).success(function(data, status) {
             $scope.results.bans.columns = data.data.cols;
-            $scope.results.bans.data    = data.data.bans;
-            $scope.loaded.bans          = true;
+            $scope.results.bans.data = data.data.bans;
+            $scope.loaded.bans = true;
             $("#latest-ban-refresh-btn").removeClass('fa-spin');
         }).error(function(data, status) {
             $scope.latestBans();
@@ -110,13 +110,13 @@ angular.controller('DashboardController', ['$scope', '$http', '$interval', funct
      */
     $scope.population = function() {
         $http.get('api/servers/population').success(function(data, status) {
-            $scope.results.population.data       = data.data.games;
-            $scope.results.population.online     = data.data.online;
-            $scope.results.population.total      = data.data.totalSlots;
+            $scope.results.population.data = data.data.games;
+            $scope.results.population.online = data.data.online;
+            $scope.results.population.total = data.data.totalSlots;
             $scope.results.population.percentage = data.data.percentage;
-            $scope.results.population.columns    = data.data.columns;
-            $scope.results.population.title      = data.data.title;
-            $scope.results.population.footer     = data.data.footer;
+            $scope.results.population.columns = data.data.columns;
+            $scope.results.population.title = data.data.title;
+            $scope.results.population.footer = data.data.footer;
         }).error(function(data, status) {
             $scope.population();
         });
@@ -129,7 +129,7 @@ angular.controller('DashboardController', ['$scope', '$http', '$interval', funct
     $scope.banStats = function() {
         $http.get('api/bans/stats').success(function(data, status) {
             $scope.results.banstats.yesterday = data.data.bans.yesterday;
-            $scope.results.banstats.average   = data.data.bans.average;
+            $scope.results.banstats.average = data.data.bans.average;
         }).error(function(data, status) {
             $scope.banStats();
         });
@@ -144,15 +144,15 @@ angular.controller('DashboardController', ['$scope', '$http', '$interval', funct
     $scope.populationColor = function(pct, usebg) {
         var classColor;
 
-        if(pct <= 30) {
+        if (pct <= 30) {
             classColor = usebg ? 'red' : 'danger';
-        } else if(pct > 30 && pct <= 80) {
+        } else if (pct > 30 && pct <= 80) {
             classColor = usebg ? 'blue' : 'warning';
-        } else if(pct > 80) {
+        } else if (pct > 80) {
             classColor = usebg ? 'green' : 'success';
         }
 
-        if(usebg) {
+        if (usebg) {
             classColor = 'bg-' + classColor;
         }
 
@@ -167,8 +167,7 @@ angular.controller('DashboardController', ['$scope', '$http', '$interval', funct
     $scope.assessmentType = function(assessment) {
         var typeLabel = '';
 
-        switch(assessment.action_type)
-        {
+        switch (assessment.action_type) {
             case "none":
                 typeLabel = $scope.results.metabans.locales.type.none;
                 break;

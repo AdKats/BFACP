@@ -2,6 +2,7 @@
 
 use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File as File;
 
 class Main extends BaseHelper
 {
@@ -855,5 +856,31 @@ class Main extends BaseHelper
         }
 
         return $style;
+    }
+
+    /**
+     * Returns files in a directory
+     * @param  string  $dir       Directory Path
+     * @param  boolean $onlyNames Only return the filename
+     * @param  string  $prepend   Prepend custom path to use in front of filename
+     * @return array
+     */
+    public function files($dir, $onlyNames = false, $prepend = null)
+    {
+        $files = [];
+
+        foreach (File::files($dir) as $path) {
+            if ($onlyNames) {
+                $file = pathinfo($path);
+
+                $extension = '.' . $file['extension'];
+
+                $files[] = $prepend === null ? $file['filename'] . $extension : $prepend . $file['filename'] . $extension;
+            } else {
+                $files[] = $path;
+            }
+        }
+
+        return $files;
     }
 }

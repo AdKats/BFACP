@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -10,11 +10,9 @@ return array(
     | These environments will not be minified and all individual files are
     | returned
     |
-    */
+     */
 
-    'ignore_environments' => array(
-	    'local',
-    ),
+    'ignore_environments' => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -26,9 +24,9 @@ return array(
     | stored. This is relative to your public path. Notice the trailing slash.
     | Note that this directory must be writeable.
     |
-    */
+     */
 
-    'css_build_path' => '/css/builds/',
+    'css_build_path'      => '/css/builds/',
 
     /*
     |--------------------------------------------------------------------------
@@ -40,18 +38,18 @@ return array(
     | stored. This is relative to your public path. Notice the trailing slash.
     | Note that this directory must be writeable.
     |
-    */
+     */
 
-    'js_build_path' => '/js/builds/',
+    'js_build_path'       => '/js/builds/',
 
-	/*
+    /*
     |--------------------------------------------------------------------------
     | Base URL
     |--------------------------------------------------------------------------
     |
-    | You can set the base URL for the links generated with the configuration 
-	| value. By default if empty HTTP_HOST would be used.
+    | You can set the base URL for the links generated with the configuration
+    | value. By default if empty HTTP_HOST would be used.
     |
-    */
-	'base_url' => ''
-);
+     */
+    'base_url'            => ''
+];

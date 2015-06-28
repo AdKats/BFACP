@@ -126,8 +126,8 @@
             moment.locale( lang || navigator.language.split('-')[0] );
             $.widget.bridge('uibutton', $.ui.button);
         </script>
-        {{ HTML::script('js/app.js?v=1') }}
 
+        {{ Minify::javascript(array_merge(['/js/app.js'], MainHelper::files(public_path() . '/js/factorys', true, '/js/factorys/'), MainHelper::files(public_path() . '/js/controllers', true, '/js/controllers/'))) }}
         @yield('scripts')
     </body>
 </html>
