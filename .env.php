@@ -45,6 +45,7 @@ return [
      */
     'APP_ENV'        => 'production',
     'APP_DEBUG'      => $debug,
+    'IP_WHITELIST'   => implode('|', $allowedIps),
 
     // Supported: "file", "database", "apc", "memcached", "redis", "array"
     'SESSION_DRIVER' => $session_driver,

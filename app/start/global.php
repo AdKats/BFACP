@@ -76,7 +76,14 @@ App::missing(function ($exception) {
  */
 
 App::down(function () {
-    return Response::make('Be right back!', 503);
+    $clientIp = $_SERVER['REMOTE_ADDR'];
+    $whitelist = getenv('IP_WHITELIST') !== false ? explode('|', getenv('IP_WHITELIST')) : [];
+
+    if (!in_array($clientIp, $whitelist)) {
+        return Response::view('system.maintenance', [], 503);
+    }
+
+    View::share('appdown', true);
 });
 
 /*
@@ -91,6 +98,5 @@ App::down(function () {
  */
 
 require app_path() . '/filters.php';
-
 require app_path() . '/bfacp/macros.php';
 require app_path() . '/bfacp/events.php';

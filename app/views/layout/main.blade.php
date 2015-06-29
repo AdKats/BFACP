@@ -64,6 +64,13 @@
                 </section>
 
                 <section class="content">
+                    @if(isset($appdown) && $appdown)
+                    <div class="alert alert-warning">
+                        <i class="fa fa-exclamation-triangle animated infinite flash"></i>
+                        Maintenance Mode Enabled
+                    </div>
+                    @endif
+
                     @foreach(Session::get('messages', []) as $message)
                     <div class="row">
                         <div class="col-xs-12">
