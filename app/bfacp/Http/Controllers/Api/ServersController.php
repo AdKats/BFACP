@@ -8,6 +8,7 @@ use BFACP\Repositories\Scoreboard\LiveServerRepository;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config as Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
@@ -97,7 +98,7 @@ class ServersController extends BaseController
             $scoreboard = new LiveServerRepository(Server::findOrFail($id));
 
             if ($scoreboard->attempt()->check()) {
-                if (Input::has('verbose') && Input::get('verbose') == 1) {
+                if (Config::get('app.debug') && Input::has('verbose') && Input::get('verbose') == 1) {
                     $useVerbose = true;
                 } else {
                     $useVerbose = false;

@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Config as Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log as Log;
-use Illuminate\Support\Facades\Queue;
 use MainHelper;
 
 class LiveServerRepository extends BaseRepository
@@ -828,29 +827,28 @@ class LiveServerRepository extends BaseRepository
                             }
 
                             if (is_array($player) && array_key_exists('guid', $player)) {
+                                $updated = false;
 
-                                Queue::push(function ($job) use ($player, $player2) {
-                                    $updated = false;
+                                // If player rank doesn't match the database update it
+                                if ($player2->GlobalRank != $player['rank']) {
+                                    if ($player['rank'] > 0) {
+                                        $player2->GlobalRank = $player['rank'];
 
-                                    // If player rank doesn't match the database update it
-                                    if ($player2->GlobalRank != $player['rank']) {
-                                        if ($player['rank'] > 0) {
-                                            $player2->GlobalRank = $player['rank'];
-                                            $updated = true;
-                                        }
-                                    }
-
-                                    // If player name doesn't match the database update it
-                                    if ($player2->SoldierName != $player['name']) {
-                                        $player2->SoldierName = $player['name'];
                                         $updated = true;
                                     }
+                                }
 
-                                    // If player name or rank are changed save changes to database
-                                    if ($updated) {
-                                        $player2->save();
-                                    }
-                                });
+                                // If player name doesn't match the database update it
+                                if ($player2->SoldierName != $player['name']) {
+                                    $player2->SoldierName = $player['name'];
+
+                                    $updated = true;
+                                }
+
+                                // If player name or rank are changed save changes to database
+                                if ($updated) {
+                                    $player2->save();
+                                }
                             }
 
                             $this->data['teams'][$teamID][$type][$index]['_player'] = $player2;
@@ -1244,8 +1242,10 @@ class LiveServerRepository extends BaseRepository
         $this->data['_raw']['playerlist'] = $this->client->adminGetPlayerlist();
 
         for ($i = 0; $i < count($serverinfo); $i++) {
-            $key                                    = 'K' . $i;
+            $key = 'K' . $i;
+
             $this->data['_raw']['serverinfo'][$key] = $serverinfo[$i];
+
             if (is_numeric($this->data['_raw']['serverinfo'][$key])) {
                 $this->data['_raw']['serverinfo'][$key] = intval($this->data['_raw']['serverinfo'][$key]);
             } else {
@@ -1253,6 +1253,13 @@ class LiveServerRepository extends BaseRepository
                     $this->data['_raw']['serverinfo'][$key] = ($this->data['_raw']['serverinfo'][$key] == 'true' ? true : false);
                 }
             }
+        }
+
+        $this->data['_raw']['sql_time'] = 0;
+        $this->data['_raw']['sql']      = DB::getQueryLog();
+
+        foreach ($this->data['_raw']['sql'] as $sql) {
+            $this->data['_raw']['sql_time'] = $this->data['_raw']['sql_time'] + $sql['time'];
         }
 
         return $this;

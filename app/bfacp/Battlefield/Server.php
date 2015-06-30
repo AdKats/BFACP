@@ -70,14 +70,14 @@ class Server extends Elegant
      * Models to be loaded automaticly
      * @var array
      */
-    protected $with = [];
+    protected $with = ['game', 'setting'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function game()
     {
-        return $this->belongsTo('BFACP\Battlefield\Game', 'GameID');
+        return $this->belongsTo('BFACP\Battlefield\Game', 'GameID')->remember(30);
     }
 
     /**

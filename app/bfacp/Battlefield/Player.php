@@ -51,7 +51,7 @@ class Player extends Elegant
      * Models to be loaded automaticly
      * @var array
      */
-    protected $with = [];
+    protected $with = ['game', 'battlelog'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Model
@@ -106,7 +106,7 @@ class Player extends Elegant
      */
     public function game()
     {
-        return $this->belongsTo('BFACP\Battlefield\Game', 'GameID');
+        return $this->belongsTo('BFACP\Battlefield\Game', 'GameID')->remember(30);
     }
 
     /**
@@ -214,10 +214,6 @@ class Player extends Elegant
      */
     public function getLinksAttribute()
     {
-        if (is_null($this->game)) {
-            return;
-        }
-
         switch ($this->game->Name) {
             case 'BFHL':
                 $game = 'BFH';
@@ -308,11 +304,6 @@ class Player extends Elegant
      */
     public function getRankImageAttribute()
     {
-        // If we don't have a game object return null
-        if (is_null($this->game)) {
-            return;
-        }
-
         switch ($this->game->Name) {
             case 'BF3':
                 $rank = $this->GlobalRank;
