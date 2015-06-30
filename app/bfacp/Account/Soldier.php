@@ -51,7 +51,7 @@ class Soldier extends Elegant
      * Models to be loaded automaticly
      * @var array
      */
-    protected $with = ['player'];
+    protected $with = [];
 
     /**
      * @return Illuminate\Database\Eloquent\Model

@@ -59,12 +59,15 @@ class Main extends BaseHelper
      */
     public function executionTime($isPage = false)
     {
-        $time = round((microtime(true) - LARAVEL_START), 2);
+        $time = round((microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']), 2);
 
         if ($isPage) {
             $string = 'Page generated in ';
         } else {
-            $string = 'Data crunched in ';
+            return [
+                'time' => $time,
+                'text' => 'Data crunched in ' . $this->secToStr($time)
+            ];
         }
 
         return $string . $this->secToStr($time);

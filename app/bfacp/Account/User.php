@@ -58,7 +58,7 @@ class User extends Model implements ConfideUserInterface
      * Models to be loaded automaticly
      * @var array
      */
-    protected $with = ['setting', 'roles', 'soldiers'];
+    protected $with = [];
 
     /**
      * Validation rules

@@ -46,7 +46,7 @@ class Statistics extends Elegant
      * Models to be loaded automaticly
      * @var array
      */
-    protected $with = ['server'];
+    protected $with = [];
 
     /**
      * @return \Illuminate\Database\Eloquent\Model

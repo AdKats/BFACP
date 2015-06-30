@@ -14,8 +14,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config as Config;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log as Log;
 use Illuminate\Support\Facades\Queue;
@@ -153,8 +153,7 @@ class LiveServerRepository extends BaseRepository
         $this->port     = $server->port;
 
         // Set the current user
-        $bfacp      = \App::make('bfadmincp');
-        $this->user = $bfacp->user;
+        $this->user = App::make('bfadmincp')->user;
 
         if (!is_null($this->user)) {
             $this->setAdmin();
@@ -727,10 +726,20 @@ class LiveServerRepository extends BaseRepository
      */
     private function getOnlineAdmins()
     {
-        $adminlist = DB::select(
-            File::get(storage_path() . DIRECTORY_SEPARATOR . 'sql' . DIRECTORY_SEPARATOR . 'adminList.sql'),
-            [$this->gameID]
-        );
+        $adminlist = DB::table('adkats_usersoldiers')
+            ->select('player_id', 'EAGUID', 'GameID', 'SoldierName')
+            ->join('adkats_users', 'adkats_usersoldiers.user_id', '=', 'adkats_users.user_id')
+            ->join('adkats_roles', 'adkats_users.user_role', '=', 'adkats_roles.role_id')
+            ->join('tbl_playerdata', 'adkats_usersoldiers.player_id', '=', 'tbl_playerdata.PlayerID')
+            ->where('tbl_playerdata.GameID', $this->gameID)
+            ->whereExists(function ($query) {
+                $query->select('adkats_rolecommands.role_id')
+                ->from('adkats_rolecommands')
+                ->join('adkats_commands', 'adkats_rolecommands.command_id', '=', 'adkats_commands.command_id')
+                ->where('command_playerInteraction', 1)
+                ->whereRaw('adkats_rolecommands.role_id = adkats_users.user_role')
+                ->groupBy('adkats_rolecommands.role_id');
+            })->get();
 
         foreach (['players', 'spectators', 'commander'] as $type) {
             foreach ($this->data['teams'] as $teamID => $team) {
@@ -825,8 +834,10 @@ class LiveServerRepository extends BaseRepository
 
                                     // If player rank doesn't match the database update it
                                     if ($player2->GlobalRank != $player['rank']) {
-                                        $player2->GlobalRank = $player['rank'];
-                                        $updated = true;
+                                        if ($player['rank'] > 0) {
+                                            $player2->GlobalRank = $player['rank'];
+                                            $updated = true;
+                                        }
                                     }
 
                                     // If player name doesn't match the database update it
@@ -938,6 +949,7 @@ class LiveServerRepository extends BaseRepository
                 case 'Hit0':
                 case 'Hostage0':
                 case 'TeamDeathMatch0':
+                case 'CashGrab0':
                     $ticketcap = $length < 25 ? null : intval($info[11]);
                     $uptime    = $length < 25 ? (int) $info[14] : (int) $info[16];
                     $round     = $length < 25 ? (int) $info[15] : (int) $info[17];
@@ -1205,10 +1217,9 @@ class LiveServerRepository extends BaseRepository
     {
         $v = preg_match('/^[a-zA-Z0-9_\\-]+$/', $player);
 
-        if ($v) {
-            Log::debug('Name passed validation', ['player' => $player, 'server' => $this->server->ServerName, 'auth' => $this->user->username]);
-        } else {
-            Log::debug('Name failed validation', ['player' => $player, 'server' => $this->server->ServerName, 'auth' => $this->user->username]);
+        if (Config::get('app.debug')) {
+            $debugMessage = $v ? 'Name passed validation' : 'Name failed validation';
+            Log::debug($debugMessage, ['player' => $player, 'server' => $this->server->ServerName, 'user' => $this->user->username, 'ip' => $_SERVER['REMOTE_ADDR']]);
         }
 
         return $v;

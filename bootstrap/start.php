@@ -98,6 +98,14 @@ App::singleton('bfadmincp', function () {
     return $app;
 });
 
+App::singleton('geo', function () {
+    return App::make('BFACP\Repositories\GeoRepository');
+});
+
+App::singleton('guzzle', function () {
+    return App::make('GuzzleHttp\Client');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

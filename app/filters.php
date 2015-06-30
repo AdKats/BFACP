@@ -48,10 +48,6 @@ App::before(function ($request) {
         }
     }
 
-    App::singleton('geo', function () {
-        return App::make('BFACP\Repositories\GeoRepository');
-    });
-
     View::share('bfacp', App::make('bfadmincp'));
 });
 

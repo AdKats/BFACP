@@ -23,14 +23,12 @@
         "guzzlehttp/guzzle": "~5.0",
         "laravel/framework": "4.2.*",
         "lavary/laravel-menu": "1.5.0",
-        "php": ">=5.4.0",
+        "php": ">=5.5.0",
         "zizaco/confide": "~4.3@dev",
         "zizaco/entrust": "1.2.*@dev",
-        "league/commonmark": "0.7.0",
         "vierbergenlars/php-semver": "3.0.0",
         "davejamesmiller/laravel-breadcrumbs": "2.*",
         "kmd/logviewer": "1.2.*",
-        "barryvdh/laravel-debugbar": "~1.8",
         "ceesvanegmond/minify": "2.0.*"
     },
     "autoload": {

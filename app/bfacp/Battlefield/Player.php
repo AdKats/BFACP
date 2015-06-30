@@ -51,7 +51,7 @@ class Player extends Elegant
      * Models to be loaded automaticly
      * @var array
      */
-    protected $with = ['game', 'battlelog'];
+    protected $with = [];
 
     /**
      * @return \Illuminate\Database\Eloquent\Model
@@ -198,15 +198,13 @@ class Player extends Elegant
     public function getCountryNameAttribute()
     {
         try {
-            $geo = App::make('geo')->set($this->IP_Address);
-
-            return $geo->country();
-        } catch (Exception $e) {
             if ($this->CountryCode == '--' || empty($this->CountryCode)) {
-                return 'Unknown';
+                throw new Exception();
             }
 
             return MainHelper::countries($this->CountryCode);
+        } catch (Exception $e) {
+            return 'Unknown';
         }
     }
 
@@ -248,7 +246,7 @@ class Player extends Elegant
                     throw new \Exception();
                 }
 
-                $request = App::make('GuzzleHttp\Client')->get(sprintf('http://api.bf4db.com/api-player.php?%s', http_build_query([
+                $request = App::make('guzzle')->get(sprintf('http://api.bf4db.com/api-player.php?%s', http_build_query([
                     'format' => 'json',
                     'guid'   => $this->EAGUID
                 ])));
@@ -294,13 +292,13 @@ class Player extends Elegant
     public function getCountryFlagAttribute()
     {
         try {
-            $geo = App::make('geo')->set($this->IP_Address);
-
-            return sprintf('images/flags/24/%s.png', strtoupper($geo->cc()));
-        } catch (Exception $e) {
             if ($this->CountryCode == '--' || empty($this->CountryCode)) {
-                return 'images/flags/24/_unknown.png';
+                throw new Exception();
             }
+
+            return sprintf('images/flags/24/%s.png', strtoupper($this->CountryCode));
+        } catch (Exception $e) {
+            return 'images/flags/24/_unknown.png';
         }
     }
 

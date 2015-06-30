@@ -7,14 +7,14 @@ use BFACP\Exceptions\RconException;
 use BFACP\Repositories\Scoreboard\LiveServerRepository;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Cache;
 use MainHelper;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ServersController extends BaseController
 {
@@ -194,7 +194,7 @@ class ServersController extends BaseController
         {
             $id = Input::get('server_id');
 
-            if(!is_numeric($id) || $id <= 0) {
+            if (!is_numeric($id) || $id <= 0) {
                 throw new NotFoundHttpException('Invalid Server ID');
             }
 
@@ -209,12 +209,12 @@ class ServersController extends BaseController
 
             $permissions = Cache::get('admin.perm.list');
 
-            if(!Input::has('method') || !in_array(Input::get('method'), $allowedMethods)) {
-                throw new NotFoundHttpException;
+            if (!Input::has('method') || !in_array(Input::get('method'), $allowedMethods)) {
+                throw new NotFoundHttpException();
             }
 
-            if(!$this->isLoggedIn || !$this->user->ability(null, $permissions['scoreboard'])) {
-                throw new AccessDeniedHttpException;
+            if (!$this->isLoggedIn || !$this->user->ability(null, $permissions['scoreboard'])) {
+                throw new AccessDeniedHttpException();
             }
 
             $scoreboard = new LiveServerRepository(Server::findOrFail($id));
@@ -223,16 +223,16 @@ class ServersController extends BaseController
 
                 $players = [];
 
-                if(Input::has('players')) {
-                    $players = explode(',' , Input::get('players'));
+                if (Input::has('players')) {
+                    $players = explode(',', Input::get('players'));
                 }
 
-                switch(Input::get('method')) {
-                    case "yell":
+                switch (Input::get('method')) {
+                    case 'yell':
                         $this->hasPermission('admin.scoreboard.yell');
 
-                        if(Input::get('type') == 'Player' && Input::has('players')) {
-                            foreach($players as $player) {
+                        if (Input::get('type') == 'Player' && Input::has('players')) {
+                            foreach ($players as $player) {
                                 $scoreboard->adminYell(
                                     Input::get('message', null),
                                     $player,
@@ -252,11 +252,11 @@ class ServersController extends BaseController
                         }
                         break;
 
-                    case "say":
+                    case 'say':
                         $this->hasPermission('admin.scoreboard.say');
 
-                        if(Input::get('type') == 'Player' && Input::has('players')) {
-                            foreach($players as $player) {
+                        if (Input::get('type') == 'Player' && Input::has('players')) {
+                            foreach ($players as $player) {
                                 $scoreboard->adminSay(
                                     Input::get('message', null),
                                     $player,
@@ -274,24 +274,24 @@ class ServersController extends BaseController
                         }
                         break;
 
-                    case "kill":
+                    case 'kill':
                         $this->hasPermission('admin.scoreboard.kill');
 
-                        if(Input::has('players')) {
+                        if (Input::has('players')) {
                             $unkilled = [];
 
-                            foreach($players as $player) {
+                            foreach ($players as $player) {
                                 try {
                                     $scoreboard->adminKill($player, Input::get('message', null));
-                                } catch(PlayerNotFoundException $e) {
+                                } catch (PlayerNotFoundException $e) {
                                     $unkilled[] = [
-                                        'name' => $player,
+                                        'name'   => $player,
                                         'reason' => $e->getMessage()
                                     ];
                                 }
                             }
 
-                            if(!empty($unkilled)) {
+                            if (!empty($unkilled)) {
                                 $data = $unkilled;
                             }
 
@@ -300,24 +300,24 @@ class ServersController extends BaseController
                         }
                         break;
 
-                    case "kick":
+                    case 'kick':
                         $this->hasPermission('admin.scoreboard.kick');
 
-                        if(Input::has('players')) {
+                        if (Input::has('players')) {
                             $unkicked = [];
 
-                            foreach($players as $player) {
+                            foreach ($players as $player) {
                                 try {
                                     $scoreboard->adminKick($player, Input::get('message', null));
-                                } catch(PlayerNotFoundException $e) {
+                                } catch (PlayerNotFoundException $e) {
                                     $unkicked[] = [
-                                        'name' => $player,
+                                        'name'   => $player,
                                         'reason' => $e->getMessage()
                                     ];
                                 }
                             }
 
-                            if(!empty($unkicked)) {
+                            if (!empty($unkicked)) {
                                 $data = $unkicked;
                             }
                         } else {
@@ -325,33 +325,33 @@ class ServersController extends BaseController
                         }
                         break;
 
-                    case "move":
+                    case 'move':
                         $this->hasPermission('admin.scoreboard.teamswitch');
 
-                        if(Input::has('players')) {
+                        if (Input::has('players')) {
                             $unmoved = [];
 
-                            foreach($players as $player) {
+                            foreach ($players as $player) {
                                 try {
                                     $scoreboard->adminMovePlayer(
                                         $player,
                                         Input::get('team', null),
                                         Input::get('squad', null)
                                     );
-                                } catch(PlayerNotFoundException $e) {
+                                } catch (PlayerNotFoundException $e) {
                                     $unmoved[] = [
-                                        'name' => $player,
+                                        'name'   => $player,
                                         'reason' => $e->getMessage()
                                     ];
-                                } catch(RconException $e) {
+                                } catch (RconException $e) {
                                     $unmoved[] = [
-                                        'name' => $player,
+                                        'name'   => $player,
                                         'reason' => $e->getMessage()
                                     ];
                                 }
                             }
 
-                            if(!empty($unmoved)) {
+                            if (!empty($unmoved)) {
                                 $data = $unmoved;
                             }
 
@@ -360,12 +360,12 @@ class ServersController extends BaseController
                         }
                         break;
 
-                    case "punish":
+                    case 'punish':
                         $this->hasPermission('admin.scoreboard.punish');
 
-                        if(Input::has('players')) {
-                            foreach($players as $player) {
-                                $scoreboard->adminPunish(
+                        if (Input::has('players')) {
+                            foreach ($players as $player) {
+                                $data[] = $scoreboard->adminPunish(
                                     $player,
                                     Input::get('message')
                                 );
@@ -375,11 +375,11 @@ class ServersController extends BaseController
                         }
                         break;
 
-                    case "forgive":
+                    case 'forgive':
                         $this->hasPermission('admin.scoreboard.forgive');
 
-                        if(Input::has('players')) {
-                            foreach($players as $player) {
+                        if (Input::has('players')) {
+                            foreach ($players as $player) {
                                 $scoreboard->adminForgive(
                                     $player,
                                     Input::get('message')
@@ -391,17 +391,15 @@ class ServersController extends BaseController
                         break;
 
                     default:
-                        throw new NotFoundHttpException;
+                        throw new NotFoundHttpException();
                 }
 
-                if(!isset($data)) {
-                    $data = null;
+                if (!isset($data)) {
+                    $data = [];
                 }
 
                 return MainHelper::response($data, null, null, null, false, true);
             }
-        } catch (RconException $e) {
-            throw $e;
         } catch (PlayerNotFoundException $e) {
             return MainHelper::response(null, $e->getMessage(), 'error', null, false, true);
         } catch (ModelNotFoundException $e) {
@@ -419,7 +417,7 @@ class ServersController extends BaseController
      */
     private function hasPermission($permission, $message = 'You do have permission to issue this command')
     {
-        if(!$this->user->ability(null, $permission)) {
+        if (!$this->user->ability(null, $permission)) {
             throw new AccessDeniedHttpException($message);
         }
 

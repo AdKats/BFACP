@@ -129,7 +129,6 @@ return [
         'BFACP\Providers\HelpersProvider',
         'DaveJamesMiller\Breadcrumbs\ServiceProvider',
         'Kmd\Logviewer\LogviewerServiceProvider',
-        'Barryvdh\Debugbar\ServiceProvider',
         'CeesVanEgmond\Minify\MinifyServiceProvider'
     ],
 
