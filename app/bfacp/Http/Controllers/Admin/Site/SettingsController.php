@@ -2,6 +2,7 @@
 
 use BFACP\Http\Controllers\BaseController;
 use BFACP\Option as Option;
+use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Input as Input;
 use Illuminate\Support\Facades\Lang as Lang;
 use Illuminate\Support\Facades\Redirect as Redirect;
@@ -38,6 +39,8 @@ class SettingsController extends BaseController
                 }
             }
         }
+
+        Cache::forget('site.options');
 
         return Redirect::route('admin.site.settings.index')->with('messages', ['Settings Saved!']);
     }
