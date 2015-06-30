@@ -202,9 +202,38 @@ class Player extends Elegant
                 throw new Exception();
             }
 
-            return MainHelper::countries($this->CountryCode);
+            $cc = MainHelper::countries($this->CountryCode);
+
+            if ($cc === null) {
+                throw new Exception();
+            }
+
+            return $cc;
         } catch (Exception $e) {
             return 'Unknown';
+        }
+    }
+
+    /**
+     * Get the country image flag
+     * @return string
+     */
+    public function getCountryFlagAttribute()
+    {
+        try {
+            if ($this->CountryCode == '--' || empty($this->CountryCode)) {
+                throw new Exception();
+            }
+
+            $path = sprintf('images/flags/24/%s.png', strtoupper($this->CountryCode));
+
+            if (!file_exists(sprintf('%s/%s', public_path(), $path))) {
+                throw new Exception();
+            }
+
+            return $path;
+        } catch (Exception $e) {
+            return 'images/flags/24/_unknown.png';
         }
     }
 
@@ -279,23 +308,6 @@ class Player extends Elegant
         unset($links[0]);
 
         return $links;
-    }
-
-    /**
-     * Get the country image flag
-     * @return string
-     */
-    public function getCountryFlagAttribute()
-    {
-        try {
-            if ($this->CountryCode == '--' || empty($this->CountryCode)) {
-                throw new Exception();
-            }
-
-            return sprintf('images/flags/24/%s.png', strtoupper($this->CountryCode));
-        } catch (Exception $e) {
-            return 'images/flags/24/_unknown.png';
-        }
     }
 
     /**
