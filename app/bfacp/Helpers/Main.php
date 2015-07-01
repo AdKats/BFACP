@@ -900,10 +900,6 @@ class Main extends BaseHelper
                 $query->orWhere('EAGUID', $player->EAGUID);
             }
 
-            if (!empty($player->IP_Address)) {
-                $query->orWhere('IP_Address', $player->IP_Address);
-            }
-
             if (!empty($player->PBGUID)) {
                 $query->orWhere('PBGUID', $player->PBGUID);
             }
