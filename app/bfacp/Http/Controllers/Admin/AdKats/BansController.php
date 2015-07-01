@@ -34,10 +34,10 @@ class BansController extends BaseController
     {
         parent::__construct();
 
-        $this->repository = \App::make('BFACP\Repositories\BanRepository');
+        $this->repository = App::make('BFACP\Repositories\BanRepository');
 
         try {
-            $this->metabans = \App::make('BFACP\Libraries\Metabans');
+            $this->metabans = App::make('BFACP\Libraries\Metabans');
         } catch (MetabansException $e) {}
     }
 
