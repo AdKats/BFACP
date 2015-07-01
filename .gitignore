@@ -9,3 +9,4 @@ Thumbs.db
 oracle.sqlite
 *.sublime-*
 /vendor
+/.idea
