@@ -274,7 +274,9 @@ class Player extends Elegant
                 $request = App::make('guzzle')->get(sprintf('http://api.bf4db.com/api-player.php?%s', http_build_query([
                     'format' => 'json',
                     'guid'   => $this->EAGUID
-                ])));
+                ])), [
+                    'connect_timeout' => 5
+                ]);
 
                 $response = $request->json();
 
@@ -301,7 +303,8 @@ class Player extends Elegant
             'istats'   => sprintf('http://i-stats.net/index.php?action=pcheck&player=%s&game=%s&sub=Check+Player', $this->SoldierName, $game),
             'metabans' => sprintf('http://metabans.com/search/?phrase=%s', $this->SoldierName),
             'bf4db'    => $game == 'BF4' ? $bf4db_profile : null,
-            'chatlogs' => route('chatlog.search', ['pid' => $this->PlayerID])
+            'chatlogs' => route('chatlog.search', ['pid' => $this->PlayerID]),
+            'pbbans'   => !empty($this->PBGUID) ? sprintf('http://www.pbbans.com/mbi-guid-search-%s.html', $this->PBGUID) : null
         ];
 
         $links = array_merge($links, $links[0]);

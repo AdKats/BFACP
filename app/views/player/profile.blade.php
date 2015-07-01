@@ -39,7 +39,7 @@
                             <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.eaguid') }}</label>
                             <div class="col-sm-9">
                                 <p class="form-control-static">
-                                    @if( ! empty($player->EAGUID) && Entrust::can('player.view.guids') )
+                                    @if(!empty($player->EAGUID) && $bfacp->isLoggedIn && $bfacp->user->ability(null, 'player.view.guids'))
                                     {{ link_to_route('player.listing', $player->EAGUID, [
                                         'player' => $player->EAGUID
                                     ], [
@@ -56,7 +56,7 @@
                             <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.pbguid') }}</label>
                             <div class="col-sm-9">
                                 <p class="form-control-static">
-                                    @if( ! empty($player->PBGUID) && Entrust::can('player.view.guids') )
+                                    @if(!empty($player->PBGUID) && $bfacp->isLoggedIn && $bfacp->user->ability(null, 'player.view.guids'))
                                     {{ link_to_route('player.listing', $player->PBGUID, [
                                         'player' => $player->PBGUID
                                     ], [
@@ -73,7 +73,7 @@
                             <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.ip') }}</label>
                             <div class="col-sm-9">
                                 <p class="form-control-static">
-                                    @if( ! empty($player->IP_Address) && Entrust::can('player.view.ip') )
+                                    @if( ! empty($player->IP_Address) && $bfacp->isLoggedIn && $bfacp->user->ability(null, 'player.view.ip') )
                                     {{ link_to_route('player.listing', $player->IP_Address, [
                                         'player' => $player->IP_Address
                                     ], [
@@ -112,6 +112,24 @@
                                         {{ round($player->reputation->total_rep_co, 2) }}
                                     </span>
                                 </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.linked_accounts') }}</label>
+                            <div class="col-sm-9">
+                                <div class="form-control-static">
+                                    <ul class="list-inline">
+                                        @forelse(MainHelper::linkedAccounts($player) as $account)
+                                        {{ link_to_route('player.show', $account->game->Name, [
+                                            $account->PlayerID,
+                                            $account->SoldierName
+                                        ], ['target' => '_blank', 'class' => $account->game->class_css, 'style' => 'color: white !important', 'tooltip' => $account->SoldierName]) }}
+                                        @empty
+                                        {{ HTML::faicon('fa-info-circle') }} No linked accounts found.
+                                        @endforelse
+                                    </ul>
+                                </div>
                             </div>
                         </div>
 
@@ -316,10 +334,14 @@
                                     @else
                                     {{ HTML::link($link->url, Lang::get(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => '_blank']) }}
                                     @endif
-                                @elseif($key == 'chatlogs' && ((Auth::guest() && !Config::get('bfacp.site.chatlogs.guest')) || (Auth::check() && !Auth::user()->ability(null, 'chatlogs'))))
-                                {{-- Do not show the chatlogs button --}}
                                 @else
-                                {{ HTML::link($link, Lang::get(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => '_blank']) }}
+                                    @if($key == 'chatlogs' && ((!$bfacp->isLoggedIn && !Config::get('bfacp.site.chatlogs.guest')) || ($bfacp->isLoggedIn && !$bfacp->user->ability(null, 'chatlogs'))))
+                                    {{-- Do not show the chatlogs button --}}
+                                    @elseif($key == 'pbbans' && (is_null($bfacp->user) || !$bfacp->user->ability(null, 'player.view.guids')))
+                                    {{-- Do not show the pbbans button --}}
+                                    @else
+                                    {{ HTML::link($link, Lang::get(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => '_blank']) }}
+                                    @endif
                                 @endif
                             @endunless
                         @endforeach

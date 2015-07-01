@@ -1,5 +1,6 @@
 <?php namespace BFACP\Helpers;
 
+use BFACP\Battlefield\Player;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File as File;
@@ -885,5 +886,33 @@ class Main extends BaseHelper
         }
 
         return $files;
+    }
+
+    /**
+     * Returns a list of accounts that match $player
+     * @param  object $player \BFACP\Battlefield\Player
+     * @return array
+     */
+    public function linkedAccounts($player)
+    {
+        $players = Player::where('PlayerID', '!=', $player->PlayerID)->where(function ($query) use (&$player) {
+            if (!empty($player->EAGUID)) {
+                $query->orWhere('EAGUID', $player->EAGUID);
+            }
+
+            if (!empty($player->IP_Address)) {
+                $query->orWhere('IP_Address', $player->IP_Address);
+            }
+
+            if (!empty($player->PBGUID)) {
+                $query->orWhere('PBGUID', $player->PBGUID);
+            }
+
+            if (!empty($player->SoldierName)) {
+                $query->orWhere('SoldierName', $player->SoldierName);
+            }
+        });
+
+        return $players->get();
     }
 }

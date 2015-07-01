@@ -10,14 +10,15 @@ return [
         'details'     => [
             'title'  => 'Details',
             'items'  => [
-                'id'         => 'ID',
-                'game'       => 'Game',
-                'eaguid'     => 'EA GUID',
-                'pbguid'     => 'PB GUID',
-                'ip'         => 'IP',
-                'country'    => 'Country',
-                'reputation' => 'Reputation',
-                'rank'       => 'Rank'
+                'id'              => 'ID',
+                'game'            => 'Game',
+                'eaguid'          => 'EA GUID',
+                'pbguid'          => 'PB GUID',
+                'ip'              => 'IP',
+                'country'         => 'Country',
+                'reputation'      => 'Reputation',
+                'rank'            => 'Rank',
+                'linked_accounts' => 'Linked Accounts'
             ],
             'cached' => 'Viewing Cached Version'
         ],
@@ -37,6 +38,7 @@ return [
                 'bf4stats'     => 'BF4 Stats',
                 'bfhstats'     => 'BFH Stats',
                 'metabans'     => 'Metabans',
+                'pbbans'       => 'PBBans',
 
                 /**
                  * Internal LInks
