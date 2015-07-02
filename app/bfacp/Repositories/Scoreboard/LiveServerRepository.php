@@ -470,9 +470,10 @@ class LiveServerRepository extends BaseRepository
      * @param  string  $player  Name of player
      * @param  integer $teamId  Id of team to move to
      * @param  integer $squadId Id of squad to move to
+     * @param  boolean $locked  Should the squad be locked
      * @return boolean
      */
-    public function adminMovePlayer($player, $teamId = null, $squadId = 0)
+    public function adminMovePlayer($player, $teamId = null, $squadId = 0, $locked = false)
     {
         if (!is_numeric($squadId) || empty($squadId) || !in_array($squadId, range(0, 32))) {
             $squadId = 0;
@@ -513,6 +514,11 @@ class LiveServerRepository extends BaseRepository
                 throw new PlayerNotFoundException(404, sprintf('No player found with the name "%s"', $player));
             }
 
+            // Lock squad if $locked is truthy
+            if (MainHelper::stringToBool($locked)) {
+                $this->client->adminSetSquadPrivate($teamId, $squadId, $locked);
+            }
+
             if ($response == 'SetSquadFailed') {
                 $squadId = 0;
             }
@@ -523,8 +529,10 @@ class LiveServerRepository extends BaseRepository
                 $message = sprintf('You were switched to team %s and placed in squad %s.', $teamName, $squadName);
             }
 
-            $this->adminTell($player, $message, 5, false, true);
-            $this->log($player, 'player_fmove', $message);
+            $dbMessage = sprintf('Switched to %s and placed in squad %s', $teamName, $squadName);
+
+            $this->adminTell($player, $message, 5, false, true, 1);
+            $this->log($player, 'player_fmove', $dbMessage);
 
         } else {
             throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
