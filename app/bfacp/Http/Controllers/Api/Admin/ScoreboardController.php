@@ -2,6 +2,7 @@
 
 use BFACP\Battlefield\Server as Server;
 use BFACP\Exceptions\PlayerNotFoundException as PlayerNotFoundException;
+use BFACP\Exceptions\RconException as RconException;
 use BFACP\Http\Controllers\Api\BaseController as BaseController;
 use BFACP\Repositories\Scoreboard\LiveServerRepository as LiveServerRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
@@ -14,6 +15,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException as NotFoundHttp
 
 class ScoreboardController extends BaseController
 {
+    const COMPLETE_WITH_ERRORS = 'Completed with errors';
+
     /**
      * \BFACP\Repositories\Scoreboard\LiveServerRepository
      * @var null
@@ -106,10 +109,6 @@ class ScoreboardController extends BaseController
             );
         }
 
-        if (!empty($this->errors)) {
-            return $this->_response($this->errors, 'Completed with errors');
-        }
-
         return $this->_response();
     }
 
@@ -142,10 +141,6 @@ class ScoreboardController extends BaseController
             );
         }
 
-        if (!empty($this->errors)) {
-            return $this->_response($this->errors, 'Completed with errors');
-        }
-
         return $this->_response();
     }
 
@@ -166,10 +161,6 @@ class ScoreboardController extends BaseController
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = $e->getMessage();
             }
-        }
-
-        if (!empty($this->errors)) {
-            return $this->_response($this->errors, 'Completed with errors');
         }
 
         return $this->_response();
@@ -196,10 +187,6 @@ class ScoreboardController extends BaseController
             }
         }
 
-        if (!empty($this->errors)) {
-            return $this->_response($this->errors, 'Completed with errors');
-        }
-
         return $this->_response();
     }
 
@@ -224,8 +211,35 @@ class ScoreboardController extends BaseController
             }
         }
 
-        if (!empty($this->errors)) {
-            return $this->_response($this->errors, 'Completed with errors');
+        return $this->_response();
+    }
+
+    /**
+     * Move the selected player(s).
+     */
+    public function anyTeamswitch()
+    {
+        $this->hasPermission('admin.scoreboard.teamswitch');
+
+        foreach ($this->players as $player) {
+            try {
+                $this->repository->adminMovePlayer(
+                    $player,
+                    Input::get('team', null),
+                    Input::get('squad', null),
+                    Input::get('locked', false)
+                );
+            } catch (PlayerNotFoundException $e) {
+                $this->errors[] = [
+                    'player'  => $player,
+                    'message' => $e->getMessage()
+                ];
+            } catch (RconException $e) {
+                $this->errors[] = [
+                    'player'  => $player,
+                    'message' => $e->getMessage()
+                ];
+            }
         }
 
         return $this->_response();
@@ -240,6 +254,10 @@ class ScoreboardController extends BaseController
      */
     private function _response($data = null, $message = null, $type = null)
     {
+        if (!empty($this->errors)) {
+            return MainHelper::response($this->errors, self::COMPLETE_WITH_ERRORS, null, null, false, true);
+        }
+
         return MainHelper::response($data, $message, $type, null, false, true);
     }
 
