@@ -823,9 +823,9 @@ class Main extends BaseHelper
      */
     public function stringToBool($string)
     {
-        if ($string === 1 || $string === '1' || $string === 'true') {
+        if ($string === 1 || $string === '1' || $string === 'true' || $string === true) {
             return true;
-        } else if ($string === 0 || $string === '0' || $string === 'false') {
+        } else if ($string === 0 || $string === '0' || $string === 'false' || $string === false) {
             return false;
         }
 
