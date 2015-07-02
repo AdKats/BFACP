@@ -134,12 +134,6 @@ class LiveServerRepository extends BaseRepository
      */
     protected $admin;
 
-    /**
-     * Stores the current user object
-     * @var BFACP\Account\User
-     */
-    protected $user;
-
     public function __construct(Server $server)
     {
         parent::__construct();
@@ -150,9 +144,6 @@ class LiveServerRepository extends BaseRepository
         $this->serverID = $server->ServerID;
         $this->serverIP = $server->ip;
         $this->port     = $server->port;
-
-        // Set the current user
-        $this->user = App::make('bfadmincp')->user;
 
         if (!is_null($this->user)) {
             $this->setAdmin();
@@ -269,7 +260,10 @@ class LiveServerRepository extends BaseRepository
             case 'All':
                 $response = $this->client->adminYellMessage($message, '{%all%}', $duration);
 
-                $this->log(null, 'admin_yell', $message, $duration);
+                if (!$skipLog) {
+                    $this->log(null, 'admin_yell', $message, $duration);
+                }
+
                 break;
 
             case 'Team':
@@ -300,7 +294,7 @@ class LiveServerRepository extends BaseRepository
 
                     // Check if the server returned a player not found error
                     if ($response == 'PlayerNotFound') {
-                        throw new PlayerNotFoundException(200, sprintf('No player found with the name "%s"', $player));
+                        throw new PlayerNotFoundException(404, sprintf('No player found with the name "%s"', $player));
                     }
 
                     if (!$skipLog) {
@@ -345,7 +339,10 @@ class LiveServerRepository extends BaseRepository
                     $response = $this->client->adminSayMessageToAll($message);
                 }
 
-                $this->log(null, 'admin_say', $message);
+                if (!$skipLog) {
+                    $this->log(null, 'admin_say', $message);
+                }
+
                 break;
 
             case 'Team':
@@ -385,7 +382,7 @@ class LiveServerRepository extends BaseRepository
 
                     // Check if the server returned a player not found error
                     if ($response == 'PlayerNotFound') {
-                        throw new PlayerNotFoundException(200, sprintf('No player found with the name "%s"', $player));
+                        throw new PlayerNotFoundException(404, sprintf('No player found with the name "%s"', $player));
                     }
 
                     if (!$skipLog) {
@@ -409,18 +406,22 @@ class LiveServerRepository extends BaseRepository
      * @param  string  $player       Name of player
      * @param  string  $message      Message to be sent
      * @param  integer $yellDuration Seconds for yell to stay up
-     * @return void
+     * @param  integer $times        How many times the say should be repeated
+     * @return boolean
      */
-    public function adminTell($player, $message, $yellDuration = 10, $displayAdminName = true, $skipLog = false)
+    public function adminTell($player, $message, $yellDuration = 10, $displayAdminName = true, $skipLog = false, $times = 7)
     {
-        $this->adminSay($message, $player, null, 'Player', $displayAdminName, $skipLog);
-        $this->adminYell($message, $player, null, $yellDuration, 'Player', $skipLog);
+        for ($i = 0; $i < $times; $i++) {
+            $this->adminSay($message, $player, null, 'Player', $displayAdminName, true);
+        }
+
+        $this->adminYell($message, $player, null, $yellDuration, 'Player', true);
 
         if (!$skipLog) {
             $this->log($player, 'player_tell', $message);
         }
 
-        return;
+        return true;
     }
 
     /*==========  Player Interaction  ==========*/
@@ -434,6 +435,9 @@ class LiveServerRepository extends BaseRepository
      */
     public function adminKill($player, $message = null)
     {
+        // Save the orignal message for use later.
+        $orignalMessage = $message;
+
         if (!empty($message)) {
             $message = sprintf('You were killed by an admin. Reason: %s', $message);
         } else {
@@ -445,15 +449,15 @@ class LiveServerRepository extends BaseRepository
 
             // Check if the server returned a player not found error
             if ($response == 'InvalidPlayerName') {
-                throw new PlayerNotFoundException(200, sprintf('No player found with the name "%s"', $player));
+                throw new PlayerNotFoundException(404, sprintf('No player found with the name "%s"', $player));
             }
 
             if ($response == 'SoldierNotAlive') {
-                throw new PlayerNotFoundException(200, 'Player was already dead.');
+                throw new PlayerNotFoundException(404, 'Player was already dead.');
             }
 
-            $this->adminTell($player, $message, 5, false, true);
-            $this->log($player, 'player_kill', $message);
+            $this->adminTell($player, $message, 5, false, true, 1);
+            $this->log($player, 'player_kill', $orignalMessage);
         } else {
             throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
         }
@@ -506,7 +510,7 @@ class LiveServerRepository extends BaseRepository
 
             // Check if the server returned a player not found error
             if ($response == 'InvalidPlayerName') {
-                throw new PlayerNotFoundException(200, sprintf('No player found with the name "%s"', $player));
+                throw new PlayerNotFoundException(404, sprintf('No player found with the name "%s"', $player));
             }
 
             if ($response == 'SetSquadFailed') {
@@ -547,8 +551,8 @@ class LiveServerRepository extends BaseRepository
             $response = $this->client->adminKickPlayerWithReason($player, $message);
 
             // Check if the server returned a player not found error
-            if ($response == 'PlayerNotFound') {
-                throw new PlayerNotFoundException(200, sprintf('No player found with the name "%s"', $player));
+            if (in_array($response, ['PlayerNotFound', 'InvalidPlayerName'])) {
+                throw new PlayerNotFoundException(404, sprintf('No player found with the name "%s"', $player));
             }
 
             // If adminKick was called from the adminBan function do not send the kick message

@@ -4,10 +4,14 @@ use Illuminate\Support\Facades\App;
 
 class BaseRepository
 {
-    protected $user;
+    protected $user       = null;
+    protected $isLoggedIn = false;
 
     public function __construct()
     {
-        $this->user = App::make('bfadmincp');
+        $bfacp = App::make('bfadmincp');
+
+        $this->user       = $bfacp->user;
+        $this->isLoggedIn = $bfacp->isLoggedIn;
     }
 }
