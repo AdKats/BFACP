@@ -34,7 +34,7 @@ App::before(function ($request) {
         return Redirect::secure($path, $status);
     }
 
-    if (Config::get('bfacp.site.auth') && !Auth::check()) {
+    if (Config::get('bfacp.site.auth') && Auth::guest()) {
         $path = explode('/', Request::path());
 
         if (count($path) > 1) {
