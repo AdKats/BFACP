@@ -22,7 +22,7 @@ App::before(function ($request) {
 
     // If request is not secured and force secured connection is enabled
     // then we need to redirect the user to a secure link.
-    if (!Request::secure() && Config::get('bfacp.site.ssl') && $_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
+    if (!Request::secure() && Config::get('bfacp.site.ssl') && $_SERVER['REMOTE_ADDR'] != '127.0.0.1' && filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE)) {
         $path = Request::path();
 
         if (strlen(Request::server('QUERY_STRING')) > 0) {
