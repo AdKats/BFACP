@@ -1229,7 +1229,6 @@ class LiveServerRepository extends BaseRepository
 
         if (Config::get('app.debug')) {
             $debugMessage = $v ? 'Name passed validation' : 'Name failed validation';
-            Log::debug($debugMessage, ['player' => $player, 'server' => $this->server->ServerName, 'user' => $this->user->username, 'ip' => $_SERVER['REMOTE_ADDR']]);
         }
 
         return $v;
