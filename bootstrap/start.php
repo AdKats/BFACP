@@ -1,6 +1,7 @@
 <?php
 
 define('BFACP_VERSION', '2.0.1');
+header(sprintf('Expires: %s', Carbon\Carbon::now()->subYears(10)->format("D, d M Y H:i:s \G\M\T")));
 
 /*
 |--------------------------------------------------------------------------

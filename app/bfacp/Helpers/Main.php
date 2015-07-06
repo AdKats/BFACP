@@ -49,8 +49,7 @@ class Main extends BaseHelper
 
         return $this->response->json($collection, $httpcode)
                     ->header('X-Robots-Tag', 'noindex')
-                    ->header('Cache-Control', 'no-cache, must-revalidate')
-                    ->header('Expires', $this->carbon->now()->subYears(10)->format("D, d M Y H:i:s \G\M\T"));
+                    ->header('Cache-Control', 'no-cache, must-revalidate');
     }
 
     /**
