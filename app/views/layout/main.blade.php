@@ -125,11 +125,7 @@
         {{ HTML::script('js/plugins/iCheck/icheck.min.js') }}
         {{ HTML::script('js/boot.js?v=1') }}
         <script type="text/javascript">
-            @if(Config::get('app.locale') != 'en')
-            var lang = "{{ Config::get('app.locale') }}";
-            @else
-            var lang = null;
-            @endif
+            var lang = "{{ Config::get('app.locale', null) }}";
             moment.locale( lang || navigator.language.split('-')[0] );
             $.widget.bridge('uibutton', $.ui.button);
         </script>
