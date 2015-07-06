@@ -94,7 +94,7 @@ return [
 
             'previous' => [
                 'title' => 'Vorherige Banns',
-                'none'  => 'Keine vorherigen Banns vorhanden,
+                'none'  => 'Keine vorherigen Banns vorhanden',
                 'table' => [
                     'col1' => 'Ausgeführt',
                     'col2' => 'Dauer',
@@ -153,7 +153,7 @@ return [
          */
         'acs'         => [
             'title'    => 'Auffällige Waffen',
-            'help'     => 'Bei den rot markierten Waffen muss es sich nicht zwangsläufig um Cheat-Verdächtige Waffen handeln. Daher müssen diese Stats hier besonders bei Schrotflinten und Scharfschützengewehren mit Vorsicht verwendet werden.
+            'help'     => 'Bei den rot markierten Waffen muss es sich nicht zwangsläufig um Cheat-Verdächtige Waffen handeln. Daher müssen diese Stats hier besonders bei Schrotflinten und Scharfschützengewehren mit Vorsicht verwendet werden.'
             'none'     => 'Keine auffälligen Waffen gefunden',
             'checking' => 'Überprüfe Spieler&hellip;',
             'table'    => [
