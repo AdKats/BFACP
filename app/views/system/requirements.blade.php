@@ -24,12 +24,12 @@
                     <div class="error-page">
                         <div class="error-content">
                             <h3>
-                                <?php if (version_compare(phpversion(), '5.5.0', '<')): ?>
+                                <?php if (version_compare(phpversion(), $required_php_version, '<')): ?>
                                 <i class="fa fa-warning text-danger"></i> <small>You are running <?php echo phpversion();?></small>
                                 <?php else: ?>
                                 <i class="fa fa-check text-success"></i>
                                 <?php endif;?>
-                                PHP 5.4 or Higher
+                                PHP <?php echo $required_php_version;?> or Higher
                             </h3>
                             <h3>
                                 <?php if (!extension_loaded('mcrypt')): ?>

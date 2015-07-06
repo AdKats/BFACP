@@ -64,21 +64,11 @@ if (!$app->runningInConsole()) {
     $setupFilePath = $app['path.base'] . '/app/bfacp/setup.php';
     $jsBuildsPath  = $app['path.public'] . '/js/builds';
 
-    if (file_exists($setupFilePath)) {
+    if (file_exists($setupFilePath) && App::environment() != 'local') {
         require_once $setupFilePath;
 
         if (!unlink($setupFilePath)) {
-            die(sprintf('Please delete installer located at %s', $setupFilePath));
-        }
-    }
-
-    if (!is_writable($jsBuildsPath)) {
-        try {
-            if (!chmod($jsBuildsPath, 0777)) {
-                die(sprintf('Directory "%s" is not writeable. Please change permissions to 0777', $jsBuildsPath));
-            }
-        } catch (Exception $e) {
-            die(sprintf('Directory "%s" is not writeable. Please change permissions to 0777', $jsBuildsPath));
+            die(sprintf('Please delete installer located at "%s"', $setupFilePath));
         }
     }
 

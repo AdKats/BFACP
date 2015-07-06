@@ -163,6 +163,8 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
                 'only'  => ['index', 'edit', 'update', 'destroy', 'store']
             ]);
 
+            Route::resource('roles', 'RolesController');
+
             Route::resource('special_players', 'SpecialPlayersController', [
                 'names' => [
                     'index'  => 'admin.adkats.special_players.index',
@@ -282,6 +284,4 @@ Entrust::routeNeedsPermission(Config::get('logviewer::base_url') . '/*', 'admin.
 =            Require the Menu Builder            =
 ================================================*/
 
-if (!file_exists($app['path.base'] . '/app/bfacp/setup.php')) {
-    require $app['path.base'] . '/app/menu.php';
-}
+require $app['path.base'] . '/app/menu.php';

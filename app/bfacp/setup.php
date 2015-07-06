@@ -5,8 +5,19 @@ if (!is_writable(storage_path())) {
     die(sprintf('All folders under %s must be set to 0777.', storage_path()));
 }
 
+// Check if the JS Builds folder is writeable
+if (!is_writable($jsBuildsPath)) {
+    try {
+        if (!chmod($jsBuildsPath, 0777)) {
+            die(sprintf('Directory "%s" is not writeable. Please change permissions to 0777', $jsBuildsPath));
+        }
+    } catch (Exception $e) {
+        die(sprintf('Directory "%s" is not writeable. Please change permissions to 0777', $jsBuildsPath));
+    }
+}
+
 if (version_compare(phpversion(), '5.5.0', '<') || !extension_loaded('mcrypt') || !extension_loaded('pdo')) {
-    die(View::make('system.requirements'));
+    die(View::make('system.requirements', ['required_php_version' => '5.5.0']));
 }
 
 if (Config::get('app.key') == 'YourSecretKey!!!' || empty(Config::get('app.key'))) {
