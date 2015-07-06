@@ -1,7 +1,8 @@
-SELECT DISTINCT
-    index_name, column_name
-FROM
-    INFORMATION_SCHEMA.STATISTICS
-WHERE
-    (table_schema , table_name) = (? , ?)
-        AND index_type = 'FULLTEXT';
+zzSELECT DISTINCT index_name,
+                  COLUMN_NAME
+FROM INFORMATION_SCHEMA.STATISTICS
+WHERE (table_schema ,
+       TABLE_NAME) = (? ,
+                      ?)
+  AND index_type = 'FULLTEXT';
+
