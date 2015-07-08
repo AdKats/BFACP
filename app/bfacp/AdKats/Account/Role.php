@@ -63,4 +63,13 @@ class Role extends Elegant
     {
         return $this->hasMany('BFACP\AdKats\Account\User', 'user_role');
     }
+
+    /**
+     * Return the power level of the role
+     * @return integer
+     */
+    public function getPowerLevel($count)
+    {
+        return ($count) + (2 * $this->permissions()->admin()->count());
+    }
 }

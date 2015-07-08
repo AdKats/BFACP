@@ -49,6 +49,22 @@ class Command extends Elegant
     protected $with = [];
 
     /**
+     * Returns the commands that usable by the guest
+     */
+    public function scopeGuest($query)
+    {
+        return $query->where('command_playerInteraction', false);
+    }
+
+    /**
+     * Returns the commands that usable by the admin
+     */
+    public function scopeAdmin($query)
+    {
+        return $query->where('command_playerInteraction', true);
+    }
+
+    /**
      * Command can be interacted with by player
      * @return bool
      */
