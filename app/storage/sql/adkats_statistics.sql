@@ -19,4 +19,3 @@ SELECT ROUND(
                 FROM `adkats_bans`
                 WHERE `ban_status` = 'Active'
                   AND `ban_endTime` > UTC_TIMESTAMP()), 3) AS `PercentageBanned_Active`
-FROM `tbl_playerdata` LIMIT 1
