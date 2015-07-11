@@ -16,7 +16,7 @@
                     </thead>
 
                     <tbody>
-                        <tr ng-repeat="(serverKey, server) in game.servers" ng-class="populationColor(server.percentage, true)">
+                        <tr ng-repeat="(serverKey, server) in game.servers track by server.ServerID" ng-class="populationColor(server.percentage, true)">
                             <td>
                                 <a ng-href="/servers/live#id-{{ server.ServerID }}" style="color: white;" ng-bind="server.server_name_short || server.ServerName" target="_self"></a>
                             </td>
