@@ -124,13 +124,16 @@
         {{ HTML::script('js/plugins/highcharts/highcharts.js') }}
         {{ HTML::script('js/plugins/iCheck/icheck.min.js') }}
         {{ HTML::script('js/boot.js?v=1') }}
+        {{ Minify::javascript(array_merge(
+            ['/js/app.js'],
+            MainHelper::files(public_path() . '/js/factorys', true, '/js/factorys/'),
+            MainHelper::files(public_path() . '/js/controllers', true, '/js/controllers/')
+        )) }}
         <script type="text/javascript">
             var lang = "{{ Config::get('app.locale', null) }}";
             moment.locale( lang || navigator.language.split('-')[0] );
             $.widget.bridge('uibutton', $.ui.button);
         </script>
-
-        {{ Minify::javascript(array_merge(['/js/app.js'], MainHelper::files(public_path() . '/js/factorys', true, '/js/factorys/'), MainHelper::files(public_path() . '/js/controllers', true, '/js/controllers/'))) }}
         @yield('scripts')
     </body>
 </html>
