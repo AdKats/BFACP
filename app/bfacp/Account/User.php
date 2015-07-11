@@ -65,7 +65,7 @@ class User extends Model implements ConfideUserInterface
      * @var array
      */
     public static $rules = [
-        'username' => 'required|unique:bfacp_users,username|alpha_num|min:4',
+        'username' => 'required|unique:bfacp_users,username|alpha_dash|min:4',
         'email'    => 'required|unique:bfacp_users,email|email',
         'password' => 'required|min:8|confirmed'
     ];
