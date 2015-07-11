@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection as Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App as App;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
@@ -128,10 +127,7 @@ class PlayerRepository extends BaseRepository
      */
     public function getPlayerCount()
     {
-        $count = Cache::remember('player.count', 60, function () {
-            return Player::count();
-        });
-
+        $count = Player::count('PlayerID');
         return intval($count);
     }
 
