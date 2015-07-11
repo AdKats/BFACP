@@ -94,6 +94,11 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
     Route::group(['prefix' => 'chatlogs'], function () {
         Route::get('/', ['as' => 'api.chatlogs.index', 'uses' => 'ChatlogController@getIndex']);
     });
+
+    /*===================================
+    =            API Reports            =
+    ===================================*/
+    Route::controller('reports', 'ReportsController');
 });
 
 /**
