@@ -92,6 +92,11 @@ table.scoreboard > tbody > tr.ng-leave {
     width: auto;
 }
 
+.wordwrap {
+    word-wrap: break-word;
+    white-space: normal;
+}
+
 .wysiwyg-color-black {
     color: black !important;
 }
@@ -134,4 +139,12 @@ table.scoreboard > tbody > tr.ng-leave {
 
 .wysiwyg-color-orange {
     color: orange !important;
+}
+
+.navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a > h4 {
+  margin: 0 0 0 0px !important;
+}
+
+.navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a > p {
+  margin: 0 0 0 0px !important;
 }
