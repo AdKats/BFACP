@@ -45,7 +45,7 @@ class PlayersController extends BaseController
         // Get or Set cache for player
         $player = Cache::remember($key, 5, function () use ($id) {
             $json = $this->repository->setopts([
-                'ban.previous',
+                'ban.previous.server',
                 'ban.record.server',
                 'reputation',
                 'infractionsGlobal',
