@@ -131,3 +131,12 @@ Route::filter('chatlogs', function () {
         return Redirect::route('home');
     }
 });
+
+Route::filter('ip.whitelisted', function() {
+    $clientIp = $_SERVER['REMOTE_ADDR'];
+    $whitelist = getenv('IP_WHITELIST') !== false ? explode('|', getenv('IP_WHITELIST')) : [];
+
+    if (!in_array($clientIp, $whitelist)) {
+        return Redirect::route('home');
+    }
+});

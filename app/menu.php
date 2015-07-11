@@ -94,5 +94,13 @@ Menu::make('MainNav', function ($menu) use ($adminPermsList, $bfacp) {
                 ->prepend(HTML::faicon(Lang::get('navigation.admin.site.items.system.logs.icon.fa'), true));
             }
         }
+
+        $clientIp = $_SERVER['REMOTE_ADDR'];
+        $whitelist = getenv('IP_WHITELIST') !== false ? explode('|', getenv('IP_WHITELIST')) : [];
+
+        if (in_array($clientIp, $whitelist)) {
+            $menu->add(Lang::get('navigation.main.items.maintenance.title'), ['route' => 'admin.site.maintenance.index'])
+            ->prepend(HTML::faicon(Lang::get('navigation.main.items.maintenance.icon.fa'), true));
+        }
     }
 });

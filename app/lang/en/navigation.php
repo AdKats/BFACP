@@ -31,6 +31,13 @@ return [
                     'fa'  => 'fa-users',
                     'ion' => null
                 ]
+            ],
+            'maintenance' => [
+                'title' => 'System Maintenance',
+                'icon'  => [
+                    'fa'  => 'fa-cogs',
+                    'ion' => null
+                ]
             ]
         ]
     ],

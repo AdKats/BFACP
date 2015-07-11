@@ -220,6 +220,9 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
 
             Route::get('settings', ['as' => 'admin.site.settings.index', 'uses' => 'SettingsController@index']);
             Route::put('settings', ['as' => 'admin.site.settings.update', 'uses' => 'SettingsController@update']);
+
+            Route::get('system/maintenance', ['as' => 'admin.site.maintenance.index', 'uses' => 'MaintenanceController@index', 'before' => 'auth|ip.whitelisted']);
+            Route::post('system/maintenance', ['as' => 'admin.site.maintenance.update', 'uses' => 'MaintenanceController@update', 'before' => 'auth|ip.whitelisted']);
         });
 
         Route::get('updater', ['as' => 'admin.updater.index', 'uses' => 'UpdaterController@index']);
