@@ -33,7 +33,7 @@ if (class_exists('Memcached')) {
     $session_driver = 'memcached';
     $cache_driver   = 'memcached';
 } else {
-    $session_driver = 'database';
+    $session_driver = 'file';
     $cache_driver   = 'file';
 }
 
