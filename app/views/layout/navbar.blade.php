@@ -1,5 +1,11 @@
 <div class="navbar-custom-menu">
     <ul class="nav navbar-nav">
+        {{-- Reports Menu --}}
+        @if($bfacp->isLoggedIn && $bfacp->user->ability(null, 'admin.adkats.reports.view'))
+        <li class="dropdown messages-menu" ng-include="'js/templates/latestreports.html'" ng-controller="ReportsController" onload="latestReports()"></li>
+        @endif
+
+        {{-- User Menu --}}
         @if($bfacp->isLoggedIn)
         <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

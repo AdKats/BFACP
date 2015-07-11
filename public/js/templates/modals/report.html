@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h3 class="modal-title">
+        {{ report.source_name }} reported {{ report.target_name }}
+        <small class="pull-right"><span ng-class="report.server.game.class_css" ng-bind="report.server.game.Name"></span></small>
+    </h3>
+</div>
+
+<div class="modal-body">
+    <i class="fa fa-server"></i>&nbsp;<span ng-bind="report.server.ServerName"></span><br />
+    <i class="fa fa-clock-o"></i>&nbsp;<span ng-bind="moment(report.stamp).format('LLL')"></span><br /><br />
+
+    <div class="input-group">
+        <input type="text" class="form-control" ng-model="reportReason" ng-disabled="!edit" maxlength="500" >
+        <span class="input-group-addon">
+            <input type="checkbox" ng-model="edit" tooltip="Check to edit reason">
+        </span>
+    </div>
+
+
+    <ul class="list-inline">
+        <li ng-if="report.source_id !== null" >
+            <a ng-href="/players/{{ report.source_id }}/{{ report.source_name }}" ng-bind="report.source_name" target="_blank"></a>
+        </li>
+        <li ng-if="report.target_id !== null">
+            <a ng-href="/players/{{ report.target_id }}/{{ report.target_name }}" ng-bind="report.target_name" target="_blank"></a>
+        </li>
+    </ul>
+
+    <label for="reportAction">Action</label>
+    <select id="reportAction" class="form-control" ng-model="actionSelected" ng-options="index as action.name for (index, action) in actions"></select>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">
+        <i class="fa fa-spinner fa-pulse" ng-show="working"></i> OK
+    </button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
