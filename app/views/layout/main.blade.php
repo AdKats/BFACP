@@ -127,6 +127,7 @@
         {{ Minify::javascript(array_merge(
             ['/js/app.js'],
             MainHelper::files(public_path() . '/js/factorys', true, '/js/factorys/'),
+            MainHelper::files(public_path() . '/js/services', true, '/js/services/'),
             MainHelper::files(public_path() . '/js/controllers', true, '/js/controllers/')
         )) }}
         <script type="text/javascript">
