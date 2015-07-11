@@ -1,4 +1,4 @@
-angular.module('bfacp').controller('DashboardController', ['$scope', '$http', '$interval', function($scope, $http, $interval) {
+angular.module('bfacp').controller('DashboardController', ['$scope', '$http', '$interval', '$timeout', function($scope, $http, $interval, $timeout) {
     $scope.results = {
         bans: {
             columns: [],
@@ -55,7 +55,6 @@ angular.module('bfacp').controller('DashboardController', ['$scope', '$http', '$
     });
 
     $scope.metabans = function() {
-
         // Fetch feed
         $http({
             url: 'api/bans/metabans/feed_assessments',
@@ -75,7 +74,6 @@ angular.module('bfacp').controller('DashboardController', ['$scope', '$http', '$
 
             $scope.metabans();
         });
-
     };
 
     /**
@@ -192,5 +190,4 @@ angular.module('bfacp').controller('DashboardController', ['$scope', '$http', '$
     $interval($scope.population, 30 * 1000);
 
     $scope.banStats();
-
 }]);
