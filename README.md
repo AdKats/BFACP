@@ -1,6 +1,8 @@
 # Overview
 The Battlefield Admin Control Panel (BFACP) is a web based admin tool designed to work exclusively with [AdKats](https://github.com/AdKats/AdKats) (v6+) and [XpKillers Chat, GUID, Stats and Mapstats Logger](https://forum.myrcon.com/showthread.php?6698) (v1.0.0.2). The software is built with the [Laravel](http://laravel.com/) PHP framework to speed up development time and make my job a lot easier.
 
+[FAQ](https://github.com/Prophet731/BFAdminCP/wiki/FAQ)
+
 # Requirements
 
 * MySQL Database (5.6+)
@@ -61,16 +63,26 @@ If you have any questions or need help setting this up please post it [here](htt
 
 Please create a ticket for bugs/requests. [here](https://github.com/Prophet731/BFAdminCP/issues).
 
-## Installing from the command line (Linux Only)
+## Installing from the command line
 
-This method is only for those who have shell access to their web server or VPS. This will download and extract the files to your current directory.
+This method is only for those who have shell access to their web server or VPS. This will download and extract the files to your current directory. Make sure it's an empty directory.
+
+### Git Method (prefered)
+
+If you have git installed you can just run the following command to install it.
+
+```bash
+git clone https://github.com/Prophet731/BFAdminCP.git .
+```
+
+To update it all you will need to do is run `git remote update` and it will pull the latest version.
+
+### Manual Method (Linux Only)
 
 ```bash
 wget -O v2.0.0.tar.gz https://github.com/Prophet731/BFAdminCP/archive/v2.0.0.tar.gz
 tar -xzf v2.0.0.tar.gz --strip-components=1
 rm -f v2.0.0.tar.gz
 ```
-
-[FAQ](https://github.com/Prophet731/BFAdminCP/wiki/FAQ)
 
 <a href="https://goo.gl/8BlTk2" target="_blank"><img src="https://raw.githubusercontent.com/ColColonCleaner/AdKats/master/images/AdKats_Docs_Donate.jpg"></a>
