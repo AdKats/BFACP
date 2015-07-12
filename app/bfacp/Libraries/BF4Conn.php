@@ -1,6 +1,7 @@
 <?php namespace BFACP\Libraries;
 
 use BFACP\Battlefield\Server;
+use BFACP\Exceptions\RconException;
 use Illuminate\Support\Facades\Lang;
 
 /*
@@ -40,33 +41,32 @@ use Illuminate\Support\Facades\Lang;
  * Modified for Battlefield 4 by Prophet of ADKGamers
  *
  */
-
 class BF4Conn
 {
-    private $_serverIP            = null;
+    private $_serverIP = null;
     private $_serverRconQueryPort = null;
-    private $_clientSequenceNr    = 0;
-    private $_sock                = null;
-    private $_connection          = false;
+    private $_clientSequenceNr = 0;
+    private $_sock = null;
+    private $_connection = false;
 
-    private $_playerdata       = null; // used for caching
+    private $_playerdata = null; // used for caching
     private $_playerdata_admin = null; // used for caching
-    private $_serverdata       = null; // used for caching
+    private $_serverdata = null; // used for caching
 
     private $_isLoggedIn = false;
-    private $_sockType   = null;
+    private $_sockType = null;
 
     /*-- configuration vars --*/
 
     private $_globalMsg = array(
-        'PLAYER_NOT_FOUND'        => 'PlayerNotFoundError',
-        'TEAM_NOT_FOUND'          => 'TeamNameNotFoundError',
-        'SQUAD_NOT_FOUND'         => 'SquadNameNotFoundError',
-        'PLAYMODE_NOT_FOUND'      => 'PlaymodeNameNotFoundError',
-        'MAPNAME_NOT_FOUND'       => 'MapNameNotFoundError',
+        'PLAYER_NOT_FOUND' => 'PlayerNotFoundError',
+        'TEAM_NOT_FOUND' => 'TeamNameNotFoundError',
+        'SQUAD_NOT_FOUND' => 'SquadNameNotFoundError',
+        'PLAYMODE_NOT_FOUND' => 'PlaymodeNameNotFoundError',
+        'MAPNAME_NOT_FOUND' => 'MapNameNotFoundError',
         'ADMIN_YELL_DURATION_MAX' => 60,
-        'NOT_LOGGED_IN'           => 'NotLoggedInAsAdmin',
-        'LOGIN_FAILED'            => 'LoginFailed'
+        'NOT_LOGGED_IN' => 'NotLoggedInAsAdmin',
+        'LOGIN_FAILED' => 'LoginFailed'
     );
 
     private $_globalVars = array();
@@ -75,23 +75,23 @@ class BF4Conn
 
     /**
      * @param Server $server
-     * @param string $debug  for debugging, use "-d"
+     * @param string $debug for debugging, use "-d"
      */
     public function __construct(Server $server, $debug = '-d')
     {
         $this->_globalVars = array(
-            'mapsFileXML'           => $server->maps_file_path,
-            'playmodesFileXML'      => $server->modes_file_path,
-            'squadnamesFileXML'     => $server->squads_file_path,
-            'teamnamesFileXML'      => $server->teams_file_path,
+            'mapsFileXML' => $server->maps_file_path,
+            'playmodesFileXML' => $server->modes_file_path,
+            'squadnamesFileXML' => $server->squads_file_path,
+            'teamnamesFileXML' => $server->teams_file_path,
             'defaultServerResponse' => 'OK',
-            'cachingEnabled'        => true // change this to false if you want caching disabled
+            'cachingEnabled' => true // change this to false if you want caching disabled
         );
 
         if ($this->_serverIP == null) {
-            $this->_serverIP            = $server->ip;
+            $this->_serverIP = $server->ip;
             $this->_serverRconQueryPort = $server->port;
-            $this->_connection          = $this->_openConnection($debug);
+            $this->_connection = $this->_openConnection($debug);
         }
     }
 
@@ -107,7 +107,7 @@ class BF4Conn
 
     private function _encodeClientRequest($data)
     {
-        $packet                  = $this->_encodePacket(false, false, $this->_clientSequenceNr, $data);
+        $packet = $this->_encodePacket(false, false, $this->_clientSequenceNr, $data);
         $this->_clientSequenceNr = ($this->_clientSequenceNr + 1) & 0x3fffffff;
 
         return $packet;
@@ -151,7 +151,7 @@ class BF4Conn
 
     private function _encodeWords($words)
     {
-        $size         = 0;
+        $size = 0;
         $encodedWords = '';
         foreach ($words as $word) {
             $strWord = $word;
@@ -170,10 +170,10 @@ class BF4Conn
     private function _decodeWords($size, $data)
     {
         $numWords = $this->_decodeInt32($data);
-        $offset   = 0;
+        $offset = 0;
         while ($offset < $size) {
             $wordLen = $this->_decodeInt32(substr($data, $offset, 4));
-            $word    = substr($data, $offset + 4, $wordLen);
+            $word = substr($data, $offset + 4, $wordLen);
             $words[] = $word;
             $offset += $wordLen + 5;
         }
@@ -188,21 +188,25 @@ class BF4Conn
             $adminYell = array($data[0], '', '', '');
 
             $yellStyle = '';
-            $yellKey   = 0;
+            $yellKey = 0;
             foreach ($data as $key => $content) {
                 if ($key != 0) {
                     if ($content == '{%player%}') {
                         $yellStyle = 'player';
-                        $yellKey   = $key;
+                        $yellKey = $key;
                         break;
-                    } else if ($content == '{%team%}') {
-                        $yellStyle = 'team';
-                        $yellKey   = $key;
-                        break;
-                    } else if ($content == '{%all%}') {
-                        $yellStyle = 'all';
-                        $yellKey   = $key;
-                        break;
+                    } else {
+                        if ($content == '{%team%}') {
+                            $yellStyle = 'team';
+                            $yellKey = $key;
+                            break;
+                        } else {
+                            if ($content == '{%all%}') {
+                                $yellStyle = 'all';
+                                $yellKey = $key;
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -211,204 +215,234 @@ class BF4Conn
                 foreach ($data as $key => $content) {
                     if ($key != 0 && $key < $yellKey - 1) {
                         $adminYell[1] .= $content . ' ';
-                    } else if ($key == $yellKey) {
-                        $adminYell[3] = $yellStyle;
-                    } else if ($key == $yellKey - 1) {
-                        $adminYell[2] = $data[$yellKey - 1];
-                    }
-                }
-
-                $adminYell[1] = trim($adminYell[1]);
-            } else if ($yellStyle == 'player' || $yellStyle == 'team') {
-                $adminYell[4] = '';
-
-                foreach ($data as $key => $content) {
-                    if ($key != 0 && $key < $yellKey - 1) {
-                        $adminYell[1] .= $content . ' ';
-                    } else if ($key == $yellKey) {
-                        $adminYell[3] = $yellStyle;
-                    } else if ($key == $yellKey - 1) {
-                        $adminYell[2] = $data[$yellKey - 1];
-                    } else if ($key > $yellKey) {
-                        $adminYell[4] .= $content . ' ';
-                    }
-                }
-
-                $adminYell[4] = trim($adminYell[4]); // trim whitespaces
-            }
-
-            $data = $adminYell;
-        } else if ($data[0] == 'vars.serverDescription' && isset($data[1])) {
-            $serverDesc = array($data[0], '');
-            foreach ($data as $key => $value) {
-                if ($key != 0) {
-                    $serverDesc[1] .= $value . ' ';
-                }
-            }
-            $serverDesc[1] = trim($serverDesc[1]);
-
-            $data = $serverDesc;
-        } else if ($data[0] == 'admin.kickPlayer' && isset($data[1])) {
-            $reason = false;
-            foreach ($data as $key => $value) {
-                if ($value == '{%reason%}') {
-                    $reason = true;
-                }
-            }
-
-            if (!$reason) {
-                $kickPlayer = array($data[0], '');
-                foreach ($data as $key => $value) {
-                    if ($key != 0) {
-                        $kickPlayer[1] .= $value . ' ';
-                    }
-                }
-                $kickPlayer[1] = trim($kickPlayer[1]);
-            } else {
-                $kickPlayer = array($data[0], '', '');
-                $i          = 0;
-                foreach ($data as $key => $value) {
-                    if ($key != 0) {
-                        if ($value == '{%reason%}') {
-                            $i = $key;
-                        }
-
-                        if ($i == 0) {
-                            $kickPlayer[1] .= $value . ' ';
+                    } else {
+                        if ($key == $yellKey) {
+                            $adminYell[3] = $yellStyle;
                         } else {
-                            if ($key != $i) {
-                                $kickPlayer[2] .= $value . ' ';
+                            if ($key == $yellKey - 1) {
+                                $adminYell[2] = $data[$yellKey - 1];
                             }
                         }
                     }
                 }
-                $kickPlayer[1] = trim($kickPlayer[1]); // trim whitespaces
-                $kickPlayer[2] = trim($kickPlayer[2]); // trim whitespaces
-            }
 
-            $data = $kickPlayer;
-        } else if ($data[0] == 'banList.add' || $data[0] == 'banList.remove' && isset($data[1])) {
-            $dataCount = count($data) - 1;
-            $banPlayer = array($data[0], $data[1], '');
-            foreach ($data as $key => $value) {
-                if ($key != 0 && $key != 1) {
-                    if ($data[0] == 'banList.add' && $key != $dataCount) {
-                        $banPlayer[2] .= $value . ' ';
-                    } else if ($data[0] == 'banList.remove') {
-                        $banPlayer[2] .= $value . ' ';
-                    }
-                }
-            }
-
-            $banPlayer[2] = trim($banPlayer[2]); // trim whitespace
-
-            if ($data[0] == 'banList.add') {
-                $banPlayer[3] = $data[$dataCount];
-            }
-
-            $data = $banPlayer;
-        } else if ($data[0] == 'admin.listPlayers' || $data[0] == 'listPlayers' && isset($data[1])) {
-            $listPlayer = array($data[0]);
-            if ($data[1] != 'all') {
-                if ($data[1] == 'player') {
-                    $listPlayer[1] = $data[1];
-                    $listPlayer[2] = '';
-                    foreach ($data as $key => $value) {
-                        if ($key != 0 && $key != 1) {
-                            $listPlayer[2] .= $value . ' ';
-                        }
-                    }
-
-                    $listPlayer[2] = trim($listPlayer[2]); // trim ending whitespace
-                }
-                if ($data[1] == 'team') {
-                    $listPlayer[1] = $data[1];
-                    $listPlayer[2] = '';
-                    foreach ($data as $key => $value) {
-                        if ($key != 0 && $key != 1) {
-                            $listPlayer[2] .= $value . ' ';
-                        }
-                    }
-
-                    $listPlayer[2] = trim($listPlayer[2]); // trim ending whitespace
-                }
+                $adminYell[1] = trim($adminYell[1]);
             } else {
-                $listPlayer[1] = $data[1];
-            }
+                if ($yellStyle == 'player' || $yellStyle == 'team') {
+                    $adminYell[4] = '';
 
-            $data = $listPlayer;
-        } else if ($data[0] == 'reservedSlots.addPlayer' || $data[0] == 'reservedSlots.removePlayer' && isset($data[1])) {
-            $reservedSlots = array($data[0], '');
-            foreach ($data as $key => $value) {
-                if ($key != 0) {
-                    $reservedSlots[1] .= $value . ' ';
+                    foreach ($data as $key => $content) {
+                        if ($key != 0 && $key < $yellKey - 1) {
+                            $adminYell[1] .= $content . ' ';
+                        } else {
+                            if ($key == $yellKey) {
+                                $adminYell[3] = $yellStyle;
+                            } else {
+                                if ($key == $yellKey - 1) {
+                                    $adminYell[2] = $data[$yellKey - 1];
+                                } else {
+                                    if ($key > $yellKey) {
+                                        $adminYell[4] .= $content . ' ';
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    $adminYell[4] = trim($adminYell[4]); // trim whitespaces
                 }
             }
 
-            $reservedSlots[1] = trim($reservedSlots[1]); // trim whitespace
-
-            $data = $reservedSlots;
-        } else if ($data[0] == 'admin.say' && isset($data[1])) {
-            $adminSay = array($data[0], '', '', '');
-            $i        = 0;
-            foreach ($data as $key => $value) {
-                if ($key != 0) {
-                    if ($value == '{%player%}' || $value == '{%team%}' || $value == '{%all%}') {
-                        $i           = $key;
-                        $adminSay[2] = preg_replace('/[{}%]/', '', $value);
+            $data = $adminYell;
+        } else {
+            if ($data[0] == 'vars.serverDescription' && isset($data[1])) {
+                $serverDesc = array($data[0], '');
+                foreach ($data as $key => $value) {
+                    if ($key != 0) {
+                        $serverDesc[1] .= $value . ' ';
                     }
-                    if ($i == 0) {
-                        $adminSay[1] .= $value . ' ';
+                }
+                $serverDesc[1] = trim($serverDesc[1]);
+
+                $data = $serverDesc;
+            } else {
+                if ($data[0] == 'admin.kickPlayer' && isset($data[1])) {
+                    $reason = false;
+                    foreach ($data as $key => $value) {
+                        if ($value == '{%reason%}') {
+                            $reason = true;
+                        }
+                    }
+
+                    if (!$reason) {
+                        $kickPlayer = array($data[0], '');
+                        foreach ($data as $key => $value) {
+                            if ($key != 0) {
+                                $kickPlayer[1] .= $value . ' ';
+                            }
+                        }
+                        $kickPlayer[1] = trim($kickPlayer[1]);
                     } else {
-                        if ($key != $i && $adminSay[2] != 'all') {
-                            $adminSay[3] .= $value . ' ';
+                        $kickPlayer = array($data[0], '', '');
+                        $i = 0;
+                        foreach ($data as $key => $value) {
+                            if ($key != 0) {
+                                if ($value == '{%reason%}') {
+                                    $i = $key;
+                                }
+
+                                if ($i == 0) {
+                                    $kickPlayer[1] .= $value . ' ';
+                                } else {
+                                    if ($key != $i) {
+                                        $kickPlayer[2] .= $value . ' ';
+                                    }
+                                }
+                            }
+                        }
+                        $kickPlayer[1] = trim($kickPlayer[1]); // trim whitespaces
+                        $kickPlayer[2] = trim($kickPlayer[2]); // trim whitespaces
+                    }
+
+                    $data = $kickPlayer;
+                } else {
+                    if ($data[0] == 'banList.add' || $data[0] == 'banList.remove' && isset($data[1])) {
+                        $dataCount = count($data) - 1;
+                        $banPlayer = array($data[0], $data[1], '');
+                        foreach ($data as $key => $value) {
+                            if ($key != 0 && $key != 1) {
+                                if ($data[0] == 'banList.add' && $key != $dataCount) {
+                                    $banPlayer[2] .= $value . ' ';
+                                } else {
+                                    if ($data[0] == 'banList.remove') {
+                                        $banPlayer[2] .= $value . ' ';
+                                    }
+                                }
+                            }
+                        }
+
+                        $banPlayer[2] = trim($banPlayer[2]); // trim whitespace
+
+                        if ($data[0] == 'banList.add') {
+                            $banPlayer[3] = $data[$dataCount];
+                        }
+
+                        $data = $banPlayer;
+                    } else {
+                        if ($data[0] == 'admin.listPlayers' || $data[0] == 'listPlayers' && isset($data[1])) {
+                            $listPlayer = array($data[0]);
+                            if ($data[1] != 'all') {
+                                if ($data[1] == 'player') {
+                                    $listPlayer[1] = $data[1];
+                                    $listPlayer[2] = '';
+                                    foreach ($data as $key => $value) {
+                                        if ($key != 0 && $key != 1) {
+                                            $listPlayer[2] .= $value . ' ';
+                                        }
+                                    }
+
+                                    $listPlayer[2] = trim($listPlayer[2]); // trim ending whitespace
+                                }
+                                if ($data[1] == 'team') {
+                                    $listPlayer[1] = $data[1];
+                                    $listPlayer[2] = '';
+                                    foreach ($data as $key => $value) {
+                                        if ($key != 0 && $key != 1) {
+                                            $listPlayer[2] .= $value . ' ';
+                                        }
+                                    }
+
+                                    $listPlayer[2] = trim($listPlayer[2]); // trim ending whitespace
+                                }
+                            } else {
+                                $listPlayer[1] = $data[1];
+                            }
+
+                            $data = $listPlayer;
+                        } else {
+                            if ($data[0] == 'reservedSlots.addPlayer' || $data[0] == 'reservedSlots.removePlayer' && isset($data[1])) {
+                                $reservedSlots = array($data[0], '');
+                                foreach ($data as $key => $value) {
+                                    if ($key != 0) {
+                                        $reservedSlots[1] .= $value . ' ';
+                                    }
+                                }
+
+                                $reservedSlots[1] = trim($reservedSlots[1]); // trim whitespace
+
+                                $data = $reservedSlots;
+                            } else {
+                                if ($data[0] == 'admin.say' && isset($data[1])) {
+                                    $adminSay = array($data[0], '', '', '');
+                                    $i = 0;
+                                    foreach ($data as $key => $value) {
+                                        if ($key != 0) {
+                                            if ($value == '{%player%}' || $value == '{%team%}' || $value == '{%all%}') {
+                                                $i = $key;
+                                                $adminSay[2] = preg_replace('/[{}%]/', '', $value);
+                                            }
+                                            if ($i == 0) {
+                                                $adminSay[1] .= $value . ' ';
+                                            } else {
+                                                if ($key != $i && $adminSay[2] != 'all') {
+                                                    $adminSay[3] .= $value . ' ';
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    $adminSay[1] = trim($adminSay[1]); // trim whitespace
+                                    $adminSay[3] = trim($adminSay[3]); // trim whitespace
+
+                                    if ($adminSay[2] == 'all') {
+                                        unset($adminSay[3]);
+                                    }
+
+                                    $data = $adminSay;
+                                } else {
+                                    if ($data[0] == 'admin.killPlayer' && isset($data[1])) {
+                                        $adminKillPlayer = array($data[0], '');
+                                        $i = 0;
+                                        foreach ($data as $key => $value) {
+                                            if ($key != 0) {
+                                                $adminKillPlayer[1] .= $value . ' ';
+                                            }
+                                        }
+
+                                        $adminKillPlayer[1] = trim($adminKillPlayer[1]); // trim whitespace
+
+                                        $data = $adminKillPlayer;
+                                    } else {
+                                        if ($data[0] == 'admin.movePlayer' && isset($data[1])) {
+                                            $dataCount = count($data) - 3;
+                                            $adminMovePlayer = array($data[0], '', '', '', '');
+                                            $i = 0;
+                                            foreach ($data as $key => $value) {
+                                                if ($key != 0 && $key < $dataCount) {
+                                                    $adminMovePlayer[1] .= $value . ' ';
+                                                }
+                                            }
+
+                                            $adminMovePlayer[1] = trim($adminMovePlayer[1]); // trim whitespace
+                                            $adminMovePlayer[2] = $data[$dataCount];
+                                            $adminMovePlayer[3] = $data[$dataCount + 1];
+                                            $adminMovePlayer[4] = $data[$dataCount + 2];
+
+                                            $data = $adminMovePlayer;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
-
-            $adminSay[1] = trim($adminSay[1]); // trim whitespace
-            $adminSay[3] = trim($adminSay[3]); // trim whitespace
-
-            if ($adminSay[2] == 'all') {
-                unset($adminSay[3]);
-            }
-
-            $data = $adminSay;
-        } else if ($data[0] == 'admin.killPlayer' && isset($data[1])) {
-            $adminKillPlayer = array($data[0], '');
-            $i               = 0;
-            foreach ($data as $key => $value) {
-                if ($key != 0) {
-                    $adminKillPlayer[1] .= $value . ' ';
-                }
-            }
-
-            $adminKillPlayer[1] = trim($adminKillPlayer[1]); // trim whitespace
-
-            $data = $adminKillPlayer;
-        } else if ($data[0] == 'admin.movePlayer' && isset($data[1])) {
-            $dataCount       = count($data) - 3;
-            $adminMovePlayer = array($data[0], '', '', '', '');
-            $i               = 0;
-            foreach ($data as $key => $value) {
-                if ($key != 0 && $key < $dataCount) {
-                    $adminMovePlayer[1] .= $value . ' ';
-                }
-            }
-
-            $adminMovePlayer[1] = trim($adminMovePlayer[1]); // trim whitespace
-            $adminMovePlayer[2] = $data[$dataCount];
-            $adminMovePlayer[3] = $data[$dataCount + 1];
-            $adminMovePlayer[4] = $data[$dataCount + 2];
-
-            $data = $adminMovePlayer;
         }
 
-        $encodedHeader                  = $this->_encodeHeader($isFromServer, $isResponse, $sequence);
-        $encodedNumWords                = $this->_encodeInt32(count($data));
+        $encodedHeader = $this->_encodeHeader($isFromServer, $isResponse, $sequence);
+        $encodedNumWords = $this->_encodeInt32(count($data));
         list($wordsSize, $encodedWords) = $this->_encodeWords($data);
-        $encodedSize                    = $this->_encodeInt32($wordsSize + 12);
+        $encodedSize = $this->_encodeInt32($wordsSize + 12);
 
         return $encodedHeader . $encodedSize . $encodedNumWords . $encodedWords;
     }
@@ -416,8 +450,8 @@ class BF4Conn
     private function _decodePacket($data)
     {
         list($isFromServer, $isResponse, $sequence) = $this->_decodeHeader($data);
-        $wordsSize                                  = $this->_decodeInt32(substr($data, 4, 4)) - 12;
-        $words                                      = $this->_decodeWords($wordsSize, substr($data, 12));
+        $wordsSize = $this->_decodeInt32(substr($data, 4, 4)) - 12;
+        $words = $this->_decodeWords($wordsSize, substr($data, 12));
 
         return array(
             $isFromServer,
@@ -447,13 +481,13 @@ class BF4Conn
             if ($this->_sockType == 1) {
                 $socketbuffer = @socket_read($this->_sock, 4096);
                 if ($socketbuffer == false) {
-                    throw new BattlefieldException('Could not read packet data from game server.');
+                    throw new RconException('Could not read packet data from game server.');
                 }
                 $receiveBuffer .= $socketbuffer;
             } else {
                 $socketbuffer = fread($this->_sock, 4096);
                 if ($socketbuffer == false) {
-                    throw new BattlefieldException('Could not read packet data from game server.');
+                    throw new RconException('Could not read packet data from game server.');
                 }
                 $receiveBuffer .= $socketbuffer;
             }
@@ -461,7 +495,7 @@ class BF4Conn
 
         $packetSize = $this->_decodeInt32(substr($receiveBuffer, 4, 4));
 
-        $packet        = substr($receiveBuffer, 0, $packetSize);
+        $packet = substr($receiveBuffer, 0, $packetSize);
         $receiveBuffer = substr($receiveBuffer, $packetSize, strlen($receiveBuffer));
 
         return array(
@@ -529,19 +563,22 @@ class BF4Conn
             }
 
             $this->_sockType = 1;
-        } else if (function_exists('fsockopen')) {
-            if ($debug == '-d') {
-                @$this->_sock = fsockopen('tcp://' . $this->_serverIP, $this->_serverRconQueryPort, $errno, $errstr, 10);
-                if (!$this->_sock) {
-                    echo '[DEBUG]: ' . $errno . ' - ' . $errstr . "\n";
+        } else {
+            if (function_exists('fsockopen')) {
+                if ($debug == '-d') {
+                    @$this->_sock = fsockopen('tcp://' . $this->_serverIP, $this->_serverRconQueryPort, $errno, $errstr,
+                        10);
+                    if (!$this->_sock) {
+                        echo '[DEBUG]: ' . $errno . ' - ' . $errstr . "\n";
+                    }
+                } else {
+                    @$this->_sock = fsockopen('tcp://' . $this->_serverIP, $this->_serverRconQueryPort);
                 }
-            } else {
-                @$this->_sock = fsockopen('tcp://' . $this->_serverIP, $this->_serverRconQueryPort);
+
+                $connection = $this->_sock;
+
+                $this->_sockType = 2;
             }
-
-            $connection = $this->_sock;
-
-            $this->_sockType = 2;
         }
 
         return $connection;
@@ -570,8 +607,8 @@ class BF4Conn
             fwrite($this->_sock, $data, strlen($data));
         }
 
-        $receiveBuffer                                              = '';
-        list($packet, $receiveBuffer)                               = $this->_receivePacket($receiveBuffer);
+        $receiveBuffer = '';
+        list($packet, $receiveBuffer) = $this->_receivePacket($receiveBuffer);
         list($isFromServer, $isResponse, $sequence, $requestAnswer) = $this->_decodePacket($packet);
 
         return $requestAnswer;
@@ -623,7 +660,7 @@ class BF4Conn
     {
         $salt = $this->_array2String($this->_clientRequest('login.hashed'));
 
-        $hashedPW       = $this->_hex_str($salt) . $rconPassword;
+        $hashedPW = $this->_hex_str($salt) . $rconPassword;
         $saltedHashedPW = strtoupper(md5($hashedPW));
 
         $loginStatus = $this->_array2String($this->_clientRequest('login.hashed ' . $saltedHashedPW), 0);
@@ -680,7 +717,7 @@ class BF4Conn
     public function getMapName($mapURI)
     {
         $mapNamesXML = simplexml_load_file($this->_globalVars['mapsFileXML']);
-        $mapName     = $this->_globalMsg['MAPNAME_NOT_FOUND'];
+        $mapName = $this->_globalMsg['MAPNAME_NOT_FOUND'];
 
         for ($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
             if (strcasecmp($mapURI, $mapNamesXML->map[$i]->attributes()->uri) == 0) {
@@ -724,7 +761,7 @@ class BF4Conn
     public function getSquadName($squadID)
     {
         $squadNamesXML = simplexml_load_file($this->_globalVars['squadnamesFileXML']);
-        $squadName     = $this->_globalMsg['SQUAD_NOT_FOUND'];
+        $squadName = $this->_globalMsg['SQUAD_NOT_FOUND'];
 
         for ($i = 0; $i <= (count($squadNamesXML->squad) - 1); $i++) {
             if ($squadID == $squadNamesXML->squad[$i]->attributes()->id) {
@@ -748,7 +785,7 @@ class BF4Conn
     public function getTeamName($mapURI, $playmodeURI, $teamID, $squadID = null)
     {
         $teamNameXML = simplexml_load_file($this->_globalVars['teamnamesFileXML']);
-        $teamName    = $this->_globalMsg['TEAM_NOT_FOUND'];
+        $teamName = $this->_globalMsg['TEAM_NOT_FOUND'];
 
         $playModes = count($teamNameXML->teamName[0]) - 1;
         if ($playModes >= $teamID) {
@@ -809,7 +846,7 @@ class BF4Conn
     {
         $serverInfo = $this->getServerInfo();
 
-        return (int) $this->_array2String($serverInfo, 2);
+        return (int)$this->_array2String($serverInfo, 2);
     }
 
     /**
@@ -821,7 +858,7 @@ class BF4Conn
     {
         $serverInfo = $this->getServerInfo();
 
-        return (int) $this->_array2String($serverInfo, 3);
+        return (int)$this->_array2String($serverInfo, 3);
     }
 
     /**
@@ -889,7 +926,7 @@ class BF4Conn
      */
     public function getVersionID()
     {
-        return (int) $this->_array2String($this->getVersion(), 2);
+        return (int)$this->_array2String($this->getVersion(), 2);
     }
 
     /**
@@ -909,7 +946,7 @@ class BF4Conn
      */
     public function getCurrentGameRound()
     {
-        return (int) $this->_array2String($this->getServerInfo(), 6) + 1;
+        return (int)$this->_array2String($this->getServerInfo(), 6) + 1;
     }
 
     /**
@@ -919,7 +956,7 @@ class BF4Conn
      */
     public function getGameMaxRounds()
     {
-        return (int) $this->_array2String($this->getServerInfo(), 7);
+        return (int)$this->_array2String($this->getServerInfo(), 7);
     }
 
     /**
@@ -930,7 +967,7 @@ class BF4Conn
      */
     public function getTeamScores()
     {
-        return (int) $this->_array2String($this->getServerInfo(), 8);
+        return (int)$this->_array2String($this->getServerInfo(), 8);
     }
 
     /**
@@ -961,6 +998,7 @@ class BF4Conn
     /**
      * returns list of all players on the server with the team specified, but with zeroed out GUIDs
      *
+     * @param string $team
      * @return array
      */
     public function getPlayerlistTeam($team = '')
@@ -981,14 +1019,14 @@ class BF4Conn
      */
     public function getPlayerlistNames()
     {
-        $players       = $this->getPlayerlist();
+        $players = $this->getPlayerlist();
         $playersAmount = $this->getCurrentPlayers();
 
         if ($playersAmount == 0) {
             $playersNames = array();
         }
 
-        $playersParameters = (int) $players[1];
+        $playersParameters = (int)$players[1];
         for ($i = 0; $i < $playersAmount; $i++) {
             $playersNames[] = $players[($playersParameters) * $i + $playersParameters + 3];
         }
@@ -1157,7 +1195,7 @@ class BF4Conn
             return $this->_globalMsg['PLAYER_NOT_FOUND'];
         }
 
-        return (int) $this->_array2String($playerInfo, 15);
+        return (int)$this->_array2String($playerInfo, 15);
     }
 
     /**
@@ -1174,7 +1212,7 @@ class BF4Conn
             return $this->_globalMsg['PLAYER_NOT_FOUND'];
         }
 
-        return (int) $this->_array2String($playerInfo, 16);
+        return (int)$this->_array2String($playerInfo, 16);
     }
 
     /**
@@ -1191,7 +1229,7 @@ class BF4Conn
             return $this->_globalMsg['PLAYER_NOT_FOUND'];
         }
 
-        return (int) $this->_array2String($playerInfo, 17);
+        return (int)$this->_array2String($playerInfo, 17);
     }
 
     /**
@@ -1208,7 +1246,7 @@ class BF4Conn
             return $this->_globalMsg['PLAYER_NOT_FOUND'];
         }
 
-        return (int) $this->_array2String($playerInfo, 18);
+        return (int)$this->_array2String($playerInfo, 18);
     }
 
     /**
@@ -1225,7 +1263,7 @@ class BF4Conn
             return $this->_globalMsg['PLAYER_NOT_FOUND'];
         }
 
-        return (int) $this->_array2String($playerInfo, 18);
+        return (int)$this->_array2String($playerInfo, 18);
     }
 
     /**
@@ -1242,7 +1280,7 @@ class BF4Conn
             return $this->_globalMsg['PLAYER_NOT_FOUND'];
         }
 
-        return (int) $this->_array2String($playerInfo, 21);
+        return (int)$this->_array2String($playerInfo, 21);
     }
 
     /*-- admin commands --*/
@@ -1265,7 +1303,7 @@ class BF4Conn
     public function adminYellMessage($text, $playerName = '{%all%}', $durationInMS = 10)
     {
         if ($durationInMS > $this->_globalMsg['ADMIN_YELL_DURATION_MAX']) {
-            $durationInMS == $this->_globalMsg['ADMIN_YELL_DURATION_MAX'];
+            $durationInMS = $this->_globalMsg['ADMIN_YELL_DURATION_MAX'];
         }
 
         if ($playerName != '{%all%}') {
@@ -1292,7 +1330,7 @@ class BF4Conn
     public function adminYellMessageToTeam($text, $teamID, $durationInMS = 10)
     {
         if ($durationInMS > $this->_globalMsg['ADMIN_YELL_DURATION_MAX']) {
-            $durationInMS == $this->_globalMsg['ADMIN_YELL_DURATION_MAX'];
+            $durationInMS = $this->_globalMsg['ADMIN_YELL_DURATION_MAX'];
         }
 
         return $this->_array2String($this->_clientRequest('admin.yell ' . $text . ' ' .
@@ -1479,7 +1517,7 @@ class BF4Conn
      */
     public function adminMaplistGetNextMapIndex()
     {
-        return (int) $this->_array2String($this->_clientRequest('mapList.getMapIndices'), 2);
+        return (int)$this->_array2String($this->_clientRequest('mapList.getMapIndices'), 2);
     }
 
     /**
@@ -1542,7 +1580,8 @@ class BF4Conn
      */
     public function adminKickPlayerWithReason($playerName, $reason = 'Kicked by administrator')
     {
-        return $this->_array2String($this->_clientRequest('admin.kickPlayer ' . $playerName . ' {%reason%} ' . $reason), 0);
+        return $this->_array2String($this->_clientRequest('admin.kickPlayer ' . $playerName . ' {%reason%} ' . $reason),
+            0);
     }
 
     /**
@@ -1590,8 +1629,7 @@ class BF4Conn
      * TODO: banreason
      *
      * @param String
-     * @param String (optional) - if not set, guid will be banned permanently
-     *
+     * @param int $timerange
      * @return String
      */
     public function adminBanAddPlayerGUID($playerName, $timerange = 2)
@@ -1673,6 +1711,7 @@ class BF4Conn
     /**
      * lists all bans from banlist
      *
+     * @param string $offset
      * @return array
      */
     public function adminBanlistList($offset = '0')
@@ -1832,7 +1871,7 @@ class BF4Conn
      */
     public function adminSquadLeader($playerName)
     {
-        $teamID  = $this->getPlayerTeamID($playerName);
+        $teamID = $this->getPlayerTeamID($playerName);
         $squadID = $this->getPlayerSquadID($playerName);
 
         return $this->_array2String($this->_clientRequest('squad.leader ' .
@@ -2010,7 +2049,7 @@ class BF4Conn
      */
     public function adminVarGetbulletDamageModifier()
     {
-        return (int) $this->_array2String($this->_clientRequest('vars.bulletDamage'));
+        return (int)$this->_array2String($this->_clientRequest('vars.bulletDamage'));
     }
 
     /**
@@ -2115,7 +2154,7 @@ class BF4Conn
      */
     public function adminVarGetIdleTimeout()
     {
-        return (int) $this->_array2String($this->_clientRequest('vars.idleTimeout'));
+        return (int)$this->_array2String($this->_clientRequest('vars.idleTimeout'));
     }
 
     /**
@@ -2138,7 +2177,7 @@ class BF4Conn
      */
     public function adminVarGetidleBanRounds()
     {
-        return (int) $this->_array2String($this->_clientRequest('vars.idleBanRounds'));
+        return (int)$this->_array2String($this->_clientRequest('vars.idleBanRounds'));
     }
 
     /**
@@ -2275,7 +2314,7 @@ class BF4Conn
      */
     public function adminVarGetPlayerManDownTimeModifier()
     {
-        return (int) $this->_array2String($this->_clientRequest('vars.playerManDownTime'));
+        return (int)$this->_array2String($this->_clientRequest('vars.playerManDownTime'));
     }
 
     /**
@@ -2297,7 +2336,7 @@ class BF4Conn
      */
     public function adminVarGetPlayerRespawnTimeModifier()
     {
-        return (int) $this->_array2String($this->_clientRequest('vars.playerRespawnTime'));
+        return (int)$this->_array2String($this->_clientRequest('vars.playerRespawnTime'));
     }
 
     /**
@@ -2433,9 +2472,10 @@ class BF4Conn
     /**
      * sets the soldier health modifier in %
      *
-     * @param $soldierHealthInteger
-     *
+     * @param $integer
      * @return String
+     * @internal param $soldierHealthInteger
+     *
      */
     public function adminVarSetSoldierHealthModifier($integer)
     {
@@ -2449,7 +2489,7 @@ class BF4Conn
      */
     public function adminVarGetSoldierHealthModifier()
     {
-        return (int) $this->_array2String($this->_clientRequest('vars.soldierHealth'));
+        return (int)$this->_array2String($this->_clientRequest('vars.soldierHealth'));
     }
 
     /**
@@ -2462,7 +2502,8 @@ class BF4Conn
      */
     public function adminVarSetTeamKillCountForKick($teamKillCountForKickInteger)
     {
-        return $this->_array2String($this->_clientRequest('vars.teamKillCountForKick ' . $teamKillCountForKickInteger), 0);
+        return $this->_array2String($this->_clientRequest('vars.teamKillCountForKick ' . $teamKillCountForKickInteger),
+            0);
     }
 
     /**
@@ -2472,7 +2513,7 @@ class BF4Conn
      */
     public function adminVarGetTeamKillCountForKick()
     {
-        return (int) $this->_array2String($this->_clientRequest('vars.teamKillCountForKick'));
+        return (int)$this->_array2String($this->_clientRequest('vars.teamKillCountForKick'));
     }
 
     /**
@@ -2485,7 +2526,8 @@ class BF4Conn
      */
     public function adminVarSetTeamKillValueForKick($teamKillValueForKickInteger)
     {
-        return $this->_array2String($this->_clientRequest('vars.teamKillValueForKick ' . $teamKillValueForKickInteger), 0);
+        return $this->_array2String($this->_clientRequest('vars.teamKillValueForKick ' . $teamKillValueForKickInteger),
+            0);
     }
 
     /**
@@ -2495,7 +2537,7 @@ class BF4Conn
      */
     public function adminVarGetTeamKillValueForKick()
     {
-        return (int) $this->_array2String($this->_clientRequest('vars.teamKillValueForKick'));
+        return (int)$this->_array2String($this->_clientRequest('vars.teamKillValueForKick'));
     }
 
     /**
@@ -2507,7 +2549,8 @@ class BF4Conn
      */
     public function adminVarSetTeamKillValueIncrease($teamKillValueIncreaseInteger)
     {
-        return $this->_array2String($this->_clientRequest('vars.teamKillValueIncrease ' . $teamKillValueIncreaseInteger), 0);
+        return $this->_array2String($this->_clientRequest('vars.teamKillValueIncrease ' . $teamKillValueIncreaseInteger),
+            0);
     }
 
     /**
@@ -2517,7 +2560,7 @@ class BF4Conn
      */
     public function adminVarGetTeamKillValueIncrease()
     {
-        return (int) $this->_array2String($this->_clientRequest('vars.teamKillValueIncrease'));
+        return (int)$this->_array2String($this->_clientRequest('vars.teamKillValueIncrease'));
     }
 
     /**
@@ -2529,7 +2572,8 @@ class BF4Conn
      */
     public function adminVarSetTeamKillValueDecreasePerSecond($teamKillValueDecreaseInteger)
     {
-        return $this->_array2String($this->_clientRequest('vars.teamKillValueDecreasePerSecond ' . $teamKillValueDecreaseInteger), 0);
+        return $this->_array2String($this->_clientRequest('vars.teamKillValueDecreasePerSecond ' . $teamKillValueDecreaseInteger),
+            0);
     }
 
     /**
@@ -2539,7 +2583,7 @@ class BF4Conn
      */
     public function adminVarGetTeamKillValueDecreasePerSecond()
     {
-        return (int) $this->_array2String($this->_clientRequest('vars.teamKillValueDecreasePerSecond'));
+        return (int)$this->_array2String($this->_clientRequest('vars.teamKillValueDecreasePerSecond'));
     }
 
     /**
@@ -2561,7 +2605,7 @@ class BF4Conn
      */
     public function adminVarGetTeamKillKickForBan()
     {
-        return (int) $this->_array2String($this->_clientRequest('vars.teamKillKickForBan'));
+        return (int)$this->_array2String($this->_clientRequest('vars.teamKillKickForBan'));
     }
 
     /**
@@ -2590,9 +2634,10 @@ class BF4Conn
     /**
      * sets the vehicle spawn modifier in %
      *
-     * @param $vehicleSpawnDelayInteger
-     *
+     * @param $integer
      * @return String
+     * @internal param $vehicleSpawnDelayInteger
+     *
      */
     public function adminVarSetVehicleSpawnDelayModifier($integer)
     {
@@ -2606,7 +2651,7 @@ class BF4Conn
      */
     public function adminVarGetVehicleSpawnDelayModifier()
     {
-        return (int) $this->_array2String($this->_clientRequest('vars.vehicleSpawnDelay'));
+        return (int)$this->_array2String($this->_clientRequest('vars.vehicleSpawnDelay'));
     }
 
     /**
@@ -2631,7 +2676,7 @@ class BF4Conn
 
     /**
      * gets the team name by there faction id
-     * @param  integer $integer  Team ID
+     * @param  integer $integer Team ID
      * @return array
      */
     public function adminVarGetTeamFaction($integer)
@@ -2656,12 +2701,12 @@ class BF4Conn
      */
     public function adminVarGetGameModeCounter()
     {
-        return (int) $this->_array2String($this->_clientRequest('vars.gameModeCounter'), 1);
+        return (int)$this->_array2String($this->_clientRequest('vars.gameModeCounter'), 1);
     }
 
     public function adminVarGetRoundTimeLimit()
     {
-        return (int) $this->_array2String($this->_clientRequest('vars.roundTimeLimit'), 1);
+        return (int)$this->_array2String($this->_clientRequest('vars.roundTimeLimit'), 1);
     }
 
     /**
@@ -2673,14 +2718,14 @@ class BF4Conn
     {
         array_shift($res);
         $nColumns = $res[0];
-        $columns  = [];
+        $columns = [];
 
         for ($i = 1; $i <= $nColumns; $i++) {
             $columns[] = $res[$i];
         }
 
         $nRows = $res[11];
-        $rows  = [
+        $rows = [
             'players' => [],
             'columns' => []
         ];
@@ -2689,8 +2734,8 @@ class BF4Conn
             $row = [];
 
             for ($j = 0; $j < count($columns); $j++) {
-                $value             = $res[++$i];
-                $row[$columns[$j]] = is_numeric($value) ? (int) $value : $value;
+                $value = $res[++$i];
+                $row[$columns[$j]] = is_numeric($value) ? (int)$value : $value;
             }
 
             $rows['players'][] = $row;

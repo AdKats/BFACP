@@ -44,10 +44,13 @@ class HomeController extends BaseController
      */
     public function scoreboard()
     {
-        $games = Game::with(['servers' => function ($query) {
-            $query->active()->orderBy('ServerName');
-        }])->get();
+        $games = Game::with([
+            'servers' => function ($query) {
+                $query->active()->orderBy('ServerName');
+            }
+        ])->get();
 
-        return View::make('scoreboard', compact('games'))->with('page_title', Lang::get('navigation.main.items.scoreboard.title'));
+        return View::make('scoreboard', compact('games'))->with('page_title',
+            Lang::get('navigation.main.items.scoreboard.title'));
     }
 }

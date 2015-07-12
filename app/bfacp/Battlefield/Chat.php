@@ -1,7 +1,6 @@
 <?php namespace BFACP\Battlefield;
 
 use BFACP\Elegant;
-use Carbon\Carbon;
 
 class Chat extends Elegant
 {
@@ -71,13 +70,15 @@ class Chat extends Elegant
     public function getProfileUrlAttribute()
     {
         return !is_null($this->logPlayerID) ? route('player.show', [
-            'id'   => $this->logPlayerID,
+            'id' => $this->logPlayerID,
             'name' => $this->logSoldierName
         ]) : null;
     }
 
     /**
      * Excludes server and player chat spam from the result
+     * @param $query
+     * @return
      */
     public function scopeExcludeSpam($query)
     {

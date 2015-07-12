@@ -1,24 +1,32 @@
 <?php namespace BFACP\Helpers;
 
+use BFACP\Account\User;
 use BFACP\Battlefield\Player;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File as File;
+use Illuminate\Support\Facades\Response;
 
 class Main extends BaseHelper
 {
     /**
      * Return a JSON response
-     * @param  array   $input
-     * @param  string  $message
-     * @param  string  $status
+     * @param  array $input
+     * @param  string $message
+     * @param  string $status
      * @param  integer $httpcode
      * @param  boolean $cached
      * @param  boolean $collectionOnly
-     * @return \Illuminate\Support\Facades\Response
+     * @return Response
      */
-    public function response($input = [], $message = 'OK', $status = 'success', $httpcode = 200, $cached = false, $collectionOnly = false)
-    {
+    public function response(
+        $input = [],
+        $message = 'OK',
+        $status = 'success',
+        $httpcode = 200,
+        $cached = false,
+        $collectionOnly = false
+    ) {
         if (is_null($message)) {
             $message = 'OK';
         }
@@ -36,11 +44,11 @@ class Main extends BaseHelper
         }
 
         $collection = new Collection([
-            'status'         => $status,
-            'message'        => $message,
+            'status' => $status,
+            'message' => $message,
             'execution_time' => $this->executionTime(),
-            'cached'         => $cached,
-            'data'           => $input
+            'cached' => $cached,
+            'data' => $input
         ]);
 
         if ($collectionOnly) {
@@ -48,14 +56,16 @@ class Main extends BaseHelper
         }
 
         return $this->response->json($collection, $httpcode)
-                    ->header('X-Robots-Tag', 'noindex')
-                    ->header('Cache-Control', 'no-cache, must-revalidate');
+            ->header('X-Robots-Tag', 'noindex')
+            ->header('Cache-Control', 'no-cache, must-revalidate');
     }
 
     /**
      * Returns how long the application took to complete
      *
+     * @param bool $isPage
      * @return string
+     * @throws Exception
      */
     public function executionTime($isPage = false)
     {
@@ -80,7 +90,7 @@ class Main extends BaseHelper
      * @param  integer $num1
      * @param  integer $num2
      * @param  integer $precision
-     * @return floatval
+     * @return float
      */
     public function divide($num1 = 0, $num2 = 0, $precision = 2)
     {
@@ -98,7 +108,7 @@ class Main extends BaseHelper
      * @param  integer $num1
      * @param  integer $num2
      * @param  integer $precision
-     * @return floatval
+     * @return float
      */
     public function percent($num1 = 0, $num2 = 0, $precision = 2)
     {
@@ -111,7 +121,7 @@ class Main extends BaseHelper
 
     /**
      * Allows the ability to call empty on a static class method
-     * @param  mixed  $var
+     * @param  mixed $var
      * @return boolean
      */
     public function isEmpty($var)
@@ -122,8 +132,10 @@ class Main extends BaseHelper
     /**
      * Convert seconds to a human-readable string
      * @param  integer $secs
-     * @param  boolean $shothand Short version time/date string
+     * @param bool $shorthand
      * @return string
+     * @throws Exception
+     * @internal param bool $shorthand Short version time/date string
      */
     public function secToStr($secs = null, $shorthand = false)
     {
@@ -146,8 +158,8 @@ class Main extends BaseHelper
 
         // Week
         if ($secs >= 604800) {
-            $week   = floor($secs / 604800);
-            $secs   = $secs % 604800;
+            $week = floor($secs / 604800);
+            $secs = $secs % 604800;
             $output = $week . ' week';
             if ($week != 1 && !$shorthand) {
                 $output .= 's';
@@ -177,7 +189,7 @@ class Main extends BaseHelper
         // Hour
         if ($secs >= 3600) {
             $hours = floor($secs / 3600);
-            $secs  = $secs % 3600;
+            $secs = $secs % 3600;
             $output .= $hours . ' hour';
             if ($hours != 1 && !$shorthand) {
                 $output .= 's';
@@ -192,7 +204,7 @@ class Main extends BaseHelper
         // Minute
         if ($secs >= 60) {
             $minutes = floor($secs / 60);
-            $secs    = $secs % 60;
+            $secs = $secs % 60;
             $output .= $minutes . ' minute';
             if ($minutes != 1 && !$shorthand) {
                 $output .= 's';
@@ -229,8 +241,8 @@ class Main extends BaseHelper
 
     /**
      * Generates the site title
-     * @param  string  $page  Page Title
-     * @param  stirng  $clan  Use clan name if set
+     * @param  string $page Page Title
+     * @param  string $clan Use clan name if set
      * @param  boolean $short If true it will just return without the page title
      * @return string
      */
@@ -254,6 +266,7 @@ class Main extends BaseHelper
     /**
      * Return country name by code
      * @param  string $code Two digit country code
+     * @param bool $list
      * @return string
      */
     public function countries($code = null, $list = false)
@@ -503,7 +516,8 @@ class Main extends BaseHelper
             'EH' => 'Western Sahara',
             'YE' => 'Yemen',
             'ZM' => 'Zambia',
-            'ZW' => 'Zimbabwe'];
+            'ZW' => 'Zimbabwe'
+        ];
 
         if (is_null($code) && $list) {
             return $countries;
@@ -520,8 +534,8 @@ class Main extends BaseHelper
 
     /**
      * Returns the language name if code is specified
-     * @param  string $lang     Language Code
-     * @param  bool   $onlyKeys Only return comma dilimated list
+     * @param  string $lang Language Code
+     * @param  bool $onlyKeys Only return comma delimited list
      * @return mixed        String or Array
      */
     public function languages($lang = '', $onlyKeys = false)
@@ -727,11 +741,11 @@ class Main extends BaseHelper
     /**
      * Returns the correct soldier assigned to user for the correct game.
      *
-     * @param  BFACP\Account\User  $user
-     * @param  integer             $gameID
-     * @return BFACP\Battlefield\Player
+     * @param  \BFACP\Account\User $user
+     * @param  integer $gameID
+     * @return Player
      */
-    public function getAdminPlayer(\BFACP\Account\User $user, $gameID)
+    public function getAdminPlayer(User $user, $gameID)
     {
         $soldiers = $user->soldiers->filter(function ($soldier) use ($gameID) {
             // Only return true if the user has a matching soldier with the game
@@ -764,7 +778,7 @@ class Main extends BaseHelper
      *
      * @param  integer $length
      * @param  boolean $add_dashes
-     * @param  string  $available_sets
+     * @param  string $available_sets
      * @return string
      * @source https://gist.github.com/tylerhall/521810
      */
@@ -787,7 +801,7 @@ class Main extends BaseHelper
             $sets[] = '!@#$%&*?';
         }
 
-        $all      = '';
+        $all = '';
         $password = '';
         foreach ($sets as $set) {
             $password .= $set[array_rand(str_split($set))];
@@ -824,8 +838,10 @@ class Main extends BaseHelper
     {
         if ($string === 1 || $string === '1' || $string === 'true' || $string === true) {
             return true;
-        } else if ($string === 0 || $string === '0' || $string === 'false' || $string === false) {
-            return false;
+        } else {
+            if ($string === 0 || $string === '0' || $string === 'false' || $string === false) {
+                return false;
+            }
         }
 
         return;
@@ -863,9 +879,9 @@ class Main extends BaseHelper
 
     /**
      * Returns files in a directory
-     * @param  string  $dir       Directory Path
+     * @param  string $dir Directory Path
      * @param  boolean $onlyNames Only return the filename
-     * @param  string  $prepend   Prepend custom path to use in front of filename
+     * @param  string $prepend Prepend custom path to use in front of filename
      * @return array
      */
     public function files($dir, $onlyNames = false, $prepend = null)

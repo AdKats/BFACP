@@ -1,27 +1,29 @@
 <?php namespace BFACP\Libraries;
 
 use BFACP\Battlefield\Player;
+use BFACP\Facades\Main as MainHelper;
 use BFACP\Libraries\Battlelog\BattlelogPlayer;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
-use MainHelper;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AntiCheat
 {
     /**
-     * @var BFACP\Libraries\Battlelog\BattlelogPlayer
+     * @var BattlelogPlayer
      */
     public $battlelog;
 
     /**
      * Player Object
-     * @var BFACP\Battlefield\Player
+     * @var Player
      */
     public $player;
 
     /**
      * Guzzle Client
-     * @var GuzzleHttp\Client
+     * @var Client
      */
     protected $guzzle;
 
@@ -48,14 +50,14 @@ class AntiCheat
      * @var array
      */
     private $allowedCategorys = [
-        'BF3'  => [
+        'BF3' => [
             'carbines',
             'machine_guns',
             'assault_rifles',
             'sub_machine_guns',
             'handheld_weapons'
         ],
-        'BF4'  => [
+        'BF4' => [
             'carbines',
             'lmgs',
             'assault_rifles',
@@ -86,18 +88,18 @@ class AntiCheat
      * @var array
      */
     private $triggers = [
-        'DPS'   => 60,
-        'HKP'   => 40,
-        'KPM'   => 4.5,
+        'DPS' => 60,
+        'HKP' => 40,
+        'KPM' => 4.5,
         'Kills' => 50
     ];
 
     public function __construct(Player $player)
     {
         $this->battlelog = new BattlelogPlayer($player);
-        $this->player    = $player;
-        $this->guzzle    = \App::make('GuzzleHttp\Client');
-        $this->game      = strtoupper($this->player->game->Name);
+        $this->player = $player;
+        $this->guzzle = App::make('GuzzleHttp\Client');
+        $this->game = strtoupper($this->player->game->Name);
         $this->fetchWeaponDamages();
     }
 
@@ -112,7 +114,7 @@ class AntiCheat
 
     /**
      * Parse the battlelog weapons list
-     * @param  array  $weapons
+     * @param  array $weapons
      * @return $this
      */
     public function parse($weapons)
@@ -126,7 +128,8 @@ class AntiCheat
 
             if (!in_array($category, $this->allowedCategorys[$this->game]) ||
                 !array_key_exists($category, $this->weapons[$this->game]) ||
-                !array_key_exists($weapon['slug'], $this->weapons[$this->game][$category])) {
+                !array_key_exists($weapon['slug'], $this->weapons[$this->game][$category])
+            ) {
                 continue;
             }
 
@@ -157,7 +160,7 @@ class AntiCheat
 
             // If either DPS, KPM, or HKP get triggered add the weapon to the triggered weapons list
             if ($status['DPS'] || $status['KPM'] || $status['HKP']) {
-                $this->triggered[] = $weapon+['triggered' => $status];
+                $this->triggered[] = $weapon + ['triggered' => $status];
             }
         }
 

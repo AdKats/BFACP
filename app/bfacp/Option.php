@@ -1,7 +1,5 @@
 <?php namespace BFACP;
 
-use BFACP\Elegant;
-use Carbon\Carbon;
 
 class Option extends Elegant
 {

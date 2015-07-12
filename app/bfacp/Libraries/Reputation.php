@@ -2,22 +2,24 @@
 
 use BFACP\AdKats\Record;
 use BFACP\Battlefield\Player;
+use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use MainHelper;
 
 class Reputation
 {
     /**
      * Guzzle Client
-     * @var GuzzleHttp\Client
+     * @var Client
      */
     protected $guzzle;
 
     /**
      * Player Object
-     * @var BFACP\Battlefield\Player
+     * @var Player
      */
     public $player;
 
@@ -53,13 +55,14 @@ class Reputation
 
     public function __construct()
     {
-        $this->guzzle = \App::make('GuzzleHttp\Client');
+        $this->guzzle = App::make('GuzzleHttp\Client');
         $this->fetchWeights();
     }
 
     /**
      * Set the player
      * @param Player $player
+     * @return $this
      */
     public function setPlayer(Player $player)
     {
@@ -81,9 +84,9 @@ class Reputation
 
             // Only update the reputation if the total reputation is different
             if ($reputation->total_rep != $this->totalReputation) {
-                $reputation->source_rep   = $this->sourceReputation;
-                $reputation->target_rep   = $this->targetReputation;
-                $reputation->total_rep    = $this->totalReputation;
+                $reputation->source_rep = $this->sourceReputation;
+                $reputation->target_rep = $this->targetReputation;
+                $reputation->total_rep = $this->totalReputation;
                 $reputation->total_rep_co = $this->finalReputation;
                 $reputation->save();
 
@@ -92,10 +95,10 @@ class Reputation
             }
         } else {
             $this->player->reputation()->save(new \BFACP\Battlefield\Reputation([
-                'game_id'      => $this->player->GameID,
-                'source_rep'   => $this->sourceReputation,
-                'target_rep'   => $this->targetReputation,
-                'total_rep'    => $this->totalReputation,
+                'game_id' => $this->player->GameID,
+                'source_rep' => $this->sourceReputation,
+                'target_rep' => $this->targetReputation,
+                'total_rep' => $this->totalReputation,
                 'total_rep_co' => $this->finalReputation
             ]));
 
@@ -223,7 +226,7 @@ class Reputation
         // Check if we have a negative value
         if ($value < 0) {
             $negative = true;
-            $value    = abs($value);
+            $value = abs($value);
         }
 
         $newValue = (1000 * $value) / ($value + 1000);

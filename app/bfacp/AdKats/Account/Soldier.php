@@ -1,7 +1,6 @@
 <?php namespace BFACP\AdKats\Account;
 
 use BFACP\Elegant;
-use Carbon\Carbon;
 
 class Soldier extends Elegant
 {

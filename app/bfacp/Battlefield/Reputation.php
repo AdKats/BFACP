@@ -1,7 +1,6 @@
 <?php namespace BFACP\Battlefield;
 
 use BFACP\Elegant;
-use Carbon\Carbon;
 
 class Reputation extends Elegant
 {
@@ -75,6 +74,7 @@ class Reputation extends Elegant
     }
 
     /**
+     * @param $query
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function scopeMostReputable($query)
@@ -83,6 +83,7 @@ class Reputation extends Elegant
     }
 
     /**
+     * @param $query
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function scopeLeastReputable($query)

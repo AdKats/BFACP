@@ -59,18 +59,20 @@ class PlayersController extends BaseController
 
         $charts = Cache::remember(sprintf('player.%u.charts', $id), 5, function () use ($id) {
             $charts = [];
-            $charts['overview'] = new Collection(DB::select(File::get(storage_path() . '/sql/playerCommandOverview.sql'), [$id]));
-            $charts['spline'] = new Collection(DB::select(File::get(storage_path() . '/sql/playerCommandHistory.sql'), [$id]));
+            $charts['overview'] = new Collection(DB::select(File::get(storage_path() . '/sql/playerCommandOverview.sql'),
+                [$id]));
+            $charts['spline'] = new Collection(DB::select(File::get(storage_path() . '/sql/playerCommandHistory.sql'),
+                [$id]));
             $charts['aliases'] = Record::where('command_type', 48)
-            ->where('target_id', $id)
-            ->select(DB::raw('record_message AS `player_name`, COUNT(record_id) AS `seen`'))
-            ->groupBy('player_name')->get();
+                ->where('target_id', $id)
+                ->select(DB::raw('record_message AS `player_name`, COUNT(record_id) AS `seen`'))
+                ->groupBy('player_name')->get();
 
             $charts['iphistory'] = Record::where('command_type', 49)
-            ->where('target_id', $id)
-            ->where('record_message', '!=', 'No previous IP on record')
-            ->select(DB::raw('record_message AS `ip`, COUNT(record_id) AS `seen`'))
-            ->groupBy('ip')->get();
+                ->where('target_id', $id)
+                ->where('record_message', '!=', 'No previous IP on record')
+                ->select(DB::raw('record_message AS `ip`, COUNT(record_id) AS `seen`'))
+                ->groupBy('ip')->get();
 
             $charts['overview'] = $charts['overview']->map(function ($command) {
                 return [
@@ -96,7 +98,8 @@ class PlayersController extends BaseController
             return $charts;
         });
 
-        $page_title = !empty($player->ClanTag) ? sprintf('[%s] %s', $player->ClanTag, $player->SoldierName) : $player->SoldierName;
+        $page_title = !empty($player->ClanTag) ? sprintf('[%s] %s', $player->ClanTag,
+            $player->SoldierName) : $player->SoldierName;
 
         return View::make('player.profile', compact('player', 'page_title', 'charts', 'isCached'));
     }

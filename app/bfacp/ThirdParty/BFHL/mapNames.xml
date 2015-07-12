@@ -1,129 +1,129 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mapNames>
     <!-- Large Conquest Maps -->
-    <map uri="MP_Bank" name="Bank Job" playmode="TurfWarLarge0" />
-    <map uri="MP_Bloodout" name="The Block" playmode="TurfWarLarge0" />
-    <map uri="MP_Desert05" name="Dust Bowl" playmode="TurfWarLarge0" />
-    <map uri="MP_Downtown" name="Downtown" playmode="TurfWarLarge0" />
-    <map uri="MP_Eastside" name="Derailed" playmode="TurfWarLarge0" />
-    <map uri="MP_Glades" name="Everglades" playmode="TurfWarLarge0" />
-    <map uri="MP_Hills" name="Hollywood Heights" playmode="TurfWarLarge0" />
-    <map uri="MP_OffShore" name="Riptide" playmode="TurfWarLarge0" />
-    <map uri="XP1_MallCops" name="Black Friday" playmode="TurfWarLarge0" />
-    <map uri="XP1_Nights" name="Code Blue" playmode="TurfWarLarge0" />
-    <map uri="XP1_Projects" name="The Beat" playmode="TurfWarLarge0" />
-    <map uri="XP1_Sawmill" name="Backwoods" playmode="TurfWarLarge0" />
+    <map uri="MP_Bank" name="Bank Job" playmode="TurfWarLarge0"/>
+    <map uri="MP_Bloodout" name="The Block" playmode="TurfWarLarge0"/>
+    <map uri="MP_Desert05" name="Dust Bowl" playmode="TurfWarLarge0"/>
+    <map uri="MP_Downtown" name="Downtown" playmode="TurfWarLarge0"/>
+    <map uri="MP_Eastside" name="Derailed" playmode="TurfWarLarge0"/>
+    <map uri="MP_Glades" name="Everglades" playmode="TurfWarLarge0"/>
+    <map uri="MP_Hills" name="Hollywood Heights" playmode="TurfWarLarge0"/>
+    <map uri="MP_OffShore" name="Riptide" playmode="TurfWarLarge0"/>
+    <map uri="XP1_MallCops" name="Black Friday" playmode="TurfWarLarge0"/>
+    <map uri="XP1_Nights" name="Code Blue" playmode="TurfWarLarge0"/>
+    <map uri="XP1_Projects" name="The Beat" playmode="TurfWarLarge0"/>
+    <map uri="XP1_Sawmill" name="Backwoods" playmode="TurfWarLarge0"/>
 
     <!-- Small Conquest Maps -->
-    <map uri="MP_Bank" name="Bank Job" playmode="TurfWarSmall0" />
-    <map uri="MP_Bloodout" name="The Block" playmode="TurfWarSmall0" />
-    <map uri="MP_Desert05" name="Dust Bowl" playmode="TurfWarSmall0" />
-    <map uri="MP_Downtown" name="Downtown" playmode="TurfWarSmall0" />
-    <map uri="MP_Eastside" name="Derailed" playmode="TurfWarSmall0" />
-    <map uri="MP_Glades" name="Everglades" playmode="TurfWarSmall0" />
-    <map uri="MP_Growhouse" name="Growhouse" playmode="TurfWarSmall0" />
-    <map uri="MP_Hills" name="Hollywood Heights" playmode="TurfWarSmall0" />
-    <map uri="MP_OffShore" name="Riptide" playmode="TurfWarSmall0" />
-    <map uri="XP1_MallCops" name="Black Friday" playmode="TurfWarSmall0" />
-    <map uri="XP1_Nights" name="Code Blue" playmode="TurfWarSmall0" />
-    <map uri="XP1_Projects" name="The Beat" playmode="TurfWarSmall0" />
-    <map uri="XP1_Sawmill" name="Backwoods" playmode="TurfWarSmall0" />
+    <map uri="MP_Bank" name="Bank Job" playmode="TurfWarSmall0"/>
+    <map uri="MP_Bloodout" name="The Block" playmode="TurfWarSmall0"/>
+    <map uri="MP_Desert05" name="Dust Bowl" playmode="TurfWarSmall0"/>
+    <map uri="MP_Downtown" name="Downtown" playmode="TurfWarSmall0"/>
+    <map uri="MP_Eastside" name="Derailed" playmode="TurfWarSmall0"/>
+    <map uri="MP_Glades" name="Everglades" playmode="TurfWarSmall0"/>
+    <map uri="MP_Growhouse" name="Growhouse" playmode="TurfWarSmall0"/>
+    <map uri="MP_Hills" name="Hollywood Heights" playmode="TurfWarSmall0"/>
+    <map uri="MP_OffShore" name="Riptide" playmode="TurfWarSmall0"/>
+    <map uri="XP1_MallCops" name="Black Friday" playmode="TurfWarSmall0"/>
+    <map uri="XP1_Nights" name="Code Blue" playmode="TurfWarSmall0"/>
+    <map uri="XP1_Projects" name="The Beat" playmode="TurfWarSmall0"/>
+    <map uri="XP1_Sawmill" name="Backwoods" playmode="TurfWarSmall0"/>
 
     <!-- Hiest Maps -->
-    <map uri="MP_Bank" name="Bank Job" playmode="Heist0" />
-    <map uri="MP_Bloodout" name="The Block" playmode="Heist0" />
-    <map uri="MP_Desert05" name="Dust Bowl" playmode="Heist0" />
-    <map uri="MP_Downtown" name="Downtown" playmode="Heist0" />
-    <map uri="MP_Eastside" name="Derailed" playmode="Heist0" />
-    <map uri="MP_Glades" name="Everglades" playmode="Heist0" />
-    <map uri="MP_Growhouse" name="Growhouse" playmode="Heist0" />
-    <map uri="MP_Hills" name="Hollywood Heights" playmode="Heist0" />
-    <map uri="MP_OffShore" name="Riptide" playmode="Heist0" />
-    <map uri="XP1_MallCops" name="Black Friday" playmode="Heist0" />
-    <map uri="XP1_Nights" name="Code Blue" playmode="Heist0" />
-    <map uri="XP1_Projects" name="The Beat" playmode="Heist0" />
-    <map uri="XP1_Sawmill" name="Backwoods" playmode="Heist0" />
+    <map uri="MP_Bank" name="Bank Job" playmode="Heist0"/>
+    <map uri="MP_Bloodout" name="The Block" playmode="Heist0"/>
+    <map uri="MP_Desert05" name="Dust Bowl" playmode="Heist0"/>
+    <map uri="MP_Downtown" name="Downtown" playmode="Heist0"/>
+    <map uri="MP_Eastside" name="Derailed" playmode="Heist0"/>
+    <map uri="MP_Glades" name="Everglades" playmode="Heist0"/>
+    <map uri="MP_Growhouse" name="Growhouse" playmode="Heist0"/>
+    <map uri="MP_Hills" name="Hollywood Heights" playmode="Heist0"/>
+    <map uri="MP_OffShore" name="Riptide" playmode="Heist0"/>
+    <map uri="XP1_MallCops" name="Black Friday" playmode="Heist0"/>
+    <map uri="XP1_Nights" name="Code Blue" playmode="Heist0"/>
+    <map uri="XP1_Projects" name="The Beat" playmode="Heist0"/>
+    <map uri="XP1_Sawmill" name="Backwoods" playmode="Heist0"/>
 
     <!-- Hotwire Maps -->
-    <map uri="MP_Desert05" name="Dust Bowl" playmode="Hotwire0" />
-    <map uri="MP_Downtown" name="Downtown" playmode="Hotwire0" />
-    <map uri="MP_Glades" name="Everglades" playmode="Hotwire0" />
-    <map uri="MP_Eastside" name="Derailed" playmode="Hotwire0" />
-    <map uri="MP_OffShore" name="Riptide" playmode="Hotwire0" />
-    <map uri="XP1_Sawmill" name="Backwoods" playmode="Hotwire0" />
+    <map uri="MP_Desert05" name="Dust Bowl" playmode="Hotwire0"/>
+    <map uri="MP_Downtown" name="Downtown" playmode="Hotwire0"/>
+    <map uri="MP_Glades" name="Everglades" playmode="Hotwire0"/>
+    <map uri="MP_Eastside" name="Derailed" playmode="Hotwire0"/>
+    <map uri="MP_OffShore" name="Riptide" playmode="Hotwire0"/>
+    <map uri="XP1_Sawmill" name="Backwoods" playmode="Hotwire0"/>
 
     <!-- Bloodmoney Maps -->
-    <map uri="MP_Bank" name="Bank Job" playmode="BloodMoney0" />
-    <map uri="MP_Bloodout" name="The Block" playmode="BloodMoney0" />
-    <map uri="MP_Desert05" name="Dust Bowl" playmode="BloodMoney0" />
-    <map uri="MP_Downtown" name="Downtown" playmode="BloodMoney0" />
-    <map uri="MP_Eastside" name="Derailed" playmode="BloodMoney0" />
-    <map uri="MP_Glades" name="Everglades" playmode="BloodMoney0" />
-    <map uri="MP_Growhouse" name="Growhouse" playmode="BloodMoney0" />
-    <map uri="MP_Hills" name="Hollywood Heights" playmode="BloodMoney0" />
-    <map uri="MP_OffShore" name="Riptide" playmode="BloodMoney0" />
-    <map uri="XP1_MallCops" name="Black Friday" playmode="BloodMoney0" />
-    <map uri="XP1_Nights" name="Code Blue" playmode="BloodMoney0" />
-    <map uri="XP1_Projects" name="The Beat" playmode="BloodMoney0" />
-    <map uri="XP1_Sawmill" name="Backwoods" playmode="BloodMoney0" />
+    <map uri="MP_Bank" name="Bank Job" playmode="BloodMoney0"/>
+    <map uri="MP_Bloodout" name="The Block" playmode="BloodMoney0"/>
+    <map uri="MP_Desert05" name="Dust Bowl" playmode="BloodMoney0"/>
+    <map uri="MP_Downtown" name="Downtown" playmode="BloodMoney0"/>
+    <map uri="MP_Eastside" name="Derailed" playmode="BloodMoney0"/>
+    <map uri="MP_Glades" name="Everglades" playmode="BloodMoney0"/>
+    <map uri="MP_Growhouse" name="Growhouse" playmode="BloodMoney0"/>
+    <map uri="MP_Hills" name="Hollywood Heights" playmode="BloodMoney0"/>
+    <map uri="MP_OffShore" name="Riptide" playmode="BloodMoney0"/>
+    <map uri="XP1_MallCops" name="Black Friday" playmode="BloodMoney0"/>
+    <map uri="XP1_Nights" name="Code Blue" playmode="BloodMoney0"/>
+    <map uri="XP1_Projects" name="The Beat" playmode="BloodMoney0"/>
+    <map uri="XP1_Sawmill" name="Backwoods" playmode="BloodMoney0"/>
 
     <!-- Crosshair Maps -->
-    <map uri="MP_Bank" name="Bank Job" playmode="Hit0" />
-    <map uri="MP_Bloodout" name="The Block" playmode="Hit0" />
-    <map uri="MP_Desert05" name="Dust Bowl" playmode="Hit0" />
-    <map uri="MP_Downtown" name="Downtown" playmode="Hit0" />
-    <map uri="MP_Eastside" name="Derailed" playmode="Hit0" />
-    <map uri="MP_Glades" name="Everglades" playmode="Hit0" />
-    <map uri="MP_Growhouse" name="Growhouse" playmode="Hit0" />
-    <map uri="MP_Hills" name="Hollywood Heights" playmode="Hit0" />
-    <map uri="MP_OffShore" name="Riptide" playmode="Hit0" />
-    <map uri="XP1_MallCops" name="Black Friday" playmode="Hit0" />
-    <map uri="XP1_Nights" name="Code Blue" playmode="Hit0" />
-    <map uri="XP1_Projects" name="The Beat" playmode="Hit0" />
-    <map uri="XP1_Sawmill" name="Backwoods" playmode="Hit0" />
+    <map uri="MP_Bank" name="Bank Job" playmode="Hit0"/>
+    <map uri="MP_Bloodout" name="The Block" playmode="Hit0"/>
+    <map uri="MP_Desert05" name="Dust Bowl" playmode="Hit0"/>
+    <map uri="MP_Downtown" name="Downtown" playmode="Hit0"/>
+    <map uri="MP_Eastside" name="Derailed" playmode="Hit0"/>
+    <map uri="MP_Glades" name="Everglades" playmode="Hit0"/>
+    <map uri="MP_Growhouse" name="Growhouse" playmode="Hit0"/>
+    <map uri="MP_Hills" name="Hollywood Heights" playmode="Hit0"/>
+    <map uri="MP_OffShore" name="Riptide" playmode="Hit0"/>
+    <map uri="XP1_MallCops" name="Black Friday" playmode="Hit0"/>
+    <map uri="XP1_Nights" name="Code Blue" playmode="Hit0"/>
+    <map uri="XP1_Projects" name="The Beat" playmode="Hit0"/>
+    <map uri="XP1_Sawmill" name="Backwoods" playmode="Hit0"/>
 
     <!-- Rescue Maps -->
-    <map uri="MP_Bank" name="Bank Job" playmode="Hostage0" />
-    <map uri="MP_Bloodout" name="The Block" playmode="Hostage0" />
-    <map uri="MP_Desert05" name="Dust Bowl" playmode="Hostage0" />
-    <map uri="MP_Downtown" name="Downtown" playmode="Hostage0" />
-    <map uri="MP_Eastside" name="Derailed" playmode="Hostage0" />
-    <map uri="MP_Glades" name="Everglades" playmode="Hostage0" />
-    <map uri="MP_Growhouse" name="Growhouse" playmode="Hostage0" />
-    <map uri="MP_Hills" name="Hollywood Heights" playmode="Hostage0" />
-    <map uri="MP_OffShore" name="Riptide" playmode="Hostage0" />
-    <map uri="XP1_MallCops" name="Black Friday" playmode="Hostage0" />
-    <map uri="XP1_Nights" name="Code Blue" playmode="Hostage0" />
-    <map uri="XP1_Projects" name="The Beat" playmode="Hostage0" />
-    <map uri="XP1_Sawmill" name="Backwoods" playmode="Hostage0" />
+    <map uri="MP_Bank" name="Bank Job" playmode="Hostage0"/>
+    <map uri="MP_Bloodout" name="The Block" playmode="Hostage0"/>
+    <map uri="MP_Desert05" name="Dust Bowl" playmode="Hostage0"/>
+    <map uri="MP_Downtown" name="Downtown" playmode="Hostage0"/>
+    <map uri="MP_Eastside" name="Derailed" playmode="Hostage0"/>
+    <map uri="MP_Glades" name="Everglades" playmode="Hostage0"/>
+    <map uri="MP_Growhouse" name="Growhouse" playmode="Hostage0"/>
+    <map uri="MP_Hills" name="Hollywood Heights" playmode="Hostage0"/>
+    <map uri="MP_OffShore" name="Riptide" playmode="Hostage0"/>
+    <map uri="XP1_MallCops" name="Black Friday" playmode="Hostage0"/>
+    <map uri="XP1_Nights" name="Code Blue" playmode="Hostage0"/>
+    <map uri="XP1_Projects" name="The Beat" playmode="Hostage0"/>
+    <map uri="XP1_Sawmill" name="Backwoods" playmode="Hostage0"/>
 
     <!-- Team Deathmatch Maps -->
-    <map uri="MP_Bank" name="Bank Job" playmode="TeamDeathMatch0" />
-    <map uri="MP_Bloodout" name="The Block" playmode="TeamDeathMatch0" />
-    <map uri="MP_Desert05" name="Dust Bowl" playmode="TeamDeathMatch0" />
-    <map uri="MP_Downtown" name="Downtown" playmode="TeamDeathMatch0" />
-    <map uri="MP_Eastside" name="Derailed" playmode="TeamDeathMatch0" />
-    <map uri="MP_Glades" name="Everglades" playmode="TeamDeathMatch0" />
-    <map uri="MP_Growhouse" name="Growhouse" playmode="TeamDeathMatch0" />
-    <map uri="MP_Hills" name="Hollywood Heights" playmode="TeamDeathMatch0" />
-    <map uri="MP_OffShore" name="Riptide" playmode="TeamDeathMatch0" />
-    <map uri="XP1_MallCops" name="Black Friday" playmode="TeamDeathMatch0" />
-    <map uri="XP1_Nights" name="Code Blue" playmode="TeamDeathMatch0" />
-    <map uri="XP1_Projects" name="The Beat" playmode="TeamDeathMatch0" />
-    <map uri="XP1_Sawmill" name="Backwoods" playmode="TeamDeathMatch0" />
+    <map uri="MP_Bank" name="Bank Job" playmode="TeamDeathMatch0"/>
+    <map uri="MP_Bloodout" name="The Block" playmode="TeamDeathMatch0"/>
+    <map uri="MP_Desert05" name="Dust Bowl" playmode="TeamDeathMatch0"/>
+    <map uri="MP_Downtown" name="Downtown" playmode="TeamDeathMatch0"/>
+    <map uri="MP_Eastside" name="Derailed" playmode="TeamDeathMatch0"/>
+    <map uri="MP_Glades" name="Everglades" playmode="TeamDeathMatch0"/>
+    <map uri="MP_Growhouse" name="Growhouse" playmode="TeamDeathMatch0"/>
+    <map uri="MP_Hills" name="Hollywood Heights" playmode="TeamDeathMatch0"/>
+    <map uri="MP_OffShore" name="Riptide" playmode="TeamDeathMatch0"/>
+    <map uri="XP1_MallCops" name="Black Friday" playmode="TeamDeathMatch0"/>
+    <map uri="XP1_Nights" name="Code Blue" playmode="TeamDeathMatch0"/>
+    <map uri="XP1_Projects" name="The Beat" playmode="TeamDeathMatch0"/>
+    <map uri="XP1_Sawmill" name="Backwoods" playmode="TeamDeathMatch0"/>
 
     <!-- Bounty Hunter Maps -->
-    <map uri="MP_Bank" name="Bank Job" playmode="CashGrab0" />
-    <map uri="MP_Bloodout" name="The Block" playmode="CashGrab0" />
-    <map uri="MP_Desert05" name="Dust Bowl" playmode="CashGrab0" />
-    <map uri="MP_Downtown" name="Downtown" playmode="CashGrab0" />
-    <map uri="MP_Eastside" name="Derailed" playmode="CashGrab0" />
-    <map uri="MP_Glades" name="Everglades" playmode="CashGrab0" />
-    <map uri="MP_Growhouse" name="Growhouse" playmode="CashGrab0" />
-    <map uri="MP_Hills" name="Hollywood Heights" playmode="CashGrab0" />
-    <map uri="MP_OffShore" name="Riptide" playmode="CashGrab0" />
-    <map uri="XP1_MallCops" name="Black Friday" playmode="CashGrab0" />
-    <map uri="XP1_Nights" name="Code Blue" playmode="CashGrab0" />
-    <map uri="XP1_Projects" name="The Beat" playmode="CashGrab0" />
-    <map uri="XP1_Sawmill" name="Backwoods" playmode="CashGrab0" />
+    <map uri="MP_Bank" name="Bank Job" playmode="CashGrab0"/>
+    <map uri="MP_Bloodout" name="The Block" playmode="CashGrab0"/>
+    <map uri="MP_Desert05" name="Dust Bowl" playmode="CashGrab0"/>
+    <map uri="MP_Downtown" name="Downtown" playmode="CashGrab0"/>
+    <map uri="MP_Eastside" name="Derailed" playmode="CashGrab0"/>
+    <map uri="MP_Glades" name="Everglades" playmode="CashGrab0"/>
+    <map uri="MP_Growhouse" name="Growhouse" playmode="CashGrab0"/>
+    <map uri="MP_Hills" name="Hollywood Heights" playmode="CashGrab0"/>
+    <map uri="MP_OffShore" name="Riptide" playmode="CashGrab0"/>
+    <map uri="XP1_MallCops" name="Black Friday" playmode="CashGrab0"/>
+    <map uri="XP1_Nights" name="Code Blue" playmode="CashGrab0"/>
+    <map uri="XP1_Projects" name="The Beat" playmode="CashGrab0"/>
+    <map uri="XP1_Sawmill" name="Backwoods" playmode="CashGrab0"/>
 </mapNames>

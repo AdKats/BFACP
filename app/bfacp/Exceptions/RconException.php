@@ -2,4 +2,6 @@
 
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class RconException extends HttpException {}
+class RconException extends HttpException
+{
+}

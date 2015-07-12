@@ -10,7 +10,7 @@ class ReportsController extends BaseController
     {
         $r = App::make('BFACP\Repositories\ReportRepository');
 
-        $reports  = $r->getReports(true);
+        $reports = $r->getReports(true);
         $commands = $r->getActions();
 
         return View::make('admin.adkats.reports.index', compact('reports', 'commands'))->with('page_title', false);

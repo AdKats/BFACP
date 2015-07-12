@@ -2,7 +2,6 @@
 
 use BFACP\Elegant;
 use BFACP\Exceptions\RconException;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 
 class Setting extends Elegant

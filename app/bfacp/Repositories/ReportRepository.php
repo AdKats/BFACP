@@ -28,14 +28,15 @@ class ReportRepository extends BaseRepository
     /**
      * Returns the latest reports
      * @param  boolean $paginate Paginate response
-     * @param  integer $take     Get X amount
+     * @param  integer $take Get X amount
      * @return array
      */
     public function getReports($paginate = false, $take = 30)
     {
-        $reports = Record::with('server', 'type', 'action')->whereIn('command_action', [18, 20])->orderBy('record_time', 'desc');
+        $reports = Record::with('server', 'type', 'action')->whereIn('command_action', [18, 20])->orderBy('record_time',
+            'desc');
 
-        if($paginate !== false) {
+        if ($paginate !== false) {
             $reports = $reports->paginate($take);
         } else {
             $reports = $reports->take($take)->get();

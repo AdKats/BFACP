@@ -17,16 +17,18 @@ class ChatlogController extends BaseController
     {
         parent::__construct();
 
-        $this->game   = $game;
-        $this->chat   = $chat;
+        $this->game = $game;
+        $this->chat = $chat;
         $this->player = $player;
     }
 
     public function index()
     {
-        $games = $this->game->with(['servers' => function ($query) {
-            $query->active();
-        }])->get();
+        $games = $this->game->with([
+            'servers' => function ($query) {
+                $query->active();
+            }
+        ])->get();
 
         $page_title = Lang::get('navigation.main.items.chatlogs.title');
 
@@ -43,8 +45,8 @@ class ChatlogController extends BaseController
             // Filtering by dates
             if (Input::has('StartDateTime') && Input::has('EndDateTime')) {
                 $startDate = Carbon::parse(Input::get('StartDateTime'))->setTimezone(new \DateTimeZone('UTC'));
-                $endDate   = Carbon::parse(Input::get('EndDateTime'))->setTimezone(new \DateTimeZone('UTC'));
-                $chat      = $chat->whereBetween('logDate', [$startDate, $endDate]);
+                $endDate = Carbon::parse(Input::get('EndDateTime'))->setTimezone(new \DateTimeZone('UTC'));
+                $chat = $chat->whereBetween('logDate', [$startDate, $endDate]);
             }
 
             // Specific keywords the user has typed. Each word seprated by a comma.

@@ -1,7 +1,6 @@
 <?php namespace BFACP\Player;
 
 use BFACP\Elegant;
-use Carbon\Carbon;
 
 class Weapon extends Elegant
 {

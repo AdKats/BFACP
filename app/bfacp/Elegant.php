@@ -3,6 +3,8 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
+use Illuminate\Validation\Validators;
 
 class Elegant extends Model
 {
@@ -23,14 +25,14 @@ class Elegant extends Model
     /**
      * Validation errors
      *
-     * @var Illuminate\Support\MessageBag
+     * @var MessageBag
      */
     protected $errors = [];
 
     /**
      * Validator instance
      *
-     * @var Illuminate\Validation\Validators
+     * @var Validators
      */
     protected $validator;
 
@@ -71,7 +73,7 @@ class Elegant extends Model
     /**
      * Set error message bag
      *
-     * @var Illuminate\Support\MessageBag
+     * @var MessageBag
      */
     protected function setErrors($errors)
     {

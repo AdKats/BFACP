@@ -1,7 +1,6 @@
 <?php namespace BFACP\AdKats;
 
 use BFACP\Elegant;
-use Carbon\Carbon;
 
 class Statistics extends Elegant
 {
@@ -58,6 +57,7 @@ class Statistics extends Elegant
 
     /**
      * Only get certian types.
+     * @param $query
      * @param  array $type
      * @return object
      */

@@ -2,4 +2,6 @@
 
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class PlayerNotFoundException extends HttpException {}
+class PlayerNotFoundException extends HttpException
+{
+}

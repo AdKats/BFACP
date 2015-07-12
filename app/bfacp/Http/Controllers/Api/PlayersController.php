@@ -1,8 +1,8 @@
 <?php namespace BFACP\Http\Controllers\Api;
 
+use BFACP\Facades\Main as MainHelper;
 use BFACP\Repositories\PlayerRepository;
 use Illuminate\Support\Facades\Cache;
-use MainHelper;
 
 class PlayersController extends BaseController
 {
@@ -28,6 +28,7 @@ class PlayersController extends BaseController
     /**
      * Get a player by their player database id
      * @param  integer $id
+     * @return \Illuminate\Support\Facades\Response
      */
     public function show($id)
     {
@@ -55,6 +56,7 @@ class PlayersController extends BaseController
     /**
      * Gets the players record history
      * @param  integer $id
+     * @return \Illuminate\Support\Facades\Response
      */
     public function showRecords($id)
     {
@@ -66,6 +68,7 @@ class PlayersController extends BaseController
     /**
      * Gets the players chatlogs
      * @param  integer $id
+     * @return \Illuminate\Support\Facades\Response
      */
     public function showChatlogs($id)
     {

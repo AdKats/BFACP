@@ -4,16 +4,16 @@ use BFACP\AdKats\Account\Role;
 use BFACP\AdKats\Account\Soldier;
 use BFACP\AdKats\Account\User;
 use BFACP\Battlefield\Player;
+use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\BaseController;
 use Carbon\Carbon;
-use Former;
+use Former\Facades\Former;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
-use MainHelper;
 
 class UsersController extends BaseController
 {
@@ -33,7 +33,8 @@ class UsersController extends BaseController
             ->orderBy('user_name')
             ->get();
 
-        return View::make('admin.adkats.users.index', compact('users'))->with('page_title', Lang::get('navigation.admin.adkats.items.users.title'));
+        return View::make('admin.adkats.users.index', compact('users'))->with('page_title',
+            Lang::get('navigation.admin.adkats.items.users.title'));
     }
 
     /**
@@ -49,7 +50,7 @@ class UsersController extends BaseController
             return MainHelper::response(null, $v->messages()->first('username'), 'error', 400);
         }
 
-        $user            = new User();
+        $user = new User();
         $user->user_name = Input::get('username');
         $user->user_role = 1;
         $user->save();
@@ -91,17 +92,17 @@ class UsersController extends BaseController
         try {
             $user = User::findOrFail($id);
 
-            $username   = trim(Input::get('user_name', null));
-            $email      = trim(Input::get('user_email', null));
-            $roleId     = trim(Input::get('user_role', null));
+            $username = trim(Input::get('user_name', null));
+            $email = trim(Input::get('user_email', null));
+            $roleId = trim(Input::get('user_role', null));
             $expiration = trim(Input::get('user_expiration', null));
-            $notes      = trim(Input::get('user_notes', 'No Notes'));
-            $soldiers   = explode(',', Input::get('soldiers', ''));
+            $notes = trim(Input::get('user_notes', 'No Notes'));
+            $soldiers = explode(',', Input::get('soldiers', ''));
 
             $v = Validator::make(Input::all(), [
-                'user_name'  => 'required|alpha_dash',
+                'user_name' => 'required|alpha_dash',
                 'user_email' => 'email',
-                'user_role'  => 'required|exists:adkats_roles,role_id',
+                'user_role' => 'required|exists:adkats_roles,role_id',
                 'user_notes' => 'max:1000'
             ]);
 
@@ -168,11 +169,12 @@ class UsersController extends BaseController
     /**
      * Delete user
      * @param  integer $id User ID
+     * @return \Illuminate\Support\Facades\Response
      */
     public function destroy($id)
     {
         try {
-            $user     = User::findOrFail($id);
+            $user = User::findOrFail($id);
             $username = $user->user_name;
             $user->delete();
 

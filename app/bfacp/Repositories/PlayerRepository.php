@@ -29,7 +29,9 @@ class PlayerRepository extends BaseRepository
 
     /**
      * Returns a paginate result of all players
-     * @return
+     * @param int $limit
+     * @param null $names
+     * @return \Illuminate\Pagination\Paginator
      */
     public function getAllPlayers($limit = 100, $names = null)
     {
@@ -51,21 +53,16 @@ class PlayerRepository extends BaseRepository
                     if (preg_match('/^EA_([0-9A-Z]{32}+)$/', $name, $matches)) {
                         $eaguid = sprintf('EA_%s', $matches[1]);
                         $q->orWhere('EAGUID', '=', $eaguid);
-                    }
-
-                    // Checks if string is a PBGUID
+                    } // Checks if string is a PBGUID
                     elseif (preg_match('/^([a-f0-9]+)$/', $name, $matches)) {
                         $pbguid = trim($matches[1]);
                         $q->orWhere('PBGUID', '=', $pbguid);
-                    }
-
-                    // Checks if string is an IPv4 Address
-                    elseif (preg_match("/^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|[0-9])$/", $name, $matches)) {
+                    } // Checks if string is an IPv4 Address
+                    elseif (preg_match("/^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|[0-9])$/",
+                        $name, $matches)) {
                         $ip = trim($name);
                         $q->orWhere('IP_Address', '=', $ip);
-                    }
-
-                    // Checks if string is a player name
+                    } // Checks if string is a player name
                     elseif (preg_match("/^([a-zA-Z0-9\_\-\|]+)$/", $name, $matches)) {
                         $name = sprintf('%s%%', $matches[1]);
 
@@ -141,9 +138,11 @@ class PlayerRepository extends BaseRepository
             ->whereNotIn('CountryCode', ['', '--'])
             ->whereNotNull('CountryCode')
             ->whereIn('tbl_playerdata.PlayerID', function ($query) {
-                $query->select('tbl_server_player.PlayerID')->from('tbl_server_player')->whereIn('tbl_server_player.StatsID', function ($query) {
-                    $query->select('StatsID')->from('tbl_playerstats')->where('LastSeenOnServer', '>=', Carbon::now()->subDay());
-                });
+                $query->select('tbl_server_player.PlayerID')->from('tbl_server_player')->whereIn('tbl_server_player.StatsID',
+                    function ($query) {
+                        $query->select('StatsID')->from('tbl_playerstats')->where('LastSeenOnServer', '>=',
+                            Carbon::now()->subDay());
+                    });
             })
             ->groupBy('CountryCode')
             ->select(DB::raw('UPPER(`CountryCode`) AS `CountryCode`, COUNT(`tbl_playerdata`.`PlayerID`) AS `total`'))->get();
@@ -155,7 +154,7 @@ class PlayerRepository extends BaseRepository
 
     /**
      * Returns the player record history
-     * @param  integer $id    Player ID
+     * @param  integer $id Player ID
      * @param  integer $limit Results to return
      * @return object
      */
@@ -188,7 +187,7 @@ class PlayerRepository extends BaseRepository
 
     /**
      * Returns the player chatlogs
-     * @param  integer $id    Player ID
+     * @param  integer $id Player ID
      * @param  integer $limit Results to return
      * @return object
      */
@@ -234,7 +233,7 @@ class PlayerRepository extends BaseRepository
     /**
      * Sets which relations should be returned
      * @param  array $opts
-     * @param  bool  $custom
+     * @param  bool $custom
      * @return $this
      */
     public function setopts($opts = [], $custom = false)

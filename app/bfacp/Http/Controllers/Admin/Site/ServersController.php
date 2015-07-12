@@ -28,7 +28,7 @@ class ServersController extends BaseController
             // If no setting entry exists for the server we need to create it
             if (is_null($server->setting)) {
                 $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogServer')->server($server);
-                $setting   = new Setting(['server_id' => $id, 'battlelog_guid' => $battlelog->guid()]);
+                $setting = new Setting(['server_id' => $id, 'battlelog_guid' => $battlelog->guid()]);
                 $setting->server()->associate($server)->save();
                 $server->load('setting');
             }
@@ -45,16 +45,16 @@ class ServersController extends BaseController
     public function update($id)
     {
         try {
-            $server  = Server::findOrFail($id);
+            $server = Server::findOrFail($id);
             $setting = $server->setting;
 
             if (Input::has('rcon_password') && !empty(trim(Input::get('rcon_password')))) {
-                $password               = Input::get('rcon_password');
+                $password = Input::get('rcon_password');
                 $setting->rcon_password = trim($password);
             }
 
             if (Input::has('filter')) {
-                $chars           = array_map('trim', explode(',', Input::get('filter')));
+                $chars = array_map('trim', explode(',', Input::get('filter')));
                 $setting->filter = implode(',', $chars);
             } else {
                 $setting->filter = null;
@@ -71,7 +71,8 @@ class ServersController extends BaseController
             $server->ConnectionState = Input::get('status', 'off');
             $server->save();
 
-            return Redirect::route('admin.site.servers.index')->with('messages', [sprintf('Successfully Updated %s', $server->ServerName)]);
+            return Redirect::route('admin.site.servers.index')->with('messages',
+                [sprintf('Successfully Updated %s', $server->ServerName)]);
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.site.servers.index')->withErrors(['Server doesn\'t exist.']);
         }

@@ -1,7 +1,6 @@
 <?php namespace BFACP\AdKats;
 
 use BFACP\Elegant;
-use Carbon\Carbon;
 
 class Record extends Elegant
 {

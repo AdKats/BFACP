@@ -1,5 +1,6 @@
 <?php namespace BFACP\Http\Controllers\Admin\Site;
 
+use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\BaseController;
 use BFACP\Option as Option;
 use Illuminate\Support\Facades\Cache as Cache;
@@ -7,7 +8,6 @@ use Illuminate\Support\Facades\Input as Input;
 use Illuminate\Support\Facades\Lang as Lang;
 use Illuminate\Support\Facades\Redirect as Redirect;
 use Illuminate\Support\Facades\View as View;
-use MainHelper;
 
 class SettingsController extends BaseController
 {
@@ -25,13 +25,15 @@ class SettingsController extends BaseController
 
         foreach (Input::all() as $key => $value) {
             if (starts_with($key, '_') === false) {
-                $key   = str_replace('-', '.', $key);
+                $key = str_replace('-', '.', $key);
                 $value = trim($value);
 
                 if (!is_null(MainHelper::stringToBool($value))) {
                     $value = MainHelper::stringToBool($value);
-                } else if (empty($value)) {
-                    $value = null;
+                } else {
+                    if (empty($value)) {
+                        $value = null;
+                    }
                 }
 
                 if ($value != $settings[$key]) {

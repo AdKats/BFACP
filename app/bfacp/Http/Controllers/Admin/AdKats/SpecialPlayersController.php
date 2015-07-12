@@ -1,15 +1,17 @@
 <?php namespace BFACP\Http\Controllers\Admin\AdKats;
 
 use BFACP\AdKats\Special;
+use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\BaseController;
 use Exception;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
-use MainHelper;
 
 class SpecialPlayersController extends BaseController
 {
@@ -21,7 +23,7 @@ class SpecialPlayersController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->guzzle = \App::make('GuzzleHttp\Client');
+        $this->guzzle = App::make('GuzzleHttp\Client');
     }
 
     public function index()

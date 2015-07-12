@@ -1,5 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
+
 // Check if the storage directory and subfolders are writeable
 if (!is_writable(storage_path())) {
     die(sprintf('All folders under %s must be set to 0777.', storage_path()));

@@ -1,7 +1,6 @@
 <?php namespace BFACP\Battlefield;
 
 use BFACP\Elegant;
-use Carbon\Carbon;
 
 class Game extends Elegant
 {

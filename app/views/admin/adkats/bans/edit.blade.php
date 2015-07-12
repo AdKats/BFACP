@@ -76,8 +76,8 @@
                         <button type="submit" class="btn bg-green">
                             <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ Lang::get('adkats.bans.edit.buttons.submit.text1') }}</span>
                         </button>
-                        {{ link_to_route('admin.adkats.bans.index', Lang::get('adkats.bans.edit.buttons.cancel'), [], ['class' => 'btn bg-red']) }}
-                        {{ link_to_route('player.show', Lang::get('adkats.bans.edit.buttons.profile'), [$ban->player->PlayerID, $ban->player->SoldierName], ['class' => 'btn bg-navy']) }}
+                        {{ link_to_route('admin.adkats.bans.index', Lang::get('adkats.bans.edit.buttons.cancel'), [], ['class' => 'btn bg-red', 'target' => '_self']) }}
+                        {{ link_to_route('player.show', Lang::get('adkats.bans.edit.buttons.profile'), [$ban->player->PlayerID, $ban->player->SoldierName], ['class' => 'btn bg-navy', 'target' => '_self']) }}
                     </div>
                 </div>
                 {{ Former::close() }}

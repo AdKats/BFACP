@@ -30,7 +30,7 @@ Event::listen('player.ban', function ($input, $player, $ban = null) {
         $ban->player()->associate($player);
     } else {
 
-        if ($ban instanceof BFACP\AdKats\Ban) {
+        if ($ban instanceof Ban) {
             // Don't need too do anything else.
         } else {
             // Retrive the ban record from the database
@@ -66,9 +66,7 @@ Event::listen('player.ban', function ($input, $player, $ban = null) {
             $ban->ban_startTime = $startDate;
             $ban->ban_endTime = $endDate;
         }
-    }
-
-    // Perma Ban - 20 Years
+    } // Perma Ban - 20 Years
     elseif (array_get($input, 'ban_type') == 8) {
         $ban->ban_startTime = Carbon::now();
         $ban->ban_endTime = Carbon::parse($ban->ban_startTime)->addYears(20);

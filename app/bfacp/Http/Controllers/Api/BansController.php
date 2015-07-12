@@ -1,13 +1,12 @@
 <?php namespace BFACP\Http\Controllers\Api;
 
 use BFACP\AdKats\Ban;
+use BFACP\Facades\Main as MainHelper;
 use BFACP\Repositories\BanRepository;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Lang;
-use MainHelper;
 
 class BansController extends BaseController
 {
@@ -22,14 +21,11 @@ class BansController extends BaseController
 
     public function latest()
     {
-        if($this->isLoggedIn && $this->request->has('personal') && $this->request->get('personal') == 'true')
-        {
-            $isCached = FALSE;
+        if ($this->isLoggedIn && $this->request->has('personal') && $this->request->get('personal') == 'true') {
+            $isCached = false;
 
-            $bans = $this->repository->getPersonalBans( $this->user->settings()->playerIds() );
-        }
-        else
-        {
+            $bans = $this->repository->getPersonalBans($this->user->settings()->playerIds());
+        } else {
             $isCached = Cache::has('bans.latest');
 
             $bans = $this->repository->getLatestBans();
@@ -38,16 +34,16 @@ class BansController extends BaseController
         return MainHelper::response([
             'cols' => Lang::get('dashboard.bans.columns'),
             'bans' => $bans
-        ], NULL, NULL, NULL, $isCached, TRUE);
+        ], null, null, null, $isCached, true);
     }
 
     public function stats()
     {
-        $yesterdaysBans = Cache::remember('bans.stats.yesterday', 120, function() {
+        $yesterdaysBans = Cache::remember('bans.stats.yesterday', 120, function () {
             return Ban::yesterday()->count();
         });
 
-        $avgBansPerDay = Cache::remember('bans.stats.average', 180, function() {
+        $avgBansPerDay = Cache::remember('bans.stats.average', 180, function () {
             $result = head(DB::select(File::get(storage_path() . '/sql/avgBansPerDay.sql')));
             return intval($result->total);
         });
@@ -57,6 +53,6 @@ class BansController extends BaseController
                 'yesterday' => $yesterdaysBans,
                 'average' => $avgBansPerDay
             ]
-        ], NULL, NULL, NULL, FALSE, TRUE);
+        ], null, null, null, false, true);
     }
 }

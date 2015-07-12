@@ -3,13 +3,12 @@
 use BFACP\Battlefield\Server as Server;
 use BFACP\Exceptions\PlayerNotFoundException as PlayerNotFoundException;
 use BFACP\Exceptions\RconException as RconException;
+use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\Api\BaseController as BaseController;
-use BFACP\Repositories\Scoreboard\LiveServerRepository as LiveServerRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
 use Illuminate\Support\Facades\App as App;
 use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Input as Input;
-use MainHelper;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException as AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException as NotFoundHttpException;
 
@@ -181,7 +180,7 @@ class ScoreboardController extends BaseController
                 );
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = [
-                    'player'  => $player,
+                    'player' => $player,
                     'message' => $e->getMessage()
                 ];
             }
@@ -205,7 +204,7 @@ class ScoreboardController extends BaseController
                 );
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = [
-                    'player'  => $player,
+                    'player' => $player,
                     'message' => $e->getMessage()
                 ];
             }
@@ -231,12 +230,12 @@ class ScoreboardController extends BaseController
                 );
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = [
-                    'player'  => $player,
+                    'player' => $player,
                     'message' => $e->getMessage()
                 ];
             } catch (RconException $e) {
                 $this->errors[] = [
-                    'player'  => $player,
+                    'player' => $player,
                     'message' => $e->getMessage()
                 ];
             }
@@ -246,11 +245,11 @@ class ScoreboardController extends BaseController
     }
 
     /**
-     * Wrapper for \BFACP\Helpers\Main
-     * @param  array   $data
-     * @param  string  $message
-     * @param  string  $type
-     * @return \BFACP\Helpers\Main
+     * Wrapper for \BFACP\Facades\Main
+     * @param  array $data
+     * @param  string $message
+     * @param  string $type
+     * @return \BFACP\Facades\Main
      */
     private function _response($data = null, $message = null, $type = null)
     {
@@ -263,12 +262,14 @@ class ScoreboardController extends BaseController
 
     /**
      * Quick function for checking permissions for the scoreboard admin.
-     * @param  string  $permission Name of the permission
-     * @param  string  $message
+     * @param  string $permission Name of the permission
+     * @param  string $message
      * @return boolean
      */
-    private function hasPermission($permission, $message = 'Access Denied! You do have permission to issue this command.')
-    {
+    private function hasPermission(
+        $permission,
+        $message = 'Access Denied! You do have permission to issue this command.'
+    ) {
         if (!$this->user->ability(null, $permission)) {
             throw new AccessDeniedHttpException($message);
         }

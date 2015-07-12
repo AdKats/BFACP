@@ -1,10 +1,9 @@
 <?php namespace BFACP\Http\Controllers\Api;
 
 use BFACP\Exceptions\MetabansException;
+use BFACP\Facades\Main as MainHelper;
 use BFACP\Libraries\Metabans;
-use Input;
-use Lang;
-use MainHelper;
+use Illuminate\Support\Facades\Lang;
 
 class MetabansController extends BaseController
 {
@@ -12,6 +11,7 @@ class MetabansController extends BaseController
 
     public function __construct(Metabans $metabans)
     {
+        parent::__construct();
         $this->metabans = $metabans;
     }
 
@@ -34,7 +34,7 @@ class MetabansController extends BaseController
             $feed_assessments + [
                 'locales' => Lang::get('common.metabans')
             ],
-            NULL, NULL, NULL, FALSE, TRUE
+            null, null, null, false, true
         );
     }
 
@@ -44,7 +44,7 @@ class MetabansController extends BaseController
 
         return MainHelper::response(
             $feed,
-            NULL, NULL, NULL, FALSE, TRUE
+            null, null, null, false, true
         );
     }
 
@@ -54,7 +54,7 @@ class MetabansController extends BaseController
 
         return MainHelper::response(
             $assessments,
-            NULL, NULL, NULL, FALSE, TRUE
+            null, null, null, false, true
         );
     }
 }

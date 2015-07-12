@@ -2,6 +2,7 @@
 
 use BFACP\Account\Permission;
 use BFACP\Account\Role;
+use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\BaseController;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -10,7 +11,6 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
-use MainHelper;
 
 class RolesController extends BaseController
 {
@@ -60,7 +60,7 @@ class RolesController extends BaseController
                         return true;
                     }
                 })->map(function ($id) {
-                    return (int) $id;
+                    return (int)$id;
                 });
             }
 
@@ -132,7 +132,7 @@ class RolesController extends BaseController
                         return true;
                     }
                 })->map(function ($id) {
-                    return (int) $id;
+                    return (int)$id;
                 });
             }
 

@@ -1,7 +1,6 @@
 <?php namespace BFACP\Battlefield\Scoreboard;
 
 use BFACP\Elegant;
-use Carbon\Carbon;
 
 class Scores extends Elegant
 {

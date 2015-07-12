@@ -1,29 +1,29 @@
 <?php namespace BFACP\Repositories;
 
-use BFACP\Account\Role;
 use BFACP\Account\Setting;
 use BFACP\Account\Soldier;
 use BFACP\Account\User;
 use BFACP\Battlefield\Player;
 use Carbon\Carbon;
-use Confide;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
+use Zizaco\Confide\Facade as Confide;
 
 class UserRepository
 {
     /**
      * Create a new user
-     * @param  array   $input
-     * @param  integer $role  Default role is 2
-     * @return BFACP\Account\User
+     * @param  array $input
+     * @param  integer $role Default role is 2
+     * @param bool $confirmed
+     * @return User
      */
     public function signup($input = [], $role = 2, $confirmed = false)
     {
         $user = new User();
 
         $user->username = array_get($input, 'username');
-        $user->email    = array_get($input, 'email');
+        $user->email = array_get($input, 'email');
         $user->password = array_get($input, 'password');
 
         // The password confirmation will be removed from model
@@ -93,7 +93,7 @@ class UserRepository
      * Checks if the credentials has been throttled by too
      * many failed login attempts
      *
-     * @param  array   $input
+     * @param  array $input
      * @return boolean
      */
     public function isThrottled($input)
@@ -105,7 +105,7 @@ class UserRepository
      * Checks if the given credentials correponds to a user
      * that exists but is not confirmed
      *
-     * @param  array  $input
+     * @param  array $input
      * @return boolean
      */
     public function existsButNotConfirmed($input)
@@ -127,18 +127,18 @@ class UserRepository
     /**
      * Resets the password of a user. The $input['token'] will tell which user.
      *
-     * @param  array  $input Array containing 'token', 'password' and 'password_confirmation' keys.
+     * @param  array $input Array containing 'token', 'password' and 'password_confirmation' keys.
      * @return boolean
      */
     public function resetPassword($input)
     {
         $result = false;
-        $user   = Confide::userByResetPasswordToken($input['token']);
+        $user = Confide::userByResetPasswordToken($input['token']);
 
         if ($user) {
-            $user->password              = $input['password'];
+            $user->password = $input['password'];
             $user->password_confirmation = $input['password_confirmation'];
-            $result                      = $this->save($user);
+            $result = $this->save($user);
         }
 
         // If result is positive, destroy token

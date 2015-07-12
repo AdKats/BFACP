@@ -1,7 +1,7 @@
 <?php namespace BFACP\AdKats;
 
 use BFACP\Elegant;
-use Carbon\Carbon;
+
 
 class Battlelog extends Elegant
 {

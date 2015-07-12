@@ -1,6 +1,7 @@
 <?php namespace BFACP\Account;
 
 use BFACP\Elegant;
+use Illuminate\Database\Eloquent\Model;
 
 class Soldier extends Elegant
 {
@@ -54,7 +55,7 @@ class Soldier extends Elegant
     protected $with = [];
 
     /**
-     * @return Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function user()
     {
@@ -62,7 +63,7 @@ class Soldier extends Elegant
     }
 
     /**
-     * @return Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function player()
     {

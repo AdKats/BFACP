@@ -1,5 +1,6 @@
 <?php namespace BFACP\Account;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 use Zizaco\Entrust\EntrustRole;
 
@@ -63,7 +64,7 @@ class Role extends EntrustRole
     ];
 
     /**
-     * @return Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function permissions()
     {
@@ -71,7 +72,7 @@ class Role extends EntrustRole
     }
 
     /**
-     * @return Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function users()
     {

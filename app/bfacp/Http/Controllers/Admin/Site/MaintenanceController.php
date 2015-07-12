@@ -1,7 +1,7 @@
 <?php namespace BFACP\Http\Controllers\Admin\Site;
 
-use Artisan;
 use BFACP\Http\Controllers\BaseController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
@@ -12,7 +12,8 @@ class MaintenanceController extends BaseController
 {
     public function index()
     {
-        return View::make('admin.site.maintenance.index')->with('page_title', Lang::get('navigation.main.items.maintenance.title'));
+        return View::make('admin.site.maintenance.index')->with('page_title',
+            Lang::get('navigation.main.items.maintenance.title'));
     }
 
     public function update()

@@ -1,6 +1,7 @@
 <?php namespace BFACP\Http\Controllers\Admin;
 
 use BFACP\Http\Controllers\BaseController;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 use vierbergenlars\SemVer\version;
@@ -11,7 +12,7 @@ class UpdaterController extends BaseController
     {
         parent::__construct();
 
-        $this->guzzle = \App::make('GuzzleHttp\Client');
+        $this->guzzle = App::make('GuzzleHttp\Client');
     }
 
     public function index()
@@ -32,9 +33,10 @@ class UpdaterController extends BaseController
             return $releases;
         });
 
-        $outofdate  = version::lt(BFACP_VERSION, $latest_release['tag_name']);
+        $outofdate = version::lt(BFACP_VERSION, $latest_release['tag_name']);
         $unreleased = version::gt(BFACP_VERSION, $latest_release['tag_name']);
 
-        return View::make('system.updater.index', compact('page_title', 'releases', 'outofdate', 'latest_release', 'unreleased'));
+        return View::make('system.updater.index',
+            compact('page_title', 'releases', 'outofdate', 'latest_release', 'unreleased'));
     }
 }

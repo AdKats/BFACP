@@ -2,4 +2,6 @@
 
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class MetabansException extends HttpException {}
+class MetabansException extends HttpException
+{
+}

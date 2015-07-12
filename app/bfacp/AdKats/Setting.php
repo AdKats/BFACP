@@ -1,7 +1,6 @@
 <?php namespace BFACP\AdKats;
 
 use BFACP\Elegant;
-use Carbon\Carbon;
 
 class Setting extends Elegant
 {
@@ -58,7 +57,9 @@ class Setting extends Elegant
 
     /**
      * Quick way of selecting specific commands
+     * @param $query
      * @param  array $names Command Names
+     * @return
      */
     public function scopeSettings($query, $names)
     {
@@ -67,7 +68,9 @@ class Setting extends Elegant
 
     /**
      * Quick way of selecting servers
-     * @param  array $ids   Array of server ids
+     * @param $query
+     * @param  array $ids Array of server ids
+     * @return
      */
     public function scopeServers($query, $ids)
     {
@@ -111,11 +114,11 @@ class Setting extends Elegant
                 break;
 
             case 'int':
-                return (int) $value;
+                return (int)$value;
                 break;
 
             case 'double':
-                return (float) $value;
+                return (float)$value;
                 break;
 
             default:

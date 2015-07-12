@@ -1,8 +1,7 @@
 <?php namespace BFACP\Battlefield\Scoreboard;
 
-use BattlefieldHelper;
 use BFACP\Elegant;
-use Carbon\Carbon;
+use BFACP\Facades\Battlefield as BattlefieldHelper;
 
 class Scoreboard extends Elegant
 {

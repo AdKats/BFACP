@@ -1,5 +1,6 @@
 <?php namespace BFACP\Account;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config as Config;
 use Zizaco\Confide\ConfideUser;
@@ -66,7 +67,7 @@ class User extends Model implements ConfideUserInterface
      */
     public static $rules = [
         'username' => 'required|unique:bfacp_users,username|alpha_dash|min:4',
-        'email'    => 'required|unique:bfacp_users,email|email',
+        'email' => 'required|unique:bfacp_users,email|email',
         'password' => 'required|min:8|confirmed'
     ];
 
@@ -128,7 +129,7 @@ class User extends Model implements ConfideUserInterface
     }
 
     /**
-     * @return Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function roles()
     {
@@ -136,7 +137,7 @@ class User extends Model implements ConfideUserInterface
     }
 
     /**
-     * @return Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function setting()
     {
@@ -144,7 +145,7 @@ class User extends Model implements ConfideUserInterface
     }
 
     /**
-     * @return Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function soldiers()
     {
@@ -162,7 +163,7 @@ class User extends Model implements ConfideUserInterface
 
     public function getStampAttribute()
     {
-        if ($this->created_at instanceof Carbon\Carbon) {
+        if ($this->created_at instanceof Carbon) {
             return $this->created_at->toIso8601String();
         }
 

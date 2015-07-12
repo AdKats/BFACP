@@ -1,11 +1,13 @@
 <?php namespace BFACP\Libraries;
 
 use BFACP\Exceptions\MetabansException;
+use BFACP\Facades\Main as MainHelper;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
-use MainHelper;
+use Illuminate\Support\MessageBag;
 
 class Metabans
 {
@@ -69,11 +71,11 @@ class Metabans
      */
     public $supported_games = [
         'BFBC2' => 'BF_BC2',
-        'MOH'   => 'MOH_2010',
-        'MOHW'  => 'MOH_2012',
-        'BF3'   => 'BF_3',
-        'BF4'   => 'BF_4',
-        'BFHL'  => 'BF_H'
+        'MOH' => 'MOH_2010',
+        'MOHW' => 'MOH_2012',
+        'BF3' => 'BF_3',
+        'BF4' => 'BF_4',
+        'BFHL' => 'BF_H'
     ];
 
     /**
@@ -88,8 +90,8 @@ class Metabans
 
     public function __construct()
     {
-        $this->key     = Config::get('bfacp.metabans.key', null);
-        $this->user    = Config::get('bfacp.metabans.user', null);
+        $this->key = Config::get('bfacp.metabans.key', null);
+        $this->user = Config::get('bfacp.metabans.user', null);
         $this->account = Config::get('bfacp.metabans.account', null);
 
         if (!Config::get('bfacp.metabans.enabled')) {
@@ -97,46 +99,48 @@ class Metabans
         }
 
         if (empty($this->key) || empty($this->user) || empty($this->account)) {
-            throw new MetabansException(500, 'Metabans settings are not configured. Please update the configuration in the site settings.');
+            throw new MetabansException(500,
+                'Metabans settings are not configured. Please update the configuration in the site settings.');
         }
 
         $this->salt = mt_rand(10000, 99999);
         $this->hash = sha1($this->salt . $this->key);
 
         $this->auth = [
-            'apikey'   => $this->hash,
-            'salt'     => $this->salt,
+            'apikey' => $this->hash,
+            'salt' => $this->salt,
             'username' => $this->user
         ];
 
-        $this->guzzle = \App::make('GuzzleHttp\Client');
-        $this->base62 = \App::make('BFACP\Libraries\Base62');
+        $this->guzzle = App::make('GuzzleHttp\Client');
+        $this->base62 = App::make('BFACP\Libraries\Base62');
     }
 
     /**
      * Assess player
-     * @param  string  $game     BF_BC2, MOH_2010, BF_3, MOH_2012, BF_4
-     * @param  string  $GUID     Player GUID
-     * @param  string  $type     None, Watch, White, Black
-     * @param  string  $reason   Ban Reason - Max 200 chars
+     * @param  string $game BF_BC2, MOH_2010, BF_3, MOH_2012, BF_4
+     * @param  string $GUID Player GUID
+     * @param  string $type None, Watch, White, Black
+     * @param  string $reason Ban Reason - Max 200 chars
      * @param  integer $duration Length of time in seconds ban should be enforced. Defaults to 3 months.
+     * @return Collection
      */
     public function assess($game, $GUID, $type, $reason = '', $duration = 7776000)
     {
         $rules = [
             'assessment_length' => 'required|numeric',
-            'assessment_type'   => 'required|in:' . implode(',', $this->assessment_types),
-            'game_name'         => 'required|in:' . implode(',', $this->supported_games),
-            'player_uid'        => 'required|regex:/^EA_([0-9A-Z]{32}+)$/',
-            'reason'            => 'required|max:200'
+            'assessment_type' => 'required|in:' . implode(',', $this->assessment_types),
+            'game_name' => 'required|in:' . implode(',', $this->supported_games),
+            'player_uid' => 'required|regex:/^EA_([0-9A-Z]{32}+)$/',
+            'reason' => 'required|max:200'
         ];
 
         $data = [
             'assessment_length' => $duration,
-            'assessment_type'   => strtolower($type),
-            'game_name'         => $this->supported_games[$game],
-            'player_uid'        => $GUID,
-            'reason'            => $reason
+            'assessment_type' => strtolower($type),
+            'game_name' => $this->supported_games[$game],
+            'player_uid' => $GUID,
+            'reason' => $reason
         ];
 
         if (!$this->validate($data, $rules)) {
@@ -155,6 +159,7 @@ class Metabans
     /**
      * Fetchs the assessments for an account
      * @param integer $offset
+     * @return Collection
      */
     public function assessments($offset = 0)
     {
@@ -165,15 +170,16 @@ class Metabans
         $assessments = $this->request([
             'mbo_assessments' => [
                 'account_name' => $this->account,
-                'offset'       => $offset
+                'offset' => $offset
             ]
         ]);
 
         foreach ($assessments['assessments'] as $key => $assessment) {
-            $player_url     = sprintf('http://metabans.com/player?i=%s', $this->base62->encode($assessment['player_id']));
-            $assessment_url = sprintf('http://metabans.com/assessment?i=%s', $this->base62->encode($assessment['assessment_id']));
+            $player_url = sprintf('http://metabans.com/player?i=%s', $this->base62->encode($assessment['player_id']));
+            $assessment_url = sprintf('http://metabans.com/assessment?i=%s',
+                $this->base62->encode($assessment['assessment_id']));
 
-            $assessments['assessments'][$key]['player_url']     = $player_url;
+            $assessments['assessments'][$key]['player_url'] = $player_url;
             $assessments['assessments'][$key]['assessment_url'] = $assessment_url;
         }
 
@@ -185,6 +191,7 @@ class Metabans
     /**
      * Fetchs the feed for an account
      * @param integer $offset
+     * @return Collection
      */
     public function feed($offset = 0)
     {
@@ -195,15 +202,16 @@ class Metabans
         $feed = $this->request([
             'mbo_feed' => [
                 'account_name' => $this->account,
-                'offset'       => $offset
+                'offset' => $offset
             ]
         ]);
 
         foreach ($feed['feed'] as $key => $f) {
-            $player_url     = sprintf('http://metabans.com/player?i=%s', $this->base62->encode($f['player_id']));
-            $assessment_url = sprintf('http://metabans.com/assessment?i=%s', $this->base62->encode($f['assessment_id']));
+            $player_url = sprintf('http://metabans.com/player?i=%s', $this->base62->encode($f['player_id']));
+            $assessment_url = sprintf('http://metabans.com/assessment?i=%s',
+                $this->base62->encode($f['assessment_id']));
 
-            $feed['feed'][$key]['player_url']     = $player_url;
+            $feed['feed'][$key]['player_url'] = $player_url;
             $feed['feed'][$key]['assessment_url'] = $assessment_url;
         }
 
@@ -215,6 +223,7 @@ class Metabans
     /**
      * Fetchs the followers for an account
      * @param integer $offset
+     * @return \Illuminate\Support\Facades\Response
      */
     public function followers($offset = 0)
     {
@@ -225,7 +234,7 @@ class Metabans
         $followers = new Collection($this->request([
             'mbo_followers' => [
                 'account_name' => $this->account,
-                'offset'       => $offset
+                'offset' => $offset
             ]
         ]));
 
@@ -235,6 +244,7 @@ class Metabans
     /**
      * Get player aliases
      * @param integer $id Metabans player id
+     * @return \Illuminate\Support\Facades\Response
      */
     public function aliases($id = 0)
     {
@@ -260,6 +270,7 @@ class Metabans
     /**
      * Search for playeers
      * @param string $phrase
+     * @return \Illuminate\Support\Facades\Response
      */
     public function search($phrase = '')
     {
@@ -302,8 +313,8 @@ class Metabans
 
     /**
      * Generates the request
-     * @param  array   $requests
-     * @param  boolean $auth     Request requires authentication
+     * @param  array $requests
+     * @param  boolean $auth Request requires authentication
      * @return [type]            [description]
      */
     private function request(array $requests, $auth = false)
@@ -330,7 +341,7 @@ class Metabans
 
     /**
      * Send request to metabans API
-     * @param  array  $payload
+     * @param  array $payload
      * @return
      */
     private function make(array $payload)
@@ -340,7 +351,7 @@ class Metabans
                 'headers' => [
                     'User-Agent' => 'PRoCon Metabans Plugin/1.1.0.0'
                 ],
-                'body'    => $payload
+                'body' => $payload
             ]);
 
             $response = $request->json();
@@ -396,7 +407,7 @@ class Metabans
     /**
      * Set error message bag
      *
-     * @var Illuminate\Support\MessageBag
+     * @var MessageBag
      */
     protected function setErrors($errors)
     {

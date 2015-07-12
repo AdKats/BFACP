@@ -1,6 +1,7 @@
 <?php namespace BFACP\Account;
 
 use BFACP\Elegant;
+use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Elegant
 {
@@ -48,7 +49,7 @@ class Setting extends Elegant
     protected $appends = [];
 
     /**
-     * Models to be loaded automaticly
+     * Models to be loaded automatically
      * @var array
      */
     protected $with = [];
@@ -60,11 +61,11 @@ class Setting extends Elegant
     public static $rules = [
         'gravatar' => 'email',
         'timezone' => 'timezone',
-        'lang'     => 'string'
+        'lang' => 'string'
     ];
 
     /**
-     * @return Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function user()
     {

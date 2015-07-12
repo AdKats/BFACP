@@ -1,11 +1,12 @@
 <?php namespace BFACP\Libraries\Battlelog;
 
+use BFACP\AdKats\Battlelog;
 use BFACP\Battlefield\Player;
 use BFACP\Exceptions\BattlelogException;
+use BFACP\Facades\Main as MainHelper;
 use Illuminate\Database\Eloquent\Collection;
-use MainHelper;
 
-class BattlelogPlayer extends Battlelog
+class BattlelogPlayer extends BattlelogAPI
 {
     /**
      * Persona ID
@@ -27,7 +28,7 @@ class BattlelogPlayer extends Battlelog
 
     /**
      * Player Object
-     * @var BFACP\Battlefield\Player
+     * @var Player
      */
     public $player;
 
@@ -62,8 +63,8 @@ class BattlelogPlayer extends Battlelog
         if (!$this->player->hasPersona()) {
             $this->fetchProfile();
         } else {
-            $this->personaID       = $this->player->battlelog->persona_id;
-            $this->personaUserID   = $this->player->battlelog->user_id;
+            $this->personaID = $this->player->battlelog->persona_id;
+            $this->personaUserID = $this->player->battlelog->user_id;
             $this->personaGravatar = $this->player->battlelog->gravatar;
         }
 
@@ -84,7 +85,8 @@ class BattlelogPlayer extends Battlelog
 
         // If the persona object is empty throw a BattlelogException
         if (empty($this->profile['context']['profilePersonas'])) {
-            throw new BattlelogException(404, sprintf('No player by the name "%s" exists on battlelog.', $this->player->SoldierName));
+            throw new BattlelogException(404,
+                sprintf('No player by the name "%s" exists on battlelog.', $this->player->SoldierName));
         }
 
         // Set the gravtar of the player
@@ -97,7 +99,7 @@ class BattlelogPlayer extends Battlelog
         foreach ($personas as $persona) {
             // PC Namespace
             if ($persona['namespace'] == 'cem_ea_id') {
-                $this->personaID     = $persona['personaId'];
+                $this->personaID = $persona['personaId'];
                 $this->personaUserID = $persona['userId'];
                 break;
             }
@@ -110,11 +112,11 @@ class BattlelogPlayer extends Battlelog
             $this->player->forget();
 
             // Assign a relationship for them and save to the database
-            $this->player->battlelog()->save(new \BFACP\AdKats\Battlelog([
-                'gravatar'       => $this->personaGravatar,
+            $this->player->battlelog()->save(new Battlelog([
+                'gravatar' => $this->personaGravatar,
                 'persona_banned' => false,
-                'persona_id'     => $this->personaID,
-                'user_id'        => $this->personaUserID
+                'persona_id' => $this->personaID,
+                'user_id' => $this->personaUserID
             ]));
 
             // Reload the relationship
@@ -157,20 +159,20 @@ class BattlelogPlayer extends Battlelog
             }
 
             $weapons->push([
-                'slug'         => $weapon['slug'],
-                'category'     => $weapon['category'],
-                'headshots'    => $weapon['headshots'],
-                'kills'        => $weapon['kills'],
-                'deaths'       => $weapon['deaths'],
-                'score'        => $weapon['score'],
-                'fired'        => $weapon['shotsFired'],
-                'hit'          => $weapon['shotsHit'],
+                'slug' => $weapon['slug'],
+                'category' => $weapon['category'],
+                'headshots' => $weapon['headshots'],
+                'kills' => $weapon['kills'],
+                'deaths' => $weapon['deaths'],
+                'score' => $weapon['score'],
+                'fired' => $weapon['shotsFired'],
+                'hit' => $weapon['shotsHit'],
                 'timeEquipped' => $weapon['timeEquipped'],
-                'accuracy'     => MainHelper::percent($weapon['shotsHit'], $weapon['shotsFired']),
-                'kpm'          => MainHelper::divide($weapon['kills'], MainHelper::divide($weapon['timeEquipped'], 60)),
-                'hskp'         => MainHelper::percent($weapon['headshots'], $weapon['kills']),
-                'dps'          => MainHelper::percent($weapon['kills'], $weapon['shotsHit']),
-                'weapon_link'  => static::BLOG . $weaponURI
+                'accuracy' => MainHelper::percent($weapon['shotsHit'], $weapon['shotsFired']),
+                'kpm' => MainHelper::divide($weapon['kills'], MainHelper::divide($weapon['timeEquipped'], 60)),
+                'hskp' => MainHelper::percent($weapon['headshots'], $weapon['kills']),
+                'dps' => MainHelper::percent($weapon['kills'], $weapon['shotsHit']),
+                'weapon_link' => parent::BLOG . $weaponURI
             ]);
         }
 
@@ -211,14 +213,14 @@ class BattlelogPlayer extends Battlelog
 
         foreach ($results['mainVehicleStats'] as $vehicle) {
             $vehicles->push([
-                'slug'         => $vehicle['slug'],
-                'code'         => $vehicle['code'],
-                'category'     => $vehicle['category'],
-                'kills'        => $vehicle['kills'],
-                'score'        => array_key_exists('score', $vehicle) ? $vehicle['score'] : null,
+                'slug' => $vehicle['slug'],
+                'code' => $vehicle['code'],
+                'category' => $vehicle['category'],
+                'kills' => $vehicle['kills'],
+                'score' => array_key_exists('score', $vehicle) ? $vehicle['score'] : null,
                 'timeEquipped' => $vehicle['timeIn'],
                 'serviceStars' => $vehicle['serviceStars'],
-                'kpm'          => MainHelper::divide($vehicle['kills'], MainHelper::divide($vehicle['timeIn'], 60))
+                'kpm' => MainHelper::divide($vehicle['kills'], MainHelper::divide($vehicle['timeIn'], 60))
             ]);
         }
 

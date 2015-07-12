@@ -1,7 +1,6 @@
 <?php namespace BFACP\AdKats;
 
 use BFACP\Elegant;
-use Carbon\Carbon;
 
 class Command extends Elegant
 {
@@ -50,6 +49,8 @@ class Command extends Elegant
 
     /**
      * Returns the commands that usable by the guest
+     * @param $query
+     * @return
      */
     public function scopeGuest($query)
     {
@@ -58,6 +59,8 @@ class Command extends Elegant
 
     /**
      * Returns the commands that usable by the admin
+     * @param $query
+     * @return
      */
     public function scopeAdmin($query)
     {

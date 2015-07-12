@@ -1,7 +1,6 @@
 <?php namespace BFACP\AdKats\Account;
 
 use BFACP\Elegant;
-use Carbon\Carbon;
 
 class Role extends Elegant
 {
@@ -66,7 +65,8 @@ class Role extends Elegant
 
     /**
      * Return the power level of the role
-     * @return integer
+     * @param $count
+     * @return int
      */
     public function getPowerLevel($count)
     {

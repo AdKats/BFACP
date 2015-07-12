@@ -4,8 +4,9 @@ use BFACP\Account\Role;
 use BFACP\Account\Soldier;
 use BFACP\Account\User;
 use BFACP\Battlefield\Player;
+use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\BaseController;
-use Former;
+use Former\Facades\Former;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
@@ -14,7 +15,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
-use MainHelper;
 
 class UsersController extends BaseController
 {
@@ -70,18 +70,18 @@ class UsersController extends BaseController
             $user = User::findOrFail($id);
 
             $username = trim(Input::get('username', null));
-            $email    = trim(Input::get('email', null));
-            $roleId   = trim(Input::get('role', null));
-            $lang     = trim(Input::get('language', null));
-            $status   = trim(Input::get('confirmed', null));
+            $email = trim(Input::get('email', null));
+            $roleId = trim(Input::get('role', null));
+            $lang = trim(Input::get('language', null));
+            $status = trim(Input::get('confirmed', null));
             $soldiers = explode(',', Input::get('soldiers', ''));
 
             $v = Validator::make(Input::all(), [
-                'username'      => 'required|alpha_num|min:4|unique:bfacp_users,username,' . $id,
-                'email'         => 'required|email|unique:bfacp_users,email,' . $id,
-                'language'      => 'required|in:' . implode(',', array_keys(Config::get('bfacp.site.languages'))),
+                'username' => 'required|alpha_num|min:4|unique:bfacp_users,username,' . $id,
+                'email' => 'required|email|unique:bfacp_users,email,' . $id,
+                'language' => 'required|in:' . implode(',', array_keys(Config::get('bfacp.site.languages'))),
                 'generate_pass' => 'boolean',
-                'confirmed'     => 'boolean'
+                'confirmed' => 'boolean'
             ]);
 
             if ($v->fails()) {
@@ -127,16 +127,17 @@ class UsersController extends BaseController
                     compact('user', 'newPassword'),
                     function ($message) use ($user) {
                         $message
-                        ->to($user->email, $user->username)
-                        ->subject(Lang::get('email.password_changed.subject'));
+                            ->to($user->email, $user->username)
+                            ->subject(Lang::get('email.password_changed.subject'));
                     }
                 );
 
                 // Change the user password
-                $user->password              = $newPassword;
+                $user->password = $newPassword;
                 $user->password_confirmation = $newPassword;
 
-                $this->messages[] = Lang::get('site.admin.users.updates.password.generated', ['username' => $user->username, 'email' => $user->email]);
+                $this->messages[] = Lang::get('site.admin.users.updates.password.generated',
+                    ['username' => $user->username, 'email' => $user->email]);
             }
 
             $soldier_ids = [];
@@ -185,11 +186,12 @@ class UsersController extends BaseController
     /**
      * Delete user
      * @param  integer $id User ID
+     * @return \Illuminate\Support\Facades\Response
      */
     public function destroy($id)
     {
         try {
-            $user     = User::findOrFail($id);
+            $user = User::findOrFail($id);
             $username = $user->username;
             $user->delete();
 

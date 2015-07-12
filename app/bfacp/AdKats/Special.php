@@ -1,7 +1,7 @@
 <?php namespace BFACP\AdKats;
 
 use BFACP\Elegant;
-use Carbon\Carbon;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
@@ -104,7 +104,7 @@ class Special extends Elegant
 
         foreach ($groups as $group) {
             if ($group['group_key'] == $this->player_group) {
-                return (object) $group;
+                return (object)$group;
             }
         }
     }

@@ -1,7 +1,6 @@
 <?php namespace BFACP\AdKats\Infractions;
 
 use BFACP\Elegant;
-use Carbon\Carbon;
 
 class Server extends Elegant
 {

@@ -16,10 +16,10 @@ class BaseHelper
 
     public function __construct(Cache $cache, Request $request, Response $response, Carbon $carbon, Guzzle $guzzle)
     {
-        $this->cache    = $cache;
-        $this->carbon   = $carbon;
-        $this->guzzle   = $guzzle;
-        $this->request  = $request;
+        $this->cache = $cache;
+        $this->carbon = $carbon;
+        $this->guzzle = $guzzle;
+        $this->request = $request;
         $this->response = $response;
     }
 }

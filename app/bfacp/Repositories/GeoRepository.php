@@ -25,17 +25,18 @@ class GeoRepository extends BaseRepository
     public function __construct()
     {
         parent::__construct();
-        $path      = app_path() . '/bfacp/ThirdParty/GeoIP2/GeoLite2-City.mmdb';
+        $path = app_path() . '/bfacp/ThirdParty/GeoIP2/GeoLite2-City.mmdb';
         $this->geo = new Reader($path);
     }
 
     /**
      * Set the IP Address to be used
      * @param string $ip IPv4 Address
+     * @return $this
      */
     public function set($ip)
     {
-        $this->ip     = $ip;
+        $this->ip = $ip;
         $this->reader = $this->geo->city($this->ip);
 
         return $this;
@@ -48,12 +49,12 @@ class GeoRepository extends BaseRepository
     public function all()
     {
         return [
-            'cc'      => $this->cc(),
+            'cc' => $this->cc(),
             'country' => $this->country(),
-            'city'    => $this->city(),
-            'lat'     => $this->lat(),
-            'lon'     => $this->lon(),
-            'postal'  => $this->postal()
+            'city' => $this->city(),
+            'lat' => $this->lat(),
+            'lon' => $this->lon(),
+            'postal' => $this->postal()
         ];
     }
 

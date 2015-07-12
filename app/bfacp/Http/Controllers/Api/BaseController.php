@@ -14,9 +14,9 @@ class BaseController extends Controller
 
     public function __construct()
     {
-        $bfacp            = App::make('bfadmincp');
+        $bfacp = App::make('bfadmincp');
         $this->isLoggedIn = $bfacp->isLoggedIn;
-        $this->request    = App::make('Illuminate\Http\Request');
-        $this->user       = $bfacp->user;
+        $this->request = App::make('Illuminate\Http\Request');
+        $this->user = $bfacp->user;
     }
 }

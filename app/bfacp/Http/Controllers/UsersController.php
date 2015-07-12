@@ -1,6 +1,8 @@
 <?php namespace BFACP\Http\Controllers;
 
 use BFACP\Account\User;
+use BFACP\Repositories\UserRepository;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
@@ -13,18 +15,19 @@ class UsersController extends BaseController
 {
     /**
      * User Repository
-     * @var BFACP\Repositories\UserRepository
+     * @var UserRepository
      */
     private $repository;
 
     public function __construct()
     {
-        $this->repository = \App::make('BFACP\Repositories\UserRepository');
+        parent::__construct();
+        $this->repository = App::make('BFACP\Repositories\UserRepository');
     }
 
     /**
      * Shows the login form
-     * @return Illuminate\Support\Facades\View
+     * @return View
      */
     public function showLogin()
     {
@@ -33,7 +36,7 @@ class UsersController extends BaseController
 
     /**
      * Shows the signup form
-     * @return Illuminate\Support\Facades\View
+     * @return View
      */
     public function showSignup()
     {
@@ -43,7 +46,7 @@ class UsersController extends BaseController
     /**
      * Attempt to confirm the account with code
      * @param  string $code
-     * @return Illuminate\Support\Facades\Redirect
+     * @return Redirect
      */
     public function confirm($code)
     {
@@ -59,7 +62,7 @@ class UsersController extends BaseController
 
     /**
      * Create a new user
-     * @return Illuminate\Support\Facades\Redirect
+     * @return Redirect
      */
     public function signup()
     {
@@ -90,8 +93,8 @@ class UsersController extends BaseController
                 compact('user'),
                 function ($message) use ($user) {
                     $message
-                    ->to($user->email, $user->username)
-                    ->subject(Lang::get('confide::confide.email.account_confirmation.subject'));
+                        ->to($user->email, $user->username)
+                        ->subject(Lang::get('confide::confide.email.account_confirmation.subject'));
                 }
             );
         }

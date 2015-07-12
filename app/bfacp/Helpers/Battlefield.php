@@ -7,7 +7,8 @@ class Battlefield extends Main
     /**
      * Gets the name of the squad by ID
      * @param  integer $id Squad ID
-     * @return string      Squad Name
+     * @return string Squad Name
+     * @throws Exception
      */
     public function squad($id)
     {
@@ -130,7 +131,7 @@ class Battlefield extends Main
      * @param  integer $kills
      * @param  integer $deaths
      * @param  integer $precision
-     * @return floatval
+     * @return float
      */
     public function kd($kills = 0, $deaths = 0, $precision = 2)
     {
@@ -151,7 +152,7 @@ class Battlefield extends Main
      * @param  integer $headshots
      * @param  integer $kills
      * @param  integer $precision
-     * @return floatval
+     * @return float
      */
     public function hsk($headshots = 0, $kills = 0, $precision = 2)
     {
@@ -165,9 +166,9 @@ class Battlefield extends Main
     /**
      * Calculates the number of tickets on round start
      *
-     * @param  string  $gamemode
+     * @param  string $gamemode
      * @param  integer $modifier
-     * @param  string  $gameName
+     * @param  string $gameName
      * @return integer
      */
     public function startingTickets($gamemode, $modifier, $gameName)
@@ -175,80 +176,80 @@ class Battlefield extends Main
         switch ($gameName) {
             case 'BF4':
                 switch ($gamemode) {
-                case 'Chainlink0':
+                    case 'Chainlink0':
                         $defaultTickets = 1000;
                         break;
 
-                case 'ConquestLarge0':
+                    case 'ConquestLarge0':
                         $defaultTickets = 800;
                         break;
 
-                case 'ConquestSmall0':
+                    case 'ConquestSmall0':
                         $defaultTickets = 400;
                         break;
 
-                case 'TeamDeathMatch0':
-                case 'Elimination0':
-                case 'Obliteration':
-                case 'CarrierAssaultLarge0':
-                case 'CarrierAssaultSmall0':
+                    case 'TeamDeathMatch0':
+                    case 'Elimination0':
+                    case 'Obliteration':
+                    case 'CarrierAssaultLarge0':
+                    case 'CarrierAssaultSmall0':
                         $defaultTickets = 100;
                         break;
 
-                case 'RushLarge0':
+                    case 'RushLarge0':
                         $defaultTickets = 100;
                         break;
 
-                case 'SquadDeathMatch0':
+                    case 'SquadDeathMatch0':
                         $defaultTickets = 50;
                         break;
 
-                case 'Domination0':
-                case 'AirSuperiority0':
+                    case 'Domination0':
+                    case 'AirSuperiority0':
                         $defaultTickets = 300;
                         break;
 
-                case 'CaptureTheFlag0':
+                    case 'CaptureTheFlag0':
                         $defaultTickets = 3;
                         break;
 
-                default:
+                    default:
                         return;
                 }
                 break;
 
             case 'BF3':
                 switch ($gamemode) {
-                case 'ConquestLarge0':
+                    case 'ConquestLarge0':
                         $defaultTickets = 800;
                         break;
 
-                case 'ConquestSmall0':
+                    case 'ConquestSmall0':
                         $defaultTickets = 400;
                         break;
 
-                case 'TeamDeathMatch0':
+                    case 'TeamDeathMatch0':
                         $defaultTickets = 100;
                         break;
 
-                case 'Domination0':
-                case 'AirSuperiority0':
+                    case 'Domination0':
+                    case 'AirSuperiority0':
                         $defaultTickets = 300;
                         break;
 
-                case 'RushLarge0':
+                    case 'RushLarge0':
                         $defaultTickets = 75;
                         break;
 
-                case 'SquadDeathMatch0':
+                    case 'SquadDeathMatch0':
                         $defaultTickets = 50;
                         break;
 
-                case 'CaptureTheFlag0':
+                    case 'CaptureTheFlag0':
                         $defaultTickets = 3;
                         break;
 
-                default:
+                    default:
                         return;
                 }
                 break;
@@ -276,9 +277,9 @@ class Battlefield extends Main
 
     /**
      * Calculates the round timer on round start
-     * @param  string  $gamemode
+     * @param  string $gamemode
      * @param  integer $modifier
-     * @param  string  $gameName
+     * @param  string $gameName
      * @return integer
      */
     public function roundStartingTimer($gamemode, $modifier, $gameName)
@@ -286,38 +287,38 @@ class Battlefield extends Main
         switch ($gameName) {
             case 'BF4':
                 switch ($gamemode) {
-                case 'Chainlink0':
+                    case 'Chainlink0':
                         $defaultTime = 1200;
                         break;
 
-                case 'ConquestLarge0':
-                case 'ConquestSmall0':
-                case 'TeamDeathMatch0':
-                case 'SquadDeathMatch0':
-                case 'Domination0':
-                case 'AirSuperiority0':
+                    case 'ConquestLarge0':
+                    case 'ConquestSmall0':
+                    case 'TeamDeathMatch0':
+                    case 'SquadDeathMatch0':
+                    case 'Domination0':
+                    case 'AirSuperiority0':
                         $defaultTime = 3600;
                         break;
 
-                case 'RushLarge0':
+                    case 'RushLarge0':
                         $defaultTime = 900 * 3;
                         break;
 
-                case 'Elimination0':
+                    case 'Elimination0':
                         $defaultTime = 600;
                         break;
 
-                case 'Obliteration':
-                case 'CarrierAssaultLarge0':
-                case 'CarrierAssaultSmall0':
+                    case 'Obliteration':
+                    case 'CarrierAssaultLarge0':
+                    case 'CarrierAssaultSmall0':
                         $defaultTime = 1800;
                         break;
 
-                case 'CaptureTheFlag0':
+                    case 'CaptureTheFlag0':
                         $defaultTime = 1200;
                         break;
 
-                default:
+                    default:
                         return;
                 }
                 break;
@@ -330,7 +331,6 @@ class Battlefield extends Main
             case 'Hotwire0':
             case 'Hit0':
             case 'Hostage0':
-            case 'TeamDeathMatch0':
             case 'TeamDeathMatch0':
                 $defaultTime = 3600;
                 break;
@@ -351,7 +351,7 @@ class Battlefield extends Main
     public function mapName($mapURI, $xmlFilePath)
     {
         $mapNamesXML = simplexml_load_file($xmlFilePath);
-        $mapName     = 'MapNameNotFoundError';
+        $mapName = 'MapNameNotFoundError';
 
         for ($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
             if (strcasecmp($mapURI, $mapNamesXML->map[$i]->attributes()->uri) == 0) {

@@ -4,6 +4,7 @@ use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Server;
 use BFACP\Exceptions\PlayerNotFoundException;
 use BFACP\Exceptions\RconException;
+use BFACP\Facades\Main as MainHelper;
 use BFACP\Repositories\Scoreboard\LiveServerRepository;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -13,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
-use MainHelper;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -21,6 +21,7 @@ class ServersController extends BaseController
 {
     /**
      * Gathers the population for all servers
+     * @param $id
      * @return array
      */
     public function chat($id)
@@ -42,8 +43,8 @@ class ServersController extends BaseController
 
     /**
      * Live Scoreboard
-     * @param  integer $id Server ID
      * @return array
+     * @internal param int $id Server ID
      */
     public function population()
     {
@@ -69,7 +70,7 @@ class ServersController extends BaseController
 
         foreach ($newCollection as $key => $collection) {
             $online = 0;
-            $total  = 0;
+            $total = 0;
 
             foreach ($collection['servers'] as $server) {
                 $online += $server->usedSlots;
@@ -77,24 +78,23 @@ class ServersController extends BaseController
             }
 
             $newCollection[$key]['stats'] = [
-                'online'     => $online,
+                'online' => $online,
                 'totalSlots' => $total,
                 'percentage' => MainHelper::percent($online, $total)
             ];
         }
 
         return MainHelper::response([
-            'online'     => $usedSlots,
-            'totalSlots' => $totalSlots,
-            'percentage' => MainHelper::percent($usedSlots, $totalSlots),
-            'games'      => $newCollection
-        ] + Lang::get('dashboard.population'), null, null, null, false, true);
+                'online' => $usedSlots,
+                'totalSlots' => $totalSlots,
+                'percentage' => MainHelper::percent($usedSlots, $totalSlots),
+                'games' => $newCollection
+            ] + Lang::get('dashboard.population'), null, null, null, false, true);
     }
 
     public function scoreboard($id)
     {
-        try
-        {
+        try {
             $scoreboard = new LiveServerRepository(Server::findOrFail($id));
 
             if ($scoreboard->attempt()->check()) {
@@ -123,28 +123,28 @@ class ServersController extends BaseController
 
         $stats = [
             [
-                'name'    => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Tickets',
-                'data'    => [],
+                'name' => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Tickets',
+                'data' => [],
                 'visible' => true
             ],
             [
-                'name'    => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Tickets',
-                'data'    => [],
+                'name' => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Tickets',
+                'data' => [],
                 'visible' => true
             ],
             [
-                'name'    => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Players',
-                'data'    => [],
+                'name' => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Players',
+                'data' => [],
                 'visible' => false
             ],
             [
-                'name'    => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Players',
-                'data'    => [],
+                'name' => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Players',
+                'data' => [],
                 'visible' => false
             ],
             [
-                'name'    => 'Players Online',
-                'data'    => [],
+                'name' => 'Players Online',
+                'data' => [],
                 'visible' => false
             ]
         ];
@@ -160,27 +160,27 @@ class ServersController extends BaseController
 
             $stats[0]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int) $result->team1_tickets
+                (int)$result->team1_tickets
             ];
 
             $stats[1]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int) $result->team2_tickets
+                (int)$result->team2_tickets
             ];
 
             $stats[2]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int) $result->team1_count
+                (int)$result->team1_count
             ];
 
             $stats[3]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int) $result->team2_count
+                (int)$result->team2_count
             ];
 
             $stats[4]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int) ($result->team1_count + $result->team2_count)
+                (int)($result->team1_count + $result->team2_count)
             ];
         }
 
@@ -191,8 +191,7 @@ class ServersController extends BaseController
 
     public function scoreboardAdmin()
     {
-        try
-        {
+        try {
             $id = Input::get('server_id');
 
             if (!is_numeric($id) || $id <= 0) {
@@ -286,7 +285,7 @@ class ServersController extends BaseController
                                     $scoreboard->adminKill($player, Input::get('message', null));
                                 } catch (PlayerNotFoundException $e) {
                                     $unkilled[] = [
-                                        'name'   => $player,
+                                        'name' => $player,
                                         'reason' => $e->getMessage()
                                     ];
                                 }
@@ -312,7 +311,7 @@ class ServersController extends BaseController
                                     $scoreboard->adminKick($player, Input::get('message', null));
                                 } catch (PlayerNotFoundException $e) {
                                     $unkicked[] = [
-                                        'name'   => $player,
+                                        'name' => $player,
                                         'reason' => $e->getMessage()
                                     ];
                                 }
@@ -341,12 +340,12 @@ class ServersController extends BaseController
                                     );
                                 } catch (PlayerNotFoundException $e) {
                                     $unmoved[] = [
-                                        'name'   => $player,
+                                        'name' => $player,
                                         'reason' => $e->getMessage()
                                     ];
                                 } catch (RconException $e) {
                                     $unmoved[] = [
-                                        'name'   => $player,
+                                        'name' => $player,
                                         'reason' => $e->getMessage()
                                     ];
                                 }
@@ -412,8 +411,8 @@ class ServersController extends BaseController
 
     /**
      * Quick function for checking permissions for the scoreboard admin.
-     * @param  string  $permission Name of the permission
-     * @param  string  $message    [description]
+     * @param  string $permission Name of the permission
+     * @param  string $message [description]
      * @return boolean             [description]
      */
     private function hasPermission($permission, $message = 'You do have permission to issue this command')

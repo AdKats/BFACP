@@ -32,9 +32,9 @@
                         <tbody>
                             @foreach($bans as $ban)
                             <tr>
-                                <td>{{ link_to_route('admin.adkats.bans.edit', $ban->ban_id, [$ban->ban_id]) }}</td>
+                                <td>{{ link_to_route('admin.adkats.bans.edit', $ban->ban_id, $ban->ban_id, ['target' => '_self']) }}</td>
                                 <td><span class="{{ $ban->player->game->class_css }}">{{ $ban->player->game->Name }}</span></td>
-                                <td>{{ link_to_route('player.show', $ban->player->SoldierName, [$ban->player->PlayerID, $ban->player->SoldierName]) }}</td>
+                                <td>{{ link_to_route('player.show', $ban->player->SoldierName, [$ban->player->PlayerID, $ban->player->SoldierName], ['target' => '_self']) }}</td>
                                 <td class="hidden-sm">
                                     @if(!is_null($ban->record->source_id))
                                     {{ link_to_route('player.show', $ban->record->source_name, [$ban->record->source_id, $ban->record->source_name]) }}
