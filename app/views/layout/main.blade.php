@@ -3,18 +3,14 @@
     <head>
         <base href="/" target="_self">
         <meta charset="UTF-8">
-        <title>{{{ MainHelper::getTitle(isset($page_title) ? $page_title : false, Config::get('bfacp.site.title')) }}}</title>
-        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-
+        <title>{{ MainHelper::getTitle(isset($page_title) ? $page_title : false, Config::get('bfacp.site.title')) }}</title>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         @yield('meta')
-
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-
         {{ HTML::style('css/ionicons.min.css') }}
-
         {{ HTML::style('css/style.css?v=1') }}
         {{ HTML::style('css/_all-skins.min.css?v=1') }}
         {{ HTML::style('css/custom.css?v=1') }}
@@ -23,11 +19,8 @@
         {{ HTML::style('css/timepicker/bootstrap-timepicker.min.css') }}
         {{ HTML::style('css/animate.css') }}
         {{ HTML::style('css/ng-table/ng-table.min.css') }}
-
         @yield('styles')
-
         @yield('header-scripts')
-
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -131,7 +124,11 @@
             MainHelper::files(public_path() . '/js/controllers', true, '/js/controllers/')
         )) }}
         <script type="text/javascript">
-            var lang = "{{ Config::get('app.locale', null) }}";
+            @if($bfacp->isLoggedIn)
+            var lang = "{{ Config::get('app.locale') }}";
+            @else
+            var lang = null;
+            @endif
             moment.locale( lang || navigator.language.split('-')[0] );
             $.widget.bridge('uibutton', $.ui.button);
         </script>

@@ -11,7 +11,7 @@
             @endif
         @else
         <a href="{{ $item->url() }}" target="_self">
-            @if(isset($isChild) && $isChild === TRUE)
+            @if(isset($isChild) && $isChild === true)
                 <i class="fa fa-angle-double-right"></i>
             @endif
 
@@ -21,7 +21,7 @@
 
         @unless( ! $item->hasChildren())
             <ul class="treeview-menu">
-                @include('layout.menu.menu-items', ['items' => $item->children(), 'isChild' => TRUE])
+                @include('layout.menu.menu-items', ['items' => $item->children(), 'isChild' => true])
             </ul>
         @endunless
     </li>
