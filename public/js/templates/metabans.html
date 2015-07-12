@@ -1,4 +1,4 @@
-<div class="nav-tabs-custom">
+<div class="nav-tabs-custom" ng-hide="results.metabans.failed">
     <ul class="nav nav-tabs pull-right">
         <li><a href="javascript://" data-target="#mb-feed" data-toggle="tab" ng-bind="results.metabans.locales.feed"></a></li>
         <li class="active"><a href="javascript://" data-target="#mb-assessments" data-toggle="tab" ng-bind="results.metabans.locales.assessments"></a></li>
@@ -47,3 +47,7 @@
         </div>
     </div>
 </div>
+
+<alert type="error" ng-show="results.metabans.failed">
+    <i class="fa fa-times"></i>&nbsp;Error loading metabans feed.
+</alert>

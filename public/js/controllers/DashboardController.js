@@ -5,6 +5,7 @@ angular.module('bfacp').controller('DashboardController', ['$scope', '$http', '$
             data: []
         },
         metabans: {
+            failed: false,
             feed: {
                 data: []
             },
@@ -68,7 +69,8 @@ angular.module('bfacp').controller('DashboardController', ['$scope', '$http', '$
             $scope.results.metabans.assessments.enforced_bans_total = data.data.assessments.enforced_bans_total;
             $scope.results.metabans.locales = data.data.locales;
         }).error(function(data, status) {
-            if (data.status_code == 500) {
+            if (data.status_code == 500 || data.status_code == 400) {
+                $scope.results.metabans.failed = true;
                 return false;
             }
 
