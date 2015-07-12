@@ -10,25 +10,29 @@ class Elegant extends Model
 {
     /**
      * Validation rules
-     * @var array
+     *
+*@var array
      */
     protected static $rules = [];
 
     /**
      * Custom messages
-     * @var array
+     *
+*@var array
      */
     protected static $messages = [];
 
     /**
      * Validation errors
-     * @var MessageBag
+     *
+*@var MessageBag
      */
     protected $errors = [];
 
     /**
      * Validator instance
-     * @var Validators
+     *
+*@var Validators
      */
     protected $validator;
 
@@ -67,20 +71,21 @@ class Elegant extends Model
     }
 
     /**
-     * Set error message bag
-     * @var MessageBag
-     */
-    protected function setErrors($errors)
-    {
-        $this->errors = $errors;
-    }
-
-    /**
      * Retrieve error message bag
      */
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    /**
+     * Set error message bag
+     *
+     * @var MessageBag
+     */
+    protected function setErrors($errors)
+    {
+        $this->errors = $errors;
     }
 
     /**

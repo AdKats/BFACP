@@ -6,43 +6,50 @@ class Role extends Elegant
 {
     /**
      * Should model handle timestamps
-     * @var boolean
+     *
+*@var boolean
      */
     public $timestamps = false;
 
     /**
      * Table name
-     * @var string
+     *
+*@var string
      */
     protected $table = 'adkats_roles';
 
     /**
      * Table primary key
-     * @var string
+     *
+*@var string
      */
     protected $primaryKey = 'role_id';
 
     /**
      * Fields allowed to be mass assigned
-     * @var array
+     *
+*@var array
      */
     protected $guarded = ['role_id'];
 
     /**
      * Date fields to convert to carbon instances
-     * @var array
+     *
+*@var array
      */
     protected $dates = [];
 
     /**
      * Append custom attributes to output
-     * @var array
+     *
+*@var array
      */
     protected $appends = [];
 
     /**
      * Models to be loaded automaticly
-     * @var array
+     *
+*@var array
      */
     protected $with = [];
 
@@ -56,12 +63,11 @@ class Role extends Elegant
 
     /**
      * Return the power level of the role
+
      *
-     * @param $count
-
-
-*
-*@return int
+*@param $count
+     *
+     * @return int
      */
     public function getPowerLevel($count)
     {

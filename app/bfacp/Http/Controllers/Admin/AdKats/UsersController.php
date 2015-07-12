@@ -60,7 +60,7 @@ class UsersController extends BaseController
     /**
      * Show the editing page
      *
-*@param integer $id User ID
+     * @param integer $id User ID
      */
     public function edit($id)
     {
@@ -84,7 +84,7 @@ class UsersController extends BaseController
     /**
      * Update user
      *
-*@param  integer $id User ID
+     * @param  integer $id User ID
      */
     public function update($id)
     {
@@ -168,10 +168,9 @@ class UsersController extends BaseController
     /**
      * Delete user
      *
-     *@param  integer $id User ID
-
-*
-*@return \Illuminate\Support\Facades\Response
+     * @param  integer $id User ID
+     *
+     * @return \Illuminate\Support\Facades\Response
      */
     public function destroy($id)
     {

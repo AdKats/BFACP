@@ -27,12 +27,11 @@ class PlayersController extends BaseController
 
     /**
      * Get a player by their player database id
+
      *
-     * @param  integer $id
-
-
-*
-*@return \Illuminate\Support\Facades\Response
+*@param  integer $id
+     *
+     * @return \Illuminate\Support\Facades\Response
      */
     public function show($id)
     {
@@ -59,13 +58,10 @@ class PlayersController extends BaseController
 
     /**
      * Gets the players record history
-
-*
-* @param  integer $id
-
-
-*
-*@return \Illuminate\Support\Facades\Response
+     *
+     * @param  integer $id
+     *
+     * @return \Illuminate\Support\Facades\Response
      */
     public function showRecords($id)
     {
@@ -76,13 +72,10 @@ class PlayersController extends BaseController
 
     /**
      * Gets the players chatlogs
-
-*
-*@param  integer $id
-
-
-*
-*@return \Illuminate\Support\Facades\Response
+     *
+     * @param  integer $id
+     *
+     * @return \Illuminate\Support\Facades\Response
      */
     public function showChatlogs($id)
     {

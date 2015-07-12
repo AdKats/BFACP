@@ -6,43 +6,50 @@ class Setting extends Elegant
 {
     /**
      * Should model handle timestamps
-     * @var boolean
+     *
+*@var boolean
      */
     public $timestamps = false;
 
     /**
      * Table name
-     * @var string
+     *
+*@var string
      */
     protected $table = 'adkats_settings';
 
     /**
      * Table primary key
-     * @var string
+     *
+*@var string
      */
     protected $primaryKey = 'server_id';
 
     /**
      * Fields not allowed to be mass assigned
-     * @var array
+     *
+*@var array
      */
     protected $fillable = ['setting_value'];
 
     /**
      * Date fields to convert to carbon instances
-     * @var array
+     *
+*@var array
      */
     protected $dates = [];
 
     /**
      * Append custom attributes to output
-     * @var array
+     *
+*@var array
      */
     protected $appends = [];
 
     /**
      * Models to be loaded automaticly
-     * @var array
+     *
+*@var array
      */
     protected $with = [];
 
@@ -57,10 +64,9 @@ class Setting extends Elegant
     /**
      * Quick way of selecting specific commands
      *
-     * @param $query
+     * @param        $query
      * @param  array $names Command Names
-
-*
+     *
 *@return
      */
     public function scopeSettings($query, $names)
@@ -72,7 +78,7 @@ class Setting extends Elegant
      * Quick way of selecting servers
 
 *
-*@param $query
+*@param              $query
      * @param  array $ids Array of server ids
 
 *
@@ -85,7 +91,9 @@ class Setting extends Elegant
 
     /**
      * Convert value to correct type
-     * @return mixed
+
+     *
+*@return mixed
      */
     public function getSettingValueAttribute()
     {

@@ -11,17 +11,16 @@ class Main extends BaseHelper
 {
     /**
      * Return a JSON response
-     *
-     * @param  array $input
-     * @param  string $message
-     * @param  string $status
+
+*
+*@param  array                $input
+     * @param  string         $message
+     * @param  string         $status
      * @param  integer $httpcode
      * @param  boolean $cached
      * @param  boolean $collectionOnly
-
-
-*
-*@return Response
+     *
+     * @return Response
      */
     public function response(
         $input = [],
@@ -66,7 +65,7 @@ class Main extends BaseHelper
     /**
      * Returns how long the application took to complete
 
-     *
+*
 *@param bool $isPage
      *
      *@return string
@@ -89,68 +88,11 @@ class Main extends BaseHelper
     }
 
     /**
-     * Function to divide two numbers together and catch
-     * divide by zero exception
-
-     *
-*@param  integer $num1
-     * @param  integer $num2
-     * @param  integer $precision
-     *
-*@return float
-     */
-    public function divide($num1 = 0, $num2 = 0, $precision = 2)
-    {
-        try {
-            return round(($num1 / $num2), $precision);
-        } catch (Exception $e) {
-            return 0;
-        }
-    }
-
-    /**
-     * Function to get percentage of two numbers together and
-     * catch divide by zero exception
-
-     *
-*@param  integer $num1
-     * @param  integer $num2
-     * @param  integer $precision
-     *
-*@return float
-     */
-    public function percent($num1 = 0, $num2 = 0, $precision = 2)
-    {
-        try {
-            return round(($num1 / $num2) * 100, $precision);
-        } catch (Exception $e) {
-            return 0;
-        }
-    }
-
-    /**
-     * Allows the ability to call empty on a static class method
-     *
-     * @param  mixed $var
-
-
-*
-*@return boolean
-     */
-    public function isEmpty($var)
-    {
-        return empty($var);
-    }
-
-    /**
      * Convert seconds to a human-readable string
-
-*
-* @param  integer $secs
-     * @param bool $shorthand
-
-
-*
+     *
+     * @param  integer $secs
+     * @param bool     $shorthand
+     *
 *@return string
      * @throws Exception
      * @internal param bool $shorthand Short version time/date string
@@ -254,15 +196,63 @@ class Main extends BaseHelper
     }
 
     /**
+     * Function to divide two numbers together and catch
+     * divide by zero exception
+     *
+     * @param  integer $num1
+     * @param  integer $num2
+     * @param  integer $precision
+     *
+     * @return float
+     */
+    public function divide($num1 = 0, $num2 = 0, $precision = 2)
+    {
+        try {
+            return round(($num1 / $num2), $precision);
+        } catch (Exception $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Function to get percentage of two numbers together and
+     * catch divide by zero exception
+     *
+     * @param  integer $num1
+     * @param  integer $num2
+     * @param  integer $precision
+     *
+     * @return float
+     */
+    public function percent($num1 = 0, $num2 = 0, $precision = 2)
+    {
+        try {
+            return round(($num1 / $num2) * 100, $precision);
+        } catch (Exception $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Allows the ability to call empty on a static class method
+     *
+     * @param  mixed $var
+     *
+     * @return boolean
+     */
+    public function isEmpty($var)
+    {
+        return empty($var);
+    }
+
+    /**
      * Generates the site title
-
-*
-*@param  string $page Page Title
-     * @param  string $clan Use clan name if set
+     *
+     * @param  string  $page  Page Title
+     * @param  string  $clan  Use clan name if set
      * @param  boolean $short If true it will just return without the page title
-
-*
-*@return string
+     *
+     * @return string
      */
     public function getTitle($page, $clan = null, $short = false)
     {
@@ -283,14 +273,11 @@ class Main extends BaseHelper
 
     /**
      * Return country name by code
-
-*
-*@param  string $code Two digit country code
-     * @param bool $list
-
-
-*
-*@return string
+     *
+     * @param  string $code Two digit country code
+     * @param bool    $list
+     *
+     * @return string
      */
     public function countries($code = null, $list = false)
     {
@@ -557,13 +544,11 @@ class Main extends BaseHelper
 
     /**
      * Returns the language name if code is specified
-
-*
-*@param  string $lang Language Code
-     * @param  bool $onlyKeys Only return comma delimited list
-
-*
-*@return mixed        String or Array
+     *
+     * @param  string $lang     Language Code
+     * @param  bool   $onlyKeys Only return comma delimited list
+     *
+     * @return mixed        String or Array
      */
     public function languages($lang = '', $onlyKeys = false)
     {
@@ -767,8 +752,9 @@ class Main extends BaseHelper
 
     /**
      * Returns the correct soldier assigned to user for the correct game.
+
      *
-     * @param  \BFACP\Account\User $user
+*@param  \BFACP\Account\User $user
      * @param  integer $gameID
      *
      * @return Player
@@ -802,11 +788,10 @@ class Main extends BaseHelper
      * Note: the $add_dashes option will increase the length of the password by
      * floor(sqrt(N)) characters.
 
-     *
-*@param  integer $length
+*
+*@param  integer       $length
      * @param  boolean $add_dashes
-     * @param  string $available_sets
-
+     * @param  string  $available_sets
      *
 *@return string
      * @source https://gist.github.com/tylerhall/521810
@@ -885,7 +870,7 @@ class Main extends BaseHelper
      *
 *@param  string $name Exception Level
      *
-*@return string
+     * @return string
      */
     public function alertToBoxClass($name = null)
     {
@@ -915,13 +900,12 @@ class Main extends BaseHelper
     /**
      * Returns files in a directory
 
-     *
-*@param  string $dir Directory Path
+*
+*@param  string  $dir             Directory Path
      * @param  boolean $onlyNames Only return the filename
-     * @param  string $prepend Prepend custom path to use in front of filename
-
+     * @param  string  $prepend   Prepend custom path to use in front of filename
      *
-*@return array
+     *@return array
      */
     public function files($dir, $onlyNames = false, $prepend = null)
     {
@@ -947,9 +931,8 @@ class Main extends BaseHelper
 
      *
 *@param  object $player \BFACP\Battlefield\Player
-
      *
-*@return array
+     * @return array
      */
     public function linkedAccounts($player)
     {

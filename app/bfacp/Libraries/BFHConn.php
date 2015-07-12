@@ -34,9 +34,10 @@ use Illuminate\Support\Facades\Lang;
  * <br /><br />
  * <b>Support:</b><br /><br />
  * http://sf.net/p/bf3conn/support/
- * @author an3k <an3k@users.sf.net>
+ *
+ * @author  an3k <an3k@users.sf.net>
  * @version 0.91b
- * Modified for Battlefield 4 by Prophet of ADKGamers
+ *          Modified for Battlefield 4 by Prophet of ADKGamers
  */
 class BFHConn
 {
@@ -99,6 +100,50 @@ class BFHConn
         }
     }
 
+    private function _openConnection($debug = null)
+    {
+        $connection = false;
+
+        if (function_exists('socket_create') && function_exists('socket_connect') && function_exists('socket_strerror') && function_exists('socket_last_error') && function_exists('socket_set_block') && function_exists('socket_read') && function_exists('socket_write') && function_exists('socket_close')) {
+            $this->_sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+            if (function_exists('socket_set_option')) {
+                socket_set_option($this->_sock, SOL_SOCKET, SO_RCVTIMEO, ['sec' => 5, 'usec' => 0]);
+                socket_set_option($this->_sock, SOL_SOCKET, SO_SNDTIMEO, ['sec' => 5, 'usec' => 0]);
+            }
+
+            @$connection = socket_connect($this->_sock, $this->_serverIP, $this->_serverRconQueryPort);
+            if ($debug == '-d') {
+                echo '[DEBUG]: ' . socket_strerror(socket_last_error()) . ".\n";
+            }
+            if ($connection) {
+                socket_set_block($this->_sock);
+            }
+
+            $this->_sockType = 1;
+        } else {
+            if (function_exists('fsockopen')) {
+                if ($debug == '-d') {
+                    @$this->_sock = fsockopen('tcp://' . $this->_serverIP, $this->_serverRconQueryPort, $errno, $errstr,
+                        10);
+                    if (!$this->_sock) {
+                        echo '[DEBUG]: ' . $errno . ' - ' . $errstr . "\n";
+                    }
+                } else {
+                    @$this->_sock = fsockopen('tcp://' . $this->_serverIP, $this->_serverRconQueryPort);
+                }
+
+                $connection = $this->_sock;
+
+                $this->_sockType = 2;
+            }
+        }
+
+        return $connection;
+    }
+
+    /*-- required methods for communicating with the gameserver --*/
+
     public function __destruct()
     {
         if ($this->_connection) {
@@ -107,7 +152,60 @@ class BFHConn
         }
     }
 
-    /*-- required methods for communicating with the gameserver --*/
+    private function _closeConnection()
+    {
+//      $this->_clientRequest("quit");
+
+        if ($this->_sockType == 1) {
+            socket_close($this->_sock);
+        } else {
+            fclose($this->_sock);
+        }
+
+        $this->_sockType = null;
+    }
+
+    /**
+     * plain text login to gameserver<br />
+     * [ RCON password MUST NOT contain whitespaces!! ]
+     *
+     * @param String
+     *
+     * @return String
+     */
+    public function loginInsecure($rconPassword)
+    {
+        $loginStatus = $this->_array2String($this->_clientRequest('login.plainText ' . $rconPassword), 0);
+
+        if ($loginStatus == $this->_globalVars['defaultServerResponse']) {
+            $this->_isLoggedIn = true;
+            return $loginStatus;
+        } else {
+            return $this->_globalMsg['LOGIN_FAILED'];
+        }
+    }
+
+    private function _array2String($array, $key = 1)
+    {
+        return $array[ $key ];
+    }
+
+    private function _clientRequest($clientRequest)
+    {
+        $data = $this->_encodeClientRequest($clientRequest);
+
+        if ($this->_sockType == 1) {
+            socket_write($this->_sock, $data, strlen($data));
+        } else {
+            fwrite($this->_sock, $data, strlen($data));
+        }
+
+        $receiveBuffer = '';
+        list($packet, $receiveBuffer) = $this->_receivePacket($receiveBuffer);
+        list($isFromServer, $isResponse, $sequence, $requestAnswer) = $this->_decodePacket($packet);
+
+        return $requestAnswer;
+    }
 
     private function _encodeClientRequest($data)
     {
@@ -115,74 +213,6 @@ class BFHConn
         $this->_clientSequenceNr = ($this->_clientSequenceNr + 1) & 0x3fffffff;
 
         return $packet;
-    }
-
-    private function _encodeHeader($isFromServer, $isResponse, $sequence)
-    {
-        $header = $sequence & 0x3fffffff;
-        if ($isFromServer) {
-            $header += 0x80000000;
-        }
-        if ($isResponse) {
-            $header += 0x40000000;
-        }
-
-        return pack('I', $header);
-    }
-
-    private function _decodeHeader($data)
-    {
-        $header = unpack('I', $data);
-
-        return [
-            $header & 0x80000000,
-            $header & 0x40000000,
-            $header & 0x3fffffff,
-        ];
-    }
-
-    private function _encodeInt32($size)
-    {
-        return pack('I', $size);
-    }
-
-    private function _decodeInt32($data)
-    {
-        $decode = unpack('I', $data);
-
-        return $decode[1];
-    }
-
-    private function _encodeWords($words)
-    {
-        $size = 0;
-        $encodedWords = '';
-        foreach ($words as $word) {
-            $strWord = $word;
-            $encodedWords .= $this->_encodeInt32(strlen($strWord));
-            $encodedWords .= $strWord;
-            $encodedWords .= "\x00";
-            $size += strlen($strWord) + 5;
-        }
-
-        return [
-            $size,
-            $encodedWords,
-        ];
-    }
-
-    private function _decodeWords($size, $data)
-    {
-        $numWords = $this->_decodeInt32($data);
-        $offset = 0;
-        while ($offset < $size) {
-            $wordLen = $this->_decodeInt32(substr($data, $offset, 4));
-            $word = substr($data, $offset + 4, $wordLen);
-            $words[] = $word;
-            $offset += $wordLen + 5;
-        }
-
-        return $words;
     }
 
     private function _encodePacket($isFromServer, $isResponse, $sequence, $data)
@@ -451,31 +481,40 @@ class BFHConn
         return $encodedHeader . $encodedSize . $encodedNumWords . $encodedWords;
     }
 
-    private function _decodePacket($data)
+    private function _encodeHeader($isFromServer, $isResponse, $sequence)
     {
-        list($isFromServer, $isResponse, $sequence) = $this->_decodeHeader($data);
-        $wordsSize = $this->_decodeInt32(substr($data, 4, 4)) - 12;
-        $words = $this->_decodeWords($wordsSize, substr($data, 12));
+        $header = $sequence & 0x3fffffff;
+        if ($isFromServer) {
+            $header += 0x80000000;
+        }
+        if ($isResponse) {
+            $header += 0x40000000;
+        }
+
+        return pack('I', $header);
+    }
+
+    private function _encodeWords($words)
+    {
+        $size = 0;
+        $encodedWords = '';
+        foreach ($words as $word) {
+            $strWord = $word;
+            $encodedWords .= $this->_encodeInt32(strlen($strWord));
+            $encodedWords .= $strWord;
+            $encodedWords .= "\x00";
+            $size += strlen($strWord) + 5;
+        }
 
         return [
-            $isFromServer,
-            $isResponse,
-            $sequence,
-            $words,
+            $size,
+            $encodedWords,
         ];
     }
 
-    private function _containsCompletePacket($data)
+    private function _encodeInt32($size)
     {
-        if (strlen($data) < 8) {
-            return false;
-        }
-
-        if (strlen($data) < $this->_decodeInt32(substr($data, 4, 4))) {
-            return false;
-        }
-
-        return true;
+        return pack('I', $size);
     }
 
     private function _receivePacket($receiveBuffer)
@@ -508,146 +547,65 @@ class BFHConn
         ];
     }
 
-    private function _hex_str($hex)
+    private function _containsCompletePacket($data)
     {
-        $string = '';
-        for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
-            $string .= chr(hexdec($hex[ $i ] . $hex[ $i + 1 ]));
-        }
-
-        return $string;
-    }
-
-    private function _bool2String($boolean)
-    {
-        $onOrOff = '';
-        if ($boolean) {
-            $onOrOff = 'true';
-        } else {
-            $onOrOff = 'false';
-        }
-
-        return $onOrOff;
-    }
-
-    private function _array2String($array, $key = 1)
-    {
-        return $array[ $key ];
-    }
-
-    private function _array2boolean($array, $key = 1)
-    {
-        if (isset($array[ $key ]) && $array[ $key ] == 'true') {
-            return true;
-        } else {
+        if (strlen($data) < 8) {
             return false;
         }
+
+        if (strlen($data) < $this->_decodeInt32(substr($data, 4, 4))) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function _decodeInt32($data)
+    {
+        $decode = unpack('I', $data);
+
+        return $decode[1];
+    }
+
+    private function _decodePacket($data)
+    {
+        list($isFromServer, $isResponse, $sequence) = $this->_decodeHeader($data);
+        $wordsSize = $this->_decodeInt32(substr($data, 4, 4)) - 12;
+        $words = $this->_decodeWords($wordsSize, substr($data, 12));
+
+        return [
+            $isFromServer,
+            $isResponse,
+            $sequence,
+            $words,
+        ];
+    }
+
+    private function _decodeHeader($data)
+    {
+        $header = unpack('I', $data);
+
+        return [
+            $header & 0x80000000,
+            $header & 0x40000000,
+            $header & 0x3fffffff,
+        ];
     }
 
     /*-- internal methods --*/
 
-    private function _openConnection($debug = null)
+    private function _decodeWords($size, $data)
     {
-        $connection = false;
-
-        if (function_exists('socket_create') && function_exists('socket_connect') && function_exists('socket_strerror') && function_exists('socket_last_error') && function_exists('socket_set_block') && function_exists('socket_read') && function_exists('socket_write') && function_exists('socket_close')) {
-            $this->_sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-
-            if (function_exists('socket_set_option')) {
-                socket_set_option($this->_sock, SOL_SOCKET, SO_RCVTIMEO, ['sec' => 5, 'usec' => 0]);
-                socket_set_option($this->_sock, SOL_SOCKET, SO_SNDTIMEO, ['sec' => 5, 'usec' => 0]);
-            }
-
-            @$connection = socket_connect($this->_sock, $this->_serverIP, $this->_serverRconQueryPort);
-            if ($debug == '-d') {
-                echo '[DEBUG]: ' . socket_strerror(socket_last_error()) . ".\n";
-            }
-            if ($connection) {
-                socket_set_block($this->_sock);
-            }
-
-            $this->_sockType = 1;
-        } else {
-            if (function_exists('fsockopen')) {
-                if ($debug == '-d') {
-                    @$this->_sock = fsockopen('tcp://' . $this->_serverIP, $this->_serverRconQueryPort, $errno, $errstr,
-                        10);
-                    if (!$this->_sock) {
-                        echo '[DEBUG]: ' . $errno . ' - ' . $errstr . "\n";
-                    }
-                } else {
-                    @$this->_sock = fsockopen('tcp://' . $this->_serverIP, $this->_serverRconQueryPort);
-                }
-
-                $connection = $this->_sock;
-
-                $this->_sockType = 2;
-            }
+        $numWords = $this->_decodeInt32($data);
+        $offset = 0;
+        while ($offset < $size) {
+            $wordLen = $this->_decodeInt32(substr($data, $offset, 4));
+            $word = substr($data, $offset + 4, $wordLen);
+            $words[] = $word;
+            $offset += $wordLen + 5;
         }
 
-        return $connection;
-    }
-
-    private function _closeConnection()
-    {
-//      $this->_clientRequest("quit");
-
-        if ($this->_sockType == 1) {
-            socket_close($this->_sock);
-        } else {
-            fclose($this->_sock);
-        }
-
-        $this->_sockType = null;
-    }
-
-    private function _clientRequest($clientRequest)
-    {
-        $data = $this->_encodeClientRequest($clientRequest);
-
-        if ($this->_sockType == 1) {
-            socket_write($this->_sock, $data, strlen($data));
-        } else {
-            fwrite($this->_sock, $data, strlen($data));
-        }
-
-        $receiveBuffer = '';
-        list($packet, $receiveBuffer) = $this->_receivePacket($receiveBuffer);
-        list($isFromServer, $isResponse, $sequence, $requestAnswer) = $this->_decodePacket($packet);
-
-        return $requestAnswer;
-    }
-
-    /**
-     * returns true if connected to a gameserver, otherwise false
-     * @see isServerOnline()
-     * @return boolean
-     */
-    public function isConnected()
-    {
-        return $this->_connection;
-    }
-
-    /*-- login and logout --*/
-
-    /**
-     * plain text login to gameserver<br />
-     * [ RCON password MUST NOT contain whitespaces!! ]
-     *
-     * @param String
-     *
-     * @return String
-     */
-    public function loginInsecure($rconPassword)
-    {
-        $loginStatus = $this->_array2String($this->_clientRequest('login.plainText ' . $rconPassword), 0);
-
-        if ($loginStatus == $this->_globalVars['defaultServerResponse']) {
-            $this->_isLoggedIn = true;
-            return $loginStatus;
-        } else {
-            return $this->_globalMsg['LOGIN_FAILED'];
-        }
+        return $words;
     }
 
     /**
@@ -675,9 +633,20 @@ class BFHConn
         }
     }
 
+    private function _hex_str($hex)
+    {
+        $string = '';
+        for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
+            $string .= chr(hexdec($hex[ $i ] . $hex[ $i + 1 ]));
+        }
+
+        return $string;
+    }
+
     /**
      * logging out
-     * @return String
+     *
+*@return String
      */
     public function logout()
     {
@@ -685,9 +654,12 @@ class BFHConn
         return $this->_array2String($this->_clientRequest('logout'), 0);
     }
 
+    /*-- login and logout --*/
+
     /**
      * disconnecting from the gameserver
-     * @return String
+     *
+*@return String
      */
     public function quit()
     {
@@ -696,57 +668,12 @@ class BFHConn
 
     /**
      * if logged in with rcon && successful, return true, otherwise false
-     * @return boolean
+     *
+*@return boolean
      */
     public function isLoggedIn()
     {
         return $this->_isLoggedIn;
-    }
-
-    /*-- replacements --*/
-
-    /**
-     * returns the name of the given map<br /><br />
-     * example: getMapName("Levels/MP_002")
-     *
-     * @param String
-     *
-     * @return String name of the given map
-     */
-    public function getMapName($mapURI)
-    {
-        $mapNamesXML = simplexml_load_file($this->_globalVars['mapsFileXML']);
-        $mapName = $this->_globalMsg['MAPNAME_NOT_FOUND'];
-
-        for ($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
-            if (strcasecmp($mapURI, $mapNamesXML->map[ $i ]->attributes()->uri) == 0) {
-                $mapName = $mapNamesXML->map[ $i ]->attributes()->name;
-            }
-        }
-
-        return $mapName;
-    }
-
-    /**
-     * returns the name of the given playmode<br /><br />
-     * example: getPlaymodeName("RUSH")
-     *
-     * @param String
-     *
-     * @return String name of the given playmode
-     */
-    public function getPlaymodeName($playmodeURI)
-    {
-        $playModesXML = simplexml_load_file($this->_globalVars['playmodesFileXML']);
-        $playmodeName = $this->_globalMsg['PLAYMODE_NOT_FOUND'];
-
-        for ($i = 0; $i <= (count($playModesXML->playmode) - 1); $i++) {
-            if ($playmodeURI == $playModesXML->playmode[ $i ]->attributes()->uri) {
-                $playmodeName = $playModesXML->playmode[ $i ]->attributes()->name;
-            }
-        }
-
-        return $playmodeName;
     }
 
     /**
@@ -798,20 +725,34 @@ class BFHConn
         return $teamName;
     }
 
-    /*-- server information --*/
-
     /**
      * returns the server ip as a string
-     * @return String
+     *
+*@return String
      */
     public function getServerIP()
     {
         return $this->_serverIP;
     }
 
+    /*-- replacements --*/
+
+    /**
+     * returns the server name as a string
+     *
+     * @return String
+     */
+    public function getServerName()
+    {
+        $serverInfo = $this->getServerInfo();
+
+        return $this->_array2String($serverInfo);
+    }
+
     /**
      * returns the server information as an array
-     * @return array
+     *
+*@return array
      */
     public function getServerInfo()
     {
@@ -823,29 +764,8 @@ class BFHConn
     }
 
     /**
-     * returns the server name as a string
-     * @return String
-     */
-    public function getServerName()
-    {
-        $serverInfo = $this->getServerInfo();
-
-        return $this->_array2String($serverInfo);
-    }
-
-    /**
-     * returns the current players on server as an integer
-     * @return Integer
-     */
-    public function getCurrentPlayers()
-    {
-        $serverInfo = $this->getServerInfo();
-
-        return (int)$this->_array2String($serverInfo, 2);
-    }
-
-    /**
      * returns the max amount of players allowed on server as an integer
+     *
      * @return Integer
      */
     public function getMaxPlayers()
@@ -856,18 +776,8 @@ class BFHConn
     }
 
     /**
-     * returns the current playmode as a string
-     * @return String
-     */
-    public function getCurrentPlaymode()
-    {
-        $serverInfo = $this->getServerInfo();
-
-        return $this->_array2String($serverInfo, 4);
-    }
-
-    /**
      * returns the current playmode (human readable) as a string
+     *
      * @return String
      */
     public function getCurrentPlaymodeName()
@@ -877,19 +787,46 @@ class BFHConn
         return $this->getPlaymodeName($this->getCurrentPlaymode());
     }
 
+    /*-- server information --*/
+
     /**
-     * returns the current map as a string
-     * @return String
+     * returns the name of the given playmode<br /><br />
+     * example: getPlaymodeName("RUSH")
+     *
+     * @param String
+     *
+     * @return String name of the given playmode
      */
-    public function getCurrentMap()
+    public function getPlaymodeName($playmodeURI)
+    {
+        $playModesXML = simplexml_load_file($this->_globalVars['playmodesFileXML']);
+        $playmodeName = $this->_globalMsg['PLAYMODE_NOT_FOUND'];
+
+        for ($i = 0; $i <= (count($playModesXML->playmode) - 1); $i++) {
+            if ($playmodeURI == $playModesXML->playmode[ $i ]->attributes()->uri) {
+                $playmodeName = $playModesXML->playmode[ $i ]->attributes()->name;
+            }
+        }
+
+        return $playmodeName;
+    }
+
+    /**
+     * returns the current playmode as a string
+
+     *
+*@return String
+     */
+    public function getCurrentPlaymode()
     {
         $serverInfo = $this->getServerInfo();
 
-        return $this->_array2String($serverInfo, 5);
+        return $this->_array2String($serverInfo, 4);
     }
 
     /**
      * returns the current map (human readable) as a string
+     *
      * @return String
      */
     public function getCurrentMapName()
@@ -900,16 +837,43 @@ class BFHConn
     }
 
     /**
-     * returns the server version as an array
-     * @return array
+     * returns the name of the given map<br /><br />
+     * example: getMapName("Levels/MP_002")
+     *
+     * @param String
+     *
+     * @return String name of the given map
      */
-    public function getVersion()
+    public function getMapName($mapURI)
     {
-        return $this->_clientRequest('version');
+        $mapNamesXML = simplexml_load_file($this->_globalVars['mapsFileXML']);
+        $mapName = $this->_globalMsg['MAPNAME_NOT_FOUND'];
+
+        for ($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
+            if (strcasecmp($mapURI, $mapNamesXML->map[ $i ]->attributes()->uri) == 0) {
+                $mapName = $mapNamesXML->map[ $i ]->attributes()->name;
+            }
+        }
+
+        return $mapName;
+    }
+
+    /**
+     * returns the current map as a string
+
+     *
+*@return String
+     */
+    public function getCurrentMap()
+    {
+        $serverInfo = $this->getServerInfo();
+
+        return $this->_array2String($serverInfo, 5);
     }
 
     /**
      * returns the build-id of the game
+     *
      * @return Integer
      */
     public function getVersionID()
@@ -918,8 +882,21 @@ class BFHConn
     }
 
     /**
+     * returns the server version as an array
+
+     *
+*@return array
+     */
+    public function getVersion()
+    {
+        return $this->_clientRequest('version');
+    }
+
+    /**
      * returns the game type currently running
-     * @return String
+
+     *
+*@return String
      */
     public function getGameType()
     {
@@ -928,7 +905,9 @@ class BFHConn
 
     /**
      * returns the current round of the game
-     * @return Integer
+
+     *
+*@return Integer
      */
     public function getCurrentGameRound()
     {
@@ -937,7 +916,9 @@ class BFHConn
 
     /**
      * returns the max amount of rounds of the current game
-     * @return Integer
+
+     *
+*@return Integer
      */
     public function getGameMaxRounds()
     {
@@ -947,7 +928,9 @@ class BFHConn
     /**
      * returns the current teamscores
      * FFIXX doesn't work yet
-     * @return Integer
+
+     *
+*@return Integer
      */
     public function getTeamScores()
     {
@@ -957,7 +940,9 @@ class BFHConn
     /**
      * returns the current online state of the gameserver
      * FFIXX doesn't work with the current bf3 server release
-     * @return String
+
+     *
+*@return String
      */
     public function getOnlineState()
     {
@@ -965,23 +950,9 @@ class BFHConn
     }
 
     /**
-     * returns list of all players on the server, but with zeroed out GUIDs
-     * @return array
-     */
-    public function getPlayerlist()
-    {
-        if ($this->_playerdata == null || !$this->_globalVars['cachingEnabled']) {
-            $this->_playerdata = $this->_clientRequest('listPlayers all');
-        }
-
-        return $this->_playerdata;
-    }
-
-    /**
      * returns list of all players on the server with the team specified, but with zeroed out GUIDs
-
      *
-*@param string $team
+     * @param string $team
      *
 *@return array
      */
@@ -998,7 +969,9 @@ class BFHConn
 
     /**
      * returns list of all playernames on server (useful for other functions)
-     * @return array
+
+     *
+*@return array
      */
     public function getPlayerlistNames()
     {
@@ -1018,27 +991,36 @@ class BFHConn
     }
 
     /**
-     * TODO: check for caching if playername = all
-     * returns gamedata of given playername with zeroed out GUID
-     *
-     * @param String (if not set, all players will be listed)
+     * returns list of all players on the server, but with zeroed out GUIDs
      *
      * @return array
      */
-    public function getPlayerdata($playerName = '')
+    public function getPlayerlist()
     {
-        if (!isset($playerName) || $playerName == '') {
-            $playerName = 'all';
-        } else {
-            $playerName = 'player ' . $playerName;
+        if ($this->_playerdata == null || !$this->_globalVars['cachingEnabled']) {
+            $this->_playerdata = $this->_clientRequest('listPlayers all');
         }
 
-        return $this->_clientRequest('listPlayers ' . $playerName);
+        return $this->_playerdata;
+    }
+
+    /**
+     * returns the current players on server as an integer
+     *
+     * @return Integer
+     */
+    public function getCurrentPlayers()
+    {
+        $serverInfo = $this->getServerInfo();
+
+        return (int)$this->_array2String($serverInfo, 2);
     }
 
     /**
      * returns true if server is available, otherwise false
-     * @see isConnected()
+
+     *
+*@see isConnected()
      * @return boolean
      */
     public function isServerOnline()
@@ -1046,11 +1028,22 @@ class BFHConn
         return $this->isConnected();
     }
 
-    /*-- admin server information --*/
+    /**
+     * returns true if connected to a gameserver, otherwise false
+     *
+     * @see isServerOnline()
+     * @return boolean
+     */
+    public function isConnected()
+    {
+        return $this->_connection;
+    }
 
     /**
      * returns the gamepassword as a string
-     * @return String
+
+     *
+*@return String
      */
     public function adminVarGetGamepassword()
     {
@@ -1059,7 +1052,9 @@ class BFHConn
 
     /**
      * gets the full gamedata of all players on the gameserver
-     * @return array
+
+     *
+*@return array
      */
     public function adminGetPlayerlist()
     {
@@ -1071,26 +1066,8 @@ class BFHConn
     }
 
     /**
-     * gets the gamedata of a given playername on the gameserver
-     * TODO: check for playerNotFound
-     *
-     * @param String (optional) - if not set, all players will be listed
-     *
-     * @return array
-     */
-    public function adminGetPlayerdata($playerName = '')
-    {
-        if (!isset($playerName) || $playerName == '') {
-            $playerName = 'all';
-        } else {
-            $playerName = 'player ' . $playerName;
-        }
-
-        return $this->_clientRequest('admin.listPlayers ' . $playerName);
-    }
-
-    /**
      * returns all commands available on the server - requires login
+     *
      * @return array
      */
     public function adminGetAllCommands()
@@ -1098,14 +1075,27 @@ class BFHConn
         return $this->_clientRequest('serverInfo');
     }
 
+    /*-- admin server information --*/
+
     /**
      * returns true/false, if server events are enabled in this connection or
      * not
-     * @return array
+
+     *
+*@return array
      */
     public function adminEventsEnabledStatusGet()
     {
         return $this->_array2boolean($this->_clientRequest('admin.eventsEnabled'));
+    }
+
+    private function _array2boolean($array, $key = 1)
+    {
+        if (isset($array[ $key ]) && $array[ $key ] == 'true') {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -1119,6 +1109,18 @@ class BFHConn
     public function adminEventsEnabledStatusSet($boolean)
     {
         return $this->_clientRequest('admin.eventsEnabled ' . $this->_bool2String($boolean));
+    }
+
+    private function _bool2String($boolean)
+    {
+        $onOrOff = '';
+        if ($boolean) {
+            $onOrOff = 'true';
+        } else {
+            $onOrOff = 'false';
+        }
+
+        return $onOrOff;
     }
 
     /**
@@ -1139,9 +1141,30 @@ class BFHConn
     }
 
     /**
-     * returns the playername of a given playername
+     * TODO: check for caching if playername = all
+     * returns gamedata of given playername with zeroed out GUID
      *
-     * @param String
+     * @param String (if not set, all players will be listed)
+
+*
+*@return array
+     */
+    public function getPlayerdata($playerName = '')
+    {
+        if (!isset($playerName) || $playerName == '') {
+            $playerName = 'all';
+        } else {
+            $playerName = 'player ' . $playerName;
+        }
+
+        return $this->_clientRequest('listPlayers ' . $playerName);
+    }
+
+    /**
+     * returns the playername of a given playername
+
+*
+*@param String
      *
      * @return String
      */
@@ -1153,40 +1176,6 @@ class BFHConn
         }
 
         return $this->_array2String($playerInfo, 13);
-    }
-
-    /**
-     * returns the teamid of a given playername
-     *
-     * @param String
-     *
-     * @return Integer
-     */
-    public function getPlayerTeamID($playerName)
-    {
-        $playerInfo = $this->getPlayerdata($playerName);
-        if (!isset($playerInfo[15])) {
-            return $this->_globalMsg['PLAYER_NOT_FOUND'];
-        }
-
-        return (int)$this->_array2String($playerInfo, 15);
-    }
-
-    /**
-     * returns the squadid of a given playername
-     *
-     * @param String
-     *
-     * @return Integer
-     */
-    public function getPlayerSquadID($playerName)
-    {
-        $playerInfo = $this->getPlayerdata($playerName);
-        if (!isset($playerInfo[16])) {
-            return $this->_globalMsg['PLAYER_NOT_FOUND'];
-        }
-
-        return (int)$this->_array2String($playerInfo, 16);
     }
 
     /**
@@ -1257,21 +1246,21 @@ class BFHConn
         return (int)$this->_array2String($playerInfo, 21);
     }
 
-    /*-- admin commands --*/
-
     /**
      * sends an admin-yell message to a specified player (or all)<br />
      * example: adminYellMessage("Storm the front!", "JLNNN") - send the message to player "JLNNN"
      * TODO: Need fix for sending messages to squads
      * TODO: Cut strings with length more than 100 chars
-     *
-     * @param String
-     * @param String (optional) - if not set, message will be sent to all
-     * players
+
+*
+*@param String
+     * @param String  (optional) - if not set, message will be sent to all
+     *                players
      * @param Integer (optional) - amount of time the message will be displayed,
-     * must be 1-60
-     *
-     * @return String
+     *                must be 1-60
+
+*
+*@return String
      */
     public function adminYellMessage($text, $playerName = '{%all%}', $durationInMS = 10)
     {
@@ -1291,11 +1280,12 @@ class BFHConn
      * sends an admin-yell message to a specified team<br />
      * example: adminYellMessageToTeam("Storm the front!", 1) - send the message to teamID 1
      * TODO: Cut strings with length more than 100 chars
+
      *
-     * @param String
+*@param String
      * @param Integer
      * @param Integer (optional) - amount of time the message will be displayed,
-     * must be 1-60
+     *                must be 1-60
      *
      * @return String
      */
@@ -1321,6 +1311,8 @@ class BFHConn
     {
         return $this->_array2String($this->_clientRequest('admin.say ' . $text . ' {%player%} ' . $playerName), 0);
     }
+
+    /*-- admin commands --*/
 
     /**
      * sends a chat mesage to a team. the message must be less than 100 characters long.
@@ -1349,7 +1341,9 @@ class BFHConn
 
     /**
      * runs the next level on maplist
-     * @return String
+
+     *
+*@return String
      */
     public function adminRunNextLevel()
     {
@@ -1357,19 +1351,8 @@ class BFHConn
     }
 
     /**
-     * TODO: planned feature adminSetNextLevel() ?
-     * sets the next level to play
-     *
-     * @param String
-     *
-     * @return String
-     */
-    //function adminSetNextLevel($mapURI) {
-    //
-    //}
-
-    /**
      * restarts the current level
+     *
      * @return String
      */
     public function adminRestartMap()
@@ -1392,7 +1375,9 @@ class BFHConn
 
     /**
      * returns all available playmodes on server
-     * @return array
+
+     *
+* @return array
      */
     public function adminGetPlaylists()
     {
@@ -1400,7 +1385,21 @@ class BFHConn
     }
 
     /**
+     * TODO: planned feature adminSetNextLevel() ?
+     * sets the next level to play
+     *
+     * @param String
+     *
+     * @return String
+     */
+    //function adminSetNextLevel($mapURI) {
+    //
+    //}
+
+    /**
      * returns current playmode on server
+
+     *
      * @see getCurrentPlaymode()
      * @return String
      */
@@ -1411,6 +1410,8 @@ class BFHConn
 
     /**
      * loads the maplist
+
+     *
      * @see adminMaplistList()
      * @return array
      */
@@ -1421,6 +1422,8 @@ class BFHConn
 
     /**
      * saves the current maplist to file
+
+     *
      * @return String
      */
     public function adminMaplistSave()
@@ -1430,6 +1433,7 @@ class BFHConn
 
     /**
      * returns the maplist from map file
+     *
      * @return array
      */
     public function adminMaplistList()
@@ -1439,6 +1443,7 @@ class BFHConn
 
     /**
      * clears the maplist file
+     *
      * @return String
      */
     public function adminMaplistClear()
@@ -1473,6 +1478,7 @@ class BFHConn
 
     /**
      * gets index of next map to be run
+     *
      * @return Integer
      */
     public function adminMaplistGetNextMapIndex()
@@ -1585,10 +1591,12 @@ class BFHConn
      * TODO: ban for xx seconds
      * TODO: banreason
 
-     *
-*@param String
+*
+*@param           String
      * @param int $timerange
-     *
+
+
+*
 *@return String
      */
     public function adminBanAddPlayerGUID($playerName, $timerange = 2)
@@ -1602,7 +1610,45 @@ class BFHConn
     }
 
     /**
+     * returns the GUID of a given playername
+     *
+     * @param String
+     *
+     * @return String
+     */
+    public function adminGetPlayerGUID($playerName)
+    {
+        $playerInfo = $this->adminGetPlayerdata($playerName);
+        if (!isset($playerInfo[14])) {
+            return $this->_globalMsg['PLAYER_NOT_FOUND'];
+        }
+
+        return $this->_array2String($playerInfo, 14);
+    }
+
+    /**
+     * gets the gamedata of a given playername on the gameserver
+     * TODO: check for playerNotFound
+     *
+     * @param String (optional) - if not set, all players will be listed
+     *
+     * @return array
+     */
+    public function adminGetPlayerdata($playerName = '')
+    {
+        if (!isset($playerName) || $playerName == '') {
+            $playerName = 'all';
+        } else {
+            $playerName = 'player ' . $playerName;
+        }
+
+        return $this->_clientRequest('admin.listPlayers ' . $playerName);
+    }
+
+    /**
      * saves the current banlist to banlist file
+
+     *
      * @return String
      */
     public function adminBanlistSave()
@@ -1612,6 +1658,7 @@ class BFHConn
 
     /**
      * loads the banlist from banlist file
+     *
      * @return String
      */
     public function adminBanlistLoad()
@@ -1657,6 +1704,7 @@ class BFHConn
 
     /**
      * clears all bans from playername banlist
+     *
      * @return String
      */
     public function adminBanlistClear()
@@ -1667,10 +1715,10 @@ class BFHConn
     /**
      * lists all bans from banlist
 
-     *
+*
 *@param string $offset
      *
-*@return array
+     * @return array
      */
     public function adminBanlistList($offset = '0')
     {
@@ -1680,7 +1728,9 @@ class BFHConn
     /**
      * loads the file containing all reserved slots<br />
      * [ I don't know if this function is useful.. ]
-     * @return String
+
+     *
+* @return String
      */
     public function adminReservedSlotsLoad()
     {
@@ -1689,6 +1739,8 @@ class BFHConn
 
     /**
      * saves made changes to reserved slots file
+
+     *
      * @return String
      */
     public function adminReservedSlotsSave()
@@ -1722,6 +1774,8 @@ class BFHConn
 
     /**
      * clears the file containing all reserved slots
+
+     *
      * @return String
      */
     public function adminReservedSlotsClear()
@@ -1731,28 +1785,13 @@ class BFHConn
 
     /**
      * lists all playernames in reserved slots file
+
+     *
      * @return array
      */
     public function adminReservedSlotsList()
     {
         return $this->_clientRequest('reservedSlotsList.list');
-    }
-
-    /**
-     * returns the GUID of a given playername
-     *
-     * @param String
-     *
-     * @return String
-     */
-    public function adminGetPlayerGUID($playerName)
-    {
-        $playerInfo = $this->adminGetPlayerdata($playerName);
-        if (!isset($playerInfo[14])) {
-            return $this->_globalMsg['PLAYER_NOT_FOUND'];
-        }
-
-        return $this->_array2String($playerInfo, 14);
     }
 
     /**
@@ -1794,6 +1833,23 @@ class BFHConn
     }
 
     /**
+     * returns the teamid of a given playername
+     *
+     * @param String
+     *
+     * @return Integer
+     */
+    public function getPlayerTeamID($playerName)
+    {
+        $playerInfo = $this->getPlayerdata($playerName);
+        if (!isset($playerInfo[15])) {
+            return $this->_globalMsg['PLAYER_NOT_FOUND'];
+        }
+
+        return (int)$this->_array2String($playerInfo, 15);
+    }
+
+    /**
      * moves the given player to another specific squad<br />
      * if $forceKill is true, the player will be killed<br />
      * [ Works only if the player is dead! Otherwise $forceKill has to be true! ]
@@ -1820,11 +1876,9 @@ class BFHConn
     /**
      * Gives player leader of their current squad
      *
-*@param  string $playerName
-
-
-*
-*@return string
+     * @param  string $playerName
+     *
+     * @return string
      */
     public function adminSquadLeader($playerName)
     {
@@ -1836,14 +1890,29 @@ class BFHConn
     }
 
     /**
+     * returns the squadid of a given playername
+     *
+     * @param String
+     *
+     * @return Integer
+     */
+    public function getPlayerSquadID($playerName)
+    {
+        $playerInfo = $this->getPlayerdata($playerName);
+        if (!isset($playerInfo[16])) {
+            return $this->_globalMsg['PLAYER_NOT_FOUND'];
+        }
+
+        return (int)$this->_array2String($playerInfo, 16);
+    }
+
+    /**
      * Checks if the squad is locked
      *
      * @param  integer $teamID
      * @param  integer $squadID
-
-
-*
-*@return boolean
+     *
+     * @return boolean
      */
     public function adminGetSquadPrivate($teamID, $squadID)
     {
@@ -1852,15 +1921,12 @@ class BFHConn
 
     /**
      * Set the squad to private or not
-
-*
-* @param  integer $teamID
+     *
+     * @param  integer $teamID
      * @param  integer $squadID
      * @param  boolean $private
-
-
-*
-*@return boolean
+     *
+     * @return boolean
      */
     public function adminSetSquadPrivate($teamID, $squadID, $private = true)
     {
@@ -1869,13 +1935,10 @@ class BFHConn
 
     /**
      * Get all squads that have players in them on a specific team
-
-*
-*@param  integer $teamID
-
-
-*
-*@return array
+     *
+     * @param  integer $teamID
+     *
+     * @return array
      */
     public function adminSquadListActive($teamID)
     {
@@ -1886,7 +1949,7 @@ class BFHConn
      * Get player count and names of soldiers in a specific squad
 
 *
-*@param  integer $teamID
+*@param  integer       $teamID
      * @param  integer $squadID
 
 
@@ -1926,7 +1989,9 @@ class BFHConn
 
     /**
      * gets true/false, if 3d spotting is enabled or not
-     * @return boolean
+
+     *
+* @return boolean
      */
     public function adminVarGet3dSpotting()
     {
@@ -1947,6 +2012,8 @@ class BFHConn
 
     /**
      * gets true/false, if 3rd person vehicle cam is enabled or not
+
+     *
      * @return boolean
      */
     public function adminVarGet3rdPersonVehiCam()
@@ -1969,6 +2036,8 @@ class BFHConn
 
     /**
      * gets true/false, if all unlocks are available or not
+
+     *
      * @return boolean
      */
     public function adminVarGetAllUnlocksUnlocked()
@@ -1990,6 +2059,8 @@ class BFHConn
 
     /**
      * gets true/false, if teambalance is enabled or not
+
+     *
      * @return boolean
      */
     public function adminVarGetTeambalance()
@@ -2011,6 +2082,7 @@ class BFHConn
 
     /**
      * gets the bullet damage modifier
+     *
      * @return Integer
      */
     public function adminVarGetbulletDamageModifier()
@@ -2032,6 +2104,7 @@ class BFHConn
 
     /**
      * gets true/false, if crosshair is enabled or not
+     *
      * @return boolean
      */
     public function adminVarGetCrosshair()
@@ -2053,6 +2126,7 @@ class BFHConn
 
     /**
      * gets true/false, if friendly fire is enabled or not
+     *
      * @return boolean
      */
     public function adminVarGetFriendlyFire()
@@ -2088,7 +2162,8 @@ class BFHConn
 
     /**
      * gets true/false, if hud is enabled or not
-     * @return boolean
+     *
+     *@return boolean
      */
     public function adminVarGetHud()
     {
@@ -2109,7 +2184,8 @@ class BFHConn
 
     /**
      * gets the current idle time allowed
-     * @return Integer
+     *
+     *@return Integer
      */
     public function adminVarGetIdleTimeout()
     {
@@ -2131,7 +2207,8 @@ class BFHConn
 
     /**
      * gets the number of rounds a player who is kicked for idle is banned
-     * @return Integer
+     *
+     *@return Integer
      */
     public function adminVarGetidleBanRounds()
     {
@@ -2152,7 +2229,8 @@ class BFHConn
 
     /**
      * gets true/false, if killcam is enabled or not
-     * @return boolean
+     *
+*@return boolean
      */
     public function adminVarGetKillCam()
     {
@@ -2173,7 +2251,8 @@ class BFHConn
 
     /**
      * gets true/false, if minimap is enabled or not
-     * @return boolean
+     *
+*@return boolean
      */
     public function adminVarGetMiniMap()
     {
@@ -2194,7 +2273,8 @@ class BFHConn
 
     /**
      * gets true/false, if minimap spotting is enabled or not
-     * @return boolean
+     *
+*@return boolean
      */
     public function adminVarGetMiniMapSpotting()
     {
@@ -2215,7 +2295,8 @@ class BFHConn
 
     /**
      * gets true/false, if nametag is enabled or not
-     * @return boolean
+     *
+*@return boolean
      */
     public function adminVarGetNameTag()
     {
@@ -2237,7 +2318,8 @@ class BFHConn
 
     /**
      * gets true/false, if onlySquadLeaderSpawn is enabled or not
-     * @return boolean
+     *
+*@return boolean
      */
     public function adminVarGetOnlySquadLeaderSpawn()
     {
@@ -2258,7 +2340,8 @@ class BFHConn
 
     /**
      * gets the man down time modifier
-     * @return Integer
+     *
+*@return Integer
      */
     public function adminVarGetPlayerManDownTimeModifier()
     {
@@ -2279,7 +2362,8 @@ class BFHConn
 
     /**
      * gets the respawn time modifier
-     * @return Integer
+     *
+*@return Integer
      */
     public function adminVarGetPlayerRespawnTimeModifier()
     {
@@ -2289,7 +2373,8 @@ class BFHConn
     /**
      * gets true/false, if punkbuster is enabled or not
      * FFIXX Only works for Rush right now
-     * @return boolean
+     *
+*@return boolean
      */
     public function adminVarGetPunkbuster()
     {
@@ -2301,7 +2386,8 @@ class BFHConn
     /**
      * gets true/false if ranked server settings are enabled or not
      * FFIXX Only works for Rush right now
-     * @return boolean
+     *
+*@return boolean
      */
     public function adminVarGetRanked()
     {
@@ -2324,7 +2410,8 @@ class BFHConn
 
     /**
      * gets true/false, if health regeneration is enabled or not
-     * @return boolean
+     *
+*@return boolean
      */
     public function adminVarGetRegenerateHealth()
     {
@@ -2345,7 +2432,8 @@ class BFHConn
 
     /**
      * gets how many players are required to begin a round
-     * @return String
+     *
+*@return String
      */
     public function adminVarGetRoundStartPlayerCount()
     {
@@ -2366,7 +2454,8 @@ class BFHConn
 
     /**
      * gets at how many players the server switches to pre-round
-     * @return String
+     *
+*@return String
      */
     public function adminVarGetRoundRestartPlayerCount()
     {
@@ -2390,7 +2479,8 @@ class BFHConn
 
     /**
      * gets the server description
-     * @return String
+     *
+*@return String
      */
     public function adminVarGetServerDescription()
     {
@@ -2411,12 +2501,10 @@ class BFHConn
 
     /**
      * sets the soldier health modifier in %
-
      *
-*@param $integer
-
+     * @param $integer
      *
-*@return String
+     * @return String
      * @internal param $soldierHealthInteger
      */
     public function adminVarSetSoldierHealthModifier($integer)
@@ -2426,7 +2514,8 @@ class BFHConn
 
     /**
      * gets the soldier health modifier
-     * @return Integer
+     *
+*@return Integer
      */
     public function adminVarGetSoldierHealthModifier()
     {
@@ -2449,7 +2538,8 @@ class BFHConn
 
     /**
      * gets the number of teamkills allowed during one round
-     * @return Integer
+     *
+*@return Integer
      */
     public function adminVarGetTeamKillCountForKick()
     {
@@ -2472,7 +2562,8 @@ class BFHConn
 
     /**
      * gets the highest kill-value allowed before a player is kicked for teamkilling
-     * @return Integer
+     *
+*@return Integer
      */
     public function adminVarGetTeamKillValueForKick()
     {
@@ -2494,7 +2585,8 @@ class BFHConn
 
     /**
      * gets the value of a teamkill
-     * @return Integer
+     *
+*@return Integer
      */
     public function adminVarGetTeamKillValueIncrease()
     {
@@ -2516,7 +2608,8 @@ class BFHConn
 
     /**
      * gets the decrease value
-     * @return Integer
+     *
+*@return Integer
      */
     public function adminVarGetTeamKillValueDecreasePerSecond()
     {
@@ -2537,7 +2630,8 @@ class BFHConn
 
     /**
      * gets the number of teamkill-kicks allowed
-     * @return Integer
+     *
+*@return Integer
      */
     public function adminVarGetTeamKillKickForBan()
     {
@@ -2559,7 +2653,9 @@ class BFHConn
 
     /**
      * gets true/false, if vehicle spawn is enabled or not
-     * @return boolean
+
+     *
+*@return boolean
      */
     public function adminVarGetVehicleSpawnAllowed()
     {
@@ -2568,12 +2664,10 @@ class BFHConn
 
     /**
      * sets the vehicle spawn modifier in %
-
      *
-*@param $integer
-
+     * @param $integer
      *
-*@return String
+     * @return String
      * @internal param $vehicleSpawnDelayInteger
      */
     public function adminVarSetVehicleSpawnDelayModifier($integer)
@@ -2583,7 +2677,8 @@ class BFHConn
 
     /**
      * gets the soldier health modifier
-     * @return Integer
+     *
+*@return Integer
      */
     public function adminVarGetVehicleSpawnDelayModifier()
     {
@@ -2592,7 +2687,8 @@ class BFHConn
 
     /**
      * gets the server type: Official, Ranked, Unranked or Private
-     * @return String
+     *
+*@return String
      */
     public function adminVarGetServerType()
     {
@@ -2601,7 +2697,8 @@ class BFHConn
 
     /**
      * gets true/false, if server is noob only. If true, only players with rank <= 10 can join
-     * @return boolean
+     *
+*@return boolean
      */
     public function adminVarGetNoobJoin()
     {
@@ -2610,12 +2707,10 @@ class BFHConn
 
     /**
      * gets the team name by there faction id
-
-*
-*@param  integer $integer Team ID
-
-*
-*@return array
+     *
+     * @param  integer $integer Team ID
+     *
+     * @return array
      */
     public function adminVarGetTeamFaction($integer)
     {
@@ -2635,7 +2730,9 @@ class BFHConn
 
     /**
      * gets scale factor for number of tickets to end round, in percent
-     * @return integer
+
+     *
+*@return integer
      */
     public function adminVarGetGameModeCounter()
     {
@@ -2649,11 +2746,10 @@ class BFHConn
 
     /**
      * Tabulates a result containing columns and rows
-
      *
-*@param  array $res
+     * @param  array $res
      *
-*@return array
+     * @return array
      */
     public function tabulate($res)
     {

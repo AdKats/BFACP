@@ -21,12 +21,11 @@ class ServersController extends BaseController
 {
     /**
      * Gathers the population for all servers
+
      *
-     * @param $id
-
-
-*
-*@return array
+*@param $id
+     *
+     * @return array
      */
     public function chat($id)
     {
@@ -47,7 +46,8 @@ class ServersController extends BaseController
 
     /**
      * Live Scoreboard
-     * @return array
+     *
+*@return array
      * @internal param int $id Server ID
      */
     public function population()
@@ -387,13 +387,11 @@ class ServersController extends BaseController
 
     /**
      * Quick function for checking permissions for the scoreboard admin.
-
-*
-* @param  string $permission Name of the permission
-     * @param  string $message [description]
-
-*
-*@return boolean             [description]
+     *
+     * @param  string $permission Name of the permission
+     * @param  string $message    [description]
+     *
+     * @return boolean             [description]
      */
     private function hasPermission($permission, $message = 'You do have permission to issue this command')
     {

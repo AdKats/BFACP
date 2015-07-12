@@ -18,25 +18,29 @@ class ScoreboardController extends BaseController
 
     /**
      * \BFACP\Repositories\Scoreboard\LiveServerRepository
-     * @var null
+     *
+*@var null
      */
     protected $repository = null;
 
     /**
      * \BFACP\Battlefield\Server
-     * @var null
+     *
+*@var null
      */
     protected $server = null;
 
     /**
      * List of player names
-     * @var array
+     *
+*@var array
      */
     protected $players = [];
 
     /**
      * Errors list
-     * @var array
+     *
+*@var array
      */
     protected $errors = [];
 
@@ -78,6 +82,24 @@ class ScoreboardController extends BaseController
     }
 
     /**
+     * Wrapper for \BFACP\Facades\Main
+     *
+     * @param  array  $data
+     * @param  string $message
+     * @param  string $type
+     *
+     * @return \BFACP\Facades\Main
+     */
+    private function _response($data = null, $message = null, $type = null)
+    {
+        if (!empty($this->errors)) {
+            return MainHelper::response($this->errors, self::COMPLETE_WITH_ERRORS, null, null, false, true);
+        }
+
+        return MainHelper::response($data, $message, $type, null, false, true);
+    }
+
+    /**
      * Sends a yell to the entire server, team, or selected player(s).
      */
     public function anyYell()
@@ -99,6 +121,25 @@ class ScoreboardController extends BaseController
         }
 
         return $this->_response();
+    }
+
+    /**
+     * Quick function for checking permissions for the scoreboard admin.
+     *
+     * @param  string $permission Name of the permission
+     * @param  string $message
+     *
+     * @return boolean
+     */
+    private function hasPermission(
+        $permission,
+        $message = 'Access Denied! You do have permission to issue this command.'
+    ) {
+        if (!$this->user->ability(null, $permission)) {
+            throw new AccessDeniedHttpException($message);
+        }
+
+        return true;
     }
 
     /**
@@ -210,47 +251,5 @@ class ScoreboardController extends BaseController
         }
 
         return $this->_response();
-    }
-
-    /**
-     * Wrapper for \BFACP\Facades\Main
-     *
-     * @param  array $data
-     * @param  string $message
-     * @param  string $type
-
-
-*
-*@return \BFACP\Facades\Main
-     */
-    private function _response($data = null, $message = null, $type = null)
-    {
-        if (!empty($this->errors)) {
-            return MainHelper::response($this->errors, self::COMPLETE_WITH_ERRORS, null, null, false, true);
-        }
-
-        return MainHelper::response($data, $message, $type, null, false, true);
-    }
-
-    /**
-     * Quick function for checking permissions for the scoreboard admin.
-
-*
-* @param  string $permission Name of the permission
-     * @param  string $message
-
-
-*
-*@return boolean
-     */
-    private function hasPermission(
-        $permission,
-        $message = 'Access Denied! You do have permission to issue this command.'
-    ) {
-        if (!$this->user->ability(null, $permission)) {
-            throw new AccessDeniedHttpException($message);
-        }
-
-        return true;
     }
 }

@@ -7,37 +7,43 @@ class Ban extends Elegant
 {
     /**
      * Should model handle timestamps
-     * @var boolean
+     *
+*@var boolean
      */
     public $timestamps = false;
 
     /**
      * Table name
-     * @var string
+     *
+*@var string
      */
     protected $table = 'adkats_bans';
 
     /**
      * Table primary key
-     * @var string
+     *
+*@var string
      */
     protected $primaryKey = 'ban_id';
 
     /**
      * Fields not allowed to be mass assigned
-     * @var array
+     *
+*@var array
      */
     protected $guarded = ['ban_id', 'ban_sync'];
 
     /**
      * Date fields to convert to carbon instances
-     * @var array
+     *
+*@var array
      */
     protected $dates = ['ban_startTime', 'ban_endTime'];
 
     /**
      * Append custom attributes to output
-     * @var array
+     *
+*@var array
      */
     protected $appends = [
         'is_active',
@@ -53,7 +59,8 @@ class Ban extends Elegant
 
     /**
      * Models to be loaded automaticly
-     * @var array
+     *
+*@var array
      */
     protected $with = [];
 
@@ -76,12 +83,10 @@ class Ban extends Elegant
     /**
      * Gets the latest bans that are in effect
      *
-     * @param  object $query
+     * @param  object  $query
      * @param  integer $limit
-
-
-*
-*@return \Illuminate\Database\Eloquent\Model
+     *
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function scopeLatest($query, $limit = 60)
     {
@@ -90,13 +95,10 @@ class Ban extends Elegant
 
     /**
      * Gets the bans done yesterday (UTC)
-
-*
-* @param  object $query
-
-
-*
-*@return \Illuminate\Database\Eloquent\Model
+     *
+     * @param  object $query
+     *
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function scopeYesterday($query)
     {
@@ -105,15 +107,12 @@ class Ban extends Elegant
 
     /**
      * Get the bans that the player ids have done
-
-*
-*@param  object $query
-     * @param  array $playerIds
+     *
+     * @param  object  $query
+     * @param  array   $playerIds
      * @param  integer $limit
-
-
-*
-*@return \Illuminate\Database\Eloquent\Model
+     *
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function scopePersonal($query, $playerIds = [], $limit = 30)
     {
@@ -147,7 +146,8 @@ class Ban extends Elegant
 
     /**
      * Is ban enforced by name
-     * @return bool
+     *
+*@return bool
      */
     public function getBanEnforceNameAttribute()
     {
@@ -156,7 +156,8 @@ class Ban extends Elegant
 
     /**
      * IS ban enforced by guid
-     * @return bool
+     *
+*@return bool
      */
     public function getBanEnforceGUIDAttribute()
     {
@@ -165,7 +166,8 @@ class Ban extends Elegant
 
     /**
      * Is ban enforced by ip
-     * @return bool
+     *
+*@return bool
      */
     public function getBanEnforceIPAttribute()
     {
@@ -174,7 +176,8 @@ class Ban extends Elegant
 
     /**
      * Is ban active
-     * @return bool
+     *
+*@return bool
      */
     public function getIsActiveAttribute()
     {
@@ -183,7 +186,8 @@ class Ban extends Elegant
 
     /**
      * Is ban expired
-     * @return bool
+     *
+*@return bool
      */
     public function getIsExpiredAttribute()
     {
@@ -192,7 +196,8 @@ class Ban extends Elegant
 
     /**
      * Is unbanned
-     * @return bool
+     *
+*@return bool
      */
     public function getIsUnbannedAttribute()
     {
@@ -203,7 +208,8 @@ class Ban extends Elegant
 
     /**
      * Is ban permanent
-     * @return bool
+     *
+*@return bool
      */
     public function getIsPermAttribute()
     {

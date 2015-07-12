@@ -7,7 +7,8 @@ class BattlelogServer extends BattlelogAPI
 {
     /**
      * Battlelog Search Options
-     * @var array
+     *
+*@var array
      */
     private $options = [
         'filtered' => 1,
@@ -52,7 +53,8 @@ class BattlelogServer extends BattlelogAPI
 
     /**
      * Returns the number of players currently in queue
-     * @return int
+     *
+*@return int
      */
     public function inQueue()
     {
@@ -79,7 +81,8 @@ class BattlelogServer extends BattlelogAPI
 
     /**
      * Returns the server GUID
-     * @return string
+     *
+*@return string
      */
     public function guid()
     {
@@ -102,7 +105,8 @@ class BattlelogServer extends BattlelogAPI
 
     /**
      * Search for server on battlelog
-     * @return array
+     *
+*@return array
      */
     public function search()
     {

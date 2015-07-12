@@ -12,46 +12,53 @@ use Illuminate\Support\Facades\DB;
 class Reputation
 {
     /**
-     * Guzzle Client
-     * @var Client
-     */
-    protected $guzzle;
-
-    /**
      * Player Object
-     * @var Player
+     *
+*@var Player
      */
     public $player;
 
     /**
-     * Array of weights
-     * @var array
-     */
-    protected $weights = [];
-
-    /**
      * Source reputation
-     * @var integer
+     *
+*@var integer
      */
     public $sourceReputation = 0;
 
     /**
      * Target reputation
-     * @var integer
+     *
+*@var integer
      */
     public $targetReputation = 0;
 
     /**
      * Sum of source and target reputation
-     * @var integer
+     *
+*@var integer
      */
     public $totalReputation = 0;
 
     /**
      * Real reputation
-     * @var integer
+     *
+*@var integer
      */
     public $finalReputation = 0;
+
+    /**
+     * Guzzle Client
+     *
+     * @var Client
+     */
+    protected $guzzle;
+
+    /**
+     * Array of weights
+     *
+     * @var array
+     */
+    protected $weights = [];
 
     public function __construct()
     {
@@ -60,13 +67,31 @@ class Reputation
     }
 
     /**
+     * Fetch the reputation weights and cache them for 1 day
+     *
+     * @return mixed
+     */
+    private function fetchWeights()
+    {
+        $this->weights = Cache::remember('reputation.weights', 60 * 24, function () {
+            try {
+                $request = $this->guzzle->get('https://raw.githubusercontent.com/AdKats/AdKats/master/adkatsreputationstats.json');
+            } catch (\Exception $e) {
+                $request = $this->guzzle->get('http://api.gamerethos.net/adkats/fetch/reputation');
+            }
+
+            return $request->json();
+        });
+
+        return $this;
+    }
+
+    /**
      * Set the player
      *
      * @param Player $player
-
-
-*
-*@return $this
+     *
+     * @return $this
      */
     public function setPlayer(Player $player)
     {
@@ -77,7 +102,8 @@ class Reputation
 
     /**
      * Creates or Updates the player reputation then reloads it
-     * @return mixed
+     *
+*@return mixed
      */
     public function createOrUpdate()
     {
@@ -115,7 +141,9 @@ class Reputation
 
     /**
      * Fetchs records by player to calculate the source reputation
-     * @return mixed
+
+     *
+*@return mixed
      */
     public function source()
     {
@@ -138,7 +166,9 @@ class Reputation
 
     /**
      * Fetchs records targeted on player to calculate the target reputation
-     * @return mixed
+
+     *
+*@return mixed
      */
     public function target()
     {
@@ -184,7 +214,9 @@ class Reputation
 
     /**
      * Fetchs special records to be applyed to the reputation values
-     * @return mixed
+
+     *
+*@return mixed
      */
     public function special()
     {
@@ -209,7 +241,9 @@ class Reputation
 
     /**
      * Calcuates the total/final reputation
-     * @return mixed
+
+     *
+*@return mixed
      */
     public function calculate()
     {
@@ -236,25 +270,6 @@ class Reputation
         }
 
         $this->finalReputation = $newValue;
-
-        return $this;
-    }
-
-    /**
-     * Fetch the reputation weights and cache them for 1 day
-     * @return mixed
-     */
-    private function fetchWeights()
-    {
-        $this->weights = Cache::remember('reputation.weights', 60 * 24, function () {
-            try {
-                $request = $this->guzzle->get('https://raw.githubusercontent.com/AdKats/AdKats/master/adkatsreputationstats.json');
-            } catch (\Exception $e) {
-                $request = $this->guzzle->get('http://api.gamerethos.net/adkats/fetch/reputation');
-            }
-
-            return $request->json();
-        });
 
         return $this;
     }

@@ -101,7 +101,8 @@ class ChatlogController extends BaseController
 
     /**
      * Checks if we have any of the required inputs
-     * @return boolean
+     *
+*@return boolean
      */
     private function hasInput()
     {
@@ -110,7 +111,8 @@ class ChatlogController extends BaseController
 
     /**
      * Checks if the message column has fulltext support.
-     * @return boolean
+     *
+*@return boolean
      */
     private function hasFulltextSupport()
     {

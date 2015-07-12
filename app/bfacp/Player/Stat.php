@@ -6,43 +6,50 @@ class Stat extends Elegant
 {
     /**
      * Should model handle timestamps
-     * @var boolean
+     *
+*@var boolean
      */
     public $timestamps = false;
 
     /**
      * Table name
-     * @var string
+     *
+*@var string
      */
     protected $table = 'tbl_playerstats';
 
     /**
      * Table primary key
-     * @var string
+     *
+*@var string
      */
     protected $primaryKey = 'StatsID';
 
     /**
      * Fields not allowed to be mass assigned
-     * @var array
+     *
+*@var array
      */
     protected $guarded = ['*'];
 
     /**
      * Date fields to convert to carbon instances
-     * @var array
+     *
+*@var array
      */
     protected $dates = ['FirstSeenOnServer', 'LastSeenOnServer'];
 
     /**
      * Append custom attributes to output
-     * @var array
+     *
+*@var array
      */
     protected $appends = ['first_seen', 'last_seen'];
 
     /**
      * Models to be loaded automaticly
-     * @var array
+     *
+*@var array
      */
     protected $with = [];
 

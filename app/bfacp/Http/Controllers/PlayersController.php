@@ -32,8 +32,8 @@ class PlayersController extends BaseController
     /**
      * Shows the player profile
      *
-*@param  integer $id
-     * @param  string $name
+     * @param  integer $id
+     * @param  string  $name
      */
     public function profile($id, $name = '')
     {

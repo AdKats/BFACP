@@ -7,43 +7,50 @@ class Scoreboard extends Elegant
 {
     /**
      * Should model handle timestamps
-     * @var boolean
+     *
+*@var boolean
      */
     public $timestamps = false;
 
     /**
      * Table name
-     * @var string
+     *
+*@var string
      */
     protected $table = 'tbl_currentplayers';
 
     /**
      * Table primary key
-     * @var string
+     *
+*@var string
      */
     protected $primaryKey = 'ServerID';
 
     /**
      * Fields not allowed to be mass assigned
-     * @var array
+     *
+*@var array
      */
     protected $guarded = ['*'];
 
     /**
      * Date fields to convert to carbon instances
-     * @var array
+     *
+*@var array
      */
     protected $dates = ['PlayerJoined'];
 
     /**
      * Append custom attributes to output
-     * @var array
+     *
+*@var array
      */
     protected $appends = ['player_joined_iso', 'squad', 'kd_ratio', 'hsk_ratio'];
 
     /**
      * Models to be loaded automaticly
-     * @var array
+     *
+*@var array
      */
     protected $with = [];
 

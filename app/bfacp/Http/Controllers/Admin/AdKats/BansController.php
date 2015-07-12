@@ -22,13 +22,15 @@ class BansController extends BaseController
 {
     /**
      * Ban Repository
-     * @var BanRepository
+     *
+*@var BanRepository
      */
     protected $repository;
 
     /**
      * Metabans Class
-     * @var Metabans
+     *
+*@var Metabans
      */
     protected $metabans = null;
 
@@ -62,7 +64,7 @@ class BansController extends BaseController
     /**
      * Shows the ban editing page
      *
-*@param  integer $id Ban ID
+     * @param  integer $id Ban ID
      */
     public function edit($id)
     {
@@ -145,7 +147,7 @@ class BansController extends BaseController
     /**
      * Updates a existing ban
      *
-*@param  integer $id Ban ID
+     * @param  integer $id Ban ID
      */
     public function update($id)
     {
@@ -297,10 +299,9 @@ class BansController extends BaseController
     /**
      * Unbans the player
      *
-     *@param  integer $id Ban ID
-
-*
-*@return \Illuminate\Support\Facades\Response
+     * @param  integer $id Ban ID
+     *
+     * @return \Illuminate\Support\Facades\Response
      */
     public function destroy($id)
     {

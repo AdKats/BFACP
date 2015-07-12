@@ -6,43 +6,50 @@ class Reputation extends Elegant
 {
     /**
      * Should model handle timestamps
-     * @var boolean
+     *
+*@var boolean
      */
     public $timestamps = false;
 
     /**
      * Table name
-     * @var string
+     *
+*@var string
      */
     protected $table = 'adkats_player_reputation';
 
     /**
      * Table primary key
-     * @var string
+     *
+*@var string
      */
     protected $primaryKey = 'player_id';
 
     /**
      * Fields allowed to be mass assigned
-     * @var array
+     *
+*@var array
      */
     protected $guarded = ['player_id'];
 
     /**
      * Date fields to convert to carbon instances
-     * @var array
+     *
+*@var array
      */
     protected $dates = [];
 
     /**
      * Append custom attributes to output
-     * @var array
+     *
+*@var array
      */
     protected $appends = ['color'];
 
     /**
      * Models to be loaded automaticly
-     * @var array
+     *
+*@var array
      */
     protected $with = [];
 
@@ -55,7 +62,8 @@ class Reputation extends Elegant
 
     /**
      * Gets the class name for the view
-     * @return string
+     *
+*@return string
      */
     public function getColorAttribute()
     {
@@ -75,7 +83,7 @@ class Reputation extends Elegant
     /**
      * @param $query
      *
-*@return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function scopeMostReputable($query)
     {
@@ -85,7 +93,7 @@ class Reputation extends Elegant
     /**
      * @param $query
      *
-*@return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function scopeLeastReputable($query)
     {

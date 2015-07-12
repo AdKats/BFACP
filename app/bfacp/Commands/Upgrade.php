@@ -7,13 +7,15 @@ class Upgrade extends Command
 
     /**
      * The console command name.
-     * @var string
+     *
+*@var string
      */
     protected $name = 'bfacp:upgrade';
 
     /**
      * The console command description.
-     * @var string
+     *
+*@var string
      */
     protected $description = 'Upgrade the BFACP to the latest version';
 
@@ -27,7 +29,8 @@ class Upgrade extends Command
 
     /**
      * Execute the console command.
-     * @return mixed
+     *
+*@return mixed
      */
     public function fire()
     {

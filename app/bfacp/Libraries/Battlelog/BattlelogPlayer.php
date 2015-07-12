@@ -10,37 +10,43 @@ class BattlelogPlayer extends BattlelogAPI
 {
     /**
      * Persona ID
-     * @var integer
+     *
+*@var integer
      */
     public $personaID = 0;
 
     /**
      * Persona User ID
-     * @var integer
+     *
+*@var integer
      */
     public $personaUserID = 0;
 
     /**
      * Persona Gravatar MD5 Hash
-     * @var string
+     *
+*@var string
      */
     public $personaGravatar = '';
 
     /**
      * Player Object
-     * @var Player
+     *
+*@var Player
      */
     public $player;
 
     /**
      * Profile object
-     * @var array
+     *
+*@var array
      */
     public $profile;
 
     /**
      * Name of game
-     * @var string
+     *
+*@var string
      */
     public $game = '';
 
@@ -73,7 +79,8 @@ class BattlelogPlayer extends BattlelogAPI
 
     /**
      * Fetchs the players battlelog profile
-     * @return mixed
+     *
+*@return mixed
      */
     public function fetchProfile()
     {
@@ -127,8 +134,44 @@ class BattlelogPlayer extends BattlelogAPI
     }
 
     /**
+     * Gets the soldier information so we can update the clantag and name if needed
+     *
+     * @return mixed
+     */
+    private function getSoldierAndUpdate()
+    {
+        // Generate URI for request
+        $uri = sprintf($this->uris[ $this->game ]['soldier'], $this->game, $this->personaUserID, $this->personaID);
+
+        // Send request
+        $results = $this->sendRequest($uri);
+
+        $oldName = $this->player->SoldierName;
+        $oldClan = $this->player->ClanTag;
+
+        $persona = $results['context']['statsPersona'];
+
+        if ($this->player->SoldierName != $persona['personaName']) {
+            $this->player->SoldierName = $persona['personaName'];
+        }
+
+        if ($this->player->ClanTag != $persona['clanTag']) {
+            $this->player->ClanTag = empty($persona['clanTag']) ? null : $persona['clanTag'];
+        }
+
+        if ($oldName != $persona['personaName'] || $oldClan != $persona['clanTag']) {
+            $this->player->forget();
+            $this->player->save();
+        }
+
+        return $this;
+    }
+
+    /**
      * Gets the player weapon stats
-     * @return array
+
+     *
+*@return array
      */
     public function getWeaponStats()
     {
@@ -175,7 +218,9 @@ class BattlelogPlayer extends BattlelogAPI
 
     /**
      * Gets the player overview stats
-     * @return array
+
+     *
+*@return array
      */
     public function getOverviewStats()
     {
@@ -192,7 +237,9 @@ class BattlelogPlayer extends BattlelogAPI
 
     /**
      * Gets the player vehicle stats
-     * @return array
+
+     *
+*@return array
      */
     public function getVehicleStats()
     {
@@ -224,7 +271,9 @@ class BattlelogPlayer extends BattlelogAPI
     /**
      * Gets the player battle reports. Only works if game is bf4 or bfh
      * and the player has publicly visible reports.
-     * @return array
+
+     *
+*@return array
      */
     public function getBattleReports()
     {
@@ -241,38 +290,5 @@ class BattlelogPlayer extends BattlelogAPI
         $battlereports = new Collection($results['gameReports']);
 
         return $battlereports;
-    }
-
-    /**
-     * Gets the soldier information so we can update the clantag and name if needed
-     * @return mixed
-     */
-    private function getSoldierAndUpdate()
-    {
-        // Generate URI for request
-        $uri = sprintf($this->uris[ $this->game ]['soldier'], $this->game, $this->personaUserID, $this->personaID);
-
-        // Send request
-        $results = $this->sendRequest($uri);
-
-        $oldName = $this->player->SoldierName;
-        $oldClan = $this->player->ClanTag;
-
-        $persona = $results['context']['statsPersona'];
-
-        if ($this->player->SoldierName != $persona['personaName']) {
-            $this->player->SoldierName = $persona['personaName'];
-        }
-
-        if ($this->player->ClanTag != $persona['clanTag']) {
-            $this->player->ClanTag = empty($persona['clanTag']) ? null : $persona['clanTag'];
-        }
-
-        if ($oldName != $persona['personaName'] || $oldClan != $persona['clanTag']) {
-            $this->player->forget();
-            $this->player->save();
-        }
-
-        return $this;
     }
 }

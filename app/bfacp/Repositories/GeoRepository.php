@@ -6,19 +6,22 @@ class GeoRepository extends BaseRepository
 {
     /**
      * GeoIP2\Database\Reader
-     * @var object
+     *
+*@var object
      */
     protected $geo;
 
     /**
      * IP Address
-     * @var null
+     *
+*@var null
      */
     protected $ip = null;
 
     /**
      * GeoIP Reader
-     * @var object
+     *
+*@var object
      */
     protected $reader;
 
@@ -31,11 +34,11 @@ class GeoRepository extends BaseRepository
 
     /**
      * Set the IP Address to be used
-     *
-     * @param string $ip IPv4 Address
 
-*
-*@return $this
+     *
+*@param string $ip IPv4 Address
+     *
+     * @return $this
      */
     public function set($ip)
     {
@@ -47,7 +50,8 @@ class GeoRepository extends BaseRepository
 
     /**
      * Simply returns all values
-     * @return array
+     *
+*@return array
      */
     public function all()
     {
@@ -63,7 +67,8 @@ class GeoRepository extends BaseRepository
 
     /**
      * Returns the country ISO Code
-     * @return string
+     *
+*@return string
      */
     public function cc()
     {
@@ -72,7 +77,8 @@ class GeoRepository extends BaseRepository
 
     /**
      * Returns the country name
-     * @return string
+     *
+*@return string
      */
     public function country()
     {
@@ -81,7 +87,9 @@ class GeoRepository extends BaseRepository
 
     /**
      * Returns the name of the city the IP is located in
-     * @return string
+
+     *
+*@return string
      */
     public function city()
     {
@@ -90,7 +98,9 @@ class GeoRepository extends BaseRepository
 
     /**
      * Returns the latitude
-     * @return float
+
+     *
+*@return float
      */
     public function lat()
     {
@@ -99,7 +109,9 @@ class GeoRepository extends BaseRepository
 
     /**
      * Returns the longitude
-     * @return float
+
+     *
+*@return float
      */
     public function lon()
     {
@@ -108,7 +120,9 @@ class GeoRepository extends BaseRepository
 
     /**
      * Returns the postal code of the city
-     * @return string
+
+     *
+*@return string
      */
     public function postal()
     {

@@ -7,50 +7,58 @@ use Illuminate\Support\Facades\Crypt;
 class Setting extends Elegant
 {
     /**
-     * Table name
-     * @var string
-     */
-    protected $table = 'bfacp_settings_servers';
-
-    /**
-     * Table primary key
-     * @var string
-     */
-    protected $primaryKey = 'server_id';
-
-    /**
-     * Fields not allowed to be mass assigned
-     * @var array
-     */
-    protected $guarded = ['server_id'];
-
-    /**
-     * The attributes excluded form the models JSON response.
-     * @var array
-     */
-    protected $hidden = ['rcon_password', 'monitor_key'];
-
-    /**
-     * Date fields to convert to carbon instances
-     * @var array
-     */
-    protected $dates = [];
-
-    /**
      * Should model handle timestamps
+     *
      * @var boolean
      */
     public $timestamps = true;
 
     /**
+     * Table name
+     *
+*@var string
+     */
+    protected $table = 'bfacp_settings_servers';
+
+    /**
+     * Table primary key
+     *
+*@var string
+     */
+    protected $primaryKey = 'server_id';
+
+    /**
+     * Fields not allowed to be mass assigned
+     *
+*@var array
+     */
+    protected $guarded = ['server_id'];
+
+    /**
+     * The attributes excluded form the models JSON response.
+     *
+*@var array
+     */
+    protected $hidden = ['rcon_password', 'monitor_key'];
+
+    /**
+     * Date fields to convert to carbon instances
+     *
+*@var array
+     */
+    protected $dates = [];
+
+    /**
      * Append custom attributes to output
-     * @var array
+     *
+*@var array
      */
     protected $appends = [];
 
     /**
      * Models to be loaded automaticly
-     * @var array
+     *
+*@var array
      */
     protected $with = [];
 
@@ -64,7 +72,8 @@ class Setting extends Elegant
 
     /**
      * Decypts the RCON Password
-     * @return string
+     *
+*@return string
      */
     public function getPassword()
     {
@@ -78,7 +87,7 @@ class Setting extends Elegant
     /**
      * Encrypts the password to be safely stored
      *
-*@param string $value
+     * @param string $value
      */
     public function setRconPasswordAttribute($value)
     {

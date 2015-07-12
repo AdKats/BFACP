@@ -17,39 +17,45 @@ class AntiCheat
 
     /**
      * Player Object
-     * @var Player
+     *
+*@var Player
      */
     public $player;
 
     /**
-     * Guzzle Client
-     * @var Client
-     */
-    protected $guzzle;
-
-    /**
      * Stores the weapons with their damages
+     *
      * @var array
      */
     public $weapons = [];
 
     /**
      * Weapons that were triggered by the Anti-Cheat System
-     * @var array
+     *
+*@var array
      */
     public $triggered = [];
 
     /**
      * Name of game
+     *
      * @var string
      */
     public $game = '';
 
     /**
-     * Categorys allowed to be parsed
+     * Guzzle Client
+     *
+     * @var Client
+     */
+    protected $guzzle;
+
+    /**
+     * Categories allowed to be parsed
+     *
      * @var array
      */
-    private $allowedCategorys = [
+    private $allowedCategories = [
         'BF3' => [
             'carbines',
             'machine_guns',
@@ -85,7 +91,8 @@ class AntiCheat
 
     /**
      * Trigger values
-     * @var array
+     *
+*@var array
      */
     private $triggers = [
         'DPS' => 60,
@@ -104,7 +111,28 @@ class AntiCheat
     }
 
     /**
+     * Fetches the weapon damages from GitHub and caches it for 24 hours (1 day)
+     *
+     * @return mixed
+     */
+    private function fetchWeaponDamages()
+    {
+        $this->weapons = Cache::remember('acs.weapons', 60 * 24, function () {
+            try {
+                $request = $this->guzzle->get('https://raw.githubusercontent.com/AdKats/AdKats/master/adkatsblweaponstats.json');
+            } catch (\Exception $e) {
+                $request = $this->guzzle->get('http://api.gamerethos.net/adkats/fetch/weapons');
+            }
+
+            return $request->json();
+        });
+
+        return;
+    }
+
+    /**
      * Returns a array of triggered weapons
+     *
      * @return array
      */
     public function get()
@@ -116,10 +144,8 @@ class AntiCheat
      * Parse the battlelog weapons list
      *
      * @param  array $weapons
-
-
-*
-*@return $this
+     *
+     * @return $this
      */
     public function parse($weapons)
     {
@@ -130,7 +156,7 @@ class AntiCheat
         foreach ($weapons as $weapon) {
             $category = str_replace(' ', '_', strtolower(trim($weapon['category'])));
 
-            if (!in_array($category, $this->allowedCategorys[ $this->game ]) || !array_key_exists($category,
+            if (!in_array($category, $this->allowedCategories[ $this->game ]) || !array_key_exists($category,
                     $this->weapons[ $this->game ]) || !array_key_exists($weapon['slug'],
                     $this->weapons[ $this->game ][ $category ])
             ) {
@@ -169,24 +195,5 @@ class AntiCheat
         }
 
         return $this;
-    }
-
-    /**
-     * Fetchs the weapon damages from GitHub and caches it for 24 hours (1 day)
-     * @return mixed
-     */
-    private function fetchWeaponDamages()
-    {
-        $this->weapons = Cache::remember('acs.weapons', 60 * 24, function () {
-            try {
-                $request = $this->guzzle->get('https://raw.githubusercontent.com/AdKats/AdKats/master/adkatsblweaponstats.json');
-            } catch (\Exception $e) {
-                $request = $this->guzzle->get('http://api.gamerethos.net/adkats/fetch/weapons');
-            }
-
-            return $request->json();
-        });
-
-        return;
     }
 }

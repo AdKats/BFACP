@@ -13,14 +13,13 @@ class UserRepository
 {
     /**
      * Create a new user
-     *
-     * @param  array $input
-     * @param  integer $role Default role is 2
-     * @param bool $confirmed
-
 
 *
-*@return User
+*@param  array         $input
+     * @param  integer $role Default role is 2
+     * @param bool     $confirmed
+     *
+     * @return User
      */
     public function signup($input = [], $role = 2, $confirmed = false)
     {
@@ -72,13 +71,10 @@ class UserRepository
 
     /**
      * Attempts to login with the given credentials.
-
-*
-* @param  array $input
-
-
-*
-*@return boolean
+     *
+     * @param  array $input
+     *
+     * @return boolean
      */
     public function login($input)
     {
@@ -91,7 +87,8 @@ class UserRepository
 
     /**
      * Log out the user
-     * @return null
+     *
+*@return null
      */
     public function logout()
     {
@@ -101,11 +98,10 @@ class UserRepository
     /**
      * Checks if the credentials has been throttled by too
      * many failed login attempts
-
      *
-*@param  array $input
+     * @param  array $input
      *
-     * @return boolean
+*@return boolean
      */
     public function isThrottled($input)
     {
@@ -115,11 +111,10 @@ class UserRepository
     /**
      * Checks if the given credentials correponds to a user
      * that exists but is not confirmed
-
      *
-*@param  array $input
+     * @param  array $input
      *
-     * @return boolean
+*@return boolean
      */
     public function existsButNotConfirmed($input)
     {
@@ -137,10 +132,10 @@ class UserRepository
     /**
      * Resets the password of a user. The $input['token'] will tell which user.
 
+*
+* @param  array $input Array containing 'token', 'password' and 'password_confirmation' keys.
      *
-*@param  array $input Array containing 'token', 'password' and 'password_confirmation' keys.
-     *
-     *@return boolean
+     * @return boolean
      */
     public function resetPassword($input)
     {

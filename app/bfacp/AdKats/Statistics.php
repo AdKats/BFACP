@@ -6,43 +6,50 @@ class Statistics extends Elegant
 {
     /**
      * Should model handle timestamps
-     * @var boolean
+     *
+*@var boolean
      */
     public $timestamps = false;
 
     /**
      * Table name
-     * @var string
+     *
+*@var string
      */
     protected $table = 'adkats_statistics';
 
     /**
      * Table primary key
-     * @var string
+     *
+*@var string
      */
     protected $primaryKey = 'stat_id';
 
     /**
      * Fields not allowed to be mass assigned
-     * @var array
+     *
+*@var array
      */
     protected $guarded = ['*'];
 
     /**
      * Date fields to convert to carbon instances
-     * @var array
+     *
+*@var array
      */
     protected $dates = ['stat_time'];
 
     /**
      * Append custom attributes to output
-     * @var array
+     *
+*@var array
      */
     protected $appends = [];
 
     /**
      * Models to be loaded automaticly
-     * @var array
+     *
+*@var array
      */
     protected $with = [];
 
@@ -57,12 +64,10 @@ class Statistics extends Elegant
     /**
      * Only get certian types.
      *
-     * @param $query
+     * @param        $query
      * @param  array $type
-
-
-*
-*@return object
+     *
+     * @return object
      */
     public function scopeOfTypes($query, $type)
     {

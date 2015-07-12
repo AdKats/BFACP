@@ -17,44 +17,8 @@ class Metabans
     const URL = 'http://metabans.com/mb-api.php';
 
     /**
-     * API Key Hash
-     * @var string
-     */
-    private $hash = '';
-
-    /**
-     * API Key
-     * @var string
-     */
-    private $key = '';
-
-    /**
-     * API Username
-     * @var string
-     */
-    private $user = '';
-
-    /**
-     * Used to pull information from accounts.
-     * Feeds, Assessments, etc..
-     * @var string
-     */
-    private $account = '';
-
-    /**
-     * API Salt
-     * @var string
-     */
-    private $salt = '';
-
-    /**
-     * Auth creds
-     * @var array
-     */
-    private $auth = [];
-
-    /**
      * Valid assessment types
+     *
      * @var array
      */
     public $assessment_types = [
@@ -66,6 +30,7 @@ class Metabans
 
     /**
      * Supported Games
+     *
      * @var array
      */
     public $supported_games = [
@@ -86,6 +51,49 @@ class Metabans
      * Base62
      */
     protected $base62;
+
+    /**
+     * API Key Hash
+     *
+*@var string
+     */
+    private $hash = '';
+
+    /**
+     * API Key
+     *
+*@var string
+     */
+    private $key = '';
+
+    /**
+     * API Username
+     *
+*@var string
+     */
+    private $user = '';
+
+    /**
+     * Used to pull information from accounts.
+     * Feeds, Assessments, etc..
+     *
+*@var string
+     */
+    private $account = '';
+
+    /**
+     * API Salt
+     *
+*@var string
+     */
+    private $salt = '';
+
+    /**
+     * Auth creds
+     *
+*@var array
+     */
+    private $auth = [];
 
     public function __construct()
     {
@@ -118,14 +126,13 @@ class Metabans
     /**
      * Assess player
      *
-     * @param  string $game BF_BC2, MOH_2010, BF_3, MOH_2012, BF_4
-     * @param  string $GUID Player GUID
-     * @param  string $type None, Watch, White, Black
+     * @param  string $game   BF_BC2, MOH_2010, BF_3, MOH_2012, BF_4
+     * @param  string $GUID   Player GUID
+     * @param  string $type   None, Watch, White, Black
      * @param  string $reason Ban Reason - Max 200 chars
      * @param  integer $duration Length of time in seconds ban should be enforced. Defaults to 3 months.
-
-*
-*@return Collection
+     *
+     * @return Collection
      */
     public function assess($game, $GUID, $type, $reason = '', $duration = 7776000)
     {
@@ -159,189 +166,51 @@ class Metabans
     }
 
     /**
-     * Fetchs the assessments for an account
-
-*
-*@param integer $offset
-
-
-*
-*@return Collection
-     */
-    public function assessments($offset = 0)
-    {
-        if (!is_numeric($offset)) {
-            $offset = 0;
-        }
-
-        $assessments = $this->request([
-            'mbo_assessments' => [
-                'account_name' => $this->account,
-                'offset' => $offset,
-            ],
-        ]);
-
-        foreach ($assessments['assessments'] as $key => $assessment) {
-            $player_url = sprintf('http://metabans.com/player?i=%s', $this->base62->encode($assessment['player_id']));
-            $assessment_url = sprintf('http://metabans.com/assessment?i=%s',
-                $this->base62->encode($assessment['assessment_id']));
-
-            $assessments['assessments'][ $key ]['player_url'] = $player_url;
-            $assessments['assessments'][ $key ]['assessment_url'] = $assessment_url;
-        }
-
-        $assessments = new Collection($assessments);
-
-        return $assessments;
-    }
-
-    /**
-     * Fetchs the feed for an account
-
-*
-*@param integer $offset
+     * Validator
      *
-*@return Collection
-     */
-    public function feed($offset = 0)
-    {
-        if (!is_numeric($offset)) {
-            $offset = 0;
-        }
-
-        $feed = $this->request([
-            'mbo_feed' => [
-                'account_name' => $this->account,
-                'offset' => $offset,
-            ],
-        ]);
-
-        foreach ($feed['feed'] as $key => $f) {
-            $player_url = sprintf('http://metabans.com/player?i=%s', $this->base62->encode($f['player_id']));
-            $assessment_url = sprintf('http://metabans.com/assessment?i=%s',
-                $this->base62->encode($f['assessment_id']));
-
-            $feed['feed'][ $key ]['player_url'] = $player_url;
-            $feed['feed'][ $key ]['assessment_url'] = $assessment_url;
-        }
-
-        $feed = new Collection($feed);
-
-        return $feed;
-    }
-
-    /**
-     * Fetchs the followers for an account
-
-*
-*@param integer $offset
+     * @param  array $data
+     * @param  array $rules
+     * @param  array $messages
      *
-*@return \Illuminate\Support\Facades\Response
+     * @return bool
      */
-    public function followers($offset = 0)
+    public function validate($data = [], $rules = [], $messages = [])
     {
-        if (!is_numeric($offset)) {
-            $offset = 0;
+        $v = Validator::make($data, $rules, $messages);
+
+        if ($v->fails()) {
+            $this->setErrors($v->messages());
+            return false;
         }
 
-        $followers = new Collection($this->request([
-            'mbo_followers' => [
-                'account_name' => $this->account,
-                'offset' => $offset,
-            ],
-        ]));
-
-        return MainHelper::response($followers);
+        return true;
     }
 
     /**
-     * Get player aliases
-
-*
-*@param integer $id Metabans player id
-
-*
-*@return \Illuminate\Support\Facades\Response
+     * Set error message bag
+     *
+     * @var MessageBag
      */
-    public function aliases($id = 0)
+    protected function setErrors($errors)
     {
-        $rules = [
-            'player_id' => 'required|numeric',
-        ];
-
-        $data = [
-            'player_id' => $id,
-        ];
-
-        if (!$this->validate($data, $rules)) {
-            return MainHelper::response($this->getErrors(), 'Validation failed.', 'error', 400);
-        }
-
-        $aliases = new Collection($this->request([
-            'mbo_player_aliases' => $data,
-        ]));
-
-        return MainHelper::response($aliases);
+        $this->errors = $errors;
     }
 
     /**
-     * Search for playeers
-
-*
-*@param string $phrase
-
-
-*
-*@return \Illuminate\Support\Facades\Response
+     * Retrieve error message bag
      */
-    public function search($phrase = '')
+    public function getErrors()
     {
-        $rules = [
-            'phrase' => 'required',
-        ];
-
-        $data = [
-            'phrase' => trim($phrase),
-        ];
-
-        if (!$this->validate($data, $rules)) {
-            return MainHelper::response($this->getErrors(), 'Validation failed.', 'error', 400);
-        }
-
-        $matches = new Collection($this->request([
-            'mbo_search' => $data,
-        ])['matches']);
-
-        return MainHelper::response($matches);
-    }
-
-    /**
-     * Returns the API Key
-     * @return string
-     */
-    public function getKey()
-    {
-        return $this->key;
-    }
-
-    /**
-     * Returns the API Username
-     * @return string
-     */
-    public function getUser()
-    {
-        return $this->user;
+        return $this->errors;
     }
 
     /**
      * Generates the request
-
-*
-*@param  array $requests
+     *
+     * @param  array   $requests
      * @param  boolean $auth Request requires authentication
-
-*
-*@return [type]            [description]
+     *
+     * @return [type]            [description]
      */
     private function request(array $requests, $auth = false)
     {
@@ -411,43 +280,170 @@ class Metabans
     }
 
     /**
-     * Validator
-
+     * Fetchs the assessments for an account
      *
-*@param  array $data
-     * @param  array $rules
-     * @param  array $messages
-
+     * @param integer $offset
      *
-*@return bool
+     * @return Collection
      */
-    public function validate($data = [], $rules = [], $messages = [])
+    public function assessments($offset = 0)
     {
-        $v = Validator::make($data, $rules, $messages);
-
-        if ($v->fails()) {
-            $this->setErrors($v->messages());
-            return false;
+        if (!is_numeric($offset)) {
+            $offset = 0;
         }
 
-        return true;
+        $assessments = $this->request([
+            'mbo_assessments' => [
+                'account_name' => $this->account,
+                'offset' => $offset,
+            ],
+        ]);
+
+        foreach ($assessments['assessments'] as $key => $assessment) {
+            $player_url = sprintf('http://metabans.com/player?i=%s', $this->base62->encode($assessment['player_id']));
+            $assessment_url = sprintf('http://metabans.com/assessment?i=%s',
+                $this->base62->encode($assessment['assessment_id']));
+
+            $assessments['assessments'][ $key ]['player_url'] = $player_url;
+            $assessments['assessments'][ $key ]['assessment_url'] = $assessment_url;
+        }
+
+        $assessments = new Collection($assessments);
+
+        return $assessments;
     }
 
     /**
-     * Set error message bag
-     * @var MessageBag
+     * Fetchs the feed for an account
+     *
+     * @param integer $offset
+     *
+     * @return Collection
      */
-    protected function setErrors($errors)
+    public function feed($offset = 0)
     {
-        $this->errors = $errors;
+        if (!is_numeric($offset)) {
+            $offset = 0;
+        }
+
+        $feed = $this->request([
+            'mbo_feed' => [
+                'account_name' => $this->account,
+                'offset' => $offset,
+            ],
+        ]);
+
+        foreach ($feed['feed'] as $key => $f) {
+            $player_url = sprintf('http://metabans.com/player?i=%s', $this->base62->encode($f['player_id']));
+            $assessment_url = sprintf('http://metabans.com/assessment?i=%s',
+                $this->base62->encode($f['assessment_id']));
+
+            $feed['feed'][ $key ]['player_url'] = $player_url;
+            $feed['feed'][ $key ]['assessment_url'] = $assessment_url;
+        }
+
+        $feed = new Collection($feed);
+
+        return $feed;
     }
 
     /**
-     * Retrieve error message bag
+     * Fetchs the followers for an account
+     *
+     * @param integer $offset
+     *
+     * @return \Illuminate\Support\Facades\Response
      */
-    public function getErrors()
+    public function followers($offset = 0)
     {
-        return $this->errors;
+        if (!is_numeric($offset)) {
+            $offset = 0;
+        }
+
+        $followers = new Collection($this->request([
+            'mbo_followers' => [
+                'account_name' => $this->account,
+                'offset' => $offset,
+            ],
+        ]));
+
+        return MainHelper::response($followers);
+    }
+
+    /**
+     * Get player aliases
+     *
+     * @param integer $id Metabans player id
+     *
+     * @return \Illuminate\Support\Facades\Response
+     */
+    public function aliases($id = 0)
+    {
+        $rules = [
+            'player_id' => 'required|numeric',
+        ];
+
+        $data = [
+            'player_id' => $id,
+        ];
+
+        if (!$this->validate($data, $rules)) {
+            return MainHelper::response($this->getErrors(), 'Validation failed.', 'error', 400);
+        }
+
+        $aliases = new Collection($this->request([
+            'mbo_player_aliases' => $data,
+        ]));
+
+        return MainHelper::response($aliases);
+    }
+
+    /**
+     * Search for playeers
+     *
+     * @param string $phrase
+     *
+     * @return \Illuminate\Support\Facades\Response
+     */
+    public function search($phrase = '')
+    {
+        $rules = [
+            'phrase' => 'required',
+        ];
+
+        $data = [
+            'phrase' => trim($phrase),
+        ];
+
+        if (!$this->validate($data, $rules)) {
+            return MainHelper::response($this->getErrors(), 'Validation failed.', 'error', 400);
+        }
+
+        $matches = new Collection($this->request([
+            'mbo_search' => $data,
+        ])['matches']);
+
+        return MainHelper::response($matches);
+    }
+
+    /**
+     * Returns the API Key
+     *
+*@return string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * Returns the API Username
+     *
+*@return string
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 
     /**
