@@ -31,8 +31,11 @@ class GeoRepository extends BaseRepository
 
     /**
      * Set the IP Address to be used
+     *
      * @param string $ip IPv4 Address
-     * @return $this
+
+*
+*@return $this
      */
     public function set($ip)
     {
@@ -54,7 +57,7 @@ class GeoRepository extends BaseRepository
             'city' => $this->city(),
             'lat' => $this->lat(),
             'lon' => $this->lon(),
-            'postal' => $this->postal()
+            'postal' => $this->postal(),
         ];
     }
 
@@ -86,15 +89,6 @@ class GeoRepository extends BaseRepository
     }
 
     /**
-     * Returns the postal code of the city
-     * @return string
-     */
-    public function postal()
-    {
-        return $this->reader->postal->code;
-    }
-
-    /**
      * Returns the latitude
      * @return float
      */
@@ -110,5 +104,14 @@ class GeoRepository extends BaseRepository
     public function lon()
     {
         return $this->reader->location->longitude;
+    }
+
+    /**
+     * Returns the postal code of the city
+     * @return string
+     */
+    public function postal()
+    {
+        return $this->reader->postal->code;
     }
 }

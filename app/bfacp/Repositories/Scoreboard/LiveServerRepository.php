@@ -22,70 +22,60 @@ class LiveServerRepository extends BaseRepository
 {
     /**
      * Game DB ID
-     *
      * @var integer
      */
     protected $gameID = 0;
 
     /**
      * Game abbreviation
-     *
      * @var null
      */
     protected $gameName = null;
 
     /**
      * Server DB ID
-     *
      * @var integer
      */
     protected $serverID = 0;
 
     /**
      * Server IPv4 Address
-     *
      * @var string
      */
     protected $serverIP = '';
 
     /**
      * RCON Port
-     *
      * @var integer
      */
     protected $port = 0;
 
     /**
      * Formated Response
-     *
      * @var array
      */
     protected $data = [];
 
     /**
      * BFConn class
-     *
      * @var object
      */
     protected $client;
 
     /**
      * Tells us if we've successfully connected to the server.
-     *
      * @var boolean
      */
     protected $connected = false;
 
     /**
      * Tell us if we are logged in.
-     *
      * @var boolean
      */
     protected $authenticated = false;
 
     /**
      * Server Object
-     *
      * @var object
      */
     public $server;
@@ -150,7 +140,6 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Attempt to establish connection and login to the gameserver.
-     *
      * @return $this
      */
     public function attempt()
@@ -163,21 +152,21 @@ class LiveServerRepository extends BaseRepository
             case 'BF3':
                 $this->client = App::make('BFACP\Libraries\BF3Conn', [
                     $this->server,
-                    false
+                    false,
                 ]);
                 break;
 
             case 'BF4':
                 $this->client = App::make('BFACP\Libraries\BF4Conn', [
                     $this->server,
-                    false
+                    false,
                 ]);
                 break;
 
             case 'BFHL':
                 $this->client = App::make('BFACP\Libraries\BFHConn', [
                     $this->server,
-                    false
+                    false,
                 ]);
                 break;
 
@@ -216,7 +205,6 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Determine if we are connected and authenticated with the gameserver.
-     *
      * @return bool
      */
     public function check()
@@ -236,14 +224,16 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Sends a yell to the entire server, team, or player.
+
      *
-     * @param  string $message Message to be sent
+*@param  string $message Message to be sent
      * @param  string $player Player Name
      * @param  integer $teamId Id of the team
      * @param  integer $duration How long it should stay up in seconds
      * @param  string $type All, Team, Player
      * @param bool $skipLog
-     * @return bool Returns true if it was successful
+     *
+*@return bool Returns true if it was successful
      */
     public function adminYell(
         $message = '',
@@ -320,14 +310,16 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Sends a say to the entire server, team, or player.
+
      *
-     * @param  string $message Message to be sent
+*@param  string $message Message to be sent
      * @param  string $player Player Name
      * @param  integer $teamId Id of the team
      * @param  string $type All, Team, Player
      * @param bool $displayAdminName
      * @param bool $skipLog
-     * @return bool Returns true if it was successful
+     *
+*@return bool Returns true if it was successful
      */
     public function adminSay(
         $message = '',
@@ -417,14 +409,16 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Sends both a yell and say message to the player
+
      *
-     * @param  string $player Name of player
+*@param  string $player Name of player
      * @param  string $message Message to be sent
      * @param  integer $yellDuration Seconds for yell to stay up
      * @param bool $displayAdminName
      * @param bool $skipLog
      * @param  integer $times How many times the say should be repeated
-     * @return bool
+     *
+*@return bool
      */
     public function adminTell(
         $player,
@@ -451,10 +445,12 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Kills the players
+
      *
-     * @param  string $player Name of player
+*@param  string $player Name of player
      * @param  string $message Message to be sent
-     * @return boolean
+     *
+*@return boolean
      */
     public function adminKill($player, $message = null)
     {
@@ -490,11 +486,14 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Moves the player to a different team and/or squad
-     * @param  string $player Name of player
+     *
+*@param  string $player Name of player
      * @param  integer $teamId Id of team to move to
      * @param  integer $squadId Id of squad to move to
      * @param  boolean $locked Should the squad be locked
-     * @return boolean
+
+*
+*@return boolean
      */
     public function adminMovePlayer($player, $teamId = null, $squadId = 0, $locked = false)
     {
@@ -569,11 +568,13 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Kick the player from the server
+
      *
-     * @param  string $player Name of player
+*@param  string $player Name of player
      * @param  string $message Message to be sent
      * @param  boolean $isBan If true then don't send the kick message to server
-     * @return boolean
+     *
+     *@return boolean
      */
     public function adminKick($player, $message = null, $isBan = false)
     {
@@ -606,10 +607,12 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Punish player
+
      *
-     * @param  string $player Name of player
+*@param  string $player Name of player
      * @param  string $message Message to be sent
-     * @return boolean
+     *
+     *@return boolean
      */
     public function adminPunish($player, $message)
     {
@@ -633,10 +636,14 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Forgive player
+
+*
      * @param  string $player Name of player
      * @param  string $message Message to be sent
      * @param  integer $count How many forgives should be issued
-     * @return boolean
+
+*
+*@return boolean
      */
     public function adminForgive($player, $message, $count = 1)
     {
@@ -666,7 +673,7 @@ class LiveServerRepository extends BaseRepository
                 'logMessage' => $message,
                 'logPlayerID' => is_null($this->admin) ? null : $this->admin->PlayerID,
                 'logSoldierName' => is_null($this->admin) ? $this->user->username : $this->admin->SoldierName,
-                'logSubset' => 'Global'
+                'logSubset' => 'Global',
             ]);
         }
 
@@ -696,8 +703,11 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Loops over the players and sorts them into teams
-     * @param bool $verbose
-     * @return Collection
+
+*
+*@param bool $verbose
+     *
+*@return Collection
      */
     public function get($verbose = false)
     {
@@ -719,21 +729,21 @@ class LiveServerRepository extends BaseRepository
         $list = [];
 
         for ($i = 0; $i < $maps[1]; $i++) {
-            $map = $maps[($maps[2]) * $i + $maps[2]];
-            $mode = $maps[($maps[2]) * $i + $maps[2] + 1];
-            $rounds = $maps[($maps[2]) * $i + $maps[2] + 2];
+            $map = $maps[ ($maps[2]) * $i + $maps[2] ];
+            $mode = $maps[ ($maps[2]) * $i + $maps[2] + 1 ];
+            $rounds = $maps[ ($maps[2]) * $i + $maps[2] + 2 ];
 
             $list[] = [
                 'map' => [
                     'name' => head($this->client->getMapName($map)),
-                    'uri' => $map
+                    'uri' => $map,
                 ],
                 'mode' => [
                     'name' => head($this->client->getPlaymodeName($mode)),
-                    'uri' => $mode
+                    'uri' => $mode,
                 ],
                 'rounds' => (int)$rounds,
-                'index' => $i
+                'index' => $i,
             ];
         }
 
@@ -765,25 +775,20 @@ class LiveServerRepository extends BaseRepository
      */
     private function getOnlineAdmins()
     {
-        $adminlist = DB::table('adkats_usersoldiers')
-            ->select('player_id', 'EAGUID', 'GameID', 'SoldierName')
-            ->join('adkats_users', 'adkats_usersoldiers.user_id', '=', 'adkats_users.user_id')
-            ->join('adkats_roles', 'adkats_users.user_role', '=', 'adkats_roles.role_id')
-            ->join('tbl_playerdata', 'adkats_usersoldiers.player_id', '=', 'tbl_playerdata.PlayerID')
-            ->where('tbl_playerdata.GameID', $this->gameID)
-            ->whereExists(function ($query) {
-                $query->select('adkats_rolecommands.role_id')
-                    ->from('adkats_rolecommands')
-                    ->join('adkats_commands', 'adkats_rolecommands.command_id', '=', 'adkats_commands.command_id')
-                    ->where('command_playerInteraction', 1)
-                    ->whereRaw('adkats_rolecommands.role_id = adkats_users.user_role')
-                    ->groupBy('adkats_rolecommands.role_id');
-            })->get();
+        $adminlist = DB::table('adkats_usersoldiers')->select('player_id', 'EAGUID', 'GameID',
+            'SoldierName')->join('adkats_users', 'adkats_usersoldiers.user_id', '=',
+            'adkats_users.user_id')->join('adkats_roles', 'adkats_users.user_role', '=',
+            'adkats_roles.role_id')->join('tbl_playerdata', 'adkats_usersoldiers.player_id', '=',
+            'tbl_playerdata.PlayerID')->where('tbl_playerdata.GameID', $this->gameID)->whereExists(function ($query) {
+            $query->select('adkats_rolecommands.role_id')->from('adkats_rolecommands')->join('adkats_commands',
+                'adkats_rolecommands.command_id', '=', 'adkats_commands.command_id')->where('command_playerInteraction',
+                1)->whereRaw('adkats_rolecommands.role_id = adkats_users.user_role')->groupBy('adkats_rolecommands.role_id');
+        })->get();
 
         foreach (['players', 'spectators', 'commander'] as $type) {
             foreach ($this->data['teams'] as $teamID => $team) {
                 if (array_key_exists($type, $team)) {
-                    foreach ($team[$type] as $index => $player) {
+                    foreach ($team[ $type ] as $index => $player) {
                         foreach ($adminlist as $index2 => $player2) {
                             $guid = !is_string($player) ? $player['guid'] : $player;
 
@@ -792,7 +797,7 @@ class LiveServerRepository extends BaseRepository
                                     return false;
                                 }
 
-                                $this->data['admins'][$player['name']] = $this->data['teams'][$teamID][$type][$index];
+                                $this->data['admins'][ $player['name'] ] = $this->data['teams'][ $teamID ][ $type ][ $index ];
                             }
                         }
                     }
@@ -847,20 +852,25 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Correctly sets the factions name
-     * @param $players
+
+*
+*@param $players
      * @param $dbPlayers
      * @param string $type
-     * @return $this
+
+
+*
+*@return $this
      */
     private function playerDBLoop($players, $dbPlayers, $type = 'players')
     {
         foreach ($this->data['teams'] as $teamID => $team) {
             if (array_key_exists($type, $team)) {
-                foreach ($team[$type] as $index => $player) {
+                foreach ($team[ $type ] as $index => $player) {
                     if (is_array($player) && array_key_exists('kills', $player) && array_key_exists('deaths',
                             $player)
                     ) {
-                        $this->data['teams'][$teamID][$type][$index]['kd'] = BattlefieldHelper::kd($player['kills'],
+                        $this->data['teams'][ $teamID ][ $type ][ $index ]['kd'] = BattlefieldHelper::kd($player['kills'],
                             $player['deaths']);
                     }
 
@@ -897,7 +907,7 @@ class LiveServerRepository extends BaseRepository
                                 }
                             }
 
-                            $this->data['teams'][$teamID][$type][$index]['_player'] = $player2;
+                            $this->data['teams'][ $teamID ][ $type ][ $index ]['_player'] = $player2;
 
                             break;
                         }
@@ -1034,17 +1044,17 @@ class LiveServerRepository extends BaseRepository
                 'max' => (int)$info[3],
                 'spectators' => 0,
                 'commanders' => 0,
-                'queue' => $this->server->in_queue
+                'queue' => $this->server->in_queue,
             ],
             'mode' => [
                 'name' => head($this->client->getPlaymodeName($info[4])),
-                'uri' => $info[4]
+                'uri' => $info[4],
             ],
             'map' => [
                 'name' => head($this->client->getMapName($info[5])),
                 'uri' => $info[5],
                 'next' => $this->getNextMap(),
-                'images' => $this->server->map_image_paths
+                'images' => $this->server->map_image_paths,
             ],
             'tickets_needed' => $ticketcap,
             'tickets_starting' => $startingTickets,
@@ -1052,17 +1062,17 @@ class LiveServerRepository extends BaseRepository
             'times' => [
                 'round' => [
                     'humanize' => MainHelper::secToStr($round, true),
-                    'seconds' => (int)$round
+                    'seconds' => (int)$round,
                 ],
                 'uptime' => [
                     'humanize' => MainHelper::secToStr($uptime, true),
-                    'seconds' => (int)$uptime
+                    'seconds' => (int)$uptime,
                 ],
                 'remaining' => [
                     'humanize' => $info[2] >= 4 ? MainHelper::secToStr($startingTimer - $round, true) : 'PreMatch',
-                    'seconds' => $info[2] >= 4 ? $startingTimer - $round : $startingTimer
-                ]
-            ]
+                    'seconds' => $info[2] >= 4 ? $startingTimer - $round : $startingTimer,
+                ],
+            ],
         ];
 
         $this->setFactions();
@@ -1072,7 +1082,6 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Checks the player list for admins currently in-game.
-     *
      * @throws \Exception
      */
     private function setFactions()
@@ -1107,10 +1116,10 @@ class LiveServerRepository extends BaseRepository
                 $this->TEAM2 = 'Criminals';
             } else {
                 $this->TEAM0 = $teamFactions[0][0];
-                $this->TEAM1 = $teamFactions[0][$teamFactions[1][1] + 1];
-                $this->TEAM2 = $teamFactions[0][$teamFactions[1][2] + 1];
-                $this->TEAM3 = $teamFactions[0][$teamFactions[1][3] + 1];
-                $this->TEAM4 = $teamFactions[0][$teamFactions[1][4] + 1];
+                $this->TEAM1 = $teamFactions[0][ $teamFactions[1][1] + 1 ];
+                $this->TEAM2 = $teamFactions[0][ $teamFactions[1][2] + 1 ];
+                $this->TEAM3 = $teamFactions[0][ $teamFactions[1][3] + 1 ];
+                $this->TEAM4 = $teamFactions[0][ $teamFactions[1][4] + 1 ];
             }
         }
 
@@ -1120,7 +1129,6 @@ class LiveServerRepository extends BaseRepository
     /**
      * Function to handle assigning of the DB player object to the playerlist
      * Only used by the getPlayerDBData() function
-     *
      * @internal param array $players
      * @internal param object $dbPlayers
      * @internal param string $type Valid types are players, spectators, and commander
@@ -1136,7 +1144,7 @@ class LiveServerRepository extends BaseRepository
             1 => [],
             2 => [],
             3 => [],
-            4 => []
+            4 => [],
         ];
 
         foreach ($players as $player) {
@@ -1144,14 +1152,14 @@ class LiveServerRepository extends BaseRepository
             $squadID = $player['squadId'];
             $squadName = BattlefieldHelper::squad($squadID);
 
-            if (array_key_exists($squadName, $lockedSquads[$teamID]) !== true) {
-                $lockedSquads[$teamID][$squadName] = $this->client->adminGetSquadPrivate($teamID, $squadID);
+            if (array_key_exists($squadName, $lockedSquads[ $teamID ]) !== true) {
+                $lockedSquads[ $teamID ][ $squadName ] = $this->client->adminGetSquadPrivate($teamID, $squadID);
             }
 
             $additional = [
                 'isSquadLocked' => array_key_exists($squadName,
-                    $lockedSquads[$teamID]) !== false ? $lockedSquads[$teamID][$squadName] : null,
-                'squadName' => $squadName
+                    $lockedSquads[ $teamID ]) !== false ? $lockedSquads[ $teamID ][ $squadName ] : null,
+                'squadName' => $squadName,
             ];
 
             switch ($teamID) {
@@ -1178,16 +1186,16 @@ class LiveServerRepository extends BaseRepository
 
             $teamName = $this->getTeamName($teamID);
 
-            $temp[$teamID]['team'] = $teamName;
+            $temp[ $teamID ]['team'] = $teamName;
 
             $serverInfoLength = count($this->serverinfo);
 
             if (($serverInfoLength >= 26 && $serverInfoLength <= 28 && in_array($this->gameName,
                         ['BF4', 'BFHL'])) || ($serverInfoLength == 25 && $this->gameName == 'BF3')
             ) {
-                $temp[$teamID]['score'] = $score;
+                $temp[ $teamID ]['score'] = $score;
             } else {
-                $temp[$teamID]['score'] = 0;
+                $temp[ $teamID ]['score'] = 0;
             }
 
             if (array_key_exists('ping', $player) && $player['ping'] == 65535) {
@@ -1196,18 +1204,18 @@ class LiveServerRepository extends BaseRepository
 
             switch (array_key_exists('type', $player) ? $player['type'] : 0) {
                 case 1:
-                    $temp[$teamID]['spectators'][] = $player;
+                    $temp[ $teamID ]['spectators'][] = $player;
                     $this->data['server']['players']['spectators']++;
                     break;
 
                 case 2:
                 case 3:
-                    $temp[$teamID]['commander'] = $player;
-                    $this->data['server']['players']['commanders']++;
+                    $temp[ $teamID ]['commander'] = $player;
+                $this->data['server']['players']['commanders']++;
                     break;
 
                 default:
-                    $temp[$teamID]['players'][] = array_merge($player, $additional);
+                    $temp[ $teamID ]['players'][] = array_merge($player, $additional);
             }
         }
 
@@ -1222,8 +1230,11 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Simply returns the correct team name by their ID
-     * @param  integer $teamID Team ID
-     * @return string
+
+*
+*@param  integer $teamID Team ID
+     *
+*@return string
      */
     protected function getTeamName($teamID)
     {
@@ -1257,10 +1268,10 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Checks if the player name is valid
-     *
      * Only alphanumeric, dash, and underscore are allowed
      *
      * @param  string $player Name of player
+     *
      * @return boolean
      */
     protected function isValidName($player)
@@ -1295,13 +1306,13 @@ class LiveServerRepository extends BaseRepository
         for ($i = 0; $i < count($serverinfo); $i++) {
             $key = 'K' . $i;
 
-            $this->data['_raw']['serverinfo'][$key] = $serverinfo[$i];
+            $this->data['_raw']['serverinfo'][ $key ] = $serverinfo[ $i ];
 
-            if (is_numeric($this->data['_raw']['serverinfo'][$key])) {
-                $this->data['_raw']['serverinfo'][$key] = intval($this->data['_raw']['serverinfo'][$key]);
+            if (is_numeric($this->data['_raw']['serverinfo'][ $key ])) {
+                $this->data['_raw']['serverinfo'][ $key ] = intval($this->data['_raw']['serverinfo'][ $key ]);
             } else {
-                if ($this->data['_raw']['serverinfo'][$key] == 'true' || $this->data['_raw']['serverinfo'][$key] == 'false') {
-                    $this->data['_raw']['serverinfo'][$key] = ($this->data['_raw']['serverinfo'][$key] == 'true' ? true : false);
+                if ($this->data['_raw']['serverinfo'][ $key ] == 'true' || $this->data['_raw']['serverinfo'][ $key ] == 'false') {
+                    $this->data['_raw']['serverinfo'][ $key ] = ($this->data['_raw']['serverinfo'][ $key ] == 'true' ? true : false);
                 }
             }
         }

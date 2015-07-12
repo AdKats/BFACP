@@ -5,6 +5,12 @@ use BFACP\Elegant;
 class Record extends Elegant
 {
     /**
+     * Should model handle timestamps
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * Table name
      * @var string
      */
@@ -27,13 +33,6 @@ class Record extends Elegant
      * @var array
      */
     protected $dates = ['record_time'];
-
-    /**
-     * Should model handle timestamps
-     *
-     * @var boolean
-     */
-    public $timestamps = false;
 
     /**
      * Append custom attributes to output
@@ -80,7 +79,7 @@ class Record extends Elegant
             'command_id',
             'command_active',
             'command_name',
-            'command_playerInteraction'
+            'command_playerInteraction',
         ]);
     }
 
@@ -93,7 +92,7 @@ class Record extends Elegant
             'command_id',
             'command_active',
             'command_name',
-            'command_playerInteraction'
+            'command_playerInteraction',
         ]);
     }
 

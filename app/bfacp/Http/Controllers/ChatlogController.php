@@ -27,7 +27,7 @@ class ChatlogController extends BaseController
         $games = $this->game->with([
             'servers' => function ($query) {
                 $query->active();
-            }
+            },
         ])->get();
 
         $page_title = Lang::get('navigation.main.items.chatlogs.title');
@@ -55,10 +55,7 @@ class ChatlogController extends BaseController
                 $keywords = array_map('trim', explode(',', Input::get('keywords')));
 
                 if ($this->hasFulltextSupport()) {
-                    $chat = $chat->whereRaw(
-                        'MATCH(logMessage) AGAINST(? IN BOOLEAN MODE)',
-                        [implode(' ', $keywords)]
-                    );
+                    $chat = $chat->whereRaw('MATCH(logMessage) AGAINST(? IN BOOLEAN MODE)', [implode(' ', $keywords)]);
                 } else {
                     $chat = $chat->where(function ($query) use ($keywords) {
                         foreach ($keywords as $keyword) {
@@ -108,12 +105,7 @@ class ChatlogController extends BaseController
      */
     private function hasInput()
     {
-        return Input::has('server') ||
-        Input::has('players') ||
-        Input::has('pid') ||
-        Input::has('keywords') ||
-        Input::has('showspam') ||
-        (Input::has('StartDateTime') && Input::has('EndDateTime'));
+        return Input::has('server') || Input::has('players') || Input::has('pid') || Input::has('keywords') || Input::has('showspam') || (Input::has('StartDateTime') && Input::has('EndDateTime'));
     }
 
     /**

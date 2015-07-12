@@ -5,6 +5,12 @@ use BFACP\Elegant;
 class User extends Elegant
 {
     /**
+     * Should model handle timestamps
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * Table name
      * @var string
      */
@@ -27,13 +33,6 @@ class User extends Elegant
      * @var array
      */
     protected $dates = ['user_expiration'];
-
-    /**
-     * Should model handle timestamps
-     *
-     * @var boolean
-     */
-    public $timestamps = false;
 
     /**
      * Append custom attributes to output

@@ -5,6 +5,12 @@ use BFACP\Elegant;
 class Statistics extends Elegant
 {
     /**
+     * Should model handle timestamps
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * Table name
      * @var string
      */
@@ -29,13 +35,6 @@ class Statistics extends Elegant
     protected $dates = ['stat_time'];
 
     /**
-     * Should model handle timestamps
-     *
-     * @var boolean
-     */
-    public $timestamps = false;
-
-    /**
      * Append custom attributes to output
      * @var array
      */
@@ -57,9 +56,13 @@ class Statistics extends Elegant
 
     /**
      * Only get certian types.
+     *
      * @param $query
      * @param  array $type
-     * @return object
+
+
+*
+*@return object
      */
     public function scopeOfTypes($query, $type)
     {
@@ -74,7 +77,7 @@ class Statistics extends Elegant
         return $this->belongsTo('BFACP\Battlefield\Server', 'server_id')->select([
             'ServerID',
             'ServerName',
-            'GameID'
+            'GameID',
         ]);
     }
 }

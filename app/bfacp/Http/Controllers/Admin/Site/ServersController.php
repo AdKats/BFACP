@@ -16,8 +16,7 @@ class ServersController extends BaseController
     {
         $servers = Server::all();
 
-        return View::make('admin.site.servers.index', compact('servers'))
-            ->with('page_title', 'Servers');
+        return View::make('admin.site.servers.index', compact('servers'))->with('page_title', 'Servers');
     }
 
     public function edit($id)
@@ -35,8 +34,7 @@ class ServersController extends BaseController
 
             Former::populate($server->setting);
 
-            return View::make('admin.site.servers.edit', compact('server'))
-                ->with('page_title', 'Server Settings');
+            return View::make('admin.site.servers.edit', compact('server'))->with('page_title', 'Server Settings');
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.site.servers.index')->withErrors(['Server doesn\'t exist.']);
         }

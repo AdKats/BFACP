@@ -39,7 +39,7 @@ class ReportsController extends BaseController
         $v = Validator::make(Input::all(), [
             'id' => 'required|numeric|exists:adkats_records_main,record_id',
             'action' => 'required|numeric|in:' . implode(',', $r::$allowedCommands),
-            'reason' => 'max:500'
+            'reason' => 'max:500',
         ]);
 
         if ($v->fails()) {

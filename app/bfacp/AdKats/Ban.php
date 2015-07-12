@@ -6,6 +6,12 @@ use Carbon\Carbon;
 class Ban extends Elegant
 {
     /**
+     * Should model handle timestamps
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * Table name
      * @var string
      */
@@ -30,13 +36,6 @@ class Ban extends Elegant
     protected $dates = ['ban_startTime', 'ban_endTime'];
 
     /**
-     * Should model handle timestamps
-     *
-     * @var boolean
-     */
-    public $timestamps = false;
-
-    /**
      * Append custom attributes to output
      * @var array
      */
@@ -49,7 +48,7 @@ class Ban extends Elegant
         'ban_enforceGUID',
         'ban_enforceIP',
         'ban_issued',
-        'ban_expires'
+        'ban_expires',
     ];
 
     /**
@@ -76,34 +75,45 @@ class Ban extends Elegant
 
     /**
      * Gets the latest bans that are in effect
+     *
      * @param  object $query
      * @param  integer $limit
-     * @return \Illuminate\Database\Eloquent\Model
+
+
+*
+*@return \Illuminate\Database\Eloquent\Model
      */
     public function scopeLatest($query, $limit = 60)
     {
-        return $query->where('ban_status', 'Active')
-            ->orderBy('ban_startTime', 'desc')
-            ->take($limit);
+        return $query->where('ban_status', 'Active')->orderBy('ban_startTime', 'desc')->take($limit);
     }
 
     /**
      * Gets the bans done yesterday (UTC)
-     * @param  object $query
-     * @return \Illuminate\Database\Eloquent\Model
+
+*
+* @param  object $query
+
+
+*
+*@return \Illuminate\Database\Eloquent\Model
      */
     public function scopeYesterday($query)
     {
-        return $query->where('ban_startTime', '>=', Carbon::yesterday())
-            ->where('ban_startTime', '<=', Carbon::today());
+        return $query->where('ban_startTime', '>=', Carbon::yesterday())->where('ban_startTime', '<=', Carbon::today());
     }
 
     /**
      * Get the bans that the player ids have done
-     * @param  object $query
+
+*
+*@param  object $query
      * @param  array $playerIds
      * @param  integer $limit
-     * @return \Illuminate\Database\Eloquent\Model
+
+
+*
+*@return \Illuminate\Database\Eloquent\Model
      */
     public function scopePersonal($query, $playerIds = [], $limit = 30)
     {
@@ -111,10 +121,9 @@ class Ban extends Elegant
             return $this;
         }
 
-        return $query->join('adkats_records_main', 'adkats_bans.latest_record_id', '=', 'adkats_records_main.record_id')
-            ->whereIn('adkats_records_main.source_id', $playerIds)
-            ->orderBy('ban_startTime', 'desc')
-            ->take($limit);
+        return $query->join('adkats_records_main', 'adkats_bans.latest_record_id', '=',
+            'adkats_records_main.record_id')->whereIn('adkats_records_main.source_id',
+            $playerIds)->orderBy('ban_startTime', 'desc')->take($limit);
     }
 
     /**
@@ -122,9 +131,8 @@ class Ban extends Elegant
      */
     public function previous()
     {
-        return $this->hasMany('BFACP\AdKats\Record', 'target_id', 'player_id')
-            ->whereIn('command_action', [7, 8, 72, 73])
-            ->orderBy('record_time', 'desc');
+        return $this->hasMany('BFACP\AdKats\Record', 'target_id', 'player_id')->whereIn('command_action',
+            [7, 8, 72, 73])->orderBy('record_time', 'desc');
     }
 
     public function getBanIssuedAttribute()

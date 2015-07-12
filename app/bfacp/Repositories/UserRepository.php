@@ -13,10 +13,14 @@ class UserRepository
 {
     /**
      * Create a new user
+     *
      * @param  array $input
      * @param  integer $role Default role is 2
      * @param bool $confirmed
-     * @return User
+
+
+*
+*@return User
      */
     public function signup($input = [], $role = 2, $confirmed = false)
     {
@@ -45,7 +49,7 @@ class UserRepository
         if (!is_null($user->id)) {
             $user->roles()->attach($role);
             $user->setting()->save(new Setting([
-                'lang' => array_get($input, 'lang', 'en')
+                'lang' => array_get($input, 'lang', 'en'),
             ]));
 
             if (!empty(array_get($input, 'ign'))) {
@@ -68,8 +72,13 @@ class UserRepository
 
     /**
      * Attempts to login with the given credentials.
-     * @param  array $input
-     * @return boolean
+
+*
+* @param  array $input
+
+
+*
+*@return boolean
      */
     public function login($input)
     {
@@ -92,8 +101,10 @@ class UserRepository
     /**
      * Checks if the credentials has been throttled by too
      * many failed login attempts
+
      *
-     * @param  array $input
+*@param  array $input
+     *
      * @return boolean
      */
     public function isThrottled($input)
@@ -104,8 +115,10 @@ class UserRepository
     /**
      * Checks if the given credentials correponds to a user
      * that exists but is not confirmed
+
      *
-     * @param  array $input
+*@param  array $input
+     *
      * @return boolean
      */
     public function existsButNotConfirmed($input)
@@ -113,10 +126,7 @@ class UserRepository
         $user = Confide::getUserByEmailOrUsername($input);
 
         if ($user) {
-            $correctPassword = Hash::check(
-                isset($input['password']) ? $input['password'] : false,
-                $user->password
-            );
+            $correctPassword = Hash::check(isset($input['password']) ? $input['password'] : false, $user->password);
 
             return !$user->confirmed && $correctPassword;
         }
@@ -126,9 +136,11 @@ class UserRepository
 
     /**
      * Resets the password of a user. The $input['token'] will tell which user.
+
      *
-     * @param  array $input Array containing 'token', 'password' and 'password_confirmation' keys.
-     * @return boolean
+*@param  array $input Array containing 'token', 'password' and 'password_confirmation' keys.
+     *
+     *@return boolean
      */
     public function resetPassword($input)
     {
@@ -151,9 +163,11 @@ class UserRepository
 
     /**
      * Attempt to confirm the account with code
+
      *
-     * @param  string $code
-     * @return boolean
+*@param  string $code
+     *
+     *@return boolean
      */
     public function confirm($code)
     {

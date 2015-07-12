@@ -6,6 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 class Setting extends Elegant
 {
     /**
+     * Validation rules
+     * @var array
+     */
+    public static $rules = [
+        'gravatar' => 'email',
+        'timezone' => 'timezone',
+        'lang' => 'string',
+    ];
+
+    /**
+     * Should model handle timestamps
+     * @var boolean
+     */
+    public $timestamps = true;
+
+    /**
      * Table name
      * @var string
      */
@@ -36,13 +52,6 @@ class Setting extends Elegant
     protected $hidden = [];
 
     /**
-     * Should model handle timestamps
-     *
-     * @var boolean
-     */
-    public $timestamps = true;
-
-    /**
      * Append custom attributes to output
      * @var array
      */
@@ -53,16 +62,6 @@ class Setting extends Elegant
      * @var array
      */
     protected $with = [];
-
-    /**
-     * Validation rules
-     * @var array
-     */
-    public static $rules = [
-        'gravatar' => 'email',
-        'timezone' => 'timezone',
-        'lang' => 'string'
-    ];
 
     /**
      * @return Model

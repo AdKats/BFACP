@@ -44,7 +44,6 @@ class User extends Model implements ConfideUserInterface
 
     /**
      * Should model handle timestamps
-     *
      * @var boolean
      */
     public $timestamps = true;
@@ -68,12 +67,11 @@ class User extends Model implements ConfideUserInterface
     public static $rules = [
         'username' => 'required|unique:bfacp_users,username|alpha_dash|min:4',
         'email' => 'required|unique:bfacp_users,email|email',
-        'password' => 'required|min:8|confirmed'
+        'password' => 'required|min:8|confirmed',
     ];
 
     /**
      * Get the unique identifier for the user.
-     *
      * @return mixed
      */
     public function getAuthIdentifier()
@@ -83,7 +81,6 @@ class User extends Model implements ConfideUserInterface
 
     /**
      * Get the password for the user.
-     *
      * @return string
      */
     public function getAuthPassword()
@@ -93,7 +90,6 @@ class User extends Model implements ConfideUserInterface
 
     /**
      * Get the e-mail address where password reminders are sent.
-     *
      * @return string
      */
     public function getReminderEmail()
@@ -112,7 +108,8 @@ class User extends Model implements ConfideUserInterface
 
     /**
      * Set the remember token for the user
-     * @param string $value
+     *
+*@param string $value
      */
     public function setRememberToken($value)
     {

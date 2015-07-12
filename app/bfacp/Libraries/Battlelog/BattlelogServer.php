@@ -47,7 +47,7 @@ class BattlelogServer extends BattlelogAPI
         'vvsd-min' => 0,
         'vvsd-max' => 500,
         'vgmc-min' => 0,
-        'vgmc-max' => 500
+        'vgmc-max' => 500,
     ];
 
     /**
@@ -78,6 +78,29 @@ class BattlelogServer extends BattlelogAPI
     }
 
     /**
+     * Returns the server GUID
+     * @return string
+     */
+    public function guid()
+    {
+        $servers = $this->search();
+
+        if (!is_null($servers) && !empty($servers)) {
+            if (count($servers) > 1) {
+                foreach ($servers as $server) {
+                    if ($server['name'] == $this->server->ServerName) {
+                        return $server['guid'];
+                    }
+                }
+            } else {
+                return $servers[0]['guid'];
+            }
+        }
+
+        return;
+    }
+
+    /**
      * Search for server on battlelog
      * @return array
      */
@@ -102,29 +125,6 @@ class BattlelogServer extends BattlelogAPI
 
         if (array_key_exists('servers', $response['globalContext'])) {
             return $response['globalContext']['servers'];
-        }
-
-        return;
-    }
-
-    /**
-     * Returns the server GUID
-     * @return string
-     */
-    public function guid()
-    {
-        $servers = $this->search();
-
-        if (!is_null($servers) && !empty($servers)) {
-            if (count($servers) > 1) {
-                foreach ($servers as $server) {
-                    if ($server['name'] == $this->server->ServerName) {
-                        return $server['guid'];
-                    }
-                }
-            } else {
-                return $servers[0]['guid'];
-            }
         }
 
         return;

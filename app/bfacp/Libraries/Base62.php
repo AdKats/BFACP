@@ -3,7 +3,6 @@
 /**
  * Base 62 Encoder / Decoder Class
  * (c) Andy Huang, 2009; All rights reserved
- *
  * This code is not distributed under any specific license,
  * as I do not believe in them, but it is distributed under
  * these terms outlined below:
@@ -23,12 +22,12 @@ class Base62
 
     public function encode($var)
     {
-        $stack = array();
+        $stack = [];
 
         while (bccomp($var, 0) != 0) {
             $remainder = bcmod($var, self::$base);
             $var = bcdiv(bcsub($var, $remainder), self::$base);
-            array_push($stack, self::$characters[$remainder]);
+            array_push($stack, self::$characters[ $remainder ]);
         }
 
         return implode('', array_reverse($stack));
@@ -40,7 +39,7 @@ class Base62
         $result = 0;
 
         for ($i = 0; $i < $length; $i++) {
-            $result = bcadd($result, bcmul(self::getDigit($var[$i]), bcpow(self::$base, ($length - ($i + 1)))));
+            $result = bcadd($result, bcmul(self::getDigit($var[ $i ]), bcpow(self::$base, ($length - ($i + 1)))));
         }
 
         return $result;

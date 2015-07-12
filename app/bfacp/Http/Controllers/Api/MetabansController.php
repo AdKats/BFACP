@@ -27,34 +27,25 @@ class MetabansController extends BaseController
 
         $feed_assessments = [
             'feed' => $feed,
-            'assessments' => $assessments
+            'assessments' => $assessments,
         ];
 
-        return MainHelper::response(
-            $feed_assessments + [
-                'locales' => Lang::get('common.metabans')
-            ],
-            null, null, null, false, true
-        );
+        return MainHelper::response($feed_assessments + [
+                'locales' => Lang::get('common.metabans'),
+            ], null, null, null, false, true);
     }
 
     public function getFeed()
     {
         $feed = $this->metabans->feed();
 
-        return MainHelper::response(
-            $feed,
-            null, null, null, false, true
-        );
+        return MainHelper::response($feed, null, null, null, false, true);
     }
 
     public function getAssessments()
     {
         $assessments = $this->metabans->assessments();
 
-        return MainHelper::response(
-            $assessments,
-            null, null, null, false, true
-        );
+        return MainHelper::response($assessments, null, null, null, false, true);
     }
 }

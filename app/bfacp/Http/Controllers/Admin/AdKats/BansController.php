@@ -61,7 +61,8 @@ class BansController extends BaseController
 
     /**
      * Shows the ban editing page
-     * @param  integer $id Ban ID
+     *
+*@param  integer $id Ban ID
      */
     public function edit($id)
     {
@@ -95,7 +96,7 @@ class BansController extends BaseController
                 'Create New Ban');
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.adkats.bans.index')->withErrors([
-                sprintf('Player #%u doesn\'t exist.', Input::get('player_id'))
+                sprintf('Player #%u doesn\'t exist.', Input::get('player_id')),
             ]);
         }
     }
@@ -126,11 +127,8 @@ class BansController extends BaseController
             $admin_id = is_null($admin) ? null : $admin->PlayerID;
             $admin_name = is_null($admin) ? Auth::user()->username : $admin->SoldierName;
 
-            $input = compact(
-                'ban_notes', 'ban_message', 'ban_server', 'ban_start', 'ban_end',
-                'ban_type', 'ban_enforce_guid', 'ban_enforce_name', 'ban_enforce_ip',
-                'admin_id', 'admin_name'
-            );
+            $input = compact('ban_notes', 'ban_message', 'ban_server', 'ban_start', 'ban_end', 'ban_type',
+                'ban_enforce_guid', 'ban_enforce_name', 'ban_enforce_ip', 'admin_id', 'admin_name');
 
             $response = Event::fire('player.ban', [$input, $player])[0];
 
@@ -139,14 +137,15 @@ class BansController extends BaseController
             return Redirect::route('admin.adkats.bans.edit', [$response->ban_id])->with('messages', $this->messages);
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.adkats.bans.index')->withErrors([
-                sprintf('Player #%u doesn\'t exist.', Input::get('player_id'))
+                sprintf('Player #%u doesn\'t exist.', Input::get('player_id')),
             ]);
         }
     }
 
     /**
      * Updates a existing ban
-     * @param  integer $id Ban ID
+     *
+*@param  integer $id Ban ID
      */
     public function update($id)
     {
@@ -190,10 +189,9 @@ class BansController extends BaseController
 
             // If the ban end datetime is passed the current datetime then redirect back and show an error
             if ($ban->ban_endTime->lte(Carbon::now())) {
-                return Redirect::route('admin.adkats.bans.edit', [$ban->ban_id])
-                    ->withErrors(['Ban expire date or time cannot be in the past. Cannot update the ban.'])
-                    ->withInput()
-                    ->with('messages', ['Fields have been preserved with your changes.']);
+                return Redirect::route('admin.adkats.bans.edit',
+                    [$ban->ban_id])->withErrors(['Ban expire date or time cannot be in the past. Cannot update the ban.'])->withInput()->with('messages',
+                    ['Fields have been preserved with your changes.']);
             }
 
             // Stores how long the ban is in minutes
@@ -230,10 +228,9 @@ class BansController extends BaseController
                         // If ban reason is the same as the unban reason then prevent the ban update.
                         // Ban reasons should be different from the unban reasons
                         if ($ban_message == $oldRecord->record_message && $oldRecord->command_type == 37) {
-                            return Redirect::route('admin.adkats.bans.edit', [$ban->ban_id])
-                                ->withErrors(['Ban reason is the same as the unban reason. Please change the ban reason.'])
-                                ->withInput()
-                                ->with('messages', ['Fields have been preserved with your changes.']);
+                            return Redirect::route('admin.adkats.bans.edit',
+                                [$ban->ban_id])->withErrors(['Ban reason is the same as the unban reason. Please change the ban reason.'])->withInput()->with('messages',
+                                ['Fields have been preserved with your changes.']);
                         }
 
                         // Duplicate the record and save the changes
@@ -299,8 +296,11 @@ class BansController extends BaseController
 
     /**
      * Unbans the player
-     * @param  integer $id Ban ID
-     * @return \Illuminate\Support\Facades\Response
+     *
+     *@param  integer $id Ban ID
+
+*
+*@return \Illuminate\Support\Facades\Response
      */
     public function destroy($id)
     {

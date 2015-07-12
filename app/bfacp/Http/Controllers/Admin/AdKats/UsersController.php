@@ -27,11 +27,8 @@ class UsersController extends BaseController
      */
     public function index()
     {
-        $users = User::join('adkats_roles AS ar', 'ar.role_id', '=', 'adkats_users.user_role')
-            ->with('role', 'soldiers.player')
-            ->orderBy('ar.role_name')
-            ->orderBy('user_name')
-            ->get();
+        $users = User::join('adkats_roles AS ar', 'ar.role_id', '=', 'adkats_users.user_role')->with('role',
+            'soldiers.player')->orderBy('ar.role_name')->orderBy('user_name')->get();
 
         return View::make('admin.adkats.users.index', compact('users'))->with('page_title',
             Lang::get('navigation.admin.adkats.items.users.title'));
@@ -43,7 +40,7 @@ class UsersController extends BaseController
     public function store()
     {
         $v = Validator::make(Input::all(), [
-            'username' => 'required|unique:adkats_users,user_name|alpha_dash'
+            'username' => 'required|unique:adkats_users,user_name|alpha_dash',
         ]);
 
         if ($v->fails()) {
@@ -56,13 +53,14 @@ class UsersController extends BaseController
         $user->save();
 
         return MainHelper::response([
-            'url' => route('admin.adkats.users.edit', $user->user_id)
+            'url' => route('admin.adkats.users.edit', $user->user_id),
         ]);
     }
 
     /**
      * Show the editing page
-     * @param integer $id User ID
+     *
+*@param integer $id User ID
      */
     public function edit($id)
     {
@@ -85,7 +83,8 @@ class UsersController extends BaseController
 
     /**
      * Update user
-     * @param  integer $id User ID
+     *
+*@param  integer $id User ID
      */
     public function update($id)
     {
@@ -103,7 +102,7 @@ class UsersController extends BaseController
                 'user_name' => 'required|alpha_dash',
                 'user_email' => 'email',
                 'user_role' => 'required|exists:adkats_roles,role_id',
-                'user_notes' => 'max:1000'
+                'user_notes' => 'max:1000',
             ]);
 
             if ($v->fails()) {
@@ -168,8 +167,11 @@ class UsersController extends BaseController
 
     /**
      * Delete user
-     * @param  integer $id User ID
-     * @return \Illuminate\Support\Facades\Response
+     *
+     *@param  integer $id User ID
+
+*
+*@return \Illuminate\Support\Facades\Response
      */
     public function destroy($id)
     {
@@ -179,7 +181,7 @@ class UsersController extends BaseController
             $user->delete();
 
             return MainHelper::response([
-                'url' => route('admin.adkats.users.index')
+                'url' => route('admin.adkats.users.index'),
             ], sprintf('%s was deleted', $username));
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);

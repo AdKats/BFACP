@@ -35,8 +35,9 @@ class HomeController extends BaseController
 
         $countryMapTable = $countryMap->sortByDesc('total')->take(5);
 
-        return View::make('dashboard', compact('uniquePlayers', 'adkats_statistics', 'countryMap', 'countryMapTable'))
-            ->with('page_title', Lang::get('navigation.main.items.dashboard.title'));
+        return View::make('dashboard',
+            compact('uniquePlayers', 'adkats_statistics', 'countryMap', 'countryMapTable'))->with('page_title',
+            Lang::get('navigation.main.items.dashboard.title'));
     }
 
     /**
@@ -47,7 +48,7 @@ class HomeController extends BaseController
         $games = Game::with([
             'servers' => function ($query) {
                 $query->active()->orderBy('ServerName');
-            }
+            },
         ])->get();
 
         return View::make('scoreboard', compact('games'))->with('page_title',

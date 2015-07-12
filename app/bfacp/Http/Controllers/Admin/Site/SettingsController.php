@@ -15,8 +15,8 @@ class SettingsController extends BaseController
     {
         $settings = Option::where('option_key', '!=', 'site.languages')->get();
 
-        return View::make('admin.site.settings.index', compact('settings'))
-            ->with('page_title', Lang::get('navigation.admin.site.items.settings.title'));
+        return View::make('admin.site.settings.index', compact('settings'))->with('page_title',
+            Lang::get('navigation.admin.site.items.settings.title'));
     }
 
     public function update()
@@ -36,7 +36,7 @@ class SettingsController extends BaseController
                     }
                 }
 
-                if ($value != $settings[$key]) {
+                if ($value != $settings[ $key ]) {
                     Option::where('option_key', $key)->update(['option_value' => $value]);
                 }
             }

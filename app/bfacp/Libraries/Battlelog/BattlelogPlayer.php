@@ -116,7 +116,7 @@ class BattlelogPlayer extends BattlelogAPI
                 'gravatar' => $this->personaGravatar,
                 'persona_banned' => false,
                 'persona_id' => $this->personaID,
-                'user_id' => $this->personaUserID
+                'user_id' => $this->personaUserID,
             ]));
 
             // Reload the relationship
@@ -133,7 +133,7 @@ class BattlelogPlayer extends BattlelogAPI
     public function getWeaponStats()
     {
         // Generate URI for request
-        $uri = sprintf($this->uris[$this->game]['weapons'], $this->game, $this->personaID);
+        $uri = sprintf($this->uris[ $this->game ]['weapons'], $this->game, $this->personaID);
 
         // Send request
         $results = $this->sendRequest($uri)['data'];
@@ -145,17 +145,11 @@ class BattlelogPlayer extends BattlelogAPI
         foreach ($results['mainWeaponStats'] as $weapon) {
 
             if ($this->game == 'bf3') {
-                $weaponURI = sprintf('%s/soldier/%s/iteminfo/%s/%u/pc/',
-                    $this->game,
-                    $this->player->SoldierName,
-                    strtolower($weapon['slug']),
-                    $this->personaID);
+                $weaponURI = sprintf('%s/soldier/%s/iteminfo/%s/%u/pc/', $this->game, $this->player->SoldierName,
+                    strtolower($weapon['slug']), $this->personaID);
             } else {
-                $weaponURI = sprintf('%s/soldier/%s/weapons/%u/pc/#%s',
-                    $this->game,
-                    $this->player->SoldierName,
-                    $this->personaID,
-                    strtolower($weapon['slug']));
+                $weaponURI = sprintf('%s/soldier/%s/weapons/%u/pc/#%s', $this->game, $this->player->SoldierName,
+                    $this->personaID, strtolower($weapon['slug']));
             }
 
             $weapons->push([
@@ -172,7 +166,7 @@ class BattlelogPlayer extends BattlelogAPI
                 'kpm' => MainHelper::divide($weapon['kills'], MainHelper::divide($weapon['timeEquipped'], 60)),
                 'hskp' => MainHelper::percent($weapon['headshots'], $weapon['kills']),
                 'dps' => MainHelper::percent($weapon['kills'], $weapon['shotsHit']),
-                'weapon_link' => parent::BLOG . $weaponURI
+                'weapon_link' => parent::BLOG . $weaponURI,
             ]);
         }
 
@@ -186,7 +180,7 @@ class BattlelogPlayer extends BattlelogAPI
     public function getOverviewStats()
     {
         // Generate URI for request
-        $uri = sprintf($this->uris[$this->game]['overview'], $this->game, $this->personaID);
+        $uri = sprintf($this->uris[ $this->game ]['overview'], $this->game, $this->personaID);
 
         // Send request
         $results = $this->sendRequest($uri)['data'];
@@ -203,7 +197,7 @@ class BattlelogPlayer extends BattlelogAPI
     public function getVehicleStats()
     {
         // Generate URI for request
-        $uri = sprintf($this->uris[$this->game]['vehicles'], $this->game, $this->personaID);
+        $uri = sprintf($this->uris[ $this->game ]['vehicles'], $this->game, $this->personaID);
 
         // Send request
         $results = $this->sendRequest($uri)['data'];
@@ -220,7 +214,7 @@ class BattlelogPlayer extends BattlelogAPI
                 'score' => array_key_exists('score', $vehicle) ? $vehicle['score'] : null,
                 'timeEquipped' => $vehicle['timeIn'],
                 'serviceStars' => $vehicle['serviceStars'],
-                'kpm' => MainHelper::divide($vehicle['kills'], MainHelper::divide($vehicle['timeIn'], 60))
+                'kpm' => MainHelper::divide($vehicle['kills'], MainHelper::divide($vehicle['timeIn'], 60)),
             ]);
         }
 
@@ -239,7 +233,7 @@ class BattlelogPlayer extends BattlelogAPI
         }
 
         // Generate URI for request
-        $uri = sprintf($this->uris[$this->game]['battlereports'], $this->game, $this->personaID);
+        $uri = sprintf($this->uris[ $this->game ]['battlereports'], $this->game, $this->personaID);
 
         // Send request
         $results = $this->sendRequest($uri)['data'];
@@ -256,7 +250,7 @@ class BattlelogPlayer extends BattlelogAPI
     private function getSoldierAndUpdate()
     {
         // Generate URI for request
-        $uri = sprintf($this->uris[$this->game]['soldier'], $this->game, $this->personaUserID, $this->personaID);
+        $uri = sprintf($this->uris[ $this->game ]['soldier'], $this->game, $this->personaUserID, $this->personaID);
 
         // Send request
         $results = $this->sendRequest($uri);

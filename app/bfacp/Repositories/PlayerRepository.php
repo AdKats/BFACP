@@ -24,14 +24,18 @@ class PlayerRepository extends BaseRepository
         'infractionsServer.server',
         'dogtags.victim',
         'stats.weapons.weapon',
-        'stats.server'
+        'stats.server',
     ];
 
     /**
      * Returns a paginate result of all players
+     *
      * @param int $limit
      * @param null $names
-     * @return \Illuminate\Pagination\Paginator
+
+
+*
+*@return \Illuminate\Pagination\Paginator
      */
     public function getAllPlayers($limit = 100, $names = null)
     {
@@ -39,12 +43,7 @@ class PlayerRepository extends BaseRepository
             $limit = 100;
         }
 
-        $query = Player::with(
-            'ban',
-            'infractionsGlobal',
-            'infractionsServer.server',
-            'reputation'
-        );
+        $query = Player::with('ban', 'infractionsGlobal', 'infractionsServer.server', 'reputation');
 
         if (!empty($names)) {
             $query->where(function ($q) use ($names) {
@@ -85,8 +84,12 @@ class PlayerRepository extends BaseRepository
 
     /**
      * Returns a player by their ID
-     * @param  integer $id Database Player ID
-     * @return object
+
+*
+* @param  integer $id Database Player ID
+
+*
+*@return object
      */
     public function getPlayerById($id)
     {
@@ -104,8 +107,12 @@ class PlayerRepository extends BaseRepository
 
     /**
      * Returns the player with the givin guid
-     * @param  string $guid EA GUID
-     * @return object
+
+*
+*@param  string $guid EA GUID
+
+*
+*@return object
      */
     public function getPlayerByGuid($guid)
     {
@@ -134,18 +141,14 @@ class PlayerRepository extends BaseRepository
      */
     public function getPlayersSeenByCountry()
     {
-        $result = DB::table('tbl_playerdata')
-            ->whereNotIn('CountryCode', ['', '--'])
-            ->whereNotNull('CountryCode')
-            ->whereIn('tbl_playerdata.PlayerID', function ($query) {
-                $query->select('tbl_server_player.PlayerID')->from('tbl_server_player')->whereIn('tbl_server_player.StatsID',
-                    function ($query) {
-                        $query->select('StatsID')->from('tbl_playerstats')->where('LastSeenOnServer', '>=',
-                            Carbon::now()->subDay());
-                    });
-            })
-            ->groupBy('CountryCode')
-            ->select(DB::raw('UPPER(`CountryCode`) AS `CountryCode`, COUNT(`tbl_playerdata`.`PlayerID`) AS `total`'))->get();
+        $result = DB::table('tbl_playerdata')->whereNotIn('CountryCode',
+            ['', '--'])->whereNotNull('CountryCode')->whereIn('tbl_playerdata.PlayerID', function ($query) {
+            $query->select('tbl_server_player.PlayerID')->from('tbl_server_player')->whereIn('tbl_server_player.StatsID',
+                function ($query) {
+                    $query->select('StatsID')->from('tbl_playerstats')->where('LastSeenOnServer', '>=',
+                        Carbon::now()->subDay());
+                });
+        })->groupBy('CountryCode')->select(DB::raw('UPPER(`CountryCode`) AS `CountryCode`, COUNT(`tbl_playerdata`.`PlayerID`) AS `total`'))->get();
 
         $result = new Collection($result);
 
@@ -154,19 +157,21 @@ class PlayerRepository extends BaseRepository
 
     /**
      * Returns the player record history
-     * @param  integer $id Player ID
+
+     *
+*@param  integer $id Player ID
      * @param  integer $limit Results to return
-     * @return object
+
+     *
+*@return object
      */
     public function getPlayerRecords($id, $limit = 25)
     {
-        $records = Record::with('target', 'source', 'type', 'action')
-            ->orderBy('record_time', 'desc')
-            ->whereNotIn('command_type', [48, 49, 85, 86])
-            ->where(function ($query) use ($id) {
-                $query->where('target_id', $id);
-                $query->orWhere('source_id', $id);
-            });
+        $records = Record::with('target', 'source', 'type', 'action')->orderBy('record_time',
+            'desc')->whereNotIn('command_type', [48, 49, 85, 86])->where(function ($query) use ($id) {
+            $query->where('target_id', $id);
+            $query->orWhere('source_id', $id);
+        });
 
         // If a command id is present we are going to only pull records
         // that have the specific id
@@ -187,16 +192,17 @@ class PlayerRepository extends BaseRepository
 
     /**
      * Returns the player chatlogs
-     * @param  integer $id Player ID
+
+     *
+*@param  integer $id Player ID
      * @param  integer $limit Results to return
-     * @return object
+
+     *
+*@return object
      */
     public function getPlayerChat($id, $limit = 30)
     {
-        $chatlogs = Chat::with('server')
-            ->where('logPlayerID', $id)
-            ->excludeSpam()
-            ->orderBy('logDate', 'desc');
+        $chatlogs = Chat::with('server')->where('logPlayerID', $id)->excludeSpam()->orderBy('logDate', 'desc');
 
         // If a server is specifed then we only pull logs from that server
         if (Input::has('server')) {
@@ -232,9 +238,13 @@ class PlayerRepository extends BaseRepository
 
     /**
      * Sets which relations should be returned
-     * @param  array $opts
+
+     *
+*@param  array $opts
      * @param  bool $custom
-     * @return $this
+
+     *
+*@return $this
      */
     public function setopts($opts = [], $custom = false)
     {

@@ -44,8 +44,8 @@ class SpecialPlayersController extends BaseController
             return new Collection($data);
         });
 
-        return View::make('admin.adkats.special_players.index', compact('players', 'groups'))
-            ->with('page_title', Lang::get('navigation.admin.adkats.items.special_players.title'));
+        return View::make('admin.adkats.special_players.index', compact('players', 'groups'))->with('page_title',
+            Lang::get('navigation.admin.adkats.items.special_players.title'));
     }
 
     public function update($id)

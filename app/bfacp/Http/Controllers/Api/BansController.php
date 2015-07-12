@@ -33,7 +33,7 @@ class BansController extends BaseController
 
         return MainHelper::response([
             'cols' => Lang::get('dashboard.bans.columns'),
-            'bans' => $bans
+            'bans' => $bans,
         ], null, null, null, $isCached, true);
     }
 
@@ -51,8 +51,8 @@ class BansController extends BaseController
         return MainHelper::response([
             'bans' => [
                 'yesterday' => $yesterdaysBans,
-                'average' => $avgBansPerDay
-            ]
+                'average' => $avgBansPerDay,
+            ],
         ], null, null, null, false, true);
     }
 }

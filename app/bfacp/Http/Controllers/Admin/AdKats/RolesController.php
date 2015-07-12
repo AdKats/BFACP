@@ -24,7 +24,7 @@ class RolesController extends BaseController
             return Role::with('permissions', 'users')->findOrFail($id);
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.adkats.roles.index')->withErrors([
-                sprintf('No role found with ID #%s.', $id)
+                sprintf('No role found with ID #%s.', $id),
             ]);
         }
     }

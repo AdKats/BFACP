@@ -38,7 +38,6 @@ class Role extends EntrustRole
 
     /**
      * Should model handle timestamps
-     *
      * @var boolean
      */
     public $timestamps = true;
@@ -60,7 +59,7 @@ class Role extends EntrustRole
      * @var array
      */
     public static $rules = [
-        'name' => 'required|unique:bfacp_roles,name|between:4,255'
+        'name' => 'required|unique:bfacp_roles,name|between:4,255',
     ];
 
     /**

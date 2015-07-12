@@ -35,7 +35,6 @@ class Player extends Elegant
 
     /**
      * Should model handle timestamps
-     *
      * @var boolean
      */
     public $timestamps = false;
@@ -186,7 +185,7 @@ class Player extends Elegant
     {
         return route('player.show', [
             'id' => $this->PlayerID,
-            'name' => $this->SoldierName
+            'name' => $this->SoldierName,
         ]);
     }
 
@@ -275,9 +274,9 @@ class Player extends Elegant
 
                 $request = App::make('guzzle')->get(sprintf('http://api.bf4db.com/api-player.php?%s', http_build_query([
                     'format' => 'json',
-                    'guid' => $this->EAGUID
+                    'guid' => $this->EAGUID,
                 ])), [
-                    'connect_timeout' => 5
+                    'connect_timeout' => 5,
                 ]);
 
                 $response = $request->json();
@@ -285,7 +284,7 @@ class Player extends Elegant
                 if ($response['type'] != 'error') {
                     $bf4db_profile = [
                         'url' => $response['data']['bf4db_url'],
-                        'cheatscore' => $response['data']['cheatscore']
+                        'cheatscore' => $response['data']['cheatscore'],
                     ];
                 } else {
                     throw new \Exception();
@@ -293,7 +292,7 @@ class Player extends Elegant
             } catch (\Exception $e) {
                 $bf4db_profile = [
                     'url' => sprintf('http://bf4db.com/players?name=%s', $this->SoldierName),
-                    'cheatscore' => null
+                    'cheatscore' => null,
                 ];
             }
         }
@@ -308,7 +307,7 @@ class Player extends Elegant
             'bf4db' => $game == 'BF4' ? $bf4db_profile : null,
             'chatlogs' => route('chatlog.search', ['pid' => $this->PlayerID]),
             'pbbans' => !empty($this->PBGUID) ? sprintf('http://www.pbbans.com/mbi-guid-search-%s.html',
-                $this->PBGUID) : null
+                $this->PBGUID) : null,
         ];
 
         $links = array_merge($links, $links[0]);

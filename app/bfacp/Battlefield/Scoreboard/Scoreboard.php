@@ -6,6 +6,12 @@ use BFACP\Facades\Battlefield as BattlefieldHelper;
 class Scoreboard extends Elegant
 {
     /**
+     * Should model handle timestamps
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * Table name
      * @var string
      */
@@ -28,13 +34,6 @@ class Scoreboard extends Elegant
      * @var array
      */
     protected $dates = ['PlayerJoined'];
-
-    /**
-     * Should model handle timestamps
-     *
-     * @var boolean
-     */
-    public $timestamps = false;
 
     /**
      * Append custom attributes to output

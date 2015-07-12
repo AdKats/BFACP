@@ -26,13 +26,14 @@ class UsersController extends BaseController
         // Fetch the users and paginate
         $users = User::orderBy('username')->paginate(60);
 
-        return View::make('admin.site.users.index', compact('users'))
-            ->with('page_title', Lang::get('navigation.admin.site.items.users.title'));
+        return View::make('admin.site.users.index', compact('users'))->with('page_title',
+            Lang::get('navigation.admin.site.items.users.title'));
     }
 
     /**
      * Show the editing page
-     * @param integer $id User ID
+     *
+*@param integer $id User ID
      */
     public function edit($id)
     {
@@ -62,7 +63,8 @@ class UsersController extends BaseController
 
     /**
      * Update user
-     * @param  integer $id User ID
+     *
+*@param  integer $id User ID
      */
     public function update($id)
     {
@@ -81,7 +83,7 @@ class UsersController extends BaseController
                 'email' => 'required|email|unique:bfacp_users,email,' . $id,
                 'language' => 'required|in:' . implode(',', array_keys(Config::get('bfacp.site.languages'))),
                 'generate_pass' => 'boolean',
-                'confirmed' => 'boolean'
+                'confirmed' => 'boolean',
             ]);
 
             if ($v->fails()) {
@@ -97,7 +99,7 @@ class UsersController extends BaseController
             // Update the user language if it's been changed
             if ($lang != $user->setting->lang) {
                 $user->setting()->update([
-                    'lang' => $lang
+                    'lang' => $lang,
                 ]);
             }
 
@@ -122,15 +124,11 @@ class UsersController extends BaseController
                 $newPassword = MainHelper::generateStrongPassword(12);
 
                 // Send the email to the user with their new password
-                Mail::send(
-                    'emails.user.passwordchange',
-                    compact('user', 'newPassword'),
+                Mail::send('emails.user.passwordchange', compact('user', 'newPassword'),
                     function ($message) use ($user) {
-                        $message
-                            ->to($user->email, $user->username)
-                            ->subject(Lang::get('email.password_changed.subject'));
-                    }
-                );
+                        $message->to($user->email,
+                            $user->username)->subject(Lang::get('email.password_changed.subject'));
+                    });
 
                 // Change the user password
                 $user->password = $newPassword;
@@ -167,7 +165,7 @@ class UsersController extends BaseController
                     // and if so do not associate with the account.
                     if (Soldier::where('player_id', $soldier->player_id)->count() == 1) {
                         $this->messages[] = Lang::get('alerts.user.soldier_taken', ['playerid' => $soldier->player_id]);
-                        unset($soldier_ids[$key]);
+                        unset($soldier_ids[ $key ]);
                     }
                 }
 
@@ -185,8 +183,11 @@ class UsersController extends BaseController
 
     /**
      * Delete user
-     * @param  integer $id User ID
-     * @return \Illuminate\Support\Facades\Response
+     *
+     *@param  integer $id User ID
+
+*
+*@return \Illuminate\Support\Facades\Response
      */
     public function destroy($id)
     {
@@ -196,7 +197,7 @@ class UsersController extends BaseController
             $user->delete();
 
             return MainHelper::response([
-                'url' => route('admin.site.users.index')
+                'url' => route('admin.site.users.index'),
             ], Lang::get('alerts.user.deleted', compact('username')));
         } catch (ModelNotFoundException $e) {
             $this->messages[] = Lang::get('alerts.user.invlid', ['userid' => $id]);

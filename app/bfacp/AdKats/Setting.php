@@ -5,6 +5,12 @@ use BFACP\Elegant;
 class Setting extends Elegant
 {
     /**
+     * Should model handle timestamps
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * Table name
      * @var string
      */
@@ -29,13 +35,6 @@ class Setting extends Elegant
     protected $dates = [];
 
     /**
-     * Should model handle timestamps
-     *
-     * @var boolean
-     */
-    public $timestamps = false;
-
-    /**
      * Append custom attributes to output
      * @var array
      */
@@ -57,9 +56,12 @@ class Setting extends Elegant
 
     /**
      * Quick way of selecting specific commands
+     *
      * @param $query
      * @param  array $names Command Names
-     * @return
+
+*
+*@return
      */
     public function scopeSettings($query, $names)
     {
@@ -68,9 +70,13 @@ class Setting extends Elegant
 
     /**
      * Quick way of selecting servers
-     * @param $query
+
+*
+*@param $query
      * @param  array $ids Array of server ids
-     * @return
+
+*
+*@return
      */
     public function scopeServers($query, $ids)
     {
@@ -95,7 +101,7 @@ class Setting extends Elegant
                     'Pre-Message List',
                     'Server Rule List',
                     'SpamBot Say List',
-                    'SpamBot Yell List'
+                    'SpamBot Yell List',
                 ])) {
                     $value = rawurldecode(urldecode($value));
                 }

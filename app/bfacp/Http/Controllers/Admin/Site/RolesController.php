@@ -34,11 +34,11 @@ class RolesController extends BaseController
                 $key = ucfirst($matches[1]);
 
                 // Push to array
-                $permissions[$key][$permission->id] = $permission->display_name;
+                $permissions[ $key ][ $permission->id ] = $permission->display_name;
             } else {
 
                 // Push to array
-                $permissions['General'][$permission->id] = $permission->display_name;
+                $permissions['General'][ $permission->id ] = $permission->display_name;
             }
         }
 
@@ -65,7 +65,7 @@ class RolesController extends BaseController
             }
 
             $v = Validator::make(Input::all(), [
-                'role_name' => Role::$rules['name']
+                'role_name' => Role::$rules['name'],
             ]);
 
             if ($v->fails()) {
@@ -79,7 +79,7 @@ class RolesController extends BaseController
             $role->permissions()->sync($permissions->toArray());
 
             return Redirect::route('admin.site.roles.edit', [$role->id])->with('messages', [
-                'Role Created!'
+                'Role Created!',
             ]);
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.site.roles.index');
@@ -100,11 +100,11 @@ class RolesController extends BaseController
                     $key = ucfirst($matches[1]);
 
                     // Push to array
-                    $permissions[$key][$permission->id] = $permission->display_name;
+                    $permissions[ $key ][ $permission->id ] = $permission->display_name;
                 } else {
 
                     // Push to array
-                    $permissions['General'][$permission->id] = $permission->display_name;
+                    $permissions['General'][ $permission->id ] = $permission->display_name;
                 }
             }
 
@@ -148,7 +148,7 @@ class RolesController extends BaseController
             }
 
             return Redirect::route('admin.site.roles.edit', [$id])->with('messages', [
-                'Role Updated!'
+                'Role Updated!',
             ]);
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.site.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);
@@ -179,7 +179,7 @@ class RolesController extends BaseController
             $role->delete();
 
             return MainHelper::response([
-                'url' => route('admin.site.roles.index')
+                'url' => route('admin.site.roles.index'),
             ], sprintf('%s was deleted', $roleName));
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.site.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);

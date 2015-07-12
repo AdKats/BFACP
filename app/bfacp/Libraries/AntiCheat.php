@@ -55,7 +55,7 @@ class AntiCheat
             'machine_guns',
             'assault_rifles',
             'sub_machine_guns',
-            'handheld_weapons'
+            'handheld_weapons',
         ],
         'BF4' => [
             'carbines',
@@ -65,7 +65,7 @@ class AntiCheat
             'handguns',
             'shotguns',
             'sniper_rifles',
-            'dmrs'
+            'dmrs',
         ],
         'BFHL' => [
             'assault_rifles',
@@ -79,8 +79,8 @@ class AntiCheat
             'shotguns',
             'smg_mechanic',
             'sg_enforcer',
-            'smg'
-        ]
+            'smg',
+        ],
     ];
 
     /**
@@ -91,7 +91,7 @@ class AntiCheat
         'DPS' => 60,
         'HKP' => 40,
         'KPM' => 4.5,
-        'Kills' => 50
+        'Kills' => 50,
     ];
 
     public function __construct(Player $player)
@@ -114,8 +114,12 @@ class AntiCheat
 
     /**
      * Parse the battlelog weapons list
+     *
      * @param  array $weapons
-     * @return $this
+
+
+*
+*@return $this
      */
     public function parse($weapons)
     {
@@ -126,9 +130,9 @@ class AntiCheat
         foreach ($weapons as $weapon) {
             $category = str_replace(' ', '_', strtolower(trim($weapon['category'])));
 
-            if (!in_array($category, $this->allowedCategorys[$this->game]) ||
-                !array_key_exists($category, $this->weapons[$this->game]) ||
-                !array_key_exists($weapon['slug'], $this->weapons[$this->game][$category])
+            if (!in_array($category, $this->allowedCategorys[ $this->game ]) || !array_key_exists($category,
+                    $this->weapons[ $this->game ]) || !array_key_exists($weapon['slug'],
+                    $this->weapons[ $this->game ][ $category ])
             ) {
                 continue;
             }
@@ -136,10 +140,10 @@ class AntiCheat
             $status = [
                 'DPS' => false,
                 'HKP' => false,
-                'KPM' => false
+                'KPM' => false,
             ];
 
-            $_weaponDPS = $this->weapons[$this->game][$category][$weapon['slug']];
+            $_weaponDPS = $this->weapons[ $this->game ][ $category ][ $weapon['slug'] ];
 
             $DPSDiff = 1 - MainHelper::divide(($_weaponDPS['max'] - $weapon['dps']), $_weaponDPS['max']);
 

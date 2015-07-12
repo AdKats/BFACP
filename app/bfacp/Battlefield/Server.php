@@ -34,7 +34,6 @@ class Server extends Elegant
 
     /**
      * Should model handle timestamps
-     *
      * @var boolean
      */
     public $timestamps = false;
@@ -56,7 +55,7 @@ class Server extends Elegant
         'current_map',
         'current_gamemode',
         'map_image_paths',
-        'is_active'
+        'is_active',
     ];
 
     /**
@@ -105,8 +104,12 @@ class Server extends Elegant
 
     /**
      * Only return servers that should be active
+     *
      * @param $query
-     * @return
+
+
+*
+*@return
      */
     public function scopeActive($query)
     {
@@ -197,11 +200,7 @@ class Server extends Elegant
      */
     public function getMapsFilePathAttribute()
     {
-        $path = app_path() .
-            DIRECTORY_SEPARATOR . 'bfacp' .
-            DIRECTORY_SEPARATOR . 'ThirdParty' .
-            DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
-            DIRECTORY_SEPARATOR . 'mapNames.xml';
+        $path = app_path() . DIRECTORY_SEPARATOR . 'bfacp' . DIRECTORY_SEPARATOR . 'ThirdParty' . DIRECTORY_SEPARATOR . strtoupper($this->game->Name) . DIRECTORY_SEPARATOR . 'mapNames.xml';
         return $path;
     }
 
@@ -211,11 +210,7 @@ class Server extends Elegant
      */
     public function getModesFilePathAttribute()
     {
-        $path = app_path() .
-            DIRECTORY_SEPARATOR . 'bfacp' .
-            DIRECTORY_SEPARATOR . 'ThirdParty' .
-            DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
-            DIRECTORY_SEPARATOR . 'playModes.xml';
+        $path = app_path() . DIRECTORY_SEPARATOR . 'bfacp' . DIRECTORY_SEPARATOR . 'ThirdParty' . DIRECTORY_SEPARATOR . strtoupper($this->game->Name) . DIRECTORY_SEPARATOR . 'playModes.xml';
         return $path;
     }
 
@@ -225,11 +220,7 @@ class Server extends Elegant
      */
     public function getSquadsFilePathAttribute()
     {
-        $path = app_path() .
-            DIRECTORY_SEPARATOR . 'bfacp' .
-            DIRECTORY_SEPARATOR . 'ThirdParty' .
-            DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
-            DIRECTORY_SEPARATOR . 'squadNames.xml';
+        $path = app_path() . DIRECTORY_SEPARATOR . 'bfacp' . DIRECTORY_SEPARATOR . 'ThirdParty' . DIRECTORY_SEPARATOR . strtoupper($this->game->Name) . DIRECTORY_SEPARATOR . 'squadNames.xml';
         return $path;
     }
 
@@ -239,11 +230,7 @@ class Server extends Elegant
      */
     public function getTeamsFilePathAttribute()
     {
-        $path = app_path() .
-            DIRECTORY_SEPARATOR . 'bfacp' .
-            DIRECTORY_SEPARATOR . 'ThirdParty' .
-            DIRECTORY_SEPARATOR . strtoupper($this->game->Name) .
-            DIRECTORY_SEPARATOR . 'teamNames.xml';
+        $path = app_path() . DIRECTORY_SEPARATOR . 'bfacp' . DIRECTORY_SEPARATOR . 'ThirdParty' . DIRECTORY_SEPARATOR . strtoupper($this->game->Name) . DIRECTORY_SEPARATOR . 'teamNames.xml';
         return $path;
     }
 
@@ -264,9 +251,8 @@ class Server extends Elegant
         $paths = [
             'large' => sprintf('%s/large/%s', $base_path, $image),
             'medium' => sprintf('%s/medium/%s', $base_path, $image),
-            'wide' => in_array($this->game->Name, ['BF4', 'BFHL']) ?
-                sprintf('%s/wide/%s', $base_path, $image) :
-                sprintf('%s/large/%s', $base_path, $image)
+            'wide' => in_array($this->game->Name, ['BF4', 'BFHL']) ? sprintf('%s/wide/%s', $base_path,
+                $image) : sprintf('%s/large/%s', $base_path, $image),
         ];
 
         return $paths;

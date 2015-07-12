@@ -23,10 +23,8 @@ class ChatlogController extends BaseController
     {
         $limit = 100;
 
-        $chat = $this->chat
-            ->leftJoin('tbl_server', 'tbl_chatlog.ServerID', '=', 'tbl_server.ServerID')
-            ->select('tbl_chatlog.*', 'tbl_server.ServerName')
-            ->orderBy('logDate', 'desc');
+        $chat = $this->chat->leftJoin('tbl_server', 'tbl_chatlog.ServerID', '=',
+            'tbl_server.ServerID')->select('tbl_chatlog.*', 'tbl_server.ServerName')->orderBy('logDate', 'desc');
 
         if (Input::has('limit') && in_array(Input::get('limit'), range(10, 100, 10))) {
             $limit = Input::get('limit');
@@ -49,20 +47,13 @@ class ChatlogController extends BaseController
 
             if ($startDate->gte($endDate)) {
                 return MainHelper::response(null,
-                    sprintf("%s is greater than %s. Please adjust your dates.",
-                        $startDate->toDateTimeString(),
-                        $endDate->toDateTimeString()
-                    ),
-                    'error',
-                    null,
-                    false,
-                    true
-                );
+                    sprintf("%s is greater than %s. Please adjust your dates.", $startDate->toDateTimeString(),
+                        $endDate->toDateTimeString()), 'error', null, false, true);
             }
 
             $chat = $chat->whereBetween('logDate', [
                 $startDate->toDateTimeString(),
-                $endDate->toDateTimeString()
+                $endDate->toDateTimeString(),
             ])->paginate($limit);
         } else {
             $chat = $chat->simplePaginate($limit);

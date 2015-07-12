@@ -5,6 +5,12 @@ use BFACP\Elegant;
 class Role extends Elegant
 {
     /**
+     * Should model handle timestamps
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * Table name
      * @var string
      */
@@ -29,13 +35,6 @@ class Role extends Elegant
     protected $dates = [];
 
     /**
-     * Should model handle timestamps
-     *
-     * @var boolean
-     */
-    public $timestamps = false;
-
-    /**
      * Append custom attributes to output
      * @var array
      */
@@ -50,14 +49,6 @@ class Role extends Elegant
     /**
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function permissions()
-    {
-        return $this->belongsToMany('BFACP\AdKats\Command', 'adkats_rolecommands', 'role_id', 'command_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Model
-     */
     public function users()
     {
         return $this->hasMany('BFACP\AdKats\Account\User', 'user_role');
@@ -65,11 +56,23 @@ class Role extends Elegant
 
     /**
      * Return the power level of the role
+     *
      * @param $count
-     * @return int
+
+
+*
+*@return int
      */
     public function getPowerLevel($count)
     {
         return ($count) + (2 * $this->permissions()->admin()->count());
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function permissions()
+    {
+        return $this->belongsToMany('BFACP\AdKats\Command', 'adkats_rolecommands', 'role_id', 'command_id');
     }
 }

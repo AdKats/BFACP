@@ -5,6 +5,12 @@ use BFACP\Elegant;
 class Stat extends Elegant
 {
     /**
+     * Should model handle timestamps
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * Table name
      * @var string
      */
@@ -27,13 +33,6 @@ class Stat extends Elegant
      * @var array
      */
     protected $dates = ['FirstSeenOnServer', 'LastSeenOnServer'];
-
-    /**
-     * Should model handle timestamps
-     *
-     * @var boolean
-     */
-    public $timestamps = false;
 
     /**
      * Append custom attributes to output

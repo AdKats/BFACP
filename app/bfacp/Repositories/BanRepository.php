@@ -8,9 +8,12 @@ class BanRepository extends BaseRepository
 {
     /**
      * Gets the latest bans
+     *
      * @param  string $cacheKey Caching key to use
      * @param  integer $ttl Cache for X minutes
-     * @return array
+
+*
+*@return array
      */
     public function getLatestBans($cacheKey = 'bans.latest', $ttl = 1)
     {
@@ -23,8 +26,12 @@ class BanRepository extends BaseRepository
 
     /**
      * Gets the bans of the users soldiers
-     * @param  array $ids Player IDs
-     * @return array
+
+*
+*@param  array $ids Player IDs
+
+*
+*@return array
      */
     public function getPersonalBans($ids = [])
     {
@@ -35,8 +42,12 @@ class BanRepository extends BaseRepository
 
     /**
      * Gets the banlist
-     * @param  integer $limit Results to return
-     * @return object
+
+*
+*@param  integer $limit Results to return
+
+*
+*@return object
      */
     public function getBanList($limit = 100)
     {
@@ -53,8 +64,11 @@ class BanRepository extends BaseRepository
 
     /**
      * Gets a ban by their ID
-     * @param  integer $id Ban ID
-     * @return object
+
+     *
+*@param  integer $id Ban ID
+     *
+     *@return object
      */
     public function getBanById($id)
     {

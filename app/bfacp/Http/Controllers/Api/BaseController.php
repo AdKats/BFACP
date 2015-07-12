@@ -9,7 +9,9 @@ class BaseController extends Controller
     use ControllerTrait;
 
     protected $request;
+
     protected $user;
+
     protected $isLoggedIn;
 
     public function __construct()

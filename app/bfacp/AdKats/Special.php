@@ -34,7 +34,6 @@ class Special extends Elegant
 
     /**
      * Should model handle timestamps
-     *
      * @var boolean
      */
     public $timestamps = false;

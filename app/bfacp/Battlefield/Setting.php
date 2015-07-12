@@ -38,7 +38,6 @@ class Setting extends Elegant
 
     /**
      * Should model handle timestamps
-     *
      * @var boolean
      */
     public $timestamps = true;
@@ -78,7 +77,8 @@ class Setting extends Elegant
 
     /**
      * Encrypts the password to be safely stored
-     * @param string $value
+     *
+*@param string $value
      */
     public function setRconPasswordAttribute($value)
     {

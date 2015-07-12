@@ -45,15 +45,19 @@ class UsersController extends BaseController
 
     /**
      * Attempt to confirm the account with code
+     *
      * @param  string $code
-     * @return Redirect
+
+
+*
+*@return Redirect
      */
     public function confirm($code)
     {
         // If the code is valid then redirect to the login page.
         if ($this->repository->confirm($code)) {
             return Redirect::route('user.login')->with('messages', [
-                Lang::get('confide::confide.alerts.confirmation')
+                Lang::get('confide::confide.alerts.confirmation'),
             ]);
         }
 
@@ -69,39 +73,32 @@ class UsersController extends BaseController
         $input = Input::all();
 
         $v = Validator::make($input, array_merge(User::$rules, [
-            'ign' => 'regex:/^([a-zA-Z0-9_\-]+)$/'
+            'ign' => 'regex:/^([a-zA-Z0-9_\-]+)$/',
         ]));
 
         if ($v->fails()) {
-            return Redirect::route('user.register')
-                ->withInput(Input::except('password', 'password_confirmation'))
-                ->withErrors($v);
+            return Redirect::route('user.register')->withInput(Input::except('password',
+                'password_confirmation'))->withErrors($v);
         }
 
         $user = $this->repository->signup($input);
 
         if (is_null($user->id)) {
-            return Redirect::route('user.register')
-                ->withInput(Input::except('password', 'password_confirmation'))
-                ->withErrors($user->errors());
+            return Redirect::route('user.register')->withInput(Input::except('password',
+                'password_confirmation'))->withErrors($user->errors());
         }
 
         if (Config::get('confide::signup_email')) {
-            Mail::queueOn(
-                Config::get('confide::email_queue'),
-                'emails.user.signup',
-                compact('user'),
+            Mail::queueOn(Config::get('confide::email_queue'), 'emails.user.signup', compact('user'),
                 function ($message) use ($user) {
-                    $message
-                        ->to($user->email, $user->username)
-                        ->subject(Lang::get('confide::confide.email.account_confirmation.subject'));
-                }
-            );
+                    $message->to($user->email,
+                        $user->username)->subject(Lang::get('confide::confide.email.account_confirmation.subject'));
+                });
         }
 
         return Redirect::route('user.login')->with('messages', [
             Lang::get('confide::confide.alerts.account_created'),
-            Lang::get('confide::confide.alerts.instructions_sent')
+            Lang::get('confide::confide.alerts.instructions_sent'),
         ]);
     }
 
@@ -124,9 +121,7 @@ class UsersController extends BaseController
             $error = Lang::get('confide::confide.alerts.wrong_credentials');
         }
 
-        return Redirect::route('user.login')
-            ->withInput(Input::except('password'))
-            ->with('error', $error);
+        return Redirect::route('user.login')->withInput(Input::except('password'))->with('error', $error);
     }
 
     /**

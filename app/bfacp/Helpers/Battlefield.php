@@ -6,8 +6,11 @@ class Battlefield extends Main
 {
     /**
      * Gets the name of the squad by ID
+     *
      * @param  integer $id Squad ID
-     * @return string Squad Name
+
+*
+*@return string Squad Name
      * @throws Exception
      */
     public function squad($id)
@@ -127,11 +130,14 @@ class Battlefield extends Main
 
     /**
      * Calculates kill/death ratio
+
      *
-     * @param  integer $kills
+*@param  integer $kills
      * @param  integer $deaths
      * @param  integer $precision
-     * @return float
+
+     *
+* @return float
      */
     public function kd($kills = 0, $deaths = 0, $precision = 2)
     {
@@ -148,10 +154,13 @@ class Battlefield extends Main
 
     /**
      * Calculates headshot kill ratio
+
      *
-     * @param  integer $headshots
+*@param  integer $headshots
      * @param  integer $kills
      * @param  integer $precision
+
+     *
      * @return float
      */
     public function hsk($headshots = 0, $kills = 0, $precision = 2)
@@ -165,10 +174,12 @@ class Battlefield extends Main
 
     /**
      * Calculates the number of tickets on round start
+
      *
-     * @param  string $gamemode
+*@param  string $gamemode
      * @param  integer $modifier
      * @param  string $gameName
+     *
      * @return integer
      */
     public function startingTickets($gamemode, $modifier, $gameName)
@@ -277,10 +288,15 @@ class Battlefield extends Main
 
     /**
      * Calculates the round timer on round start
-     * @param  string $gamemode
+
+*
+*@param  string $gamemode
      * @param  integer $modifier
      * @param  string $gameName
-     * @return integer
+
+
+*
+*@return integer
      */
     public function roundStartingTimer($gamemode, $modifier, $gameName)
     {
@@ -354,8 +370,8 @@ class Battlefield extends Main
         $mapName = 'MapNameNotFoundError';
 
         for ($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
-            if (strcasecmp($mapURI, $mapNamesXML->map[$i]->attributes()->uri) == 0) {
-                $mapName = $mapNamesXML->map[$i]->attributes()->name;
+            if (strcasecmp($mapURI, $mapNamesXML->map[ $i ]->attributes()->uri) == 0) {
+                $mapName = $mapNamesXML->map[ $i ]->attributes()->name;
             }
         }
 
@@ -368,8 +384,8 @@ class Battlefield extends Main
         $playmodeName = 'PlaymodeNameNotFoundError';
 
         for ($i = 0; $i <= (count($playModesXML->playmode) - 1); $i++) {
-            if ($playmodeURI == $playModesXML->playmode[$i]->attributes()->uri) {
-                $playmodeName = $playModesXML->playmode[$i]->attributes()->name;
+            if ($playmodeURI == $playModesXML->playmode[ $i ]->attributes()->uri) {
+                $playmodeName = $playModesXML->playmode[ $i ]->attributes()->name;
             }
         }
 

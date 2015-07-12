@@ -5,6 +5,12 @@ use BFACP\Elegant;
 class Command extends Elegant
 {
     /**
+     * Should model handle timestamps
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * Table name
      * @var string
      */
@@ -29,13 +35,6 @@ class Command extends Elegant
     protected $dates = [];
 
     /**
-     * Should model handle timestamps
-     *
-     * @var boolean
-     */
-    public $timestamps = false;
-
-    /**
      * Append custom attributes to output
      * @var array
      */
@@ -49,8 +48,12 @@ class Command extends Elegant
 
     /**
      * Returns the commands that usable by the guest
+     *
      * @param $query
-     * @return
+
+
+*
+*@return
      */
     public function scopeGuest($query)
     {
@@ -59,8 +62,13 @@ class Command extends Elegant
 
     /**
      * Returns the commands that usable by the admin
-     * @param $query
-     * @return
+
+*
+* @param $query
+
+
+*
+*@return
      */
     public function scopeAdmin($query)
     {

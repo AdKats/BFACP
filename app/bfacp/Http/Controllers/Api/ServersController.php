@@ -21,8 +21,12 @@ class ServersController extends BaseController
 {
     /**
      * Gathers the population for all servers
+     *
      * @param $id
-     * @return array
+
+
+*
+*@return array
      */
     public function chat($id)
     {
@@ -65,7 +69,7 @@ class ServersController extends BaseController
             $gameKey = strtolower($server->game->Name);
 
             // Add the server to the collection
-            $newCollection[$gameKey]['servers'][] = $server;
+            $newCollection[ $gameKey ]['servers'][] = $server;
         }
 
         foreach ($newCollection as $key => $collection) {
@@ -77,10 +81,10 @@ class ServersController extends BaseController
                 $total += $server->maxSlots;
             }
 
-            $newCollection[$key]['stats'] = [
+            $newCollection[ $key ]['stats'] = [
                 'online' => $online,
                 'totalSlots' => $total,
-                'percentage' => MainHelper::percent($online, $total)
+                'percentage' => MainHelper::percent($online, $total),
             ];
         }
 
@@ -88,7 +92,7 @@ class ServersController extends BaseController
                 'online' => $usedSlots,
                 'totalSlots' => $totalSlots,
                 'percentage' => MainHelper::percent($usedSlots, $totalSlots),
-                'games' => $newCollection
+                'games' => $newCollection,
             ] + Lang::get('dashboard.population'), null, null, null, false, true);
     }
 
@@ -125,28 +129,28 @@ class ServersController extends BaseController
             [
                 'name' => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Tickets',
                 'data' => [],
-                'visible' => true
+                'visible' => true,
             ],
             [
                 'name' => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Tickets',
                 'data' => [],
-                'visible' => true
+                'visible' => true,
             ],
             [
                 'name' => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Players',
                 'data' => [],
-                'visible' => false
+                'visible' => false,
             ],
             [
                 'name' => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Players',
                 'data' => [],
-                'visible' => false
+                'visible' => false,
             ],
             [
                 'name' => 'Players Online',
                 'data' => [],
-                'visible' => false
-            ]
+                'visible' => false,
+            ],
         ];
 
         $data['roundId'] = null;
@@ -160,27 +164,27 @@ class ServersController extends BaseController
 
             $stats[0]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int)$result->team1_tickets
+                (int)$result->team1_tickets,
             ];
 
             $stats[1]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int)$result->team2_tickets
+                (int)$result->team2_tickets,
             ];
 
             $stats[2]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int)$result->team1_count
+                (int)$result->team1_count,
             ];
 
             $stats[3]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int)$result->team2_count
+                (int)$result->team2_count,
             ];
 
             $stats[4]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int)($result->team1_count + $result->team2_count)
+                (int)($result->team1_count + $result->team2_count),
             ];
         }
 
@@ -204,7 +208,7 @@ class ServersController extends BaseController
                 'kill',
                 'move',
                 'kick',
-                'punish'
+                'punish',
             ];
 
             $permissions = Cache::get('admin.perm.list');
@@ -233,22 +237,12 @@ class ServersController extends BaseController
 
                         if (Input::get('type') == 'Player' && Input::has('players')) {
                             foreach ($players as $player) {
-                                $scoreboard->adminYell(
-                                    Input::get('message', null),
-                                    $player,
-                                    null,
-                                    Input::get('duration', 5),
-                                    'Player'
-                                );
+                                $scoreboard->adminYell(Input::get('message', null), $player, null,
+                                    Input::get('duration', 5), 'Player');
                             }
                         } else {
-                            $scoreboard->adminYell(
-                                Input::get('message', null),
-                                Input::get('player', null),
-                                Input::get('team', null),
-                                Input::get('duration', 5),
-                                Input::get('type', 'All')
-                            );
+                            $scoreboard->adminYell(Input::get('message', null), Input::get('player', null),
+                                Input::get('team', null), Input::get('duration', 5), Input::get('type', 'All'));
                         }
                         break;
 
@@ -257,20 +251,11 @@ class ServersController extends BaseController
 
                         if (Input::get('type') == 'Player' && Input::has('players')) {
                             foreach ($players as $player) {
-                                $scoreboard->adminSay(
-                                    Input::get('message', null),
-                                    $player,
-                                    null,
-                                    'Player'
-                                );
+                                $scoreboard->adminSay(Input::get('message', null), $player, null, 'Player');
                             }
                         } else {
-                            $scoreboard->adminSay(
-                                Input::get('message', null),
-                                Input::get('player', null),
-                                Input::get('team', null),
-                                Input::get('type', 'All')
-                            );
+                            $scoreboard->adminSay(Input::get('message', null), Input::get('player', null),
+                                Input::get('team', null), Input::get('type', 'All'));
                         }
                         break;
 
@@ -286,7 +271,7 @@ class ServersController extends BaseController
                                 } catch (PlayerNotFoundException $e) {
                                     $unkilled[] = [
                                         'name' => $player,
-                                        'reason' => $e->getMessage()
+                                        'reason' => $e->getMessage(),
                                     ];
                                 }
                             }
@@ -312,7 +297,7 @@ class ServersController extends BaseController
                                 } catch (PlayerNotFoundException $e) {
                                     $unkicked[] = [
                                         'name' => $player,
-                                        'reason' => $e->getMessage()
+                                        'reason' => $e->getMessage(),
                                     ];
                                 }
                             }
@@ -333,20 +318,17 @@ class ServersController extends BaseController
 
                             foreach ($players as $player) {
                                 try {
-                                    $scoreboard->adminMovePlayer(
-                                        $player,
-                                        Input::get('team', null),
-                                        Input::get('squad', null)
-                                    );
+                                    $scoreboard->adminMovePlayer($player, Input::get('team', null),
+                                        Input::get('squad', null));
                                 } catch (PlayerNotFoundException $e) {
                                     $unmoved[] = [
                                         'name' => $player,
-                                        'reason' => $e->getMessage()
+                                        'reason' => $e->getMessage(),
                                     ];
                                 } catch (RconException $e) {
                                     $unmoved[] = [
                                         'name' => $player,
-                                        'reason' => $e->getMessage()
+                                        'reason' => $e->getMessage(),
                                     ];
                                 }
                             }
@@ -365,10 +347,7 @@ class ServersController extends BaseController
 
                         if (Input::has('players')) {
                             foreach ($players as $player) {
-                                $data[] = $scoreboard->adminPunish(
-                                    $player,
-                                    Input::get('message')
-                                );
+                                $data[] = $scoreboard->adminPunish($player, Input::get('message'));
                             }
                         } else {
                             throw new RconException(400, 'No player selected.');
@@ -380,10 +359,7 @@ class ServersController extends BaseController
 
                         if (Input::has('players')) {
                             foreach ($players as $player) {
-                                $scoreboard->adminForgive(
-                                    $player,
-                                    Input::get('message')
-                                );
+                                $scoreboard->adminForgive($player, Input::get('message'));
                             }
                         } else {
                             throw new RconException(400, 'No player selected.');
@@ -411,9 +387,13 @@ class ServersController extends BaseController
 
     /**
      * Quick function for checking permissions for the scoreboard admin.
-     * @param  string $permission Name of the permission
+
+*
+* @param  string $permission Name of the permission
      * @param  string $message [description]
-     * @return boolean             [description]
+
+*
+*@return boolean             [description]
      */
     private function hasPermission($permission, $message = 'You do have permission to issue this command')
     {

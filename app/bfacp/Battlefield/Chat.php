@@ -5,6 +5,12 @@ use BFACP\Elegant;
 class Chat extends Elegant
 {
     /**
+     * Should model handle timestamps
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * Table name
      * @var string
      */
@@ -27,13 +33,6 @@ class Chat extends Elegant
      * @var array
      */
     protected $dates = ['logDate'];
-
-    /**
-     * Should model handle timestamps
-     *
-     * @var boolean
-     */
-    public $timestamps = false;
 
     /**
      * Append custom attributes to output
@@ -71,14 +70,18 @@ class Chat extends Elegant
     {
         return !is_null($this->logPlayerID) ? route('player.show', [
             'id' => $this->logPlayerID,
-            'name' => $this->logSoldierName
+            'name' => $this->logSoldierName,
         ]) : null;
     }
 
     /**
      * Excludes server and player chat spam from the result
+     *
      * @param $query
-     * @return
+
+
+*
+*@return
      */
     public function scopeExcludeSpam($query)
     {
@@ -95,7 +98,7 @@ class Chat extends Elegant
             'ID_CHAT_GET_IN',
             'ID_CHAT_NEGATIVE',
             'ID_CHAT_GET_OUT',
-            'ID_CHAT_REQUEST_REPAIRS'
+            'ID_CHAT_REQUEST_REPAIRS',
         ]);
     }
 

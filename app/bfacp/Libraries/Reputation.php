@@ -61,8 +61,12 @@ class Reputation
 
     /**
      * Set the player
+     *
      * @param Player $player
-     * @return $this
+
+
+*
+*@return $this
      */
     public function setPlayer(Player $player)
     {
@@ -99,7 +103,7 @@ class Reputation
                 'source_rep' => $this->sourceReputation,
                 'target_rep' => $this->targetReputation,
                 'total_rep' => $this->totalReputation,
-                'total_rep_co' => $this->finalReputation
+                'total_rep_co' => $this->finalReputation,
             ]));
 
             // Reload the relationship
@@ -115,10 +119,8 @@ class Reputation
      */
     public function source()
     {
-        $records = Record::select(DB::raw('command_type, command_action, COUNT(record_id) AS command_count'))
-            ->where('source_id', $this->player->PlayerID)
-            ->whereRaw('target_name != source_name')
-            ->groupBy('command_type')->groupBy('command_action')->get();
+        $records = Record::select(DB::raw('command_type, command_action, COUNT(record_id) AS command_count'))->where('source_id',
+            $this->player->PlayerID)->whereRaw('target_name != source_name')->groupBy('command_type')->groupBy('command_action')->get();
 
         foreach ($records as $record) {
             $command = sprintf('%u|%u', $record->command_type, $record->command_action);
@@ -163,10 +165,8 @@ class Reputation
         }
 
         // Retrieve the rest
-        $records = Record::select(DB::raw('command_type, command_action, COUNT(record_id) AS command_count'))
-            ->where('target_id', $this->player->PlayerID)
-            ->whereRaw('target_name != source_name')
-            ->groupBy('command_type')->groupBy('command_action')->get();
+        $records = Record::select(DB::raw('command_type, command_action, COUNT(record_id) AS command_count'))->where('target_id',
+            $this->player->PlayerID)->whereRaw('target_name != source_name')->groupBy('command_type')->groupBy('command_action')->get();
 
         foreach ($records as $record) {
             $command = sprintf('%u|%u', $record->command_type, $record->command_action);
@@ -188,11 +188,9 @@ class Reputation
      */
     public function special()
     {
-        $records = Record::select(DB::raw('command_type, command_action, COUNT(record_id) AS command_count'))
-            ->where('source_id', $this->player->PlayerID)
-            ->where('target_id', $this->player->PlayerID)
-            ->where('command_type', 51)->where('command_action', 51)
-            ->groupBy('command_type')->groupBy('command_action')->get();
+        $records = Record::select(DB::raw('command_type, command_action, COUNT(record_id) AS command_count'))->where('source_id',
+            $this->player->PlayerID)->where('target_id', $this->player->PlayerID)->where('command_type',
+            51)->where('command_action', 51)->groupBy('command_type')->groupBy('command_action')->get();
 
         foreach ($records as $record) {
             $command = sprintf('%u|%u', $record->command_type, $record->command_action);

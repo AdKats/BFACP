@@ -5,6 +5,12 @@ use BFACP\Elegant;
 class Reputation extends Elegant
 {
     /**
+     * Should model handle timestamps
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * Table name
      * @var string
      */
@@ -27,13 +33,6 @@ class Reputation extends Elegant
      * @var array
      */
     protected $dates = [];
-
-    /**
-     * Should model handle timestamps
-     *
-     * @var boolean
-     */
-    public $timestamps = false;
 
     /**
      * Append custom attributes to output
@@ -75,7 +74,8 @@ class Reputation extends Elegant
 
     /**
      * @param $query
-     * @return \Illuminate\Database\Eloquent\Model
+     *
+*@return \Illuminate\Database\Eloquent\Model
      */
     public function scopeMostReputable($query)
     {
@@ -84,7 +84,8 @@ class Reputation extends Elegant
 
     /**
      * @param $query
-     * @return \Illuminate\Database\Eloquent\Model
+     *
+*@return \Illuminate\Database\Eloquent\Model
      */
     public function scopeLeastReputable($query)
     {

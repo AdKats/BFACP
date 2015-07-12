@@ -27,9 +27,12 @@ class ReportRepository extends BaseRepository
 
     /**
      * Returns the latest reports
+     *
      * @param  boolean $paginate Paginate response
      * @param  integer $take Get X amount
-     * @return array
+
+*
+*@return array
      */
     public function getReports($paginate = false, $take = 30)
     {
@@ -47,8 +50,13 @@ class ReportRepository extends BaseRepository
 
     /**
      * Get's a report by its ID
-     * @param  integer $id
-     * @return object
+
+*
+*@param  integer $id
+
+
+*
+*@return object
      */
     public function getRecordById($id)
     {
