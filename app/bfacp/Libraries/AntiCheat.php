@@ -18,7 +18,7 @@ class AntiCheat
     /**
      * Player Object
      *
-*@var Player
+     * @var Player
      */
     public $player;
 
@@ -32,7 +32,7 @@ class AntiCheat
     /**
      * Weapons that were triggered by the Anti-Cheat System
      *
-*@var array
+     * @var array
      */
     public $triggered = [];
 
@@ -92,7 +92,7 @@ class AntiCheat
     /**
      * Trigger values
      *
-*@var array
+     * @var array
      */
     private $triggers = [
         'DPS' => 60,

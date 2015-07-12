@@ -7,49 +7,49 @@ class Record extends Elegant
     /**
      * Should model handle timestamps
      *
-*@var boolean
+     * @var boolean
      */
     public $timestamps = false;
 
     /**
      * Table name
      *
-*@var string
+     * @var string
      */
     protected $table = 'adkats_records_main';
 
     /**
      * Table primary key
      *
-*@var string
+     * @var string
      */
     protected $primaryKey = 'record_id';
 
     /**
      * Fields not allowed to be mass assigned
      *
-*@var array
+     * @var array
      */
     protected $guarded = ['record_id'];
 
     /**
      * Date fields to convert to carbon instances
      *
-*@var array
+     * @var array
      */
     protected $dates = ['record_time'];
 
     /**
      * Append custom attributes to output
      *
-*@var array
+     * @var array
      */
     protected $appends = ['is_web', 'stamp'];
 
     /**
      * Models to be loaded automaticly
      *
-*@var array
+     * @var array
      */
     protected $with = [];
 
@@ -106,7 +106,7 @@ class Record extends Elegant
     /**
      * Was record issued from the web
      *
-*@return bool
+     * @return bool
      */
     public function getIsWebAttribute()
     {

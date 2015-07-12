@@ -14,21 +14,21 @@ class BattlelogAPI
     /**
      * Guzzle Client
      *
-*@var Client
+     * @var Client
      */
     protected $guzzle;
 
     /**
      * Server object
      *
-*@var Server
+     * @var Server
      */
     protected $server;
 
     /**
      * URIs for battlelog
      *
-*@var array
+     * @var array
      */
     protected $uris = [
         'bf4' => [
@@ -64,7 +64,7 @@ class BattlelogAPI
     /**
      * Battlelog Game Codes
      *
-*@var array
+     * @var array
      */
     protected $games = [
         'bfh' => 8192,
@@ -79,9 +79,8 @@ class BattlelogAPI
 
     /**
      * Set the server
-
      *
-*@param  Server $server
+     * @param  Server $server
      *
      * @return $this
      */

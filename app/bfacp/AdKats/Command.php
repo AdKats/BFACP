@@ -7,59 +7,58 @@ class Command extends Elegant
     /**
      * Should model handle timestamps
      *
-*@var boolean
+     * @var boolean
      */
     public $timestamps = false;
 
     /**
      * Table name
      *
-*@var string
+     * @var string
      */
     protected $table = 'adkats_commands';
 
     /**
      * Table primary key
      *
-*@var string
+     * @var string
      */
     protected $primaryKey = 'command_id';
 
     /**
      * Fields not allowed to be mass assigned
      *
-*@var array
+     * @var array
      */
     protected $guarded = ['*'];
 
     /**
      * Date fields to convert to carbon instances
      *
-*@var array
+     * @var array
      */
     protected $dates = [];
 
     /**
      * Append custom attributes to output
      *
-*@var array
+     * @var array
      */
     protected $appends = ['is_interactive', 'is_enabled', 'is_invisible'];
 
     /**
      * Models to be loaded automaticly
      *
-*@var array
+     * @var array
      */
     protected $with = [];
 
     /**
      * Returns the commands that usable by the guest
-
      *
-*@param $query
+     * @param $query
      *
-     *@return
+     * @return
      */
     public function scopeGuest($query)
     {
@@ -71,7 +70,7 @@ class Command extends Elegant
      *
      * @param $query
      *
-     *@return
+     * @return
      */
     public function scopeAdmin($query)
     {
@@ -80,9 +79,8 @@ class Command extends Elegant
 
     /**
      * Command can be interacted with by player
-
      *
-*@return bool
+     * @return bool
      */
     public function getIsInteractiveAttribute()
     {
@@ -91,9 +89,8 @@ class Command extends Elegant
 
     /**
      * Command is enabled
-
      *
-*@return bool
+     * @return bool
      */
     public function getIsEnabledAttribute()
     {
@@ -102,9 +99,8 @@ class Command extends Elegant
 
     /**
      * Command is invisible
-
      *
-*@return bool
+     * @return bool
      */
     public function getIsInvisibleAttribute()
     {

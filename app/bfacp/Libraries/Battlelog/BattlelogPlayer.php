@@ -11,42 +11,42 @@ class BattlelogPlayer extends BattlelogAPI
     /**
      * Persona ID
      *
-*@var integer
+     * @var integer
      */
     public $personaID = 0;
 
     /**
      * Persona User ID
      *
-*@var integer
+     * @var integer
      */
     public $personaUserID = 0;
 
     /**
      * Persona Gravatar MD5 Hash
      *
-*@var string
+     * @var string
      */
     public $personaGravatar = '';
 
     /**
      * Player Object
      *
-*@var Player
+     * @var Player
      */
     public $player;
 
     /**
      * Profile object
      *
-*@var array
+     * @var array
      */
     public $profile;
 
     /**
      * Name of game
      *
-*@var string
+     * @var string
      */
     public $game = '';
 
@@ -80,7 +80,7 @@ class BattlelogPlayer extends BattlelogAPI
     /**
      * Fetchs the players battlelog profile
      *
-*@return mixed
+     * @return mixed
      */
     public function fetchProfile()
     {
@@ -169,9 +169,8 @@ class BattlelogPlayer extends BattlelogAPI
 
     /**
      * Gets the player weapon stats
-
      *
-*@return array
+     * @return array
      */
     public function getWeaponStats()
     {
@@ -218,9 +217,8 @@ class BattlelogPlayer extends BattlelogAPI
 
     /**
      * Gets the player overview stats
-
      *
-*@return array
+     * @return array
      */
     public function getOverviewStats()
     {
@@ -237,9 +235,8 @@ class BattlelogPlayer extends BattlelogAPI
 
     /**
      * Gets the player vehicle stats
-
      *
-*@return array
+     * @return array
      */
     public function getVehicleStats()
     {
@@ -271,9 +268,8 @@ class BattlelogPlayer extends BattlelogAPI
     /**
      * Gets the player battle reports. Only works if game is bf4 or bfh
      * and the player has publicly visible reports.
-
      *
-*@return array
+     * @return array
      */
     public function getBattleReports()
     {

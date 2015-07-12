@@ -27,9 +27,8 @@ class PlayersController extends BaseController
 
     /**
      * Get a player by their player database id
-
      *
-*@param  integer $id
+     * @param  integer $id
      *
      * @return \Illuminate\Support\Facades\Response
      */

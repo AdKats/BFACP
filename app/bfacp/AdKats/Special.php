@@ -18,42 +18,42 @@ class Special extends Elegant
     /**
      * Table name
      *
-*@var string
+     * @var string
      */
     protected $table = 'adkats_specialplayers';
 
     /**
      * Table primary key
      *
-*@var string
+     * @var string
      */
     protected $primaryKey = 'specialplayer_id';
 
     /**
      * Fields not allowed to be mass assigned
      *
-*@var array
+     * @var array
      */
     protected $guarded = ['specialplayer_id'];
 
     /**
      * Date fields to convert to carbon instances
      *
-*@var array
+     * @var array
      */
     protected $dates = ['player_effective', 'player_expiration'];
 
     /**
      * Append custom attributes to output
      *
-*@var array
+     * @var array
      */
     protected $appends = ['effective_stamp', 'expiration_stamp', 'group'];
 
     /**
      * Models to be loaded automatically
      *
-*@var array
+     * @var array
      */
     protected $with = [];
 

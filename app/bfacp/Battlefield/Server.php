@@ -18,35 +18,35 @@ class Server extends Elegant
     /**
      * Table name
      *
-*@var string
+     * @var string
      */
     protected $table = 'tbl_server';
 
     /**
      * Table primary key
      *
-*@var string
+     * @var string
      */
     protected $primaryKey = 'ServerID';
 
     /**
      * Fields not allowed to be mass assigned
      *
-*@var array
+     * @var array
      */
     protected $guarded = ['ServerID'];
 
     /**
      * Date fields to convert to carbon instances
      *
-*@var array
+     * @var array
      */
     protected $dates = [];
 
     /**
      * Append custom attributes to output
      *
-*@var array
+     * @var array
      */
     protected $appends = [
         'percentage',
@@ -67,14 +67,14 @@ class Server extends Elegant
     /**
      * The attributes excluded form the models JSON response.
      *
-*@var array
+     * @var array
      */
     protected $hidden = ['maps_file_path', 'modes_file_path', 'squads_file_path', 'teams_file_path'];
 
     /**
      * Models to be loaded automaticly
      *
-*@var array
+     * @var array
      */
     protected $with = ['game', 'setting'];
 
@@ -112,11 +112,10 @@ class Server extends Elegant
 
     /**
      * Only return servers that should be active
-
      *
-*@param $query
+     * @param $query
      *
-     *@return
+     * @return
      */
     public function scopeActive($query)
     {
@@ -126,9 +125,8 @@ class Server extends Elegant
     /**
      * Returns the server name with the strings that are
      * to be removed from it.
-
      *
-*@return string/null
+     * @return string/null
      */
     public function getServerNameShortAttribute()
     {
@@ -143,9 +141,8 @@ class Server extends Elegant
 
     /**
      * Calculates how full the server is represented by a percentage
-
      *
-*@return float
+     * @return float
      */
     public function getPercentageAttribute()
     {
@@ -154,9 +151,8 @@ class Server extends Elegant
 
     /**
      * Gets the IP Address
-
      *
-*@return string
+     * @return string
      */
     public function getIPAttribute()
     {
@@ -166,9 +162,8 @@ class Server extends Elegant
 
     /**
      * Gets the RCON port from the IP Address
-
      *
-*@return integer
+     * @return integer
      */
     public function getPortAttribute()
     {
@@ -178,9 +173,8 @@ class Server extends Elegant
 
     /**
      * Gets the human readable name of the current map
-
      *
-*@return string
+     * @return string
      */
     public function getCurrentMapAttribute()
     {
@@ -189,9 +183,8 @@ class Server extends Elegant
 
     /**
      * Gets the human readable name of the current mode
-
      *
-*@return string
+     * @return string
      */
     public function getCurrentGamemodeAttribute()
     {
@@ -200,9 +193,8 @@ class Server extends Elegant
 
     /**
      * Gets the number of players currently in queue and caches the result for 5 minutes
-
      *
-*@return integer
+     * @return integer
      */
     public function getInQueueAttribute()
     {
@@ -217,9 +209,8 @@ class Server extends Elegant
 
     /**
      * Gets the path of the maps xml file
-
      *
-*@return string
+     * @return string
      */
     public function getMapsFilePathAttribute()
     {
@@ -229,9 +220,8 @@ class Server extends Elegant
 
     /**
      * Gets the path of the gamemodes xml file
-
      *
-*@return string
+     * @return string
      */
     public function getModesFilePathAttribute()
     {
@@ -241,9 +231,8 @@ class Server extends Elegant
 
     /**
      * Gets the path of the squads xml file
-
      *
-*@return string
+     * @return string
      */
     public function getSquadsFilePathAttribute()
     {
@@ -253,9 +242,8 @@ class Server extends Elegant
 
     /**
      * Gets the path of the teams xml file
-
      *
-*@return string
+     * @return string
      */
     public function getTeamsFilePathAttribute()
     {
@@ -265,9 +253,8 @@ class Server extends Elegant
 
     /**
      * Gets the current map image banner
-
      *
-*@return string
+     * @return string
      */
     public function getMapImagePathsAttribute()
     {
@@ -291,9 +278,8 @@ class Server extends Elegant
 
     /**
      * Is the server enabled?
-
      *
-*@return bool
+     * @return bool
      */
     public function getIsActiveAttribute()
     {

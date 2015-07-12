@@ -7,49 +7,49 @@ class Chat extends Elegant
     /**
      * Should model handle timestamps
      *
-*@var boolean
+     * @var boolean
      */
     public $timestamps = false;
 
     /**
      * Table name
      *
-*@var string
+     * @var string
      */
     protected $table = 'tbl_chatlog';
 
     /**
      * Table primary key
      *
-*@var string
+     * @var string
      */
     protected $primaryKey = 'ID';
 
     /**
      * Fields not allowed to be mass assigned
      *
-*@var array
+     * @var array
      */
     protected $guarded = ['ID'];
 
     /**
      * Date fields to convert to carbon instances
      *
-*@var array
+     * @var array
      */
     protected $dates = ['logDate'];
 
     /**
      * Append custom attributes to output
      *
-*@var array
+     * @var array
      */
     protected $appends = ['stamp', 'class_css', 'profile_url'];
 
     /**
      * Models to be loaded automaticly
      *
-*@var array
+     * @var array
      */
     protected $with = [];
 
@@ -72,7 +72,7 @@ class Chat extends Elegant
     /**
      * Gets the URL to the players profile
      *
-*@return string
+     * @return string
      */
     public function getProfileUrlAttribute()
     {
@@ -84,11 +84,10 @@ class Chat extends Elegant
 
     /**
      * Excludes server and player chat spam from the result
-
      *
-*@param $query
+     * @param $query
      *
-     *@return
+     * @return
      */
     public function scopeExcludeSpam($query)
     {
@@ -111,9 +110,8 @@ class Chat extends Elegant
 
     /**
      * Converts the chat timestamp to an ISO 8601 stamp
-
      *
-*@return string
+     * @return string
      */
     public function getStampAttribute()
     {
@@ -122,9 +120,8 @@ class Chat extends Elegant
 
     /**
      * Returns the class that should be applied based on the chat visibility
-
      *
-*@return string
+     * @return string
      */
     public function getClassCssAttribute()
     {

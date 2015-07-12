@@ -6,9 +6,8 @@ class Battlefield extends Main
 {
     /**
      * Gets the name of the squad by ID
-
      *
-*@param  integer $id Squad ID
+     * @param  integer $id Squad ID
      *
      * @return string Squad Name
      * @throws Exception
@@ -130,8 +129,7 @@ class Battlefield extends Main
 
     /**
      * Calculates kill/death ratio
-
-*
+     *
      * @param  integer $kills
      * @param  integer $deaths
      * @param  integer $precision
@@ -157,9 +155,8 @@ class Battlefield extends Main
      * @param  integer $headshots
      * @param  integer $kills
      * @param  integer $precision
-
      *
-*@return float
+     * @return float
      */
     public function hsk($headshots = 0, $kills = 0, $precision = 2)
     {
@@ -172,13 +169,12 @@ class Battlefield extends Main
 
     /**
      * Calculates the number of tickets on round start
-
-*
-*@param  string        $gamemode
+     *
+     * @param  string  $gamemode
      * @param  integer $modifier
      * @param  string  $gameName
      *
-*@return integer
+     * @return integer
      */
     public function startingTickets($gamemode, $modifier, $gameName)
     {
@@ -286,9 +282,8 @@ class Battlefield extends Main
 
     /**
      * Calculates the round timer on round start
-
-*
-*@param  string        $gamemode
+     *
+     * @param  string  $gamemode
      * @param  integer $modifier
      * @param  string  $gameName
      *

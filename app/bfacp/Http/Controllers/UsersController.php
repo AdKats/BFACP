@@ -16,7 +16,7 @@ class UsersController extends BaseController
     /**
      * User Repository
      *
-*@var UserRepository
+     * @var UserRepository
      */
     private $repository;
 
@@ -29,7 +29,7 @@ class UsersController extends BaseController
     /**
      * Shows the login form
      *
-*@return View
+     * @return View
      */
     public function showLogin()
     {
@@ -39,7 +39,7 @@ class UsersController extends BaseController
     /**
      * Shows the signup form
      *
-*@return View
+     * @return View
      */
     public function showSignup()
     {
@@ -48,9 +48,8 @@ class UsersController extends BaseController
 
     /**
      * Attempt to confirm the account with code
-
      *
-*@param  string $code
+     * @param  string $code
      *
      * @return Redirect
      */
@@ -69,7 +68,7 @@ class UsersController extends BaseController
     /**
      * Create a new user
      *
-*@return Redirect
+     * @return Redirect
      */
     public function signup()
     {

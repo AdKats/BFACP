@@ -14,35 +14,35 @@ class Reputation
     /**
      * Player Object
      *
-*@var Player
+     * @var Player
      */
     public $player;
 
     /**
      * Source reputation
      *
-*@var integer
+     * @var integer
      */
     public $sourceReputation = 0;
 
     /**
      * Target reputation
      *
-*@var integer
+     * @var integer
      */
     public $targetReputation = 0;
 
     /**
      * Sum of source and target reputation
      *
-*@var integer
+     * @var integer
      */
     public $totalReputation = 0;
 
     /**
      * Real reputation
      *
-*@var integer
+     * @var integer
      */
     public $finalReputation = 0;
 
@@ -103,7 +103,7 @@ class Reputation
     /**
      * Creates or Updates the player reputation then reloads it
      *
-*@return mixed
+     * @return mixed
      */
     public function createOrUpdate()
     {
@@ -141,9 +141,8 @@ class Reputation
 
     /**
      * Fetchs records by player to calculate the source reputation
-
      *
-*@return mixed
+     * @return mixed
      */
     public function source()
     {
@@ -166,9 +165,8 @@ class Reputation
 
     /**
      * Fetchs records targeted on player to calculate the target reputation
-
      *
-*@return mixed
+     * @return mixed
      */
     public function target()
     {
@@ -214,9 +212,8 @@ class Reputation
 
     /**
      * Fetchs special records to be applyed to the reputation values
-
      *
-*@return mixed
+     * @return mixed
      */
     public function special()
     {
@@ -241,9 +238,8 @@ class Reputation
 
     /**
      * Calcuates the total/final reputation
-
      *
-*@return mixed
+     * @return mixed
      */
     public function calculate()
     {

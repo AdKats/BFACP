@@ -19,42 +19,42 @@ class Player extends Elegant
     /**
      * Table name
      *
-*@var string
+     * @var string
      */
     protected $table = 'tbl_playerdata';
 
     /**
      * Table primary key
      *
-*@var string
+     * @var string
      */
     protected $primaryKey = 'PlayerID';
 
     /**
      * Fields not allowed to be mass assigned
      *
-*@var array
+     * @var array
      */
     protected $guarded = ['PlayerID'];
 
     /**
      * Date fields to convert to carbon instances
      *
-*@var array
+     * @var array
      */
     protected $dates = [];
 
     /**
      * Append custom attributes to output
      *
-*@var array
+     * @var array
      */
     protected $appends = ['profile_url', 'country_flag', 'country_name', 'rank_image', 'links'];
 
     /**
      * Models to be loaded automaticly
      *
-*@var array
+     * @var array
      */
     protected $with = ['game', 'battlelog'];
 
@@ -157,7 +157,7 @@ class Player extends Elegant
     /**
      * Does the player have a battlelog persona id linked
      *
-*@return boolean
+     * @return boolean
      */
     public function hasPersona()
     {
@@ -167,7 +167,7 @@ class Player extends Elegant
     /**
      * Checks if player has a reputation record
      *
-*@return boolean
+     * @return boolean
      */
     public function hasReputation()
     {
@@ -176,9 +176,8 @@ class Player extends Elegant
 
     /**
      * Purge the cache for the player
-
      *
-*@return $this
+     * @return $this
      */
     public function forget()
     {
@@ -190,9 +189,8 @@ class Player extends Elegant
 
     /**
      * Gets the URL to the players profile
-
      *
-*@return string
+     * @return string
      */
     public function getProfileUrlAttribute()
     {
@@ -204,9 +202,8 @@ class Player extends Elegant
 
     /**
      * Get the country name
-
      *
-*@return string
+     * @return string
      */
     public function getCountryNameAttribute()
     {
@@ -229,9 +226,8 @@ class Player extends Elegant
 
     /**
      * Get the country image flag
-
      *
-*@return string
+     * @return string
      */
     public function getCountryFlagAttribute()
     {
@@ -254,9 +250,8 @@ class Player extends Elegant
 
     /**
      * Generates links to external/internal systems.
-
      *
-*@return array
+     * @return array
      */
     public function getLinksAttribute()
     {
@@ -337,9 +332,8 @@ class Player extends Elegant
 
     /**
      * Get the rank image
-
      *
-*@return string
+     * @return string
      */
     public function getRankImageAttribute()
     {

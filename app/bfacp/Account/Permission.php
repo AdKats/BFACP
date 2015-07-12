@@ -7,7 +7,7 @@ class Permission extends EntrustPermission
     /**
      * Validation rules
      *
-*@var array
+     * @var array
      */
     public static $rules = [
         'name' => 'required|unique:bfacp_permissions,name|between:3,255',
@@ -16,49 +16,49 @@ class Permission extends EntrustPermission
     /**
      * Should model handle timestamps
      *
-*@var boolean
+     * @var boolean
      */
     public $timestamps = true;
 
     /**
      * Table name
      *
-*@var string
+     * @var string
      */
     protected $table = 'bfacp_permissions';
 
     /**
      * Fields allowed to be mass assigned
      *
-*@var array
+     * @var array
      */
     protected $guarded = ['id'];
 
     /**
      * Date fields to convert to carbon instances
      *
-*@var array
+     * @var array
      */
     protected $dates = [];
 
     /**
      * The attributes excluded form the models JSON response.
      *
-*@var array
+     * @var array
      */
     protected $hidden = [];
 
     /**
      * Append custom attributes to output
      *
-*@var array
+     * @var array
      */
     protected $appends = [];
 
     /**
      * Models to be loaded automaticly
      *
-*@var array
+     * @var array
      */
     protected $with = [];
 }

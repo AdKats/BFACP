@@ -55,21 +55,21 @@ class Metabans
     /**
      * API Key Hash
      *
-*@var string
+     * @var string
      */
     private $hash = '';
 
     /**
      * API Key
      *
-*@var string
+     * @var string
      */
     private $key = '';
 
     /**
      * API Username
      *
-*@var string
+     * @var string
      */
     private $user = '';
 
@@ -77,21 +77,21 @@ class Metabans
      * Used to pull information from accounts.
      * Feeds, Assessments, etc..
      *
-*@var string
+     * @var string
      */
     private $account = '';
 
     /**
      * API Salt
      *
-*@var string
+     * @var string
      */
     private $salt = '';
 
     /**
      * Auth creds
      *
-*@var array
+     * @var array
      */
     private $auth = [];
 
@@ -126,10 +126,10 @@ class Metabans
     /**
      * Assess player
      *
-     * @param  string $game   BF_BC2, MOH_2010, BF_3, MOH_2012, BF_4
-     * @param  string $GUID   Player GUID
-     * @param  string $type   None, Watch, White, Black
-     * @param  string $reason Ban Reason - Max 200 chars
+     * @param  string  $game     BF_BC2, MOH_2010, BF_3, MOH_2012, BF_4
+     * @param  string  $GUID     Player GUID
+     * @param  string  $type     None, Watch, White, Black
+     * @param  string  $reason   Ban Reason - Max 200 chars
      * @param  integer $duration Length of time in seconds ban should be enforced. Defaults to 3 months.
      *
      * @return Collection
@@ -429,7 +429,7 @@ class Metabans
     /**
      * Returns the API Key
      *
-*@return string
+     * @return string
      */
     public function getKey()
     {
@@ -439,7 +439,7 @@ class Metabans
     /**
      * Returns the API Username
      *
-*@return string
+     * @return string
      */
     public function getUser()
     {

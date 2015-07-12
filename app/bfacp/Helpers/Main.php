@@ -11,11 +11,10 @@ class Main extends BaseHelper
 {
     /**
      * Return a JSON response
-
-*
-*@param  array                $input
-     * @param  string         $message
-     * @param  string         $status
+     *
+     * @param  array   $input
+     * @param  string  $message
+     * @param  string  $status
      * @param  integer $httpcode
      * @param  boolean $cached
      * @param  boolean $collectionOnly
@@ -64,11 +63,10 @@ class Main extends BaseHelper
 
     /**
      * Returns how long the application took to complete
-
-*
-*@param bool $isPage
      *
-     *@return string
+     * @param bool $isPage
+     *
+     * @return string
      * @throws Exception
      */
     public function executionTime($isPage = false)
@@ -93,7 +91,7 @@ class Main extends BaseHelper
      * @param  integer $secs
      * @param bool     $shorthand
      *
-*@return string
+     * @return string
      * @throws Exception
      * @internal param bool $shorthand Short version time/date string
      */
@@ -752,10 +750,9 @@ class Main extends BaseHelper
 
     /**
      * Returns the correct soldier assigned to user for the correct game.
-
      *
-*@param  \BFACP\Account\User $user
-     * @param  integer $gameID
+     * @param  \BFACP\Account\User $user
+     * @param  integer             $gameID
      *
      * @return Player
      */
@@ -787,13 +784,12 @@ class Main extends BaseHelper
      * makes it much easier for users to manually type or speak their passwords.
      * Note: the $add_dashes option will increase the length of the password by
      * floor(sqrt(N)) characters.
-
-*
-*@param  integer       $length
+     *
+     * @param  integer $length
      * @param  boolean $add_dashes
      * @param  string  $available_sets
      *
-*@return string
+     * @return string
      * @source https://gist.github.com/tylerhall/521810
      */
     public function generateStrongPassword($length = 9, $add_dashes = false, $available_sets = 'luds')
@@ -845,9 +841,8 @@ class Main extends BaseHelper
 
     /**
      * Converts a string to a boolean
-
      *
-*@param  string $string
+     * @param  string $string
      *
      * @return boolean
      */
@@ -866,9 +861,8 @@ class Main extends BaseHelper
 
     /**
      * Converts log error codes to correct css styles
-
      *
-*@param  string $name Exception Level
+     * @param  string $name Exception Level
      *
      * @return string
      */
@@ -899,13 +893,12 @@ class Main extends BaseHelper
 
     /**
      * Returns files in a directory
-
-*
-*@param  string  $dir             Directory Path
+     *
+     * @param  string  $dir       Directory Path
      * @param  boolean $onlyNames Only return the filename
      * @param  string  $prepend   Prepend custom path to use in front of filename
      *
-     *@return array
+     * @return array
      */
     public function files($dir, $onlyNames = false, $prepend = null)
     {
@@ -928,9 +921,8 @@ class Main extends BaseHelper
 
     /**
      * Returns a list of accounts that match $player
-
      *
-*@param  object $player \BFACP\Battlefield\Player
+     * @param  object $player \BFACP\Battlefield\Player
      *
      * @return array
      */

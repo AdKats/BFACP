@@ -21,9 +21,8 @@ class ServersController extends BaseController
 {
     /**
      * Gathers the population for all servers
-
      *
-*@param $id
+     * @param $id
      *
      * @return array
      */
@@ -47,7 +46,7 @@ class ServersController extends BaseController
     /**
      * Live Scoreboard
      *
-*@return array
+     * @return array
      * @internal param int $id Server ID
      */
     public function population()

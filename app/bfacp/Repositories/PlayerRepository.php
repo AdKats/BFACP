@@ -16,7 +16,7 @@ class PlayerRepository extends BaseRepository
     /**
      * Eager loading options
      *
-*@var array
+     * @var array
      */
     private $opts = [
         'ban.previous',
@@ -30,9 +30,8 @@ class PlayerRepository extends BaseRepository
 
     /**
      * Returns a paginate result of all players
-
-*
-* @param int       $limit
+     *
+     * @param int  $limit
      * @param null $names
      *
      * @return \Illuminate\Pagination\Paginator
@@ -124,7 +123,7 @@ class PlayerRepository extends BaseRepository
     /**
      * Gets the total number of players in the database
      *
-*@return integer
+     * @return integer
      */
     public function getPlayerCount()
     {
@@ -135,7 +134,7 @@ class PlayerRepository extends BaseRepository
     /**
      * Gets the total number of players seen from each country
      *
-*@return array
+     * @return array
      */
     public function getPlayersSeenByCountry()
     {
@@ -155,13 +154,11 @@ class PlayerRepository extends BaseRepository
 
     /**
      * Returns the player record history
-
-*
-* @param  integer      $id    Player ID
+     *
+     * @param  integer $id    Player ID
      * @param  integer $limit Results to return
-
-*
-*@return object
+     *
+     * @return object
      */
     public function getPlayerRecords($id, $limit = 25)
     {
@@ -190,13 +187,11 @@ class PlayerRepository extends BaseRepository
 
     /**
      * Returns the player chatlogs
-
      *
-*@param  integer       $id    Player ID
+     * @param  integer $id    Player ID
      * @param  integer $limit Results to return
-
      *
-*@return object
+     * @return object
      */
     public function getPlayerChat($id, $limit = 30)
     {
@@ -236,12 +231,11 @@ class PlayerRepository extends BaseRepository
 
     /**
      * Sets which relations should be returned
-
      *
-*@param  array      $opts
-     * @param  bool $custom
+     * @param  array $opts
+     * @param  bool  $custom
      *
-     *@return $this
+     * @return $this
      */
     public function setopts($opts = [], $custom = false)
     {

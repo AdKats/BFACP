@@ -7,49 +7,49 @@ class Session extends Elegant
     /**
      * Should model handle timestamps
      *
-*@var boolean
+     * @var boolean
      */
     public $timestamps = false;
 
     /**
      * Table name
      *
-*@var string
+     * @var string
      */
     protected $table = 'tbl_sessions';
 
     /**
      * Table primary key
      *
-*@var string
+     * @var string
      */
     protected $primaryKey = 'StatsID';
 
     /**
      * Fields not allowed to be mass assigned
      *
-*@var array
+     * @var array
      */
     protected $guarded = ['*'];
 
     /**
      * Date fields to convert to carbon instances
      *
-*@var array
+     * @var array
      */
     protected $dates = ['StartTime', 'EndTime'];
 
     /**
      * Append custom attributes to output
      *
-*@var array
+     * @var array
      */
     protected $appends = ['session_start', 'session_end'];
 
     /**
      * Models to be loaded automaticly
      *
-*@var array
+     * @var array
      */
     protected $with = [];
 

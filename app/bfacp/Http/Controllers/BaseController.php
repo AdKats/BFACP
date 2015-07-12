@@ -9,21 +9,21 @@ class BaseController extends Controller
     /**
      * BFACP\Account\User
      *
-*@var object
+     * @var object
      */
     public $user;
 
     /**
      * Is the user logged in
      *
-*@var boolean
+     * @var boolean
      */
     public $isLoggedIn = false;
 
     /**
      * Messages to be sent to the view
      *
-*@var array
+     * @var array
      */
     public $messages = [];
 
@@ -37,7 +37,7 @@ class BaseController extends Controller
     /**
      * Setup the layout used by the controller.
      *
-*@return void
+     * @return void
      */
     protected function setupLayout()
     {

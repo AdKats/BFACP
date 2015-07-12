@@ -62,7 +62,7 @@ class BanRepository extends BaseRepository
      *
      * @param  integer $id Ban ID
      *
-*@return object
+     * @return object
      */
     public function getBanById($id)
     {

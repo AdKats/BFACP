@@ -30,72 +30,70 @@ class LiveServerRepository extends BaseRepository
     /**
      * Game DB ID
      *
-*@var integer
+     * @var integer
      */
     protected $gameID = 0;
 
     /**
      * Game abbreviation
      *
-*@var null
+     * @var null
      */
     protected $gameName = null;
 
     /**
      * Server DB ID
      *
-*@var integer
+     * @var integer
      */
     protected $serverID = 0;
 
     /**
      * Server IPv4 Address
      *
-*@var string
+     * @var string
      */
     protected $serverIP = '';
 
     /**
      * RCON Port
      *
-*@var integer
+     * @var integer
      */
     protected $port = 0;
 
     /**
      * Formated Response
      *
-*@var array
+     * @var array
      */
     protected $data = [];
 
     /**
      * BFConn class
      *
-*@var object
+     * @var object
      */
     protected $client;
 
     /**
      * Tells us if we've successfully connected to the server.
      *
-*@var boolean
+     * @var boolean
      */
     protected $connected = false;
 
     /**
      * Tell us if we are logged in.
-
      *
-*@var boolean
+     * @var boolean
      */
     protected $authenticated = false;
 
     /**
      * Holds the server infomation block
-
      *
-*@var array
+     * @var array
      */
     protected $serverinfo = [];
 
@@ -108,41 +106,36 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Neutral Team
-
      *
-*@var string
+     * @var string
      */
     private $TEAM0 = 'Neutral';
 
     /**
      * Team 1 Name
-
      *
-*@var string
+     * @var string
      */
     private $TEAM1 = 'US Army';
 
     /**
      * Team 2 Name
-
      *
-*@var string
+     * @var string
      */
     private $TEAM2 = 'RU Army';
 
     /**
      * Team 3 Name
-
      *
-*@var string
+     * @var string
      */
     private $TEAM3 = 'US Army';
 
     /**
      * Team 4 Name
-
      *
-*@var string
+     * @var string
      */
     private $TEAM4 = 'RU Army';
 
@@ -172,9 +165,8 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Attempt to establish connection and login to the gameserver.
-
      *
-*@return $this
+     * @return $this
      */
     public function attempt()
     {
@@ -509,9 +501,8 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Determine if we are connected and authenticated with the gameserver.
-
      *
-*@return bool
+     * @return bool
      */
     public function check()
     {
@@ -590,9 +581,8 @@ class LiveServerRepository extends BaseRepository
      * @param bool     $displayAdminName
      * @param bool     $skipLog
      * @param  integer $times        How many times the say should be repeated
-
-*
-*@return bool
+     *
+     * @return bool
      */
     public function adminTell(
         $player,
@@ -846,10 +836,10 @@ class LiveServerRepository extends BaseRepository
     /**
      * Moves the player to a different team and/or squad
      *
-     * @param  string  $player Name of player
-     * @param  integer $teamId Id of team to move to
+     * @param  string  $player  Name of player
+     * @param  integer $teamId  Id of team to move to
      * @param  integer $squadId Id of squad to move to
-     * @param  boolean $locked Should the squad be locked
+     * @param  boolean $locked  Should the squad be locked
      *
      * @return boolean
      */
@@ -1001,13 +991,11 @@ class LiveServerRepository extends BaseRepository
 
     /**
      * Punish player
-
      *
-*@param  string $player        Name of player
+     * @param  string $player  Name of player
      * @param  string $message Message to be sent
-
      *
-*@return boolean
+     * @return boolean
      */
     public function adminPunish($player, $message)
     {
@@ -1104,9 +1092,8 @@ class LiveServerRepository extends BaseRepository
     /**
      * Function to handle assigning of the DB player object to the playerlist
      * Only used by the getPlayerDBData() function
-
      *
-*@internal param array $players
+     * @internal param array $players
      * @internal param object $dbPlayers
      * @internal param string $type Valid types are players, spectators, and commander
      */
@@ -1189,7 +1176,7 @@ class LiveServerRepository extends BaseRepository
                 case 3:
                     $temp[ $teamID ]['commander'] = $player;
                     $this->data['server']['players']['commanders']++;
-                break;
+                    break;
 
                 default:
                     $temp[ $teamID ]['players'][] = array_merge($player, $additional);

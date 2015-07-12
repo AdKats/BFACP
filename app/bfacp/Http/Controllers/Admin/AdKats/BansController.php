@@ -23,14 +23,14 @@ class BansController extends BaseController
     /**
      * Ban Repository
      *
-*@var BanRepository
+     * @var BanRepository
      */
     protected $repository;
 
     /**
      * Metabans Class
      *
-*@var Metabans
+     * @var Metabans
      */
     protected $metabans = null;
 

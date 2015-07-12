@@ -19,28 +19,28 @@ class ScoreboardController extends BaseController
     /**
      * \BFACP\Repositories\Scoreboard\LiveServerRepository
      *
-*@var null
+     * @var null
      */
     protected $repository = null;
 
     /**
      * \BFACP\Battlefield\Server
      *
-*@var null
+     * @var null
      */
     protected $server = null;
 
     /**
      * List of player names
      *
-*@var array
+     * @var array
      */
     protected $players = [];
 
     /**
      * Errors list
      *
-*@var array
+     * @var array
      */
     protected $errors = [];
 

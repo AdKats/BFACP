@@ -646,7 +646,7 @@ class BFHConn
     /**
      * logging out
      *
-*@return String
+     * @return String
      */
     public function logout()
     {
@@ -659,7 +659,7 @@ class BFHConn
     /**
      * disconnecting from the gameserver
      *
-*@return String
+     * @return String
      */
     public function quit()
     {
@@ -669,7 +669,7 @@ class BFHConn
     /**
      * if logged in with rcon && successful, return true, otherwise false
      *
-*@return boolean
+     * @return boolean
      */
     public function isLoggedIn()
     {
@@ -728,7 +728,7 @@ class BFHConn
     /**
      * returns the server ip as a string
      *
-*@return String
+     * @return String
      */
     public function getServerIP()
     {
@@ -752,7 +752,7 @@ class BFHConn
     /**
      * returns the server information as an array
      *
-*@return array
+     * @return array
      */
     public function getServerInfo()
     {
@@ -813,9 +813,8 @@ class BFHConn
 
     /**
      * returns the current playmode as a string
-
      *
-*@return String
+     * @return String
      */
     public function getCurrentPlaymode()
     {
@@ -860,9 +859,8 @@ class BFHConn
 
     /**
      * returns the current map as a string
-
      *
-*@return String
+     * @return String
      */
     public function getCurrentMap()
     {
@@ -883,9 +881,8 @@ class BFHConn
 
     /**
      * returns the server version as an array
-
      *
-*@return array
+     * @return array
      */
     public function getVersion()
     {
@@ -894,9 +891,8 @@ class BFHConn
 
     /**
      * returns the game type currently running
-
      *
-*@return String
+     * @return String
      */
     public function getGameType()
     {
@@ -905,9 +901,8 @@ class BFHConn
 
     /**
      * returns the current round of the game
-
      *
-*@return Integer
+     * @return Integer
      */
     public function getCurrentGameRound()
     {
@@ -916,9 +911,8 @@ class BFHConn
 
     /**
      * returns the max amount of rounds of the current game
-
      *
-*@return Integer
+     * @return Integer
      */
     public function getGameMaxRounds()
     {
@@ -928,9 +922,8 @@ class BFHConn
     /**
      * returns the current teamscores
      * FFIXX doesn't work yet
-
      *
-*@return Integer
+     * @return Integer
      */
     public function getTeamScores()
     {
@@ -940,9 +933,8 @@ class BFHConn
     /**
      * returns the current online state of the gameserver
      * FFIXX doesn't work with the current bf3 server release
-
      *
-*@return String
+     * @return String
      */
     public function getOnlineState()
     {
@@ -954,7 +946,7 @@ class BFHConn
      *
      * @param string $team
      *
-*@return array
+     * @return array
      */
     public function getPlayerlistTeam($team = '')
     {
@@ -969,9 +961,8 @@ class BFHConn
 
     /**
      * returns list of all playernames on server (useful for other functions)
-
      *
-*@return array
+     * @return array
      */
     public function getPlayerlistNames()
     {
@@ -1018,9 +1009,8 @@ class BFHConn
 
     /**
      * returns true if server is available, otherwise false
-
      *
-*@see isConnected()
+     * @see isConnected()
      * @return boolean
      */
     public function isServerOnline()
@@ -1041,9 +1031,8 @@ class BFHConn
 
     /**
      * returns the gamepassword as a string
-
      *
-*@return String
+     * @return String
      */
     public function adminVarGetGamepassword()
     {
@@ -1052,9 +1041,8 @@ class BFHConn
 
     /**
      * gets the full gamedata of all players on the gameserver
-
      *
-*@return array
+     * @return array
      */
     public function adminGetPlayerlist()
     {
@@ -1080,9 +1068,8 @@ class BFHConn
     /**
      * returns true/false, if server events are enabled in this connection or
      * not
-
      *
-*@return array
+     * @return array
      */
     public function adminEventsEnabledStatusGet()
     {
@@ -1145,9 +1132,8 @@ class BFHConn
      * returns gamedata of given playername with zeroed out GUID
      *
      * @param String (if not set, all players will be listed)
-
-*
-*@return array
+     *
+     * @return array
      */
     public function getPlayerdata($playerName = '')
     {
@@ -1162,9 +1148,8 @@ class BFHConn
 
     /**
      * returns the playername of a given playername
-
-*
-*@param String
+     *
+     * @param String
      *
      * @return String
      */
@@ -1251,16 +1236,14 @@ class BFHConn
      * example: adminYellMessage("Storm the front!", "JLNNN") - send the message to player "JLNNN"
      * TODO: Need fix for sending messages to squads
      * TODO: Cut strings with length more than 100 chars
-
-*
-*@param String
+     *
+     * @param String
      * @param String  (optional) - if not set, message will be sent to all
      *                players
      * @param Integer (optional) - amount of time the message will be displayed,
      *                must be 1-60
-
-*
-*@return String
+     *
+     * @return String
      */
     public function adminYellMessage($text, $playerName = '{%all%}', $durationInMS = 10)
     {
@@ -1280,9 +1263,8 @@ class BFHConn
      * sends an admin-yell message to a specified team<br />
      * example: adminYellMessageToTeam("Storm the front!", 1) - send the message to teamID 1
      * TODO: Cut strings with length more than 100 chars
-
      *
-*@param String
+     * @param String
      * @param Integer
      * @param Integer (optional) - amount of time the message will be displayed,
      *                must be 1-60
@@ -1341,9 +1323,8 @@ class BFHConn
 
     /**
      * runs the next level on maplist
-
      *
-*@return String
+     * @return String
      */
     public function adminRunNextLevel()
     {
@@ -1375,9 +1356,8 @@ class BFHConn
 
     /**
      * returns all available playmodes on server
-
      *
-* @return array
+     * @return array
      */
     public function adminGetPlaylists()
     {
@@ -1398,7 +1378,6 @@ class BFHConn
 
     /**
      * returns current playmode on server
-
      *
      * @see getCurrentPlaymode()
      * @return String
@@ -1410,7 +1389,6 @@ class BFHConn
 
     /**
      * loads the maplist
-
      *
      * @see adminMaplistList()
      * @return array
@@ -1422,7 +1400,6 @@ class BFHConn
 
     /**
      * saves the current maplist to file
-
      *
      * @return String
      */
@@ -1590,14 +1567,11 @@ class BFHConn
      * if no range is given, the ip will be banned permanently
      * TODO: ban for xx seconds
      * TODO: banreason
-
-*
-*@param           String
-     * @param int $timerange
-
-
-*
-*@return String
+     *
+     * @param           String
+     * @param int       $timerange
+     *
+     * @return String
      */
     public function adminBanAddPlayerGUID($playerName, $timerange = 2)
     {
@@ -1647,7 +1621,6 @@ class BFHConn
 
     /**
      * saves the current banlist to banlist file
-
      *
      * @return String
      */
@@ -1714,9 +1687,8 @@ class BFHConn
 
     /**
      * lists all bans from banlist
-
-*
-*@param string $offset
+     *
+     * @param string $offset
      *
      * @return array
      */
@@ -1728,9 +1700,8 @@ class BFHConn
     /**
      * loads the file containing all reserved slots<br />
      * [ I don't know if this function is useful.. ]
-
      *
-* @return String
+     * @return String
      */
     public function adminReservedSlotsLoad()
     {
@@ -1739,7 +1710,6 @@ class BFHConn
 
     /**
      * saves made changes to reserved slots file
-
      *
      * @return String
      */
@@ -1774,7 +1744,6 @@ class BFHConn
 
     /**
      * clears the file containing all reserved slots
-
      *
      * @return String
      */
@@ -1785,7 +1754,6 @@ class BFHConn
 
     /**
      * lists all playernames in reserved slots file
-
      *
      * @return array
      */
@@ -1947,14 +1915,11 @@ class BFHConn
 
     /**
      * Get player count and names of soldiers in a specific squad
-
-*
-*@param  integer       $teamID
+     *
+     * @param  integer $teamID
      * @param  integer $squadID
-
-
-*
-*@return array
+     *
+     * @return array
      */
     public function adminSquadListPlayer($teamID, $squadID)
     {
@@ -1989,9 +1954,8 @@ class BFHConn
 
     /**
      * gets true/false, if 3d spotting is enabled or not
-
      *
-* @return boolean
+     * @return boolean
      */
     public function adminVarGet3dSpotting()
     {
@@ -2012,7 +1976,6 @@ class BFHConn
 
     /**
      * gets true/false, if 3rd person vehicle cam is enabled or not
-
      *
      * @return boolean
      */
@@ -2036,7 +1999,6 @@ class BFHConn
 
     /**
      * gets true/false, if all unlocks are available or not
-
      *
      * @return boolean
      */
@@ -2059,7 +2021,6 @@ class BFHConn
 
     /**
      * gets true/false, if teambalance is enabled or not
-
      *
      * @return boolean
      */
@@ -2163,7 +2124,7 @@ class BFHConn
     /**
      * gets true/false, if hud is enabled or not
      *
-     *@return boolean
+     * @return boolean
      */
     public function adminVarGetHud()
     {
@@ -2185,7 +2146,7 @@ class BFHConn
     /**
      * gets the current idle time allowed
      *
-     *@return Integer
+     * @return Integer
      */
     public function adminVarGetIdleTimeout()
     {
@@ -2208,7 +2169,7 @@ class BFHConn
     /**
      * gets the number of rounds a player who is kicked for idle is banned
      *
-     *@return Integer
+     * @return Integer
      */
     public function adminVarGetidleBanRounds()
     {
@@ -2230,7 +2191,7 @@ class BFHConn
     /**
      * gets true/false, if killcam is enabled or not
      *
-*@return boolean
+     * @return boolean
      */
     public function adminVarGetKillCam()
     {
@@ -2252,7 +2213,7 @@ class BFHConn
     /**
      * gets true/false, if minimap is enabled or not
      *
-*@return boolean
+     * @return boolean
      */
     public function adminVarGetMiniMap()
     {
@@ -2274,7 +2235,7 @@ class BFHConn
     /**
      * gets true/false, if minimap spotting is enabled or not
      *
-*@return boolean
+     * @return boolean
      */
     public function adminVarGetMiniMapSpotting()
     {
@@ -2296,7 +2257,7 @@ class BFHConn
     /**
      * gets true/false, if nametag is enabled or not
      *
-*@return boolean
+     * @return boolean
      */
     public function adminVarGetNameTag()
     {
@@ -2319,7 +2280,7 @@ class BFHConn
     /**
      * gets true/false, if onlySquadLeaderSpawn is enabled or not
      *
-*@return boolean
+     * @return boolean
      */
     public function adminVarGetOnlySquadLeaderSpawn()
     {
@@ -2341,7 +2302,7 @@ class BFHConn
     /**
      * gets the man down time modifier
      *
-*@return Integer
+     * @return Integer
      */
     public function adminVarGetPlayerManDownTimeModifier()
     {
@@ -2363,7 +2324,7 @@ class BFHConn
     /**
      * gets the respawn time modifier
      *
-*@return Integer
+     * @return Integer
      */
     public function adminVarGetPlayerRespawnTimeModifier()
     {
@@ -2374,7 +2335,7 @@ class BFHConn
      * gets true/false, if punkbuster is enabled or not
      * FFIXX Only works for Rush right now
      *
-*@return boolean
+     * @return boolean
      */
     public function adminVarGetPunkbuster()
     {
@@ -2387,7 +2348,7 @@ class BFHConn
      * gets true/false if ranked server settings are enabled or not
      * FFIXX Only works for Rush right now
      *
-*@return boolean
+     * @return boolean
      */
     public function adminVarGetRanked()
     {
@@ -2411,7 +2372,7 @@ class BFHConn
     /**
      * gets true/false, if health regeneration is enabled or not
      *
-*@return boolean
+     * @return boolean
      */
     public function adminVarGetRegenerateHealth()
     {
@@ -2433,7 +2394,7 @@ class BFHConn
     /**
      * gets how many players are required to begin a round
      *
-*@return String
+     * @return String
      */
     public function adminVarGetRoundStartPlayerCount()
     {
@@ -2455,7 +2416,7 @@ class BFHConn
     /**
      * gets at how many players the server switches to pre-round
      *
-*@return String
+     * @return String
      */
     public function adminVarGetRoundRestartPlayerCount()
     {
@@ -2480,7 +2441,7 @@ class BFHConn
     /**
      * gets the server description
      *
-*@return String
+     * @return String
      */
     public function adminVarGetServerDescription()
     {
@@ -2515,7 +2476,7 @@ class BFHConn
     /**
      * gets the soldier health modifier
      *
-*@return Integer
+     * @return Integer
      */
     public function adminVarGetSoldierHealthModifier()
     {
@@ -2539,7 +2500,7 @@ class BFHConn
     /**
      * gets the number of teamkills allowed during one round
      *
-*@return Integer
+     * @return Integer
      */
     public function adminVarGetTeamKillCountForKick()
     {
@@ -2563,7 +2524,7 @@ class BFHConn
     /**
      * gets the highest kill-value allowed before a player is kicked for teamkilling
      *
-*@return Integer
+     * @return Integer
      */
     public function adminVarGetTeamKillValueForKick()
     {
@@ -2586,7 +2547,7 @@ class BFHConn
     /**
      * gets the value of a teamkill
      *
-*@return Integer
+     * @return Integer
      */
     public function adminVarGetTeamKillValueIncrease()
     {
@@ -2609,7 +2570,7 @@ class BFHConn
     /**
      * gets the decrease value
      *
-*@return Integer
+     * @return Integer
      */
     public function adminVarGetTeamKillValueDecreasePerSecond()
     {
@@ -2631,7 +2592,7 @@ class BFHConn
     /**
      * gets the number of teamkill-kicks allowed
      *
-*@return Integer
+     * @return Integer
      */
     public function adminVarGetTeamKillKickForBan()
     {
@@ -2653,9 +2614,8 @@ class BFHConn
 
     /**
      * gets true/false, if vehicle spawn is enabled or not
-
      *
-*@return boolean
+     * @return boolean
      */
     public function adminVarGetVehicleSpawnAllowed()
     {
@@ -2678,7 +2638,7 @@ class BFHConn
     /**
      * gets the soldier health modifier
      *
-*@return Integer
+     * @return Integer
      */
     public function adminVarGetVehicleSpawnDelayModifier()
     {
@@ -2688,7 +2648,7 @@ class BFHConn
     /**
      * gets the server type: Official, Ranked, Unranked or Private
      *
-*@return String
+     * @return String
      */
     public function adminVarGetServerType()
     {
@@ -2698,7 +2658,7 @@ class BFHConn
     /**
      * gets true/false, if server is noob only. If true, only players with rank <= 10 can join
      *
-*@return boolean
+     * @return boolean
      */
     public function adminVarGetNoobJoin()
     {
@@ -2730,9 +2690,8 @@ class BFHConn
 
     /**
      * gets scale factor for number of tickets to end round, in percent
-
      *
-*@return integer
+     * @return integer
      */
     public function adminVarGetGameModeCounter()
     {

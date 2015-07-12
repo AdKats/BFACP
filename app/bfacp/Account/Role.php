@@ -25,49 +25,49 @@ class Role extends EntrustRole
     /**
      * Table name
      *
-*@var string
+     * @var string
      */
     protected $table = 'bfacp_roles';
 
     /**
      * Table primary key
      *
-*@var string
+     * @var string
      */
     protected $primaryKey = 'id';
 
     /**
      * Fields allowed to be mass assigned
      *
-*@var array
+     * @var array
      */
     protected $fillable = ['name'];
 
     /**
      * Date fields to convert to carbon instances
      *
-*@var array
+     * @var array
      */
     protected $dates = [];
 
     /**
      * The attributes excluded form the models JSON response.
      *
-*@var array
+     * @var array
      */
     protected $hidden = [];
 
     /**
      * Append custom attributes to output
      *
-*@var array
+     * @var array
      */
     protected $appends = [];
 
     /**
      * Models to be loaded automaticly
      *
-*@var array
+     * @var array
      */
     protected $with = [];
 

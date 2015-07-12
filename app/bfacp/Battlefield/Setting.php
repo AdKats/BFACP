@@ -16,49 +16,49 @@ class Setting extends Elegant
     /**
      * Table name
      *
-*@var string
+     * @var string
      */
     protected $table = 'bfacp_settings_servers';
 
     /**
      * Table primary key
      *
-*@var string
+     * @var string
      */
     protected $primaryKey = 'server_id';
 
     /**
      * Fields not allowed to be mass assigned
      *
-*@var array
+     * @var array
      */
     protected $guarded = ['server_id'];
 
     /**
      * The attributes excluded form the models JSON response.
      *
-*@var array
+     * @var array
      */
     protected $hidden = ['rcon_password', 'monitor_key'];
 
     /**
      * Date fields to convert to carbon instances
      *
-*@var array
+     * @var array
      */
     protected $dates = [];
 
     /**
      * Append custom attributes to output
      *
-*@var array
+     * @var array
      */
     protected $appends = [];
 
     /**
      * Models to be loaded automaticly
      *
-*@var array
+     * @var array
      */
     protected $with = [];
 
@@ -73,7 +73,7 @@ class Setting extends Elegant
     /**
      * Decypts the RCON Password
      *
-*@return string
+     * @return string
      */
     public function getPassword()
     {

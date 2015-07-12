@@ -8,7 +8,7 @@ class Setting extends Elegant
     /**
      * Validation rules
      *
-*@var array
+     * @var array
      */
     public static $rules = [
         'gravatar' => 'email',
@@ -19,57 +19,56 @@ class Setting extends Elegant
     /**
      * Should model handle timestamps
      *
-*@var boolean
+     * @var boolean
      */
     public $timestamps = true;
 
     /**
      * Table name
      *
-*@var string
+     * @var string
      */
     protected $table = 'bfacp_settings_users';
 
     /**
      * Table primary key
      *
-*@var string
+     * @var string
      */
     protected $primaryKey = 'user_id';
 
     /**
      * Fields allowed to be mass assigned
      *
-*@var array
+     * @var array
      */
     protected $guarded = ['user_id'];
 
     /**
      * Date fields to convert to carbon instances
      *
-*@var array
+     * @var array
      */
     protected $dates = [];
 
     /**
      * The attributes excluded form the models JSON response.
      *
-*@var array
+     * @var array
      */
     protected $hidden = [];
 
     /**
      * Append custom attributes to output
      *
-*@var array
+     * @var array
      */
     protected $appends = [];
 
     /**
      * Models to be loaded automatically
-
      *
-*@var array
+     * @var array
      */
     protected $with = [];
 
