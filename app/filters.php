@@ -47,8 +47,6 @@ App::before(function ($request) {
             return Redirect::route('user.login');
         }
     }
-
-    View::share('bfacp', App::make('bfadmincp'));
 });
 
 App::after(function ($request, $response) {

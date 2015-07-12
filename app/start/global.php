@@ -100,3 +100,4 @@ App::down(function () {
 require app_path() . '/filters.php';
 require app_path() . '/bfacp/macros.php';
 require app_path() . '/bfacp/events.php';
+require app_path() . '/bfacp/composers.php';
