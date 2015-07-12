@@ -168,7 +168,17 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
                 'only'  => ['index', 'edit', 'update', 'destroy', 'store']
             ]);
 
-            Route::resource('roles', 'RolesController');
+            // AdKats Roles
+            Route::resource('roles', 'RolesController', [
+                'names' => [
+                    'index'   => 'admin.adkats.roles.index',
+                    'edit'    => 'admin.adkats.roles.edit',
+                    'store'   => 'admin.adkats.roles.store',
+                    'update'  => 'admin.adkats.roles.update',
+                    'create'  => 'admin.adkats.roles.create',
+                    'destroy' => 'admin.adkats.roles.destroy'
+                ]
+            ]);
 
             Route::resource('special_players', 'SpecialPlayersController', [
                 'names' => [
@@ -205,8 +215,7 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
                     'update'  => 'admin.site.roles.update',
                     'create'  => 'admin.site.roles.create',
                     'store'   => 'admin.site.roles.store'
-                ],
-                'only'  => ['index', 'edit', 'destroy', 'update', 'create', 'store']
+                ]
             ]);
 
             Route::resource('servers', 'ServersController', [
@@ -246,6 +255,12 @@ Entrust::routeNeedsPermission('admin/adkats/bans/*', 'admin.adkats.bans.edit');
 Entrust::routeNeedsPermission('admin/adkats/users', 'admin.adkats.user.view');
 Entrust::routeNeedsPermission('admin/adkats/users/*', 'admin.adkats.user.edit');
 
+/*====================================
+=            AdKats Roles            =
+====================================*/
+Entrust::routeNeedsPermission('admin/adkats/roles', 'admin.adkats.roles.view');
+Entrust::routeNeedsPermission('admin/adkats/roles/*', 'admin.adkats.roles.edit');
+
 /*============================================
 =            AdKats Special Users            =
 ============================================*/
@@ -257,6 +272,12 @@ Entrust::routeNeedsPermission('admin/adkats/special_players/*', 'admin.adkats.sp
 =======================================*/
 Entrust::routeNeedsPermission('admin/adkats/settings', 'admin.adkats.settings.edit');
 Entrust::routeNeedsPermission('admin/adkats/settings/*', 'admin.adkats.settings.edit');
+
+/*==================================
+=            Site Users            =
+==================================*/
+Entrust::routeNeedsPermission('admin/site/users', 'admin.site.users');
+Entrust::routeNeedsPermission('admin/site/users/*', 'admin.site.users');
 
 /*==================================
 =            Site Users            =

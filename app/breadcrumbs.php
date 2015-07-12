@@ -87,6 +87,27 @@ Breadcrumbs::register('admin.adkats.users.edit', function ($b, $id) {
     $b->push(Lang::get('navigation.admin.adkats.items.users.items.edit.title', ['id' => $id]));
 });
 
+/*====================================
+=            AdKats Roles            =
+====================================*/
+
+Breadcrumbs::register('admin.adkats.roles.index', function ($b) {
+    $b->parent('admin.adkats');
+    $b->push(Lang::get('navigation.admin.adkats.items.roles.title'), route('admin.adkats.roles.index'), [
+        'icon' => HTML::faicon(Lang::get('navigation.admin.adkats.items.roles.icon.fa'))
+    ]);
+});
+
+Breadcrumbs::register('admin.adkats.roles.edit', function ($b) {
+    $b->parent('admin.adkats.roles.index');
+    $b->push(Lang::get('navigation.admin.adkats.items.roles.items.edit.title'));
+});
+
+Breadcrumbs::register('admin.adkats.roles.create', function ($b) {
+    $b->parent('admin.adkats.roles.index');
+    $b->push(Lang::get('navigation.admin.adkats.items.roles.items.create.title'));
+});
+
 /*==============================================
 =            AdKats Special Players            =
 ==============================================*/

@@ -71,6 +71,18 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at'   => $now
             ],
             [
+                'name'         => 'admin.adkats.roles.edit',
+                'display_name' => 'Edit AdKats Roles',
+                'created_at'   => $now,
+                'updated_at'   => $now
+            ],
+            [
+                'name'         => 'admin.adkats.roles.view',
+                'display_name' => 'View AdKats Roles',
+                'created_at'   => $now,
+                'updated_at'   => $now
+            ],
+            [
                 'name'         => 'admin.scoreboard.forgive',
                 'display_name' => 'Forgive Player',
                 'created_at'   => $now,

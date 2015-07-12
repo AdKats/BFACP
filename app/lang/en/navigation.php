@@ -143,6 +143,22 @@ return [
                     ]
                 ],
 
+                'roles'    => [
+                    'title' => 'Roles',
+                    'icon'  => [
+                        'fa'  => 'fa-list-ol',
+                        'ion' => null
+                    ],
+                    'items' => [
+                        'edit'   => [
+                            'title' => 'Editing Role'
+                        ],
+                        'create' => [
+                            'title' => 'Create New Role'
+                        ]
+                    ]
+                ],
+
                 'special_players' => [
                     'title' => 'Special Players',
                     'icon'  => [

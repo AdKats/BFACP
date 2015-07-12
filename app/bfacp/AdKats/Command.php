@@ -78,6 +78,19 @@ class Command extends Elegant
     }
 
     /**
+     * Returns commands with the selected $type
+     *
+     * @param $query
+     * @param $type
+     *
+     * @return mixed
+     */
+    public function scopeType($query, $type)
+    {
+        return $query->where('command_active', $type);
+    }
+
+    /**
      * Command can be interacted with by player
      *
      * @return bool

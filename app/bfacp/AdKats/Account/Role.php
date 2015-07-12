@@ -74,6 +74,18 @@ class Role extends Elegant
     }
 
     /**
+     * Trims $value and sets the role key
+     *
+     * @param $value
+     */
+    public function setRoleNameAttribute($value)
+    {
+        $name = trim($value);
+        $this->attributes['role_name'] = $name;
+        $this->attributes['role_key'] = strtolower(str_replace(' ', '_', $name));
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function permissions()

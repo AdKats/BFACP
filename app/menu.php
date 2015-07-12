@@ -53,6 +53,11 @@ Menu::make('MainNav', function ($menu) use ($adminPermsList, $bfacp) {
                 ->prepend(HTML::faicon(Lang::get('navigation.admin.adkats.items.users.icon.fa'), true));
             }
 
+            if ($bfacp->user->ability(null, 'admin.adkats.roles.view')) {
+                $adkats->add(Lang::get('navigation.admin.adkats.items.roles.title'), ['route' => 'admin.adkats.roles.index'])
+                    ->prepend(HTML::faicon(Lang::get('navigation.admin.adkats.items.roles.icon.fa'), true));
+            }
+
             if ($bfacp->user->ability(null, 'admin.adkats.special.view')) {
                 $adkats->add(Lang::get('navigation.admin.adkats.items.special_players.title'), ['route' => 'admin.adkats.special_players.index'])
                 ->prepend(HTML::faicon(Lang::get('navigation.admin.adkats.items.special_players.icon.fa'), true));
