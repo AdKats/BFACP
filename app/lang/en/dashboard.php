@@ -21,6 +21,8 @@ return [
         ]
     ],
 
+    'motd' => 'Message of the Day',
+
     'population'                    => [
         'title'   => 'Population',
         'footer'  => 'Total',

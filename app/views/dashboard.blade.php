@@ -6,12 +6,12 @@
 @stop
 
 @section('content')
-@if($bfacp->isLoggedIn && $bfacp->user->ability(null, 'admin.site.motd') && !is_null(Config::get('bfacp.site.motd')))
+@if($bfacp->isLoggedIn && $bfacp->user->ability(null, 'admin.site.motd') && !empty(Config::get('bfacp.site.motd')))
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-info">
             <div class="box-header">
-                <h3 class="box-title">Message of the Day</h3>
+                <h3 class="box-title">{{ Lang::get('command.motd') }}</h3>
             </div>
 
             <div class="box-body">
