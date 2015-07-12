@@ -2,6 +2,7 @@
 
 use BFACP\Exceptions\MetabansException;
 use BFACP\Facades\Main as MainHelper;
+use GuzzleHttp\Exception\ParseException;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
@@ -276,6 +277,8 @@ class Metabans
             }
 
             throw new MetabansException(400, 'Could not connect to Metabans API');
+        } catch (ParseException $e) {
+            throw new MetabansException(400, 'Unable to process Metabans response.');
         }
     }
 
