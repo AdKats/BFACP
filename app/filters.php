@@ -14,10 +14,10 @@
 App::before(function ($request) {
     // CloudFlare IP addresses to trust
     // Proxies obtained from https://www.cloudflare.com/ips-v4
+    // Cached for 1 week
     Request::setTrustedProxies(Cache::remember('cloudflare.ips', 24 * 60 * 7, function () {
-        $request = App::make('GuzzleHttp\Client')->get('https://www.cloudflare.com/ips-v4');
-        $response = $request->getBody();
-        return explode("\n", $response);
+        $request = App::make('guzzle')->get('https://www.cloudflare.com/ips-v4');
+        return explode("\n", $request->getBody());
     }));
 
     // If request is not secured and force secured connection is enabled
@@ -34,6 +34,7 @@ App::before(function ($request) {
         return Redirect::secure($path, $status);
     }
 
+    // Check if only authorized users are allowed to access the site.
     if (Config::get('bfacp.site.auth') && Auth::guest()) {
         $path = explode('/', Request::path());
 
