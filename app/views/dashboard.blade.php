@@ -11,7 +11,7 @@
     <div class="col-xs-12">
         <div class="box box-info">
             <div class="box-header">
-                <h3 class="box-title">{{ Lang::get('command.motd') }}</h3>
+                <h3 class="box-title">{{ Lang::get('common.motd') }}</h3>
             </div>
 
             <div class="box-body">

@@ -67,7 +67,7 @@ Please create a ticket for bugs/requests. [here](https://github.com/Prophet731/B
 
 This method is only for those who have shell access to their web server or VPS. This will download and extract the files to your current directory. Make sure it's an empty directory.
 
-### Git Method (prefered)
+### Git Method (preferred)
 
 If you have git installed you can just run the following command to install it.
 

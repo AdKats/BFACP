@@ -6,6 +6,8 @@ return [
     'login' => 'Login',
     'logout' => 'Logout',
 
+    'motd' => 'Message of the Day',
+
     'metabans' => [
         'title' => 'Metabans',
         'assessments' => 'Assessments',
