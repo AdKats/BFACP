@@ -116,6 +116,7 @@
         {{ HTML::script('js/plugins/angular-modules/ng-table/ng-table.min.js') }}
         {{ HTML::script('js/plugins/highcharts/highcharts.js') }}
         {{ HTML::script('js/plugins/iCheck/icheck.min.js') }}
+        {{ HTML::script('js/plugins/howler/howler.min.js') }}
         {{ HTML::script('js/boot.js?v=1') }}
         {{ Minify::javascript(array_merge(
             ['/js/app.js'],
