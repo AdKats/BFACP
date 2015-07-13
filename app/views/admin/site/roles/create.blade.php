@@ -18,7 +18,7 @@
                         <button type="submit" class="btn bg-green">
                             <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ Lang::get('site.admin.roles.create.buttons.save') }}</span>
                         </button>
-                        {{ link_to_route('admin.site.roles.index', Lang::get('site.admin.roles.create.buttons.cancel'), [], ['class' => 'btn bg-blue']) }}
+                        {{ link_to_route('admin.site.roles.index', Lang::get('site.admin.roles.create.buttons.cancel'), [], ['class' => 'btn bg-blue', 'target' => '_self']) }}
                     </div>
                 </div>
             </div>

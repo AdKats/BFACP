@@ -37,7 +37,7 @@
                                 <td>{{ link_to_route('player.show', $ban->player->SoldierName, [$ban->player->PlayerID, $ban->player->SoldierName], ['target' => '_self']) }}</td>
                                 <td class="hidden-sm">
                                     @if(!is_null($ban->record->source_id))
-                                    {{ link_to_route('player.show', $ban->record->source_name, [$ban->record->source_id, $ban->record->source_name]) }}
+                                    {{ link_to_route('player.show', $ban->record->source_name, [$ban->record->source_id, $ban->record->source_name], ['target' => '_self']) }}
                                     @else
                                     {{ $ban->record->source_name }}
                                     @endif

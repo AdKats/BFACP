@@ -19,7 +19,7 @@
                         <button type="submit" class="btn bg-green">
                             <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ Lang::get('site.admin.roles.edit.buttons.save') }}</span>
                         </button>
-                        {{ link_to_route('admin.site.roles.index', Lang::get('site.admin.roles.edit.buttons.cancel'), [], ['class' => 'btn bg-blue']) }}
+                        {{ link_to_route('admin.site.roles.index', Lang::get('site.admin.roles.edit.buttons.cancel'), [], ['class' => 'btn bg-blue', 'target' => '_self']) }}
                         @if(!in_array($role->id, [1, 2]))
                         <button class="btn bg-red" id="delete-role">
                             <i class="fa fa-trash"></i>&nbsp;<span>{{ Lang::get('site.admin.roles.edit.buttons.delete') }}</span>
@@ -42,7 +42,7 @@
                     <tbody>
                         @foreach($role->users as $user)
                         <tr>
-                            <td>{{ link_to_route('admin.site.users.edit', $user->username, [$user->id]) }}</td>
+                            <td>{{ link_to_route('admin.site.users.edit', $user->username, $user->id, ['target' => '_self']) }}</td>
                         </tr>
                         @endforeach
                     </tbody>

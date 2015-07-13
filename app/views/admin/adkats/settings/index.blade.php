@@ -16,7 +16,7 @@
                             @foreach($servers as $server)
                             <tr>
                                 <td>{{ $server->ServerID }}</td>
-                                <td>{{ link_to_route('admin.adkats.settings.edit', $server->ServerName, [$server->ServerID]) }}</td>
+                                <td>{{ link_to_route('admin.adkats.settings.edit', $server->ServerName, $server->ServerID, ['target' => '_self']) }}</td>
                             </tr>
                             @endforeach
                         </tbody>

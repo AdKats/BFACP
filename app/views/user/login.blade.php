@@ -71,7 +71,7 @@
                 {{ Former::close() }}
 
                 @if(Config::get('bfacp.site.registration'))
-                {{ link_to_route('user.register', 'Create an account', [], ['class' => 'text-center']) }}
+                {{ link_to_route('user.register', 'Create an account', [], ['class' => 'text-center', 'target' => '_self']) }}
                 @endif
             </div>
         </div>

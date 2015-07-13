@@ -50,7 +50,7 @@
                     </div>
                 {{ Former::close() }}
 
-                {{ link_to_route('user.login', 'I already have an account', [], ['class' => 'text-center']) }}
+                {{ link_to_route('user.login', 'I already have an account', [], ['class' => 'text-center', 'target' => '_self']) }}
             </div>
         </div>
 

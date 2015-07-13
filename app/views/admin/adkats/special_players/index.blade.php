@@ -31,7 +31,7 @@
                                     @if(is_null($player->player))
                                     {{ link_to_route('player.listing', $player->player_identifier, ['player' => $player->player_identifier], ['target' => '_blank']) }}
                                     @else
-                                    {{ link_to_route('player.show', $player->player->SoldierName, [$player->player->PlayerID, $player->player->SoldierName]) }}
+                                    {{ link_to_route('player.show', $player->player->SoldierName, [$player->player->PlayerID, $player->player->SoldierName], ['target' => '_self']) }}
                                     @endif
                                 </td>
                                 <td>{{ Former::select('group')->fromQuery($groups, 'group_name', 'group_key')->value($player->player_group)->data_special_id($player->specialplayer_id) }}</td>

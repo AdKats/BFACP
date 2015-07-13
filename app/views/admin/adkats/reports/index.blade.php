@@ -29,13 +29,13 @@
                                     @if(is_null($report->source_id))
                                     {{ $report->source_name }}
                                     @else
-                                    {{ link_to_route('player.show', $report->source_name, [$report->source_id, $report->source_name]) }}</td>
+                                    {{ link_to_route('player.show', $report->source_name, [$report->source_id, $report->source_name], ['target' => '_self']) }}</td>
                                     @endif
                                 <td>
                                     @if(is_null($report->target_id))
                                     {{ $report->target_name }}
                                     @else
-                                    {{ link_to_route('player.show', $report->target_name, [$report->target_id, $report->target_name]) }}
+                                    {{ link_to_route('player.show', $report->target_name, [$report->target_id, $report->target_name], ['target' => '_self']) }}
                                     @endif
                                 </td>
                                 <td>{{ $report->record_message }}</td>

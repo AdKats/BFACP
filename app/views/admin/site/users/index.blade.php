@@ -23,7 +23,7 @@
                         <tbody>
                             @foreach($users as $user)
                             <tr>
-                                <td>{{ link_to_route('admin.site.users.edit', $user->username, $user->id) }}</td>
+                                <td>{{ link_to_route('admin.site.users.edit', $user->username, $user->id, ['target' => '_self']) }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->roles[0]->name }}</td>
                                 <td>{{ MainHelper::languages($user->setting->lang) }}</td>

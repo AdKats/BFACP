@@ -54,7 +54,7 @@
                         <button type="submit" class="btn bg-green">
                             <i class="fa fa-floppy-o"></i>&nbsp;<span>Create Ban</span>
                         </button>
-                        {{ link_to_route('admin.adkats.bans.index', Lang::get('adkats.bans.edit.buttons.cancel'), [], ['class' => 'btn bg-red']) }}
+                        {{ link_to_route('admin.adkats.bans.index', Lang::get('adkats.bans.edit.buttons.cancel'), [], ['class' => 'btn bg-red', 'target' => '_self']) }}
                     </div>
                 </div>
                 {{ Former::close() }}

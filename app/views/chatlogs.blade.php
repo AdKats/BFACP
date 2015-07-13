@@ -89,7 +89,7 @@
                                     @if(is_null($message->logPlayerID))
                                     {{ $message->logSoldierName }}
                                     @else
-                                    {{ link_to_route('player.show', $message->player->SoldierName, [$message->player->PlayerID, $message->player->SoldierName]) }}
+                                    {{ link_to_route('player.show', $message->player->SoldierName, [$message->player->PlayerID, $message->player->SoldierName], ['target' => '_self']) }}
                                     @endif
                                 </td>
                                 <td>
@@ -104,7 +104,7 @@
                                     @if(is_null($message->logPlayerID))
                                     {{ $message->logSoldierName }}
                                     @else
-                                    {{ link_to_route('player.show', $message->player->SoldierName, [$message->player->PlayerID, $message->player->SoldierName]) }}
+                                    {{ link_to_route('player.show', $message->player->SoldierName, [$message->player->PlayerID, $message->player->SoldierName], ['target' => '_self']) }}
                                     @endif
                                 </td>
                                 <td>

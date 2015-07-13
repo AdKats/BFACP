@@ -7,7 +7,7 @@
             <div class="box-header">
                 <h3 class="box-title">&nbsp;</h3>
                 <div class="box-tools">
-                    {{ link_to_route('admin.site.roles.create', 'Create Role', [], ['class' => 'btn bg-green btn-xs pull-right']) }}
+                    {{ link_to_route('admin.site.roles.create', 'Create Role', [], ['class' => 'btn bg-green btn-xs pull-right', 'target' => '_self']) }}
                 </div>
             </div>
 

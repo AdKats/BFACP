@@ -26,7 +26,7 @@
                         <button type="submit" class="btn bg-green">
                             <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ Lang::get('adkats.users.edit.buttons.save') }}</span>
                         </button>
-                        {{ link_to_route('admin.adkats.users.index', Lang::get('adkats.users.edit.buttons.cancel'), [], ['class' => 'btn bg-blue']) }}
+                        {{ link_to_route('admin.adkats.users.index', Lang::get('adkats.users.edit.buttons.cancel'), [], ['class' => 'btn bg-blue', 'target' => '_self']) }}
                         <button class="btn bg-red" id="delete-user">
                             <i class="fa fa-trash"></i>&nbsp;<span>{{ Lang::get('adkats.users.edit.buttons.delete') }}</span>
                         </button>

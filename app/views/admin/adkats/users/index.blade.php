@@ -29,7 +29,7 @@
                         <tbody>
                             @forelse($users as $user)
                             <tr>
-                                <td>{{ link_to_route('admin.adkats.users.edit', $user->user_name, [$user->user_id]) }}</td>
+                                <td>{{ link_to_route('admin.adkats.users.edit', $user->user_name, $user->user_id, ['target' => '_self']) }}</td>
                                 <td>{{ $user->user_email or 'N/A' }}</td>
                                 <td>{{ $user->role->role_name }}</td>
                                 <td><span ng-bind="moment('{{ $user->stamp }}').fromNow()" tooltip="{{ HTML::moment($user->stamp) }}"></span></td>

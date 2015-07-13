@@ -25,7 +25,7 @@
                             <tr>
                                 <td>{{ $server->ServerID }}</td>
                                 <td>{{ Form::label(null, $server->game->Name, ['class' => $server->game->class_css]) }}</td>
-                                <td>{{ link_to_route('admin.site.servers.edit', $server->ServerName, [$server->ServerID]) }}</td>
+                                <td>{{ link_to_route('admin.site.servers.edit', $server->ServerName, $server->ServerID, ['target' => '_self']) }}</td>
                                 <td>
                                     @if($server->is_active)
                                     <label class="label bg-green">Enabled</label>
