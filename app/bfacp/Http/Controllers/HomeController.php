@@ -1,6 +1,6 @@
 <?php namespace BFACP\Http\Controllers;
 
-use BFACP\Battlefield\Game;
+use BFACP\Battlefield\Server;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -45,13 +45,15 @@ class HomeController extends BaseController
      */
     public function scoreboard()
     {
-        $games = Game::with([
-            'servers' => function ($query) {
-                $query->active()->orderBy('ServerName');
-            },
-        ])->get();
+        $servers = [
+            '-1' => 'Select Server&hellip;'
+        ];
 
-        return View::make('scoreboard', compact('games'))->with('page_title',
+        Server::active()->get()->each(function($server) use(&$servers) {
+            $servers[$server->game->Name][$server->ServerID] = $server->ServerName;
+        });
+
+        return View::make('scoreboard', compact('servers'))->with('page_title',
             Lang::get('navigation.main.items.scoreboard.title'));
     }
 }

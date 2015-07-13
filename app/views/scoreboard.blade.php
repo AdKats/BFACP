@@ -5,16 +5,12 @@
 <div ng-controller="ScoreboardController">
     <div class="row" style="padding-bottom: 10px">
         <div class="col-xs-12">
-            <select class="form-control" ng-model="selectedId" ng-change="switchServer()" ng-disabled="refresh">
-                <option value="-1" selected>Select Server...</option>
-                @foreach($games as $game)
-                <optgroup label="{{ $game->Name }}">
-                    @foreach($game->servers as $server)
-                    <option value="{{ $server->ServerID }}">{{{ $server->ServerName }}}</option>
-                    @endforeach
-                </optgroup>
-                @endforeach
-            </select>
+            {{ Former::select()
+                ->options($servers)
+                ->ng_model('selectedId')
+                ->ng_change('switchServer()')
+                ->ng_disabled('refresh')
+            }}
         </div>
     </div>
 
