@@ -50,6 +50,7 @@ class UsersController extends BaseController
         $user = new User();
         $user->user_name = Input::get('username');
         $user->user_role = 1;
+        $user->user_expiration = Carbon::now()->addYears(20);
         $user->save();
 
         return MainHelper::response([
