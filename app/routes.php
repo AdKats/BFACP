@@ -17,8 +17,10 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
     Route::group(['prefix' => 'players'], function () {
         Route::get('/', ['as' => 'api.players.index', 'uses' => 'PlayersController@index']);
         Route::get('{id}', ['as' => 'api.players.show', 'uses' => 'PlayersController@show'])->where('id', '[0-9]+');
-        Route::get('{id}/records', ['as' => 'api.players.show.records', 'uses' => 'PlayersController@showRecords'])->where('id', '[0-9]+');
-        Route::get('{id}/chatlogs', ['as' => 'api.players.show.chatlogs', 'uses' => 'PlayersController@showChatlogs'])->where('id', '[0-9]+');
+        Route::get('{id}/records', ['as' => 'api.players.show.records', 'uses' => 'PlayersController@showRecords'])
+            ->where('id', '[0-9]+');
+        Route::get('{id}/chatlogs', ['as' => 'api.players.show.chatlogs', 'uses' => 'PlayersController@showChatlogs'])
+            ->where('id', '[0-9]+');
     });
 
     /*=====================================
@@ -27,35 +29,20 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
 
     Route::group(['prefix' => 'battlelog'], function () {
         Route::group(['prefix' => 'players'], function () {
-            Route::get('{player}/weapons', ['as' => 'api.battlelog.players.weapons', function (BFACP\Battlefield\Player $player) {
-                $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogPlayer', [$player]);
+            Route::get('{player}/weapons', ['as' => 'api.battlelog.players.weapons', 'uses' => 'BattlelogController@getWeapons'])
+                ->where('player', '[0-9]+');
 
-                return MainHelper::response($battlelog->getWeaponStats(), null, null, null, false, true);
-            }])->where('player', '[0-9]+');
+            Route::get('{player}/overview', ['as' => 'api.battlelog.players.overview', 'uses' => 'BattlelogController@getOverview'])
+                ->where('player', '[0-9]+');
 
-            Route::get('{player}/overview', ['as' => 'api.battlelog.players.overview', function (BFACP\Battlefield\Player $player) {
-                $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogPlayer', [$player]);
+            Route::get('{player}/vehicles', ['as' => 'api.battlelog.players.vehicles', 'uses' => 'BattlelogController@getVehicles'])
+                ->where('player', '[0-9]+');
 
-                return MainHelper::response($battlelog->getOverviewStats(), null, null, null, false, true);
-            }])->where('player', '[0-9]+');
+            Route::get('{player}/reports', ['as' => 'api.battlelog.players.reports', 'uses' => 'BattlelogController@getReports'])
+                ->where('player', '[0-9]+');
 
-            Route::get('{player}/vehicles', ['as' => 'api.battlelog.players.vehicles', function (BFACP\Battlefield\Player $player) {
-                $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogPlayer', [$player]);
-
-                return MainHelper::response($battlelog->getVehicleStats(), null, null, null, false, true);
-            }])->where('player', '[0-9]+');
-
-            Route::get('{player}/reports', ['as' => 'api.battlelog.players.reports', function (BFACP\Battlefield\Player $player) {
-                $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogPlayer', [$player]);
-
-                return MainHelper::response($battlelog->getBattleReports(), null, null, null, false, true);
-            }])->where('player', '[0-9]+');
-
-            Route::get('{player}/acs', ['as' => 'api.battlelog.players.acs', function (BFACP\Battlefield\Player $player) {
-                $acs = App::make('BFACP\Libraries\AntiCheat', [$player]);
-                $data = $acs->parse($acs->battlelog->getWeaponStats())->get();
-                return MainHelper::response($data, null, null, null, false, true);
-            }])->where('player', '[0-9]+');
+            Route::get('{player}/acs', ['as' => 'api.battlelog.players.acs', 'uses' => 'BattlelogController@getCheatDetection']
+                )->where('player', '[0-9]+');
         });
     });
 
@@ -81,9 +68,12 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
 
     Route::group(['prefix' => 'servers'], function () {
         Route::get('population', ['as' => 'api.servers.population', 'uses' => 'ServersController@population']);
-        Route::get('scoreboard/{id}', ['as' => 'api.servers.scoreboard', 'uses' => 'ServersController@scoreboard'])->where('id', '[0-9]+');
-        Route::get('scoreboard/roundstats/{id}', ['as' => 'api.servers.scoreboard.roundstats', 'uses' => 'ServersController@scoreboardExtra'])->where('id', '[0-9]+');
-        Route::get('chat/{id}', ['as' => 'api.servers.chat', 'uses' => 'ServersController@chat'])->where('id', '[0-9]+');
+        Route::get('scoreboard/{id}', ['as' => 'api.servers.scoreboard', 'uses' => 'ServersController@scoreboard'])
+            ->where('id', '[0-9]+');
+        Route::get('scoreboard/roundstats/{id}', ['as' => 'api.servers.scoreboard.roundstats', 'uses' => 'ServersController@scoreboardExtra'])
+            ->where('id', '[0-9]+');
+        Route::get('chat/{id}', ['as' => 'api.servers.chat', 'uses' => 'ServersController@chat'])
+            ->where('id', '[0-9]+');
         Route::controller('admin/scoreboard', 'Admin\ScoreboardController');
     });
 
