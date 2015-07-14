@@ -130,7 +130,7 @@ class Server extends Elegant
      */
     public function getServerNameShortAttribute()
     {
-        if (empty($this->setting->filter)) {
+        if (is_null($this->setting) || empty($this->setting->filter)) {
             return;
         }
 
