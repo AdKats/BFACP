@@ -32,6 +32,10 @@ App::error(function (Exception $exception, $code) {
     switch ($code) {
         case 403:
             if (Auth::check()) {
+                if(Request::is('api/*')) {
+                    return MainHelper::response(null, 'Access Forbidden!', 'error', 403);
+                }
+
                 return Redirect::route('home')->withErrors([
                     'Access Forbidden!'
                 ]);
@@ -41,6 +45,10 @@ App::error(function (Exception $exception, $code) {
             break;
 
         case 405:
+            if(Request::is('api/*')) {
+                return MainHelper::response(null, 'No Method Available', 'error', 405);
+            }
+
             return Redirect::intended(route('home'))->withErrors([
                 'No Method Available'
             ]);
@@ -50,16 +58,25 @@ App::error(function (Exception $exception, $code) {
     Log::error($exception);
 
     if (!Config::get('app.debug')) {
-        if (Request::ajax()) {
+        if (Request::ajax() || Request::is('api/*')) {
             return MainHelper::response(null, $exception->getMessage(), 'error', 500);
         } else {
             View::share('page_title', 'Fatal Error');
             return Response::view('system.error', compact('exception', 'code'), 500);
         }
     }
+
+    if(Request::is('api/*')) {
+        return MainHelper::response($exception, 'Fatal Error', 'error', 500);
+    }
 });
 
 App::missing(function ($exception) {
+
+    if(Request::is('api/*')) {
+        return MainHelper::response(null, 'Resource Not Found', 'error', 404);
+    }
+
     View::share('page_title', 'Page Not Found');
     return Response::view('system.notfound', [], 404);
 });
