@@ -69,6 +69,11 @@ angular.module('bfacp').controller('ReportsController', ['$scope', '$http', '$in
     $scope.actionSelected = null;
     $scope.working = false;
     $scope.edit = false;
+    $scope.extra = {
+        tban: {
+            duration: 30
+        }
+    };
 
     $scope.ok = function () {
         var action = $scope.actions[$scope.actionSelected];
@@ -95,6 +100,7 @@ angular.module('bfacp').controller('ReportsController', ['$scope', '$http', '$in
         ReportFactory.setAction(action);
         ReportFactory.setRecordId($scope.report);
         ReportFactory.setReason($scope.reportReason);
+        ReportFactory.setExtras($scope.extra);
         ReportFactory.updateReport().then(function(data) {
             toastr.success(data.message);
             $modalInstance.close();

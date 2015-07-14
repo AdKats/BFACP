@@ -56,8 +56,8 @@ class ReportRepository extends BaseRepository
      *
      * @return object
      */
-    public function getRecordById($id)
+    public function getReportById($id)
     {
-        return Record::with('server', 'type', 'action')->findOrFail($id);
+        return Record::with('server', 'type', 'action')->whereIn('command_type', [18, 20])->findOrFail($id);
     }
 }

@@ -1,13 +1,17 @@
 <div class="modal-header">
     <h3 class="modal-title">
-        {{ report.source_name }} reported {{ report.target_name }}
+        <a ng-if="report.source_id !== null" ng-href="/players/{{ report.source_id }}/{{ report.source_name }}" ng-bind="report.source_name" target="_blank"></a>
+        <span ng-if="report.source_id === null" ng-bind=""report.source_name></span>
+        reported
+        <a ng-if="report.target_id !== null" ng-href="/players/{{ report.target_id }}/{{ report.target_name }}" ng-bind="report.target_name" target="_blank"></a>
+        <span ng-if="report.target_id === null" ng-bind=""report.target_name></span>
         <small class="pull-right"><span ng-class="report.server.game.class_css" ng-bind="report.server.game.Name"></span></small>
     </h3>
 </div>
 
 <div class="modal-body">
     <i class="fa fa-server"></i>&nbsp;<span ng-bind="report.server.ServerName"></span><br />
-    <i class="fa fa-clock-o"></i>&nbsp;<span ng-bind="moment(report.stamp).format('LLL')"></span><br /><br />
+    <i class="fa fa-clock-o"></i>&nbsp;<span ng-bind="moment(report.stamp).format('LLL')"></span>&nbsp;(<span ng-bind="moment(report.stamp).fromNow()"></span>)<br /><br />
 
     <div class="input-group">
         <input type="text" class="form-control" ng-model="reportReason" ng-disabled="!edit" maxlength="500" >
@@ -16,18 +20,13 @@
         </span>
     </div>
 
-
-    <ul class="list-inline">
-        <li ng-if="report.source_id !== null" >
-            <a ng-href="/players/{{ report.source_id }}/{{ report.source_name }}" ng-bind="report.source_name" target="_blank"></a>
-        </li>
-        <li ng-if="report.target_id !== null">
-            <a ng-href="/players/{{ report.target_id }}/{{ report.target_name }}" ng-bind="report.target_name" target="_blank"></a>
-        </li>
-    </ul>
-
     <label for="reportAction">Action</label>
     <select id="reportAction" class="form-control" ng-model="actionSelected" ng-options="index as action.name for (index, action) in actions"></select>
+
+    <div ng-show="actions[actionSelected].id == 7">
+        <label for="tbanDuration">Duration (Minutes)</label>
+        <input type="number" id="tbanDuration" class="form-control" ng-model="extra.tban.duration" min="1" max="525960">
+    </div>
 </div>
 
 <div class="modal-footer">

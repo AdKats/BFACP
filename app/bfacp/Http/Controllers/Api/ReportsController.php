@@ -46,7 +46,7 @@ class ReportsController extends BaseController
             throw new ResourceException(null, $v->errors());
         }
 
-        $record = $r->getRecordById(Input::get('id'));
+        $record = $r->getReportById(Input::get('id'));
 
         if (!in_array($record->command_action, [18, 20])) {
             throw new UpdateResourceFailedException('Unable to complete action. Report has already been acted on.');
