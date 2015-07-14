@@ -1,10 +1,10 @@
 <div class="modal-header">
     <h3 class="modal-title">
         <a ng-if="report.source_id !== null" ng-href="/players/{{ report.source_id }}/{{ report.source_name }}" ng-bind="report.source_name" target="_blank"></a>
-        <span ng-if="report.source_id === null" ng-bind=""report.source_name></span>
+        <span ng-if="report.source_id === null" ng-bind="report.source_name"></span>
         reported
         <a ng-if="report.target_id !== null" ng-href="/players/{{ report.target_id }}/{{ report.target_name }}" ng-bind="report.target_name" target="_blank"></a>
-        <span ng-if="report.target_id === null" ng-bind=""report.target_name></span>
+        <span ng-if="report.target_id === null" ng-bind="report.target_name"></span>
         <small class="pull-right"><span ng-class="report.server.game.class_css" ng-bind="report.server.game.Name"></span></small>
     </h3>
 </div>
