@@ -5,7 +5,7 @@ angular.module('bfacp').factory('ReportFactory', ['$http', '$q', function($http,
     var _extras = {};
     var _reason = '';
 
-    server.setExtras = function(x) {
+    service.setExtras = function(x) {
         _extras = x;
     };
 
