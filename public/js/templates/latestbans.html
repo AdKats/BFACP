@@ -15,8 +15,11 @@
                     <span ng-class="ban.player.game.class_css" ng-bind="ban.player.game.Name"></span>
                     <a ng-href="{{ ban.player.profile_url }}" tooltip="{{ ban.record.record_message }}" ng-bind="ban.player.SoldierName" target="_self"></a>
                 </td>
-                <td class="hidden-xs" ng-bind="ban.record.source_name"></td>
-                <td><span ng-bind="moment(ban.ban_issued).fromNow()" tooltip="{{ ban.ban_issued | date:'medium' }}"></span></td>
+                <td class="hidden-xs">
+                    <span ng-if="ban.record.source_id === null" ng-bind="ban.record.source_name"></span>
+                    <a ng-if="ban.record.source_id !== null" ng-href="/players/{{ ban.record.source_id }}/{{ ban.record.source_name }}" ng-bind="ban.record.source_name" target="_self"></a>
+                </td>
+                <td><span ng-bind="moment(ban.ban_issued).fromNow()" tooltip="{{ moment(ban.ban_issued).format('LLL') }}"></span></td>
                 <td>
                     <span ng-if="ban.is_perm" class="label label-danger">Permanent Ban</span>
                     <span ng-if="!ban.is_perm" ng-bind="moment(ban.ban_endTime).fromNow()"></span>
