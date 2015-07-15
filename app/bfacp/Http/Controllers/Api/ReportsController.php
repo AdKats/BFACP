@@ -53,8 +53,6 @@ class ReportsController extends BaseController
             throw new ResourceException(null, $v->errors());
         }
 
-        throw new UpdateResourceFailedException('Unable to complete action. Report has already been acted on.');
-
         try {
             $record = $r->getReportById(Input::get('id'));
 
