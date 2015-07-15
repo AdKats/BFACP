@@ -134,7 +134,7 @@ class BattlelogPlayer extends BattlelogAPI
     }
 
     /**
-     * Gets the soldier information so we can update the clantag and name if needed
+     * Gets the soldier information so we can update the clan tag and name if needed
      *
      * @return mixed
      */
@@ -151,11 +151,11 @@ class BattlelogPlayer extends BattlelogAPI
 
         $persona = $results['context']['statsPersona'];
 
-        if ($this->player->SoldierName != $persona['personaName']) {
+        if ($oldName != $persona['personaName']) {
             $this->player->SoldierName = $persona['personaName'];
         }
 
-        if ($this->player->ClanTag != $persona['clanTag']) {
+        if ($oldClan != $persona['clanTag']) {
             $this->player->ClanTag = empty($persona['clanTag']) ? null : $persona['clanTag'];
         }
 
