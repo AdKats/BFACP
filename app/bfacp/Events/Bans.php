@@ -4,13 +4,11 @@ use BFACP\AdKats\Ban;
 use BFACP\AdKats\Record;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth as Auth;
-use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Event as Event;
 
 Event::listen('player.ban', function ($input, $player, $ban = null) {
     // Purge the cache for the player
-    Cache::forget(sprintf('api.player.%u', $player->PlayerID));
-    Cache::forget(sprintf('player.%u', $player->PlayerID));
+    $player->forget();
 
     // If no ban exists for the player we need to create it
     // otherwise we need to fetch it.
@@ -33,7 +31,7 @@ Event::listen('player.ban', function ($input, $player, $ban = null) {
         if ($ban instanceof Ban) {
             // Don't need too do anything else.
         } else {
-            // Retrive the ban record from the database
+            // Retrieve the ban record from the database
             $ban = Ban::findOrFail($ban);
         }
 
