@@ -71,7 +71,7 @@ App::error(function (Exception $exception, $code) {
     }
 });
 
-App::missing(function ($exception) {
+App::missing(function () {
 
     if(Request::is('api/*')) {
         return MainHelper::response(null, 'Resource Not Found', 'error', 404);
