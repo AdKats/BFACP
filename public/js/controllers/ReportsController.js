@@ -100,12 +100,27 @@ angular.module('bfacp').controller('ReportsController', ['$scope', '$http', '$in
         ReportFactory.setAction(action);
         ReportFactory.setRecordId($scope.report);
         ReportFactory.setReason($scope.reportReason);
-        ReportFactory.setExtras($scope.extra);
+
+        if(action.id == 7) {
+            ReportFactory.setExtras($scope.extra);
+        }
+
         ReportFactory.updateReport().then(function(data) {
             toastr.success(data.message);
             $modalInstance.close();
         }, function(data) {
+            if(data.errors !== undefined) {
+                angular.forEach(data.errors, function(error, key) {
+                    for(var i=0; i < error.length; i++) {
+                        toastr.error(error[i]);
+                    }
+                });
+
+                return;
+            }
+
             toastr.error(data.message);
+
             if(data.status_code == 422) {
                 $scope.cancel();
             }

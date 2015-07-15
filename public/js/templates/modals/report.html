@@ -13,27 +13,35 @@
     <i class="fa fa-server"></i>&nbsp;<span ng-bind="report.server.ServerName"></span><br />
     <i class="fa fa-clock-o"></i>&nbsp;<span ng-bind="moment(report.stamp).format('LLL')"></span>&nbsp;(<span ng-bind="moment(report.stamp).fromNow()"></span>)<br /><br />
 
-    <div class="input-group">
-        <input type="text" class="form-control" ng-model="reportReason" ng-disabled="!edit" maxlength="500" >
-        <span class="input-group-addon">
-            <input type="checkbox" ng-model="edit" tooltip="Check to edit reason">
-        </span>
+    <div class="form-group">
+        <label for="reason">Reason</label>
+        <div class="input-group">
+            <input type="text" id="reason" class="form-control" ng-model="reportReason" ng-disabled="!edit" maxlength="500">
+            <span class="input-group-addon">
+                <input type="checkbox" ng-model="edit" tooltip="Check to edit reason">
+            </span>
+        </div>
+
+        <div class="help-block">
+            <div class="text-right">
+                <span ng-class="{'text-green': reportReason.length > 0 && reportReason.length < 450, 'text-orange': reportReason.length >= 450 && reportReason.length < 500, 'text-red': reportReason.length >= 500 || reportReason.length == 0}"
+                      ng-bind="reportReason.length"></span> / 500
+            </div>
+        </div>
     </div>
 
-    <label for="reportAction">Action</label>
-    <select id="reportAction" class="form-control" ng-model="actionSelected" ng-options="index as action.name for (index, action) in actions"></select>
+    <div class="form-group">
+        <label for="reportAction">Action</label>
+        <select id="reportAction" class="form-control" ng-model="actionSelected" ng-options="index as action.name for (index, action) in actions"></select>
+    </div>
 
-    <div ng-show="actions[actionSelected].id == 7">
+    <div ng-show="actions[actionSelected].id == 7" class="form-group">
         <label for="tbanDuration">Duration (Minutes)</label>
-        <input type="number" id="tbanDuration" class="form-control" ng-model="extra.tban.duration" min="1" max="525960">
-        <p>
-            <div class="pull-left">
-                <span class="text-blue" ng-bind="momentDuration(extra.tban.duration, 'minutes')"></span>
-            </div>
-            <div class="pull-right">
-                <span class="text-purple" ng-bind="moment().add(extra.tban.duration, 'm').format('LLL')"></span>
-            </div>
-        </p>
+        <input type="number" id="tbanDuration" class="form-control" ng-model="extra.tban.duration">
+        <div class="help-block">
+            <span class="text-blue" ng-bind="momentDuration(extra.tban.duration, 'minutes')"></span>
+            <span class="text-purple pull-right" ng-bind="moment().add(extra.tban.duration, 'm').format('LLL')"></span>
+        </div>
     </div>
 </div>
 

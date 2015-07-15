@@ -96,7 +96,7 @@ class Setting extends Elegant
     {
         $value = $this->attributes['setting_value'];
 
-        if ($this->attributes['setting_name'] == 'Custom HTML Addition') {
+        if (!array_key_exists('setting_name', $this->attributes) || $this->attributes['setting_name'] == 'Custom HTML Addition') {
             return $value;
         }
 
