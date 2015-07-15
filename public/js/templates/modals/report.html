@@ -26,6 +26,14 @@
     <div ng-show="actions[actionSelected].id == 7">
         <label for="tbanDuration">Duration (Minutes)</label>
         <input type="number" id="tbanDuration" class="form-control" ng-model="extra.tban.duration" min="1" max="525960">
+        <p>
+            <div class="pull-left">
+                <span class="text-blue" ng-bind="momentDuration(extra.tban.duration, 'minutes')"></span>
+            </div>
+            <div class="pull-right">
+                <span class="text-purple" ng-bind="moment().add(extra.tban.duration, 'm').format('LLL')"></span>
+            </div>
+        </p>
     </div>
 </div>
 
