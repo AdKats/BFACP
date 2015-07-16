@@ -52,7 +52,7 @@ class Player extends Elegant
     protected $appends = ['profile_url', 'country_flag', 'country_name', 'rank_image', 'links'];
 
     /**
-     * Models to be loaded automaticly
+     * Models to be loaded automatically
      *
      * @var array
      */
@@ -283,7 +283,7 @@ class Player extends Elegant
         if ($game == 'BF4') {
             try {
                 if (Route::currentRouteName() != 'player.show') {
-                    throw new \Exception();
+                    throw new Exception();
                 }
 
                 $request = App::make('guzzle')->get(sprintf('http://api.bf4db.com/api-player.php?%s', http_build_query([
@@ -301,9 +301,9 @@ class Player extends Elegant
                         'cheatscore' => $response['data']['cheatscore'],
                     ];
                 } else {
-                    throw new \Exception();
+                    throw new Exception();
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $bf4db_profile = [
                     'url' => sprintf('http://bf4db.com/players?name=%s', $this->SoldierName),
                     'cheatscore' => null,
