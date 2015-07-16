@@ -22,7 +22,7 @@
                 <td><span ng-bind="moment(ban.ban_issued).fromNow()" tooltip="{{ moment(ban.ban_issued).format('LLL') }}"></span></td>
                 <td>
                     <span ng-if="ban.is_perm" class="label label-danger">Permanent Ban</span>
-                    <span ng-if="!ban.is_perm" ng-bind="moment(ban.ban_endTime).fromNow()"></span>
+                    <span ng-if="!ban.is_perm" ng-bind="moment(ban.ban_expires).fromNow()"></span>
                 </td>
             </tr>
         </tbody>
