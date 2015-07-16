@@ -78,9 +78,10 @@ class BattlelogPlayer extends BattlelogAPI
     }
 
     /**
-     * Fetchs the players battlelog profile
+     * Fetches the players battlelog profile
      *
      * @return mixed
+     * @throws BattlelogException
      */
     public function fetchProfile()
     {
@@ -96,7 +97,7 @@ class BattlelogPlayer extends BattlelogAPI
                 sprintf('No player by the name "%s" exists on battlelog.', $this->player->SoldierName));
         }
 
-        // Set the gravtar of the player
+        // Set the gravatar of the player
         $this->personaGravatar = $this->profile['context']['profileCommon']['user']['gravatarMd5'];
 
         // Assign array of personas
@@ -137,6 +138,7 @@ class BattlelogPlayer extends BattlelogAPI
      * Gets the soldier information so we can update the clan tag and name if needed
      *
      * @return mixed
+     * @throws BattlelogException
      */
     private function getSoldierAndUpdate()
     {
@@ -148,6 +150,10 @@ class BattlelogPlayer extends BattlelogAPI
 
         $oldName = $this->player->SoldierName;
         $oldClan = $this->player->ClanTag;
+
+        if (!array_key_exists('statsPersona', $results['content'])) {
+            throw new BattlelogException(500, sprintf('Could not retrieve stats for %s.', $oldName));
+        }
 
         $persona = $results['context']['statsPersona'];
 
