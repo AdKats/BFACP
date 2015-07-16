@@ -11,7 +11,7 @@ angular.module('bfacp', [
         'countTo'
 ])
 .config(['$locationProvider', '$idleProvider', function($locationProvider, $idleProvider) {
-    $locationProvider.html5Mode(true).hashPrefix('!');
+    //$locationProvider.html5Mode(true).hashPrefix('!');
     $idleProvider.idleDuration(window.idleDurationSeconds || 60);
     $idleProvider.warningDuration(window.warningDurationSeconds || 60);
 }])

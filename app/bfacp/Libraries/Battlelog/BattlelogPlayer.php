@@ -151,7 +151,7 @@ class BattlelogPlayer extends BattlelogAPI
         $oldName = $this->player->SoldierName;
         $oldClan = $this->player->ClanTag;
 
-        if (!array_key_exists('statsPersona', $results['content'])) {
+        if (!array_key_exists('statsPersona', $results['context'])) {
             throw new BattlelogException(500, sprintf('Could not retrieve stats for %s.', $oldName));
         }
 
