@@ -30,19 +30,7 @@ class SpecialPlayersController extends BaseController
     {
         $players = Special::with('player', 'game', 'server')->get();
 
-        $groups = Cache::remember('admin.adkats.special.groups', 60 * 24, function () {
-            try {
-                $request = $this->guzzle->get('https://raw.githubusercontent.com/AdKats/AdKats/master/adkatsspecialgroups.json');
-                $response = $request->json();
-                $data = $response['SpecialGroups'];
-            } catch (RequestException $e) {
-                $request = $this->guzzle->get('http://api.gamerethos.net/adkats/fetch/specialgroups');
-                $response = $request->json();
-                $data = $response['SpecialGroups'];
-            }
-
-            return new Collection($data);
-        });
+        $groups = MainHelper::specialGroups();
 
         return View::make('admin.adkats.special_players.index', compact('players', 'groups'))->with('page_title',
             Lang::get('navigation.admin.adkats.items.special_players.title'));

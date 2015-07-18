@@ -124,7 +124,7 @@
                                         {{ link_to_route('player.show', $account->game->Name, [
                                             $account->PlayerID,
                                             $account->SoldierName
-                                        ], ['target' => '_blank', 'class' => $account->game->class_css, 'style' => 'color: white !important', 'tooltip' => $account->SoldierName]) }}
+                                        ], ['target' => '_blank', 'class' => $account->game->class_css, 'tooltip' => $account->SoldierName]) }}
                                         @empty
                                         {{ HTML::faicon('fa-info-circle') }} No linked accounts found.
                                         @endforelse
@@ -132,6 +132,23 @@
                                 </div>
                             </div>
                         </div>
+
+                        @if($bfacp->isLoggedIn && $bfacp->user->ability(null, 'admin.adkats.special.view'))
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Groups</label>
+                            <div class="col-sm-9">
+                                <div class="form-control-static">
+                                    <ul class="list-inline">
+                                        @forelse($groups as $group)
+                                            <li data-group-id="{{ $group['group_id'] }}">{{ $group['group_name'] }}</li>
+                                        @empty
+                                            {{ HTML::faicon('fa-info-circle') }} No groups assigned.
+                                        @endforelse
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.rank') }}</label>
@@ -349,7 +366,7 @@
 
                     <div class="tab-pane" id="command-overview"></div>
                     <div class="tab-pane" id="aliases"></div>
-                    @if(Entrust::can('player.view.ip'))
+                    @if($bfacp->isLoggedIn && $bfacp->user->ability(null, 'player.view.ip'))
                     <div class="tab-pane" id="ip-history"></div>
                     @endif
                 </div>

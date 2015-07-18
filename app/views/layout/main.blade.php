@@ -115,6 +115,7 @@
         {{ HTML::script('js/plugins/angular-modules/ng-idle/angular-idle.min.js') }}
         {{ HTML::script('js/plugins/angular-modules/ng-table/ng-table.min.js') }}
         {{ HTML::script('js/plugins/highcharts/highcharts.js') }}
+        {{ HTML::script('js/plugins/highcharts/modules/no-data-to-display.js') }}
         {{ HTML::script('js/plugins/iCheck/icheck.min.js') }}
         {{ HTML::script('js/plugins/howler/howler.min.js') }}
         {{ HTML::script('js/boot.js?v=1') }}
@@ -132,6 +133,11 @@
             @endif
             moment.locale( lang || navigator.language.split('-')[0] );
             $.widget.bridge('uibutton', $.ui.button);
+            Highcharts.setOptions({
+                lang: {
+                    noData: "No data available."
+                }
+            });
         </script>
         @yield('scripts')
     </body>

@@ -1,6 +1,7 @@
 <?php namespace BFACP\Http\Controllers;
 
 use BFACP\AdKats\Record;
+use BFACP\Facades\Main as MainHelper;
 use BFACP\Repositories\PlayerRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -95,9 +96,19 @@ class PlayersController extends BaseController
             return $charts;
         });
 
+        $specialGroups = MainHelper::specialGroups();
+
+        $groups = $specialGroups->filter(function($group) use(&$player) {
+            foreach($player->special_groups as $g) {
+                if($g->player_group == $group['group_key']) {
+                    return true;
+                }
+            }
+        });
+
         $page_title = !empty($player->ClanTag) ? sprintf('[%s] %s', $player->ClanTag,
             $player->SoldierName) : $player->SoldierName;
 
-        return View::make('player.profile', compact('player', 'page_title', 'charts', 'isCached'));
+        return View::make('player.profile', compact('player', 'page_title', 'charts', 'isCached', 'groups'));
     }
 }

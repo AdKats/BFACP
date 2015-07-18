@@ -8,7 +8,7 @@
                 {{ Former::open() }}
                 @foreach($settings as $setting)
                     @if($setting->setting_type == 'multiline' && $setting->setting_name != 'Custom HTML Addition' && is_array($setting->setting_value))
-                    {{ Former::textarea($setting->setting_name)->value(implode("\n", $setting->setting_value))->label($setting->setting_name)->rows(5)->cols(50) }}
+                    {{ Former::textarea($setting->setting_name)->value(implode("\n", $setting->setting_value))->label($setting->setting_name)->rows(count($setting->setting_value))->cols(50) }}
                     @elseif($setting->setting_type == 'multiline' && $setting->setting_name != 'Custom HTML Addition' && !is_array($setting->setting_value))
                     {{ Former::text($setting->setting_name)->value($setting->setting_value)->label($setting->setting_name) }}
                     @elseif($setting->setting_type == 'bool')

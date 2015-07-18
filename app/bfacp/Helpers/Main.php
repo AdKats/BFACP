@@ -944,4 +944,28 @@ class Main extends BaseHelper
 
         return $players->get();
     }
+
+    /**
+     * Returns the valid AdKats Special groups
+     *
+     * @return mixed
+     */
+    public function specialGroups()
+    {
+        $groups = $this->cache->remember('admin.adkats.special.groups', 60 * 24, function () {
+            try {
+                $request = $this->guzzle->get('https://raw.githubusercontent.com/AdKats/AdKats/master/adkatsspecialgroups.json');
+                $response = $request->json();
+                $data = $response['SpecialGroups'];
+            } catch (RequestException $e) {
+                $request = $this->guzzle->get('http://api.gamerethos.net/adkats/fetch/specialgroups');
+                $response = $request->json();
+                $data = $response['SpecialGroups'];
+            }
+
+            return new Collection($data);
+        });
+
+        return $groups;
+    }
 }

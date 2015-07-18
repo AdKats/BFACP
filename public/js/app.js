@@ -11,7 +11,7 @@ angular.module('bfacp', [
         'countTo'
 ])
 .config(['$locationProvider', '$idleProvider', function($locationProvider, $idleProvider) {
-    //$locationProvider.html5Mode(true).hashPrefix('!');
+    $locationProvider.html5Mode(false).hashPrefix('!');
     $idleProvider.idleDuration(window.idleDurationSeconds || 60);
     $idleProvider.warningDuration(window.warningDurationSeconds || 60);
 }])
@@ -105,3 +105,10 @@ $('#psearch').submit(function() {
         $(this).val(inputVal.split(' ').join(''));
     });
 });
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}

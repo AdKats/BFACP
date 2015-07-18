@@ -1,5 +1,5 @@
 angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScope', '$http', '$timeout', '$location', '$idle', '$modal', 'SBA',
-    function($scope, $rootScope, $http, $timeout, $location, $idle, $modal, SBA) {
+    function ($scope, $rootScope, $http, $timeout, $location, $idle, $modal, SBA) {
 
         // How often the data should be fetched in seconds
         var refresh = 10;
@@ -240,7 +240,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 score: null
             };
             var tickets_needed = $scope.server.tickets_needed;
-            var tickets_starting = $scope.server.tickets_starting;
+
             var mode = $scope.server.mode;
             var num = null;
 
@@ -370,7 +370,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 url: 'api/servers/scoreboard/' + $scope.selectedId,
                 method: 'GET',
                 params: {}
-            }).success(function(data, status) {
+            }).success(function (data) {
                 if ($scope.alerts.length > 0) {
                     $scope.alerts = [];
                 }
@@ -444,9 +444,9 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                     sb: 1,
                     nospam: 1
                 }
-            }).success(function(data, status) {
+            }).success(function(data) {
                 $scope.messages = data.data;
-            }).error(function(data, status) {
+            }).error(function() {
                 $timeout($scope.fetchServerChat, 2 * 1000);
             });
         };
@@ -483,7 +483,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             if ($('thead th input:checkbox', table).is(':checked')) {
                 $('thead th input:checkbox', table).prop('checked', false);
             }
-        }
+        };
 
         $scope.selectAll = function(e) {
             var table = $(e.target).closest('table');
@@ -500,7 +500,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 url: 'api/servers/scoreboard/roundstats/' + $scope.selectedId,
                 method: 'GET',
                 params: {}
-            }).success(function(data, status) {
+            }).success(function (data) {
                 for (var i = 0; i < data.data.stats.length; i++) {
                     if (chart.series[i] === undefined || chart.series[i] === null) {
                         chart.addSeries(data.data['stats'][i]);
@@ -516,7 +516,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 chart.redraw();
 
                 $timeout($scope.fetchRoundStats, 30 * 1000);
-            }).error(function(data, status) {
+            }).error(function () {
                 $timeout($scope.fetchRoundStats, 2 * 1000);
             });
         };
@@ -565,8 +565,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             var path = $location.hash().split('-');
             $scope.selectedId = parseInt(path[1], 10);
             $scope.switchServer();
-        };
-
+        }
         /**
          * Admin functionality
          */

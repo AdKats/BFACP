@@ -1,4 +1,4 @@
-angular.module('bfacp').controller('PlayerListController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+angular.module('bfacp').controller('PlayerListController', ['$scope', '$http', function($scope, $http) {
 
     $scope.players = [];
     $scope.alerts = [];
@@ -56,16 +56,18 @@ angular.module('bfacp').controller('PlayerListController', ['$scope', '$http', '
 
         var url = 'api/players?page=' + $scope.main.page + '&limit=' + $scope.main.take;
 
-        if ($location.search().player !== undefined) {
-            url += '&player=' + $location.search().player;
+        var playerName = getParameterByName('player');
+
+        if (playerName !== '') {
+            url += '&player=' + playerName;
         }
 
-        $http.get(url).success(function(data, status) {
+        $http.get(url).success(function(data) {
             $scope.loaded = true;
             $scope.players = data.data.data;
             $scope.main.last_page = data.data.last_page;
             $scope.main.total = data.data.total;
-        }).error(function(data, status) {
+        }).error(function() {
             $scope.getListing();
         });
     };
