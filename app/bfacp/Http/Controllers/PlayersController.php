@@ -96,15 +96,7 @@ class PlayersController extends BaseController
             return $charts;
         });
 
-        $specialGroups = MainHelper::specialGroups();
-
-        $groups = $specialGroups->filter(function($group) use(&$player) {
-            foreach($player->special_groups as $g) {
-                if($g->player_group == $group['group_key']) {
-                    return true;
-                }
-            }
-        });
+        $groups = MainHelper::specialGroups($player->special_groups, 'player_group');
 
         $page_title = !empty($player->ClanTag) ? sprintf('[%s] %s', $player->ClanTag,
             $player->SoldierName) : $player->SoldierName;

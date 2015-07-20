@@ -948,9 +948,12 @@ class Main extends BaseHelper
     /**
      * Returns the valid AdKats Special groups
      *
-     * @return mixed
+     * @param null $keys   Only return the requested group(s)
+     * @param null $objkey The object property to use if $keys contains array of objects
+     *
+*@return mixed
      */
-    public function specialGroups()
+    public function specialGroups($keys = null, $objkey = null)
     {
         $groups = $this->cache->remember('admin.adkats.special.groups', 60 * 24, function () {
             try {
@@ -965,6 +968,28 @@ class Main extends BaseHelper
 
             return new Collection($data);
         });
+
+        if (!is_null($keys)) {
+            return $groups->filter(function ($group) use (&$keys, &$objkey) {
+                if (is_array($keys)) {
+                    foreach ($keys as $k) {
+                        if (is_object($k)) {
+                            if ($k->{$objkey} == $group['group_key']) {
+                                return true;
+                            }
+                        } else {
+                            if ($k == $group['group_key']) {
+                                return true;
+                            }
+                        }
+                    }
+                } else {
+                    if ($keys == $group['group_key']) {
+                        return true;
+                    }
+                }
+            });
+        }
 
         return $groups;
     }

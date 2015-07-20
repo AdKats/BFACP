@@ -1,10 +1,7 @@
 <?php namespace BFACP\AdKats;
 
 use BFACP\Elegant;
-use GuzzleHttp\Exception\RequestException;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cache;
+use BFACP\Facades\Main as MainHelper;
 
 class Special extends Elegant
 {
@@ -93,25 +90,8 @@ class Special extends Elegant
 
     public function getGroupAttribute()
     {
-        $groups = Cache::remember('admin.adkats.special.groups', 60 * 24, function () {
-            $guzzle = App::make('GuzzleHttp\Client');
-            try {
-                $request = $guzzle->get('https://raw.githubusercontent.com/AdKats/AdKats/master/adkatsspecialgroups.json');
-                $response = $request->json();
-                $data = $response['SpecialGroups'];
-            } catch (RequestException $e) {
-                $request = $guzzle->get('http://api.gamerethos.net/adkats/fetch/specialgroups');
-                $response = $request->json();
-                $data = $response['SpecialGroups'];
-            }
+        $group = MainHelper::specialGroups($this->player_group);
 
-            return new Collection($data);
-        });
-
-        foreach ($groups as $group) {
-            if ($group['group_key'] == $this->player_group) {
-                return (object)$group;
-            }
-        }
+        return $group;
     }
 }
