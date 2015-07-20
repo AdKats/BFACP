@@ -67,7 +67,9 @@ App::error(function (Exception $exception, $code) {
     }
 
     if(Request::is('api/*')) {
-        return MainHelper::response($exception, 'Fatal Error', 'error', 500);
+        return MainHelper::response([
+            $exception->getMessage()
+        ], 'Fatal Error', 'error', 500);
     }
 });
 
