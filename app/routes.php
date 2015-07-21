@@ -11,6 +11,15 @@ Route::model('player', 'BFACP\Battlefield\Player');
 Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], function () {
 
     /*===================================
+    =            API Resources          =
+    ===================================*/
+    Route::group(['prefix' => 'helpers'], function() {
+        Route::group(['prefix' => 'adkats'], function() {
+            Route::get('special_groups', 'HelpersController@getSpecialGroups');
+        });
+    });
+
+    /*===================================
     =            API Players            =
     ===================================*/
 
