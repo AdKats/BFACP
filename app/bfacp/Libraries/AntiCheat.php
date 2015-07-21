@@ -173,6 +173,9 @@ class AntiCheat
 
             $DPSDiff = 1 - MainHelper::divide(($_weaponDPS['max'] - $weapon['dps']), $_weaponDPS['max']);
 
+            // Convert first letter of each word to an uppercase
+            $weapon['category'] = ucwords($weapon['category']);
+
             // Check if the weapon has been used with a damage mod
             if ($DPSDiff > 1.5 && $weapon['kills'] >= $this->triggers['Kills']) {
                 $status['DPS'] = true;
