@@ -229,7 +229,9 @@
                         <table class="table table-condensed">
                             <thead>
                                 <th>{{ Lang::get('player.profile.bans.current.table.col1') }}</th>
+                                @if(!$player->ban->is_perm)
                                 <th>{{ Lang::get('player.profile.bans.current.table.col2') }}</th>
+                                @endif
                                 <th>{{ Lang::get('player.profile.bans.current.table.col3') }}</th>
                                 <th>{{ Lang::get('player.profile.bans.current.table.col4') }}</th>
                                 <th>{{ Lang::get('player.profile.bans.current.table.col5') }}</th>
@@ -241,9 +243,11 @@
                                     <td>
                                         <span ng-bind="moment('{{ $player->ban->ban_issued }}').fromNow()" tooltip="{{ HTML::moment($player->ban->ban_issued) }}"></span>
                                     </td>
+                                    @if(!$player->ban->is_perm)
                                     <td>
                                         <span ng-bind="moment('{{ $player->ban->ban_expires }}').fromNow()" tooltip="{{ HTML::moment($player->ban->ban_expires) }}"></span>
                                     </td>
+                                    @endif
                                     <td>
                                         @if($player->ban->record->server->is_active)
                                         <a href="servers/live#id-{{ $player->ban->record->server->ServerID }}" target="_blank" tooltip="{{ $player->ban->record->server->ServerName }}">
@@ -535,8 +539,6 @@
             }]
         });
         @endif
-
-
 
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
            var target = $(e.target).data("target");
