@@ -1,5 +1,6 @@
 <?php namespace BFACP\Account;
 
+use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config as Config;
@@ -189,10 +190,6 @@ class User extends Model implements ConfideUserInterface
      */
     public function getGravatarAttribute()
     {
-        $url = '//www.gravatar.com/avatar/';
-        $url .= md5(strtolower(trim($this->email)));
-        $url .= '?s=80&d=mm&r=x';
-
-        return $url;
+        return MainHelper::gravatar($this->email);
     }
 }

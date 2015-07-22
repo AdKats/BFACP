@@ -88,7 +88,8 @@
 
                 <div class="box-body chat scoreboard-chat" id="chat-box">
                     <div class="item" ng-repeat="(key, message) in messages | filter: { logSoldierName: search.chat } | orderBy: 'logDate': true track by message.ID">
-                        <img ng-src="{{ message.player.rank_image }}" width="128" alt="Player Avatar" class="online" />
+                        <img ng-if="message.player.battlelog === null" src="https://www.gravatar.com/avatar/?s=128&d=mm&r=x" width="128" class="online" />
+                        <img ng-if="message.player.battlelog !== null" ng-src="{{ message.player.battlelog.gravatar_img }}" width="128" class="online" />
                         <p class="message">
                             <a ng-href="{{ message.player.profile_url }}" target="_blank" class="name">
                                 <small class="text-muted pull-right" tooltip="{{ moment(message.stamp).format('h:mm:ss a') }}" tooltip-placement="left">

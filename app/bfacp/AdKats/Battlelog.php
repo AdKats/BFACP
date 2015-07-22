@@ -1,7 +1,7 @@
 <?php namespace BFACP\AdKats;
 
 use BFACP\Elegant;
-
+use BFACP\Facades\Main as MainHelper;
 
 class Battlelog extends Elegant
 {
@@ -45,10 +45,10 @@ class Battlelog extends Elegant
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = ['gravatar_img'];
 
     /**
-     * Models to be loaded automaticly
+     * Models to be loaded automatically
      *
      * @var array
      */
@@ -60,5 +60,15 @@ class Battlelog extends Elegant
     public function player()
     {
         return $this->belongsTo('BFACP\Battlefield\Player', 'player_id');
+    }
+
+    /**
+     * Gets users gravatar image
+     *
+     * @return string
+     */
+    public function getGravatarImgAttribute()
+    {
+        return MainHelper::gravatar(null, $this->gravatar, 128);
     }
 }

@@ -1019,4 +1019,26 @@ class Main extends BaseHelper
 
         return false;
     }
+
+    /**
+     * Gets users gravatar image
+     *
+     * @param string $email
+     * @param string $hash
+     * @param int    $size
+     *
+     * @return string|void
+     */
+    public function gravatar($email = '', $hash = '', $size = 80)
+    {
+        if (!empty($email)) {
+            return sprintf('https://www.gravatar.com/avatar/%s?s=%u&d=mm&r=x', md5(strtolower(trim($email))), $size);
+        }
+
+        if (!empty($hash)) {
+            return sprintf('https://www.gravatar.com/avatar/%s?s=%u&d=mm&r=x', $hash, $size);
+        }
+
+        return sprintf('https://www.gravatar.com/avatar/?s=%u&d=mm&r=x', $size);
+    }
 }
