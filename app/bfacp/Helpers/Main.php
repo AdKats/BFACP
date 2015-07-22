@@ -4,7 +4,8 @@ use BFACP\Account\User;
 use BFACP\Battlefield\Player;
 use Exception;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\File as File;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 
 class Main extends BaseHelper
@@ -992,5 +993,30 @@ class Main extends BaseHelper
         }
 
         return $groups;
+    }
+
+    /**
+     * Checks if the $column has fulltext support.
+     *
+     * @param $table
+     * @param $column
+     *
+     * @return bool
+     */
+    public function hasFulltextSupport($table, $column)
+    {
+        $sql = File::get(storage_path() . '/sql/fulltextCheck.sql');
+
+        $results = DB::select($sql, [Config::get('database.connections.mysql.database'), $table]);
+
+        if (count($results) > 0) {
+            foreach ($results as $result) {
+                if ($result->column_name == $column) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

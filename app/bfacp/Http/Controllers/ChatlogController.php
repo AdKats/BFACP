@@ -3,10 +3,8 @@
 use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Game;
 use BFACP\Battlefield\Player;
+use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
@@ -49,12 +47,12 @@ class ChatlogController extends BaseController
                 $chat = $chat->whereBetween('logDate', [$startDate, $endDate]);
             }
 
-            // Specific keywords the user has typed. Each word seprated by a comma.
+            // Specific keywords the user has typed. Each word separated by a comma.
             // This can add significant time to fetching the results
             if (Input::has('keywords')) {
                 $keywords = array_map('trim', explode(',', Input::get('keywords')));
 
-                if ($this->hasFulltextSupport()) {
+                if (MainHelper::hasFulltextSupport('tbl_chatlog', 'logMessage')) {
                     $chat = $chat->whereRaw('MATCH(logMessage) AGAINST(? IN BOOLEAN MODE)', [implode(' ', $keywords)]);
                 } else {
                     $chat = $chat->where(function ($query) use ($keywords) {
@@ -107,27 +105,5 @@ class ChatlogController extends BaseController
     private function hasInput()
     {
         return Input::has('server') || Input::has('players') || Input::has('pid') || Input::has('keywords') || Input::has('showspam') || (Input::has('StartDateTime') && Input::has('EndDateTime'));
-    }
-
-    /**
-     * Checks if the message column has fulltext support.
-     *
-     * @return boolean
-     */
-    private function hasFulltextSupport()
-    {
-        $sql = File::get(storage_path() . '/sql/fulltextCheck.sql');
-
-        $results = DB::select($sql, [Config::get('database.connections.mysql.database'), 'tbl_chatlog']);
-
-        if (count($results) > 0) {
-            foreach ($results as $result) {
-                if ($result->column_name == 'logMessage') {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 }
