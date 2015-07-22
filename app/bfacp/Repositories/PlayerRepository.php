@@ -44,9 +44,13 @@ class PlayerRepository extends BaseRepository
 
         $query = Player::with('ban', 'infractionsGlobal', 'infractionsServer.server', 'reputation');
 
+        $names = new Collection(explode(',', $names));
+
+        $soldierNames = [];
+
         if (!empty($names)) {
-            $query->where(function ($q) use ($names) {
-                foreach (explode(',', $names) as $name) {
+            $query->where(function ($q) use (&$names, &$soldierNames) {
+                $names->each(function ($name) use (&$q, &$soldierNames) {
                     // Checks if string is an EAGUID
                     if (preg_match('/^EA_([0-9A-Z]{32}+)$/', $name, $matches)) {
                         $eaguid = sprintf('EA_%s', $matches[1]);
@@ -66,12 +70,21 @@ class PlayerRepository extends BaseRepository
 
                         if (isset($matches[1]) && !empty($matches[1])) {
                             $q->orWhere('SoldierName', 'LIKE', $name);
+                            $soldierNames[] = $name;
                         }
                     }
-                }
+                });
             });
 
-            $query->orderBy('SoldierName', 'ASC');
+            if (!empty($soldierNames)) {
+                $query->orWhereIn('PlayerID', function ($q) use (&$soldierNames) {
+                    $q->select('target_id')->from('adkats_records_main')->where(function ($q2) use (&$soldierNames) {
+                        foreach ($soldierNames as $name) {
+                            $q2->orWhere('record_message', 'LIKE', sprintf('%s%%', $name));
+                        }
+                    })->where('command_type', 48);
+                });
+            }
 
             return $query->paginate($limit);
         }
