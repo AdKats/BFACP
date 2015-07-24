@@ -5,19 +5,25 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 
-// Check if the storage directory and subfolders are writeable
-if (!is_writable(storage_path())) {
-    die(sprintf('All folders under %s must be set to 0777.', storage_path()));
-}
-
-// Check if the JS Builds folder is writeable
-if (!is_writable($jsBuildsPath)) {
+if (!is_writable(storage_path()) || !is_writable($jsBuildsPath)) {
     try {
-        if (!chmod($jsBuildsPath, 0777)) {
-            die(sprintf('Directory "%s" is not writeable. Please change permissions to 0777', $jsBuildsPath));
+        $directorys = [
+            storage_path(),
+            storage_path() . '/cache',
+            storage_path() . '/logs',
+            storage_path() . '/meta',
+            storage_path() . '/sessions',
+            storage_path() . '/views',
+            $jsBuildsPath,
+        ];
+
+        foreach($directorys as $directory) {
+            if (!chmod($directory, 0777)) {
+                die(sprintf('Directory "%s" is not writeable. Please change permissions to 0777', storage_path()));
+            }
         }
     } catch (Exception $e) {
-        die(sprintf('Directory "%s" is not writeable. Please change permissions to 0777', $jsBuildsPath));
+        die(sprintf('Directory "%s" is not writeable. Please change permissions to 0777', storage_path()));
     }
 }
 
