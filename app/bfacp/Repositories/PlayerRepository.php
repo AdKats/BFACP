@@ -77,13 +77,17 @@ class PlayerRepository extends BaseRepository
             });
 
             if (!empty($soldierNames)) {
-                $query->orWhereIn('PlayerID', function ($q) use (&$soldierNames) {
+                $playerIds = Player::whereIn('PlayerID', function ($q) use (&$soldierNames) {
                     $q->select('target_id')->from('adkats_records_main')->where(function ($q2) use (&$soldierNames) {
                         foreach ($soldierNames as $name) {
-                            $q2->orWhere('record_message', 'LIKE', sprintf('%s%%', $name));
+                            $q2->orWhere('record_message', 'LIKE', $name);
                         }
                     })->where('command_type', 48);
-                });
+                })->lists('PlayerID');
+
+                if (!empty($playerIds)) {
+                    $query->orWhereIn('PlayerID', $playerIds);
+                }
             }
 
             return $query->paginate($limit);
