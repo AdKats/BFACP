@@ -36,6 +36,7 @@ class BattlelogAPI
             'weapons' => '%s/warsawWeaponsPopulateStats/%u/1/stats/',
             'vehicles' => '%s/warsawvehiclesPopulateStats/%u/1/stats/',
             'battlereports' => '%s/warsawbattlereportspopulate/%u/2048/1/',
+            'battlereport' => '%s/battlereport/loadgeneralreport/%s/1/%u/',
             'soldier' => '%s/soldier/%u/stats/%u/pc/',
         ],
         'bf3' => [
@@ -43,6 +44,7 @@ class BattlelogAPI
             'weapons' => '%s/weaponsPopulateStats/%u/1/stats/',
             'vehicles' => '%s/vehiclesPopulateStats/%u/1/stats/',
             //'battlereports' => '%s/warsawbattlereportspopulate/%u/2048/1/',
+            'battlereport' => '%s/battlereport/loadplayerreport/%s/1/%u/',
             'soldier' => '%s/soldier/%u/stats/%u/pc/',
         ],
         'bfh' => [

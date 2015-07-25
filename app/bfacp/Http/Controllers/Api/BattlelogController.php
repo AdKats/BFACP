@@ -57,6 +57,19 @@ class BattlelogController extends BaseController
 
     /**
      * @param Player $player
+     * @param int    $id
+     *
+     * @return mixed
+     */
+    public function getReport(Player $player, $id)
+    {
+        $battlelog = new BattlelogPlayer($player);
+
+        return MainHelper::response($battlelog->getBattleReport($id), null, null, null, false, true);
+    }
+
+    /**
+     * @param Player $player
      *
      * @return mixed
      */

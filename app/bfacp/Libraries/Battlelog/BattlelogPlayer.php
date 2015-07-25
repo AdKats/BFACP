@@ -293,4 +293,29 @@ class BattlelogPlayer extends BattlelogAPI
 
         return $battlereports;
     }
+
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getBattleReport($id)
+    {
+        if ($this->game == 'bfh') {
+            throw new BattlelogException(404, 'Reports for Battlefield Hardline are not supported.');
+        }
+
+        // Generate URI for request
+        $uri = sprintf($this->uris[ $this->game ]['battlereport'], $this->game, $id, $this->personaID);
+
+        $results = $this->sendRequest($uri);
+
+        $battlereport = new Collection([
+            'game' => $this->game,
+            'url' => parent::BLOG . sprintf('%s/battlereport/show/1/%s/%u', $this->game, $id, $this->personaID),
+            'report' => is_null($results) ? [] : $results,
+        ]);
+
+        return $battlereport;
+    }
 }

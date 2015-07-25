@@ -13,8 +13,8 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
     /*===================================
     =            API Resources          =
     ===================================*/
-    Route::group(['prefix' => 'helpers'], function() {
-        Route::group(['prefix' => 'adkats'], function() {
+    Route::group(['prefix' => 'helpers'], function () {
+        Route::group(['prefix' => 'adkats'], function () {
             Route::get('special_groups', 'HelpersController@getSpecialGroups');
         });
     });
@@ -56,10 +56,14 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
                 ['as' => 'api.battlelog.players.reports', 'uses' => 'BattlelogController@getReports'])->where('player',
                     '[0-9]+');
 
+            Route::get('{player}/report/{id}',
+                ['as' => 'api.battlelog.players.report', 'uses' => 'BattlelogController@getReport'])->where('player',
+                    '[0-9]+')->where('id', '[0-9]+');
+
             Route::get('{player}/acs', [
-                    'as' => 'api.battlelog.players.acs',
-                    'uses' => 'BattlelogController@getCheatDetection',
-                ])->where('player', '[0-9]+');
+                'as' => 'api.battlelog.players.acs',
+                'uses' => 'BattlelogController@getCheatDetection',
+            ])->where('player', '[0-9]+');
         });
     });
 
@@ -91,9 +95,9 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
             ['as' => 'api.servers.scoreboard', 'uses' => 'ServersController@scoreboard'])->where('id', '[0-9]+');
         Route::get('scoreboard/roundstats/{id}',
             ['as' => 'api.servers.scoreboard.roundstats', 'uses' => 'ServersController@scoreboardExtra'])->where('id',
-                '[0-9]+');
+            '[0-9]+');
         Route::get('chat/{id}', ['as' => 'api.servers.chat', 'uses' => 'ServersController@chat'])->where('id',
-                '[0-9]+');
+            '[0-9]+');
         Route::controller('admin/scoreboard', 'Admin\ScoreboardController');
     });
 
@@ -138,7 +142,7 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
     Route::group(['prefix' => 'players'], function () {
         Route::get('/', ['as' => 'player.listing', 'uses' => 'PlayersController@listing']);
         Route::get('{id}/{name?}', ['as' => 'player.show', 'uses' => 'PlayersController@profile'])->where('id',
-                '[0-9]+');
+            '[0-9]+');
     });
 
     Route::group(['prefix' => 'servers'], function () {
