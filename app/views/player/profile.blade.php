@@ -140,7 +140,13 @@
                                 <div class="form-control-static">
                                     <ul class="list-inline">
                                         @forelse($groups as $group)
-                                            <li data-group-id="{{ $group['group_id'] }}">{{ $group['group_name'] }}</li>
+                                            @if(\Carbon\Carbon::now()->diffInYears(\Carbon\Carbon::parse($group['player_expiration'])) > 1)
+                                                <li data-group-id="{{ $group['group_id'] }}">{{ $group['group_name'] }}</li>
+                                            @else
+                                                <li data-group-id="{{ $group['group_id'] }}" tooltip="Expires {{ HTML::moment(\Carbon\Carbon::parse($group['player_expiration'])->toIso8601String(), null, null, true) }}">
+                                                    {{ $group['group_name'] }}
+                                                </li>
+                                            @endif
                                         @empty
                                             {{ HTML::faicon('fa-info-circle') }} No groups assigned.
                                         @endforelse

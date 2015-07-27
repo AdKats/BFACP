@@ -990,6 +990,26 @@ class Main extends BaseHelper
                         return true;
                     }
                 }
+            })->map(function ($group) use (&$keys, &$objkey) {
+                $special = [];
+
+                if (is_array($keys)) {
+                    foreach ($keys as $k) {
+                        if (is_object($k)) {
+                            if ($k->{$objkey} == $group['group_key']) {
+                                $special = $k;
+                                break;
+                            }
+                        } else {
+                            if ($k == $group['group_key']) {
+                                $special = $k;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                return array_merge($group, (array)$special);
             });
         }
 
