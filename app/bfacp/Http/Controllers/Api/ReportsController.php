@@ -107,7 +107,10 @@ class ReportsController extends BaseController
                 $record->save();
             }
 
-            return MainHelper::response(null, 'Report updated', null, null, false, true);
+            return MainHelper::response([
+                'old' => $record,
+                'new' => isset($newRecord) ? $newRecord : null,
+            ], 'Report updated', null, null, false, true);
         } catch (ModelNotFoundException $e) {
             return MainHelper::response(null, 'Report was not found. Aborting!', 'error', null, false, true);
         }

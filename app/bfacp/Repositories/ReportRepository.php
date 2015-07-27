@@ -3,6 +3,7 @@
 use BFACP\AdKats\Command;
 use BFACP\AdKats\Record;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Input;
 
 class ReportRepository extends BaseRepository
 {
@@ -39,6 +40,14 @@ class ReportRepository extends BaseRepository
     {
         $reports = Record::with('server', 'type', 'action')->whereIn('command_action', [18, 20])->orderBy('record_time',
             'desc');
+
+        if (Input::has('last_id')) {
+            $lastId = Input::get('last_id', null);
+
+            if (!is_null($lastId) && is_numeric($lastId)) {
+                $reports->where('record_id', '>', abs($lastId));
+            }
+        }
 
         if ($paginate !== false) {
             $reports = $reports->paginate($take);

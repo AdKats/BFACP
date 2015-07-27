@@ -7,7 +7,7 @@
     <li>
         <ul class="menu">
             <li ng-repeat="(key, report) in reports.data track by report.record_id">
-                <a href="javascript://" ng-click="open(report)">
+                <a href="javascript://" ng-click="open(report, key)">
                     <h4>
                         {{ report.target_name }}
                         <small><i class="fa fa-clock-o"></i> <span ng-bind="moment(report.stamp).fromNow()"></span></small>

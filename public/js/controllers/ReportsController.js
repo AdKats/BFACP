@@ -1,13 +1,14 @@
 angular.module('bfacp').controller('ReportsController', ['$scope', '$http', '$interval', '$modal', function($scope, $http, $interval, $modal) {
     $scope.reports = {
         refresh: false,
+        last_id: null,
         data: []
     };
 
     $scope.actions = [];
 
     /**
-     * Fetchs the actions that can be used on reports.
+     * Fetches the actions that can be used on reports.
      * @return void
      */
     $scope.getActions = function() {
@@ -29,15 +30,27 @@ angular.module('bfacp').controller('ReportsController', ['$scope', '$http', '$in
     $scope.getActions();
 
     /**
-     * Fetchs the latest reports.
+     * Fetches the latest reports.
      * @return void
      */
     $scope.latestReports = function() {
         $scope.reports.refresh = true;
-        $http.get('api/reports').success(function(data, status) {
-            $scope.reports.data = data.data;
+        $http({
+            url: 'api/reports',
+            method: 'GET',
+            params: {
+                last_id: $scope.reports.last_id
+            }
+        }).success(function(data) {
+            if(data.data.length > 0) {
+                angular.forEach(data.data, function(obj, key) {
+                    $scope.reports.data.push(obj);
+                });
+                $scope.reports.last_id = data.data[0].record_id;
+            }
         }).error(function(data, status) {
-
+            console.error('Error in reports request.', data);
+            $scope.latestReports();
         }).finally(function() {
             $scope.reports.refresh = false;
         });
@@ -46,7 +59,7 @@ angular.module('bfacp').controller('ReportsController', ['$scope', '$http', '$in
     // Re-fetch the reports every 30 seconds
     $interval($scope.latestReports, 30 * 1000);
 
-    $scope.open = function(report) {
+    $scope.open = function(report, key) {
         var reportInstance = $modal.open({
             animation: true,
             templateUrl: 'js/templates/modals/report.html',
@@ -59,6 +72,10 @@ angular.module('bfacp').controller('ReportsController', ['$scope', '$http', '$in
                     return $scope.actions;
                 }
             }
+        });
+
+        reportInstance.result.then(function (report) {
+            $scope.reports.data.splice(key, 1);
         });
     };
 }])
@@ -107,7 +124,7 @@ angular.module('bfacp').controller('ReportsController', ['$scope', '$http', '$in
 
         ReportFactory.updateReport().then(function(data) {
             toastr.success(data.message);
-            $modalInstance.close();
+            $modalInstance.close(data.data);
         }, function(data) {
             if(data.errors !== undefined) {
                 angular.forEach(data.errors, function(error, key) {
@@ -122,7 +139,7 @@ angular.module('bfacp').controller('ReportsController', ['$scope', '$http', '$in
             toastr.error(data.message);
 
             if(data.status_code == 422) {
-                $scope.cancel();
+                $modalInstance.close(data.data);
             }
         }).finally(function() {
             $scope.working = false;
