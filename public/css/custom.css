@@ -92,6 +92,14 @@ table.scoreboard > tbody > tr.ng-leave {
     width: auto;
 }
 
+.limit-text {
+    width: 200px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .wordwrap {
     word-wrap: break-word;
     white-space: normal;

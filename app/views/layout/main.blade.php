@@ -110,10 +110,12 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.1.6/ZeroClipboard.min.js"></script>
         {{ HTML::script('js/plugins/fastclick/fastclick.min.js') }}
         {{ HTML::script('js/plugins/angular-modules/count-to/count-to.js') }}
         {{ HTML::script('js/plugins/angular-modules/ng-idle/angular-idle.min.js') }}
         {{ HTML::script('js/plugins/angular-modules/ng-table/ng-table.min.js') }}
+        {{ HTML::script('js/plugins/angular-modules/ng-clip/ng-clip.min.js') }}
         {{ HTML::script('js/plugins/highcharts/highcharts.js') }}
         {{ HTML::script('js/plugins/highcharts/modules/no-data-to-display.js') }}
         {{ HTML::script('js/plugins/iCheck/icheck.min.js') }}

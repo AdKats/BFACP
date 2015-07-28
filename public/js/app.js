@@ -7,13 +7,15 @@ angular.module('bfacp', [
         'ngSanitize',
         'ngIdle',
         'ngTable',
+        'ngClipboard',
         'ui.bootstrap',
         'countTo'
 ])
-.config(['$locationProvider', '$idleProvider', function($locationProvider, $idleProvider) {
+.config(['$locationProvider', '$idleProvider', 'ngClipProvider', function($locationProvider, $idleProvider, ngClipProvider) {
     $locationProvider.html5Mode(false).hashPrefix('!');
     $idleProvider.idleDuration(window.idleDurationSeconds || 60);
     $idleProvider.warningDuration(window.warningDurationSeconds || 60);
+    ngClipProvider.setPath("//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.1.6/ZeroClipboard.swf");
 }])
 .run(['$rootScope', function($rootScope) {
     $rootScope.moment = function(date) { return moment(date); };

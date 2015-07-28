@@ -31,7 +31,7 @@
                 </td>
                 <td>
                     <span ng-if="record.action.command_id == 7 || record.action.command_id == 72" class="badge bg-purple" ng-bind="momentDuration(record.command_numeric, 'minutes')"></span>
-                    <span ng-bind="record.record_message" class="expands"></span>
+                    <span ng-bind="record.record_message" class="limit-text" popover="{{ record.record_message }}" popover-trigger="mouseenter" clip-copy="record.record_message"></span>
                 </td>
             </tr>
         </tbody>
