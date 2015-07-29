@@ -1,8 +1,10 @@
 <?php namespace BFACP;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
+use Illuminate\Validation\Validators;
 
 class Elegant extends Model
 {
@@ -30,21 +32,15 @@ class Elegant extends Model
     /**
      * Validator instance
      *
-     * @var \Illuminate\Support\Facades\Validator
+     * @var Validators
      */
     protected $validator;
-
-    /**
-     * BFAdminCP instance
-     */
-    protected $bfacp;
 
     public function __construct(array $attributes = [], Validator $validator = null)
     {
         parent::__construct($attributes);
 
-        $this->validator = $validator ?: app('validator');
-        $this->bfacp = app('bfadmincp');
+        $this->validator = $validator ?: App::make('validator');
     }
 
     /**

@@ -58,19 +58,6 @@ class Player extends Elegant
      */
     protected $with = ['game', 'battlelog'];
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        if (!$this->bfacp->isLoggedIn || !$this->bfacp->user->ability(null, 'player.view.ip')) {
-            $this->hidden[] = 'IP_Address';
-        }
-
-        if (!$this->bfacp->isLoggedIn || !$this->bfacp->user->ability(null, 'player.view.guids')) {
-            array_push($this->hidden, 'EAGUID', 'PBGUID');
-        }
-    }
-
     /**
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -333,12 +320,9 @@ class Player extends Elegant
             'metabans' => sprintf('http://metabans.com/search/?phrase=%s', $this->SoldierName),
             'bf4db' => $game == 'BF4' ? $bf4db_profile : null,
             'chatlogs' => route('chatlog.search', ['pid' => $this->PlayerID]),
+            'pbbans' => !empty($this->PBGUID) ? sprintf('http://www.pbbans.com/mbi-guid-search-%s.html',
+                $this->PBGUID) : null,
         ];
-
-        if ($this->bfacp->isLoggedIn && $this->bfacp->user->ability(null, 'player.view.guids')) {
-            $this->links[] = !empty($this->PBGUID) ? sprintf('http://www.pbbans.com/mbi-guid-search-%s.html',
-                $this->PBGUID) : null;
-        }
 
         $links = array_merge($links, $links[0]);
         unset($links[0]);
