@@ -942,6 +942,10 @@ class Main extends BaseHelper
             if (!empty($player->SoldierName)) {
                 $query->orWhere('SoldierName', $player->SoldierName);
             }
+
+            if (!empty($player->IP_Address)) {
+                $query->orWhere('IP_Address', $player->IP_Address);
+            }
         });
 
         return $players->get();
