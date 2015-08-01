@@ -49,7 +49,7 @@ angular.module('bfacp').controller('ReportsController', ['$scope', '$http', '$in
                 $scope.reports.last_id = data.data[0].record_id;
             }
         }).error(function(data, status) {
-            console.error('Error in reports request.', data);
+            if(status == 403) return;
             $scope.latestReports();
         }).finally(function() {
             $scope.reports.refresh = false;
