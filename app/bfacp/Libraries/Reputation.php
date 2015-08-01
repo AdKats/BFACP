@@ -140,7 +140,7 @@ class Reputation
     }
 
     /**
-     * Fetchs records by player to calculate the source reputation
+     * Fetches records by player to calculate the source reputation
      *
      * @return mixed
      */
@@ -164,7 +164,7 @@ class Reputation
     }
 
     /**
-     * Fetchs records targeted on player to calculate the target reputation
+     * Fetches records targeted on player to calculate the target reputation
      *
      * @return mixed
      */
@@ -211,7 +211,7 @@ class Reputation
     }
 
     /**
-     * Fetchs special records to be applyed to the reputation values
+     * Fetches special records to be applied to the reputation values
      *
      * @return mixed
      */
@@ -237,7 +237,7 @@ class Reputation
     }
 
     /**
-     * Calcuates the total/final reputation
+     * Calculates the total/final reputation
      *
      * @return mixed
      */

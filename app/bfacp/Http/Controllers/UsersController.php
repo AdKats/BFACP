@@ -105,7 +105,7 @@ class UsersController extends BaseController
     }
 
     /**
-     * Attemps to login with the given credentials.
+     * Attempts to login with the given credentials.
      */
     public function login()
     {
