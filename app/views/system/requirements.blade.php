@@ -25,11 +25,10 @@
                         <div class="error-content">
                             <h3>
                                 <?php if (version_compare(phpversion(), $required_php_version, '<')): ?>
-                                <i class="fa fa-warning text-danger"></i> <small>You are running <?php echo phpversion();?></small>
+                                <i class="fa fa-warning text-danger"></i> <small>You are running <?php echo phpversion();?></small>. PHP 5.5 or Higher required.
                                 <?php else: ?>
-                                <i class="fa fa-check text-success"></i>
+                                <i class="fa fa-check text-success"></i> You are running PHP version <?php echo phpversion();?>.
                                 <?php endif;?>
-                                PHP <?php echo $required_php_version;?> or Higher
                             </h3>
                             <h3>
                                 <?php if (!extension_loaded('mcrypt')): ?>
