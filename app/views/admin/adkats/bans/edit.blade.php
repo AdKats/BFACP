@@ -154,8 +154,10 @@
         $('#unban-form').submit(function(e) {
             e.preventDefault();
 
-            var unban = prompt("<?php echo Lang::get('adkats.bans.edit.unban.prompt'); ?>", "Unbanning <?php echo $ban->player->SoldierName; ?>");
+            var unban = prompt("<?php echo Lang::get('adkats.bans.prompts.unban.reason'); ?>", "Unbanning <?php echo $ban->player->SoldierName; ?>");
             var btn = $(this).find('button');
+
+            var notes = prompt("<?php echo Lang::get('adkats.bans.prompts.unban.notes') ?>");
 
             if(unban !== null) {
                 btn.find("i").removeClass('fa-eraser').addClass('fa-spinner fa-pulse');
@@ -166,14 +168,15 @@
                     url: $(this).attr('action'),
                     type: 'DELETE',
                     data: {
-                        message: unban
+                        message: unban,
+                        notes: notes
                     }
                 })
                 .done(function(data, status) {
                     location.reload();
                 })
                 .fail(function(xhr, err) {
-                    alert("<?php echo Lang::get('adkats.bans.edit.unban.request_failed'); ?>");
+                    alert("<?php echo Lang::get('adkats.bans.prompts.unban.request_failed'); ?>");
                 })
                 .always(function() {
                     btn.find("i").removeClass('fa-spinner fa-pulse').addClass('fa-eraser');

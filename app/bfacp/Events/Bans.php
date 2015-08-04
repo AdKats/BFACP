@@ -24,7 +24,7 @@ Event::listen('player.ban', function ($input, $player, $ban = null) {
         $record->target_id = $player->PlayerID;
         $record->target_name = $player->SoldierName;
 
-        // Assocate the player with the ban.
+        // Associate the player with the ban.
         $ban->player()->associate($player);
     } else {
 
@@ -85,7 +85,7 @@ Event::listen('player.ban', function ($input, $player, $ban = null) {
     $record->adkats_web = true;
     $record->save();
 
-    // Assocate the record with the ban.
+    // Associate the record with the ban.
     $ban->record()->associate($record);
 
     // Enforce ban by GUID

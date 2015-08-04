@@ -337,6 +337,11 @@ class BansController extends BaseController
             // Update the ban record and save the changes
             $ban->record()->associate($record);
             $ban->ban_status = 'Disabled';
+
+            if(!is_null(Input::get('notes', null))) {
+                $ban->ban_notes = Input::get('notes', 'NoNotes');
+            }
+
             $ban->save();
 
             try {
