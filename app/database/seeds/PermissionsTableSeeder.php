@@ -155,6 +155,12 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at'   => $now
             ],
             [
+                'name'         => 'admin.scoreboard.tell',
+                'display_name' => 'Tell Message (Sends both Say and Yell)',
+                'created_at'   => $now,
+                'updated_at'   => $now
+            ],
+            [
                 'name'         => 'admin.site.motd',
                 'display_name' => 'View Message of the Day',
                 'created_at'   => $now,
@@ -192,7 +198,7 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'name'         => 'admin.site.system.logs',
-                'display_name' => 'View the application logs.',
+                'display_name' => 'View the application logs',
                 'created_at'   => $now,
                 'updated_at'   => $now
             ],
