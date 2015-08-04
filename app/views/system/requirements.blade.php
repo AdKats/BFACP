@@ -22,7 +22,7 @@
             <div class="content-wrapper">
                 <section class="content">
                     <div class="error-page">
-                        <div class="error-content">
+                        <div class="error-content" style="margin-left: 0px">
                             <h3>
                                 <?php if (version_compare(phpversion(), $required_php_version, '<')): ?>
                                 <i class="fa fa-warning text-danger"></i> <small>You are running <?php echo phpversion();?></small>. PHP 5.5 or Higher required.
