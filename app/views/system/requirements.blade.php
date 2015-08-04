@@ -23,29 +23,27 @@
                 <section class="content">
                     <div class="error-page">
                         <div class="error-content" style="margin-left: 0px">
-                            <h3>
+                            <h4>
                                 <?php if (version_compare(phpversion(), $required_php_version, '<')): ?>
-                                <i class="fa fa-warning text-danger"></i> <small>You are running <?php echo phpversion();?></small>. PHP 5.5 or Higher required.
+                                <i class="fa fa-warning text-danger"></i> Server is running PHP version <?php echo phpversion();?>, 5.5 or higher required.
                                 <?php else: ?>
-                                <i class="fa fa-check text-success"></i> You are running PHP version <?php echo phpversion();?>.
+                                <i class="fa fa-check text-success"></i> Server is running PHP version <?php echo phpversion();?> and satisfies PHP requirement.
                                 <?php endif;?>
-                            </h3>
-                            <h3>
+                            </h4>
+                            <h4>
                                 <?php if (!extension_loaded('mcrypt')): ?>
-                                <i class="fa fa-warning text-danger"></i>
+                                <i class="fa fa-warning text-danger"></i> Mcrypt is either not Installed or not enabled.
                                 <?php else: ?>
-                                <i class="fa fa-check text-success"></i>
+                                <i class="fa fa-check text-success"></i> Mcrypt installed and enabled.
                                 <?php endif;?>
-                                Mcrypt Installed and Enabled
-                            </h3>
-                            <h3>
+                            </h4>
+                            <h4>
                                 <?php if (!extension_loaded('pdo')): ?>
-                                <i class="fa fa-warning text-danger"></i>
+                                <i class="fa fa-warning text-danger"></i> PDO Driver either not installed or not enabled.
                                 <?php else: ?>
-                                <i class="fa fa-check text-success"></i>
+                                <i class="fa fa-check text-success"></i> PDO Driver installed and enabled.
                                 <?php endif;?>
-                                PDO Driver Installed and Enabled
-                            </h3>
+                            </h4>
                         </div>
                     </div>
                 </section>
