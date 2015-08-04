@@ -47,7 +47,7 @@ class Chat extends Elegant
     protected $appends = ['stamp', 'class_css', 'profile_url'];
 
     /**
-     * Models to be loaded automaticly
+     * Models to be loaded automatically
      *
      * @var array
      */
