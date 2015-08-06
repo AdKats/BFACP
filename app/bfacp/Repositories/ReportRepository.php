@@ -38,7 +38,7 @@ class ReportRepository extends BaseRepository
      */
     public function getReports($paginate = false, $take = 30)
     {
-        $reports = Record::with('server', 'type', 'action')->whereIn('command_action', [18, 20])->orderBy('record_time',
+        $reports = Record::with('server', 'type', 'action')->whereIn('command_type', [18, 20])->orderBy('record_time',
             'desc');
 
         if (Input::has('last_id')) {

@@ -44,6 +44,13 @@ class ScoreboardController extends BaseController
      */
     protected $errors = [];
 
+    /**
+     * Data to be passed to response
+     *
+     * @var array
+     */
+    protected $data = [];
+
     public function __construct()
     {
         parent::__construct();
@@ -75,6 +82,8 @@ class ScoreboardController extends BaseController
 
     /**
      * Index
+     *
+     * @return \BFACP\Facades\Main
      */
     public function anyIndex()
     {
@@ -96,13 +105,19 @@ class ScoreboardController extends BaseController
             return MainHelper::response($this->errors, self::COMPLETE_WITH_ERRORS, null, null, false, true);
         }
 
+        if (!empty($this->data)) {
+            $data = $this->data;
+        }
+
         return MainHelper::response($data, $message, $type, null, false, true);
     }
 
     /**
      * Sends a yell to the entire server, team, or selected player(s).
+     *
+     * @return \BFACP\Facades\Main
      */
-    public function anyYell()
+    public function postYell()
     {
         $this->hasPermission('admin.scoreboard.yell');
 
@@ -144,21 +159,23 @@ class ScoreboardController extends BaseController
 
     /**
      * Sends a say to the entire server, team, or selected player(s).
+     *
+     * @return \BFACP\Facades\Main
      */
-    public function anySay()
+    public function postSay()
     {
         $this->hasPermission('admin.scoreboard.say');
 
         if (Input::get('type') == 'Player' && !empty($this->players)) {
             foreach ($this->players as $player) {
                 try {
-                    $this->repository->adminSay(Input::get('message', null), $player, null, 'Player');
+                    $this->data = $this->repository->adminSay(Input::get('message', null), $player, null, 'Player');
                 } catch (PlayerNotFoundException $e) {
                     $this->errors[] = $e->getMessage();
                 }
             }
         } else {
-            $this->repository->adminSay(Input::get('message', null), null, Input::get('team', null),
+            $this->data = $this->repository->adminSay(Input::get('message', null), null, Input::get('team', null),
                 Input::get('type', 'All'));
         }
 
@@ -167,11 +184,12 @@ class ScoreboardController extends BaseController
 
     /**
      * Sends a tell to selected player(s).
+     *
+     * @return \BFACP\Facades\Main
      */
-    public function anyTell()
+    public function postTell()
     {
-        $this->hasPermission('admin.scoreboard.say');
-        $this->hasPermission('admin.scoreboard.yell');
+        $this->hasPermission('admin.scoreboard.tell');
 
         foreach ($this->players as $player) {
             try {
@@ -186,8 +204,10 @@ class ScoreboardController extends BaseController
 
     /**
      * Kill the selected player(s).
+     *
+     * @return \BFACP\Facades\Main
      */
-    public function anyKill()
+    public function postKill()
     {
         $this->hasPermission('admin.scoreboard.kill');
 
@@ -207,8 +227,10 @@ class ScoreboardController extends BaseController
 
     /**
      * Kick the selected player(s).
+     *
+     * @return \BFACP\Facades\Main
      */
-    public function anyKick()
+    public function postKick()
     {
         $this->hasPermission('admin.scoreboard.kick');
 
@@ -228,8 +250,10 @@ class ScoreboardController extends BaseController
 
     /**
      * Move the selected player(s).
+     *
+     * @return \BFACP\Facades\Main
      */
-    public function anyTeamswitch()
+    public function postTeamswitch()
     {
         $this->hasPermission('admin.scoreboard.teamswitch');
 
@@ -237,6 +261,34 @@ class ScoreboardController extends BaseController
             try {
                 $this->repository->adminMovePlayer($player, Input::get('team', null), Input::get('squad', null),
                     Input::get('locked', false));
+            } catch (PlayerNotFoundException $e) {
+                $this->errors[] = [
+                    'player' => $player,
+                    'message' => $e->getMessage(),
+                ];
+            } catch (RconException $e) {
+                $this->errors[] = [
+                    'player' => $player,
+                    'message' => $e->getMessage(),
+                ];
+            }
+        }
+
+        return $this->_response();
+    }
+
+    /**
+     * Punish the selected player(s).
+     *
+     * @return \BFACP\Facades\Main
+     */
+    public function postPunish()
+    {
+        $this->hasPermission('admin.scoreboard.punish');
+
+        foreach ($this->players as $player) {
+            try {
+                $this->repository->adminPunish($player, Input::get('message', null));
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = [
                     'player' => $player,

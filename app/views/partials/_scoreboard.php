@@ -82,7 +82,7 @@
                     <i class="fa fa-comments-o"></i>
                     <h3 class="box-title">Chat <span class="badge bg-green" ng-bind="messages.length"></span></h3>
                     <div class="box-tools pull-right">
-                        <input class="form-control" type="text" ng-model="search.chat" placeholder="Filter Players..." />
+                        <input class="form-control" type="text" ng-model="search.chat" placeholder="Filter Chat..." />
                     </div>
                 </div>
 
@@ -100,25 +100,59 @@
                                 <span ng-bind="message.logSoldierName"></span>
                             </a>
 
-                            {{ message.logMessage }}
+                            <span ng-bind="message.logMessage"></span>
                         </p>
                     </div>
                 </div>
+
+                <?php if($bfacp->isLoggedIn && $bfacp->user->ability(null, 'admin.scoreboard.say')) : ?>
+                <div class="box-footer">
+                    <div class="input-group">
+                        <input type="text" ng-model="chat.message" placeholder="Type message..." class="form-control" ng-disabled="chat.sending" ng-enter="admin.sendMessage()">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-danger btn-flat" ng-click="admin.sendMessage()" ng-disabled="chat.sending">
+                                <ng-switch on="chat.sending">
+                                    <span ng-switch-when="true"><i class="fa fa-cog fa-spin"></i> Sending...</span>
+                                    <span ng-switch-default>Send</span>
+                                </ng-switch>
+                            </button>
+                        </span>
+                    </div>
+                </div>
             </div>
+            <?php endif; ?>
         </div>
 
-        <div ng-if="(server.game.Name == 'BF4' || server.game.Name == 'BFHL') && netural.spectators" class="col-xs-4 col-sm-3" >
+        <?php if ($bfacp->isLoggedIn): ?>
+        <div class="col-xs-3 col-sm-2" ng-if="admins !== null">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Admins</h3>
+                </div>
+
+                <div class="box-body">
+                    <ul class="list-unstyled">
+                        <li ng-repeat="(key, player) in admins track by player.name">
+                            <a ng-href="{{ player._player.profile_url }}" ng-bind="player.name" target="_blank"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <div ng-if="(server.game.Name == 'BF4' || server.game.Name == 'BFHL') && neutral.spectators" class="col-xs-3 col-sm-2" >
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">Spectators</h3>
                     <div class="box-tools pull-right">
-                        <span ng-if="netural.spectators" class="badge bg-light-blue" ng-bind="netural.spectators.length"></span>
+                        <span ng-if="neutral.spectators" class="badge bg-light-blue" ng-bind="neutral.spectators.length"></span>
                     </div>
                 </div>
 
                 <div class="box-body">
                     <ul class="list-unstyled">
-                        <li ng-repeat="(key, player) in netural.spectators track by player.name">
+                        <li ng-repeat="(key, player) in neutral.spectators track by player.name">
                             <a ng-href="{{ player._player.profile_url }}" ng-bind="player.name" target="_blank"></a>
                         </li>
                     </ul>
@@ -126,18 +160,18 @@
             </div>
         </div>
 
-        <div ng-if="netural.players" class="col-xs-4 col-sm-3">
+        <div ng-if="neutral.players" class="col-xs-3 col-sm-2">
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">Joining</h3>
                     <div class="box-tools pull-right">
-                        <span ng-if="netural.players" class="badge bg-light-blue" ng-bind="netural.players.length"></span>
+                        <span ng-if="neutral.players" class="badge bg-light-blue" ng-bind="neutral.players.length"></span>
                     </div>
                 </div>
 
                 <div class="box-body">
                     <ul class="list-unstyled">
-                        <li ng-repeat="(key, player) in netural.players track by player.name">
+                        <li ng-repeat="(key, player) in neutral.players track by player.name">
                             <i class="fa fa-circle-o-notch fa-spin"></i>
                             <a ng-href="{{ player._player.profile_url }}" ng-bind="player.name" target="_blank"></a>
                         </li>
@@ -216,7 +250,7 @@
                                 <tr ng-repeat="(key, player) in team.players | filter: { name: search.scoreboard } | orderBy:sort.column:sort.desc track by player.name">
                                     <?php if ($bfacp->isLoggedIn): ?>
                                     <td>
-                                        <input type="checkbox" name="players[]" value="{{ player.name }}" ng-click="isSelectAll($event)" />
+                                        <input type="checkbox" name="players[]" ng-value="player.name" />
                                     </td>
                                     <?php endif;?>
                                     <td>

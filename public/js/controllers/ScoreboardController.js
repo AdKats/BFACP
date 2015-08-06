@@ -105,6 +105,8 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
         $scope.selectedId = -1;
         $scope.roundId = null;
 
+        $scope.playersSelected = [];
+
         $scope.alerts = [];
 
         $scope.sort = {
@@ -114,7 +116,8 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
 
         $scope.server = [];
         $scope.teams = [];
-        $scope.netural = [];
+        $scope.neutral = [];
+        $scope.admins = null;
         $scope.messages = [];
         $scope.winning = {
             '1': false,
@@ -126,6 +129,11 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
         $scope.search = {
             chat: '',
             scoreboard: ''
+        };
+
+        $scope.chat = {
+            message: '',
+            sending: false
         };
 
         var addAlert = function(message, alertType) {
@@ -144,7 +152,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             $scope.refresh = false;
             $scope.server = [];
             $scope.teams = [];
-            $scope.netural = [];
+            $scope.neutral = [];
             $scope.messages = [];
             $location.hash('');
 
@@ -160,7 +168,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             $scope.refresh = true;
             $scope.server = [];
             $scope.teams = [];
-            $scope.netural = [];
+            $scope.neutral = [];
             $scope.messages = [];
 
             if ($scope.selectedId == -1) {
@@ -377,10 +385,17 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
 
                 $scope.server = data.data.server;
                 $scope.teams = data.data.teams;
+
+                if(data.data.admins !== undefined) {
+                    $scope.admins = data.data.admins;
+                } else {
+                    $scope.admins = null;
+                }
+
                 $scope.setWinningTeam();
 
                 if (data.data.teams[0] !== undefined || data.data.teams[0] !== null) {
-                    $scope.netural = data.data.teams[0];
+                    $scope.neutral = data.data.teams[0];
                     delete $scope.teams[0];
                 }
 
@@ -483,11 +498,22 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             if ($('thead th input:checkbox', table).is(':checked')) {
                 $('thead th input:checkbox', table).prop('checked', false);
             }
+            $scope.addOrRemovePlayer(e.target.value);
         };
 
         $scope.selectAll = function(e) {
             var table = $(e.target).closest('table');
             $('tbody td input:checkbox', table).prop('checked', e.target.checked);
+        };
+
+        $scope.addOrRemovePlayer = function(player) {
+            if($scope.playersSelected[player] !== undefined) {
+                delete $scope.playersSelected[player];
+            } else {
+                $scope.playersSelected[player] = true;
+            }
+
+            console.log($scope.playersSelected);
         };
 
         $scope.fetchRoundStats = function() {
@@ -566,8 +592,28 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             $scope.selectedId = parseInt(path[1], 10);
             $scope.switchServer();
         }
+
         /**
          * Admin functionality
          */
+
+        $scope.admin = {
+            sendMessage: function() {
+                var message = $scope.chat.message;
+                if(message === '') return;
+
+                $scope.chat.sending = true;
+
+                SBA.say($scope.selectedId, undefined, undefined, message).success(function(data) {
+                    $scope.messages.push(data.data.chat);
+                    $scope.chat.message = '';
+                }).error(function(e) {
+                    console.error('Error: ', e);
+                    toastr.error('Their was an error sending your message. Please try again.');
+                }).finally(function() {
+                    $scope.chat.sending = false;
+                });
+            }
+        }
     }
 ]);

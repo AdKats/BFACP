@@ -624,7 +624,7 @@ class LiveServerRepository extends BaseRepository
                 }
 
                 if (!$skipLog) {
-                    $this->log(null, 'admin_say', $message);
+                    return $this->log(null, 'admin_say', $message);
                 }
 
                 break;
@@ -671,7 +671,7 @@ class LiveServerRepository extends BaseRepository
                     }
 
                     if (!$skipLog) {
-                        $this->log($player, 'player_say', $message);
+                        return $this->log($player, 'player_say', $message);
                     }
                 } else {
                     throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
@@ -906,7 +906,11 @@ class LiveServerRepository extends BaseRepository
             $p = Player::where('GameID', $this->gameID)->where('SoldierName', $player)->first();
 
             if (!$p) {
-                throw new RconException(400, 'Unable to punish player. No match found.');
+                throw new PlayerNotFoundException(404, 'Unable to punish player. No match found.');
+            }
+
+            if (empty($message)) {
+                throw new RconException(400, 'No reason provided');
             }
 
             return $this->log($player, 'player_punish', $message, 0, false);
@@ -958,8 +962,14 @@ class LiveServerRepository extends BaseRepository
 
         $command = Command::where('command_key', $command)->first();
 
-        if ($command == 'admin_say') {
-            Chat::create([
+        if (!$command) {
+            throw new RconException(500, 'Invalid command type');
+        }
+
+        $data = [];
+
+        if ($command->command_key == 'admin_say') {
+            $data['chat'] = Chat::create([
                 'ServerID' => $this->serverID,
                 'logDate' => $timestamp,
                 'logMessage' => $message,
@@ -967,6 +977,10 @@ class LiveServerRepository extends BaseRepository
                 'logSoldierName' => is_null($this->admin) ? $this->user->username : $this->admin->SoldierName,
                 'logSubset' => 'Global',
             ]);
+
+            if(!is_null($this->admin)) {
+                $data['chat']['player'] = $this->admin;
+            }
         }
 
         $record = new Record();
@@ -984,7 +998,9 @@ class LiveServerRepository extends BaseRepository
         $record->target_id = is_null($player) ? null : $player->PlayerID;
         $record->save();
 
-        return $record;
+        $data['record'] = $record;
+
+        return $data;
     }
 
     /**
@@ -1290,15 +1306,13 @@ class LiveServerRepository extends BaseRepository
     {
         $adminlist = DB::table('adkats_usersoldiers')->select('player_id', 'EAGUID', 'GameID',
             'SoldierName')->join('adkats_users', 'adkats_usersoldiers.user_id', '=',
-                'adkats_users.user_id')->join('adkats_roles', 'adkats_users.user_role', '=',
-                'adkats_roles.role_id')->join('tbl_playerdata', 'adkats_usersoldiers.player_id', '=',
-                'tbl_playerdata.PlayerID')->where('tbl_playerdata.GameID', $this->gameID)->whereExists(function ($query
-            ) {
-                $query->select('adkats_rolecommands.role_id')->from('adkats_rolecommands')->join('adkats_commands',
-                        'adkats_rolecommands.command_id', '=',
-                        'adkats_commands.command_id')->where('command_playerInteraction',
-                        1)->whereRaw('adkats_rolecommands.role_id = adkats_users.user_role')->groupBy('adkats_rolecommands.role_id');
-            })->get();
+            'adkats_users.user_id')->join('adkats_roles', 'adkats_users.user_role', '=',
+            'adkats_roles.role_id')->join('tbl_playerdata', 'adkats_usersoldiers.player_id', '=',
+            'tbl_playerdata.PlayerID')->where('tbl_playerdata.GameID', $this->gameID)->whereExists(function ($query) {
+            $query->select('adkats_rolecommands.role_id')->from('adkats_rolecommands')->join('adkats_commands',
+                'adkats_rolecommands.command_id', '=', 'adkats_commands.command_id')->where('command_playerInteraction',
+                1)->whereRaw('adkats_rolecommands.role_id = adkats_users.user_role')->groupBy('adkats_rolecommands.role_id');
+        })->get();
 
         foreach (['players', 'spectators', 'commander'] as $type) {
             foreach ($this->data['teams'] as $teamID => $team) {
