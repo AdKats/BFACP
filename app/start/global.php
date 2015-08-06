@@ -32,12 +32,12 @@ App::error(function (Exception $exception, $code) {
     switch ($code) {
         case 403:
             if (Auth::check()) {
-                if(Request::is('api/*')) {
+                if (Request::is('api/*')) {
                     return MainHelper::response(null, 'Access Forbidden!', 'error', 403);
                 }
 
                 return Redirect::route('home')->withErrors([
-                    'Access Forbidden!'
+                    'Access Forbidden!',
                 ]);
             }
 
@@ -45,17 +45,25 @@ App::error(function (Exception $exception, $code) {
             break;
 
         case 405:
-            if(Request::is('api/*')) {
+            if (Request::is('api/*')) {
                 return MainHelper::response(null, 'No Method Available', 'error', 405);
             }
 
             return Redirect::intended(route('home'))->withErrors([
-                'No Method Available'
+                'No Method Available',
             ]);
             break;
     }
 
     Log::error($exception);
+
+    if ($exception instanceof PDOException) {
+        $clientIp = $_SERVER['REMOTE_ADDR'];
+        $whitelist = getenv('IP_WHITELIST') !== false ? explode('|', getenv('IP_WHITELIST')) : [];
+        $isWhitelisted = in_array($clientIp, $whitelist);
+
+        return Response::view('system.db', compact('exception', 'isWhitelisted'), 500);
+    }
 
     if (!Config::get('app.debug')) {
         if (Request::ajax() || Request::is('api/*')) {
@@ -66,16 +74,16 @@ App::error(function (Exception $exception, $code) {
         }
     }
 
-    if(Request::is('api/*')) {
+    if (Request::is('api/*')) {
         return MainHelper::response([
-            $exception->getMessage()
+            $exception->getMessage(),
         ], 'Fatal Error', 'error', 500);
     }
 });
 
 App::missing(function () {
 
-    if(Request::is('api/*')) {
+    if (Request::is('api/*')) {
         return MainHelper::response(null, 'Resource Not Found', 'error', 404);
     }
 
