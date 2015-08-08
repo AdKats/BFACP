@@ -42,7 +42,7 @@ Menu::make('MainNav', function ($menu) use ($adminPermsList, $bfacp) {
     if ($bfacp->isLoggedIn) {
 
         /*===============================================
-        =            AdKats Admin Navigation            =
+        =            Adkats Admin Navigation            =
         ===============================================*/
 
         if ($bfacp->user->ability(null, $adminPermsList['adkats'])) {

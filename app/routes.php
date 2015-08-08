@@ -150,9 +150,9 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
     });
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
-        Route::group(['prefix' => 'adkats', 'namespace' => 'AdKats'], function () {
+        Route::group(['prefix' => 'adkats', 'namespace' => 'Adkats'], function () {
 
-            // AdKats Settings
+            // Adkats Settings
             Route::resource('settings', 'SettingsController', [
                 'names' => [
                     'index' => 'admin.adkats.settings.index',
@@ -161,7 +161,7 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
                 'only' => ['index', 'edit'],
             ]);
 
-            // AdKats Bans
+            // Adkats Bans
             Route::resource('bans', 'BansController', [
                 'names' => [
                     'index' => 'admin.adkats.bans.index',
@@ -174,7 +174,7 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
                 'only' => ['index', 'edit', 'update', 'destroy', 'store', 'create'],
             ]);
 
-            // AdKats Users
+            // Adkats Users
             Route::resource('users', 'UsersController', [
                 'names' => [
                     'index' => 'admin.adkats.users.index',
@@ -186,7 +186,7 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
                 'only' => ['index', 'edit', 'update', 'destroy', 'store'],
             ]);
 
-            // AdKats Roles
+            // Adkats Roles
             Route::resource('roles', 'RolesController', [
                 'names' => [
                     'index' => 'admin.adkats.roles.index',
@@ -269,32 +269,32 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
  */
 
 /*===================================
-=            AdKats Bans            =
+=            Adkats Bans            =
 ===================================*/
 Entrust::routeNeedsPermission('admin/adkats/bans', 'admin.adkats.bans.view');
 Entrust::routeNeedsPermission('admin/adkats/bans/create', 'admin.adkats.bans.create');
 Entrust::routeNeedsPermission('admin/adkats/bans/*', 'admin.adkats.bans.edit');
 
 /*====================================
-=            AdKats Users            =
+=            Adkats Users            =
 ====================================*/
 Entrust::routeNeedsPermission('admin/adkats/users', 'admin.adkats.user.view');
 Entrust::routeNeedsPermission('admin/adkats/users/*', 'admin.adkats.user.edit');
 
 /*====================================
-=            AdKats Roles            =
+=            Adkats Roles            =
 ====================================*/
 Entrust::routeNeedsPermission('admin/adkats/roles', 'admin.adkats.roles.view');
 Entrust::routeNeedsPermission('admin/adkats/roles/*', 'admin.adkats.roles.edit');
 
 /*============================================
-=            AdKats Special Users            =
+=            Adkats Special Users            =
 ============================================*/
 Entrust::routeNeedsPermission('admin/adkats/special_players', 'admin.adkats.special.view');
 Entrust::routeNeedsPermission('admin/adkats/special_players/*', 'admin.adkats.special.edit');
 
 /*=======================================
-=            AdKats Settings            =
+=            Adkats Settings            =
 =======================================*/
 Entrust::routeNeedsPermission('admin/adkats/settings', 'admin.adkats.settings.edit');
 Entrust::routeNeedsPermission('admin/adkats/settings/*', 'admin.adkats.settings.edit');

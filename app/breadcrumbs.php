@@ -56,7 +56,7 @@ Breadcrumbs::register('admin.site', function ($b) {
 });
 
 /*===================================
-=            AdKats Bans            =
+=            Adkats Bans            =
 ===================================*/
 
 Breadcrumbs::register('admin.adkats.bans.index', function ($b) {
@@ -72,7 +72,7 @@ Breadcrumbs::register('admin.adkats.bans.edit', function ($b, $id) {
 });
 
 /*====================================
-=            AdKats Users            =
+=            Adkats Users            =
 ====================================*/
 
 Breadcrumbs::register('admin.adkats.users.index', function ($b) {
@@ -88,7 +88,7 @@ Breadcrumbs::register('admin.adkats.users.edit', function ($b, $id) {
 });
 
 /*====================================
-=            AdKats Roles            =
+=            Adkats Roles            =
 ====================================*/
 
 Breadcrumbs::register('admin.adkats.roles.index', function ($b) {
@@ -109,7 +109,7 @@ Breadcrumbs::register('admin.adkats.roles.create', function ($b) {
 });
 
 /*==============================================
-=            AdKats Special Players            =
+=            Adkats Special Players            =
 ==============================================*/
 
 Breadcrumbs::register('admin.adkats.special_players.index', function ($b) {
