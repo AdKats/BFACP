@@ -16,7 +16,7 @@
 </style>
 
 <article>
-    <h1><img src="images/dino.gif">&nbsp;Database Error!</h1>
+    <h1>{{ HTML::image('images/dino.gif') }}&nbsp;Database Error!</h1>
     <div>
         @if($exception->getCode() == 2002)
             <p>Sorry, application could not connect to the database.</p>
