@@ -1,6 +1,6 @@
 <?php namespace BFACP\Http\Controllers\Admin\AdKats;
 
-use BFACP\AdKats\Setting;
+use BFACP\Adkats\Setting;
 use BFACP\Battlefield\Server;
 use BFACP\Http\Controllers\BaseController;
 use Illuminate\Support\Facades\View;

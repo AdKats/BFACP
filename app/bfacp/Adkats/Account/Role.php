@@ -1,4 +1,4 @@
-<?php namespace BFACP\AdKats\Account;
+<?php namespace BFACP\Adkats\Account;
 
 use BFACP\Elegant;
 
@@ -58,7 +58,7 @@ class Role extends Elegant
      */
     public function users()
     {
-        return $this->hasMany('BFACP\AdKats\Account\User', 'user_role');
+        return $this->hasMany('BFACP\Adkats\Account\User', 'user_role');
     }
 
     /**
@@ -90,6 +90,6 @@ class Role extends Elegant
      */
     public function permissions()
     {
-        return $this->belongsToMany('BFACP\AdKats\Command', 'adkats_rolecommands', 'role_id', 'command_id');
+        return $this->belongsToMany('BFACP\Adkats\Command', 'adkats_rolecommands', 'role_id', 'command_id');
     }
 }

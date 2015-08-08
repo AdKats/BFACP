@@ -1,6 +1,6 @@
 <?php namespace BFACP\Repositories;
 
-use BFACP\AdKats\Ban;
+use BFACP\Adkats\Ban;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 

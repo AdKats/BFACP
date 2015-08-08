@@ -1,6 +1,6 @@
 <?php namespace BFACP\Http\Controllers\Api;
 
-use BFACP\AdKats\Setting;
+use BFACP\Adkats\Setting;
 use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;
 use Dingo\Api\Exception\ResourceException as ResourceException;

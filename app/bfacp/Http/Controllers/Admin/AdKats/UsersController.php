@@ -1,8 +1,8 @@
 <?php namespace BFACP\Http\Controllers\Admin\AdKats;
 
-use BFACP\AdKats\Account\Role;
-use BFACP\AdKats\Account\Soldier;
-use BFACP\AdKats\Account\User;
+use BFACP\Adkats\Account\Role;
+use BFACP\Adkats\Account\Soldier;
+use BFACP\Adkats\Account\User;
 use BFACP\Battlefield\Player;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\BaseController;

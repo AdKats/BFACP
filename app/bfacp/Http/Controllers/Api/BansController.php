@@ -1,6 +1,6 @@
 <?php namespace BFACP\Http\Controllers\Api;
 
-use BFACP\AdKats\Ban;
+use BFACP\Adkats\Ban;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Repositories\BanRepository;
 use Illuminate\Support\Facades\Cache;

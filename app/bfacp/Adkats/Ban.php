@@ -1,4 +1,4 @@
-<?php namespace BFACP\AdKats;
+<?php namespace BFACP\Adkats;
 
 use BFACP\Elegant;
 use Carbon\Carbon;
@@ -69,7 +69,7 @@ class Ban extends Elegant
      */
     public function record()
     {
-        return $this->belongsTo('BFACP\AdKats\Record', 'latest_record_id');
+        return $this->belongsTo('BFACP\Adkats\Record', 'latest_record_id');
     }
 
     /**
@@ -130,7 +130,7 @@ class Ban extends Elegant
      */
     public function previous()
     {
-        return $this->hasMany('BFACP\AdKats\Record', 'target_id', 'player_id')->whereIn('command_action',
+        return $this->hasMany('BFACP\Adkats\Record', 'target_id', 'player_id')->whereIn('command_action',
             [7, 8, 72, 73])->orderBy('record_time', 'desc');
     }
 

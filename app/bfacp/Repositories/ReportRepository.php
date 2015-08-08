@@ -1,7 +1,7 @@
 <?php namespace BFACP\Repositories;
 
-use BFACP\AdKats\Command;
-use BFACP\AdKats\Record;
+use BFACP\Adkats\Command;
+use BFACP\Adkats\Record;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 

@@ -1,4 +1,4 @@
-<?php namespace BFACP\AdKats\Infractions;
+<?php namespace BFACP\Adkats\Infractions;
 
 use BFACP\Elegant;
 

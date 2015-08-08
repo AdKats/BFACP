@@ -1,6 +1,6 @@
 <?php namespace BFACP\Http\Controllers;
 
-use BFACP\AdKats\Record;
+use BFACP\Adkats\Record;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Repositories\PlayerRepository;
 use Illuminate\Database\Eloquent\Collection;

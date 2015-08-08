@@ -1,4 +1,4 @@
-<?php namespace BFACP\AdKats;
+<?php namespace BFACP\Adkats;
 
 use BFACP\Elegant;
 use BFACP\Facades\Main as MainHelper;

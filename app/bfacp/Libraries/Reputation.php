@@ -1,6 +1,6 @@
 <?php namespace BFACP\Libraries;
 
-use BFACP\AdKats\Record;
+use BFACP\Adkats\Record;
 use BFACP\Battlefield\Player;
 use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;

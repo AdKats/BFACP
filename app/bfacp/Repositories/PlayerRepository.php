@@ -1,6 +1,6 @@
 <?php namespace BFACP\Repositories;
 
-use BFACP\AdKats\Record;
+use BFACP\Adkats\Record;
 use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Player;
 use BFACP\Exceptions\PlayerNotFoundException;
