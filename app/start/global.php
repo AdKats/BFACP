@@ -62,6 +62,11 @@ App::error(function (Exception $exception, $code) {
         $whitelist = getenv('IP_WHITELIST') !== false ? explode('|', getenv('IP_WHITELIST')) : [];
         $isWhitelisted = in_array($clientIp, $whitelist);
 
+        if (Request::ajax() || Request::is('api/*')) {
+            return MainHelper::response(($isWhitelisted ? [$exception->getMessage()] : null), 'Database Error!',
+                'error', 500);
+        }
+
         return Response::view('system.db', compact('exception', 'isWhitelisted'), 500);
     }
 
