@@ -1,7 +1,7 @@
 <?php namespace BFACP\Events;
 
-use BFACP\AdKats\Ban;
-use BFACP\AdKats\Record;
+use BFACP\Adkats\Ban;
+use BFACP\Adkats\Record;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Support\Facades\Event as Event;

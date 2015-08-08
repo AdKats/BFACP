@@ -1,4 +1,4 @@
-<?php namespace BFACP\AdKats\Account;
+<?php namespace BFACP\Adkats\Account;
 
 use BFACP\Elegant;
 
@@ -58,7 +58,7 @@ class User extends Elegant
      */
     public function role()
     {
-        return $this->belongsTo('BFACP\AdKats\Account\Role', 'user_role');
+        return $this->belongsTo('BFACP\Adkats\Account\Role', 'user_role');
     }
 
     /**
@@ -66,7 +66,7 @@ class User extends Elegant
      */
     public function soldiers()
     {
-        return $this->hasMany('BFACP\AdKats\Account\Soldier', 'user_id');
+        return $this->hasMany('BFACP\Adkats\Account\Soldier', 'user_id');
     }
 
     public function getStampAttribute()

@@ -71,7 +71,7 @@ class Player extends Elegant
      */
     public function ban()
     {
-        return $this->hasOne('BFACP\AdKats\Ban', 'player_id');
+        return $this->hasOne('BFACP\Adkats\Ban', 'player_id');
     }
 
     /**
@@ -95,7 +95,7 @@ class Player extends Elegant
      */
     public function infractionsGlobal()
     {
-        return $this->hasOne('BFACP\AdKats\Infractions\Overall', 'player_id');
+        return $this->hasOne('BFACP\Adkats\Infractions\Overall', 'player_id');
     }
 
     /**
@@ -103,7 +103,7 @@ class Player extends Elegant
      */
     public function infractionsServer()
     {
-        return $this->hasMany('BFACP\AdKats\Infractions\Server', 'player_id');
+        return $this->hasMany('BFACP\Adkats\Infractions\Server', 'player_id');
     }
 
     /**
@@ -127,7 +127,7 @@ class Player extends Elegant
      */
     public function recordsBy()
     {
-        return $this->hasMany('BFACP\AdKats\Record', 'source_id');
+        return $this->hasMany('BFACP\Adkats\Record', 'source_id');
     }
 
     /**
@@ -135,7 +135,7 @@ class Player extends Elegant
      */
     public function recordsOn()
     {
-        return $this->hasMany('BFACP\AdKats\Record', 'target_id');
+        return $this->hasMany('BFACP\Adkats\Record', 'target_id');
     }
 
     /**
@@ -143,7 +143,7 @@ class Player extends Elegant
      */
     public function battlelog()
     {
-        return $this->hasOne('BFACP\AdKats\Battlelog', 'player_id');
+        return $this->hasOne('BFACP\Adkats\Battlelog', 'player_id');
     }
 
     /**
@@ -151,7 +151,7 @@ class Player extends Elegant
      */
     public function specialGroups()
     {
-        return $this->hasMany('BFACP\AdKats\Special', 'player_id');
+        return $this->hasMany('BFACP\Adkats\Special', 'player_id');
     }
 
     /**

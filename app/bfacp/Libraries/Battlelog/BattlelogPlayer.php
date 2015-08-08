@@ -1,6 +1,6 @@
 <?php namespace BFACP\Libraries\Battlelog;
 
-use BFACP\AdKats\Battlelog;
+use BFACP\Adkats\Battlelog;
 use BFACP\Battlefield\Player;
 use BFACP\Exceptions\BattlelogException;
 use BFACP\Facades\Main as MainHelper;

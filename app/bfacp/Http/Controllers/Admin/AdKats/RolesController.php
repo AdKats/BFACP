@@ -1,7 +1,7 @@
 <?php namespace BFACP\Http\Controllers\Admin\AdKats;
 
-use BFACP\AdKats\Account\Role;
-use BFACP\AdKats\Command as Command;
+use BFACP\Adkats\Account\Role;
+use BFACP\Adkats\Command as Command;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\BaseController;
 use Illuminate\Database\Eloquent\Collection;

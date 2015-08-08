@@ -1,6 +1,6 @@
 <?php namespace BFACP\Http\Controllers\Admin\AdKats;
 
-use BFACP\AdKats\Special;
+use BFACP\Adkats\Special;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\BaseController;
 use Exception;

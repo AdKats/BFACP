@@ -1,4 +1,4 @@
-<?php namespace BFACP\AdKats;
+<?php namespace BFACP\Adkats;
 
 use BFACP\Elegant;
 
@@ -82,7 +82,7 @@ class Record extends Elegant
      */
     public function type()
     {
-        return $this->belongsTo('BFACP\AdKats\Command', 'command_type')->select([
+        return $this->belongsTo('BFACP\Adkats\Command', 'command_type')->select([
             'command_id',
             'command_active',
             'command_name',
@@ -95,7 +95,7 @@ class Record extends Elegant
      */
     public function action()
     {
-        return $this->belongsTo('BFACP\AdKats\Command', 'command_action')->select([
+        return $this->belongsTo('BFACP\Adkats\Command', 'command_action')->select([
             'command_id',
             'command_active',
             'command_name',

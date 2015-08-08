@@ -1,4 +1,4 @@
-<?php namespace BFACP\AdKats\Account;
+<?php namespace BFACP\Adkats\Account;
 
 use BFACP\Elegant;
 
@@ -58,7 +58,7 @@ class Soldier extends Elegant
      */
     public function user()
     {
-        return $this->belongsTo('BFACP\AdKats\Account\User', 'user_id');
+        return $this->belongsTo('BFACP\Adkats\Account\User', 'user_id');
     }
 
     /**
