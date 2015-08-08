@@ -150,7 +150,7 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
     });
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
-        Route::group(['prefix' => 'adkats', 'namespace' => 'Adkats'], function () {
+        Route::group(['prefix' => 'adkats', 'namespace' => 'AdKats'], function () {
 
             // Adkats Settings
             Route::resource('settings', 'SettingsController', [
