@@ -3,27 +3,29 @@
 return [
 
     'metro'                         => [
-        'players_online' => 'Players Online',
-        'average_bans'   => 'Average Bans Per Day',
-        'yesterday_bans' => 'Bans Yesterday',
-        'player_count'   => 'Unique Players',
+        'players_online' => 'Spelers Online',
+        'average_bans'   => 'Gemiddeld aantal bans per dag',
+        'yesterday_bans' => 'Bans Gisteren',
+        'player_count'   => 'Unieke Spelers',
         'adkats'         => [
             'titles'        => [
-                'killed'        => 'Players Killed',
-                'kicked'        => 'Players Kicked',
-                'banned'        => 'Players Banned',
-                'banned_active' => 'Active Bans'
+                'killed'        => 'Spelers Gedood',
+                'kicked'        => 'Spelers gekicked',
+                'banned'        => 'Spelers Verbannen',
+                'banned_active' => 'Actieve Bans'
             ],
-            'killed'        => ':killed% of players have been killed',
-            'kicked'        => ':kicked% of players have been kicked',
-            'banned'        => ':banned% of players have been banned',
-            'banned_active' => ':banned% of players are banned'
+            'killed'        => ':killed% van de spelers zijn gedood',
+            'kicked'        => ':kicked% van de spelers zijn gekicked',
+            'banned'        => ':banned% van de spelers hebben een ban gehad',
+            'banned_active' => ':banned% van de spelers hebben een ban'            
         ]
     ],
 
+    'motd' => 'Bericht van de dag',
+
     'population'                    => [
-        'title'   => 'Population',
-        'footer'  => 'Total',
+        'title'   => 'Populatie',
+        'footer'  => 'Totaal',
         'columns' => [
             'col1' => 'Server',
             'col2' => 'Online',
@@ -32,20 +34,20 @@ return [
     ],
 
     'bans'                          => [
-        'title'   => 'Latest Bans',
+        'title'   => 'Laatste Bans',
         'columns' => [
-            'col1' => 'Player',
+            'col1' => 'Speler',
             'col2' => 'Admin',
-            'col3' => 'Issued',
-            'col4' => 'Expires'
+            'col3' => 'Geforceerd op',
+            'col4' => 'Vervaltijd'
         ]
     ],
 
     'players_seen_country_past_day' => [
-        'title' => 'Players Seen by Country (24h)',
+        'title' => 'Herkomst spelers (Laatste 24 uur)',
         'table' => [
-            'col1' => 'Country',
-            'col2' => 'Visits'
+            'col1' => 'Land',
+            'col2' => 'Bezoeken'
         ]
     ]
 ];

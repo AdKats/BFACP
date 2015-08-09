@@ -6,39 +6,39 @@ return [
         'users'   => [
             'listing' => [
                 'table'  => [
-                    'col1' => 'Username',
+                    'col1' => 'Gebruikersnaam',
                     'col2' => 'Email',
-                    'col3' => 'Role',
-                    'col4' => 'Language',
+                    'col3' => 'Rol',
+                    'col4' => 'Taal',
                     'col5' => 'Status',
-                    'col6' => 'Created'
+                    'col6' => 'Aangemaakt'
                 ],
                 'status' => [
-                    'active'   => 'Active',
-                    'inactive' => 'Inactive'
+                    'active'   => 'Actief',
+                    'inactive' => 'Inactief'
                 ]
             ],
 
             'edit'    => [
                 'details' => 'Details',
                 'buttons' => [
-                    'save'   => 'Save Changes',
-                    'cancel' => 'Cancel',
-                    'delete' => 'Delete User'
+                    'save'   => 'Opslaan',
+                    'cancel' => 'Annuleren',
+                    'delete' => 'Gebruiker Verwijderen'
                 ],
                 'inputs'  => [
-                    'username'       => ['label' => 'Username'],
+                    'username'       => ['label' => 'Gebruikersnaam'],
                     'email'          => ['label' => 'Email'],
-                    'role'           => ['label' => 'Role'],
+                    'role'           => ['label' => 'Rol'],
                     'account_status' => ['label' => 'Status'],
-                    'lang'           => ['label' => 'Language'],
-                    'genpass'        => ['label' => 'Generate new password for user']
+                    'lang'           => ['label' => 'Taal'],
+                    'genpass'        => ['label' => 'Genereer nieuw wachtwoord']
                 ]
             ],
 
             'updates' => [
                 'password' => [
-                    'generated' => ':username (:email) has been emailed with their new password.'
+                    'generated' => 'Nieuw wachtwoord gestuurd naar :username (:email).'                 
                 ]
             ]
         ],
@@ -46,16 +46,16 @@ return [
         'roles'   => [
             'edit'   => [
                 'buttons' => [
-                    'save'   => 'Save Changes',
-                    'cancel' => 'Cancel',
-                    'delete' => 'Delete Role'
+                    'save'   => 'Opslaan',
+                    'cancel' => 'Annuleren',
+                    'delete' => 'Rol Verwijderen'
                 ]
             ],
             'create' => [
                 'buttons' => [
-                    'save'   => 'Create Role',
-                    'cancel' => 'Cancel',
-                    'delete' => 'Delete Role'
+                    'save'   => 'Rol Aanmaken',
+                    'cancel' => 'Annuleren',
+                    'delete' => 'Rol Verwijderen'
                 ]
             ]
         ],
@@ -63,9 +63,9 @@ return [
         'servers' => [
             'edit' => [
                 'buttons' => [
-                    'save'   => 'Save Changes',
+                    'save'   => 'Opslaan',
                     'cancel' => 'Cancel',
-                    'delete' => 'Delete Server'
+                    'delete' => 'Server Verwijderen'
                 ]
             ]
         ]

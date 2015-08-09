@@ -4,33 +4,33 @@ return [
 
     'factions' => [
         0 => [
-            'full_name' => 'Neutral',
-            'short_name' => 'Neutral'
+            'full_name' => 'Neutraal',
+            'short_name' => 'Neutraal'
         ],
 
         1 => [
-            'full_name' => 'US Army',
+            'full_name' => 'Amerikaanse Leger',
             'short_name' => 'US'
         ],
 
         2 => [
-            'full_name' => 'Russian Army',
+            'full_name' => 'Russische Leger',
             'short_name' => 'RU'
         ],
 
         3 => [
-            'full_name' => 'Chinese Army',
+            'full_name' => 'Chinese Leger',
             'short_name' => 'CN'
         ],
 
         4 => [
-            'full_name' => 'Attackers',
-            'short_name' => 'Attackers'
+            'full_name' => 'Aanvallers',
+            'short_name' => 'Aanvallers'
         ],
 
         5 => [
-            'full_name' => 'Defenders',
-            'short_name' => 'Defenders'
+            'full_name' => 'Verdedigers',
+            'short_name' => 'Verdedigers'
         ]
     ]
 ];

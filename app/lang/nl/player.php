@@ -11,14 +11,14 @@ return [
             'title'  => 'Details',
             'items'  => [
                 'id'              => 'ID',
-                'game'            => 'Game',
+                'game'            => 'Spel',
                 'eaguid'          => 'EA GUID',
                 'pbguid'          => 'PB GUID',
                 'ip'              => 'IP',
-                'country'         => 'Country',
-                'reputation'      => 'Reputation',
+                'country'         => 'Land',
+                'reputation'      => 'Reputatie',
                 'rank'            => 'Rank',
-                'linked_accounts' => 'Linked Accounts'
+                'linked_accounts' => 'Verbonden Spelers'
             ],
             'cached' => 'Viewing Cached Version'
         ],
@@ -51,23 +51,23 @@ return [
          * Infractions and Bans Blocks
          */
         'infractions' => [
-            'title'   => 'Infractions',
-            'none'    => 'No infractions on file',
+            'title'   => 'Overtredingen',
+            'none'    => 'Geen overtredingen bekend',
             'overall' => [
-                'title' => 'Total'
+                'title' => 'Totaal'
             ],
             'table'   => [
                 'col1' => 'Server',
-                'col2' => 'Punishes',
-                'col3' => 'Forgives',
-                'col4' => 'Total'
+                'col2' => 'Straffen',
+                'col3' => 'Vergevingen',
+                'col4' => 'Totaal'
             ]
         ],
 
         'bans'        => [
             'type'     => [
                 'temporary' => [
-                    'long'  => 'Temporary',
+                    'long'  => 'Tijdelijk',
                     'short' => 'Temp'
                 ],
                 'permanent' => [
@@ -76,34 +76,34 @@ return [
                 ]
             ],
             'status'   => [
-                'enabled'  => 'Enabled',
-                'disabled' => 'Disabled',
-                'expired'  => 'Expired',
-                'expire'   => 'Expire'
+                'enabled'  => 'Ingeschakeld',
+                'disabled' => 'Uitgeschakeld',
+                'expired'  => 'Verlopen',
+                'expire'   => 'Verloopt'
             ],
             'current'  => [
-                'title'    => 'Current Ban',
-                'none'     => 'No bans on file',
-                'inactive' => 'No ban currently in effect. Status&colon; <strong>:status</strong>',
+                'title'    => 'Actieve Ban',
+                'none'     => 'Geen ban(s) bekend',
+                'inactive' => 'Geen ban op dit moment actief. Status&colon; <strong>:status</strong>',
                 'table'    => [
-                    'col1' => 'Issued',
-                    'col2' => 'Expires',
+                    'col1' => 'Sinds',
+                    'col2' => 'Verloopt',
                     'col3' => 'Server',
                     'col4' => 'Type',
                     'col5' => 'Status',
-                    'col6' => 'Reason'
+                    'col6' => 'Reden'
                 ]
             ],
 
             'previous' => [
-                'title' => 'Previous Bans',
-                'none'  => 'No previous bans on file',
+                'title' => 'Eerdere Bans',
+                'none'  => 'Geen eerdere ban(s) bekend',
                 'table' => [
-                    'col1' => 'Issued',
-                    'col2' => 'Duration',
+                    'col1' => 'Sinds',
+                    'col2' => 'Duur',
                     'col3' => 'Server',
                     'col4' => 'Type',
-                    'col5' => 'Reason'
+                    'col5' => 'Reden'
                 ]
             ]
         ],
@@ -119,17 +119,17 @@ return [
             'server'   => [
                 'title' => 'Server Stats',
                 'table' => [
-                    'col1'  => 'First Seen',
-                    'col2'  => 'Last Seen',
-                    'col3'  => 'Overall Score',
-                    'col4'  => 'Highest Score',
+                    'col1'  => 'Eerste Bezoek',
+                    'col2'  => 'Laatste Bezoek',
+                    'col3'  => 'Totaal Score',
+                    'col4'  => 'Hoogste Score',
                     'col5'  => 'Kills',
                     'col6'  => 'HS',
                     'col7'  => 'Deaths',
                     'col8'  => 'Suicides',
                     'col9'  => 'Tks',
-                    'col10' => 'Playtime',
-                    'col11' => 'Rounds',
+                    'col10' => 'Speeltijd',
+                    'col11' => 'Rondes',
                     'col12' => 'Killstreak',
                     'col13' => 'Deathstreak',
                     'col14' => 'Wins',
@@ -147,7 +147,7 @@ return [
              * Player sessions
              */
             'sessions' => [
-                'title' => 'Sessions'
+                'title' => 'Sessies'
             ]
         ],
 
@@ -155,19 +155,19 @@ return [
          * Anti-Cheat System
          */
         'acs'         => [
-            'title'    => 'Suspicious Weapons',
-            'help'     => 'Weapons shown are not always suspicious and is only there to help you decided if the player is cheating. Shotguns and Snipers may trigger more frequently.',
-            'none'     => 'No Suspicious Weapons Found',
-            'checking' => 'Checking player&hellip;',
+            'title'    => 'Verdachte Wapens',
+            'help'     => 'Getoonde wapens zijn niet altijd verdacht en staan hier alleen om u te helpen besluiten of de speler cheat. Shotguns en Snipers zullen vaker getoond worden.',            
+            'none'     => 'Geen verdachte wapens gevonden.',
+            'checking' => 'Speler controleren&hellip;',
             'table'    => [
-                'col1'  => 'Weapon',
-                'col2'  => 'Category',
+                'col1'  => 'Wapen',
+                'col2'  => 'Categorie',
                 'col3'  => 'Kills',
                 'col4'  => 'Headshots',
-                'col5'  => 'Fired',
-                'col6'  => 'Hit',
-                'col7'  => 'Accuracy',
-                'col8'  => 'Playtime',
+                'col5'  => 'Geschoten',
+                'col6'  => 'Geraakt',
+                'col7'  => 'Nauwkeurigheid',
+                'col8'  => 'Speeltijd',
                 'col9'  => 'DPS',
                 'col10' => 'HSKP',
                 'col11' => 'KPM'
@@ -178,20 +178,20 @@ return [
          * Player Records
          */
         'records'     => [
-            'title'   => 'Record History',
+            'title'   => 'Record Geschiedenis',
             'viewing' => [
-                'p1' => 'Viewing records',
-                'p2' => 'through',
-                'p3' => 'out of'
+                'p1' => 'Toont records',
+                'p2' => 'tot',
+                'p3' => 'van'
             ],
             'table'   => [
-                'col1' => 'Date',
-                'col2' => 'CMD Issued',
-                'col3' => 'CMD Taken',
-                'col4' => 'Target',
-                'col5' => 'Source',
+                'col1' => 'Datum',
+                'col2' => 'Opgegeven CMD',
+                'col3' => 'uitgevoerd CMD',
+                'col4' => 'Doel',
+                'col5' => 'Bron',
                 'col6' => 'Server',
-                'col7' => 'Message'
+                'col7' => 'Bericht'
             ]
         ],
 
@@ -200,22 +200,22 @@ return [
          */
         'charts'      => [
             'command_overview' => [
-                'title' => 'CMD Usage',
+                'title' => 'CMD Gebruik',
                 'chart' => [
-                    'title'   => 'Command Usage Overview',
-                    'tooltip' => 'Usage'
+                    'title'   => 'Overzicht Gebruikte Commandos',
+                    'tooltip' => 'Gebruik'
                 ]
             ],
 
             'aliases'          => [
-                'title' => 'Aliases',
+                'title' => 'Aliassen',
                 'chart' => [
                     'tooltip' => 'Alias'
                 ]
             ],
 
             'ip_history'       => [
-                'title' => 'IP History',
+                'title' => 'IP Geschiedenis',
                 'chart' => [
                     'tooltip' => 'IP'
                 ]

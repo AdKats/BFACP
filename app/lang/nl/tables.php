@@ -5,17 +5,17 @@ return [
     'playerlist' => [
         'columns' => [
             'col1' => 'ID',
-            'col2' => 'Game',
+            'col2' => 'Spel',
             'col3' => 'Rank',
-            'col4' => 'Player',
+            'col4' => 'Speler',
             'col5' => 'Ban',
-            'col6' => 'Reputation',
-            'col7' => 'Total Infractions',
-            'col8' => 'Country'
+            'col6' => 'Reputatie',
+            'col7' => 'Totaal Overtredingen',
+            'col8' => 'Land'
         ],
-        'button_next' => 'Next',
-        'button_previous' => 'Previous',
-        'button_reset' => 'Reset'
+        'button_next' => 'Volgende',
+        'button_previous' => 'Vorige',
+        'button_reset' => 'Herstel'
     ]
 
 ];

@@ -2,7 +2,7 @@
 
 return [
     'main'  => [
-        'title' => 'Main Navigation',
+        'title' => 'Navigatie',
         'items' => [
             'dashboard'  => [
                 'title' => 'Dashboard',
@@ -19,16 +19,23 @@ return [
                 ]
             ],
             'scoreboard' => [
-                'title' => 'Live Scoreboard',
+                'title' => 'Live Scorebord',
                 'icon'  => [
                     'fa'  => 'fa-server',
                     'ion' => null
                 ]
             ],
             'playerlist' => [
-                'title' => 'Playerlist',
+                'title' => 'Spelerslijst',
                 'icon'  => [
                     'fa'  => 'fa-users',
+                    'ion' => null
+                ]
+            ],
+            'maintenance' => [
+                'title' => 'Systeem Onderhoud',
+                'icon'  => [
+                    'fa'  => 'fa-cogs',
                     'ion' => null
                 ]
             ]
@@ -37,39 +44,39 @@ return [
 
     'admin' => [
         'site'   => [
-            'title' => 'Site Management',
+            'title' => 'Site Beheer',
             'items' => [
                 'users'    => [
-                    'title' => 'Users',
+                    'title' => 'Gebruikers',
                     'icon'  => [
                         'fa'  => 'fa-users',
                         'ion' => null
                     ],
                     'items' => [
                         'edit' => [
-                            'title' => 'Editing User #:id'
+                            'title' => 'Gebruiker #:id bewerken'
                         ]
                     ]
                 ],
 
                 'roles'    => [
-                    'title' => 'Roles',
+                    'title' => 'Rollen',
                     'icon'  => [
                         'fa'  => 'fa-list-ol',
                         'ion' => null
                     ],
                     'items' => [
                         'edit'   => [
-                            'title' => 'Editing :name Role'
+                            'title' => 'Rol :name bewerken'
                         ],
                         'create' => [
-                            'title' => 'Create New Role'
+                            'title' => 'Nieuwe Rol'
                         ]
                     ]
                 ],
 
                 'settings' => [
-                    'title' => 'Settings',
+                    'title' => 'instellingen',
                     'icon'  => [
                         'fa'  => 'fa-cogs',
                         'ion' => null
@@ -87,7 +94,7 @@ return [
                 ],
 
                 'updater'  => [
-                    'title' => 'Updater',
+                    'title' => 'Updates',
                     'icon'  => [
                         'fa'  => 'fa-wrench',
                         'ion' => null
@@ -97,7 +104,7 @@ return [
 
                 'system'   => [
                     'logs' => [
-                        'title' => 'System Logs',
+                        'title' => 'Systeem Logs',
                         'icon'  => [
                             'fa'  => 'fa-file',
                             'ion' => null
@@ -107,44 +114,60 @@ return [
             ]
         ],
         'adkats' => [
-            'title' => 'AdKats Management',
+            'title' => 'AdKats Beheer',
             'items' => [
 
                 'banlist'         => [
-                    'title' => 'Banlist',
+                    'title' => 'Banlijst',
                     'icon'  => [
                         'fa'  => null,
                         'ion' => 'ion-hammer'
                     ],
                     'items' => [
                         'edit' => [
-                            'title' => 'Editing Ban #:id'
+                            'title' => 'Ban #:id bewerken'
                         ]
                     ]
                 ],
 
                 'users'           => [
-                    'title' => 'Users',
+                    'title' => 'Gebruikers',
                     'icon'  => [
                         'fa'  => 'fa-users',
                         'ion' => null
                     ],
                     'items' => [
                         'edit' => [
-                            'title' => 'Editing User #:id'
+                            'title' => 'Gebruiker #:id bewerken'
+                        ]
+                    ]
+                ],
+
+                'roles'    => [
+                    'title' => 'Rollen',
+                    'icon'  => [
+                        'fa'  => 'fa-list-ol',
+                        'ion' => null
+                    ],
+                    'items' => [
+                        'edit'   => [
+                            'title' => 'Rol Bewerken'
+                        ],
+                        'create' => [
+                            'title' => 'Nieuwe rol maken'
                         ]
                     ]
                 ],
 
                 'special_players' => [
-                    'title' => 'Special Players',
+                    'title' => 'Speciale Spelers',
                     'icon'  => [
                         'fa'  => 'fa-users',
                         'ion' => null
                     ],
                     'items' => [
                         'edit' => [
-                            'title' => 'Editing Special Player #:id'
+                            'title' => 'Speciale speler #:id bewerken'
                         ]
                     ]
                 ]

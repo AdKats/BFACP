@@ -1,33 +1,35 @@
 <?php
 
 return [
-    'version' => 'Version',
+    'version' => 'Versie',
 
-    'login' => 'Login',
-    'logout' => 'Logout',
+    'login' => 'Inloggen',
+    'logout' => 'Uitloggen',
+
+    'motd' => 'Bericht van de dag',
 
     'metabans' => [
         'title' => 'Metabans',
-        'assessments' => 'Assessments',
-        'feed' => 'Feed',
+        'assessments' => 'Beoordelingen',
+        'feed' => 'Lijst',
         'columns' => [
-            'col1' => 'Player',
-            'col2' => 'Game',
+            'col1' => 'Speler',
+            'col2' => 'Spel',
             'col3' => 'Type',
-            'col4' => 'Expiration'
+            'col4' => 'Vervaltijd'
         ],
         'type' => [
-            'none' => 'No Assessment',
-            'watch' => 'Watched',
-            'white' => 'Protected',
-            'black' => 'Banned'
+            'none' => 'Geen Beoordeling',
+            'watch' => 'Bekeken',
+            'white' => 'Beschermd',
+            'black' => 'Verbannen'
         ]
     ],
 
     'nav' => [
         'extras' => [
             'psearch' => [
-                'placeholder' => 'Search for player...'
+                'placeholder' => 'Zoek naar een speler...'
             ]
         ]
     ]

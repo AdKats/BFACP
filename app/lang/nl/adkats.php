@@ -2,122 +2,120 @@
 
 return [
 
-    'bans'            => [
+    'bans' => [
         'listing' => [
             'table' => [
                 'col1' => 'ID',
-                'col2' => 'Game',
-                'col3' => 'Player',
+                'col2' => 'Spel',
+                'col3' => 'Speler',
                 'col4' => 'Admin',
                 'col5' => 'Status',
-                'col6' => 'Issued',
-                'col7' => 'Expires',
-                'col8' => 'Enforcement',
-                'col9' => 'Reason'
-            ]
+                'col6' => 'Sinds',
+                'col7' => 'Verloopt',
+                'col8' => 'Geforceerd',
+                'col9' => 'Reden',
+            ],
         ],
-
-        'edit'    => [
-            'fields'  => [
-                'field1'  => 'Player',
-                'field2'  => 'Admin',
-                'field3'  => 'Notes',
-                'field4'  => 'Reason',
-                'field5'  => 'Server',
-                'field6'  => 'Date &amp; Time',
-                'field7'  => 'Status',
-                'field8'  => 'Ban Type',
-                'field9'  => 'Enforce by GUID',
-                'field10' => 'Enforce by Name',
-                'field11' => 'Enforce by IP'
+        'edit' => [
+            'fields' => [
+                'field1' => 'Speler',
+                'field2' => 'Admin',
+                'field3' => 'Notities',
+                'field4' => 'Reden',
+                'field5' => 'Server',
+                'field6' => 'Datum &amp; Tijd',
+                'field7' => 'Status',
+                'field8' => 'Ban Type',
+                'field9' => 'forceer op GUID',
+                'field10' => 'forceer op Name',
+                'field11' => 'forceer op IP',
             ],
-
             'buttons' => [
-                'submit'  => [
-                    'text1' => 'Save Changes',
-                    'text2' => 'Please wait...',
-                    'text3' => 'Unban'
+                'submit' => [
+                    'text1' => 'Opslaan',
+                    'text2' => 'Even geduld alstublieft...',
+                    'text3' => 'Ban Opheffen',
                 ],
-                'cancel'  => 'Cancel',
-                'profile' => 'Return to Player Profile'
+                'cancel' => 'Annuleer',
+                'profile' => 'Terug naar profiel',
             ],
-
-            'unban'   => [
-                'request_failed' => 'Request failed. Please try again later.',
-                'prompt'         => 'Enter unban reason'
-            ]
-        ]
+        ],
+        'prompts' => [
+            'unban' => [
+                'request_failed' => 'Verzoek mislukt. Probeer het later opnieuw.',
+                'reason' => 'Geef de reden voor het opheffen van de ban',
+                'notes' => 'Would you like to update the ban notes?\nClick cancel to keep current notes.',
+            ],
+        ],
     ],
-
     'special_players' => [
         'listing' => [
             'table' => [
                 'col1' => 'ID',
-                'col2' => 'Game',
-                'col3' => 'Player',
+                'col2' => 'Spel',
+                'col3' => 'Speler',
                 'col4' => 'Group',
                 'col5' => 'Created',
-                'col6' => 'Expires'
-            ]
-        ]
-    ],
-
-    'users'           => [
-        'no_soldiers' => 'No Soldiers Assigned.',
-        'no_users'    => 'No users found.',
-        'soldiers'    => 'Soldiers',
-        'listing'     => [
-            'buttons' => [
-                'create' => 'Add User'
+                'col6' => 'Verloopt',
             ],
-            'table'   => [
-                'col1' => 'User',
-                'col2' => 'Email',
-                'col3' => 'Role',
-                'col4' => 'Expiration',
-                'col5' => 'Soldiers',
-                'col6' => 'Notes'
-            ]
         ],
-        'edit'        => [
+    ],
+    'users' => [
+        'no_soldiers' => 'Geen Soldaten Gekoppeld.',
+        'no_users' => 'Geen gebruikers gevonden.',
+        'soldiers' => 'Soldaten',
+        'listing' => [
+            'buttons' => [
+                'create' => 'Gebruiker Toevoegen',
+            ],
+            'table' => [
+                'col1' => 'Gebruiker',
+                'col2' => 'Email',
+                'col3' => 'Rol',
+                'col4' => 'Vervaltijd',
+                'col5' => 'Soldaten',
+                'col6' => 'Notities',
+            ],
+        ],
+        'edit' => [
             'details' => 'Details',
             'buttons' => [
-                'save'   => 'Save Changes',
-                'cancel' => 'Cancel',
-                'delete' => 'Delete User'
+                'save' => 'Opslaan',
+                'cancel' => 'Annuleer',
+                'delete' => 'Gebruiker Verwijderen',
             ],
-            'inputs'  => [
-                'username'   => [
-                    'label' => 'Username'
+            'inputs' => [
+                'username' => [
+                    'label' => 'Gebruikersnaam',
                 ],
-                'email'      => [
-                    'label' => 'Email'
+                'email' => [
+                    'label' => 'Email',
                 ],
-                'role'       => [
-                    'label' => 'Role'
+                'role' => [
+                    'label' => 'Rol',
                 ],
                 'expiration' => [
-                    'label' => 'Expiration',
-                    'help'  => 'Leave date blank to set default expire date.'
+                    'label' => 'Vervaltijd',
+                    'help' => 'Laat datum leeg voor standaard vervaltijd.',
                 ],
-                'notes'      => [
-                    'label' => 'Notes'
+                'notes' => [
+                    'label' => 'Notities',
                 ],
-                'soldiers'   => [
-                    'label' => 'Player IDs',
-                    'help'  => 'Seprate IDs by a comma to add more players. Remove IDs to delete them from the user.'
+                'soldiers' => [
+                    'label' => 'Speler IDs',
+                    'help' => 'Gebruik een komma tussen IDs om meerdere spelers te koppelen. Verwijder IDs om ze te ontkoppelen.',
                 ],
-                'soldier'    => [
-                    'label' => 'Player Name',
-                    'help'  => 'To have the system add the player, type in the player name. This will add any player with the name provided.'
-                ]
+                'soldier' => [
+                    'label' => 'Spelers Naam',
+                    'help' => 'Vul de spelersnaam in om het systeem het ID op te laten zoeken. Dit voegt iedere speler toe met de opgegeven naam.',
+                ],
             ],
-            'table'   => [
+            'table' => [
                 'col1' => 'ID',
-                'col2' => 'Game',
-                'col3' => 'Name'
-            ]
-        ]
-    ]
+                'col2' => 'Spel',
+                'col3' => 'Naam',
+            ],
+        ],
+    ],
 
 ];

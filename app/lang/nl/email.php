@@ -2,8 +2,8 @@
 
 return [
     'password_changed' => [
-        'subject'   => 'Password Has Been Changed',
-        'greetings' => 'Hello :username',
-        'body'      => 'Your new password is :password'
+        'subject'   => 'Wachtwoord gewijzigd',
+        'greetings' => 'Hallo :username',
+        'body'      => 'Uw nieuwe wachtwoord is: :password'
     ]
 ];
