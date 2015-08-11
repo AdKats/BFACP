@@ -30,13 +30,13 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             }
         }
 
-        $scope.$on('$idleWarn', function(e, countdown) {
-            if(countdown < 20) {
+        $scope.$on('$idleWarn', function (e, countdown) {
+            if (countdown < 20) {
                 idleSound.play();
             }
         });
 
-        $scope.$on('$idleStart', function() {
+        $scope.$on('$idleStart', function () {
             closeModels();
 
             $scope.idleWarning = $modal.open({
@@ -45,13 +45,13 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             });
         });
 
-        $scope.$on('$idleEnd', function() {
+        $scope.$on('$idleEnd', function () {
             closeModels();
             idleSound.stop();
 
             if ($scope.idleServerId !== null) {
-                setTimeout(function() {
-                    $scope.$apply(function() {
+                setTimeout(function () {
+                    $scope.$apply(function () {
                         $scope.selectedId = $scope.idleServerId;
                         $scope.idleServerId = null;
                     });
@@ -61,11 +61,11 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             }
         });
 
-        $scope.$on('$idleTimeout', function() {
+        $scope.$on('$idleTimeout', function () {
             closeModels();
 
-            setTimeout(function() {
-                $scope.$apply(function() {
+            setTimeout(function () {
+                $scope.$apply(function () {
                     $scope.idleServerId = $scope.selectedId;
                     $scope.selectedId = -1;
                     $scope.roundId = null;
@@ -81,7 +81,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             });
         });
 
-        $scope.$watch('selectedId', function() {
+        $scope.$watch('selectedId', function () {
             if ($scope.selectedId != -1) {
                 if (!$scope.idleStarted) {
                     $idle.watch();
@@ -105,9 +105,8 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
         $scope.selectedId = -1;
         $scope.roundId = null;
 
-        $scope.playersSelected = [];
-
         $scope.alerts = [];
+        $scope.selectedPlayers = [];
 
         $scope.sort = {
             column: 'score',
@@ -136,18 +135,18 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             sending: false
         };
 
-        var addAlert = function(message, alertType) {
+        var addAlert = function (message, alertType) {
             $scope.alerts.push({
                 msg: message,
                 type: alertType
             });
         };
 
-        $scope.closeAlert = function(index) {
+        $scope.closeAlert = function (index) {
             $scope.alerts.splice(index, 1);
         };
 
-        $scope.disableServerRequests = function() {
+        $scope.disableServerRequests = function () {
             $scope.loading = false;
             $scope.refresh = false;
             $scope.server = [];
@@ -163,13 +162,14 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             $timeout.cancel(refreshTimeout);
         };
 
-        $scope.switchServer = function() {
+        $scope.switchServer = function () {
             $scope.loading = true;
             $scope.refresh = true;
             $scope.server = [];
             $scope.teams = [];
             $scope.neutral = [];
             $scope.messages = [];
+            $scope.selectedPlayers = [];
 
             if ($scope.selectedId == -1) {
                 $location.hash('');
@@ -186,7 +186,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             $scope.fetchRoundStats();
         };
 
-        $scope.kd = function(kills, deaths) {
+        $scope.kd = function (kills, deaths) {
             var ratio = $rootScope.divide(kills, deaths);
 
             if (kills === 0 && deaths > 0) {
@@ -196,7 +196,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             return ratio;
         };
 
-        $scope.avg = function(items, prop, precision) {
+        $scope.avg = function (items, prop, precision) {
             if (items === null) {
                 return 0;
             }
@@ -206,17 +206,17 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             return $rootScope.divide(sum, items.length, precision || 0);
         };
 
-        $scope.sum = function(items, prop) {
+        $scope.sum = function (items, prop) {
             if (items === null) {
                 return 0;
             }
 
-            return items.reduce(function(a, b) {
+            return items.reduce(function (a, b) {
                 return b[prop] === null ? a : a + b[prop];
             }, 0);
         };
 
-        $scope.pingColor = function(ping) {
+        $scope.pingColor = function (ping) {
             if (ping === null) {
                 return 'bg-blue';
             }
@@ -234,19 +234,19 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             return color;
         };
 
-        $scope.setWinningTeam = function() {
+        $scope.setWinningTeam = function () {
             var team1 = $scope.teams[1] || {
-                score: null
-            };
+                    score: null
+                };
             var team2 = $scope.teams[2] || {
-                score: null
-            };
+                    score: null
+                };
             var team3 = $scope.teams[3] || {
-                score: null
-            };
+                    score: null
+                };
             var team4 = $scope.teams[4] || {
-                score: null
-            };
+                    score: null
+                };
             var tickets_needed = $scope.server.tickets_needed;
 
             var mode = $scope.server.mode;
@@ -361,7 +361,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             }
         };
 
-        $scope.fetchServerData = function() {
+        $scope.fetchServerData = function () {
             if ($scope.selectedId == -1) {
                 $scope.loading = false;
                 $scope.refresh = false;
@@ -386,7 +386,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 $scope.server = data.data.server;
                 $scope.teams = data.data.teams;
 
-                if(data.data.admins !== undefined) {
+                if (data.data.admins !== undefined) {
                     $scope.admins = data.data.admins;
                 } else {
                     $scope.admins = null;
@@ -414,13 +414,13 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 }
 
                 refreshTimeout = $timeout($scope.fetchServerData, refresh * 1000);
-            }).error(function(data, status) {
+            }).error(function (data, status) {
                 if (status == 410) {
                     $scope.refresh = false;
                     $scope.loading = false;
                     addAlert(data.message, 'danger');
-                    setTimeout(function() {
-                        $scope.$apply(function() {
+                    setTimeout(function () {
+                        $scope.$apply(function () {
                             $scope.selectedId = -1;
                         });
                     }, 800);
@@ -446,7 +446,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             $scope.fetchServerChat();
         };
 
-        $scope.fetchServerChat = function() {
+        $scope.fetchServerChat = function () {
             if ($scope.selectedId == -1) {
                 $scope.messages = [];
                 return false;
@@ -459,14 +459,14 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                     sb: 1,
                     nospam: 1
                 }
-            }).success(function(data) {
+            }).success(function (data) {
                 $scope.messages = data.data;
-            }).error(function() {
+            }).error(function () {
                 $timeout($scope.fetchServerChat, 2 * 1000);
             });
         };
 
-        $scope.colSort = function(col) {
+        $scope.colSort = function (col) {
             var sort = $scope.sort;
 
             if (sort.column == col) {
@@ -477,7 +477,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             }
         };
 
-        $scope.colSortClass = function(col) {
+        $scope.colSortClass = function (col) {
             var cssClass = '';
 
             if ($scope.sort.column == col) {
@@ -493,30 +493,26 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             return cssClass;
         };
 
-        $scope.isSelectAll = function(e) {
-            var table = $(e.target).closest('table');
+        $scope.isSelectAll = function (e, input) {
+            var table;
+            if (input !== undefined && input !== null) {
+                table = $(input).closest('table');
+            } else {
+                table = $(e.target).closest('table');
+            }
             if ($('thead th input:checkbox', table).is(':checked')) {
                 $('thead th input:checkbox', table).prop('checked', false);
             }
-            $scope.addOrRemovePlayer(e.target.value);
         };
 
-        $scope.selectAll = function(e) {
+        $scope.selectAll = function (e) {
             var table = $(e.target).closest('table');
-            $('tbody td input:checkbox', table).prop('checked', e.target.checked);
+            var checkboxes = $('tbody td input:checkbox', table);
+            checkboxes.prop('checked', e.target.checked);
+            $scope.updateSelectedPlayers();
         };
 
-        $scope.addOrRemovePlayer = function(player) {
-            if($scope.playersSelected[player] !== undefined) {
-                delete $scope.playersSelected[player];
-            } else {
-                $scope.playersSelected[player] = true;
-            }
-
-            console.log($scope.playersSelected);
-        };
-
-        $scope.fetchRoundStats = function() {
+        $scope.fetchRoundStats = function () {
             var chart = $("#round-graph").highcharts();
             if ($scope.selectedId == -1 || $scope.requestError) {
                 return false;
@@ -597,23 +593,38 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
          * Admin functionality
          */
 
+        $scope.updateSelectedPlayers = function () {
+            $scope.selectedPlayers = $('input[name="players"]:checked').map(function () {
+                return this.value;
+            }).get();
+        };
+
         $scope.admin = {
-            sendMessage: function() {
+            action: 'say',
+            removePlayer: function (index) {
+                var player = $scope.selectedPlayers[index];
+                var input = $('input[value="' + player + '"]');
+                input.prop('checked', false);
+                $scope.selectedPlayers.splice(index, 1);
+                $scope.isSelectAll(null, input);
+            },
+            sendMessage: function () {
                 var message = $scope.chat.message;
-                if(message === '') return;
+                if (message === '') return;
 
                 $scope.chat.sending = true;
 
-                SBA.say($scope.selectedId, undefined, undefined, message).success(function(data) {
+                SBA.say($scope.selectedId, undefined, undefined, message).success(function (data) {
                     $scope.messages.push(data.data.chat);
                     $scope.chat.message = '';
-                }).error(function(e) {
+                }).error(function (e) {
                     console.error('Error: ', e);
                     toastr.error('Their was an error sending your message. Please try again.');
-                }).finally(function() {
+                }).finally(function () {
                     $scope.chat.sending = false;
                 });
-            }
+            },
+
         }
     }
 ]);

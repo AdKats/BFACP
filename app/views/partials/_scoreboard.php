@@ -184,10 +184,14 @@
     <div class="row">
         <div class="col-xs-12 col-sm-6">
             <div class="form-group">
-                <input class="form-control" type="text" ng-model="search.scoreboard" placeholder="Filter Players..." />
+                <input class="form-control" type="text" ng-model="search.scoreboard" placeholder="Search for player..." />
             </div>
         </div>
     </div>
+
+    <?php if(!is_null($adminview)) : ?>
+    <?php echo $adminview; ?>
+    <?php endif; ?>
 
     <div class="row">
         <div class="col-xs-12 col-md-6" ng-repeat="(teamID, team) in teams track by teamID">
@@ -216,7 +220,7 @@
                     <div class="table-responsive">
                         <table class="table table-condensed table-striped table-hover scoreboard">
                             <thead>
-                                <?php if ($bfacp->isLoggedIn): ?>
+                                <?php if ($bfacp->isLoggedIn && !is_null($adminview)): ?>
                                 <th>
                                     <input type="checkbox" ng-click="selectAll($event)" />
                                 </th>
@@ -248,9 +252,9 @@
 
                             <tbody>
                                 <tr ng-repeat="(key, player) in team.players | filter: { name: search.scoreboard } | orderBy:sort.column:sort.desc track by player.name">
-                                    <?php if ($bfacp->isLoggedIn): ?>
+                                    <?php if ($bfacp->isLoggedIn && !is_null($adminview)): ?>
                                     <td>
-                                        <input type="checkbox" name="players[]" ng-value="player.name" />
+                                        <input type="checkbox" name="players" ng-value="player.name" ng-click="isSelectAll($event); updateSelectedPlayers()" />
                                     </td>
                                     <?php endif;?>
                                     <td>

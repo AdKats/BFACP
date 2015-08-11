@@ -46,14 +46,35 @@ class HomeController extends BaseController
     public function scoreboard()
     {
         $servers = [
-            '-1' => 'Select Server&hellip;'
+            '-1' => 'Select Server&hellip;',
         ];
 
-        Server::active()->get()->each(function($server) use(&$servers) {
-            $servers[$server->game->Name][$server->ServerID] = $server->ServerName;
+        Server::active()->get()->each(function ($server) use (&$servers) {
+            $servers[ $server->game->Name ][ $server->ServerID ] = $server->ServerName;
         });
 
-        return View::make('scoreboard', compact('servers'))->with('page_title',
+        if ($this->isLoggedIn && $this->user->ability(null, Cache::get('admin.perm.list')['scoreboard'])) {
+
+            $perms = $this->user->ability(null, Cache::get('admin.perm.list')['scoreboard'],
+                ['return_type' => 'array']);
+            $permissions = $perms['permissions'];
+
+            $validPermissions = $this->user->roles[0]->perms->filter(function ($perm) use (&$permissions) {
+                if (array_key_exists($perm->name, $permissions) && $permissions[ $perm->name ]) {
+                    return true;
+                }
+            })->map(function ($perm) {
+                $p = clone($perm);
+                $p->name = explode('.', $perm->name)[2];
+                return $p;
+            })->lists('display_name', 'name');
+
+            $adminview = View::make('partials.scoreboard.admin.admin', compact('validPermissions'))->render();
+        } else {
+            $adminview = null;
+        }
+
+        return View::make('scoreboard', compact('servers', 'adminview'))->with('page_title',
             Lang::get('navigation.main.items.scoreboard.title'));
     }
 }
