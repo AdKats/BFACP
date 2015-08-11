@@ -2,7 +2,7 @@
     <div class="col-xs-12 col-sm-6">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Admin Actions</h3>
+                <h3 class="box-title">(WIP) Admin Actions</h3>
             </div>
 
             <div class="box-body">
