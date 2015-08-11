@@ -1,4 +1,5 @@
 @foreach($items as $item)
+    <?php if(is_null($item->url()) && !$item->hasChildren()) { continue; } ?>
     <li@lm-attrs($item) @if($item->hasChildren()) class="treeview" @endif @lm-endattrs>
         @if(is_null($item->url()))
             @if($item->hasChildren())
@@ -6,8 +7,6 @@
                 <i class="fa fa-folder"></i> <span>{{ $item->title }}</span>
                 <i class="fa fa-angle-left pull-right"></i>
             </a>
-            @else
-            {{ $item->title }}</span>
             @endif
         @else
         <a href="{{ $item->url() }}" target="_self">

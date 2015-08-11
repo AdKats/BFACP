@@ -4,12 +4,13 @@ use BFACP\Account\Permission;
 
 $adminPermsList = Cache::remember('admin.perm.list', 60 * 24, function () {
     $temp = [];
-    foreach (Permission::all() as $permission) {
+    $permissions = Permission::all();
+    $permissions->each(function($permission) use (&$temp) {
         if (preg_match('/^admin\\.([a-z]+)/A', $permission->name, $matches)) {
             $temp[$matches[1]][] = $permission->name;
             $temp['_admin'][] = $permission->name;
         }
-    }
+    });
     return $temp;
 });
 
