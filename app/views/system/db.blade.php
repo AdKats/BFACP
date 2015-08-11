@@ -30,7 +30,7 @@
                     <p>Sorry, something went wrong with the database.</p>
                 @endif
 
-                @if(isset($isWhitelisted)) && $isWhitelisted)
+                @if(isset($isWhitelisted) && $isWhitelisted)
                     <pre>{{ $exception->getMessage() }}</pre>
                 @endif
             </div>
