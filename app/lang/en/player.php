@@ -60,9 +60,9 @@ return [
                 'col4' => 'Total',
             ],
             'table2' => [
-                'col1' => 'Type',
-                'col2' => 'Source',
-                'col3' => 'Date',
+                'col1' => 'Action',
+                'col2' => 'By',
+                'col3' => 'Issued',
                 'col4' => 'Reason',
             ],
         ],
