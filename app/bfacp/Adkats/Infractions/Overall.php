@@ -30,7 +30,7 @@ class Overall extends Elegant
      *
      * @var array
      */
-    protected $guarded = ['*'];
+    protected $guarded = [];
 
     /**
      * Date fields to convert to carbon instances
@@ -47,11 +47,11 @@ class Overall extends Elegant
     protected $appends = [];
 
     /**
-     * Models to be loaded automaticly
+     * Models to be loaded automatically
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = ['history.type'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Model
@@ -59,5 +59,16 @@ class Overall extends Elegant
     public function player()
     {
         return $this->belongsTo('BFACP\Battlefield\Player', 'player_id');
+    }
+
+    /**
+     * Returns the infraction history
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function history()
+    {
+        return $this->hasMany('BFACP\Adkats\Record', 'target_id')->whereIn('command_type',
+            [9, 10])->orderBy('record_time', 'desc');
     }
 }

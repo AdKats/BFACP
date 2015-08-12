@@ -187,46 +187,75 @@
                 <div class="tab-content">
                     <div class="tab-pane" id="infractions">
                         @if( ! is_null($player->infractions_global) && ! is_null($player->infractions_server))
-                        <table class="table table-striped table-condensed">
-                            <thead>
-                                <th>{{ Lang::get('player.profile.infractions.table.col1') }}</th>
-                                <th>{{ Lang::get('player.profile.infractions.table.col2') }}</th>
-                                <th>{{ Lang::get('player.profile.infractions.table.col3') }}</th>
-                                <th>{{ Lang::get('player.profile.infractions.table.col4') }}</th>
-                            </thead>
+                            <table class="table table-striped table-condensed">
+                                <thead>
+                                    <th>{{ Lang::get('player.profile.infractions.table.col1') }}</th>
+                                    <th>{{ Lang::get('player.profile.infractions.table.col2') }}</th>
+                                    <th>{{ Lang::get('player.profile.infractions.table.col3') }}</th>
+                                    <th>{{ Lang::get('player.profile.infractions.table.col4') }}</th>
+                                </thead>
 
-                            <tbody>
-                                @foreach($player->infractions_server as $infraction)
-                                <tr>
-                                    <td>
-                                        @if($infraction->server->is_active)
-                                        <a href="servers/live#id-{{ $infraction->server->ServerID }}" target="_blank" tooltip="{{ $infraction->server->ServerName }}">
-                                            {{ $infraction->server->server_name_short or str_limit($infraction->server->ServerName, 30) }}
-                                        </a>
-                                        @else
-                                        <span tooltip="{{ $infraction->server->ServerName }}">{{ $infraction->server->server_name_short or str_limit($infraction->server->ServerName, 30) }}</span>
-                                        @endif
-                                    </td>
-                                    <td>{{ $infraction->punish_points }}</td>
-                                    <td>{{ $infraction->forgive_points }}</td>
-                                    <td>{{ $infraction->total_points }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
+                                <tbody>
+                                    @foreach($player->infractions_server as $infraction)
+                                    <tr>
+                                        <td>
+                                            @if($infraction->server->is_active)
+                                            <a href="servers/live#id-{{ $infraction->server->ServerID }}" target="_blank" tooltip="{{ $infraction->server->ServerName }}">
+                                                {{ $infraction->server->server_name_short or str_limit($infraction->server->ServerName, 30) }}
+                                            </a>
+                                            @else
+                                            <span tooltip="{{ $infraction->server->ServerName }}">{{ $infraction->server->server_name_short or str_limit($infraction->server->ServerName, 30) }}</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ $infraction->punish_points }}</td>
+                                        <td>{{ $infraction->forgive_points }}</td>
+                                        <td>{{ $infraction->total_points }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
 
-                            <tfoot>
-                                <tr>
-                                    <td><span class="pull-right">{{ Lang::get('player.profile.infractions.overall.title') }}</span></td>
-                                    <td>{{ $player->infractions_global->punish_points }}</td>
-                                    <td>{{ $player->infractions_global->forgive_points }}</td>
-                                    <td>{{ $player->infractions_global->total_points }}</td>
-                                </tr>
-                            </tfoot>
-                        </table>
+                                <tfoot>
+                                    <tr>
+                                        <td><span class="pull-right">{{ Lang::get('player.profile.infractions.overall.title') }}</span></td>
+                                        <td>{{ $player->infractions_global->punish_points }}</td>
+                                        <td>{{ $player->infractions_global->forgive_points }}</td>
+                                        <td>{{ $player->infractions_global->total_points }}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                            <table class="table table-striped table-condensed">
+                                <thead>
+                                    <th>{{ Lang::get('player.profile.infractions.table2.col1') }}</th>
+                                    <th>{{ Lang::get('player.profile.infractions.table2.col2') }}</th>
+                                    <th>{{ Lang::get('player.profile.infractions.table2.col3') }}</th>
+                                    <th>{{ Lang::get('player.profile.infractions.table2.col4') }}</th>
+                                </thead>
+
+                                <tbody>
+                                    @foreach($player->infractions_global->history as $infraction)
+                                        <tr>
+                                            <td>{{ $infraction->type->command_name }}</td>
+                                            <td>
+                                                @if(!is_null($infraction->source_id))
+                                                {{ link_to_route('player.show', $infraction->source_name, [
+                                                    $infraction->source_id,
+                                                    $infraction->source_name
+                                                ], ['target' => '_blank']) }}
+                                                @else
+                                                {{ $infraction->source_name }}
+                                                @endif
+                                            </td>
+                                            <td><span ng-bind="moment('{{ $infraction->stamp }}').fromNow()" tooltip="{{ HTML::moment($infraction->stamp) }}"></td>
+                                            <td>{{ $infraction->record_message }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         @else
-                        <div class="alert alert-success">
-                            <i class="fa fa-check"></i> {{ Lang::get('player.profile.infractions.none') }}
-                        </div>
+                            <div class="alert alert-success">
+                                <i class="fa fa-check"></i> {{ Lang::get('player.profile.infractions.none') }}
+                            </div>
                         @endif
                     </div>
 
