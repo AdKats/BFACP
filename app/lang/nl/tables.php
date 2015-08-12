@@ -11,11 +11,11 @@ return [
             'col5' => 'Ban',
             'col6' => 'Reputatie',
             'col7' => 'Totaal Overtredingen',
-            'col8' => 'Land'
+            'col8' => 'Land',
         ],
         'button_next' => 'Volgende',
         'button_previous' => 'Vorige',
-        'button_reset' => 'Herstel'
-    ]
+        'button_reset' => 'Herstel',
+    ],
 
 ];

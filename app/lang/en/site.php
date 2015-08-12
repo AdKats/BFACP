@@ -3,72 +3,68 @@
 return [
 
     'admin' => [
-        'users'   => [
+        'users' => [
             'listing' => [
-                'table'  => [
+                'table' => [
                     'col1' => 'Username',
                     'col2' => 'Email',
                     'col3' => 'Role',
                     'col4' => 'Language',
                     'col5' => 'Status',
-                    'col6' => 'Created'
+                    'col6' => 'Created',
                 ],
                 'status' => [
-                    'active'   => 'Active',
-                    'inactive' => 'Inactive'
-                ]
+                    'active' => 'Active',
+                    'inactive' => 'Inactive',
+                ],
             ],
-
-            'edit'    => [
+            'edit' => [
                 'details' => 'Details',
                 'buttons' => [
-                    'save'   => 'Save Changes',
+                    'save' => 'Save Changes',
                     'cancel' => 'Cancel',
-                    'delete' => 'Delete User'
+                    'delete' => 'Delete User',
                 ],
-                'inputs'  => [
-                    'username'       => ['label' => 'Username'],
-                    'email'          => ['label' => 'Email'],
-                    'role'           => ['label' => 'Role'],
+                'inputs' => [
+                    'username' => ['label' => 'Username'],
+                    'email' => ['label' => 'Email'],
+                    'role' => ['label' => 'Role'],
                     'account_status' => ['label' => 'Status'],
-                    'lang'           => ['label' => 'Language'],
-                    'genpass'        => ['label' => 'Generate new password for user']
-                ]
+                    'lang' => ['label' => 'Language'],
+                    'genpass' => ['label' => 'Generate new password for user'],
+                ],
             ],
-
             'updates' => [
                 'password' => [
-                    'generated' => ':username (:email) has been emailed with their new password.'
-                ]
-            ]
+                    'generated' => ':username (:email) has been emailed with their new password.',
+                ],
+            ],
         ],
-
-        'roles'   => [
-            'edit'   => [
+        'roles' => [
+            'edit' => [
                 'buttons' => [
-                    'save'   => 'Save Changes',
+                    'save' => 'Save Changes',
                     'cancel' => 'Cancel',
-                    'delete' => 'Delete Role'
-                ]
+                    'delete' => 'Delete Role',
+                ],
             ],
             'create' => [
                 'buttons' => [
-                    'save'   => 'Create Role',
+                    'save' => 'Create Role',
                     'cancel' => 'Cancel',
-                    'delete' => 'Delete Role'
-                ]
-            ]
+                    'delete' => 'Delete Role',
+                ],
+            ],
         ],
-
         'servers' => [
             'edit' => [
                 'buttons' => [
-                    'save'   => 'Save Changes',
+                    'save' => 'Save Changes',
                     'cancel' => 'Cancel',
-                    'delete' => 'Delete Server'
-                ]
-            ]
-        ]
-    ]
+                    'delete' => 'Delete Server',
+                ],
+            ],
+        ],
+    ],
 
 ];

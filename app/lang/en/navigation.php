@@ -1,177 +1,168 @@
 <?php
 
 return [
-    'main'  => [
+    'main' => [
         'title' => 'Main Navigation',
         'items' => [
-            'dashboard'  => [
+            'dashboard' => [
                 'title' => 'Dashboard',
-                'icon'  => [
-                    'fa'  => 'fa-dashboard',
-                    'ion' => null
-                ]
+                'icon' => [
+                    'fa' => 'fa-dashboard',
+                    'ion' => null,
+                ],
             ],
-            'chatlogs'   => [
+            'chatlogs' => [
                 'title' => 'Chatlogs',
-                'icon'  => [
-                    'fa'  => 'fa-comments',
-                    'ion' => null
-                ]
+                'icon' => [
+                    'fa' => 'fa-comments',
+                    'ion' => null,
+                ],
             ],
             'scoreboard' => [
                 'title' => 'Live Scoreboard',
-                'icon'  => [
-                    'fa'  => 'fa-server',
-                    'ion' => null
-                ]
+                'icon' => [
+                    'fa' => 'fa-server',
+                    'ion' => null,
+                ],
             ],
             'playerlist' => [
                 'title' => 'Playerlist',
-                'icon'  => [
-                    'fa'  => 'fa-users',
-                    'ion' => null
-                ]
+                'icon' => [
+                    'fa' => 'fa-users',
+                    'ion' => null,
+                ],
             ],
             'maintenance' => [
                 'title' => 'System Maintenance',
-                'icon'  => [
-                    'fa'  => 'fa-cogs',
-                    'ion' => null
-                ]
-            ]
-        ]
+                'icon' => [
+                    'fa' => 'fa-cogs',
+                    'ion' => null,
+                ],
+            ],
+        ],
     ],
-
     'admin' => [
-        'site'   => [
+        'site' => [
             'title' => 'Site Management',
             'items' => [
-                'users'    => [
+                'users' => [
                     'title' => 'Users',
-                    'icon'  => [
-                        'fa'  => 'fa-users',
-                        'ion' => null
+                    'icon' => [
+                        'fa' => 'fa-users',
+                        'ion' => null,
                     ],
                     'items' => [
                         'edit' => [
-                            'title' => 'Editing User #:id'
-                        ]
-                    ]
+                            'title' => 'Editing User #:id',
+                        ],
+                    ],
                 ],
-
-                'roles'    => [
+                'roles' => [
                     'title' => 'Roles',
-                    'icon'  => [
-                        'fa'  => 'fa-list-ol',
-                        'ion' => null
+                    'icon' => [
+                        'fa' => 'fa-list-ol',
+                        'ion' => null,
                     ],
                     'items' => [
-                        'edit'   => [
-                            'title' => 'Editing :name Role'
+                        'edit' => [
+                            'title' => 'Editing :name Role',
                         ],
                         'create' => [
-                            'title' => 'Create New Role'
-                        ]
-                    ]
+                            'title' => 'Create New Role',
+                        ],
+                    ],
                 ],
-
                 'settings' => [
                     'title' => 'Settings',
-                    'icon'  => [
-                        'fa'  => 'fa-cogs',
-                        'ion' => null
+                    'icon' => [
+                        'fa' => 'fa-cogs',
+                        'ion' => null,
                     ],
-                    'items' => []
+                    'items' => [],
                 ],
-
-                'servers'  => [
+                'servers' => [
                     'title' => 'Servers',
-                    'icon'  => [
-                        'fa'  => 'fa-server',
-                        'ion' => null
+                    'icon' => [
+                        'fa' => 'fa-server',
+                        'ion' => null,
                     ],
-                    'items' => []
+                    'items' => [],
                 ],
-
-                'updater'  => [
+                'updater' => [
                     'title' => 'Updater',
-                    'icon'  => [
-                        'fa'  => 'fa-wrench',
-                        'ion' => null
+                    'icon' => [
+                        'fa' => 'fa-wrench',
+                        'ion' => null,
                     ],
-                    'items' => []
+                    'items' => [],
                 ],
-
-                'system'   => [
+                'system' => [
                     'logs' => [
                         'title' => 'System Logs',
-                        'icon'  => [
-                            'fa'  => 'fa-file',
-                            'ion' => null
-                        ]
-                    ]
-                ]
-            ]
+                        'icon' => [
+                            'fa' => 'fa-file',
+                            'ion' => null,
+                        ],
+                    ],
+                ],
+            ],
         ],
         'adkats' => [
             'title' => 'AdKats Management',
             'items' => [
 
-                'banlist'         => [
+                'banlist' => [
                     'title' => 'Banlist',
-                    'icon'  => [
-                        'fa'  => null,
-                        'ion' => 'ion-hammer'
+                    'icon' => [
+                        'fa' => null,
+                        'ion' => 'ion-hammer',
                     ],
                     'items' => [
                         'edit' => [
-                            'title' => 'Editing Ban #:id'
-                        ]
-                    ]
+                            'title' => 'Editing Ban #:id',
+                        ],
+                    ],
                 ],
-
-                'users'           => [
+                'users' => [
                     'title' => 'Users',
-                    'icon'  => [
-                        'fa'  => 'fa-users',
-                        'ion' => null
+                    'icon' => [
+                        'fa' => 'fa-users',
+                        'ion' => null,
                     ],
                     'items' => [
                         'edit' => [
-                            'title' => 'Editing User #:id'
-                        ]
-                    ]
+                            'title' => 'Editing User #:id',
+                        ],
+                    ],
                 ],
-
-                'roles'    => [
+                'roles' => [
                     'title' => 'Roles',
-                    'icon'  => [
-                        'fa'  => 'fa-list-ol',
-                        'ion' => null
+                    'icon' => [
+                        'fa' => 'fa-list-ol',
+                        'ion' => null,
                     ],
                     'items' => [
-                        'edit'   => [
-                            'title' => 'Editing Role'
+                        'edit' => [
+                            'title' => 'Editing Role',
                         ],
                         'create' => [
-                            'title' => 'Create New Role'
-                        ]
-                    ]
+                            'title' => 'Create New Role',
+                        ],
+                    ],
                 ],
-
                 'special_players' => [
                     'title' => 'Special Players',
-                    'icon'  => [
-                        'fa'  => 'fa-users',
-                        'ion' => null
+                    'icon' => [
+                        'fa' => 'fa-users',
+                        'ion' => null,
                     ],
                     'items' => [
                         'edit' => [
-                            'title' => 'Editing Special Player #:id'
-                        ]
-                    ]
-                ]
-            ]
-        ]
-    ]
+                            'title' => 'Editing Special Player #:id',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
 ];

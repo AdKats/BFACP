@@ -2,12 +2,9 @@
 
 return [
     'version' => 'Versie',
-
     'login' => 'Inloggen',
     'logout' => 'Uitloggen',
-
     'motd' => 'Bericht van de dag',
-
     'metabans' => [
         'title' => 'Metabans',
         'assessments' => 'Beoordelingen',
@@ -16,22 +13,21 @@ return [
             'col1' => 'Speler',
             'col2' => 'Spel',
             'col3' => 'Type',
-            'col4' => 'Vervaltijd'
+            'col4' => 'Vervaltijd',
         ],
         'type' => [
             'none' => 'Geen Beoordeling',
             'watch' => 'Bekeken',
             'white' => 'Beschermd',
-            'black' => 'Verbannen'
-        ]
+            'black' => 'Verbannen',
+        ],
     ],
-
     'nav' => [
         'extras' => [
             'psearch' => [
-                'placeholder' => 'Zoek naar een speler...'
-            ]
-        ]
-    ]
+                'placeholder' => 'Zoek naar een speler...',
+            ],
+        ],
+    ],
 
 ];

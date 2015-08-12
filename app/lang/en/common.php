@@ -2,12 +2,9 @@
 
 return [
     'version' => 'Version',
-
     'login' => 'Login',
     'logout' => 'Logout',
-
     'motd' => 'Message of the Day',
-
     'metabans' => [
         'title' => 'Metabans',
         'assessments' => 'Assessments',
@@ -16,22 +13,21 @@ return [
             'col1' => 'Player',
             'col2' => 'Game',
             'col3' => 'Type',
-            'col4' => 'Expiration'
+            'col4' => 'Expiration',
         ],
         'type' => [
             'none' => 'No Assessment',
             'watch' => 'Watched',
             'white' => 'Protected',
-            'black' => 'Banned'
-        ]
+            'black' => 'Banned',
+        ],
     ],
-
     'nav' => [
         'extras' => [
             'psearch' => [
-                'placeholder' => 'Search for player...'
-            ]
-        ]
-    ]
+                'placeholder' => 'Search for player...',
+            ],
+        ],
+    ],
 
 ];
