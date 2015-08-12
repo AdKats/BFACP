@@ -60,10 +60,11 @@ return [
                 'col4' => 'Total',
             ],
             'table2' => [
-                'col1' => 'Action',
-                'col2' => 'By',
-                'col3' => 'Issued',
-                'col4' => 'Reason',
+                'col1' => 'Type',
+                'col2' => 'Action',
+                'col3' => 'By',
+                'col4' => 'Issued',
+                'col5' => 'Reason',
             ],
         ],
         'bans' => [

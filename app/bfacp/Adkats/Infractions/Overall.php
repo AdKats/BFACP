@@ -51,7 +51,7 @@ class Overall extends Elegant
      *
      * @var array
      */
-    protected $with = ['history.type'];
+    protected $with = ['history.type', 'history.action'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Model

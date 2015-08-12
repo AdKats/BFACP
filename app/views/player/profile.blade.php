@@ -230,12 +230,14 @@
                                     <th>{{ Lang::get('player.profile.infractions.table2.col2') }}</th>
                                     <th>{{ Lang::get('player.profile.infractions.table2.col3') }}</th>
                                     <th>{{ Lang::get('player.profile.infractions.table2.col4') }}</th>
+                                    <th>{{ Lang::get('player.profile.infractions.table2.col5') }}</th>
                                 </thead>
 
                                 <tbody>
                                     @foreach($player->infractions_global->history as $infraction)
                                         <tr>
                                             <td>{{ $infraction->type->command_name }}</td>
+                                            <td>{{ $infraction->action->command_name }}</td>
                                             <td>
                                                 @if(!is_null($infraction->source_id))
                                                 {{ link_to_route('player.show', $infraction->source_name, [
