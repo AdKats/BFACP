@@ -59,6 +59,13 @@ return [
                 'col3' => 'Vergevingen',
                 'col4' => 'Totaal',
             ],
+            'table2' => [
+                'col1' => 'Type',
+                'col2' => 'Actie',
+                'col3' => 'Door',
+                'col4' => 'Uitgegeven',
+                'col5' => 'Reden',
+            ],
         ],
         'bans' => [
             'type' => [
