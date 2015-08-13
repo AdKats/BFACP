@@ -12,7 +12,7 @@
                         ->ng_model('admin.action')
                     }}
 
-                    {{ Former::select()->ng_options('msg for msg in server._presetmessages')->ng_model('admin.message') }}
+                    {{ Former::select()->ng_if('server._presetmessages.length > 0')->ng_options('msg for msg in server._presetmessages')->ng_model('admin.message') }}
 
                     <div ng-switch="admin.action">
                         <div ng-switch-when="kick">
