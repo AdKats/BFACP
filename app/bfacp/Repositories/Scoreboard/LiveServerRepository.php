@@ -2,6 +2,7 @@
 
 use BFACP\Adkats\Command;
 use BFACP\Adkats\Record;
+use BFACP\Adkats\Setting;
 use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Player;
 use BFACP\Battlefield\Server;
@@ -334,6 +335,10 @@ class LiveServerRepository extends BaseRepository
             $startingTickets = 0;
         }
 
+        if ($this->isLoggedIn) {
+            $presetMessages = Setting::servers($this->serverID)->settings('Pre-Message List')->first()->setting_value;
+        }
+
         $this->data['server'] = [
             'name' => $info[1],
             'description' => trim($this->client->adminVarGetServerDescription()),
@@ -376,6 +381,7 @@ class LiveServerRepository extends BaseRepository
                     'seconds' => $info[2] >= 4 ? $startingTimer - $round : $startingTimer,
                 ],
             ],
+            '_presetmessages' => isset($presetMessages) ? [''] + $presetMessages : [],
         ];
 
         $this->setFactions();
@@ -978,7 +984,7 @@ class LiveServerRepository extends BaseRepository
                 'logSubset' => 'Global',
             ]);
 
-            if(!is_null($this->admin)) {
+            if (!is_null($this->admin)) {
                 $data['chat']['player'] = $this->admin;
             }
         }

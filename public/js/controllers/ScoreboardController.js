@@ -601,6 +601,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
 
         $scope.admin = {
             action: 'say',
+            message: '',
             removePlayer: function (index) {
                 var player = $scope.selectedPlayers[index];
                 var input = $('input[value="' + player + '"]');

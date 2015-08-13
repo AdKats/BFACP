@@ -28,4 +28,10 @@ return [
             'short_name' => 'Defenders',
         ],
     ],
+
+    'admin' => [
+        'inputs' => [
+            'message' => 'Type or select preset :action message...',
+        ],
+    ],
 ];

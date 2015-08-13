@@ -69,7 +69,8 @@ class HomeController extends BaseController
                 return $p;
             })->lists('display_name', 'name');
 
-            $adminview = View::make('partials.scoreboard.admin.admin', compact('validPermissions'))->render();
+            $adminview = View::make('partials.scoreboard.admin.admin',
+                compact('validPermissions', 'presetMessages'))->render();
         } else {
             $adminview = null;
         }
