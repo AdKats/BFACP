@@ -119,8 +119,8 @@
                         </span>
                     </div>
                 </div>
+                <?php endif; ?>
             </div>
-            <?php endif; ?>
         </div>
 
         <?php if ($bfacp->isLoggedIn): ?>
@@ -141,7 +141,7 @@
         </div>
         <?php endif; ?>
 
-        <div ng-if="(server.game.Name == 'BF4' || server.game.Name == 'BFHL') && neutral.spectators" class="col-xs-3 col-sm-2" >
+        <div ng-if="(server.game.Name == 'BF4' || server.game.Name == 'BFHL') && neutral.spectators" class="col-xs-3 col-<?php if($bfacp->isLoggedIn):?>sm-2<?php else:?>md-3<?php endif;?>" >
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">Spectators</h3>
@@ -160,7 +160,7 @@
             </div>
         </div>
 
-        <div ng-if="neutral.players" class="col-xs-3 col-sm-2">
+        <div ng-if="neutral.players" class="col-xs-3 col-<?php if($bfacp->isLoggedIn):?>sm-2<?php else:?>md-3<?php endif;?>">
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">Joining</h3>
@@ -189,9 +189,7 @@
         </div>
     </div>
 
-    <?php if(!is_null($adminview)) : ?>
-    <?php echo $adminview; ?>
-    <?php endif; ?>
+    <?php if(!is_null($adminview)) { echo $adminview; } ?>
 
     <div class="row">
         <div class="col-xs-12 col-md-6" ng-repeat="(teamID, team) in teams track by teamID">
