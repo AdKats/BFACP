@@ -178,7 +178,7 @@ class Server extends Elegant
      */
     public function getCurrentMapAttribute()
     {
-        return BattlefieldHelper::mapName($this->mapName, $this->maps_file_path);
+        return BattlefieldHelper::mapName($this->mapName, $this->maps_file_path, $this->Gamemode);
     }
 
     /**

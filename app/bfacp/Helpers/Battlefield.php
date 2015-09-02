@@ -355,13 +355,13 @@ class Battlefield extends Main
         return intval($startingRoundTimer);
     }
 
-    public function mapName($mapURI, $xmlFilePath)
+    public function mapName($mapURI, $xmlFilePath, $playmodeURI)
     {
         $mapNamesXML = simplexml_load_file($xmlFilePath);
         $mapName = 'MapNameNotFoundError';
 
         for ($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
-            if (strcasecmp($mapURI, $mapNamesXML->map[ $i ]->attributes()->uri) == 0) {
+            if (strcasecmp($mapURI, $mapNamesXML->map[ $i ]->attributes()->uri) == 0 && $playmodeURI == $mapNamesXML->map[ $i ]->attributes()->playmode) {
                 $mapName = $mapNamesXML->map[ $i ]->attributes()->name;
             }
         }
