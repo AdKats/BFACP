@@ -433,11 +433,11 @@ class LiveServerRepository extends BaseRepository
 
             $list[] = [
                 'map' => [
-                    'name' => !is_string($_playmode) ? head($_playmode) : $_playmode,
+                    'name' => !is_string($_map) ? head($_map) : $_map,
                     'uri' => $map,
                 ],
                 'mode' => [
-                    'name' => !is_string($_map) ? head($_map) : $_map,
+                    'name' => !is_string($_playmode) ? head($_playmode) : $_playmode,
                     'uri' => $mode,
                 ],
                 'rounds' => (int)$rounds,
