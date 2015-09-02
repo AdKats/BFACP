@@ -31,6 +31,7 @@
     <map uri="XP4_SubBase" name="Hammerhead" playmode="ConquestLarge0"/>
     <map uri="XP4_Titan" name="Hangar 21" playmode="ConquestLarge0"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="ConquestLarge0"/>
+    <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="ConquestLarge0"/>
 
     <!-- Small Conquest Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="ConquestSmall0"/>
@@ -63,6 +64,7 @@
     <map uri="XP4_SubBase" name="Hammerhead" playmode="ConquestSmall0"/>
     <map uri="XP4_Titan" name="Hangar 21" playmode="ConquestSmall0"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="ConquestSmall0"/>
+    <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="ConquestSmall0"/>
 
     <!-- Domination Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="Domination0"/>
@@ -95,6 +97,7 @@
     <map uri="XP4_SubBase" name="Hammerhead" playmode="Domination0"/>
     <map uri="XP4_Titan" name="Hangar 21" playmode="Domination0"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="Domination0"/>
+    <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="Domination0"/>
 
     <!-- Elimination Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="Elimination0"/>
@@ -159,6 +162,7 @@
     <map uri="XP4_SubBase" name="Hammerhead" playmode="Obliteration"/>
     <map uri="XP4_Titan" name="Hangar 21" playmode="Obliteration"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="Obliteration"/>
+    <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="Obliteration"/>
 
     <!-- Rush Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="RushLarge0"/>
@@ -191,6 +195,7 @@
     <map uri="XP4_SubBase" name="Hammerhead" playmode="RushLarge0"/>
     <map uri="XP4_Titan" name="Hangar 21" playmode="RushLarge0"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="RushLarge0"/>
+    <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="RushLarge0"/>
 
     <!-- Squad Death Match Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="SquadDeathMatch0"/>
@@ -255,6 +260,7 @@
     <map uri="XP4_SubBase" name="Hammerhead" playmode="TeamDeathMatch0"/>
     <map uri="XP4_Titan" name="Hangar 21" playmode="TeamDeathMatch0"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="TeamDeathMatch0"/>
+    <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="TeamDeathMatch0"/>
 
     <!-- Capture The Flag Maps -->
     <map uri="XP0_Caspian" name="Caspian Border 2014" playmode="CaptureTheFlag0"/>
@@ -312,5 +318,7 @@
     <map uri="MP_Siege" name="Siege of Shanghai" playmode="GunMaster0"/>
     <map uri="MP_TheDish" name="Rogue Transmission" playmode="GunMaster0"/>
     <map uri="MP_Tremors" name="Dawnbreaker" playmode="GunMaster0"/>
+    <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="GunMaster0"/>
+    <map uri="XP5_Night_01" name="Zavod:Graveyard Shift v2" playmode="GunMaster1"/>
 
 </mapNames>

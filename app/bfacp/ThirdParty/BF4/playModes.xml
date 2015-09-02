@@ -15,4 +15,5 @@
     <playmode uri="Chainlink0" name="Chainlink"/>
     <playmode uri="SquadObliteration0" name="Squad Obliteration"/>
     <playmode uri="GunMaster0" name="Gun Master"/>
+    <playmode uri="GunMaster1" name="Gun Master"/>
 </playmodes>
