@@ -339,6 +339,9 @@ class LiveServerRepository extends BaseRepository
             $presetMessages = Setting::servers($this->serverID)->settings('Pre-Message List')->first()->setting_value;
         }
 
+        $_playmode = $this->client->getPlaymodeName($info[4]);
+        $_map = $this->client->getMapName($info[5]);
+
         $this->data['server'] = [
             'name' => $info[1],
             'description' => trim($this->client->adminVarGetServerDescription()),
@@ -355,11 +358,11 @@ class LiveServerRepository extends BaseRepository
                 'queue' => $this->server->in_queue,
             ],
             'mode' => [
-                'name' => head($this->client->getPlaymodeName($info[4])),
+                'name' => !is_string($_playmode) ? head($_playmode) : $_playmode,
                 'uri' => $info[4],
             ],
             'map' => [
-                'name' => head($this->client->getMapName($info[5])),
+                'name' => !is_string($_map) ? head($_map) : $_map,
                 'uri' => $info[5],
                 'next' => $this->getNextMap(),
                 'images' => $this->server->map_image_paths,
@@ -425,13 +428,16 @@ class LiveServerRepository extends BaseRepository
             $mode = $maps[ ($maps[2]) * $i + $maps[2] + 1 ];
             $rounds = $maps[ ($maps[2]) * $i + $maps[2] + 2 ];
 
+            $_playmode = $this->client->getPlaymodeName($mode);
+            $_map = $this->client->getMapName($map);
+
             $list[] = [
                 'map' => [
-                    'name' => head($this->client->getMapName($map)),
+                    'name' => !is_string($_playmode) ? head($_playmode) : $_playmode,
                     'uri' => $map,
                 ],
                 'mode' => [
-                    'name' => head($this->client->getPlaymodeName($mode)),
+                    'name' => !is_string($_map) ? head($_map) : $_map,
                     'uri' => $mode,
                 ],
                 'rounds' => (int)$rounds,

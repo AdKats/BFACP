@@ -843,9 +843,10 @@ class BF3Conn
     {
         $mapNamesXML = simplexml_load_file($this->_globalVars['mapsFileXML']);
         $mapName = $this->_globalMsg['MAPNAME_NOT_FOUND'];
+        $currentPlaymode = $this->getCurrentPlaymode();
 
         for ($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
-            if (strcasecmp($mapURI, $mapNamesXML->map[ $i ]->attributes()->uri) == 0) {
+            if (strcasecmp($mapURI, $mapNamesXML->map[ $i ]->attributes()->uri) == 0 && $currentPlaymode == $mapNamesXML->map[ $i ]->attributes()->playmode) {
                 $mapName = $mapNamesXML->map[ $i ]->attributes()->name;
             }
         }
