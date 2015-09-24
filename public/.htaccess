@@ -4,7 +4,10 @@
     </IfModule>
 
     RewriteEngine On
-
+    
+    #For 1and1 users: uncomment the following line to fix the 500 internal server errors
+    #RewriteBase /
+    
     # Redirect Trailing Slashes...
     RewriteRule ^(.*)/$ /$1 [L,R=301]
 
