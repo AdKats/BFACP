@@ -13,6 +13,10 @@
     <map uri="XP1_Nights" name="Code Blue" playmode="TurfWarLarge0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="TurfWarLarge0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="TurfWarLarge0"/>
+	<map uri="xp2_cargoship" name="The Docks" playmode="TurfWarLarge0"/>
+    <map uri="xp2_coastal" name="Break Point" playmode="TurfWarLarge0"/>
+    <map uri="xp2_museum02" name="Museum" playmode="TurfWarLarge0"/>
+    <map uri="xp2_precinct7" name="Precinct" playmode="TurfWarLarge0"/>
 
     <!-- Small Conquest Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="TurfWarSmall0"/>
@@ -28,6 +32,10 @@
     <map uri="XP1_Nights" name="Code Blue" playmode="TurfWarSmall0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="TurfWarSmall0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="TurfWarSmall0"/>
+	<map uri="xp2_cargoship" name="The Docks" playmode="TurfWarSmall0"/>
+    <map uri="xp2_coastal" name="Break Point" playmode="TurfWarSmall0"/>
+    <map uri="xp2_museum02" name="Museum" playmode="TurfWarSmall0"/>
+    <map uri="xp2_precinct7" name="Precinct" playmode="TurfWarSmall0"/>
 
     <!-- Hiest Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="Heist0"/>
@@ -43,6 +51,10 @@
     <map uri="XP1_Nights" name="Code Blue" playmode="Heist0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="Heist0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="Heist0"/>
+	<map uri="xp2_cargoship" name="The Docks" playmode="Heist0"/>
+    <map uri="xp2_coastal" name="Break Point" playmode="Heist0"/>
+    <map uri="xp2_museum02" name="Museum" playmode="Heist0"/>
+    <map uri="xp2_precinct7" name="Precinct" playmode="Heist0"/>
 
     <!-- Hotwire Maps -->
     <map uri="MP_Desert05" name="Dust Bowl" playmode="Hotwire0"/>
@@ -51,6 +63,10 @@
     <map uri="MP_Eastside" name="Derailed" playmode="Hotwire0"/>
     <map uri="MP_OffShore" name="Riptide" playmode="Hotwire0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="Hotwire0"/>
+	<map uri="xp2_cargoship" name="The Docks" playmode="Hotwire0"/>
+    <map uri="xp2_coastal" name="Break Point" playmode="Hotwire0"/>
+    <map uri="xp2_museum02" name="Museum" playmode="Hotwire0"/>
+    <map uri="xp2_precinct7" name="Precinct" playmode="Hotwire0"/>
 
     <!-- Bloodmoney Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="BloodMoney0"/>
@@ -66,6 +82,10 @@
     <map uri="XP1_Nights" name="Code Blue" playmode="BloodMoney0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="BloodMoney0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="BloodMoney0"/>
+	<map uri="xp2_cargoship" name="The Docks" playmode="BloodMoney0"/>
+    <map uri="xp2_coastal" name="Break Point" playmode="BloodMoney0"/>
+    <map uri="xp2_museum02" name="Museum" playmode="BloodMoney0"/>
+    <map uri="xp2_precinct7" name="Precinct" playmode="BloodMoney0"/>
 
     <!-- Crosshair Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="Hit0"/>
@@ -81,6 +101,10 @@
     <map uri="XP1_Nights" name="Code Blue" playmode="Hit0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="Hit0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="Hit0"/>
+	<map uri="xp2_cargoship" name="The Docks" playmode="Hit0"/>
+    <map uri="xp2_coastal" name="Break Point" playmode="Hit0"/>
+    <map uri="xp2_museum02" name="Museum" playmode="Hit0"/>
+    <map uri="xp2_precinct7" name="Precinct" playmode="Hit0"/>
 
     <!-- Rescue Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="Hostage0"/>
@@ -96,6 +120,10 @@
     <map uri="XP1_Nights" name="Code Blue" playmode="Hostage0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="Hostage0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="Hostage0"/>
+	<map uri="xp2_cargoship" name="The Docks" playmode="Hostage0"/>
+    <map uri="xp2_coastal" name="Break Point" playmode="Hostage0"/>
+    <map uri="xp2_museum02" name="Museum" playmode="Hostage0"/>
+    <map uri="xp2_precinct7" name="Precinct" playmode="Hostage0"/>
 
     <!-- Team Deathmatch Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="TeamDeathMatch0"/>
@@ -111,6 +139,10 @@
     <map uri="XP1_Nights" name="Code Blue" playmode="TeamDeathMatch0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="TeamDeathMatch0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="TeamDeathMatch0"/>
+	<map uri="xp2_cargoship" name="The Docks" playmode="TeamDeathMatch0"/>
+    <map uri="xp2_coastal" name="Break Point" playmode="TeamDeathMatch0"/>
+    <map uri="xp2_museum02" name="Museum" playmode="TeamDeathMatch0"/>
+    <map uri="xp2_precinct7" name="Precinct" playmode="TeamDeathMatch0"/>
 
     <!-- Bounty Hunter Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="CashGrab0"/>
@@ -126,4 +158,14 @@
     <map uri="XP1_Nights" name="Code Blue" playmode="CashGrab0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="CashGrab0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="CashGrab0"/>
+	<map uri="xp2_cargoship" name="The Docks" playmode="CashGrab0"/>
+    <map uri="xp2_coastal" name="Break Point" playmode="CashGrab0"/>
+    <map uri="xp2_museum02" name="Museum" playmode="CashGrab0"/>
+    <map uri="xp2_precinct7" name="Precinct" playmode="CashGrab0"/>
+	
+	<!-- Squad Heist Maps -->
+    <map uri="xp2_cargoship" name="The Docks" playmode="SquadHeist0"/>
+    <map uri="xp2_coastal" name="Break Point" playmode="SquadHeist0"/>
+    <map uri="xp2_museum02" name="Museum" playmode="SquadHeist0"/>
+    <map uri="xp2_precinct7" name="Precinct" playmode="SquadHeist0"/>
 </mapNames>
