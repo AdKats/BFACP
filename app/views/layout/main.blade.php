@@ -74,6 +74,16 @@
                     </div>
                     @endforeach
 
+                    @foreach(Session::get('warnings', []) as $message)
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <alert type="warning">
+                                <i class="fa fa-exclamation-circle"></i>&nbsp;{{ $message }}
+                            </alert>
+                        </div>
+                    </div>
+                    @endforeach
+
                     @foreach($errors->all() as $message)
                     <div class="row">
                         <div class="col-xs-12">
