@@ -5,6 +5,9 @@
 
     RewriteEngine On
 
+    # For 1&1 users, uncomment the following line.
+    # RewriteBase /
+
     # Redirect Trailing Slashes...
     RewriteRule ^(.*)/$ /$1 [L,R=301]
 
