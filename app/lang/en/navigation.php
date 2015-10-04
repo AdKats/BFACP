@@ -55,6 +55,9 @@ return [
                         'edit' => [
                             'title' => 'Editing User #:id',
                         ],
+                        'create' => [
+                            'title' => 'Create New User',
+                        ],
                     ],
                 ],
                 'roles' => [

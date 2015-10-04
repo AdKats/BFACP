@@ -6,6 +6,9 @@
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">&nbsp;</h3>
+                <div class="box-tools">
+                    {{ link_to_route('admin.site.users.create', Lang::get('navigation.admin.site.items.users.items.create.title'), [], ['class' => 'btn bg-green btn-xs pull-right', 'target' => '_self']) }}
+                </div>
             </div>
 
             <div class="box-body">

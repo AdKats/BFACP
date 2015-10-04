@@ -4,9 +4,12 @@ use BFACP\Account\Setting;
 use BFACP\Account\Soldier;
 use BFACP\Account\User;
 use BFACP\Battlefield\Player;
+use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Mail;
 use Zizaco\Confide\Facade as Confide;
 
 class UserRepository
@@ -16,22 +19,32 @@ class UserRepository
      *
      * @param  array   $input
      * @param  integer $role Default role is 2
-     * @param bool     $confirmed
+     * @param  bool    $confirmed
+     * @param  bool    $autoGenPass Generate a secure password if true
      *
      * @return User
      */
-    public function signup($input = [], $role = 2, $confirmed = false)
+    public function signup($input = [], $role = 2, $confirmed = false, $autoGenPass = false)
     {
         $user = new User();
 
         $user->username = array_get($input, 'username');
         $user->email = array_get($input, 'email');
-        $user->password = array_get($input, 'password');
+
+        if($autoGenPass) {
+            $pass1 = $this->generatePassword();
+            $pass2 = $pass1;
+        } else {
+            $pass1 = array_get($input, 'password');
+            $pass2 = array_get($input, 'password_confirmation');
+        }
+
+        $user->password = $pass1;
 
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's
         // auto validation.
-        $user->password_confirmation = array_get($input, 'password_confirmation');
+        $user->password_confirmation = $pass2;
 
         // Generate a random confirmation code
         $user->confirmation_code = md5(uniqid(mt_rand(), true));
@@ -63,6 +76,8 @@ class UserRepository
                     }
                 }
             }
+
+            $this->sendPasswordChangeEmail($user->username, $user->email, $pass1);
         }
 
         return $user;
@@ -170,5 +185,35 @@ class UserRepository
         }
 
         return false;
+    }
+
+    /**
+     * Generates a strong password
+     *
+     * @param  integer $len Length of generated password
+     *
+     * @return string
+     */
+    public function generatePassword($len = 12)
+    {
+        $pass = MainHelper::generateStrongPassword($len);
+
+        return $pass;
+    }
+
+    /**
+     * @param  string $username
+     * @param  string $email
+     * @param  string $password
+     * @return null
+     */
+    public function sendPasswordChangeEmail($username, $email, $newPassword)
+    {
+        // Send the email to the user with their new password
+        Mail::send('emails.user.passwordchange', compact('username', 'newPassword'),
+            function ($message) use ($username, $email) {
+                $message->to($email, $username)
+                ->subject(Lang::get('email.password_changed.subject'));
+        });
     }
 }

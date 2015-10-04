@@ -221,8 +221,9 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
                     'edit' => 'admin.site.users.edit',
                     'destroy' => 'admin.site.users.destroy',
                     'update' => 'admin.site.users.update',
+                    'create' => 'admin.site.users.create',
+                    'store' => 'admin.site.users.store',
                 ],
-                'only' => ['index', 'edit', 'destroy', 'update'],
             ]);
 
             Route::resource('roles', 'RolesController', [

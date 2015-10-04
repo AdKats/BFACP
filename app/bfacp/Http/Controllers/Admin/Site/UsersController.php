@@ -30,6 +30,47 @@ class UsersController extends BaseController
             Lang::get('navigation.admin.site.items.users.title'));
     }
 
+    public function create()
+    {
+        // Get the list of roles
+        $roles = Role::lists('name', 'id');
+
+        return View::make('admin.site.users.create', compact('roles'))->with('page_title',
+            Lang::get('navigation.admin.site.items.users.items.create.title'));
+    }
+
+    public function store()
+    {
+        $repo = app('BFACP\Repositories\UserRepository');
+
+        $v = Validator::make(Input::all(), [
+            'username' => 'required|alpha_num|min:4|unique:bfacp_users,username',
+            'email' => 'required|email|unique:bfacp_users,email',
+            'language' => 'required|in:' . implode(',', array_keys(Config::get('bfacp.site.languages'))),
+            'soldier'  => 'exists:tbl_playerdata,SoldierName',
+            'role' => 'required',
+            'language' => 'required',
+        ]);
+
+        if ($v->fails()) {
+            return Redirect::route('admin.site.users.create')->withErrors($v)->withInput();
+        }
+
+        $data = [
+            'username' => Input::get('username'),
+            'email' => Input::get('email'),
+            'ign' => Input::get('soldier'),
+            'lang' => Input::get('language', 'en'),
+        ];
+
+        $user = $repo->signup($data, Input::get('role', 2), true, true);
+
+        $this->messages[] = Lang::get('site.admin.users.updates.password.generated',
+            ['username' => $user->username, 'email' => $user->email]);
+
+        return Redirect::route('admin.site.users.edit', [$user->id])->withMessages($this->messages);
+    }
+
     /**
      * Show the editing page
      *
@@ -120,15 +161,12 @@ class UsersController extends BaseController
 
             if (Input::has('generate_pass')) {
 
-                // Generate a new password
-                $newPassword = MainHelper::generateStrongPassword(12);
+                $repo = app('BFACP\Repositories\UserRepository');
 
-                // Send the email to the user with their new password
-                Mail::send('emails.user.passwordchange', compact('user', 'newPassword'),
-                    function ($message) use ($user) {
-                        $message->to($user->email,
-                            $user->username)->subject(Lang::get('email.password_changed.subject'));
-                    });
+                // Generate a new password
+                $newPassword = $repo->generatePassword();
+
+                $repo->sendPasswordChangeEmail($user->username, $user->email, $newPassword);
 
                 // Change the user password
                 $user->password = $newPassword;

@@ -39,6 +39,19 @@ return [
                     'generated' => ':username (:email) has been emailed with their new password.',
                 ],
             ],
+            'create' => [
+                'details' => 'Details',
+                'inputs' => [
+                    'username' => ['label' => 'Username'],
+                    'email' => ['label' => 'Email'],
+                    'role' => ['label' => 'Role'],
+                    'lang' => ['label' => 'Language'],
+                ],
+                'buttons' => [
+                    'save' => 'Create User',
+                    'cancel' => 'Cancel',
+                ],
+            ],
         ],
         'roles' => [
             'edit' => [
