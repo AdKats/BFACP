@@ -203,6 +203,23 @@ class PlayerRepository extends BaseRepository
     }
 
     /**
+     * Returns the player session history
+     *
+     * @param  integer $id    Player ID
+     *
+     * @return object
+     */
+    public function getPlayerSessions($id)
+    {
+        try {
+            $sessions = Player::findOrFail($id)->sessions()->orderBy('StartTime', 'desc')->get();
+            return $sessions;
+        } catch (ModelNotFoundException $e) {
+            throw new PlayerNotFoundException(404, 'Player Not Found');
+        }
+    }
+
+    /**
      * Returns the player chatlogs
      *
      * @param  integer $id    Player ID

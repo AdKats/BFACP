@@ -30,6 +30,8 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
             ['as' => 'api.players.show.records', 'uses' => 'PlayersController@showRecords'])->where('id', '[0-9]+');
         Route::get('{id}/chatlogs',
             ['as' => 'api.players.show.chatlogs', 'uses' => 'PlayersController@showChatlogs'])->where('id', '[0-9]+');
+        Route::get('{id}/sessions',
+            ['as' => 'api.players.show.sessions', 'uses' => 'PlayersController@showSessions'])->where('id', '[0-9]+');
     });
 
     /*=====================================

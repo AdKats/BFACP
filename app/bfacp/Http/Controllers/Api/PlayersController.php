@@ -82,4 +82,18 @@ class PlayersController extends BaseController
 
         return MainHelper::response($chatlogs, null, null, null, false, true);
     }
+
+    /**
+     * Gets the players sessions
+     *
+     * @param  integer $id
+     *
+     * @return \Illuminate\Support\Facades\Response
+     */
+    public function showSessions($id)
+    {
+        $sessions = $this->repository->getPlayerSessions($id);
+
+        return MainHelper::response($sessions, null, null, null, false, true);
+    }
 }
