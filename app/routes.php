@@ -139,6 +139,16 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
 
     /*-----  End of Auth Routes  ------*/
 
+    /*===================================
+    =            User Router            =
+    ===================================*/
+
+    Route::get('account', ['as' => 'user.account', 'uses' => 'UsersController@showAccountSettings', 'before' => 'auth']);
+    Route::put('account', ['as' => 'user.account.save', 'uses' => 'UsersController@saveAccountSettings', 'before' => 'auth']);
+
+    /*=====  End of User Router  ======*/
+
+
     Route::get('chatlogs', ['as' => 'chatlog.search', 'uses' => 'ChatlogController@index', 'before' => 'chatlogs']);
 
     Route::group(['prefix' => 'players'], function () {

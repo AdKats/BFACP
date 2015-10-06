@@ -39,8 +39,7 @@
 
                 <li class="user-footer">
                     <div class="pull-left">
-                        {{ HTML::link('/profile', 'Profile', ['class' => 'btn btn-default btn-flat']) }}
-                        {{ HTML::link('/account', 'Account', ['class' => 'btn btn-default btn-flat']) }}
+                        {{ link_to_route('user.account', 'Account', [], ['class' => 'btn btn-default btn-flat', 'target' => '_self']) }}
                     </div>
 
                     <div class="pull-right">

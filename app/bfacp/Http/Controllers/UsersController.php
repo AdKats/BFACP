@@ -2,6 +2,7 @@
 
 use BFACP\Account\User;
 use BFACP\Repositories\UserRepository;
+use Former\Facades\Former;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
@@ -24,6 +25,74 @@ class UsersController extends BaseController
     {
         parent::__construct();
         $this->repository = App::make('BFACP\Repositories\UserRepository');
+    }
+
+    /**
+     * Show the account settings page
+     *
+     * @return View
+     */
+    public function showAccountSettings()
+    {
+        $page_title = 'Account Settings';
+        $user =& $this->user;
+
+        // Populate the form fields with the user information
+        Former::populate($user);
+
+        return View::make('user.account-settings', compact('user', 'page_title'));
+    }
+
+    /**
+     * Save the changes made to the users account
+     * @return Redirect
+     */
+    public function saveAccountSettings()
+    {
+        $user = \Auth::user();
+
+        $email = trim(Input::get('email', null));
+        $lang = trim(Input::get('language', null));
+        $password = trim(Input::get('password', null));
+        $password_confirmation = trim(Input::get('password_confirmation', null));
+
+        $v = Validator::make(Input::all(), [
+            'email' => 'required|email|unique:bfacp_users,email,' . $user->id,
+            'language' => 'required|in:' . implode(',', array_keys(Config::get('bfacp.site.languages'))),
+            'password' => 'min:8|confirmed',
+        ]);
+
+        if ($v->fails()) {
+            return Redirect::route('user.account')->withErrors($v)->withInput();
+        }
+
+        // Update email
+        if ($email != $user->email) {
+            $user->email = $email;
+            $this->messages[] = Lang::get('user.notifications.account.email.changed', ['addr' => $email]);
+        }
+
+        // Update the user language if it's been changed
+        if ($lang != $user->setting->lang) {
+            $user->setting()->update([
+                'lang' => $lang,
+            ]);
+
+            $langHuman = Config::get('bfacp.site.languages')[$lang];
+
+            $this->messages[] = Lang::get('user.notifications.account.language.changed', ['lang' => $langHuman]);
+        }
+
+        // Change the user password if they filled out the fields and new passwords match
+        if(Input::has('password') && Input::has('password_confirmation') && $password == $password_confirmation) {
+            $user->password = $password;
+            $user->password_confirmation = $password;
+            $this->messages[] = Lang::get('user.notifications.password.email.changed');
+        }
+
+        $user->save();
+
+        return Redirect::route('user.account')->withMessages($this->messages);
     }
 
     /**
