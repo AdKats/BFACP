@@ -12,7 +12,10 @@
         <tbody>
             <tr ng-repeat="(key, record) in records.data">
                 <td ng-bind="moment(record.stamp).format('MMM D, YYYY h:mm:ss a')"></td>
-                <td class="hidden-sm" ng-bind="record.type.command_name"></td>
+                <td class="hidden-sm">
+                    <span ng-bind="record.type.command_name"></span>&nbsp;
+                    <span ng-show="record.is_web" class="badge bg-blue">Web</span>
+                </td>
                 <td ng-bind="record.action.command_name"></td>
                 <td>
                     <ng-switch on="record.target !== null && record.target.PlayerID != playerId">
