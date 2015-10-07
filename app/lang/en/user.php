@@ -25,7 +25,6 @@ return [
             ],
         ],
     ],
-
     'notifications' => [
         'account' => [
             'email' => [
