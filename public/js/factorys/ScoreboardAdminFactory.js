@@ -30,7 +30,6 @@ angular.module('bfacp').factory('SBA', ['$http', function ($http) {
         tell: function (server_id, players, message) {
             payload = {
                 server_id: server_id,
-                type: type,
                 message: message,
                 players: players
             };
@@ -41,7 +40,6 @@ angular.module('bfacp').factory('SBA', ['$http', function ($http) {
         kill: function (server_id, players, message) {
             payload = {
                 server_id: server_id,
-                type: type,
                 message: message,
                 players: players
             };
@@ -52,7 +50,6 @@ angular.module('bfacp').factory('SBA', ['$http', function ($http) {
         kick: function (server_id, players, message) {
             payload = {
                 server_id: server_id,
-                type: type,
                 message: message,
                 players: players
             };
@@ -63,7 +60,6 @@ angular.module('bfacp').factory('SBA', ['$http', function ($http) {
         teamswitch: function (server_id, players, team, squad, locked) {
             payload = {
                 server_id: server_id,
-                type: type,
                 team: team,
                 squad: squad,
                 locked: locked,
