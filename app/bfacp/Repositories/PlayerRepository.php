@@ -69,7 +69,7 @@ class PlayerRepository extends BaseRepository
                         $name = sprintf('%s%%', $matches[1]);
 
                         if (isset($matches[1]) && !empty($matches[1])) {
-                            $q->orWhere('SoldierName', 'LIKE', $name);
+                            $q->orWhere('SoldierName', 'LIKE', '%' . $name . '%');
                             $soldierNames[] = $name;
                         }
                     }
