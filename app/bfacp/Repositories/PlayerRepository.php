@@ -65,8 +65,8 @@ class PlayerRepository extends BaseRepository
                         $ip = trim($name);
                         $q->orWhere('IP_Address', '=', $ip);
                     } // Checks if string is a player name
-                    elseif (preg_match("/^\%?([a-zA-Z0-9\_\-\|]+)$/", $name, $matches)) {
-                        if (substr($matches[0], 0, 1) === '%') {
+                    elseif (preg_match("/^\*?([a-zA-Z0-9\_\-\|]+)$/", $name, $matches)) {
+                        if (substr($matches[0], 0, 1) === '*') {
                             $name = sprintf('%%%s%%', $matches[1]);
                         } else {
                             $name = sprintf('%s%%', $matches[1]);
