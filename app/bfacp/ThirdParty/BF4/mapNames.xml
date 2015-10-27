@@ -32,6 +32,7 @@
     <map uri="XP4_Titan" name="Hangar 21" playmode="ConquestLarge0"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="ConquestLarge0"/>
     <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="ConquestLarge0"/>
+    <map uri="XP6_CMP" name="Operation Outbreak" playmode="ConquestLarge0"/>
 
     <!-- Small Conquest Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="ConquestSmall0"/>
@@ -65,6 +66,7 @@
     <map uri="XP4_Titan" name="Hangar 21" playmode="ConquestSmall0"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="ConquestSmall0"/>
     <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="ConquestSmall0"/>
+    <map uri="XP6_CMP" name="Operation Outbreak" playmode="ConquestSmall0"/>
 
     <!-- Domination Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="Domination0"/>
@@ -98,6 +100,7 @@
     <map uri="XP4_Titan" name="Hangar 21" playmode="Domination0"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="Domination0"/>
     <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="Domination0"/>
+    <map uri="XP6_CMP" name="Operation Outbreak" playmode="Domination0"/>
 
     <!-- Elimination Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="Elimination0"/>
@@ -163,6 +166,7 @@
     <map uri="XP4_Titan" name="Hangar 21" playmode="Obliteration"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="Obliteration"/>
     <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="Obliteration"/>
+    <map uri="XP6_CMP" name="Operation Outbreak" playmode="Obliteration"/>
 
     <!-- Rush Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="RushLarge0"/>
@@ -196,8 +200,9 @@
     <map uri="XP4_Titan" name="Hangar 21" playmode="RushLarge0"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="RushLarge0"/>
     <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="RushLarge0"/>
+    <map uri="XP6_CMP" name="Operation Outbreak" playmode="RushLarge0"/>
 
-    <!-- Squad Death Match Maps -->
+    <!-- Squad Death Match v1 Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="SquadDeathMatch0"/>
     <map uri="MP_Damage" name="Lancang Dam" playmode="SquadDeathMatch0"/>
     <map uri="MP_Flooded" name="Flood Zone" playmode="SquadDeathMatch0"/>
@@ -228,8 +233,12 @@
     <map uri="XP4_SubBase" name="Hammerhead" playmode="SquadDeathMatch0"/>
     <map uri="XP4_Titan" name="Hangar 21" playmode="SquadDeathMatch0"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="SquadDeathMatch0"/>
+    <map uri="XP6_CMP" name="Operation Outbreak" playmode="SquadDeathMatch0"/>
 
-    <!-- Team Deathmatch Maps -->
+    <!-- Squad Death Match v2 Maps -->
+    <map uri="XP6_CMP" name="Operation Outbreak" playmode="SquadDeathMatch1"/>
+
+    <!-- Team Deathmatch v1 Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="TeamDeathMatch0"/>
     <map uri="MP_Damage" name="Lancang Dam" playmode="TeamDeathMatch0"/>
     <map uri="MP_Flooded" name="Flood Zone" playmode="TeamDeathMatch0"/>
@@ -261,7 +270,11 @@
     <map uri="XP4_Titan" name="Hangar 21" playmode="TeamDeathMatch0"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="TeamDeathMatch0"/>
     <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="TeamDeathMatch0"/>
+    <map uri="XP6_CMP" name="Operation Outbreak" playmode="TeamDeathMatch0"/>
 
+    <!-- Team Deathmatch v2 Maps -->
+    <map uri="XP6_CMP" name="Operation Outbreak" playmode="TeamDeathMatch1"/>
+    
     <!-- Capture The Flag Maps -->
     <map uri="XP0_Caspian" name="Caspian Border 2014" playmode="CaptureTheFlag0"/>
     <map uri="XP0_Firestorm" name="Operation Firestorm 2014" playmode="CaptureTheFlag0"/>
@@ -275,6 +288,7 @@
     <map uri="XP4_SubBase" name="Hammerhead" playmode="CaptureTheFlag0"/>
     <map uri="XP4_Titan" name="Hangar 21" playmode="CaptureTheFlag0"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="CaptureTheFlag0"/>
+    <map uri="XP6_CMP" name="Operation Outbreak" playmode="CaptureTheFlag0"/>
 
     <!-- CarrierAssault Large -->
     <map uri="XP2_001" name="Lost Islands" playmode="CarrierAssaultLarge0"/>
@@ -297,6 +311,7 @@
     <map uri="XP4_SubBase" name="Hammerhead" playmode="Chainlink0"/>
     <map uri="XP4_Titan" name="Hangar 21" playmode="Chainlink0"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="Chainlink0"/>
+    <map uri="XP6_CMP" name="Operation Outbreak" playmode="Chainlink0"/>
 
     <!-- Squad Obliteration -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="SquadObliteration0"/>
@@ -320,5 +335,7 @@
     <map uri="MP_Tremors" name="Dawnbreaker" playmode="GunMaster0"/>
     <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="GunMaster0"/>
     <map uri="XP5_Night_01" name="Zavod:Graveyard Shift v2" playmode="GunMaster1"/>
+    <map uri="XP6_CMP" name="Operation Outbreak" playmode="GunMaster0"/>
+    <map uri="XP6_CMP" name="Operation Outbreak" playmode="GunMaster1"/>
 
 </mapNames>

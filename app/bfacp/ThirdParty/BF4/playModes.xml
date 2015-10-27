@@ -7,7 +7,9 @@
     <playmode uri="Obliteration" name="Obliteration"/>
     <playmode uri="RushLarge0" name="Rush"/>
     <playmode uri="SquadDeathMatch0" name="Squad Deathmatch"/>
+    <playmode uri="SquadDeathMatch1" name="Squad Deathmatch v2"/>
     <playmode uri="TeamDeathMatch0" name="Team Deathmatch"/>
+    <playmode uri="TeamDeathMatch1" name="Team Deathmatch v2"/>
     <playmode uri="AirSuperiority0" name="Air Superiority"/>
     <playmode uri="CaptureTheFlag0" name="Capture the Flag"/>
     <playmode uri="CarrierAssaultLarge0" name="Carrier Assault Large"/>
