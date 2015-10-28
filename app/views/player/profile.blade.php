@@ -193,6 +193,7 @@
                                     <th>{{ Lang::get('player.profile.infractions.table.col2') }}</th>
                                     <th>{{ Lang::get('player.profile.infractions.table.col3') }}</th>
                                     <th>{{ Lang::get('player.profile.infractions.table.col4') }}</th>
+                                    <th>{{ Lang::get('player.profile.infractions.table.col5') }}</th>
                                 </thead>
 
                                 <tbody>
@@ -209,7 +210,7 @@
                                         </td>
                                         <td>{{ $infraction->punish_points }}</td>
                                         <td>{{ $infraction->forgive_points }}</td>
-                                        <td>{{ $infraction->total_points }}</td>
+                                        <td colspan="2">{{ $infraction->total_points }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -220,6 +221,7 @@
                                         <td>{{ $player->infractions_global->punish_points }}</td>
                                         <td>{{ $player->infractions_global->forgive_points }}</td>
                                         <td>{{ $player->infractions_global->total_points }}</td>
+                                        <td>{{ MainHelper::getNextPunishment(null, $player->infractions_global->total_points, $player->infractions_server[0]->server->ServerID) }}</td>
                                     </tr>
                                 </tfoot>
                             </table>

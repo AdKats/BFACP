@@ -55,6 +55,7 @@ return [
                 'col2' => 'Bestrafungen',
                 'col3' => 'Vergebungen',
                 'col4' => 'Total',
+                'col5' => 'Next Punishment',
             ],
         ],
         'bans' => [

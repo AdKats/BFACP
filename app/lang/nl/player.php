@@ -58,6 +58,7 @@ return [
                 'col2' => 'Straffen',
                 'col3' => 'Vergevingen',
                 'col4' => 'Totaal',
+                'col5' => 'Next Punishment',
             ],
             'table2' => [
                 'col1' => 'Type',

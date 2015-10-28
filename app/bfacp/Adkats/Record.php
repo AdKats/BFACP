@@ -47,7 +47,7 @@ class Record extends Elegant
     protected $appends = ['is_web', 'stamp'];
 
     /**
-     * Models to be loaded automaticly
+     * Models to be loaded automatically
      *
      * @var array
      */

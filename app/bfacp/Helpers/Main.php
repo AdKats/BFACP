@@ -2,6 +2,7 @@
 
 use BFACP\Account\User;
 use BFACP\Battlefield\Player;
+use BFACP\Adkats\Setting as AdKatsSetting;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
@@ -73,7 +74,7 @@ class Main extends BaseHelper
      */
     public function executionTime($isPage = false)
     {
-        $time = round((microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']), 2);
+        $time = round((microtime(true) - $_SERVER[ 'REQUEST_TIME_FLOAT' ]), 2);
 
         if ($isPage) {
             $string = 'Page generated in ';
@@ -770,6 +771,7 @@ class Main extends BaseHelper
         // Check if we have a soldier.
         if (!empty($soldiers) && count($soldiers) > 0) {
             $soldier = head(array_flatten($soldiers));
+
             return $soldier->player;
         }
 
@@ -838,6 +840,7 @@ class Main extends BaseHelper
             $password = substr($password, $dash_len);
         }
         $dash_str .= $password;
+
         return $dash_str;
     }
 
@@ -910,9 +913,9 @@ class Main extends BaseHelper
             if ($onlyNames) {
                 $file = pathinfo($path);
 
-                $extension = '.' . $file['extension'];
+                $extension = '.' . $file[ 'extension' ];
 
-                $files[] = $prepend === null ? $file['filename'] . $extension : $prepend . $file['filename'] . $extension;
+                $files[] = $prepend === null ? $file[ 'filename' ] . $extension : $prepend . $file[ 'filename' ] . $extension;
             } else {
                 $files[] = $path;
             }
@@ -965,11 +968,11 @@ class Main extends BaseHelper
             try {
                 $request = $this->guzzle->get('https://raw.githubusercontent.com/AdKats/AdKats/master/adkatsspecialgroups.json');
                 $response = $request->json();
-                $data = $response['SpecialGroups'];
+                $data = $response[ 'SpecialGroups' ];
             } catch (RequestException $e) {
                 $request = $this->guzzle->get('http://api.gamerethos.net/adkats/fetch/specialgroups');
                 $response = $request->json();
-                $data = $response['SpecialGroups'];
+                $data = $response[ 'SpecialGroups' ];
             }
 
             return new Collection($data);
@@ -980,17 +983,17 @@ class Main extends BaseHelper
                 if (is_array($keys)) {
                     foreach ($keys as $k) {
                         if (is_object($k)) {
-                            if ($k->{$objkey} == $group['group_key']) {
+                            if ($k->{$objkey} == $group[ 'group_key' ]) {
                                 return true;
                             }
                         } else {
-                            if ($k == $group['group_key']) {
+                            if ($k == $group[ 'group_key' ]) {
                                 return true;
                             }
                         }
                     }
                 } else {
-                    if ($keys == $group['group_key']) {
+                    if ($keys == $group[ 'group_key' ]) {
                         return true;
                     }
                 }
@@ -1000,12 +1003,12 @@ class Main extends BaseHelper
                 if (is_array($keys)) {
                     foreach ($keys as $k) {
                         if (is_object($k)) {
-                            if ($k->{$objkey} == $group['group_key']) {
+                            if ($k->{$objkey} == $group[ 'group_key' ]) {
                                 $special = $k;
                                 break;
                             }
                         } else {
-                            if ($k == $group['group_key']) {
+                            if ($k == $group[ 'group_key' ]) {
                                 $special = $k;
                                 break;
                             }
@@ -1013,7 +1016,7 @@ class Main extends BaseHelper
                     }
                 }
 
-                return array_merge($group, (array)$special);
+                return array_merge($group, (array) $special);
             });
         }
 
@@ -1065,5 +1068,47 @@ class Main extends BaseHelper
         }
 
         return sprintf('https://www.gravatar.com/avatar/?s=%u&d=mm&r=x', $size);
+    }
+
+    /**
+     * Gets the next punishment name
+     *
+     * @param string|null  $key
+     * @param integer|null $index
+     * @param integer|null $serverid
+     *
+     * @return string|null
+     */
+    public function getNextPunishment($key, $index = null, $serverid = null)
+    {
+        // If the index is less than 1 just return false
+        if ($index < 1) {
+            return false;
+        }
+
+        if (!is_null($index) && !is_null($serverid)) {
+            $settings = AdKatsSetting::servers($serverid)->settings('Punishment Hierarchy')->first();
+
+            $key = $settings->setting_value[ $index ];
+        }
+
+        $hierarchy = [
+            'warn' => 'Warn',
+            'kill' => 'Kill',
+            'kick' => 'Kick',
+            'tban60' => 'Temp-Ban 1 Hour',
+            'tban120' => 'Temp-Ban 2 Hours',
+            'tbanday' => 'Temp-Ban 1 Day',
+            'tbanweek' => 'Temp-Ban 1 Week',
+            'tban2weeks' => 'Temp-Ban 2 Weeks',
+            'tbanmonth' => 'Temp-Ban 1 Month',
+            'ban' => 'Perma-Ban',
+        ];
+
+        if (array_key_exists($key, $hierarchy)) {
+            return $hierarchy[ $key ];
+        }
+
+        return null;
     }
 }
