@@ -1081,32 +1081,35 @@ class Main extends BaseHelper
      */
     public function getNextPunishment($key, $index = null, $serverid = null)
     {
-        // If the index is less than 1 just return false
-        if ($index < 1) {
-            return false;
-        }
+        try {
+            // If the index is less than 1 just return false
+            if ($index < 1) {
+                return false;
+            }
 
-        if (!is_null($index) && !is_null($serverid)) {
-            $settings = AdKatsSetting::servers($serverid)->settings('Punishment Hierarchy')->first();
+            if (!is_null($index) && !is_null($serverid)) {
+                $settings = AdKatsSetting::servers($serverid)->settings('Punishment Hierarchy')->first();
 
-            $key = $settings->setting_value[ $index ];
-        }
+                $key = $settings->setting_value[ $index ];
+            }
 
-        $hierarchy = [
-            'warn' => 'Warn',
-            'kill' => 'Kill',
-            'kick' => 'Kick',
-            'tban60' => 'Temp-Ban 1 Hour',
-            'tban120' => 'Temp-Ban 2 Hours',
-            'tbanday' => 'Temp-Ban 1 Day',
-            'tbanweek' => 'Temp-Ban 1 Week',
-            'tban2weeks' => 'Temp-Ban 2 Weeks',
-            'tbanmonth' => 'Temp-Ban 1 Month',
-            'ban' => 'Perma-Ban',
-        ];
+            $hierarchy = [
+                'warn' => 'Warn',
+                'kill' => 'Kill',
+                'kick' => 'Kick',
+                'tban60' => 'Temp-Ban 1 Hour',
+                'tban120' => 'Temp-Ban 2 Hours',
+                'tbanday' => 'Temp-Ban 1 Day',
+                'tbanweek' => 'Temp-Ban 1 Week',
+                'tban2weeks' => 'Temp-Ban 2 Weeks',
+                'tbanmonth' => 'Temp-Ban 1 Month',
+                'ban' => 'Perma-Ban',
+            ];
 
-        if (array_key_exists($key, $hierarchy)) {
-            return $hierarchy[ $key ];
+            if (array_key_exists($key, $hierarchy)) {
+                return $hierarchy[ $key ];
+            }
+        } catch (Exception $e) {
         }
 
         return null;
