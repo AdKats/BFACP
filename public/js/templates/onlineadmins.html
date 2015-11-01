@@ -6,10 +6,10 @@
             <th>Server</th>
         </thead>
         <tbody>
-            <tr ng-repeat="(key, admin) in results.online_admins">
+            <tr ng-repeat="(key, admin) in results.online_admins track by admin.SoldierName">
                 <td ng-bind="admin.SoldierName"></td>
                 <td ng-bind="moment(admin.stamp).calendar()"></td>
-                <td ng-bind="admin.ServerName | limitTo: 20"></td>
+                <td ng-bind="admin.ServerName | limitTo: 30"></td>
             </tr>
         </tbody>
     </table>
