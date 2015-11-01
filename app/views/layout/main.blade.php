@@ -130,6 +130,7 @@
         {{ HTML::script('js/plugins/highcharts/modules/no-data-to-display.js') }}
         {{ HTML::script('js/plugins/iCheck/icheck.min.js') }}
         {{ HTML::script('js/plugins/howler/howler.min.js') }}
+        {{ HTML::script('js/plugins/slimScroll/jquery.slimscroll.min.js') }}
         {{ HTML::script('js/boot.js?v=1') }}
         {{ Minify::javascript(array_merge(
             ['/js/app.js'],
