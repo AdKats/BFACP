@@ -29,7 +29,7 @@
         <![endif]-->
     </head>
 
-    <body class="skin-blue sidebar-mini">
+    <body class="skin-blue sidebar-mini fixed">
         <div class="wrapper">
             <header class="main-header">
 
