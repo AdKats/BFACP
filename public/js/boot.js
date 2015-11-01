@@ -7,7 +7,7 @@
  * @Author  Almsaeed Studio
  * @Support <http://www.almsaeedstudio.com>
  * @Email   <support@almsaeedstudio.com>
- * @version 2.1.2
+ * @version 2.3.2
  * @license MIT <http://opensource.org/licenses/MIT>
  */
 
@@ -139,6 +139,9 @@ $.AdminLTE.options = {
  */
 $(function () {
   "use strict";
+
+  //Fix for IE page transitions
+  $("body").removeClass("hold-transition");
 
   //Extend options if external options exist
   if (typeof AdminLTEOptions !== "undefined") {
@@ -311,7 +314,7 @@ function _init() {
       var screenSizes = $.AdminLTE.options.screenSizes;
 
       //Enable sidebar toggle
-      $(toggleBtn).on('click', function (e) {
+      $(document).on('click', toggleBtn, function (e) {
         e.preventDefault();
 
         //Enable sidebar push menu
@@ -385,13 +388,13 @@ function _init() {
   $.AdminLTE.tree = function (menu) {
     var _this = this;
     var animationSpeed = $.AdminLTE.options.animationSpeed;
-    $(document).on('click', menu + ' li a', function (e) {
+    $(menu).on('click', 'li a', function (e) {
       //Get the clicked link and the next element
       var $this = $(this);
       var checkElement = $this.next();
 
       //Check if the next element is a menu and is visible
-      if ((checkElement.is('.treeview-menu')) && (checkElement.is(':visible'))) {
+      if ((checkElement.is('.treeview-menu')) && (checkElement.is(':visible')) && (!$('body').hasClass('sidebar-collapse'))) {
         //Close the menu
         checkElement.slideUp(animationSpeed, function () {
           checkElement.removeClass('menu-open');
@@ -669,14 +672,16 @@ function _init() {
 
 })(jQuery);
 
-/*
- * EXPLICIT BOX ACTIVATION
+ /*
+ * EXPLICIT BOX CONTROLS
  * -----------------------
  * This is a custom plugin to use with the component BOX. It allows you to activate
- * a box inserted in the DOM after the app.js was loaded.
+ * a box inserted in the DOM after the app.js was loaded, toggle and remove box.
  *
  * @type plugin
  * @usage $("#box-widget").activateBox();
+ * @usage $("#box-widget").toggleBox();
+ * @usage $("#box-widget").removeBox();
  */
 (function ($) {
 
@@ -684,6 +689,16 @@ function _init() {
 
   $.fn.activateBox = function () {
     $.AdminLTE.boxWidget.activate(this);
+  };
+
+  $.fn.toggleBox = function(){
+    var button = $($.AdminLTE.boxWidget.selectors.collapse, this);
+    $.AdminLTE.boxWidget.collapse(button);
+  };
+
+  $.fn.removeBox = function(){
+    var button = $($.AdminLTE.boxWidget.selectors.remove, this);
+    $.AdminLTE.boxWidget.remove(button);
   };
 
 })(jQuery);
