@@ -1,12 +1,13 @@
-<a href="javascript://" class="dropdown-toggle" data-toggle="dropdown">
+<a href="javascript://" class="dropdown-toggle" data-toggle="dropdown" ng-click="resetNewReportCount()">
     <i class="fa fa-envelope-o"></i>
+    <span class="label label-warning" ng-bind="reports.new_reports" ng-class="{'label-warning': reports.new_reports > 0, 'label-success': reports.new_reports == 0}"></span>
 </a>
 
 <ul class="dropdown-menu">
     <li class="header">Latest Reports <i class="fa fa-refresh fa-spin pull-right" ng-show="reports.refresh"></i></li>
     <li>
         <ul class="menu">
-            <li ng-repeat="(key, report) in reports.data track by report.record_id">
+            <li ng-repeat="(key, report) in reports.data | orderBy: '-stamp' track by report.record_id">
                 <a href="javascript://" ng-click="open(report, key)">
                     <h4>
                         {{ report.target_name }}
