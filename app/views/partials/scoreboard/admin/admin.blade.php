@@ -6,7 +6,7 @@
             </div>
 
             <div class="box-body">
-                {{ Former::vertical_open() }}
+                {{ Former::vertical_open()->ng_submit('admin.submit()') }}
                     {{ Former::select()
                         ->options($validPermissions)
                         ->ng_model('admin.action')
@@ -67,6 +67,8 @@
                             {{ Former::text()->ng_model('admin.message')->placeholder(Lang::get('scoreboard.admin.inputs.message', ['action' => 'forgive'])) }}
                         </div>
                     </div>
+
+                    {{ Former::submit('Submit') }}
 
                 {{ Former::close() }}
 

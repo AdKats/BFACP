@@ -78,7 +78,7 @@
     </div>
 
     <div class="row">
-        <div class="cold-xs-12 col-sm-6 col-lg-3">
+        <div class="col-xs-12 col-sm-6 col-lg-3">
             <div class="info-box bg-navy disabled">
                 <span class="info-box-icon">&#9760;</span>
                 <div class="info-box-content">
@@ -96,7 +96,7 @@
             </div>
         </div>
 
-        <div class="cold-xs-12 col-sm-6 col-lg-3">
+        <div class="col-xs-12 col-sm-6 col-lg-3">
             <div class="info-box bg-navy disabled">
                 <span class="info-box-icon"><i class="fa fa-trash"></i></span>
                 <div class="info-box-content">
@@ -116,7 +116,7 @@
 
         <div class="clearfix visible-sm-block"></div>
 
-        <div class="cold-xs-12 col-sm-6 col-lg-3">
+        <div class="col-xs-12 col-sm-6 col-lg-3">
             <div class="info-box bg-navy disabled">
                 <span class="info-box-icon"><i class="ion ion-hammer"></i></span>
                 <div class="info-box-content">
@@ -134,7 +134,7 @@
             </div>
         </div>
 
-        <div class="cold-xs-12 col-sm-6 col-lg-3">
+        <div class="col-xs-12 col-sm-6 col-lg-3">
             <div class="info-box bg-navy disabled">
                 <span class="info-box-icon"><i class="fa fa-frown-o"></i></span>
                 <div class="info-box-content">
@@ -155,6 +155,9 @@
 
     <div class="row">
         <div ng-include="'js/templates/serverpopulation.html'" onload="population()"></div>
+    </div>
+
+    <div class="row">
         <div class="col-xs-12 col-lg-6">
             <div class="box box-solid bg-light-blue-gradient">
                 <div class="box-header">
@@ -171,12 +174,12 @@
                 <div class="box-footer no-border" style="color: black">
                     <table class="table table-condensed table-striped">
                         <thead>
-                            <th>{{ Lang::get('dashboard.players_seen_country_past_day.table.col1') }}</th>
-                            <th>{{ Lang::get('dashboard.players_seen_country_past_day.table.col2') }}</th>
+                        <th>{{ Lang::get('dashboard.players_seen_country_past_day.table.col1') }}</th>
+                        <th>{{ Lang::get('dashboard.players_seen_country_past_day.table.col2') }}</th>
                         </thead>
 
                         <tbody>
-                            @foreach($countryMapTable as $country)
+                        @foreach($countryMapTable as $country)
                             <tr>
                                 <td>
                                     {{ HTML::image(sprintf('images/flags/24/%s.png', strtoupper($country->CountryCode)), MainHelper::countries($country->CountryCode)) }}
@@ -184,10 +187,22 @@
                                 </td>
                                 <td ng-bind="{{ (int) $country->total }} | number"></td>
                             </tr>
-                            @endforeach
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-lg-6">
+            <div class="box box-solid">
+                <div class="box-header">
+                    <h3 class="box-title">
+                        {{ Lang::get('dashboard.online_admin') }}
+                    </h3>
+                </div>
+
+                <div class="box-body" ng-include="'js/templates/onlineadmins.html'" onload="onlineAdmins()"></div>
             </div>
         </div>
     </div>

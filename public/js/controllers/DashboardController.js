@@ -34,7 +34,8 @@ angular.module('bfacp').controller('DashboardController', ['$scope', '$http', '$
         banstats: {
             yesterday: 0,
             average: 0
-        }
+        },
+        online_admins: []
     };
 
     $scope.opts = {
@@ -188,8 +189,23 @@ angular.module('bfacp').controller('DashboardController', ['$scope', '$http', '$
         return typeLabel;
     };
 
-    // Re-fetch the population every 30 seconds
+    $scope.onlineAdmins = function() {
+        $http.get('api/helpers/online/admins').success(function(data) {
+            if(data.data.length > 0) {
+                $scope.results.online_admins = data.data;
+            } else {
+                $scope.results.online_admins = [];
+            }
+        }).error(function() {
+            $scope.onlineAdmins();
+        });
+    };
+
+    // Re-fetch the population every 30 seconds.
     $interval($scope.population, 30 * 1000);
+
+    // Re-fetch the online admins every minute.
+    $interval($scope.onlineAdmins, 60 * 1000);
 
     $scope.banStats();
 }]);

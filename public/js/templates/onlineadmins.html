@@ -1,0 +1,16 @@
+<div class="table-responsive">
+    <table class="table no-margin">
+        <thead>
+            <th>Admin</th>
+            <th>Online</th>
+            <th>Server</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="(key, admin) in results.online_admins">
+                <td ng-bind="admin.SoldierName"></td>
+                <td ng-bind="moment(admin.stamp).calendar()"></td>
+                <td ng-bind="admin.ServerName | limitTo: 20"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -17,6 +17,7 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
         Route::group(['prefix' => 'adkats'], function () {
             Route::get('special_groups', 'HelpersController@getSpecialGroups');
         });
+        Route::get('online/admins', 'HelpersController@onlineAdmins');
     });
 
     /*===================================
@@ -42,7 +43,7 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
         Route::group(['prefix' => 'players'], function () {
             Route::get('{player}/weapons',
                 ['as' => 'api.battlelog.players.weapons', 'uses' => 'BattlelogController@getWeapons'])->where('player',
-                    '[0-9]+');
+                '[0-9]+');
 
             Route::get('{player}/overview', [
                 'as' => 'api.battlelog.players.overview',
@@ -56,11 +57,11 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
 
             Route::get('{player}/reports',
                 ['as' => 'api.battlelog.players.reports', 'uses' => 'BattlelogController@getReports'])->where('player',
-                    '[0-9]+');
+                '[0-9]+');
 
             Route::get('{player}/report/{id}',
                 ['as' => 'api.battlelog.players.report', 'uses' => 'BattlelogController@getReport'])->where('player',
-                    '[0-9]+')->where('id', '[0-9]+');
+                '[0-9]+')->where('id', '[0-9]+');
 
             Route::get('{player}/acs', [
                 'as' => 'api.battlelog.players.acs',
@@ -143,8 +144,10 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
     =            User Router            =
     ===================================*/
 
-    Route::get('account', ['as' => 'user.account', 'uses' => 'UsersController@showAccountSettings', 'before' => 'auth']);
-    Route::put('account', ['as' => 'user.account.save', 'uses' => 'UsersController@saveAccountSettings', 'before' => 'auth']);
+    Route::get('account',
+        ['as' => 'user.account', 'uses' => 'UsersController@showAccountSettings', 'before' => 'auth']);
+    Route::put('account',
+        ['as' => 'user.account.save', 'uses' => 'UsersController@saveAccountSettings', 'before' => 'auth']);
 
     /*=====  End of User Router  ======*/
 
@@ -352,6 +355,6 @@ Entrust::routeNeedsPermission(Config::get('logviewer::base_url') . '/*', 'admin.
 =            Require the Menu Builder            =
 ================================================*/
 
-if(!file_exists($app['path.base'] . '/app/bfacp/setup.php')) {
-    require $app['path.base'] . '/app/menu.php';
+if (!file_exists($app[ 'path.base' ] . '/app/bfacp/setup.php')) {
+    require $app[ 'path.base' ] . '/app/menu.php';
 }

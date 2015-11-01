@@ -21,6 +21,7 @@ return [
         ],
     ],
     'motd' => 'Message of the Day',
+    'online_admin' => 'Online Admins',
     'population' => [
         'title' => 'Population',
         'footer' => 'Total',
