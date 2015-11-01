@@ -59,6 +59,13 @@ angular.module('bfacp').controller('ReportsController', ['$scope', '$http', '$in
                 if ($scope.reports.last_id !== null) {
                     reportAlert.play();
                     $scope.reports.new_reports += data.data.length;
+                    var c = $scope.reports.new_reports;
+                    toastr.info('You have ' + c + ' unread reports.', 'Unread Reports', {
+                        closeButton: true,
+                        newestOnTop: true,
+                        preventDuplicates: true,
+                        positionClass: 'toast-top-center'
+                    });
                 }
 
                 $scope.reports.last_id = data.data[0].record_id;
