@@ -51,16 +51,19 @@ class ReputationCalculation extends Command
 
         Player::where('GameID', '>', 0)->chunk($chunk, function ($players) use (&$r) {
             foreach ($players as $player) {
-                $startClock = microtime(true) * 1000;
-                $r->setPlayer($player);
-                $r->createOrUpdate();
-                $endClock = microtime(true) * 1000;
+                try {
+                    $startClock = microtime(true) * 1000;
+                    $r->setPlayer($player)->createOrUpdate();
+                    $endClock = microtime(true) * 1000;
 
-                $execClock = $endClock - $startClock;
+                    $execClock = $endClock - $startClock;
 
-                $txt = sprintf("[%u][%u ms] %s", $player->PlayerID, $execClock, $player->SoldierName);
+                    $txt = sprintf("[%u][%u ms] %s", $player->PlayerID, $execClock, $player->SoldierName);
 
-                $this->info("Updated player: " . $txt);
+                    $this->info("Updated player: " . $txt);
+                } catch (\Exception $e) {
+                    $this->error('Update failed. Reason: ' . $e->getMessage());
+                }
             }
         });
     }
