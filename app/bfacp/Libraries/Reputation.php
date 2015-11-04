@@ -101,6 +101,21 @@ class Reputation
     }
 
     /**
+     * Function to reset the values in the case of a loop being used.
+     *
+     * @return $this
+     */
+    public function resetValues()
+    {
+        $this->sourceReputation = 0;
+        $this->targetReputation = 0;
+        $this->totalReputation = 0;
+        $this->finalReputation = 0;
+
+        return $this;
+    }
+
+    /**
      * Creates or Updates the player reputation then reloads it
      *
      * @return mixed

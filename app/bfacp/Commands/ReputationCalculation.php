@@ -53,7 +53,7 @@ class ReputationCalculation extends Command
             foreach ($players as $player) {
                 try {
                     $startClock = microtime(true) * 1000;
-                    $r->setPlayer($player)->createOrUpdate();
+                    $r->setPlayer($player)->createOrUpdate()->resetValues();
                     $endClock = microtime(true) * 1000;
 
                     $execClock = $endClock - $startClock;
