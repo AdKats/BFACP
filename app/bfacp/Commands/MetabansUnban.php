@@ -21,7 +21,7 @@ class MetabansUnban extends Command
      *
      * @var string
      */
-    protected $description = 'Recalculates all players reputations.';
+    protected $description = 'Allows you to remove a ban from metabans.';
 
     /**
      * Create a new command instance.
