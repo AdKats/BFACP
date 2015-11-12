@@ -38,7 +38,7 @@
 
             <div class="box-body">
                 {{ Former::password('password')->label(Lang::get('user.account.settings.blocks.password.inputs.password'))->help(Lang::get('user.account.settings.blocks.password.inputs_help.password'))->autocomplete('off') }}
-                {{ Former::password('password_confirm')->label(Lang::get('user.account.settings.blocks.password.inputs.password_confirm'))->help(Lang::get('user.account.settings.blocks.password.inputs_help.password_confirm'))->autocomplete('off') }}
+                {{ Former::password('password_confirmation')->label(Lang::get('user.account.settings.blocks.password.inputs.password_confirm'))->help(Lang::get('user.account.settings.blocks.password.inputs_help.password_confirm'))->autocomplete('off') }}
             </div>
         </div>
     </div>
