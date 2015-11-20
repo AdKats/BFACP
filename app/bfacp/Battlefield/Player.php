@@ -280,8 +280,6 @@ class Player extends Elegant
             }
         }
 
-        // Disable BF4DB check as site is currently offline. Will re-enable when and if it comes back online
-        /*
         if ($game == 'BF4') {
             try {
                 if (Route::currentRouteName() != 'player.show') {
@@ -312,7 +310,6 @@ class Player extends Elegant
                 ];
             }
         }
-        */
 
         $links[] = [
             'bf3stats' => $game == 'BF3' ? sprintf('http://bf3stats.com/stats_pc/%s', $this->SoldierName) : null,
@@ -321,7 +318,7 @@ class Player extends Elegant
             'istats' => sprintf('http://i-stats.net/index.php?action=pcheck&player=%s&game=%s&sub=Check+Player',
                 $this->SoldierName, $game),
             'metabans' => sprintf('http://metabans.com/search/?phrase=%s', $this->SoldierName),
-            // 'bf4db' => $game == 'BF4' ? $bf4db_profile : null,
+            'bf4db' => $game == 'BF4' ? $bf4db_profile : null,
             'chatlogs' => route('chatlog.search', ['pid' => $this->PlayerID]),
             'pbbans' => !empty($this->PBGUID) ? sprintf('http://www.pbbans.com/mbi-guid-search-%s.html',
                 $this->PBGUID) : null,
