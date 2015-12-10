@@ -62,6 +62,14 @@ class Overall extends Elegant
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function servers()
+    {
+        return $this->hasMany('BFACP\Adkats\Infractions\Server', 'player_id', 'player_id');
+    }
+
+    /**
      * Returns the infraction history
      *
      * @return \Illuminate\Database\Eloquent\Model
