@@ -58,7 +58,7 @@ class Session extends Elegant
      */
     public function server()
     {
-        return $this->belongsToMany('BFACP\Battlefield\Server', 'tbl_server_player', 'StatsID', 'ServerID');
+        return $this->belongsToMany('BFACP\Battlefield\Server\Server', 'tbl_server_player', 'StatsID', 'ServerID');
     }
 
     public function getSessionStartAttribute()

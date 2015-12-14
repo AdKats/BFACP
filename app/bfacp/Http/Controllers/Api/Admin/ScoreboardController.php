@@ -1,6 +1,6 @@
 <?php namespace BFACP\Http\Controllers\Api\Admin;
 
-use BFACP\Battlefield\Server as Server;
+use BFACP\Battlefield\Server\Server as Server;
 use BFACP\Exceptions\PlayerNotFoundException as PlayerNotFoundException;
 use BFACP\Exceptions\RconException as RconException;
 use BFACP\Facades\Main as MainHelper;
@@ -24,7 +24,7 @@ class ScoreboardController extends BaseController
     protected $repository = null;
 
     /**
-     * \BFACP\Battlefield\Server
+     * \BFACP\Battlefield\Server\Server
      *
      * @var null
      */

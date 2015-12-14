@@ -1,6 +1,6 @@
 <?php namespace BFACP\Libraries\Battlelog;
 
-use BFACP\Battlefield\Server;
+use BFACP\Battlefield\Server\Server;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\App;
 

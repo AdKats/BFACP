@@ -1,7 +1,7 @@
 <?php namespace BFACP\Http\Controllers\Api;
 
 use BFACP\Battlefield\Chat;
-use BFACP\Battlefield\Server;
+use BFACP\Battlefield\Server\Server;
 use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;

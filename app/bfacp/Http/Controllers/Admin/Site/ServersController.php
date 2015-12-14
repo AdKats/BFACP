@@ -1,6 +1,6 @@
 <?php namespace BFACP\Http\Controllers\Admin\Site;
 
-use BFACP\Battlefield\Server as Server;
+use BFACP\Battlefield\Server\Server as Server;
 use BFACP\Battlefield\Setting as Setting;
 use BFACP\Http\Controllers\BaseController;
 use Exception as Exception;

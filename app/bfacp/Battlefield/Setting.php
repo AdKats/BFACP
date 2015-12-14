@@ -67,7 +67,7 @@ class Setting extends Elegant
      */
     public function server()
     {
-        return $this->belongsTo('BFACP\Battlefield\Server', 'server_id');
+        return $this->belongsTo('BFACP\Battlefield\Server\Server', 'server_id');
     }
 
     /**

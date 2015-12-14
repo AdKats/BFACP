@@ -1,4 +1,4 @@
-<?php namespace BFACP\Battlefield;
+<?php namespace BFACP\Battlefield\Server;
 
 use BFACP\Elegant;
 use BFACP\Facades\Battlefield as BattlefieldHelper;
@@ -72,7 +72,7 @@ class Server extends Elegant
     protected $hidden = ['maps_file_path', 'modes_file_path', 'squads_file_path', 'teams_file_path'];
 
     /**
-     * Models to be loaded automaticly
+     * Models to be loaded automatically
      *
      * @var array
      */

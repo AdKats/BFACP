@@ -1,7 +1,7 @@
 <?php namespace BFACP\Http\Controllers\Api;
 
 use BFACP\Battlefield\Chat;
-use BFACP\Battlefield\Server;
+use BFACP\Battlefield\Server\Server;
 use BFACP\Exceptions\PlayerNotFoundException;
 use BFACP\Exceptions\RconException;
 use BFACP\Facades\Main as MainHelper;

@@ -79,7 +79,7 @@ class Statistics extends Elegant
      */
     public function server()
     {
-        return $this->belongsTo('BFACP\Battlefield\Server', 'server_id')->select([
+        return $this->belongsTo('BFACP\Battlefield\Server\Server', 'server_id')->select([
             'ServerID',
             'ServerName',
             'GameID',

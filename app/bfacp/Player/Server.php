@@ -58,6 +58,6 @@ class Server extends Elegant
      */
     public function server()
     {
-        return $this->belongsTo('BFACP\Battlefield\Server', 'ServerID');
+        return $this->belongsTo('BFACP\Battlefield\Server\Server', 'ServerID');
     }
 }

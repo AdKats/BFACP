@@ -58,7 +58,7 @@ class Game extends Elegant
      */
     public function servers()
     {
-        return $this->hasMany('BFACP\Battlefield\Server', 'GameID');
+        return $this->hasMany('BFACP\Battlefield\Server\Server', 'GameID');
     }
 
     public function getClassCssAttribute()

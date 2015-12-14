@@ -5,7 +5,7 @@ use BFACP\Adkats\Record;
 use BFACP\Adkats\Setting;
 use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Player;
-use BFACP\Battlefield\Server;
+use BFACP\Battlefield\Server\Server;
 use BFACP\Exceptions\PlayerNotFoundException;
 use BFACP\Exceptions\RconException;
 use BFACP\Facades\Battlefield as BattlefieldHelper;

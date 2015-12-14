@@ -1,6 +1,6 @@
 <?php namespace BFACP\Http\Controllers;
 
-use BFACP\Battlefield\Server;
+use BFACP\Battlefield\Server\Server;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;

@@ -1,6 +1,6 @@
 <?php namespace BFACP\Libraries;
 
-use BFACP\Battlefield\Server;
+use BFACP\Battlefield\Server\Server;
 use BFACP\Exceptions\RconException;
 use Illuminate\Support\Facades\Lang;
 

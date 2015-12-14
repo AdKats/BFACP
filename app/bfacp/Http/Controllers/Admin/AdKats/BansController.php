@@ -1,7 +1,7 @@
 <?php namespace BFACP\Http\Controllers\Admin\AdKats;
 
 use BFACP\Battlefield\Player as Player;
-use BFACP\Battlefield\Server as Server;
+use BFACP\Battlefield\Server\Server as Server;
 use BFACP\Exceptions\MetabansException;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\BaseController;
