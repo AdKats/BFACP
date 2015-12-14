@@ -60,7 +60,7 @@ class Main extends BaseHelper
             return $collection;
         }
 
-        return $this->response->json($collection, $httpcode)->header('X-Robots-Tag', 'noindex')->header('Cache-Control',
+        return $this->response->json($collection, $httpcode, [], JSON_NUMERIC_CHECK)->header('X-Robots-Tag', 'noindex')->header('Cache-Control',
             'no-cache, must-revalidate');
     }
 
