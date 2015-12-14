@@ -26,7 +26,10 @@ The Battlefield Admin Control Panel (BFACP) is a web based admin tool designed t
 * Quick DB Stats overview
 * and more!
 
-Download the latest version from [here](https://github.com/Prophet731/BFAdminCP/releases/latest). Once downloaded unzip it to a temporary folder on your computer. Next open the `.env.php` file located in the root folder in your favorite text editor. Scroll down to the database settings section and fill in your database connection information.
+
+[![Download Battlefield Admin Control Panel](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/bfacp/files/latest/download)
+
+Download the latest version. Once downloaded unzip it to a temporary folder on your computer. Next open the `.env.php` file located in the root folder in your favorite text editor. Scroll down to the database settings section and fill in your database connection information.
 
 ```PHP
     /**
