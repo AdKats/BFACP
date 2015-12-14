@@ -75,7 +75,7 @@ If you have git installed you can just run the following command to install it.
 git clone https://github.com/Prophet731/BFAdminCP.git .
 ```
 
-To update it all you will need to do is run `git remote update; git pull` and it will pull the latest version.
+To update it all you will need to do is run `git pull` and it will pull the latest version.
 
 ### Manual Method (Linux Only)
 
