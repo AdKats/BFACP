@@ -1,7 +1,7 @@
 <?php
 
 use BFACP\Account\Role;
-use BFACP\Battlefield\Server;
+use BFACP\Battlefield\Server\Server;
 
 Breadcrumbs::register('home', function ($b) {
     $b->push(Lang::get('navigation.main.items.dashboard.title'), route('home'), [
