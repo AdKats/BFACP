@@ -408,9 +408,43 @@
                     </div>
 
                     <div class="tab-pane" id="command-overview"></div>
-                    <div class="tab-pane" id="aliases"></div>
+                    <div class="tab-pane" id="aliases">
+                        <div id="aliases-chart"></div>
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                                <th>Name</th>
+                                <th>Used</th>
+                            </thead>
+
+                            <tbody>
+                                @foreach($charts['aliases'] as $alias)
+                                    <tr>
+                                        <td>{{ $alias[0] }}</td>
+                                        <td>{{ $alias[1] }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                     @if($bfacp->isLoggedIn && $bfacp->user->ability(null, 'player.view.ip'))
-                    <div class="tab-pane" id="ip-history"></div>
+                    <div class="tab-pane" id="ip-history">
+                        <div id="ip-history-chart"></div>
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                                <th>IP</th>
+                                <th>Used</th>
+                            </thead>
+
+                            <tbody>
+                            @foreach($charts['iphistory'] as $ip)
+                                <tr>
+                                    <td>{{ $ip[0] }}</td>
+                                    <td>{{ $ip[1] }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                     @endif
                 </div>
             </div>
@@ -523,7 +557,7 @@
             }]
         });
 
-        $('#aliases').highcharts({
+        $('#aliases-chart').highcharts({
             title: {
                 text: "{{ Lang::get('player.profile.charts.aliases.title') }}"
             },
@@ -551,7 +585,7 @@
         });
 
         @if(Entrust::can('player.view.ip'))
-        $('#ip-history').highcharts({
+        $('#ip-history-chart').highcharts({
             title: {
                 text: "{{ Lang::get('player.profile.charts.ip_history.title') }}"
             },
@@ -584,10 +618,14 @@
 
            switch(target) {
               case "#command-overview":
-              case "#aliases":
+                  $(target).highcharts().reflow();
+                  break;
               case "#ip-history":
-                $(target).highcharts().reflow();
-                break;
+                  $("#ip-history-chart").highcharts().reflow();
+                  break;
+              case "#aliases":
+                  $("#aliases-chart").highcharts().reflow();
+                  break;
            }
         });
     });
