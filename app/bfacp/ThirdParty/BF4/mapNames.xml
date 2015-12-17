@@ -33,6 +33,7 @@
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="ConquestLarge0"/>
     <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="ConquestLarge0"/>
     <map uri="XP6_CMP" name="Operation Outbreak" playmode="ConquestLarge0"/>
+    <map uri="XP7_Valley" name="Dragon Valley 2015" playmode="ConquestLarge0"/>
 
     <!-- Small Conquest Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="ConquestSmall0"/>
@@ -67,6 +68,7 @@
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="ConquestSmall0"/>
     <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="ConquestSmall0"/>
     <map uri="XP6_CMP" name="Operation Outbreak" playmode="ConquestSmall0"/>
+    <map uri="XP7_Valley" name="Dragon Valley 2015" playmode="ConquestSmall0"/>
 
     <!-- Domination Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="Domination0"/>
@@ -101,6 +103,7 @@
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="Domination0"/>
     <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="Domination0"/>
     <map uri="XP6_CMP" name="Operation Outbreak" playmode="Domination0"/>
+    <map uri="XP7_Valley" name="Dragon Valley 2015" playmode="Domination0"/>
 
     <!-- Elimination Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="Elimination0"/>
@@ -133,6 +136,7 @@
     <map uri="XP4_SubBase" name="Hammerhead" playmode="Elimination0"/>
     <map uri="XP4_Titan" name="Hangar 21" playmode="Elimination0"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="Elimination0"/>
+    <map uri="XP7_Valley" name="Dragon Valley 2015" playmode="Elimination0"/>
 
     <!-- Obliteration Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="Obliteration"/>
@@ -167,6 +171,7 @@
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="Obliteration"/>
     <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="Obliteration"/>
     <map uri="XP6_CMP" name="Operation Outbreak" playmode="Obliteration"/>
+    <map uri="XP7_Valley" name="Dragon Valley 2015" playmode="Obliteration"/>
 
     <!-- Rush Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="RushLarge0"/>
@@ -201,6 +206,7 @@
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="RushLarge0"/>
     <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="RushLarge0"/>
     <map uri="XP6_CMP" name="Operation Outbreak" playmode="RushLarge0"/>
+    <map uri="XP7_Valley" name="Dragon Valley 2015" playmode="RushLarge0"/>
 
     <!-- Squad Death Match v1 Maps -->
     <map uri="MP_Abandoned" name="Zavod 311" playmode="SquadDeathMatch0"/>
@@ -234,6 +240,7 @@
     <map uri="XP4_Titan" name="Hangar 21" playmode="SquadDeathMatch0"/>
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="SquadDeathMatch0"/>
     <map uri="XP6_CMP" name="Operation Outbreak" playmode="SquadDeathMatch0"/>
+    <map uri="XP7_Valley" name="Dragon Valley 2015" playmode="SquadDeathMatch0"/>
 
     <!-- Squad Death Match v2 Maps -->
     <map uri="XP6_CMP" name="Operation Outbreak" playmode="SquadDeathMatch1"/>
@@ -271,6 +278,7 @@
     <map uri="XP4_WlkrFtry" name="Giants Of Karelia" playmode="TeamDeathMatch0"/>
     <map uri="XP5_Night_01" name="Zavod:Graveyard Shift" playmode="TeamDeathMatch0"/>
     <map uri="XP6_CMP" name="Operation Outbreak" playmode="TeamDeathMatch0"/>
+    <map uri="XP7_Valley" name="Dragon Valley 2015" playmode="TeamDeathMatch0"/>
 
     <!-- Team Deathmatch v2 Maps -->
     <map uri="XP6_CMP" name="Operation Outbreak" playmode="TeamDeathMatch1"/>
@@ -337,5 +345,6 @@
     <map uri="XP5_Night_01" name="Zavod:Graveyard Shift v2" playmode="GunMaster1"/>
     <map uri="XP6_CMP" name="Operation Outbreak" playmode="GunMaster0"/>
     <map uri="XP6_CMP" name="Operation Outbreak" playmode="GunMaster1"/>
+    <map uri="XP7_Valley" name="Dragon Valley 2015" playmode="GunMaster0"/>
 
 </mapNames>
