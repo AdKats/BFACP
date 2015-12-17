@@ -150,9 +150,15 @@ table.scoreboard > tbody > tr.ng-leave {
 }
 
 .navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a > h4 {
-  margin: 0 0 0 0px !important;
+    margin: 0 0 0 0px !important;
 }
 
 .navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a > p {
-  margin: 0 0 0 0px !important;
+    margin: 0 0 0 0px !important;
+}
+
+.center-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

@@ -162,6 +162,8 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
 
     Route::group(['prefix' => 'servers'], function () {
         Route::get('live', ['as' => 'servers.live', 'uses' => 'HomeController@scoreboard']);
+        Route::get('list', ['as' => 'servers.list', 'uses' => 'ServersController@index']);
+        Route::get('show/{id}/{name?}', ['as' => 'servers.show', 'uses' => 'ServersController@show']);
     });
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
@@ -355,6 +357,6 @@ Entrust::routeNeedsPermission(Config::get('logviewer::base_url') . '/*', 'admin.
 =            Require the Menu Builder            =
 ================================================*/
 
-if (!file_exists($app[ 'path.base' ] . '/app/bfacp/setup.php')) {
-    require $app[ 'path.base' ] . '/app/menu.php';
+if (!file_exists($app['path.base'] . '/app/bfacp/setup.php')) {
+    require $app['path.base'] . '/app/menu.php';
 }

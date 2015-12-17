@@ -5,6 +5,7 @@ use BFACP\Facades\Battlefield as BattlefieldHelper;
 use BFACP\Facades\Main as MainHelper;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class Server extends Elegant
 {
@@ -62,6 +63,7 @@ class Server extends Elegant
         'current_gamemode',
         'map_image_paths',
         'is_active',
+        'slug',
     ];
 
     /**
@@ -84,6 +86,14 @@ class Server extends Elegant
     public function game()
     {
         return $this->belongsTo('BFACP\Battlefield\Game', 'GameID')->remember(30);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function stats()
+    {
+        return $this->belongsTo('BFACP\Battlefield\Server\Stats', 'ServerID');
     }
 
     /**
@@ -157,6 +167,7 @@ class Server extends Elegant
     public function getIPAttribute()
     {
         $host = explode(':', $this->IP_Address)[0];
+
         return gethostbyname($host);
     }
 
@@ -168,6 +179,7 @@ class Server extends Elegant
     public function getPortAttribute()
     {
         $port = explode(':', $this->IP_Address)[1];
+
         return (int)$port;
     }
 
@@ -215,6 +227,7 @@ class Server extends Elegant
     public function getMapsFilePathAttribute()
     {
         $path = app_path() . DIRECTORY_SEPARATOR . 'bfacp' . DIRECTORY_SEPARATOR . 'ThirdParty' . DIRECTORY_SEPARATOR . strtoupper($this->game->Name) . DIRECTORY_SEPARATOR . 'mapNames.xml';
+
         return $path;
     }
 
@@ -226,6 +239,7 @@ class Server extends Elegant
     public function getModesFilePathAttribute()
     {
         $path = app_path() . DIRECTORY_SEPARATOR . 'bfacp' . DIRECTORY_SEPARATOR . 'ThirdParty' . DIRECTORY_SEPARATOR . strtoupper($this->game->Name) . DIRECTORY_SEPARATOR . 'playModes.xml';
+
         return $path;
     }
 
@@ -237,6 +251,7 @@ class Server extends Elegant
     public function getSquadsFilePathAttribute()
     {
         $path = app_path() . DIRECTORY_SEPARATOR . 'bfacp' . DIRECTORY_SEPARATOR . 'ThirdParty' . DIRECTORY_SEPARATOR . strtoupper($this->game->Name) . DIRECTORY_SEPARATOR . 'squadNames.xml';
+
         return $path;
     }
 
@@ -248,6 +263,7 @@ class Server extends Elegant
     public function getTeamsFilePathAttribute()
     {
         $path = app_path() . DIRECTORY_SEPARATOR . 'bfacp' . DIRECTORY_SEPARATOR . 'ThirdParty' . DIRECTORY_SEPARATOR . strtoupper($this->game->Name) . DIRECTORY_SEPARATOR . 'teamNames.xml';
+
         return $path;
     }
 
@@ -284,5 +300,10 @@ class Server extends Elegant
     public function getIsActiveAttribute()
     {
         return $this->ConnectionState == 'on';
+    }
+
+    public function getSlugAttribute()
+    {
+        return Str::slug($this->ServerName);
     }
 }
