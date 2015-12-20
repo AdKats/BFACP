@@ -138,6 +138,9 @@ angular.module('bfacp').controller('PlayerController', ['$scope', '$resource', '
         $scope.geoRequest = function() {
             var ip = $scope.player.IP_Address;
             var url = "http://ipinfo.io/" + ip + "/json";
+            if(location.protocol === 'https:') {
+                url = 'api/helpers/ip/' + ip;
+            }
 
             if(ip === '' || ip === null) {
                 return;

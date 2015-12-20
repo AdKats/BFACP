@@ -2,6 +2,8 @@
 
 use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class HelpersController extends BaseController
@@ -37,5 +39,17 @@ class HelpersController extends BaseController
         }
 
         return MainHelper::response($admins, null, null, null, false, true);
+    }
+
+    public function iplookup($addy)
+    {
+        $hash = md5($addy);
+        $result = Cache::remember(sprintf('iplookup.%s', $hash), 24 * 60, function () use (&$addy) {
+            $request = App::make('guzzle')->get("http://ipinfo.io/" . $addy . "/json");
+
+            return $request->json();
+        });
+
+        return $result;
     }
 }

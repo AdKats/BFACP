@@ -18,6 +18,7 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
             Route::get('special_groups', 'HelpersController@getSpecialGroups');
         });
         Route::get('online/admins', 'HelpersController@onlineAdmins');
+        Route::get('ip/{addy}', 'HelpersController@iplookup');
     });
 
     /*===================================
