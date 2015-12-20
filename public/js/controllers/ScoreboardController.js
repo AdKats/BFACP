@@ -645,6 +645,11 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 });
             },
             killPlayer: function (players, message) {
+                if(players.length < 1) {
+                    toastr.error('You need to have at least 1 player selected.');
+                    return;
+                }
+
                 SBA.kill($scope.selectedId, players, message).success(function (data) {
                     var status = data.status;
 
