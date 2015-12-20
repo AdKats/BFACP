@@ -162,3 +162,11 @@ table.scoreboard > tbody > tr.ng-leave {
     margin-left: auto;
     margin-right: auto;
 }
+
+.dotted {
+    border-bottom: 1px dashed #999999 !important;
+    text-decoration: none !important;
+    cursor: help !important;
+    color: blueviolet !important;
+    font-style: italic !important;
+}

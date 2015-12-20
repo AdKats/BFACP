@@ -74,11 +74,12 @@
                             <div class="col-sm-9">
                                 <p class="form-control-static">
                                     @if( ! empty($player->IP_Address) && $bfacp->isLoggedIn && $bfacp->user->ability(null, 'player.view.ip') )
-                                    {{ link_to_route('player.listing', $player->IP_Address, [
-                                        'player' => $player->IP_Address
-                                    ], [
-                                        'target' => '_blank'
-                                    ]) }}
+                                        {{ link_to_route('player.listing', $player->IP_Address, [
+                                            'player' => $player->IP_Address
+                                        ], [
+                                            'target' => '_blank'
+                                        ]) }}
+                                        <a href="javascript://" class="dotted" uib-popover-template="geoPopover.templateUrl" popover-trigger="mouseenter">Geo Info</a>
                                     @else
                                     <span class="text-red">N/A</span>
                                     @endif
