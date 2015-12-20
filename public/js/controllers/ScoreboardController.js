@@ -602,6 +602,25 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
         $scope.admin = {
             action: 'say',
             message: '',
+            submit: function () {
+                var action = $scope.admin.action;
+                var message = $scope.admin.message;
+                var players = $scope.selectedPlayers.join();
+                var playerCount = $scope.selectedPlayers.length;
+
+                switch (action) {
+                    case "kill":
+                        $scope.admin.killPlayer(players, message);
+                        break;
+
+                }
+            },
+            resetSys: function () {
+                $scope.admin.action = 'say';
+                $scope.admin.message = '';
+                $('input[name="players"]').attr('checked', false);
+                $scope.selectedPlayers = [];
+            },
             removePlayer: function (index) {
                 var player = $scope.selectedPlayers[index];
                 var input = $('input[value="' + player + '"]');
@@ -620,12 +639,27 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                     $scope.chat.message = '';
                 }).error(function (e) {
                     console.error('Error: ', e);
-                    toastr.error('Their was an error sending your message. Please try again.');
+                    toastr.error('An error was occurred when sending your message. Please try again.');
                 }).finally(function () {
                     $scope.chat.sending = false;
                 });
             },
+            killPlayer: function (players, message) {
+                SBA.kill($scope.selectedId, players, message).success(function (data) {
+                    var status = data.status;
 
-        }
+                    if (status == 'success') {
+                        toastr.success('Selected players have been killed.');
+                        $scope.admin.resetSys();
+                    } else {
+                        toastr.error('Players were not killed due to server side error.');
+                    }
+                }).error(function (e) {
+                    console.error(e);
+                });
+            }
+        };
+
+
     }
 ]);
