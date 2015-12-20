@@ -46,7 +46,7 @@ class Option extends Elegant
     protected $appends = [];
 
     /**
-     * Models to be loaded automaticly
+     * Models to be loaded automatically
      *
      * @var array
      */

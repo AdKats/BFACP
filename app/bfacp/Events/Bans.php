@@ -102,7 +102,7 @@ Event::listen('player.ban', function ($input, $player, $ban = null) {
         $ban->ban_notes = array_get($input, 'ban_notes', 'NoNotes');
     }
 
-    // If the ban not in effect we need to renable it
+    // If the ban not in effect we need to re-enable it
     if (is_null($player->ban) || $ban->is_unbanned) {
         $ban->ban_status = 'Active';
     }
