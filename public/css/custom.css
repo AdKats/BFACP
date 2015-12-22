@@ -170,3 +170,9 @@ table.scoreboard > tbody > tr.ng-leave {
     color: blueviolet !important;
     font-style: italic !important;
 }
+
+a.dotted-info {
+    border-bottom: 1px dashed #999999 !important;
+    cursor: help !important;
+    margin-left: 5px;
+}
