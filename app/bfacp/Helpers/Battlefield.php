@@ -193,6 +193,7 @@ class Battlefield extends Main
                         $defaultTickets = 400;
                         break;
 
+                    case 'TeamDeathMatch1':
                     case 'TeamDeathMatch0':
                     case 'Elimination0':
                     case 'Obliteration':
@@ -205,6 +206,7 @@ class Battlefield extends Main
                         $defaultTickets = 100;
                         break;
 
+                    case 'SquadDeathMatch1':
                     case 'SquadDeathMatch0':
                         $defaultTickets = 50;
                         break;
@@ -218,8 +220,13 @@ class Battlefield extends Main
                         $defaultTickets = 3;
                         break;
 
+                    case 'GunMaster0':
+                    case 'GunMaster1':
+                        $defaultTickets = 100;
+                        break;
+
                     default:
-                        return;
+                        return null;
                 }
                 break;
 
@@ -255,24 +262,28 @@ class Battlefield extends Main
                         break;
 
                     default:
-                        return;
+                        return null;
                 }
                 break;
 
             case 'BFH':
             case 'BFHL':
-            case 'TurfWarLarge0':
-            case 'TurfWarSmall0':
-            case 'Heist0':
-            case 'Hotwire0':
-            case 'Bloodmoney0':
-            case 'Hit0':
-            case 'Hostage0':
-            case 'TeamDeathMatch0':
-                $defaultTickets = 100;
+                switch($gamemode) {
+                    case 'TurfWarLarge0':
+                    case 'TurfWarSmall0':
+                    case 'Heist0':
+                    case 'Hotwire0':
+                    case 'Bloodmoney0':
+                    case 'Hit0':
+                    case 'Hostage0':
+                    case 'TeamDeathMatch0':
+                        $defaultTickets = 100;
+                        break;
+                }
                 break;
+
             default:
-                return;
+                return null;
         }
 
         $startingTicketCount = ($this->divide($defaultTickets, 100) * $modifier);
@@ -301,9 +312,13 @@ class Battlefield extends Main
                     case 'ConquestLarge0':
                     case 'ConquestSmall0':
                     case 'TeamDeathMatch0':
+                    case 'TeamDeathMatch1':
                     case 'SquadDeathMatch0':
+                    case 'SquadDeathMatch1':
                     case 'Domination0':
                     case 'AirSuperiority0':
+                    case 'GunMaster0':
+                    case 'GunMaster1':
                         $defaultTime = 3600;
                         break;
 
@@ -326,28 +341,31 @@ class Battlefield extends Main
                         break;
 
                     default:
-                        return;
+                        return null;
                 }
                 break;
 
             case 'BFH':
             case 'BFHL':
-            case 'TurfWarLarge0':
-            case 'TurfWarSmall0':
-            case 'Heist0':
-            case 'Hotwire0':
-            case 'Hit0':
-            case 'Hostage0':
-            case 'TeamDeathMatch0':
-                $defaultTime = 3600;
-                break;
+                switch($gamemode) {
+                    case 'TurfWarLarge0':
+                    case 'TurfWarSmall0':
+                    case 'Heist0':
+                    case 'Hotwire0':
+                    case 'Hit0':
+                    case 'Hostage0':
+                    case 'TeamDeathMatch0':
+                        $defaultTime = 3600;
+                        break;
 
-            case 'Bloodmoney0':
-                $defaultTime = 1200;
+                    case 'Bloodmoney0':
+                        $defaultTime = 1200;
+                        break;
+                }
                 break;
 
             default:
-                return;
+                return null;
         }
 
         $startingRoundTimer = ($this->divide($defaultTime, 100) * $modifier);
