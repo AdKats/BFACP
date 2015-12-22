@@ -79,7 +79,7 @@
                                         ], [
                                             'target' => '_blank'
                                         ]) }}
-                                        <a href="javascript://" class="dotted" uib-popover-template="geoPopover.templateUrl" popover-trigger="mouseenter">Geo Info</a>
+                                        <a href="javascript://" class="dotted" uib-popover-template="geoPopover.templateUrl" popover-trigger="mouseenter"><i class="fa fa-info-circle"></i></a>
                                     @else
                                     <span class="text-red">N/A</span>
                                     @endif
