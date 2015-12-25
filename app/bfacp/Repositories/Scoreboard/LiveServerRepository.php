@@ -563,7 +563,10 @@ class LiveServerRepository extends BaseRepository
             throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
         }
 
-        return true;
+        return [
+            'player' => $player,
+            'message' => $originalMessage
+        ];
     }
 
     /**
@@ -768,7 +771,9 @@ class LiveServerRepository extends BaseRepository
                     }
 
                     if (!$skipLog) {
-                        $this->log($player, 'player_yell', $message, $duration);
+                        $record = $this->log($player, 'player_yell', $message, $duration);
+
+                        return $record['record'];
                     }
                 } else {
                     throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
@@ -861,7 +866,10 @@ class LiveServerRepository extends BaseRepository
             throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
         }
 
-        return true;
+        return [
+            'player' => $player,
+            'message' => $dbMessage
+        ];
     }
 
     /**
@@ -900,7 +908,10 @@ class LiveServerRepository extends BaseRepository
             throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
         }
 
-        return true;
+        return [
+            'player' => $player,
+            'message' => $message
+        ];
     }
 
     /**
@@ -918,14 +929,18 @@ class LiveServerRepository extends BaseRepository
             $p = Player::where('GameID', $this->gameID)->where('SoldierName', $player)->first();
 
             if (!$p) {
-                throw new PlayerNotFoundException(404, 'Unable to punish player. No match found.');
+                throw new PlayerNotFoundException(404, 'Unable to punish. %s was not found.', $player);
             }
 
             if (empty($message)) {
                 throw new RconException(400, 'No reason provided');
             }
 
-            return $this->log($player, 'player_punish', $message, 0, false);
+            return [
+                'player' => $player,
+                'message' => $message,
+                'record' => $this->log($player, 'player_punish', $message, 0, false),
+            ];
         }
 
         throw new RconException(400, sprintf('"%s" is not a valid name.', $player));

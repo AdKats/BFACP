@@ -4,6 +4,7 @@ use BFACP\Battlefield\Player;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 class ReputationCalculation extends Command
 {
@@ -61,7 +62,7 @@ class ReputationCalculation extends Command
                     $txt = sprintf("[%u][%u ms] %s", $player->PlayerID, $execClock, $player->SoldierName);
 
                     $this->info("Updated player: " . $txt);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $this->error('Update failed. Reason: ' . $e->getMessage());
                 }
             }

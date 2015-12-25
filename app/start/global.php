@@ -57,32 +57,36 @@ App::error(function (Exception $exception, $code) {
 
     Log::error($exception);
 
-    if ($exception instanceof PDOException) {
-        $clientIp = $_SERVER['REMOTE_ADDR'];
-        $whitelist = getenv('IP_WHITELIST') !== false ? explode('|', getenv('IP_WHITELIST')) : [];
-        $isWhitelisted = in_array($clientIp, $whitelist);
+    if (App::runningInConsole()) {
+        die($exception->getMessage() . PHP_EOL);
+    } else {
+        if ($exception instanceof PDOException) {
+            $clientIp = $_SERVER['REMOTE_ADDR'];
+            $whitelist = getenv('IP_WHITELIST') !== false ? explode('|', getenv('IP_WHITELIST')) : [];
+            $isWhitelisted = in_array($clientIp, $whitelist);
 
-        if (Request::ajax() || Request::is('api/*')) {
-            return MainHelper::response(($isWhitelisted ? [$exception->getMessage()] : null), 'Database Error!',
-                'error', 500);
+            if (Request::ajax() || Request::is('api/*')) {
+                return MainHelper::response(($isWhitelisted ? [$exception->getMessage()] : null), 'Database Error!',
+                    'error', 500);
+            }
+
+            return Response::view('system.db', compact('exception', 'isWhitelisted'), 500);
         }
 
-        return Response::view('system.db', compact('exception', 'isWhitelisted'), 500);
-    }
-
-    if (!Config::get('app.debug')) {
-        if (Request::ajax() || Request::is('api/*')) {
-            return MainHelper::response(null, $exception->getMessage(), 'error', 500);
-        } else {
-            View::share('page_title', 'Fatal Error');
-            return Response::view('system.error', compact('exception', 'code'), 500);
+        if (!Config::get('app.debug')) {
+            if (Request::ajax() || Request::is('api/*')) {
+                return MainHelper::response(null, $exception->getMessage(), 'error', 500);
+            } else {
+                View::share('page_title', 'Fatal Error');
+                return Response::view('system.error', compact('exception', 'code'), 500);
+            }
         }
-    }
 
-    if (Request::is('api/*')) {
-        return MainHelper::response([
-            $exception->getMessage(),
-        ], 'Fatal Error', 'error', 500);
+        if (Request::is('api/*')) {
+            return MainHelper::response([
+                $exception->getMessage(),
+            ], 'Fatal Error', 'error', 500);
+        }
     }
 });
 

@@ -601,18 +601,61 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
 
         $scope.admin = {
             action: 'say',
+            processing: false,
             message: '',
+            needsConfirm: function(action, count) {
+                if(count > 5) {
+
+                    switch(action) {
+                        case "kickall":
+                            action = "kick all";
+                            break;
+                    }
+
+                    var c = confirm("Are you sure you want to " + action + " " + count + " players?");
+                    if(c == true) {
+                        return true;
+                    }
+                }
+
+                return false;
+            },
             submit: function () {
                 var action = $scope.admin.action;
                 var message = $scope.admin.message;
                 var players = $scope.selectedPlayers.join();
                 var playerCount = $scope.selectedPlayers.length;
+                $scope.admin.processing = true;
+
+                if(players.length < 1) {
+                    toastr.error('You need to have at least 1 player selected.');
+                    $scope.admin.processing = false;
+                    return;
+                }
 
                 switch (action) {
                     case "kill":
-                        $scope.admin.killPlayer(players, message);
+                        if($scope.admin.needsConfirm(action, playerCount)) {
+                            $scope.admin.killPlayer(players, message);
+                        }
                         break;
 
+                    case "kick":
+                    case "kickall":
+                        if(action == 'kickall') {
+                            if(confirm("You are about to kick all players from the server. Continue?")) {
+                                players = $("input[name='players']").map(function() { return this.value; }).get().join();
+                            }
+                        }
+
+                        if($scope.admin.needsConfirm(action, playerCount)) {
+                            $scope.admin.kickPlayer(players, message);
+                        }
+                        break;
+
+                    default:
+                        $scope.admin.processing = false;
+                        break;
                 }
             },
             resetSys: function () {
@@ -635,7 +678,8 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 $scope.chat.sending = true;
 
                 SBA.say($scope.selectedId, undefined, undefined, message).success(function (data) {
-                    $scope.messages.push(data.data.chat);
+                    var chatrecord = data.data.passed[0].record;
+                    $scope.messages.push(chatrecord);
                     $scope.chat.message = '';
                 }).error(function (e) {
                     console.error('Error: ', e);
@@ -645,26 +689,179 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 });
             },
             killPlayer: function (players, message) {
-                if(players.length < 1) {
-                    toastr.error('You need to have at least 1 player selected.');
-                    return;
-                }
-
                 SBA.kill($scope.selectedId, players, message).success(function (data) {
                     var status = data.status;
+                    var player = null;
+                    var res = null;
+                    var failed = data.data.failed;
+                    var passed = data.data.passed;
 
                     if (status == 'success') {
-                        toastr.success('Selected players have been killed.');
+                        for (var i = 0; i < failed.length; i++) {
+                            player = failed[i];
+                            toastr.warning(player.message);
+                        };
+
+                        for (var i = 0; i < passed.length; i++) {
+                            player = passed[i];
+                            toastr.success(player.player, player.message);
+                        };
+
                         $scope.admin.resetSys();
                     } else {
-                        toastr.error('Players were not killed due to server side error.');
+                        toastr.error(data.message);
                     }
+
+                    $scope.admin.processing = false;
                 }).error(function (e) {
                     console.error(e);
                 });
-            }
+            },
+            punishPlayer: function(players, message) {
+                SBA.punish($scope.selectedId, players, message).success(function (data) {
+                    var status = data.status;
+                    var player = null;
+                    var res = null;
+                    var failed = data.data.failed;
+                    var passed = data.data.passed;
+
+                    if (status == 'success') {
+                        for (var i = 0; i < failed.length; i++) {
+                            player = failed[i];
+                            toastr.warning(player.message);
+                        };
+
+                        for (var i = 0; i < passed.length; i++) {
+                            player = passed[i];
+                            toastr.success(player.player, player.message);
+                        };
+
+                        $scope.admin.resetSys();
+                    } else {
+                        toastr.error(data.message);
+                    }
+
+                    $scope.admin.processing = false;
+                }).error(function (e) {
+                    console.error(e);
+                });
+            },
+            kickPlayer: function (players, message) {
+                SBA.kick($scope.selectedId, players, message).success(function (data) {
+                    var status = data.status;
+                    var player = null;
+                    var res = null;
+                    var failed = data.data.failed;
+                    var passed = data.data.passed;
+
+                    if (status == 'success') {
+                        for (var i = 0; i < failed.length; i++) {
+                            player = failed[i];
+                            toastr.warning(player.message);
+                        };
+
+                        for (var i = 0; i < passed.length; i++) {
+                            player = passed[i];
+                            toastr.success(player.player, player.message);
+                        };
+
+                        $scope.admin.resetSys();
+                    } else {
+                        toastr.error(data.message);
+                    }
+
+                    $scope.admin.processing = false;
+                }).error(function (e) {
+                    console.error(e);
+                });
+            },
+            switchPlayer: function(players, team, squad, locked) {
+                SBA.teamswitch($scope.selectedId, players, squad, locked).success(function (data) {
+                    var status = data.status;
+                    var player = null;
+                    var res = null;
+                    var failed = data.data.failed;
+                    var passed = data.data.passed;
+
+                    if (status == 'success') {
+                        for (var i = 0; i < failed.length; i++) {
+                            player = failed[i];
+                            toastr.warning(player.message);
+                        };
+
+                        for (var i = 0; i < passed.length; i++) {
+                            player = passed[i];
+                            toastr.success(player.player, player.message);
+                        };
+
+                        $scope.admin.resetSys();
+                    } else {
+                        toastr.error(data.message);
+                    }
+
+                    $scope.admin.processing = false;
+                }).error(function (e) {
+                    console.error(e);
+                });
+            },
+            sendSay: function(players, type, message, teamID) {
+                SBA.say($scope.selectedId, players, type, message, teamID).success(function (data) {
+                    var status = data.status;
+                    var player = null;
+                    var res = null;
+                    var failed = data.data.failed;
+                    var passed = data.data.passed;
+
+                    if (status == 'success') {
+                        for (var i = 0; i < failed.length; i++) {
+                            player = failed[i];
+                            toastr.warning(player.message);
+                        };
+
+                        for (var i = 0; i < passed.length; i++) {
+                            player = passed[i];
+                            toastr.success(player.player, player.message);
+                        };
+
+                        $scope.admin.resetSys();
+                    } else {
+                        toastr.error(data.message);
+                    }
+
+                    $scope.admin.processing = false;
+                }).error(function (e) {
+                    console.error(e);
+                });
+            },
+            sendYell: function(players, type, message, teamID, duration) {
+                SBA.yell($scope.selectedId, players, type, message, teamID, duration).success(function (data) {
+                    var status = data.status;
+                    var player = null;
+                    var res = null;
+                    var failed = data.data.failed;
+                    var passed = data.data.passed;
+
+                    if (status == 'success') {
+                        for (var i = 0; i < failed.length; i++) {
+                            player = failed[i];
+                            toastr.warning(player.message);
+                        };
+
+                        for (var i = 0; i < passed.length; i++) {
+                            player = passed[i];
+                            toastr.success(player.player, player.message);
+                        };
+
+                        $scope.admin.resetSys();
+                    } else {
+                        toastr.error(data.message);
+                    }
+
+                    $scope.admin.processing = false;
+                }).error(function (e) {
+                    console.error(e);
+                });
+            },
         };
-
-
     }
 ]);
