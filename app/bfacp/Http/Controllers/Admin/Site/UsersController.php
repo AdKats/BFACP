@@ -44,10 +44,10 @@ class UsersController extends BaseController
         $repo = app('BFACP\Repositories\UserRepository');
 
         $v = Validator::make(Input::all(), [
-            'username' => 'required|alpha_num|min:4|unique:bfacp_users,username',
+            'username' => 'required|alpha_dash|min:4|unique:bfacp_users,username',
             'email' => 'required|email|unique:bfacp_users,email',
             'language' => 'required|in:' . implode(',', array_keys(Config::get('bfacp.site.languages'))),
-            'soldier'  => 'exists:tbl_playerdata,SoldierName',
+            'soldier' => 'exists:tbl_playerdata,SoldierName',
             'role' => 'required',
             'language' => 'required',
         ]);
@@ -98,6 +98,7 @@ class UsersController extends BaseController
             return View::make('admin.site.users.edit', compact('user', 'page_title', 'roles'));
         } catch (ModelNotFoundException $e) {
             $this->messages[] = Lang::get('alerts.user.invlid', ['userid' => $id]);
+
             return Redirect::route('admin.site.users.index')->withErrors($this->messages);
         }
     }
@@ -120,7 +121,7 @@ class UsersController extends BaseController
             $soldiers = explode(',', Input::get('soldiers', ''));
 
             $v = Validator::make(Input::all(), [
-                'username' => 'required|alpha_num|min:4|unique:bfacp_users,username,' . $id,
+                'username' => 'required|alpha_dash|min:4|unique:bfacp_users,username,' . $id,
                 'email' => 'required|email|unique:bfacp_users,email,' . $id,
                 'language' => 'required|in:' . implode(',', array_keys(Config::get('bfacp.site.languages'))),
                 'generate_pass' => 'boolean',
@@ -215,6 +216,7 @@ class UsersController extends BaseController
             return Redirect::route('admin.site.users.edit', [$id])->withMessages($this->messages);
         } catch (ModelNotFoundException $e) {
             $this->messages[] = Lang::get('alerts.user.invlid', ['userid' => $id]);
+
             return Redirect::route('admin.site.users.edit', [$id])->withErrors($this->messages);
         }
     }
@@ -238,6 +240,7 @@ class UsersController extends BaseController
             ], Lang::get('alerts.user.deleted', compact('username')));
         } catch (ModelNotFoundException $e) {
             $this->messages[] = Lang::get('alerts.user.invlid', ['userid' => $id]);
+
             return Redirect::route('admin.site.users.index')->withErrors($this->messages);
         }
     }

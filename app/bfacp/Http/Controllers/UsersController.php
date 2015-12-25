@@ -45,6 +45,7 @@ class UsersController extends BaseController
 
     /**
      * Save the changes made to the users account
+     *
      * @return Redirect
      */
     public function saveAccountSettings()
@@ -78,13 +79,13 @@ class UsersController extends BaseController
                 'lang' => $lang,
             ]);
 
-            $langHuman = Config::get('bfacp.site.languages')[$lang];
+            $langHuman = Config::get('bfacp.site.languages')[ $lang ];
 
             $this->messages[] = Lang::get('user.notifications.account.language.changed', ['lang' => $langHuman]);
         }
 
         // Change the user password if they filled out the fields and new passwords match
-        if(Input::has('password') && Input::has('password_confirmation') && $password == $password_confirmation) {
+        if (Input::has('password') && Input::has('password_confirmation') && $password == $password_confirmation) {
             $user->password = $password;
             $user->password_confirmation = $password;
             $this->messages[] = Lang::get('user.notifications.password.email.changed');
