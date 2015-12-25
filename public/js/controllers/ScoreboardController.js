@@ -603,27 +603,27 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             action: 'say',
             processing: false,
             message: '',
-            doCheck: function(players, needsConfirm, skipPlayerCheck) {
-                if(needsConfirm === undefined) {
+            doCheck: function (players, needsConfirm, skipPlayerCheck) {
+                if (needsConfirm === undefined) {
                     needsConfirm = true;
                 }
 
-                if(skipPlayerCheck === undefined) {
+                if (skipPlayerCheck === undefined) {
                     skipPlayerCheck = false;
                 }
 
                 var action = $scope.admin.action;
                 var count = players;
 
-                if(count < 1 && !skipPlayerCheck) {
+                if (count < 1 && !skipPlayerCheck) {
                     toastr.error('You need to have at least 1 player selected.');
                     $scope.admin.processing = false;
                     return false;
                 }
 
-                if(needsConfirm) {
-                    if(count > 5 || action == "kickall") {
-                        switch(action) {
+                if (needsConfirm) {
+                    if (count > 5 || action == "kickall") {
+                        switch (action) {
                             case "kickall":
                                 action = "kick all";
                                 break;
@@ -647,7 +647,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
 
                 switch (action) {
                     case "kill":
-                        if(!$scope.admin.doCheck(playerCount)) {
+                        if (!$scope.admin.doCheck(playerCount)) {
                             $scope.admin.processing = false;
                             break;
                         }
@@ -657,10 +657,14 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
 
                     case "kick":
                     case "kickall":
-                        if(action == 'kickall') {
-                            if(confirm("You are about to kick all players from the server. Continue?")) {
-                                players = $("input[name='players']").map(function() { return this.value; }).get().join();
-                                playerCount = $("input[name='players']").map(function() { return this.value; }).get().length;
+                        if (action == 'kickall') {
+                            if (confirm("You are about to kick all players from the server. Continue?")) {
+                                players = $("input[name='players']").map(function () {
+                                    return this.value;
+                                }).get().join();
+                                playerCount = $("input[name='players']").map(function () {
+                                    return this.value;
+                                }).get().length;
                                 skipPlayerCheck = true;
                             } else {
                                 $scope.admin.processing = false;
@@ -668,12 +672,9 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                             }
                         }
 
-                        console.log(skipPlayerCheck);
                         var check = $scope.admin.doCheck(playerCount, true, skipPlayerCheck);
 
-                        console.log(check);
-
-                        if(!check) {
+                        if (!check) {
                             $scope.admin.processing = false;
                             break;
                         }
@@ -728,13 +729,11 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         for (var i = 0; i < failed.length; i++) {
                             player = failed[i];
                             toastr.warning(player.message);
-                        };
-
+                        }
                         for (var i = 0; i < passed.length; i++) {
                             player = passed[i];
                             toastr.success(player.player, player.message);
-                        };
-
+                        }
                         $scope.admin.resetSys();
                     } else {
                         toastr.error(data.message);
@@ -745,7 +744,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                     console.error(e);
                 });
             },
-            punishPlayer: function(players, message) {
+            punishPlayer: function (players, message) {
                 SBA.punish($scope.selectedId, players, message).success(function (data) {
                     var status = data.status;
                     var player = null;
@@ -757,13 +756,11 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         for (var i = 0; i < failed.length; i++) {
                             player = failed[i];
                             toastr.warning(player.message);
-                        };
-
+                        }
                         for (var i = 0; i < passed.length; i++) {
                             player = passed[i];
                             toastr.success(player.player, player.message);
-                        };
-
+                        }
                         $scope.admin.resetSys();
                     } else {
                         toastr.error(data.message);
@@ -786,13 +783,11 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         for (var i = 0; i < failed.length; i++) {
                             player = failed[i];
                             toastr.warning(player.message);
-                        };
-
+                        }
                         for (var i = 0; i < passed.length; i++) {
                             player = passed[i];
                             toastr.success(player.player, player.message);
-                        };
-
+                        }
                         $scope.admin.resetSys();
                     } else {
                         toastr.error(data.message);
@@ -803,7 +798,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                     console.error(e);
                 });
             },
-            switchPlayer: function(players, team, squad, locked) {
+            switchPlayer: function (players, team, squad, locked) {
                 SBA.teamswitch($scope.selectedId, players, squad, locked).success(function (data) {
                     var status = data.status;
                     var player = null;
@@ -815,13 +810,11 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         for (var i = 0; i < failed.length; i++) {
                             player = failed[i];
                             toastr.warning(player.message);
-                        };
-
+                        }
                         for (var i = 0; i < passed.length; i++) {
                             player = passed[i];
                             toastr.success(player.player, player.message);
-                        };
-
+                        }
                         $scope.admin.resetSys();
                     } else {
                         toastr.error(data.message);
@@ -832,7 +825,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                     console.error(e);
                 });
             },
-            sendSay: function(players, type, message, teamID) {
+            sendSay: function (players, type, message, teamID) {
                 SBA.say($scope.selectedId, players, type, message, teamID).success(function (data) {
                     var status = data.status;
                     var player = null;
@@ -844,13 +837,11 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         for (var i = 0; i < failed.length; i++) {
                             player = failed[i];
                             toastr.warning(player.message);
-                        };
-
+                        }
                         for (var i = 0; i < passed.length; i++) {
                             player = passed[i];
                             toastr.success(player.player, player.message);
-                        };
-
+                        }
                         $scope.admin.resetSys();
                     } else {
                         toastr.error(data.message);
@@ -861,7 +852,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                     console.error(e);
                 });
             },
-            sendYell: function(players, type, message, teamID, duration) {
+            sendYell: function (players, type, message, teamID, duration) {
                 SBA.yell($scope.selectedId, players, type, message, teamID, duration).success(function (data) {
                     var status = data.status;
                     var player = null;
@@ -873,13 +864,11 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         for (var i = 0; i < failed.length; i++) {
                             player = failed[i];
                             toastr.warning(player.message);
-                        };
-
+                        }
                         for (var i = 0; i < passed.length; i++) {
                             player = passed[i];
                             toastr.success(player.player, player.message);
-                        };
-
+                        }
                         $scope.admin.resetSys();
                     } else {
                         toastr.error(data.message);
