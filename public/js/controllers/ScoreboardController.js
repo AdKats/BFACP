@@ -622,7 +622,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 }
 
                 if(needsConfirm) {
-                    if(count > 5) {
+                    if(count > 5 || action == "kickall") {
                         switch(action) {
                             case "kickall":
                                 action = "kick all";
@@ -662,11 +662,20 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         if(action == 'kickall') {
                             if(confirm("You are about to kick all players from the server. Continue?")) {
                                 players = $("input[name='players']").map(function() { return this.value; }).get().join();
+                                playerCount = $("input[name='players']").map(function() { return this.value; }).get().length;
                                 skipPlayerCheck = true;
+                            } else {
+                                $scope.admin.processing = false;
+                                break;
                             }
                         }
 
-                        if(!$scope.admin.doCheck(playerCount, true, skipPlayerCheck)) {
+                        console.log(skipPlayerCheck);
+                        var check = $scope.admin.doCheck(playerCount, true, skipPlayerCheck);
+
+                        console.log(check);
+
+                        if(!check) {
                             $scope.admin.processing = false;
                             break;
                         }
