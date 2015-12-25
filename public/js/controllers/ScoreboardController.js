@@ -633,8 +633,6 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
 
                         return c;
                     }
-
-                    return false;
                 }
 
                 return true;
