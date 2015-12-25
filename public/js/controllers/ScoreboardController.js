@@ -604,8 +604,14 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             processing: false,
             message: '',
             doCheck: function(players, needsConfirm, skipPlayerCheck) {
-                needsConfirm = true;
-                skipPlayerCheck = false;
+                if(needsConfirm === undefined) {
+                    needsConfirm = true;
+                }
+
+                if(skipPlayerCheck === undefined) {
+                    skipPlayerCheck = false;
+                }
+
                 var action = $scope.admin.action;
                 var count = players;
 
