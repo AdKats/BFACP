@@ -603,41 +603,52 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             action: 'say',
             processing: false,
             message: '',
-            needsConfirm: function(action, count) {
-                if(count > 5) {
+            doCheck: function(players, needsConfirm, skipPlayerCheck) {
+                needsConfirm = true;
+                skipPlayerCheck = false;
+                var action = $scope.admin.action;
+                var count = players;
 
-                    switch(action) {
-                        case "kickall":
-                            action = "kick all";
-                            break;
-                    }
-
-                    var c = confirm("Are you sure you want to " + action + " " + count + " players?");
-                    if(c == true) {
-                        return true;
-                    }
+                if(count < 1 && !skipPlayerCheck) {
+                    toastr.error('You need to have at least 1 player selected.');
+                    $scope.admin.processing = false;
+                    return false;
                 }
 
-                return false;
+                if(needsConfirm) {
+                    if(count > 5) {
+                        switch(action) {
+                            case "kickall":
+                                action = "kick all";
+                                break;
+                        }
+
+                        var c = confirm("Are you sure you want to " + action + " " + count + " players?");
+
+                        return c;
+                    }
+
+                    return false;
+                }
+
+                return true;
             },
             submit: function () {
                 var action = $scope.admin.action;
                 var message = $scope.admin.message;
                 var players = $scope.selectedPlayers.join();
                 var playerCount = $scope.selectedPlayers.length;
+                var skipPlayerCheck = false;
                 $scope.admin.processing = true;
-
-                if(players.length < 1) {
-                    toastr.error('You need to have at least 1 player selected.');
-                    $scope.admin.processing = false;
-                    return;
-                }
 
                 switch (action) {
                     case "kill":
-                        if($scope.admin.needsConfirm(action, playerCount)) {
-                            $scope.admin.killPlayer(players, message);
+                        if(!$scope.admin.doCheck(playerCount)) {
+                            $scope.admin.processing = false;
+                            break;
                         }
+
+                        $scope.admin.killPlayer(players, message);
                         break;
 
                     case "kick":
@@ -645,12 +656,16 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         if(action == 'kickall') {
                             if(confirm("You are about to kick all players from the server. Continue?")) {
                                 players = $("input[name='players']").map(function() { return this.value; }).get().join();
+                                skipPlayerCheck = true;
                             }
                         }
 
-                        if($scope.admin.needsConfirm(action, playerCount)) {
-                            $scope.admin.kickPlayer(players, message);
+                        if(!$scope.admin.doCheck(playerCount, true, skipPlayerCheck)) {
+                            $scope.admin.processing = false;
+                            break;
                         }
+
+                        $scope.admin.kickPlayer(players, message);
                         break;
 
                     default:
