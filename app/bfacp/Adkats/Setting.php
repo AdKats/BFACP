@@ -88,7 +88,7 @@ class Setting extends Elegant
      */
     public function scopeServers($query, $ids)
     {
-        if(is_integer($ids)) {
+        if(is_numeric($ids)) {
             return $query->where('server_id', $ids);
         }
 
