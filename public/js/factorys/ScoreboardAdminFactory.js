@@ -3,7 +3,7 @@ angular.module('bfacp').factory('SBA', ['$http', function ($http) {
 
     return {
         say: function (server_id, players, type, message, teamID) {
-            payload = {
+            var payload = {
                 server_id: server_id,
                 type: type,
                 message: message,
@@ -15,7 +15,7 @@ angular.module('bfacp').factory('SBA', ['$http', function ($http) {
         },
 
         yell: function (server_id, players, type, message, teamID, duration) {
-            payload = {
+            var payload = {
                 server_id: server_id,
                 type: type,
                 message: message,
@@ -28,7 +28,7 @@ angular.module('bfacp').factory('SBA', ['$http', function ($http) {
         },
 
         tell: function (server_id, players, message) {
-            payload = {
+            var payload = {
                 server_id: server_id,
                 message: message,
                 players: players
@@ -38,7 +38,7 @@ angular.module('bfacp').factory('SBA', ['$http', function ($http) {
         },
 
         kill: function (server_id, players, message) {
-            payload = {
+            var payload = {
                 server_id: server_id,
                 message: message,
                 players: players
@@ -48,7 +48,7 @@ angular.module('bfacp').factory('SBA', ['$http', function ($http) {
         },
 
         kick: function (server_id, players, message) {
-            payload = {
+            var payload = {
                 server_id: server_id,
                 message: message,
                 players: players
@@ -58,7 +58,7 @@ angular.module('bfacp').factory('SBA', ['$http', function ($http) {
         },
 
         teamswitch: function (server_id, players, team, squad, locked) {
-            payload = {
+            var payload = {
                 server_id: server_id,
                 team: team,
                 squad: squad,
@@ -70,7 +70,7 @@ angular.module('bfacp').factory('SBA', ['$http', function ($http) {
         },
 
         punish: function (server_id, players, message) {
-            payload = {
+            var payload = {
                 server_id: server_id,
                 message: message,
                 players: players
