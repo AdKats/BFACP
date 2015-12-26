@@ -56,7 +56,7 @@ return array(
 
 	'from' => array(
 		'address' => 'noreply@mg.gamerethos.net',
-		'name' => 'noreply@' . isset($_SERVER['SERVER_NAME']) ?
+		'name' => 'noreply@' . array_key_exists('SERVER_NAME', $_SERVER) ?
 			$_SERVER['SERVER_NAME'] : 'localhost'
 	),
 
