@@ -18,20 +18,21 @@ class UserRepository
      * Create a new user
      *
      * @param  array   $input
-     * @param  integer $role Default role is 2
+     * @param  integer $role        Default role is 2
      * @param  bool    $confirmed
      * @param  bool    $autoGenPass Generate a secure password if true
+     * @param bool     $skipEmail   Skips the sending of the email
      *
      * @return User
      */
-    public function signup($input = [], $role = 2, $confirmed = false, $autoGenPass = false)
+    public function signup($input = [], $role = 2, $confirmed = false, $autoGenPass = false, $skipEmail = false)
     {
         $user = new User();
 
         $user->username = array_get($input, 'username');
         $user->email = array_get($input, 'email');
 
-        if($autoGenPass) {
+        if ($autoGenPass) {
             $pass1 = $this->generatePassword();
             $pass2 = $pass1;
         } else {
@@ -77,7 +78,9 @@ class UserRepository
                 }
             }
 
-            $this->sendPasswordChangeEmail($user->username, $user->email, $pass1);
+            if (!$skipEmail) {
+                $this->sendPasswordChangeEmail($user->username, $user->email, $pass1);
+            }
         }
 
         return $user;
@@ -205,6 +208,7 @@ class UserRepository
      * @param  string $username
      * @param  string $email
      * @param  string $password
+     *
      * @return null
      */
     public function sendPasswordChangeEmail($username, $email, $newPassword)
@@ -213,7 +217,7 @@ class UserRepository
         Mail::send('emails.user.passwordchange', compact('username', 'newPassword'),
             function ($message) use ($username, $email) {
                 $message->to($email, $username)
-                ->subject(Lang::get('email.password_changed.subject'));
-        });
+                    ->subject(Lang::get('email.password_changed.subject'));
+            });
     }
 }

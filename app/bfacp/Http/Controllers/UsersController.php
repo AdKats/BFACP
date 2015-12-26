@@ -153,7 +153,7 @@ class UsersController extends BaseController
                 'password_confirmation'))->withErrors($v);
         }
 
-        $user = $this->repository->signup($input);
+        $user = $this->repository->signup($input, 2, false, false, true);
 
         if (is_null($user->id)) {
             return Redirect::route('user.register')->withInput(Input::except('password',

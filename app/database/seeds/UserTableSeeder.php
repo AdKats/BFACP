@@ -15,10 +15,10 @@ class UserTableSeeder extends Seeder
         $password = 'password';
 
         $user = $this->repository->signup([
-            'username'              => 'Admin',
-            'email'                 => 'admin@example.com',
-            'password'              => $password,
-            'password_confirmation' => $password
-        ], 1, true);
+            'username' => 'Admin',
+            'email' => 'admin@example.com',
+            'password' => $password,
+            'password_confirmation' => $password,
+        ], 1, true, false, true);
     }
 }
