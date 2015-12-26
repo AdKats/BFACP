@@ -4,8 +4,6 @@ use BFACP\Adkats\Special;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\BaseController;
 use Exception;
-use GuzzleHttp\Exception\RequestException;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
@@ -64,6 +62,7 @@ class SpecialPlayersController extends BaseController
             return MainHelper::response(null, $message);
         } catch (ModelNotFoundException $e) {
             $message = sprintf('No player found with special id of %u', $id);
+
             return MainHelper::response(null, $message, 'error', 404);
         } catch (Exception $e) {
             return MainHelper::response($e, $e->getMessage(), 'error', 500);

@@ -565,7 +565,7 @@ class LiveServerRepository extends BaseRepository
 
         return [
             'player' => $player,
-            'message' => $originalMessage
+            'message' => $originalMessage,
         ];
     }
 
@@ -868,7 +868,7 @@ class LiveServerRepository extends BaseRepository
 
         return [
             'player' => $player,
-            'message' => $dbMessage
+            'message' => $dbMessage,
         ];
     }
 
@@ -910,7 +910,7 @@ class LiveServerRepository extends BaseRepository
 
         return [
             'player' => $player,
-            'message' => $message
+            'message' => $message,
         ];
     }
 

@@ -181,6 +181,7 @@ class Metabans
 
         if ($v->fails()) {
             $this->setErrors($v->messages());
+
             return false;
         }
 

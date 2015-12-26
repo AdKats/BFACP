@@ -68,19 +68,19 @@ class ServersController extends BaseController
             $gameKey = strtolower($server->game->Name);
 
             // Add the server to the collection
-            $newCollection[ $gameKey ][ 'servers' ][] = $server;
+            $newCollection[ $gameKey ]['servers'][] = $server;
         }
 
         foreach ($newCollection as $key => $collection) {
             $online = 0;
             $total = 0;
 
-            foreach ($collection[ 'servers' ] as $server) {
+            foreach ($collection['servers'] as $server) {
                 $online += $server->usedSlots;
                 $total += $server->maxSlots;
             }
 
-            $newCollection[ $key ][ 'stats' ] = [
+            $newCollection[ $key ]['stats'] = [
                 'online' => $online,
                 'totalSlots' => $total,
                 'percentage' => MainHelper::percent($online, $total),
@@ -126,22 +126,22 @@ class ServersController extends BaseController
 
         $stats = [
             [
-                'name' => Lang::get('scoreboard.factions')[ 1 ][ 'full_name' ] . ' - Tickets',
+                'name' => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Tickets',
                 'data' => [],
                 'visible' => true,
             ],
             [
-                'name' => Lang::get('scoreboard.factions')[ 2 ][ 'full_name' ] . ' - Tickets',
+                'name' => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Tickets',
                 'data' => [],
                 'visible' => true,
             ],
             [
-                'name' => Lang::get('scoreboard.factions')[ 1 ][ 'full_name' ] . ' - Players',
+                'name' => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Players',
                 'data' => [],
                 'visible' => false,
             ],
             [
-                'name' => Lang::get('scoreboard.factions')[ 2 ][ 'full_name' ] . ' - Players',
+                'name' => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Players',
                 'data' => [],
                 'visible' => false,
             ],
@@ -152,42 +152,42 @@ class ServersController extends BaseController
             ],
         ];
 
-        $data[ 'roundId' ] = null;
+        $data['roundId'] = null;
 
         $results = DB::select($sql, [$id, $id]);
 
         foreach ($results as $result) {
-            if (is_null($data[ 'roundId' ])) {
-                $data[ 'roundId' ] = $result->round_id;
+            if (is_null($data['roundId'])) {
+                $data['roundId'] = $result->round_id;
             }
 
-            $stats[ 0 ][ 'data' ][] = [
+            $stats[0]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int) $result->team1_tickets,
+                (int)$result->team1_tickets,
             ];
 
-            $stats[ 1 ][ 'data' ][] = [
+            $stats[1]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int) $result->team2_tickets,
+                (int)$result->team2_tickets,
             ];
 
-            $stats[ 2 ][ 'data' ][] = [
+            $stats[2]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int) $result->team1_count,
+                (int)$result->team1_count,
             ];
 
-            $stats[ 3 ][ 'data' ][] = [
+            $stats[3]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int) $result->team2_count,
+                (int)$result->team2_count,
             ];
 
-            $stats[ 4 ][ 'data' ][] = [
+            $stats[4]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int) ($result->team1_count + $result->team2_count),
+                (int)($result->team1_count + $result->team2_count),
             ];
         }
 
-        $data[ 'stats' ] = $stats;
+        $data['stats'] = $stats;
 
         return MainHelper::response($data, null, null, null, false, true);
     }
@@ -216,7 +216,7 @@ class ServersController extends BaseController
                 throw new NotFoundHttpException();
             }
 
-            if (!$this->isLoggedIn || !$this->user->ability(null, $permissions[ 'scoreboard' ])) {
+            if (!$this->isLoggedIn || !$this->user->ability(null, $permissions['scoreboard'])) {
                 throw new AccessDeniedHttpException();
             }
 

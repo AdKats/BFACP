@@ -25,6 +25,7 @@ class HomeController extends BaseController
         // Cache results for 1 day
         $adkats_statistics = Cache::remember('adkats.statistics', 60 * 24, function () use (&$playerRepository) {
             $results = DB::select(File::get(storage_path() . '/sql/adkats_statistics.sql'));
+
             return head($results);
         });
 
@@ -66,6 +67,7 @@ class HomeController extends BaseController
             })->map(function ($perm) {
                 $p = clone($perm);
                 $p->name = explode('.', $perm->name)[2];
+
                 return $p;
             })->lists('display_name', 'name');
 

@@ -149,6 +149,7 @@ class PlayerRepository extends BaseRepository
     public function getPlayerCount()
     {
         $count = Player::count('PlayerID');
+
         return intval($count);
     }
 
@@ -209,7 +210,7 @@ class PlayerRepository extends BaseRepository
     /**
      * Returns the player session history
      *
-     * @param  integer $id    Player ID
+     * @param  integer $id Player ID
      *
      * @return object
      */
@@ -217,6 +218,7 @@ class PlayerRepository extends BaseRepository
     {
         try {
             $sessions = Player::findOrFail($id)->sessions()->orderBy('StartTime', 'desc')->get();
+
             return $sessions;
         } catch (ModelNotFoundException $e) {
             throw new PlayerNotFoundException(404, 'Player Not Found');

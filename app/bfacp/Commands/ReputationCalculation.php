@@ -1,10 +1,10 @@
 <?php namespace BFACP\Commands;
 
 use BFACP\Battlefield\Player;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
-use Exception;
 
 class ReputationCalculation extends Command
 {

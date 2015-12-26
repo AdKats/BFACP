@@ -28,7 +28,7 @@ class ReseedTables extends Command
     {
         parent::__construct();
 
-        if(!defined('STDIN')) {
+        if (!defined('STDIN')) {
             define('STDIN', fopen('php://stdin', 'r'));
         }
     }

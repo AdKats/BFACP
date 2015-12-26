@@ -338,7 +338,7 @@ class BansController extends BaseController
             $ban->record()->associate($record);
             $ban->ban_status = 'Disabled';
 
-            if(!is_null(Input::get('notes', null))) {
+            if (!is_null(Input::get('notes', null))) {
                 $ban->ban_notes = Input::get('notes', 'NoNotes');
             }
 

@@ -268,7 +268,7 @@ class Battlefield extends Main
 
             case 'BFH':
             case 'BFHL':
-                switch($gamemode) {
+                switch ($gamemode) {
                     case 'TurfWarLarge0':
                     case 'TurfWarSmall0':
                     case 'Heist0':
@@ -347,7 +347,7 @@ class Battlefield extends Main
 
             case 'BFH':
             case 'BFHL':
-                switch($gamemode) {
+                switch ($gamemode) {
                     case 'TurfWarLarge0':
                     case 'TurfWarSmall0':
                     case 'Heist0':
@@ -379,7 +379,9 @@ class Battlefield extends Main
         $mapName = 'MapNameNotFoundError';
 
         for ($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
-            if (strcasecmp($mapURI, $mapNamesXML->map[ $i ]->attributes()->uri) == 0 && $playmodeURI == $mapNamesXML->map[ $i ]->attributes()->playmode) {
+            if (strcasecmp($mapURI,
+                    $mapNamesXML->map[ $i ]->attributes()->uri) == 0 && $playmodeURI == $mapNamesXML->map[ $i ]->attributes()->playmode
+            ) {
                 $mapName = $mapNamesXML->map[ $i ]->attributes()->name;
             }
         }

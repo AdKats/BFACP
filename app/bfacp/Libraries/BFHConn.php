@@ -179,6 +179,7 @@ class BFHConn
 
         if ($loginStatus == $this->_globalVars['defaultServerResponse']) {
             $this->_isLoggedIn = true;
+
             return $loginStatus;
         } else {
             return $this->_globalMsg['LOGIN_FAILED'];
@@ -627,6 +628,7 @@ class BFHConn
 
         if ($loginStatus == $this->_globalVars['defaultServerResponse']) {
             $this->_isLoggedIn = true;
+
             return $loginStatus;
         } else {
             return $this->_globalMsg['LOGIN_FAILED'];
@@ -651,6 +653,7 @@ class BFHConn
     public function logout()
     {
         $this->_isLoggedIn = false;
+
         return $this->_array2String($this->_clientRequest('logout'), 0);
     }
 
@@ -850,7 +853,9 @@ class BFHConn
         $currentPlaymode = $this->getCurrentPlaymode();
 
         for ($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
-            if (strcasecmp($mapURI, $mapNamesXML->map[ $i ]->attributes()->uri) == 0 && $currentPlaymode == $mapNamesXML->map[ $i ]->attributes()->playmode) {
+            if (strcasecmp($mapURI,
+                    $mapNamesXML->map[ $i ]->attributes()->uri) == 0 && $currentPlaymode == $mapNamesXML->map[ $i ]->attributes()->playmode
+            ) {
                 $mapName = $mapNamesXML->map[ $i ]->attributes()->name;
             }
         }

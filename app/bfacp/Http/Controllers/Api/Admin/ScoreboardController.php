@@ -104,7 +104,7 @@ class ScoreboardController extends BaseController
         $data = [
             'failed' => $this->errors,
             'passed' => $this->data,
-            'other'  => $data,
+            'other' => $data,
         ];
 
         if (!empty($this->errors)) {

@@ -18,7 +18,9 @@ class RolesController extends BaseController
     {
         $guestCommandCount = Command::guest()->count();
         $roles = Role::with('users')->orderBy('role_name')->get();
-        return View::make('admin.adkats.roles.index', compact('roles', 'guestCommandCount'))->with('page_title', Lang::get('navigation.admin.adkats.items.roles.title'));
+
+        return View::make('admin.adkats.roles.index', compact('roles', 'guestCommandCount'))->with('page_title',
+            Lang::get('navigation.admin.adkats.items.roles.title'));
     }
 
     public function create()
@@ -38,7 +40,8 @@ class RolesController extends BaseController
             $permissions[ $group ][ $command_id ] = $command_name;
         });
 
-        return View::make('admin.adkats.roles.create', compact('permissions'))->with('page_title', Lang::get('navigation.admin.adkats.items.roles.items.create.title'));
+        return View::make('admin.adkats.roles.create', compact('permissions'))->with('page_title',
+            Lang::get('navigation.admin.adkats.items.roles.items.create.title'));
     }
 
     public function edit($id)
@@ -61,7 +64,8 @@ class RolesController extends BaseController
                 $permissions[ $group ][ $command_id ] = $command_name;
             });
 
-            return View::make('admin.adkats.roles.edit', compact('permissions', 'role'))->with('page_title', Lang::get('navigation.admin.adkats.items.roles.items.edit.title'));
+            return View::make('admin.adkats.roles.edit', compact('permissions', 'role'))->with('page_title',
+                Lang::get('navigation.admin.adkats.items.roles.items.edit.title'));
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.adkats.roles.index')->withErrors([
                 sprintf('No role found with ID #%s.', $id),

@@ -45,6 +45,7 @@ class BansController extends BaseController
 
         $avgBansPerDay = Cache::remember('bans.stats.average', 180, function () {
             $result = head(DB::select(File::get(storage_path() . '/sql/avgBansPerDay.sql')));
+
             return intval($result->total);
         });
 

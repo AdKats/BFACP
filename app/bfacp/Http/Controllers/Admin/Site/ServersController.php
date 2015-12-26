@@ -32,10 +32,10 @@ class ServersController extends BaseController
                 try {
                     $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogServer')->server($server);
                     $serverguid = $battlelog->guid();
-                } catch(Exception $e) {
+                } catch (Exception $e) {
                     $serverguid = null;
                     Session::flash('warnings', [
-                        'Unable to automatically get the battlelog server guid. Please manually enter it.'
+                        'Unable to automatically get the battlelog server guid. Please manually enter it.',
                     ]);
                 }
 

@@ -64,6 +64,7 @@ class Elegant extends Model
 
         if ($v->fails()) {
             $this->setErrors($v->messages());
+
             return false;
         }
 
