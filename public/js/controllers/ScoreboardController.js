@@ -118,6 +118,8 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
         $scope.neutral = [];
         $scope.admins = null;
         $scope.messages = [];
+        $scope.teamsList = [];
+        $scope.presetMessages = [];
         $scope.winning = {
             '1': false,
             '2': false,
@@ -386,6 +388,14 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 $scope.server = data.data.server;
                 $scope.teams = data.data.teams;
 
+                if ($scope.presetMessages.length == 0) {
+                    $scope.presetMessages = data.data._presetmessages;
+                }
+
+                if ($scope.teamsList.length == 0) {
+                    $scope.teamsList = data.data._teams;
+                }
+
                 if (data.data.admins !== undefined) {
                     $scope.admins = data.data.admins;
                 } else {
@@ -603,6 +613,11 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             action: 'say',
             processing: false,
             message: '',
+            actions: {
+                nuke: {
+                    team: null
+                }
+            },
             doCheck: function (players, needsConfirm, skipPlayerCheck) {
                 if (needsConfirm === undefined) {
                     needsConfirm = true;
@@ -643,6 +658,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 var players = $scope.selectedPlayers.join();
                 var playerCount = $scope.selectedPlayers.length;
                 var skipPlayerCheck = false;
+                var _players = $("input[name='players']");
                 $scope.admin.processing = true;
 
                 switch (action) {
@@ -655,14 +671,27 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         $scope.admin.killPlayer(players, message);
                         break;
 
+                    case "nuke":
+                        var team = $scope.admin.actions.nuke.team;
+                        try {
+                            if (confirm('Are you sure you want to NUKE the ' + team.label + '?')) {
+                                $scope.admin.sendNuke(team.id, team.label);
+                            }
+                        } catch (e) {
+                            toastr.error('Team not selected.');
+                        }
+
+                        $scope.admin.processing = false;
+                        break;
+
                     case "kick":
                     case "kickall":
                         if (action == 'kickall') {
                             if (confirm("You are about to kick all players from the server. Continue?")) {
-                                players = $("input[name='players']").map(function () {
+                                players = _players.map(function () {
                                     return this.value;
                                 }).get().join();
-                                playerCount = $("input[name='players']").map(function () {
+                                playerCount = _players.map(function () {
                                     return this.value;
                                 }).get().length;
                                 skipPlayerCheck = true;
@@ -879,6 +908,22 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                     console.error(e);
                 });
             },
+            sendNuke: function (teamId, teamName) {
+                SBA.nuke($scope.selectedId, teamId).success(function (data) {
+                    var status = data.status;
+
+                    if (status == 'success') {
+                        toastr.success('You NUKED the ' + teamName);
+                        $scope.admin.resetSys();
+                    } else {
+                        toastr.error(data.message);
+                    }
+
+                    $scope.admin.processing = false;
+                }).error(function (e) {
+                    console.error(e);
+                });
+            }
         };
     }
 ]);

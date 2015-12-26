@@ -83,7 +83,7 @@ class ScoreboardController extends BaseController
     /**
      * Index
      *
-     * @return \BFACP\Facades\Main
+     * @return MainHelper
      */
     public function anyIndex()
     {
@@ -97,7 +97,7 @@ class ScoreboardController extends BaseController
      * @param  string $message
      * @param  string $type
      *
-     * @return \BFACP\Facades\Main
+     * @return MainHelper
      */
     private function _response($data = null, $message = null, $type = null)
     {
@@ -136,7 +136,7 @@ class ScoreboardController extends BaseController
     /**
      * Sends a yell to the entire server, team, or selected player(s).
      *
-     * @return \BFACP\Facades\Main
+     * @return MainHelper
      */
     public function postYell()
     {
@@ -173,7 +173,7 @@ class ScoreboardController extends BaseController
     /**
      * Sends a say to the entire server, team, or selected player(s).
      *
-     * @return \BFACP\Facades\Main
+     * @return MainHelper
      */
     public function postSay()
     {
@@ -209,7 +209,7 @@ class ScoreboardController extends BaseController
     /**
      * Sends a tell to selected player(s).
      *
-     * @return \BFACP\Facades\Main
+     * @return MainHelper
      */
     public function postTell()
     {
@@ -229,7 +229,7 @@ class ScoreboardController extends BaseController
     /**
      * Kill the selected player(s).
      *
-     * @return \BFACP\Facades\Main
+     * @return MainHelper
      */
     public function postKill()
     {
@@ -250,9 +250,32 @@ class ScoreboardController extends BaseController
     }
 
     /**
+     * Nukes a targeted team
+     *
+     * @return MainHelper
+     */
+    public function postNuke() {
+        $this->hasPermission('admin.scoreboard.nuke');
+
+        if(Input::has('teamId')) {
+            $teamId = Input::get('teamId', 0);
+        } else {
+            return $this->_response(null, 'Team ID Required', 'error');
+        }
+
+        if(!is_numeric($teamId)) {
+            return $this->_response(null, 'Invalid Team ID', 'error');
+        }
+
+        $this->repository->adminNuke((int) $teamId);
+
+        return $this->_response();
+    }
+
+    /**
      * Kick the selected player(s).
      *
-     * @return \BFACP\Facades\Main
+     * @return MainHelper
      */
     public function postKick()
     {
@@ -275,7 +298,7 @@ class ScoreboardController extends BaseController
     /**
      * Move the selected player(s).
      *
-     * @return \BFACP\Facades\Main
+     * @return MainHelper
      */
     public function postTeamswitch()
     {
@@ -307,7 +330,7 @@ class ScoreboardController extends BaseController
     /**
      * Punish the selected player(s).
      *
-     * @return \BFACP\Facades\Main
+     * @return MainHelper
      */
     public function postPunish()
     {

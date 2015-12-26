@@ -77,6 +77,15 @@ angular.module('bfacp').factory('SBA', ['$http', function ($http) {
             };
 
             return $http.post(baseurl + '/punish', payload);
+        },
+
+        nuke: function (server_id, teamId) {
+            var payload = {
+                server_id: server_id,
+                teamId: teamId
+            };
+
+            return $http.post(baseurl + '/nuke', payload);
         }
     }
 }]);

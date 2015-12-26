@@ -384,10 +384,30 @@ class LiveServerRepository extends BaseRepository
                     'seconds' => $info[2] >= 4 ? $startingTimer - $round : $startingTimer,
                 ],
             ],
-            '_presetmessages' => isset($presetMessages) ? [''] + $presetMessages : [],
         ];
 
         $this->setFactions();
+
+        $this->data['_presetmessages'] = isset($presetMessages) ? [''] + $presetMessages : [];
+
+        $this->data['_teams'] = [
+            [
+                'id' => 1,
+                'label' => sprintf('%s (%s)', $this->TEAM1['full_name'], 'Team 1'),
+            ],
+            [
+                'id' => 2,
+                'label' => sprintf('%s (%s)', $this->TEAM2['full_name'], 'Team 2'),
+            ],
+            [
+                'id' => 3,
+                'label' => sprintf('%s (%s)', $this->TEAM3['full_name'], 'Team 3'),
+            ],
+            [
+                'id' => 4,
+                'label' => sprintf('%s (%s)', $this->TEAM4['full_name'], 'Team 4'),
+            ],
+        ];
 
         return $this;
     }
@@ -567,6 +587,33 @@ class LiveServerRepository extends BaseRepository
             'player' => $player,
             'message' => $originalMessage,
         ];
+    }
+
+    /**
+     * Nukes the targeted team
+     *
+     * @param int $team
+     *
+     * @return bool
+     */
+    public function adminNuke($team = 0)
+    {
+        $players = $this->client->tabulate($this->client->adminGetPlayerlist())['players'];
+
+        $teamName = $this->getTeamName($team);
+
+        $message = sprintf('NUKE issued on team %s', $teamName['full_name']);
+
+        foreach ($players as $player) {
+            if ($player['teamId'] == $team) {
+                $this->client->adminKillPlayer($player['name']);
+                $this->adminTell($player['name'], $message, 5, false, true, 1);
+            }
+        }
+
+        //$this->log($teamName, 'server_nuke', sprintf('Nuke Server (%s)', $teamName));
+
+        return true;
     }
 
     /**
@@ -971,7 +1018,7 @@ class LiveServerRepository extends BaseRepository
     /**
      * Logs action to database
      *
-     * @param string|Player $player
+     * @param string|Player $target
      * @param string        $command
      * @param string        $message
      * @param int           $duration
@@ -979,18 +1026,34 @@ class LiveServerRepository extends BaseRepository
      *
      * @return \BFACP\Adkats\Record
      */
-    private function log($player, $command, $message = 'No Message', $duration = 0, $sys = true)
+    private function log($target, $command, $message = 'No Message', $duration = 0, $sys = true)
     {
         $timestamp = Carbon::now();
-
-        if (!is_null($player)) {
-            $player = Player::where('GameID', $this->gameID)->where('SoldierName', $player)->first();
-        }
 
         $command = Command::where('command_key', $command)->first();
 
         if (!$command) {
             throw new RconException(500, 'Invalid command type');
+        }
+
+        if (!$target instanceof Player && is_string($target) && !in_array($command->command_key, ['server_nuke'])) {
+            $target = Player::where('GameID', $this->gameID)->where('SoldierName', $target)->first();
+        }
+
+        if ($target instanceof Player) {
+            $target_name = $target->SoldierName;
+            $target_id = $target->PlayerID;
+        } else {
+            $target_name = is_null($target) ? 'Server' : $target;
+            $target_id = null;
+        }
+
+        if ($this->admin instanceof Player) {
+            $source_name = $this->admin->SoldierName;
+            $source_id = $this->admin->PlayerID;
+        } else {
+            $source_name = $this->user->username;
+            $source_id = null;
         }
 
         $data = [];
@@ -1000,12 +1063,12 @@ class LiveServerRepository extends BaseRepository
                 'ServerID' => $this->serverID,
                 'logDate' => $timestamp,
                 'logMessage' => $message,
-                'logPlayerID' => is_null($this->admin) ? null : $this->admin->PlayerID,
-                'logSoldierName' => is_null($this->admin) ? $this->user->username : $this->admin->SoldierName,
+                'logPlayerID' => $source_id,
+                'logSoldierName' => $source_name,
                 'logSubset' => 'Global',
             ]);
 
-            if (!is_null($this->admin)) {
+            if ($this->admin instanceof Player) {
                 $data['chat']['player'] = $this->admin;
             }
         }
@@ -1019,10 +1082,10 @@ class LiveServerRepository extends BaseRepository
         $record->record_message = $message;
         $record->record_time = $timestamp;
         $record->server_id = $this->serverID;
-        $record->source_name = is_null($this->admin) ? $this->user->username : $this->admin->SoldierName;
-        $record->source_id = is_null($this->admin) ? null : $this->admin->PlayerID;
-        $record->target_name = is_null($player) ? 'Server' : $player->SoldierName;
-        $record->target_id = is_null($player) ? null : $player->PlayerID;
+        $record->source_name = $source_name;
+        $record->source_id = $source_id;
+        $record->target_name = $target_name;
+        $record->target_id = $target_id;
         $record->save();
 
         $data['record'] = $record;
