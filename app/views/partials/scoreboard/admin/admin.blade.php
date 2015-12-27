@@ -27,12 +27,6 @@
                         </div>
                     </div>
 
-                    <div ng-switch-when="pban"></div>
-
-                    <div ng-switch-when="say"></div>
-
-                    <div ng-switch-when="tban"></div>
-
                     <div ng-switch-when="teamswitch">
                         <div class="form-group">
                             <label class="control-label">Team</label>
@@ -63,9 +57,12 @@
                         </div>
                     </div>
 
-                    <div ng-switch-when="tell"></div>
-
-                    <div ng-switch-when="yell"></div>
+                    <div ng-switch-when="yell">
+                        <div class="form-group">
+                            <label class="control-label">Duration</label>
+                            <input type="number" class="form-control" ng-model="admin.actions.yell.duration" min="1" max="60">
+                        </div>
+                    </div>
                 </div>
 
                 <ul class="list-inline">

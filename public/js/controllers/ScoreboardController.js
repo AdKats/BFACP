@@ -660,6 +660,9 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                     team: 1,
                     squad: 0,
                     locked: false
+                },
+                yell: {
+                    duration: 10
                 }
             },
             doCheck: function (players, needsConfirm, skipPlayerCheck) {
@@ -790,6 +793,31 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         }
 
                         $scope.admin.switchPlayer(players, $scope.admin.actions.teamswitch.team, $scope.admin.actions.teamswitch.squad, $scope.admin.actions.teamswitch.locked);
+                        break;
+
+                    case "say":
+                        if (playerCount > 0) {
+                            $scope.admin.sendSay(players, 'Player', message);
+                        } else {
+                            $scope.admin.sendSay(undefined, 'All', message);
+                        }
+                        break;
+
+                    case "tell":
+                        if (!$scope.admin.doCheck(playerCount, false)) {
+                            $scope.admin.processing = false;
+                            break;
+                        }
+
+                        $scope.admin.sendTell(players, 'Player', message);
+                        break;
+
+                    case "yell":
+                        if (playerCount > 0) {
+                            $scope.admin.sendYell(players, 'Player', message, undefined, $scope.admin.actions.yell.duration);
+                        } else {
+                            $scope.admin.sendYell(undefined, 'All', message, undefined, $scope.admin.actions.yell.duration);
+                        }
                         break;
 
                     default:
@@ -1004,7 +1032,6 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 SBA.say($scope.selectedId, players, type, message, teamID).success(function (data) {
                     var status = data.status;
                     var player = null;
-                    var res = null;
                     var failed = data.data.failed;
                     var passed = data.data.passed;
 
@@ -1015,7 +1042,33 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         }
                         for (var i = 0; i < passed.length; i++) {
                             player = passed[i];
-                            toastr.success(player.player, player.message);
+                            toastr.success(player.message, player.player);
+                        }
+                        $scope.admin.resetSys();
+                    } else {
+                        toastr.error(data.message);
+                    }
+
+                    $scope.admin.processing = false;
+                }).error(function (e) {
+                    console.error(e);
+                });
+            },
+            sendTell: function (players, message) {
+                SBA.tell($scope.selectedId, players, message).success(function (data) {
+                    var status = data.status;
+                    var player = null;
+                    var failed = data.data.failed;
+                    var passed = data.data.passed;
+
+                    if (status == 'success') {
+                        for (var i = 0; i < failed.length; i++) {
+                            player = failed[i];
+                            toastr.warning(player.message);
+                        }
+                        for (var i = 0; i < passed.length; i++) {
+                            player = passed[i];
+                            toastr.success(player.message, player.player);
                         }
                         $scope.admin.resetSys();
                     } else {
