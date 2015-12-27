@@ -182,7 +182,12 @@ class ScoreboardController extends BaseController
         $message = Input::get('message', null);
         $team = Input::get('team', null);
         $type = Input::get('type', 'All');
-        $hideName = (bool)Input::get('hideName', false);
+
+        if ((bool)Input::get('hideName', false) == true) {
+            $hideName = false;
+        } else {
+            $hideName = true;
+        }
 
         if (Input::get('type') == 'Player' && !empty($this->players)) {
             foreach ($this->players as $player) {
