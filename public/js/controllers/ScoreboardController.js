@@ -809,7 +809,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                             break;
                         }
 
-                        $scope.admin.sendTell(players, 'Player', message);
+                        $scope.admin.sendTell(players, message);
                         break;
 
                     case "yell":
