@@ -967,8 +967,9 @@ class LiveServerRepository extends BaseRepository
      * @param $player
      * @param $message
      *
-     * @return \BFACP\Adkats\Record
+     * @return array
      * @throws RconException
+     * @throws PlayerNotFoundException
      */
     public function adminPunish($player, $message)
     {
@@ -1000,17 +1001,62 @@ class LiveServerRepository extends BaseRepository
      * @param  string  $message Message to be sent
      * @param  integer $count   How many forgives should be issued
      *
-     * @return boolean
+     * @return array
+     * @throws RconException
+     * @throws PlayerNotFoundException
      */
     public function adminForgive($player, $message, $count = 1)
     {
         if ($this->isValidName($player)) {
-            $player = Player::where('GameID', $this->gameID)->where('SoldierName', $player)->first();
-        } else {
-            throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
+            $p = Player::where('GameID', $this->gameID)->where('SoldierName', $player)->first();
+
+            if (!$p) {
+                throw new PlayerNotFoundException(404, 'Unable to forgive. %s was not found.', $player);
+            }
+
+            if (empty($message)) {
+                throw new RconException(400, 'No reason provided');
+            }
+
+            return [
+                'player' => $player,
+                'message' => $message,
+                'record' => $this->log($player, 'player_forgive', $message, 0, false),
+            ];
         }
 
-        return true;
+        throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
+    }
+
+    /**
+     * Mute player
+     *
+     * @param  string $player  Name of player
+     * @param  string $message Message to be sent
+     *
+     * @return boolean
+     */
+    public function adminMute($player, $message)
+    {
+        if ($this->isValidName($player)) {
+            $p = Player::where('GameID', $this->gameID)->where('SoldierName', $player)->first();
+
+            if (!$p) {
+                throw new PlayerNotFoundException(404, 'Unable to mute. %s was not found.', $player);
+            }
+
+            if (empty($message)) {
+                throw new RconException(400, 'No reason provided');
+            }
+
+            return [
+                'player' => $player,
+                'message' => $message,
+                'record' => $this->log($player, 'player_mute', $message, 0, false),
+            ];
+        }
+
+        throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
     }
 
     /*-----  End of Admin Commands  ------*/

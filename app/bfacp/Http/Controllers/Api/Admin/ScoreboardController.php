@@ -354,4 +354,60 @@ class ScoreboardController extends BaseController
 
         return $this->_response();
     }
+
+    /**
+ * Forgive the selected player(s).
+ *
+ * @return MainHelper
+ */
+    public function postForgive()
+    {
+        $this->hasPermission('admin.scoreboard.forgive');
+
+        foreach ($this->players as $player) {
+            try {
+                $this->data[] = $this->repository->adminForgive($player, Input::get('message', null));
+            } catch (PlayerNotFoundException $e) {
+                $this->errors[] = [
+                    'player' => $player,
+                    'message' => $e->getMessage(),
+                ];
+            } catch (RconException $e) {
+                $this->errors[] = [
+                    'player' => $player,
+                    'message' => $e->getMessage(),
+                ];
+            }
+        }
+
+        return $this->_response();
+    }
+
+    /**
+     * Mute the selected player(s).
+     *
+     * @return MainHelper
+     */
+    public function postMute()
+    {
+        $this->hasPermission('admin.scoreboard.mute');
+
+        foreach ($this->players as $player) {
+            try {
+                $this->data[] = $this->repository->adminMute($player, Input::get('message', null));
+            } catch (PlayerNotFoundException $e) {
+                $this->errors[] = [
+                    'player' => $player,
+                    'message' => $e->getMessage(),
+                ];
+            } catch (RconException $e) {
+                $this->errors[] = [
+                    'player' => $player,
+                    'message' => $e->getMessage(),
+                ];
+            }
+        }
+
+        return $this->_response();
+    }
 }

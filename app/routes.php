@@ -19,6 +19,17 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
         });
         Route::get('online/admins', 'HelpersController@onlineAdmins');
         Route::get('ip/{addy}', 'HelpersController@iplookup');
+        Route::get('squads', function () {
+            $squads = [];
+            for ($i = 0; $i <= 32; $i++) {
+                $squads[] = [
+                    'id' => $i,
+                    'name' => BattlefieldHelper::squad($i),
+                ];
+            }
+
+            return $squads;
+        });
     });
 
     /*===================================

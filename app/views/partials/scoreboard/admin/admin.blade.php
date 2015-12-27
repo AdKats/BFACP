@@ -2,7 +2,7 @@
     <div class="col-xs-12 col-sm-6">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">(WIP) Admin Actions</h3>
+                <h3 class="box-title">Admin Actions</h3>
             </div>
 
             {{ Former::vertical_open()->ng_submit('admin.submit()') }}
@@ -14,7 +14,7 @@
                     ->label('Select Command')
                 }}
 
-                <div class="form-group" ng-show="presetMessages.length > 0 && admin.action != 'nuke'">
+                <div class="form-group" ng-if="presetMessages.length > 0 && admin.hidePreset === false">
                     <label class="control-label">Preset Messages</label>
                     <select class="form-control" ng-options="msg for msg in presetMessages" ng-model="admin.message"></select>
                 </div>
@@ -23,25 +23,49 @@
                     <div ng-switch-when="nuke">
                         <div class="form-group">
                             <label class="control-label">Team</label>
-                            <select class="form-control" ng-model="admin.actions.nuke.team" ng-options="team as team.label for team in teamsList track by team.id"></select>
+                            <select class="form-control" ng-model="admin.actions.nuke.team" ng-options="team.id as team.label for team in teamsList"></select>
                         </div>
                     </div>
 
                     <div ng-switch-when="pban"></div>
 
-                    <div ng-switch-when="punish"></div>
-
                     <div ng-switch-when="say"></div>
 
                     <div ng-switch-when="tban"></div>
 
-                    <div ng-switch-when="teamswitch"></div>
+                    <div ng-switch-when="teamswitch">
+                        <div class="form-group">
+                            <label class="control-label">Team</label>
+                            <select class="form-control" ng-model="admin.actions.teamswitch.team" ng-options="team.id as team.label for team in teamsList"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Squad</label>
+                            <select class="form-control" ng-model="admin.actions.teamswitch.squad" ng-options="squad.id as squad.name for squad in squadlist"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="admin.actions.teamswitch.locked">
+                                    Check to Lock Squad
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <p>
+                                <span ng-bind="selectedPlayers.length"></span> player<span ng-if="selectedPlayers.length != 1">s</span> will be moved to the
+                                <span ng-bind="getTeam(admin.actions.teamswitch.team)" class="badge bg-purple"></span> and placed in
+                                <span ng-bind="getSquad(admin.actions.teamswitch.squad)" ng-class="{'badge bg-blue': admin.actions.teamswitch.squad != 0}"></span>
+                                <span ng-if="admin.actions.teamswitch.squad != 0">squad</span>.
+                            </p>
+                        </div>
+                    </div>
 
                     <div ng-switch-when="tell"></div>
 
                     <div ng-switch-when="yell"></div>
-
-                    <div ng-switch-when="forgive"></div>
                 </div>
 
                 <ul class="list-inline">

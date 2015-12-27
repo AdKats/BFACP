@@ -609,13 +609,57 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             }).get();
         };
 
+        $scope.squadlist = [];
+
+        $http.get('api/helpers/squads').success(function (data) {
+            $scope.squadlist = data;
+        });
+
+        $scope.$watch("admin.action", function (action) {
+            if (action == 'nuke' || action == 'teamswitch') {
+                $scope.admin.hidePreset = true;
+            } else {
+                $scope.admin.hidePreset = false;
+            }
+        });
+
+        $scope.getSquad = function (squadId) {
+            var squads = $scope.squadlist;
+
+            if (squadId === 0) {
+                return 'no squad';
+            }
+
+            for (var i = 0; i < squads.length; i++) {
+                if (squadId == i) {
+                    return squads[i].name;
+                }
+            }
+        };
+
+        $scope.getTeam = function (teamId) {
+            var teams = $scope.teamsList;
+
+            for (var i = 0; i < teams.length; i++) {
+                if (teamId == teams[i].id) {
+                    return teams[i].label;
+                }
+            }
+        };
+
         $scope.admin = {
             action: 'say',
             processing: false,
+            hidePreset: false,
             message: '',
             actions: {
                 nuke: {
-                    team: null
+                    team: 1
+                },
+                teamswitch: {
+                    team: 1,
+                    squad: 0,
+                    locked: false
                 }
             },
             doCheck: function (players, needsConfirm, skipPlayerCheck) {
@@ -642,11 +686,12 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                             case "kickall":
                                 action = "kick all";
                                 break;
+                            case "teamswitch":
+                                action = "team/squad switch";
+                                break;
                         }
 
-                        var c = confirm("Are you sure you want to " + action + " " + count + " players?");
-
-                        return c;
+                        return confirm("Are you sure you want to " + action + " " + count + " players?");
                     }
                 }
 
@@ -658,10 +703,38 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 var players = $scope.selectedPlayers.join();
                 var playerCount = $scope.selectedPlayers.length;
                 var skipPlayerCheck = false;
+                var team = null;
                 var _players = $("input[name='players']");
                 $scope.admin.processing = true;
 
                 switch (action) {
+                    case "punish":
+                        if (!$scope.admin.doCheck(playerCount)) {
+                            $scope.admin.processing = false;
+                            break;
+                        }
+
+                        $scope.admin.punishPlayer(players, message);
+                        break;
+
+                    case "forgive":
+                        if (!$scope.admin.doCheck(playerCount)) {
+                            $scope.admin.processing = false;
+                            break;
+                        }
+
+                        $scope.admin.forgivePlayer(players, message);
+                        break;
+
+                    case "mute":
+                        if (!$scope.admin.doCheck(playerCount)) {
+                            $scope.admin.processing = false;
+                            break;
+                        }
+
+                        $scope.admin.mutePlayer(players, message);
+                        break;
+
                     case "kill":
                         if (!$scope.admin.doCheck(playerCount)) {
                             $scope.admin.processing = false;
@@ -672,16 +745,15 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         break;
 
                     case "nuke":
-                        var team = $scope.admin.actions.nuke.team;
+                        team = $scope.admin.actions.nuke.team;
                         try {
-                            if (confirm('Are you sure you want to NUKE the ' + team.label + '?')) {
-                                $scope.admin.sendNuke(team.id, team.label);
+                            if (confirm('Are you sure you want to NUKE the ' + $scope.getTeam(team) + '?')) {
+                                $scope.admin.sendNuke(team, $scope.getTeam(team));
                             }
                         } catch (e) {
+                            $scope.admin.processing = false;
                             toastr.error('Team not selected.');
                         }
-
-                        $scope.admin.processing = false;
                         break;
 
                     case "kick":
@@ -701,14 +773,23 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                             }
                         }
 
-                        var check = $scope.admin.doCheck(playerCount, true, skipPlayerCheck);
-
-                        if (!check) {
+                        if (!$scope.admin.doCheck(playerCount, true, skipPlayerCheck)) {
                             $scope.admin.processing = false;
                             break;
                         }
 
                         $scope.admin.kickPlayer(players, message);
+                        break;
+
+                    case "teamswitch":
+                        team = $scope.admin.actions.teamswitch.team;
+
+                        if (!$scope.admin.doCheck(playerCount)) {
+                            $scope.admin.processing = false;
+                            break;
+                        }
+
+                        $scope.admin.switchPlayer(players, $scope.admin.actions.teamswitch.team, $scope.admin.actions.teamswitch.squad, $scope.admin.actions.teamswitch.locked);
                         break;
 
                     default:
@@ -719,6 +800,17 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
             resetSys: function () {
                 $scope.admin.action = 'say';
                 $scope.admin.message = '';
+                $scope.admin.hidePreset = false;
+                $scope.admin.actions = {
+                    nuke: {
+                        team: 1
+                    },
+                    teamswitch: {
+                        team: 1,
+                        squad: 0,
+                        locked: false
+                    }
+                };
                 $('input[name="players"]').attr('checked', false);
                 $scope.selectedPlayers = [];
             },
@@ -761,7 +853,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         }
                         for (var i = 0; i < passed.length; i++) {
                             player = passed[i];
-                            toastr.success(player.player, player.message);
+                            toastr.success(player.message, player.player);
                         }
                         $scope.admin.resetSys();
                     } else {
@@ -788,7 +880,61 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         }
                         for (var i = 0; i < passed.length; i++) {
                             player = passed[i];
-                            toastr.success(player.player, player.message);
+                            toastr.success(player.message, player.player);
+                        }
+                        $scope.admin.resetSys();
+                    } else {
+                        toastr.error(data.message);
+                    }
+
+                    $scope.admin.processing = false;
+                }).error(function (e) {
+                    console.error(e);
+                });
+            },
+            forgivePlayer: function (players, message) {
+                SBA.forgive($scope.selectedId, players, message).success(function (data) {
+                    var status = data.status;
+                    var player = null;
+                    var res = null;
+                    var failed = data.data.failed;
+                    var passed = data.data.passed;
+
+                    if (status == 'success') {
+                        for (var i = 0; i < failed.length; i++) {
+                            player = failed[i];
+                            toastr.warning(player.message);
+                        }
+                        for (var i = 0; i < passed.length; i++) {
+                            player = passed[i];
+                            toastr.success(player.message, player.player);
+                        }
+                        $scope.admin.resetSys();
+                    } else {
+                        toastr.error(data.message);
+                    }
+
+                    $scope.admin.processing = false;
+                }).error(function (e) {
+                    console.error(e);
+                });
+            },
+            mutePlayer: function (players, message) {
+                SBA.mute($scope.selectedId, players, message).success(function (data) {
+                    var status = data.status;
+                    var player = null;
+                    var res = null;
+                    var failed = data.data.failed;
+                    var passed = data.data.passed;
+
+                    if (status == 'success') {
+                        for (var i = 0; i < failed.length; i++) {
+                            player = failed[i];
+                            toastr.warning(player.message);
+                        }
+                        for (var i = 0; i < passed.length; i++) {
+                            player = passed[i];
+                            toastr.success(player.message, player.player);
                         }
                         $scope.admin.resetSys();
                     } else {
@@ -815,7 +961,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         }
                         for (var i = 0; i < passed.length; i++) {
                             player = passed[i];
-                            toastr.success(player.player, player.message);
+                            toastr.success(player.message, player.player);
                         }
                         $scope.admin.resetSys();
                     } else {
@@ -828,7 +974,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 });
             },
             switchPlayer: function (players, team, squad, locked) {
-                SBA.teamswitch($scope.selectedId, players, squad, locked).success(function (data) {
+                SBA.teamswitch($scope.selectedId, players, team, squad, locked).success(function (data) {
                     var status = data.status;
                     var player = null;
                     var res = null;
@@ -842,7 +988,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                         }
                         for (var i = 0; i < passed.length; i++) {
                             player = passed[i];
-                            toastr.success(player.player, player.message);
+                            toastr.success(player.message, player.player);
                         }
                         $scope.admin.resetSys();
                     } else {
