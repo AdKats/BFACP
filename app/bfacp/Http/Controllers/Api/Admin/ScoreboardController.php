@@ -223,7 +223,7 @@ class ScoreboardController extends BaseController
 
         foreach ($this->players as $player) {
             try {
-                $this->repository->adminTell($player, Input::get('message', null));
+                $this->repository->adminTell($player, Input::get('message', null), 10, false);
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = $e->getMessage();
             }
