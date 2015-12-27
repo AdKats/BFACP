@@ -15,10 +15,16 @@ App::before(function ($request) {
     // CloudFlare IP addresses to trust
     // Proxies obtained from https://www.cloudflare.com/ips-v4
     // Cached for 1 week
-    Request::setTrustedProxies(Cache::remember('cloudflare.ips', 24 * 60 * 7, function () {
-        $request = App::make('guzzle')->get('https://www.cloudflare.com/ips-v4');
-        return explode("\n", $request->getBody());
-    }));
+    try {
+        Request::setTrustedProxies(Cache::remember('cloudflare.ips', 24 * 60 * 7, function () {
+            $request = App::make('guzzle')->get('https://www.cloudflare.com/ips-v4');
+            return explode("\n", $request->getBody());
+        }));
+    } catch(Exception $e) {
+        Cache::forget('cloudflare.ips');
+        Log::error($e);
+    }
+
 
     // If request is not secured and force secured connection is enabled
     // then we need to redirect the user to a secure link.
