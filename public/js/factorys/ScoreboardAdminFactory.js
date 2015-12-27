@@ -2,13 +2,14 @@ angular.module('bfacp').factory('SBA', ['$http', function ($http) {
     var baseurl = 'api/servers/admin/scoreboard';
 
     return {
-        say: function (server_id, players, type, message, teamID) {
+        say: function (server_id, players, type, message, teamID, hideName) {
             var payload = {
                 server_id: server_id,
                 type: type,
                 message: message,
                 team: teamID,
-                players: players
+                players: players,
+                hideName: hideName
             };
 
             return $http.post(baseurl + '/say', payload);

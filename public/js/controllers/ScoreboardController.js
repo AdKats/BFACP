@@ -1029,7 +1029,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 });
             },
             sendSay: function (players, type, message, teamID) {
-                SBA.say($scope.selectedId, players, type, message, teamID).success(function (data) {
+                SBA.say($scope.selectedId, players, type, message, teamID, true).success(function (data) {
                     var status = data.status;
                     var player = null;
                     var failed = data.data.failed;

@@ -182,6 +182,7 @@ class ScoreboardController extends BaseController
         $message = Input::get('message', null);
         $team = Input::get('team', null);
         $type = Input::get('type', 'All');
+        $hideName = (bool)Input::get('hideName', false);
 
         if (Input::get('type') == 'Player' && !empty($this->players)) {
             foreach ($this->players as $player) {
@@ -189,7 +190,7 @@ class ScoreboardController extends BaseController
                     $this->data[] = [
                         'player' => $player,
                         'message' => $message,
-                        'record' => $this->repository->adminSay($message, $player, null, 'Player'),
+                        'record' => $this->repository->adminSay($message, $player, null, 'Player', $hideName),
                     ];
                 } catch (PlayerNotFoundException $e) {
                     $this->errors[] = $e->getMessage();
@@ -199,7 +200,7 @@ class ScoreboardController extends BaseController
             $this->data[] = [
                 'player' => null,
                 'message' => $message,
-                'record' => $this->repository->adminSay($message, null, $team, $type),
+                'record' => $this->repository->adminSay($message, null, $team, $type, $hideName),
             ];
         }
 
@@ -254,20 +255,21 @@ class ScoreboardController extends BaseController
      *
      * @return MainHelper
      */
-    public function postNuke() {
+    public function postNuke()
+    {
         $this->hasPermission('admin.scoreboard.nuke');
 
-        if(Input::has('teamId')) {
+        if (Input::has('teamId')) {
             $teamId = Input::get('teamId', 0);
         } else {
             return $this->_response(null, 'Team ID Required', 'error');
         }
 
-        if(!is_numeric($teamId)) {
+        if (!is_numeric($teamId)) {
             return $this->_response(null, 'Invalid Team ID', 'error');
         }
 
-        $this->repository->adminNuke((int) $teamId);
+        $this->repository->adminNuke((int)$teamId);
 
         return $this->_response();
     }
@@ -356,10 +358,10 @@ class ScoreboardController extends BaseController
     }
 
     /**
- * Forgive the selected player(s).
- *
- * @return MainHelper
- */
+     * Forgive the selected player(s).
+     *
+     * @return MainHelper
+     */
     public function postForgive()
     {
         $this->hasPermission('admin.scoreboard.forgive');
