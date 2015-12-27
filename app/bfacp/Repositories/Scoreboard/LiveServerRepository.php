@@ -611,7 +611,7 @@ class LiveServerRepository extends BaseRepository
             }
         }
 
-        $this->log($teamName, 'server_nuke', sprintf('Nuke Server (%s)', $teamName));
+        $this->log($teamName['full_name'], 'server_nuke', sprintf('Nuke Server (%s)', $teamName['full_name']));
 
         return true;
     }

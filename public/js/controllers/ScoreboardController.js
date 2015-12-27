@@ -199,7 +199,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
         };
 
         $scope.avg = function (items, prop, precision) {
-            if (items === null) {
+            if (items === null || items === undefined) {
                 return 0;
             }
 
@@ -209,7 +209,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
         };
 
         $scope.sum = function (items, prop) {
-            if (items === null) {
+            if (items === null || items === undefined) {
                 return 0;
             }
 
