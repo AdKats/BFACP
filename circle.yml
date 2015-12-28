@@ -4,7 +4,7 @@ machine:
 
 dependencies:
    override:
-      - composer install --no-scripts --no-interaction --prefer-dist
+      - composer install --no-scripts --no-interaction --prefer-dist --no-progress
 
 deployment:
   staging:
