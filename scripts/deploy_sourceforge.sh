@@ -1,6 +1,7 @@
 #!/bin/bash -eu
-parentdir="$(dirname "$(pwd)")"
-#FILENAME=${CIRCLE_BRANCH}
+parentdir="$(dirname "$(pwd)")/BFAdminCP"
+FILENAME="${CIRCLE_BRANCH}.zip"
+zip -9 -q -r $FILENAME . -x *.git*
 USER="prophet731"
 HOST="frs.sourceforge.net"
-scp -oUserKnownHostsFile=/dev/null "${parentdir}/README.md" $USER@$HOST:/home/pfs/project/b/bf/bfacp/
+scp -oUserKnownHostsFile=/dev/null "${parentdir}/${FILENAME}" $USER@$HOST:/home/pfs/project/b/bf/bfacp/
