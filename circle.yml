@@ -2,10 +2,6 @@ machine:
    php:
       version: 5.5.9
 
-checkout:
-   post:
-      - git checkout develop
-
 dependencies:
    override:
       - composer install --no-scripts --no-interaction --prefer-source
