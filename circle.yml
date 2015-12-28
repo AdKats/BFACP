@@ -5,3 +5,21 @@ machine:
 dependencies:
    override:
       - composer install --no-scripts --no-interaction --prefer-source
+
+deployment:
+  staging:
+    branch: develop
+    commands:
+      - ./scripts/deploy_sourceforge.sh
+
+  release:
+    tag: /v[0-9]+(\.[0-9]+)*/
+    owner: prophet731
+    commands:
+      - ./scripts/deploy_sourceforge.sh
+
+general:
+  branches:
+    only:
+      - master
+      - develop
