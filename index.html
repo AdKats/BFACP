@@ -24,6 +24,8 @@
 
 <p>The Battlefield Admin Control Panel (BFACP) is a web based admin tool designed to work exclusively with <a href="https://github.com/AdKats/AdKats">AdKats</a> (v6+) and <a href="https://forum.myrcon.com/showthread.php?6698">XpKillers Chat, GUID, Stats and Mapstats Logger</a> (v1.0.0.2). The software is built with the <a href="http://laravel.com/">Laravel</a> PHP framework to speed up development time and make my job a lot easier.</p>
 
+<p><a href="https://github.com/Prophet731/BFAdminCP/wiki/FAQ">FAQ</a></p>
+
 <h1>
 <a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h1>
 
@@ -53,7 +55,9 @@
 <li>and more!</li>
 </ul>
 
-<p>Download the latest version from <a href="https://github.com/Prophet731/BFAdminCP/releases/latest">here</a>. Once downloaded unzip it to a temporary folder on your computer. Next open the <code>.env.php</code> file located in the root folder in your favorite text editor. Scroll down to the database settings section and fill in your database connection information.</p>
+<p><a href="https://sourceforge.net/projects/bfacp/files/latest/download"><img src="https://a.fsdn.com/con/app/sf-download-button" alt="Download Battlefield Admin Control Panel"></a></p>
+
+<p>Download the latest version. Once downloaded unzip it to a temporary folder on your computer. Next open the <code>.env.php</code> file located in the root folder in your favorite text editor. Scroll down to the database settings section and fill in your database connection information.</p>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1">    <span class="pl-c">/**</span></span>
 <span class="pl-s1"><span class="pl-c">     * Database Settings</span></span>
@@ -87,7 +91,28 @@
 
 <p>Please create a ticket for bugs/requests. <a href="https://github.com/Prophet731/BFAdminCP/issues">here</a>.</p>
 
-<p><a href="https://github.com/Prophet731/BFAdminCP/wiki/FAQ">FAQ</a></p>
+<h2>
+<a id="installing-from-the-command-line" class="anchor" href="#installing-from-the-command-line" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing from the command line</h2>
+
+<p>This method is only for those who have shell access to their web server or VPS. This will download and extract the files to your current directory. Make sure it's an empty directory.</p>
+
+<h3>
+<a id="git-method-preferred" class="anchor" href="#git-method-preferred" aria-hidden="true"><span class="octicon octicon-link"></span></a>Git Method (preferred)</h3>
+
+<p>If you have git installed you can just run the following command to install it. You must have <a href="https://getcomposer.org/doc/00-intro.md">composer</a> and php command line installed. </p>
+
+<div class="highlight highlight-source-shell"><pre>git clone https://github.com/Prophet731/BFAdminCP.git <span class="pl-c1">.</span>
+composer install --no-scripts</pre></div>
+
+<p>This will clone and install the dependency's need for the BFACP to work. This will checkout the master branch which is the stable version. If you would like to run the develop version you will need to run <code>git checkout develop</code> before you issue the composer command.</p>
+
+<p>To update it all you will need to do is run <code>git pull</code> and it will pull the latest version on the current branch (master or develop). </p>
+
+<p>To make this an automated process you can create a cron job for it. </p>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-k">*</span> <span class="pl-k">*</span> <span class="pl-k">*</span> <span class="pl-k">*</span> <span class="pl-k">*</span> <span class="pl-c1">cd</span> /path/to/bfacp<span class="pl-k">;</span> git pull <span class="pl-k">&gt;</span>/dev/null <span class="pl-k">2&gt;&amp;1</span></pre></div>
+
+<p><a href="https://goo.gl/8BlTk2" target="_blank"><img src="https://raw.githubusercontent.com/ColColonCleaner/AdKats/master/images/AdKats_Docs_Donate.jpg"></a></p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/Prophet731/BFAdminCP">BFAdminCP</a> is maintained by <a href="https://github.com/Prophet731">Prophet731</a>.</span>
