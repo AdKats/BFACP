@@ -4,11 +4,12 @@ machine:
 
 dependencies:
    override:
-      - composer install --no-scripts --no-interaction --prefer-dist --no-progress
+      - composer install --no-scripts --no-interaction --prefer-source --no-progress
 
 deployment:
   staging:
-    branch: develop
+    branch: master
+    owner: prophet731
     commands:
       - chmod +x ./scripts/deploy_sourceforge.sh
       - ./scripts/deploy_sourceforge.sh
