@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/Prophet731/BFAdminCP.svg?style=svg)](https://circleci.com/gh/Prophet731/BFAdminCP) [![Download Battlefield Admin Control Panel](https://img.shields.io/sourceforge/dt/bfacp.svg)](https://sourceforge.net/projects/bfacp/files/latest/download)
+
 # Overview
 The Battlefield Admin Control Panel (BFACP) is a web based admin tool designed to work exclusively with [AdKats](https://github.com/AdKats/AdKats) (v6+) and [XpKillers Chat, GUID, Stats and Mapstats Logger](https://forum.myrcon.com/showthread.php?6698) (v1.0.0.2). The software is built with the [Laravel](http://laravel.com/) PHP framework to speed up development time and make my job a lot easier.
 
@@ -72,7 +74,7 @@ This method is only for those who have shell access to their web server or VPS. 
 
 ### Git Method (preferred)
 
-If you have git installed you can just run the following command to install it. You must have [composer](https://getcomposer.org/doc/00-intro.md) and php command line installed. 
+If you have git installed you can just run the following command to install it. You must have [composer](https://getcomposer.org/doc/00-intro.md) and php command line installed.
 
 ```bash
 git clone https://github.com/Prophet731/BFAdminCP.git .
@@ -81,9 +83,9 @@ composer install --no-scripts
 
 This will clone and install the dependency's need for the BFACP to work. This will checkout the master branch which is the stable version. If you would like to run the develop version you will need to run `git checkout develop` before you issue the composer command.
 
-To update it all you will need to do is run `git pull` and it will pull the latest version on the current branch (master or develop). 
+To update it all you will need to do is run `git pull` and it will pull the latest version on the current branch (master or develop).
 
-To make this an automated process you can create a cron job for it. 
+To make this an automated process you can create a cron job for it.
 
 ```bash
 * * * * * cd /path/to/bfacp; git pull >/dev/null 2>&1
