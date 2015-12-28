@@ -1,37 +1,25 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="BFAdminCP : A web based admin tool for Battlefield 3 and Battlefield 4 integrated with AdKats and XPKillers Stat Logger plugins for ProCon.">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>BFAdminCP</title>
+    <meta charset="UTF-8">
+    <title>BFAdminCP by Prophet731</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
+    <section class="page-header">
+      <h1 class="project-name">BFAdminCP</h1>
+      <h2 class="project-tagline">A web based admin tool for Battlefield 3, Battlefield 4, and Battlefield Hardline integrated with AdKats and XPKillers Stat Logger plugins for ProCon.</h2>
+      <a href="https://github.com/Prophet731/BFAdminCP" class="btn">View on GitHub</a>
+      <a href="https://github.com/Prophet731/BFAdminCP/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/Prophet731/BFAdminCP/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/Prophet731/BFAdminCP">View on GitHub</a>
-
-          <h1 id="project_title">BFAdminCP</h1>
-          <h2 id="project_tagline">A web based admin tool for Battlefield 3 and Battlefield 4 integrated with AdKats and XPKillers Stat Logger plugins for ProCon.</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/Prophet731/BFAdminCP/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/Prophet731/BFAdminCP/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>
+    <section class="main-content">
+      <h1>
 <a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h1>
 
 <p>The Battlefield Admin Control Panel (BFACP) is a web based admin tool designed to work exclusively with <a href="https://github.com/AdKats/AdKats">AdKats</a> (v6+) and <a href="https://forum.myrcon.com/showthread.php?6698">XpKillers Chat, GUID, Stats and Mapstats Logger</a> (v1.0.0.2). The software is built with the <a href="http://laravel.com/">Laravel</a> PHP framework to speed up development time and make my job a lot easier.</p>
@@ -67,7 +55,7 @@
 
 <p>Download the latest version from <a href="https://github.com/Prophet731/BFAdminCP/releases/latest">here</a>. Once downloaded unzip it to a temporary folder on your computer. Next open the <code>.env.php</code> file located in the root folder in your favorite text editor. Scroll down to the database settings section and fill in your database connection information.</p>
 
-<div class="highlight highlight-PHP"><pre><span class="pl-s1">    <span class="pl-c">/**</span></span>
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">    <span class="pl-c">/**</span></span>
 <span class="pl-s1"><span class="pl-c">     * Database Settings</span></span>
 <span class="pl-s1"><span class="pl-c">     */</span></span>
 <span class="pl-s1">    <span class="pl-s"><span class="pl-pds">'</span>DB_HOST<span class="pl-pds">'</span></span>        <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>localhost<span class="pl-pds">'</span></span>,</span>
@@ -77,7 +65,7 @@
 
 <p>Next we need to create a encryption key. This is <strong>IMPORTANT</strong>! The default key provided is just a placeholder string and is insecure. I have provided a page where you can get a random 32 character string. I do <strong>NOT</strong> save these and they are random on each refresh. You can access this page <a href="https://api.gamerethos.net/random_key">here</a>. Once you have your key open up the file <code>.env.php</code> in the root folder and scroll down till you see the <code>APP_KEY</code> field. Replace the <code>YourSecretKey!!!</code> with the key that was generated. By default it will look like this.</p>
 
-<div class="highlight highlight-PHP"><pre><span class="pl-s1">    <span class="pl-c">/**</span></span>
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">    <span class="pl-c">/**</span></span>
 <span class="pl-s1"><span class="pl-c">     * Set your app key here</span></span>
 <span class="pl-s1"><span class="pl-c">     */</span></span>
 <span class="pl-s1">    <span class="pl-s"><span class="pl-pds">'</span>APP_KEY<span class="pl-pds">'</span></span>        <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>YourSecretKey!!!<span class="pl-pds">'</span></span></span></pre></div>
@@ -100,18 +88,15 @@
 <p>Please create a ticket for bugs/requests. <a href="https://github.com/Prophet731/BFAdminCP/issues">here</a>.</p>
 
 <p><a href="https://github.com/Prophet731/BFAdminCP/wiki/FAQ">FAQ</a></p>
-      </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">BFAdminCP maintained by <a href="https://github.com/Prophet731">Prophet731</a></p>
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/Prophet731/BFAdminCP">BFAdminCP</a> is maintained by <a href="https://github.com/Prophet731">Prophet731</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
 
-    
+    </section>
 
+  
   </body>
 </html>
