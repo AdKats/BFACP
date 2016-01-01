@@ -1,7 +1,12 @@
 <?php
 
-define('BFACP_VERSION', '2.0.1');
-header(sprintf('Expires: %s', Carbon\Carbon::now()->subYears(10)->format("D, d M Y H:i:s \G\M\T")));
+if (!defined('BFACP_VERSION')) {
+    define('BFACP_VERSION', '2.0.2');
+}
+
+if (php_sapi_name() != "cli") {
+    header(sprintf('Expires: %s', Carbon\Carbon::now()->subYears(10)->format("D, d M Y H:i:s \G\M\T")));
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -56,19 +61,19 @@ $env = $app->detectEnvironment(function () use ($app) {
  */
 
 $framework = $app['path.base'] .
-'/vendor/laravel/framework/src';
+    '/vendor/laravel/framework/src';
 
 require $framework . '/Illuminate/Foundation/start.php';
 
 if (!$app->runningInConsole()) {
     $setupFilePath = $app['path.base'] . '/app/bfacp/setup.php';
-    $jsBuildsPath  = $app['path.public'] . '/js/builds';
+    $jsBuildsPath = $app['path.public'] . '/js/builds';
 
     if (version_compare(phpversion(), '5.5.0', '<') || !extension_loaded('mcrypt') || !extension_loaded('pdo')) {
         die(View::make('system.requirements', ['required_php_version' => '5.5.0']));
     }
 
-    if (file_exists($setupFilePath) && App::environment() != 'local') {
+    if (file_exists($setupFilePath) && !in_array(App::environment(), ['local', 'testing'])) {
         require_once $setupFilePath;
 
         if (!unlink($setupFilePath)) {
