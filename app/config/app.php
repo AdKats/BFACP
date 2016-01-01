@@ -13,8 +13,7 @@ return [
     |
      */
 
-    'debug'           => getenv('APP_DEBUG') ?: false,
-
+    'debug' => getenv('APP_DEBUG') ?: false,
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -26,8 +25,7 @@ return [
     |
      */
 
-    'url'             => 'http://localhost',
-
+    'url' => 'http://localhost',
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -39,8 +37,7 @@ return [
     |
      */
 
-    'timezone'        => 'UTC',
-
+    'timezone' => 'UTC',
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -52,8 +49,7 @@ return [
     |
      */
 
-    'locale'          => 'en',
-
+    'locale' => 'en',
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -66,7 +62,6 @@ return [
      */
 
     'fallback_locale' => 'en',
-
     /*
     |--------------------------------------------------------------------------
     | Encryption Key
@@ -78,10 +73,8 @@ return [
     |
      */
 
-    'key'             => getenv('APP_KEY') ?: 'YourSecretKey!!!',
-
-    'cipher'          => MCRYPT_RIJNDAEL_256,
-
+    'key' => getenv('APP_KEY') ?: 'YourSecretKey!!!',
+    'cipher' => MCRYPT_RIJNDAEL_256,
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -93,7 +86,7 @@ return [
     |
      */
 
-    'providers'       => [
+    'providers' => [
 
         'Former\FormerServiceProvider',
         'Illuminate\Auth\AuthServiceProvider',
@@ -129,9 +122,9 @@ return [
         'BFACP\Providers\HelpersProvider',
         'DaveJamesMiller\Breadcrumbs\ServiceProvider',
         'Kmd\Logviewer\LogviewerServiceProvider',
-        'CeesVanEgmond\Minify\MinifyServiceProvider'
+        'CeesVanEgmond\Minify\MinifyServiceProvider',
+        'Roumen\Feed\FeedServiceProvider',
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Service Provider Manifest
@@ -143,8 +136,7 @@ return [
     |
      */
 
-    'manifest'        => storage_path() . '/meta',
-
+    'manifest' => storage_path() . '/meta',
     /*
     |--------------------------------------------------------------------------
     | Class Aliases
@@ -156,54 +148,55 @@ return [
     |
      */
 
-    'aliases'         => [
+    'aliases' => [
 
-        'API'               => 'Dingo\Api\Facade\API',
-        'App'               => 'Illuminate\Support\Facades\App',
-        'Artisan'           => 'Illuminate\Support\Facades\Artisan',
-        'Auth'              => 'Illuminate\Support\Facades\Auth',
-        'Blade'             => 'Illuminate\Support\Facades\Blade',
-        'Cache'             => 'Illuminate\Support\Facades\Cache',
-        'Carbon'            => 'Carbon\Carbon',
-        'ClassLoader'       => 'Illuminate\Support\ClassLoader',
-        'Confide'           => 'Zizaco\Confide\Facade',
-        'Config'            => 'Illuminate\Support\Facades\Config',
-        'Controller'        => 'Illuminate\Routing\Controller',
-        'Cookie'            => 'Illuminate\Support\Facades\Cookie',
-        'Crypt'             => 'Illuminate\Support\Facades\Crypt',
-        'DB'                => 'Illuminate\Support\Facades\DB',
-        'Eloquent'          => 'Illuminate\Database\Eloquent\Model',
-        'Entrust'           => 'Zizaco\Entrust\EntrustFacade',
-        'Event'             => 'Illuminate\Support\Facades\Event',
-        'File'              => 'Illuminate\Support\Facades\File',
-        'Form'              => 'Illuminate\Support\Facades\Form',
-        'Former'            => 'Former\Facades\Former',
-        'HTML'              => 'Illuminate\Support\Facades\HTML',
-        'Hash'              => 'Illuminate\Support\Facades\Hash',
-        'Input'             => 'Illuminate\Support\Facades\Input',
-        'Lang'              => 'Illuminate\Support\Facades\Lang',
-        'Log'               => 'Illuminate\Support\Facades\Log',
-        'Mail'              => 'Illuminate\Support\Facades\Mail',
-        'Paginator'         => 'Illuminate\Support\Facades\Paginator',
-        'Password'          => 'Illuminate\Support\Facades\Password',
-        'Queue'             => 'Illuminate\Support\Facades\Queue',
-        'Redirect'          => 'Illuminate\Support\Facades\Redirect',
-        'Redis'             => 'Illuminate\Support\Facades\Redis',
-        'Request'           => 'Illuminate\Support\Facades\Request',
-        'Response'          => 'Illuminate\Support\Facades\Response',
-        'Route'             => 'Illuminate\Support\Facades\Route',
-        'SSH'               => 'Illuminate\Support\Facades\SSH',
-        'Schema'            => 'Illuminate\Support\Facades\Schema',
-        'Seeder'            => 'Illuminate\Database\Seeder',
-        'Session'           => 'Illuminate\Support\Facades\Session',
+        'API' => 'Dingo\Api\Facade\API',
+        'App' => 'Illuminate\Support\Facades\App',
+        'Artisan' => 'Illuminate\Support\Facades\Artisan',
+        'Auth' => 'Illuminate\Support\Facades\Auth',
+        'Blade' => 'Illuminate\Support\Facades\Blade',
+        'Cache' => 'Illuminate\Support\Facades\Cache',
+        'Carbon' => 'Carbon\Carbon',
+        'ClassLoader' => 'Illuminate\Support\ClassLoader',
+        'Confide' => 'Zizaco\Confide\Facade',
+        'Config' => 'Illuminate\Support\Facades\Config',
+        'Controller' => 'Illuminate\Routing\Controller',
+        'Cookie' => 'Illuminate\Support\Facades\Cookie',
+        'Crypt' => 'Illuminate\Support\Facades\Crypt',
+        'DB' => 'Illuminate\Support\Facades\DB',
+        'Eloquent' => 'Illuminate\Database\Eloquent\Model',
+        'Entrust' => 'Zizaco\Entrust\EntrustFacade',
+        'Event' => 'Illuminate\Support\Facades\Event',
+        'File' => 'Illuminate\Support\Facades\File',
+        'Form' => 'Illuminate\Support\Facades\Form',
+        'Former' => 'Former\Facades\Former',
+        'HTML' => 'Illuminate\Support\Facades\HTML',
+        'Hash' => 'Illuminate\Support\Facades\Hash',
+        'Input' => 'Illuminate\Support\Facades\Input',
+        'Lang' => 'Illuminate\Support\Facades\Lang',
+        'Log' => 'Illuminate\Support\Facades\Log',
+        'Mail' => 'Illuminate\Support\Facades\Mail',
+        'Paginator' => 'Illuminate\Support\Facades\Paginator',
+        'Password' => 'Illuminate\Support\Facades\Password',
+        'Queue' => 'Illuminate\Support\Facades\Queue',
+        'Redirect' => 'Illuminate\Support\Facades\Redirect',
+        'Redis' => 'Illuminate\Support\Facades\Redis',
+        'Request' => 'Illuminate\Support\Facades\Request',
+        'Response' => 'Illuminate\Support\Facades\Response',
+        'Route' => 'Illuminate\Support\Facades\Route',
+        'SSH' => 'Illuminate\Support\Facades\SSH',
+        'Schema' => 'Illuminate\Support\Facades\Schema',
+        'Seeder' => 'Illuminate\Database\Seeder',
+        'Session' => 'Illuminate\Support\Facades\Session',
         'SoftDeletingTrait' => 'Illuminate\Database\Eloquent\SoftDeletingTrait',
-        'Str'               => 'Illuminate\Support\Str',
-        'URL'               => 'Illuminate\Support\Facades\URL',
-        'Validator'         => 'Illuminate\Support\Facades\Validator',
-        'View'              => 'Illuminate\Support\Facades\View',
-        'version'           => 'vierbergenlars\SemVer\version',
-        'Menu'              => 'Lavary\Menu\Facade',
-        'Breadcrumbs'       => 'DaveJamesMiller\Breadcrumbs\Facade'
-    ]
+        'Str' => 'Illuminate\Support\Str',
+        'URL' => 'Illuminate\Support\Facades\URL',
+        'Validator' => 'Illuminate\Support\Facades\Validator',
+        'View' => 'Illuminate\Support\Facades\View',
+        'version' => 'vierbergenlars\SemVer\version',
+        'Menu' => 'Lavary\Menu\Facade',
+        'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facade',
+        'Feed' => 'Roumen\Feed\Facades\Feed',
+    ],
 
 ];
