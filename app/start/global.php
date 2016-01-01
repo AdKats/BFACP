@@ -78,13 +78,18 @@ App::error(function (Exception $exception, $code) {
                 return MainHelper::response(null, $exception->getMessage(), 'error', 500);
             } else {
                 View::share('page_title', 'Fatal Error');
+
                 return Response::view('system.error', compact('exception', 'code'), 500);
             }
         }
 
         if (Request::is('api/*')) {
             return MainHelper::response([
-                $exception->getMessage(),
+                [
+                    'message' => $exception->getMessage(),
+                    'line' => $exception->getLine(),
+                    'file' => $exception->getFile(),
+                ],
             ], 'Fatal Error', 'error', 500);
         }
     }
@@ -97,6 +102,7 @@ App::missing(function () {
     }
 
     View::share('page_title', 'Page Not Found');
+
     return Response::view('system.notfound', [], 404);
 });
 
