@@ -51,4 +51,17 @@ class Option extends Elegant
      * @var array
      */
     protected $with = [];
+
+    /**
+     * Quick method for getting an option setting
+     *
+     * @param $query
+     * @param $optionKey
+     *
+     * @return mixed
+     */
+    public function scopeSetting($query, $optionKey)
+    {
+        return $query->where('option_key', $optionKey);
+    }
 }
