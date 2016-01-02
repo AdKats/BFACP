@@ -105,6 +105,7 @@
                 <strong>&copy; 2013-{{ date('Y') }} <a href="http://www.adkgamers.com" target="_blank">A Different Kind, LLC</a>. All rights reserved.</strong> <em>{{ MainHelper::executionTime(true) }}</em>
             </footer>
 
+            @if($bfacp->isLoggedIn)
             <!-- Control Sidebar -->
             <aside class="control-sidebar control-sidebar-dark">
                 <!-- Create the tabs -->
@@ -138,6 +139,7 @@
             <!-- /.control-sidebar -->
             <!-- This div must placed right after the sidebar for it to work-->
             <div class="control-sidebar-bg"></div>
+            @endif
         </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -167,9 +169,11 @@
         {{ HTML::script('js/plugins/howler/howler.min.js') }}
         {{ HTML::script('js/plugins/slimScroll/jquery.slimscroll.min.js') }}
         {{ HTML::script('js/boot.js?v=1') }}
+        @if($bfacp->isLoggedIn)
         <script type="text/javascript">
             var pusher = new Pusher('{{ getenv('PUSHER_APP_KEY') }}');
         </script>
+        @endif
         {{ Minify::javascript(array_merge(
             ['/js/app.js'],
             MainHelper::files(public_path() . '/js/factorys', true, '/js/factorys/'),
