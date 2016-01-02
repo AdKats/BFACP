@@ -147,67 +147,65 @@ return [
         'acs' => [
             'title' => 'Auffällige Waffen',
             'help' => 'Bei den rot markierten Waffen muss es sich nicht zwangsläufig um Cheat-Verdächtige Waffen handeln. Daher müssen diese Stats hier besonders bei Schrotflinten und Scharfschützengewehren mit Vorsicht verwendet werden.',
-            'none'     => 'Keine auffälligen Waffen gefunden',
+            'none' => 'Keine auffälligen Waffen gefunden',
             'checking' => 'Überprüfe Spieler&hellip;',
-            'table'    => [
-    'col1' => 'Waffe',
-    'col2' => 'Kategorie',
-    'col3' => 'Kills',
-    'col4' => 'Kopfschüsse',
-    'col5' => 'Abgefeuert',
-    'col6' => 'Treffer',
-    'col7' => 'Genauigkeit',
-    'col8' => 'Spielzeit',
-    'col9' => 'DPS',
-    'col10' => 'HSKP',
-    'col11' => 'KPM',
-]
+            'table' => [
+                'col1' => 'Waffe',
+                'col2' => 'Kategorie',
+                'col3' => 'Kills',
+                'col4' => 'Kopfschüsse',
+                'col5' => 'Abgefeuert',
+                'col6' => 'Treffer',
+                'col7' => 'Genauigkeit',
+                'col8' => 'Spielzeit',
+                'col9' => 'DPS',
+                'col10' => 'HSKP',
+                'col11' => 'KPM',
+            ],
         ],
-
         /**
          * Player Records
          */
-        'records'     => [
-    'title' => 'Historie',
-    'viewing' => [
-        'p1' => 'Anzeigen der Datensätze',
-        'p2' => 'durch',
-        'p3' => 'aus',
-    ],
-    'table' => [
-        'col1' => 'Datum',
-        'col2' => 'CMD ausgeführt',
-        'col3' => 'CMD erhalten',
-        'col4' => 'Ziel',
-        'col5' => 'Quelle',
-        'col6' => 'Server',
-        'col7' => 'Nachricht',
-    ],
-],
-
+        'records' => [
+            'title' => 'Historie',
+            'viewing' => [
+                'p1' => 'Anzeigen der Datensätze',
+                'p2' => 'durch',
+                'p3' => 'aus',
+            ],
+            'table' => [
+                'col1' => 'Datum',
+                'col2' => 'CMD ausgeführt',
+                'col3' => 'CMD erhalten',
+                'col4' => 'Ziel',
+                'col5' => 'Quelle',
+                'col6' => 'Server',
+                'col7' => 'Nachricht',
+            ],
+        ],
         /**
          * Charts
          */
-        'charts'      => [
-    'command_overview' => [
-        'title' => 'CMD Benutzung',
-        'chart' => [
-            'title' => 'Übersicht der verwendeten Befehle',
-            'tooltip' => 'Benutzung',
+        'charts' => [
+            'command_overview' => [
+                'title' => 'CMD Benutzung',
+                'chart' => [
+                    'title' => 'Übersicht der verwendeten Befehle',
+                    'tooltip' => 'Benutzung',
+                ],
+            ],
+            'aliases' => [
+                'title' => 'Aliase',
+                'chart' => [
+                    'tooltip' => 'Alias',
+                ],
+            ],
+            'ip_history' => [
+                'title' => 'IP Historie',
+                'chart' => [
+                    'tooltip' => 'IP',
+                ],
+            ],
         ],
     ],
-    'aliases' => [
-        'title' => 'Aliase',
-        'chart' => [
-            'tooltip' => 'Alias',
-        ],
-    ],
-    'ip_history' => [
-        'title' => 'IP Historie',
-        'chart' => [
-            'tooltip' => 'IP',
-        ],
-    ],
-]
-    ]
 ];
