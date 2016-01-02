@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "44b1cdfb6e064e38e9b35eb45f5286b6",
-    "content-hash": "908b68156a08bba976a50f9c09837605",
+    "hash": "33510ac6d55c25cf86516113a82788ef",
+    "content-hash": "e5f9e962b9897fa3f2fd56168487668f",
     "packages": [
         {
             "name": "anahkiasen/former",
@@ -111,6 +111,57 @@
             "time": "2015-03-04 17:12:08"
         },
         {
+            "name": "artdarek/pusherer",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/artdarek/pusherer.git",
+                "reference": "b8afcec4a627a7d87f2d0cc150ce3649ade674a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/artdarek/pusherer/zipball/b8afcec4a627a7d87f2d0cc150ce3649ade674a5",
+                "reference": "b8afcec4a627a7d87f2d0cc150ce3649ade674a5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "pusher/pusher-php-server": "2.2.*"
+            },
+            "require-dev": {
+                "illuminate/support": "4.0.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Artdarek\\Pusherer": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Artdarek",
+                    "email": "artdarek@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Pusher.com service provider for Laravel 4.",
+            "homepage": "https://github.com/artdarek/pusherer",
+            "keywords": [
+                "Laravel 4",
+                "Pusher.com",
+                "laravel",
+                "laravel4",
+                "notifications",
+                "pusher",
+                "realtime"
+            ],
+            "time": "2015-10-26 15:40:30"
+        },
+        {
             "name": "ceesvanegmond/minify",
             "version": "2.0.13",
             "source": {
@@ -206,25 +257,23 @@
         },
         {
             "name": "d11wtq/boris",
-            "version": "v1.0.8",
+            "version": "v1.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/borisrepl/boris.git",
-                "reference": "125dd4e5752639af7678a22ea597115646d89c6e"
+                "reference": "31055b15e2d3fe47f31f6aa8e277f8f3fc7eb483"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/borisrepl/boris/zipball/125dd4e5752639af7678a22ea597115646d89c6e",
-                "reference": "125dd4e5752639af7678a22ea597115646d89c6e",
+                "url": "https://api.github.com/repos/borisrepl/boris/zipball/31055b15e2d3fe47f31f6aa8e277f8f3fc7eb483",
+                "reference": "31055b15e2d3fe47f31f6aa8e277f8f3fc7eb483",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
-            },
-            "suggest": {
                 "ext-pcntl": "*",
                 "ext-posix": "*",
-                "ext-readline": "*"
+                "ext-readline": "*",
+                "php": ">=5.3.0"
             },
             "bin": [
                 "bin/boris"
@@ -236,7 +285,11 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2014-01-17 12:21:18"
+            "license": [
+                "MIT"
+            ],
+            "description": "A tiny, but robust REPL (Read-Evaluate-Print-Loop) for PHP.",
+            "time": "2015-03-01 08:05:19"
         },
         {
             "name": "davejamesmiller/laravel-breadcrumbs",
@@ -1632,6 +1685,50 @@
                 "psr-3"
             ],
             "time": "2012-12-21 11:40:51"
+        },
+        {
+            "name": "pusher/pusher-php-server",
+            "version": "v2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pusher/pusher-http-php.git",
+                "reference": "79d755cc5d5b02b67779e2a40782fd6e3726657d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pusher/pusher-http-php/zipball/79d755cc5d5b02b67779e2a40782fd6e3726657d",
+                "reference": "79d755cc5d5b02b67779e2a40782fd6e3726657d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Library for interacting with the Pusher REST API",
+            "homepage": "https://github.com/pusher/pusher-php-server",
+            "keywords": [
+                "events",
+                "php-pusher-server",
+                "publish",
+                "pusher",
+                "realtime",
+                "rest",
+                "trigger"
+            ],
+            "time": "2015-05-13 11:01:46"
         },
         {
             "name": "react/promise",

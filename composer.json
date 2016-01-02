@@ -30,7 +30,8 @@
         "davejamesmiller/laravel-breadcrumbs": "2.*",
         "kmd/logviewer": "1.2.*",
         "ceesvanegmond/minify": "2.0.*",
-        "roumen/feed": "2.8.*"
+        "roumen/feed": "2.8.*",
+        "artdarek/pusherer": "1.0.*"
     },
     "autoload": {
         "classmap": [

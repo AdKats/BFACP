@@ -1,5 +1,20 @@
 <?php
 
+Route::post('/pusher/auth', function() {
+    $bfacp = App::make('bfadmincp');
+
+    if (Input::has('channel_name') && Input::has('socket_id') && $bfacp->isLoggedIn) {
+        $socket = Pusherer::presence_auth(Input::get('channel_name'), Input::get('socket_id'), $bfacp->user->id, [
+            'id' => $bfacp->user->id,
+            'username' => $bfacp->user->username,
+            'avatar' => $bfacp->user->gravatar,
+        ]);
+        return Response::make($socket);
+    }
+
+    return Response::make('Forbidden', 403);
+});
+
 /**
  * Route Model Bindings
  */

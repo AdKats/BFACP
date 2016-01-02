@@ -124,6 +124,7 @@ return [
         'Kmd\Logviewer\LogviewerServiceProvider',
         'CeesVanEgmond\Minify\MinifyServiceProvider',
         'Roumen\Feed\FeedServiceProvider',
+        'Artdarek\Pusherer\PushererServiceProvider',
     ],
     /*
     |--------------------------------------------------------------------------
