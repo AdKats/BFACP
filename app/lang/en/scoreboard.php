@@ -27,6 +27,14 @@ return [
             'full_name' => 'Defenders',
             'short_name' => 'Defenders',
         ],
+        6 => [
+            'full_name' => 'Cops',
+            'short_name' => 'Cops',
+        ],
+        7 => [
+            'full_name' => 'Criminals',
+            'short_name' => 'Criminals',
+        ],
     ],
     'admin' => [
         'inputs' => [
