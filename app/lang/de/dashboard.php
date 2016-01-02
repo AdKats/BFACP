@@ -4,7 +4,7 @@ return [
 
     'metro' => [
         'players_online' => 'Spieler auf den Servern',
-        'average_bans' => 'Durchschnittliche Banns pro Tag',
+        'average_bans' => 'Ca. Banns pro Tag',
         'yesterday_bans' => 'Banns gestern',
         'player_count' => 'Spieler insgesamt',
         'adkats' => [
@@ -14,9 +14,9 @@ return [
                 'banned' => 'Gebannte Spieler',
                 'banned_active' => 'Aktive Banns',
             ],
-            'killed' => '% :killed der Spieler wurden getötet',
-            'kicked' => '% :kicked der Spieler wurden gekickt',
-            'banned' => '% :banned der Spieler wurden gebannt',
+            'killed' => '% :killed  der Spieler wurden getötet',
+            'kicked' => '% :kicked  der Spieler wurden gekickt',
+            'banned' => '% :banned  der Spieler wurden gebannt',
             'banned_active' => '% :banned der Spieler sind gebannt',
         ],
     ],

@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/Prophet731/BFAdminCP.svg?style=svg)](https://circleci.com/gh/Prophet731/BFAdminCP) [![Download Battlefield Admin Control Panel](https://img.shields.io/sourceforge/dt/bfacp.svg)](https://sourceforge.net/projects/bfacp/files/latest/download)
+[![Circle CI](https://circleci.com/gh/Prophet731/BFAdminCP.svg?style=svg)](https://circleci.com/gh/Prophet731/BFAdminCP) [![Download Battlefield Admin Control Panel](https://img.shields.io/sourceforge/dt/bfacp.svg)](https://sourceforge.net/projects/bfacp/files/latest/download)[![Latest Stable Version](https://poser.pugx.org/adkgamers/bfadmincp/v/stable)](https://packagist.org/packages/adkgamers/bfadmincp) [![Total Downloads](https://poser.pugx.org/adkgamers/bfadmincp/downloads)](https://packagist.org/packages/adkgamers/bfadmincp) [![Latest Unstable Version](https://poser.pugx.org/adkgamers/bfadmincp/v/unstable)](https://packagist.org/packages/adkgamers/bfadmincp) [![License](https://poser.pugx.org/adkgamers/bfadmincp/license)](https://packagist.org/packages/adkgamers/bfadmincp)
 
 # Overview
 The Battlefield Admin Control Panel (BFACP) is a web based admin tool designed to work exclusively with [AdKats](https://github.com/AdKats/AdKats) (v6+) and [XpKillers Chat, GUID, Stats and Mapstats Logger](https://forum.myrcon.com/showthread.php?6698) (v1.0.0.2). The software is built with the [Laravel](http://laravel.com/) PHP framework to speed up development time and make my job a lot easier.
@@ -72,9 +72,15 @@ Please create a ticket for bugs/requests. [here](https://github.com/Prophet731/B
 
 This method is only for those who have shell access to their web server or VPS. This will download and extract the files to your current directory. Make sure it's an empty directory.
 
-### Git Method (preferred)
-
 If you have git installed you can just run the following command to install it. You must have [composer](https://getcomposer.org/doc/00-intro.md) and php command line installed.
+
+### Composer Method (preferred)
+
+```bash
+composer create-project --prefer-dist --no-scripts --keep-vcs adkgamers/bfadmincp .
+```
+
+### Git Method
 
 ```bash
 git clone https://github.com/Prophet731/BFAdminCP.git .

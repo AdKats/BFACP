@@ -29,7 +29,7 @@
         <![endif]-->
     </head>
 
-    <body class="skin-blue sidebar-mini fixed">
+    <body class="skin-blue sidebar-mini fixed control-sidebar-open">
         <div class="wrapper">
             <header class="main-header">
 
@@ -104,6 +104,42 @@
                 </div>
                 <strong>&copy; 2013-{{ date('Y') }} <a href="http://www.adkgamers.com" target="_blank">A Different Kind, LLC</a>. All rights reserved.</strong> <em>{{ MainHelper::executionTime(true) }}</em>
             </footer>
+
+            @if($bfacp->isLoggedIn)
+            <!-- Control Sidebar -->
+            <aside class="control-sidebar control-sidebar-dark">
+                <!-- Create the tabs -->
+                <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                    <li><a href="#control-sidebar-users-tab" data-toggle="tab"><i class="fa fa-users"></i></a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <!-- Home tab content -->
+                    <div class="tab-pane active" id="control-sidebar-users-tab" ng-controller="PusherUsersController">
+                        <h3 class="control-sidebar-heading">Online Users (<span ng-bind="members.online"></span>)</h3>
+                        <ul class="control-sidebar-menu">
+                            <li ng-repeat="member in members.list track by member.id">
+                                <a href="javascript://">
+                                    <img ng-src="@{{ member.avatar }}" class="img-circle menu-icon" style="max-width: 40px">
+
+                                    <div class="menu-info">
+                                        <h4 class="control-sidebar-subheading" ng-bind="member.username"></h4>
+
+                                        <p>&nbsp;</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.control-sidebar-menu -->
+
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+            </aside>
+            <!-- /.control-sidebar -->
+            <!-- This div must placed right after the sidebar for it to work-->
+            <div class="control-sidebar-bg"></div>
+            @endif
         </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -121,6 +157,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.1.6/ZeroClipboard.min.js"></script>
+        <script src="//js.pusher.com/3.0/pusher.min.js"></script>
         {{ HTML::script('js/plugins/fastclick/fastclick.min.js') }}
         {{ HTML::script('js/plugins/angular-modules/count-to/count-to.js') }}
         {{ HTML::script('js/plugins/angular-modules/ng-idle/angular-idle.min.js') }}
@@ -132,6 +169,11 @@
         {{ HTML::script('js/plugins/howler/howler.min.js') }}
         {{ HTML::script('js/plugins/slimScroll/jquery.slimscroll.min.js') }}
         {{ HTML::script('js/boot.js?v=1') }}
+        @if($bfacp->isLoggedIn)
+        <script type="text/javascript">
+            var pusher = new Pusher('{{ getenv('PUSHER_APP_KEY') }}');
+        </script>
+        @endif
         {{ Minify::javascript(array_merge(
             ['/js/app.js'],
             MainHelper::files(public_path() . '/js/factorys', true, '/js/factorys/'),

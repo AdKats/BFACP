@@ -60,4 +60,12 @@ return [
      * Set your app key here
      */
     'APP_KEY' => 'YourSecretKey!!!',
+    /**
+     * Set pusher API keys to allow realtime functionality. You will need to create an account.
+     *
+     * See https://pusher.com/docs/javascript_quick_start
+     */
+    'PUSHER_APP_ID' => '',
+    'PUSHER_APP_KEY' => '',
+    'PUSHER_APP_SECRET' => '',
 ];

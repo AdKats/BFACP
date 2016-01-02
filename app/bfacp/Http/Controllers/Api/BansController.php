@@ -4,9 +4,13 @@ use BFACP\Adkats\Ban;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Repositories\BanRepository;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
+use Roumen\Feed\Facades\Feed;
 
 class BansController extends BaseController
 {
@@ -29,6 +33,40 @@ class BansController extends BaseController
             $isCached = Cache::has('bans.latest');
 
             $bans = $this->repository->getLatestBans();
+        }
+
+        if ($this->request->has('type') && $this->request->get('type') == 'rss') {
+            $feed = Feed::make();
+
+            $feed->title = sprintf('Latest Battlefield Bans by %s', Config::get('bfacp.site.title'));
+            $feed->description = sprintf('Latest Battlefield Bans by %s', Config::get('bfacp.site.title'));
+            $feed->setDateFormat('datetime');
+            $feed->link = URL::to('api/bans/latest?type=rss');
+            $feed->lang = 'en';
+
+            foreach ($bans as $ban) {
+                $title = sprintf('%s banned for %s', $ban['player']['SoldierName'], $ban['record']['record_message']);
+
+                $view = View::make('system.rss.ban_entry_content', [
+                    'playerId' => $ban['player']['PlayerID'],
+                    'playerName' => $ban['player']['SoldierName'],
+                    'banreason' => $ban['record']['record_message'],
+                    'sourceName' => $ban['record']['source_name'],
+                    'sourceId' => $ban['record']['source_id'],
+                    'banReason' => $ban['record']['record_message'],
+                ]);
+
+                $feed->add(
+                    $title,
+                    $ban['record']['source_name'],
+                    $ban['player']['profile_url'],
+                    $ban['ban_startTime'],
+                    $title,
+                    $view->render()
+                );
+            }
+
+            return $feed->render('atom');
         }
 
         return MainHelper::response([

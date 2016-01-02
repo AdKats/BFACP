@@ -502,8 +502,10 @@ class LiveServerRepository extends BaseRepository
                 $this->TEAM3 = $teamFactions[0][1];
                 $this->TEAM4 = $teamFactions[0][2];
             } elseif ($this->gameName == 'BFHL') {
-                $this->TEAM1 = 'Cops';
-                $this->TEAM2 = 'Criminals';
+                $this->TEAM1 = $teamFactions[0][6];
+                $this->TEAM2 = $teamFactions[0][7];
+                $this->TEAM3 = $teamFactions[0][6];
+                $this->TEAM4 = $teamFactions[0][7];
             } else {
                 $this->TEAM0 = $teamFactions[0][0];
                 $this->TEAM1 = $teamFactions[0][ $teamFactions[1][1] + 1 ];

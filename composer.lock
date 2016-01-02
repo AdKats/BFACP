@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ce7ede5f47c842f2cce486b9d0667f57",
-    "content-hash": "cba331ed0b85e537845585a91abfa0a5",
+    "hash": "33510ac6d55c25cf86516113a82788ef",
+    "content-hash": "e5f9e962b9897fa3f2fd56168487668f",
     "packages": [
         {
             "name": "anahkiasen/former",
-            "version": "3.5.8",
+            "version": "3.5.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/formers/former.git",
-                "reference": "d36c0f9a9de57bfb32b79d9cc0d59c9fa7afe791"
+                "reference": "40187ce024d73722f509dfbe5504f331442a6bb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/formers/former/zipball/d36c0f9a9de57bfb32b79d9cc0d59c9fa7afe791",
-                "reference": "d36c0f9a9de57bfb32b79d9cc0d59c9fa7afe791",
+                "url": "https://api.github.com/repos/formers/former/zipball/40187ce024d73722f509dfbe5504f331442a6bb2",
+                "reference": "40187ce024d73722f509dfbe5504f331442a6bb2",
                 "shasum": ""
             },
             "require": {
@@ -69,7 +69,7 @@
                 "foundation",
                 "laravel"
             ],
-            "time": "2015-09-15 17:49:56"
+            "time": "2015-11-05 15:51:09"
         },
         {
             "name": "anahkiasen/html-object",
@@ -109,6 +109,57 @@
             ],
             "description": "A set of classes to create and manipulate HTML objects abstractions",
             "time": "2015-03-04 17:12:08"
+        },
+        {
+            "name": "artdarek/pusherer",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/artdarek/pusherer.git",
+                "reference": "b8afcec4a627a7d87f2d0cc150ce3649ade674a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/artdarek/pusherer/zipball/b8afcec4a627a7d87f2d0cc150ce3649ade674a5",
+                "reference": "b8afcec4a627a7d87f2d0cc150ce3649ade674a5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "pusher/pusher-php-server": "2.2.*"
+            },
+            "require-dev": {
+                "illuminate/support": "4.0.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Artdarek\\Pusherer": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Artdarek",
+                    "email": "artdarek@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Pusher.com service provider for Laravel 4.",
+            "homepage": "https://github.com/artdarek/pusherer",
+            "keywords": [
+                "Laravel 4",
+                "Pusher.com",
+                "laravel",
+                "laravel4",
+                "notifications",
+                "pusher",
+                "realtime"
+            ],
+            "time": "2015-10-26 15:40:30"
         },
         {
             "name": "ceesvanegmond/minify",
@@ -206,25 +257,23 @@
         },
         {
             "name": "d11wtq/boris",
-            "version": "v1.0.8",
+            "version": "v1.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/borisrepl/boris.git",
-                "reference": "125dd4e5752639af7678a22ea597115646d89c6e"
+                "reference": "31055b15e2d3fe47f31f6aa8e277f8f3fc7eb483"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/borisrepl/boris/zipball/125dd4e5752639af7678a22ea597115646d89c6e",
-                "reference": "125dd4e5752639af7678a22ea597115646d89c6e",
+                "url": "https://api.github.com/repos/borisrepl/boris/zipball/31055b15e2d3fe47f31f6aa8e277f8f3fc7eb483",
+                "reference": "31055b15e2d3fe47f31f6aa8e277f8f3fc7eb483",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
-            },
-            "suggest": {
                 "ext-pcntl": "*",
                 "ext-posix": "*",
-                "ext-readline": "*"
+                "ext-readline": "*",
+                "php": ">=5.3.0"
             },
             "bin": [
                 "bin/boris"
@@ -236,7 +285,11 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2014-01-17 12:21:18"
+            "license": [
+                "MIT"
+            ],
+            "description": "A tiny, but robust REPL (Read-Evaluate-Print-Loop) for PHP.",
+            "time": "2015-03-01 08:05:19"
         },
         {
             "name": "davejamesmiller/laravel-breadcrumbs",
@@ -355,7 +408,7 @@
         },
         {
             "name": "filp/whoops",
-            "version": "1.1.7",
+            "version": "1.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
@@ -712,16 +765,16 @@
         },
         {
             "name": "kmd/logviewer",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mikemand/logviewer.git",
-                "reference": "cf546420b27e2c9d8d43e14fdd4e5306013e70a5"
+                "reference": "d7f64bb8752847067e698f23043400d19c8d820c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikemand/logviewer/zipball/cf546420b27e2c9d8d43e14fdd4e5306013e70a5",
-                "reference": "cf546420b27e2c9d8d43e14fdd4e5306013e70a5",
+                "url": "https://api.github.com/repos/mikemand/logviewer/zipball/d7f64bb8752847067e698f23043400d19c8d820c",
+                "reference": "d7f64bb8752847067e698f23043400d19c8d820c",
                 "shasum": ""
             },
             "require": {
@@ -759,7 +812,7 @@
                 "log viewer",
                 "logviewer"
             ],
-            "time": "2014-10-09 10:45:09"
+            "time": "2015-10-29 18:14:14"
         },
         {
             "name": "laravel/framework",
@@ -878,16 +931,16 @@
         },
         {
             "name": "laravelbook/ardent",
-            "version": "v2.4.2",
+            "version": "v2.5.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/laravelbook/ardent.git",
-                "reference": "0a0238b8040abc1c71401ce27a8edf2619fa5bed"
+                "url": "https://github.com/laravel-ardent/ardent.git",
+                "reference": "c655360a4d79d38684fe525f4ade8249997fa455"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravelbook/ardent/zipball/0a0238b8040abc1c71401ce27a8edf2619fa5bed",
-                "reference": "0a0238b8040abc1c71401ce27a8edf2619fa5bed",
+                "url": "https://api.github.com/repos/laravel-ardent/ardent/zipball/c655360a4d79d38684fe525f4ade8249997fa455",
+                "reference": "c655360a4d79d38684fe525f4ade8249997fa455",
                 "shasum": ""
             },
             "require": {
@@ -908,14 +961,8 @@
             ],
             "authors": [
                 {
-                    "name": "Max Ehsan",
-                    "email": "contact@laravelbook.com",
-                    "homepage": "http://laravelbook.com/",
-                    "role": "Maintainer"
-                },
-                {
                     "name": "Igor Santos",
-                    "email": "igorsantos07+dev@gmail.com",
+                    "email": "igorsantos07@gmail.com",
                     "homepage": "http://www.igorsantos.com.br",
                     "role": "Developer"
                 }
@@ -933,7 +980,7 @@
                 "sql",
                 "validation"
             ],
-            "time": "2014-02-25 20:39:04"
+            "time": "2015-09-07 17:00:50"
         },
         {
             "name": "lavary/laravel-menu",
@@ -1133,16 +1180,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.17.1",
+            "version": "1.17.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "0524c87587ab85bc4c2d6f5b41253ccb930a5422"
+                "reference": "bee7f0dc9c3e0b69a6039697533dca1e845c8c24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/0524c87587ab85bc4c2d6f5b41253ccb930a5422",
-                "reference": "0524c87587ab85bc4c2d6f5b41253ccb930a5422",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bee7f0dc9c3e0b69a6039697533dca1e845c8c24",
+                "reference": "bee7f0dc9c3e0b69a6039697533dca1e845c8c24",
                 "shasum": ""
             },
             "require": {
@@ -1156,10 +1203,11 @@
                 "aws/aws-sdk-php": "^2.4.9",
                 "doctrine/couchdb": "~1.0@dev",
                 "graylog2/gelf-php": "~1.0",
+                "jakub-onderka/php-parallel-lint": "0.9",
                 "php-console/php-console": "^3.1.3",
                 "phpunit/phpunit": "~4.5",
                 "phpunit/phpunit-mock-objects": "2.3.0",
-                "raven/raven": "~0.11",
+                "raven/raven": "^0.13",
                 "ruflin/elastica": ">=0.90 <3.0",
                 "swiftmailer/swiftmailer": "~5.3",
                 "videlalvaro/php-amqplib": "~2.4"
@@ -1205,7 +1253,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2015-08-31 09:17:37"
+            "time": "2015-10-14 12:51:02"
         },
         {
             "name": "natxet/CssMin",
@@ -1346,17 +1394,65 @@
             "time": "2014-07-23 18:24:17"
         },
         {
-            "name": "patchwork/utf8",
-            "version": "v1.2.3",
+            "name": "paragonie/random_compat",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/tchwork/utf8.git",
-                "reference": "a7a9a987d01d052ff9c99510ecbd07ebc6c270f2"
+                "url": "https://github.com/paragonie/random_compat.git",
+                "reference": "d762ee5b099a29044603cd4649851e81aa66cb47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tchwork/utf8/zipball/a7a9a987d01d052ff9c99510ecbd07ebc6c270f2",
-                "reference": "a7a9a987d01d052ff9c99510ecbd07ebc6c270f2",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/d762ee5b099a29044603cd4649851e81aa66cb47",
+                "reference": "d762ee5b099a29044603cd4649851e81aa66cb47",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*|5.*"
+            },
+            "suggest": {
+                "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "lib/random.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paragon Initiative Enterprises",
+                    "email": "security@paragonie.com",
+                    "homepage": "https://paragonie.com"
+                }
+            ],
+            "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
+            "keywords": [
+                "csprng",
+                "pseudorandom",
+                "random"
+            ],
+            "time": "2015-12-10 14:48:13"
+        },
+        {
+            "name": "patchwork/utf8",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tchwork/utf8.git",
+                "reference": "3bd61bc162ed5c5f4a11e40a0106acc255b451d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tchwork/utf8/zipball/3bd61bc162ed5c5f4a11e40a0106acc255b451d9",
+                "reference": "3bd61bc162ed5c5f4a11e40a0106acc255b451d9",
                 "shasum": ""
             },
             "require": {
@@ -1372,7 +1468,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2-dev"
+                    "dev-master": "1.3-dev"
                 }
             },
             "autoload": {
@@ -1402,7 +1498,7 @@
                 "utf-8",
                 "utf8"
             ],
-            "time": "2015-06-25 08:17:49"
+            "time": "2015-12-15 15:34:15"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -1591,6 +1687,50 @@
             "time": "2012-12-21 11:40:51"
         },
         {
+            "name": "pusher/pusher-php-server",
+            "version": "v2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pusher/pusher-http-php.git",
+                "reference": "79d755cc5d5b02b67779e2a40782fd6e3726657d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pusher/pusher-http-php/zipball/79d755cc5d5b02b67779e2a40782fd6e3726657d",
+                "reference": "79d755cc5d5b02b67779e2a40782fd6e3726657d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Library for interacting with the Pusher REST API",
+            "homepage": "https://github.com/pusher/pusher-php-server",
+            "keywords": [
+                "events",
+                "php-pusher-server",
+                "publish",
+                "pusher",
+                "realtime",
+                "rest",
+                "trigger"
+            ],
+            "time": "2015-05-13 11:01:46"
+        },
+        {
             "name": "react/promise",
             "version": "v2.2.1",
             "source": {
@@ -1633,6 +1773,60 @@
             ],
             "description": "A lightweight implementation of CommonJS Promises/A for PHP",
             "time": "2015-07-03 13:48:55"
+        },
+        {
+            "name": "roumen/feed",
+            "version": "v2.8.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RoumenDamianoff/laravel-feed.git",
+                "reference": "86ffacc24f255748831decd7b1621ff03ccaca9d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RoumenDamianoff/laravel-feed/zipball/86ffacc24f255748831decd7b1621ff03ccaca9d",
+                "reference": "86ffacc24f255748831decd7b1621ff03ccaca9d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~4|~5",
+                "paragonie/random_compat": "~1",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "2.2.*",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-laravel4": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Roumen\\Feed": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roumen Damianoff",
+                    "email": "roumen@dawebs.com",
+                    "homepage": "https://roumen.it",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple feed generator for Laravel.",
+            "homepage": "https://roumen.it/projects/laravel-feed",
+            "keywords": [
+                "feed",
+                "laravel"
+            ],
+            "time": "2015-12-29 12:07:40"
         },
         {
             "name": "stack/builder",
@@ -2011,16 +2205,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.7.5",
+            "version": "v2.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "ae4dcc2a8d3de98bd794167a3ccda1311597c5d9"
+                "reference": "a5eb815363c0388e83247e7e9853e5dbc14999cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/ae4dcc2a8d3de98bd794167a3ccda1311597c5d9",
-                "reference": "ae4dcc2a8d3de98bd794167a3ccda1311597c5d9",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/a5eb815363c0388e83247e7e9853e5dbc14999cc",
+                "reference": "a5eb815363c0388e83247e7e9853e5dbc14999cc",
                 "shasum": ""
             },
             "require": {
@@ -2028,11 +2222,10 @@
             },
             "require-dev": {
                 "psr/log": "~1.0",
-                "symfony/config": "~2.0,>=2.0.5",
-                "symfony/dependency-injection": "~2.6",
-                "symfony/expression-language": "~2.6",
-                "symfony/phpunit-bridge": "~2.7",
-                "symfony/stopwatch": "~2.3"
+                "symfony/config": "~2.0,>=2.0.5|~3.0.0",
+                "symfony/dependency-injection": "~2.6|~3.0.0",
+                "symfony/expression-language": "~2.6|~3.0.0",
+                "symfony/stopwatch": "~2.3|~3.0.0"
             },
             "suggest": {
                 "symfony/dependency-injection": "",
@@ -2041,13 +2234,16 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\EventDispatcher\\": ""
-                }
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2065,38 +2261,38 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-22 13:49:29"
+            "time": "2015-10-30 20:15:42"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.7.5",
+            "version": "v2.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "a17f8a17c20e8614c15b8e116e2f4bcde102cfab"
+                "reference": "a7ad724530a764d70c168d321ac226ba3d2f10fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/a17f8a17c20e8614c15b8e116e2f4bcde102cfab",
-                "reference": "a17f8a17c20e8614c15b8e116e2f4bcde102cfab",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/a7ad724530a764d70c168d321ac226ba3d2f10fc",
+                "reference": "a7ad724530a764d70c168d321ac226ba3d2f10fc",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.9"
             },
-            "require-dev": {
-                "symfony/phpunit-bridge": "~2.7"
-            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Filesystem\\": ""
-                }
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2114,7 +2310,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-09 17:42:36"
+            "time": "2015-12-22 10:25:57"
         },
         {
             "name": "symfony/finder",

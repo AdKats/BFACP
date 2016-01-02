@@ -27,5 +27,18 @@ return [
             'full_name' => 'Verdedigers',
             'short_name' => 'Verdedigers',
         ],
+        6 => [
+            'full_name' => 'Cops',
+            'short_name' => 'Cops',
+        ],
+        7 => [
+            'full_name' => 'Criminals',
+            'short_name' => 'Criminals',
+        ],
+    ],
+    'admin' => [
+        'inputs' => [
+            'message' => 'Type or select preset :action message...',
+        ],
     ],
 ];
