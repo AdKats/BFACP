@@ -28,12 +28,12 @@ return [
             'short_name' => 'Verdedigers',
         ],
         6 => [
-            'full_name' => 'Cops',
-            'short_name' => 'Cops',
+            'full_name' => 'cops',
+            'short_name' => 'CO',
         ],
         7 => [
-            'full_name' => 'Criminals',
-            'short_name' => 'Criminals',
+            'full_name' => 'criminelen',
+            'short_name' => 'CR',
         ],
     ],
     'admin' => [

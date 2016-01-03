@@ -28,12 +28,12 @@ return [
             'short_name' => 'Обор',
         ],
         6 => [
-            'full_name' => 'Cops',
-            'short_name' => 'Cops',
+            'full_name' => 'Менты',
+            'short_name' => 'КОП',
         ],
         7 => [
-            'full_name' => 'Criminals',
-            'short_name' => 'Criminals',
+            'full_name' => 'Преступники',
+            'short_name' => 'БАН',
         ],
     ],
     'admin' => [
