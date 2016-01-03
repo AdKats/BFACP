@@ -390,22 +390,6 @@ class LiveServerRepository extends BaseRepository
 
         $this->data['_presetmessages'] = isset($presetMessages) ? [''] + $presetMessages : [];
 
-        if ($this->gameName == 'BFHL') {
-        $this->data['_teams'] = [
-            [
-                'id' => 1,
-                'label' => sprintf('%s (%s)', $this->TEAM1['full_name'], 'Team 1'),
-            ],
-            [
-                'id' => 2,
-                'label' => sprintf('%s (%s)', $this->TEAM2['full_name'], 'Team 2'),
-            ],
-        ];        
-        
-        } else {
-
-
-
         $this->data['_teams'] = [
             [
                 'id' => 1,
@@ -424,7 +408,7 @@ class LiveServerRepository extends BaseRepository
                 'label' => sprintf('%s (%s)', $this->TEAM4['full_name'], 'Team 4'),
             ],
         ];
-        }
+
         return $this;
     }
 
@@ -520,6 +504,8 @@ class LiveServerRepository extends BaseRepository
             } elseif ($this->gameName == 'BFHL') {
                 $this->TEAM1 = $teamFactions[0][6];
                 $this->TEAM2 = $teamFactions[0][7];
+                $this->TEAM3 = $teamFactions[0][6];
+                $this->TEAM4 = $teamFactions[0][7];
             } else {
                 $this->TEAM0 = $teamFactions[0][0];
                 $this->TEAM1 = $teamFactions[0][ $teamFactions[1][1] + 1 ];

@@ -72,6 +72,7 @@
 	<map uri="xp2_cargoship" name="The Docks" playmode="Hotwire0"/>
     <map uri="xp2_coastal" name="Break Point" playmode="Hotwire0"/>
     <map uri="xp2_precinct7" name="Precinct" playmode="Hotwire0"/>
+    <map uri="xp25_bank" name="Night Job" playmode="Hotwire0"/>
     <map uri="xp25_sawmill" name="Night Woods" playmode="Hotwire0"/>
 
     <!-- Bloodmoney Maps -->
