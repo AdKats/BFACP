@@ -1,6 +1,6 @@
 <?php
 
-Route::post('/pusher/auth', function() {
+Route::post('/pusher/auth', function () {
     $bfacp = App::make('bfadmincp');
 
     if (Input::has('channel_name') && Input::has('socket_id') && $bfacp->isLoggedIn) {
@@ -8,7 +8,10 @@ Route::post('/pusher/auth', function() {
             'id' => $bfacp->user->id,
             'username' => $bfacp->user->username,
             'avatar' => $bfacp->user->gravatar,
+            'role' => $bfacp->user->roles[0]->name,
+            'timestamp' => \Carbon\Carbon::now()->getTimestamp(),
         ]);
+
         return Response::make($socket);
     }
 

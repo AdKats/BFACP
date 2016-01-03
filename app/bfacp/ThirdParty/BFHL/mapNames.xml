@@ -72,6 +72,10 @@
 	  <map uri="xp2_cargoship" name="The Docks" playmode="Hotwire0"/>
     <map uri="xp2_coastal" name="Break Point" playmode="Hotwire0"/>
     <map uri="xp2_precinct7" name="Precinct" playmode="Hotwire0"/>
+<<<<<<< HEAD
+=======
+    <map uri="xp25_bank" name="Night Job" playmode="Hotwire0"/>
+>>>>>>> refs/remotes/origin/develop
     <map uri="xp25_sawmill" name="Night Woods" playmode="Hotwire0"/>
 
     <!-- Bloodmoney Maps -->
@@ -159,15 +163,6 @@
     <map uri="xp25_sawmill" name="Night Woods" playmode="TeamDeathMatch0"/>
 
     <!-- Bounty Hunter Maps -->
-    <map uri="MP_Bank" name="Bank Job" playmode="CashGrab0"/>
-    <map uri="MP_Bloodout" name="The Block" playmode="CashGrab0"/>
-    <map uri="MP_Desert05" name="Dust Bowl" playmode="CashGrab0"/>
-    <map uri="MP_Downtown" name="Downtown" playmode="CashGrab0"/>
-    <map uri="MP_Eastside" name="Derailed" playmode="CashGrab0"/>
-    <map uri="MP_Glades" name="Everglades" playmode="CashGrab0"/>
-    <map uri="MP_Growhouse" name="Growhouse" playmode="CashGrab0"/>
-    <map uri="MP_Hills" name="Hollywood Heights" playmode="CashGrab0"/>
-    <map uri="MP_OffShore" name="Riptide" playmode="CashGrab0"/>
     <map uri="XP1_MallCops" name="Black Friday" playmode="CashGrab0"/>
     <map uri="XP1_Nights" name="Code Blue" playmode="CashGrab0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="CashGrab0"/>
@@ -176,9 +171,13 @@
     <map uri="xp2_coastal" name="Break Point" playmode="CashGrab0"/>
     <map uri="xp2_museum02" name="Museum" playmode="CashGrab0"/>
     <map uri="xp2_precinct7" name="Precinct" playmode="CashGrab0"/>
+<<<<<<< HEAD
     <map uri="xp25_bank" name="Night Job" playmode="CashGrab0"/>
     <map uri="xp25_sawmill" name="Night Woods" playmode="CashGrab0"/>
 	
+=======
+
+>>>>>>> refs/remotes/origin/develop
 	<!-- Squad Heist Maps -->
     <map uri="xp2_cargoship" name="The Docks" playmode="SquadHeist0"/>
     <map uri="xp2_coastal" name="Break Point" playmode="SquadHeist0"/>
