@@ -19,7 +19,7 @@
     </section>
 
     <section class="main-content">
-      <p><a href="https://circleci.com/gh/Prophet731/BFAdminCP"><img src="https://circleci.com/gh/Prophet731/BFAdminCP.svg?style=svg" alt="Circle CI"></a> <a href="https://sourceforge.net/projects/bfacp/files/latest/download"><img src="https://img.shields.io/sourceforge/dt/bfacp.svg" alt="Download Battlefield Admin Control Panel"></a></p>
+      <p><a href="https://circleci.com/gh/Prophet731/BFAdminCP"><img src="https://circleci.com/gh/Prophet731/BFAdminCP.svg?style=svg" alt="Circle CI"></a> <a href="https://sourceforge.net/projects/bfacp/files/latest/download"><img src="https://img.shields.io/sourceforge/dt/bfacp.svg" alt="Download Battlefield Admin Control Panel"></a><a href="https://packagist.org/packages/adkgamers/bfadmincp"><img src="https://poser.pugx.org/adkgamers/bfadmincp/v/stable" alt="Latest Stable Version"></a> <a href="https://packagist.org/packages/adkgamers/bfadmincp"><img src="https://poser.pugx.org/adkgamers/bfadmincp/downloads" alt="Total Downloads"></a> <a href="https://packagist.org/packages/adkgamers/bfadmincp"><img src="https://poser.pugx.org/adkgamers/bfadmincp/v/unstable" alt="Latest Unstable Version"></a> <a href="https://packagist.org/packages/adkgamers/bfadmincp"><img src="https://poser.pugx.org/adkgamers/bfadmincp/license" alt="License"></a></p>
 
 <h1>
 <a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h1>
@@ -98,10 +98,15 @@
 
 <p>This method is only for those who have shell access to their web server or VPS. This will download and extract the files to your current directory. Make sure it's an empty directory.</p>
 
-<h3>
-<a id="git-method-preferred" class="anchor" href="#git-method-preferred" aria-hidden="true"><span class="octicon octicon-link"></span></a>Git Method (preferred)</h3>
-
 <p>If you have git installed you can just run the following command to install it. You must have <a href="https://getcomposer.org/doc/00-intro.md">composer</a> and php command line installed.</p>
+
+<h3>
+<a id="composer-method-preferred" class="anchor" href="#composer-method-preferred" aria-hidden="true"><span class="octicon octicon-link"></span></a>Composer Method (preferred)</h3>
+
+<div class="highlight highlight-source-shell"><pre>composer create-project --prefer-dist --no-scripts --keep-vcs adkgamers/bfadmincp <span class="pl-c1">.</span></pre></div>
+
+<h3>
+<a id="git-method" class="anchor" href="#git-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>Git Method</h3>
 
 <div class="highlight highlight-source-shell"><pre>git clone https://github.com/Prophet731/BFAdminCP.git <span class="pl-c1">.</span>
 composer install --no-scripts</pre></div>
