@@ -11,16 +11,16 @@ angular.module('bfacp').controller('PusherUsersController', ['$scope', '$interva
         $scope.members.online = $scope.members.list.length;
     };
 
-    $interval(update_members_online, 1000);
-
     PresenceChannel.bind('pusher:subscription_succeeded', function (members) {
         members.each(function (member) {
             $scope.members.list.push(member.info);
         });
+        update_members_online();
     });
 
     PresenceChannel.bind('pusher:member_added', function (member) {
         $scope.members.list.push(member.info);
+        update_members_online();
     });
 
     PresenceChannel.bind('pusher:member_removed', function (member) {
@@ -30,5 +30,6 @@ angular.module('bfacp').controller('PusherUsersController', ['$scope', '$interva
                 break;
             }
         }
+        update_members_online();
     });
 }]);

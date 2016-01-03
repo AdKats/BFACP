@@ -29,7 +29,7 @@
         <![endif]-->
     </head>
 
-    <body class="skin-blue sidebar-mini fixed control-sidebar-open">
+    <body class="skin-blue sidebar-mini fixed">
         <div class="wrapper">
             <header class="main-header">
 
@@ -105,7 +105,7 @@
                 <strong>&copy; 2013-{{ date('Y') }} <a href="http://www.adkgamers.com" target="_blank">A Different Kind, LLC</a>. All rights reserved.</strong> <em>{{ MainHelper::executionTime(true) }}</em>
             </footer>
 
-            @if($bfacp->isLoggedIn)
+            @if($bfacp->isLoggedIn && !empty(getenv('PUSHER_APP_KEY')))
             <!-- Control Sidebar -->
             <aside class="control-sidebar control-sidebar-dark">
                 <!-- Create the tabs -->
@@ -125,7 +125,7 @@
                                     <div class="menu-info">
                                         <h4 class="control-sidebar-subheading" ng-bind="member.username"></h4>
 
-                                        <p>&nbsp;</p>
+                                        <p ng-bind="member.role"></p>
                                     </div>
                                 </a>
                             </li>
@@ -169,9 +169,10 @@
         {{ HTML::script('js/plugins/howler/howler.min.js') }}
         {{ HTML::script('js/plugins/slimScroll/jquery.slimscroll.min.js') }}
         {{ HTML::script('js/boot.js?v=1') }}
-        @if($bfacp->isLoggedIn)
+        @if($bfacp->isLoggedIn && !empty(getenv('PUSHER_APP_KEY')))
         <script type="text/javascript">
             var pusher = new Pusher('{{ getenv('PUSHER_APP_KEY') }}');
+            $('body').addClass('control-sidebar-open');
         </script>
         @endif
         {{ Minify::javascript(array_merge(

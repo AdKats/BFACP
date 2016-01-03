@@ -273,10 +273,12 @@ class Battlefield extends Main
                     case 'TurfWarSmall0':
                     case 'Heist0':
                     case 'Hotwire0':
-                    case 'Bloodmoney0':
+                    case 'BloodMoney0':
                     case 'Hit0':
                     case 'Hostage0':
                     case 'TeamDeathMatch0':
+                    case 'CashGrab0':
+                    case 'SquadHeist0':
                         $defaultTickets = 100;
                         break;
                 }
@@ -355,10 +357,12 @@ class Battlefield extends Main
                     case 'Hit0':
                     case 'Hostage0':
                     case 'TeamDeathMatch0':
+                    case 'CashGrab0':
+                    case 'SquadHeist0':
                         $defaultTime = 3600;
                         break;
 
-                    case 'Bloodmoney0':
+                    case 'BloodMoney0':
                         $defaultTime = 1200;
                         break;
                 }
