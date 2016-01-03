@@ -29,11 +29,11 @@ return [
         ],
         6 => [
             'full_name' => 'Polizei',
-            'short_name' => 'Cops',
+            'short_name' => 'CO',
         ],
         7 => [
             'full_name' => 'Kriminelle',
-            'short_name' => 'Criminals',
+            'short_name' => 'CR',
         ],
     ],
     'admin' => [
