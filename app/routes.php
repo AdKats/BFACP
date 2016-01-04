@@ -1,48 +1,5 @@
 <?php
 
-Route::post('/pusher/auth', function () {
-    $bfacp = App::make('bfadmincp');
-
-    if (Input::has('channel_name') && Input::has('socket_id') && $bfacp->isLoggedIn) {
-        $socket = Pusherer::presence_auth(Input::get('channel_name'), Input::get('socket_id'), $bfacp->user->id, [
-            'id' => $bfacp->user->id,
-            'username' => $bfacp->user->username,
-            'avatar' => $bfacp->user->gravatar,
-            'role' => $bfacp->user->roles[0]->name,
-            'timestamp' => \Carbon\Carbon::now()->getTimestamp(),
-        ]);
-
-        return Response::make($socket);
-    }
-
-    return Response::make('Forbidden', 403);
-});
-
-Route::post('/pusher/chat', function () {
-    $bfacp = App::make('bfadmincp');
-
-    if (Input::has('channel_name') && Input::has('event') && $bfacp->isLoggedIn) {
-        $timestamp = \Carbon\Carbon::now();
-        $data = [
-            'hash' => md5(sprintf('%s_%s', $timestamp->getTimestamp(), $bfacp->user->id)),
-            'user' => [
-                'id' => $bfacp->user->id,
-                'username' => $bfacp->user->username,
-                'avatar' => $bfacp->user->gravatar,
-                'role' => $bfacp->user->roles[0]->name,
-            ],
-            'timestamp' => $timestamp->toIso8601String(),
-            'text' => Input::get('message'),
-        ];
-
-        Pusherer::trigger(Input::get('channel_name'), Input::get('event'), $data);
-
-        return Response::make('', 200);
-    }
-
-    return Response::make('Forbidden', 403);
-});
-
 /**
  * Route Model Bindings
  */
@@ -74,6 +31,12 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
             return $squads;
         });
     });
+
+    /*===================================
+    =            API Pusher             =
+    ===================================*/
+
+    Route::controller('pusher', 'PusherController');
 
     /*===================================
     =            API Players            =

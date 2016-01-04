@@ -200,7 +200,9 @@
         {{ HTML::script('js/boot.js?v=1') }}
         @if($bfacp->isLoggedIn && !empty(getenv('PUSHER_APP_KEY')))
         <script type="text/javascript">
-            var pusher = new Pusher('{{ getenv('PUSHER_APP_KEY') }}');
+            var pusher = new Pusher('{{ getenv('PUSHER_APP_KEY') }}', {
+                authEndpoint: '/api/pusher/auth'
+            });
             $('body').addClass('control-sidebar-open');
         </script>
         @endif

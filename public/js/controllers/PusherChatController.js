@@ -21,6 +21,16 @@ angular.module('bfacp').controller('PusherChatController', ['$scope', '$http', f
 
     $scope.messages = [];
 
+    $http.get('/api/pusher/chat-history').success(function(data) {
+        var messages = data.data;
+
+        for(var i=0; i < messages.length; i++) {
+            $scope.messages.push(messages[i]);
+        }
+    }).error(function(e) {
+        console.error('Unable to get chat history.', e);
+    });
+
     $scope.sendMessage = function () {
         $scope.chat.input = true;
         $http.post('pusher/chat', {
