@@ -33,7 +33,7 @@ angular.module('bfacp').controller('PusherChatController', ['$scope', '$http', f
 
     $scope.sendMessage = function () {
         $scope.chat.input = true;
-        $http.post('pusher/chat', {
+        $http.post('api/pusher/chat', {
             channel_name: 'presence-chatroom',
             event: 'message-sent',
             message: $scope.chat.message
