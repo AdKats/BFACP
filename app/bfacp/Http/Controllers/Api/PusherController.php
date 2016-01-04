@@ -3,7 +3,6 @@
 use Artdarek\Pusherer\Facades\Pusherer;
 use BFACP\Facades\Main;
 use Carbon\Carbon;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 
@@ -28,10 +27,10 @@ class PusherController extends BaseController
 
             $socket = Pusherer::presence_auth($channel_name, $socket_id, $data['id'], $data);
 
-            return Response::make($socket);
+            return \Response::make($socket);
         }
 
-        return Response::make('Forbidden', 403);
+        return \Response::make('Forbidden', 403);
     }
 
     public function getChatHistory()
@@ -42,7 +41,7 @@ class PusherController extends BaseController
             $history = Cache::get('site.chat.history');
         }
 
-        return Main::response($history);
+        return Main::response($history, null, null, null, false, true);
     }
 
     /**
@@ -77,9 +76,9 @@ class PusherController extends BaseController
 
             Pusherer::trigger($channel_name, $event, $data);
 
-            return Response::make('OK', 200);
+            return \Response::make('OK', 200);
         }
 
-        return Response::make('Forbidden', 403);
+        return \Response::make('Forbidden', 403);
     }
 }
