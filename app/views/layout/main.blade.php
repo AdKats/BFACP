@@ -135,7 +135,7 @@
                         <h3 class="control-sidebar-heading">{{ Lang::get('common.right_sidebar.chat_room') }} <span class="badge" ng-bind="connectionState" ng-class="connStateClass"></span> </h3>
                         <ul class="control-sidebar-menu">
                             <li>
-                                <div class="direct-chat-messages">
+                                <div class="direct-chat-messages" style="height: 425px">
                                     <div class="direct-chat-msg" ng-repeat="msg in messages | orderBy:'timestamp':true track by $index">
                                         <div class="direct-chat-info clearfix">
                                             <span class="direct-chat-name pull-left" ng-bind="msg.user.username"></span>
