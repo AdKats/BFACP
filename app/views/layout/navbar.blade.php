@@ -56,5 +56,6 @@
             </a>
         </li>
         @endif
+        <li><a href="#" data-toggle="control-sidebar" tooltip="Toggle the sidebar"><i class="fa fa-gears"></i></a></li>
     </ul>
 </div>

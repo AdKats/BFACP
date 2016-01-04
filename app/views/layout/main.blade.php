@@ -117,7 +117,7 @@
                     <!-- Home tab content -->
                     <div class="tab-pane active" id="control-sidebar-users-tab" ng-controller="PusherChatController">
                         <h3 class="control-sidebar-heading">{{ Lang::get('common.right_sidebar.online_users') }} (<span ng-bind="members.online"></span>)</h3>
-                        <ul class="control-sidebar-menu">
+                        <ul class="control-sidebar-menu" id="sidebar-users">
                             <li ng-repeat="member in members.list track by member.id">
                                 <a href="javascript://">
                                     <img ng-src="@{{ member.avatar }}" class="img-circle menu-icon" style="max-width: 40px">
@@ -135,7 +135,7 @@
                         <h3 class="control-sidebar-heading">{{ Lang::get('common.right_sidebar.chat_room') }} <span class="badge" ng-bind="connectionState" ng-class="connStateClass"></span> </h3>
                         <ul class="control-sidebar-menu">
                             <li>
-                                <div class="direct-chat-messages" style="height: 425px">
+                                <div class="direct-chat-messages" id="sidebar-chat">
                                     <div class="direct-chat-msg" ng-repeat="msg in messages | orderBy:'timestamp':true track by $index">
                                         <div class="direct-chat-info clearfix">
                                             <span class="direct-chat-name pull-left" ng-bind="msg.user.username"></span>
@@ -203,7 +203,16 @@
             var pusher = new Pusher('{{ getenv('PUSHER_APP_KEY') }}', {
                 authEndpoint: '/api/pusher/auth'
             });
-            $('body').addClass('control-sidebar-open');
+
+            $('#sidebar-users').slimScroll({
+                height: '250px',
+                alwaysVisible: true
+            });
+
+            $('#sidebar-chat').slimScroll({
+                height: '350px',
+                alwaysVisible: true
+            });
         </script>
         @endif
         {{ Minify::javascript(array_merge(
