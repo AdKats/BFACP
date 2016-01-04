@@ -52,6 +52,8 @@ class PusherController extends BaseController
         if (Input::has('channel_name') && Input::has('event')) {
             $timestamp = Carbon::now();
 
+            $history = [];
+
             $data = [
                 'hash' => md5(sprintf('%s_%s', $timestamp->getTimestamp(), $this->user->id)),
                 'user' => [
@@ -65,11 +67,12 @@ class PusherController extends BaseController
             ];
 
             if (Cache::has('site.chat.history')) {
-                $history = Cache::get('site.chat.history');
-                Cache::put('site.chat.history', array_merge($history, $data), $timestamp->addMinutes(10));
-            } else {
-                Cache::put('site.chat.history', array_merge([], $data), $timestamp->addMinutes(10));
+                $history = array_merge($history, Cache::pull('site.chat.history'));
             }
+
+            $history[] = $data;
+
+            Cache::put('site.chat.history', $history, $timestamp->addMinutes(10));
 
             $channel_name = Input::get('channel_name');
             $event = Input::get('event');
