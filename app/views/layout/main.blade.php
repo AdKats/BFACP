@@ -115,8 +115,8 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <!-- Home tab content -->
-                    <div class="tab-pane active" id="control-sidebar-users-tab" ng-controller="PusherUsersController">
-                        <h3 class="control-sidebar-heading">Online Users (<span ng-bind="members.online"></span>)</h3>
+                    <div class="tab-pane active" id="control-sidebar-users-tab" ng-controller="PusherChatController">
+                        <h3 class="control-sidebar-heading">{{ Lang::get('common.right_sidebar.online_users') }} (<span ng-bind="members.online"></span>)</h3>
                         <ul class="control-sidebar-menu">
                             <li ng-repeat="member in members.list track by member.id">
                                 <a href="javascript://">
@@ -132,6 +132,35 @@
                         </ul>
                         <!-- /.control-sidebar-menu -->
 
+                        <h3 class="control-sidebar-heading">{{ Lang::get('common.right_sidebar.chat_room') }} <span class="badge" ng-bind="connectionState" ng-class="connStateClass"></span> </h3>
+                        <ul class="control-sidebar-menu">
+                            <li>
+                                <div class="direct-chat-messages">
+                                    <div class="direct-chat-msg" ng-repeat="msg in messages | orderBy:'timestamp':true track by $index">
+                                        <div class="direct-chat-info clearfix">
+                                            <span class="direct-chat-name pull-left" ng-bind="msg.user.username"></span>
+                                            <span class="direct-chat-timestamp pull-right" ng-bind="moment(msg.timestamp).fromNow()"></span>
+                                        </div>
+
+                                        <img ng-src="@{{ msg.user.avatar }}" class="direct-chat-img">
+                                        <div class="direct-chat-text" ng-bind="msg.text"></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="input-group">
+                                    <input type="text" ng-enter="sendMessage()" ng-model="chat.message" class="form-control" ng-disabled="chat.input">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-warning btn-flat" ng-click="sendMessage()" ng-disabled="chat.input">
+                                            <ng-switch on="chat.input">
+                                                <span ng-switch-when="true"><i class="fa fa-cog fa-spin"></i> Sending...</span>
+                                                <span ng-switch-default>Send</span>
+                                            </ng-switch>
+                                        </button>
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                     <!-- /.tab-pane -->
                 </div>

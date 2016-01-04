@@ -29,5 +29,8 @@ return [
             ],
         ],
     ],
-
+    'right_sidebar' => [
+        'online_users' => 'Online Users',
+        'chat_room' => 'Chat Room',
+    ],
 ];

@@ -4,6 +4,7 @@ return [
     'version' => 'Version',
     'login' => 'Login',
     'logout' => 'Logout',
+    'motd' => 'Message of the Day',
     'metabans' => [
         'title' => 'Metabans',
         'assessments' => 'Letzte Banns',
@@ -28,5 +29,8 @@ return [
             ],
         ],
     ],
-
+    'right_sidebar' => [
+        'online_users' => 'Online Users',
+        'chat_room' => 'Chat Room',
+    ],
 ];
