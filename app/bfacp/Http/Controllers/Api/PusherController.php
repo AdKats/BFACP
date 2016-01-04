@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Input;
 
 class PusherController extends BaseController
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->beforeFilter('auth');
+    }
+
     /**
      * @return mixed
      */

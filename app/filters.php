@@ -73,6 +73,10 @@ App::after(function ($request, $response) {
 
 Route::filter('auth', function () {
     if (Auth::guest()) {
+        if (Request::is('api/*')) {
+            throw new Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+        }
+
         if (Request::ajax()) {
             return Response::make('Unauthorized', 401);
         } else {
