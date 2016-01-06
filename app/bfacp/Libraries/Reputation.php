@@ -140,10 +140,10 @@ class Reputation
             }
         } else {
             $this->player->reputation()->save(new \BFACP\Battlefield\Reputation([
-                'game_id' => $this->player->GameID,
-                'source_rep' => $this->sourceReputation,
-                'target_rep' => $this->targetReputation,
-                'total_rep' => $this->totalReputation,
+                'game_id'      => $this->player->GameID,
+                'source_rep'   => $this->sourceReputation,
+                'target_rep'   => $this->targetReputation,
+                'total_rep'    => $this->totalReputation,
                 'total_rep_co' => $this->finalReputation,
             ]));
 

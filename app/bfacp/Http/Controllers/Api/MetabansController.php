@@ -26,7 +26,7 @@ class MetabansController extends BaseController
         $assessments = $this->metabans->assessments();
 
         $feed_assessments = [
-            'feed' => $feed,
+            'feed'        => $feed,
             'assessments' => $assessments,
         ];
 

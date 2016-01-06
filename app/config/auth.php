@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/*
 	|--------------------------------------------------------------------------
@@ -15,8 +15,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'eloquent',
-
+	'driver'   => 'eloquent',
 	/*
 	|--------------------------------------------------------------------------
 	| Authentication Model
@@ -28,8 +27,7 @@ return array(
 	|
 	*/
 
-	'model' => 'BFACP\Account\User',
-
+	'model'    => 'BFACP\Account\User',
 	/*
 	|--------------------------------------------------------------------------
 	| Authentication Table
@@ -41,8 +39,7 @@ return array(
 	|
 	*/
 
-	'table' => 'bfacp_users',
-
+	'table'    => 'bfacp_users',
 	/*
 	|--------------------------------------------------------------------------
 	| Password Reminder Settings
@@ -58,14 +55,12 @@ return array(
 	|
 	*/
 
-	'reminder' => array(
+	'reminder' => [
 
-		'email' => 'emails.auth.reminder',
-
-		'table' => 'bfacp_password_reminders',
-
+		'email'  => 'emails.auth.reminder',
+		'table'  => 'bfacp_password_reminders',
 		'expire' => 60,
 
-	),
+	],
 
-);
+];

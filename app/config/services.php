@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/*
 	|--------------------------------------------------------------------------
@@ -14,18 +14,16 @@ return array(
 	|
 	*/
 
-	'mailgun' => array(
+	'mailgun'  => [
 		'domain' => 'mg.gamerethos.net',
 		'secret' => 'key-70n5skrzhn0clwqw5tm2ex4kzane-kc3',
-	),
-
-	'mandrill' => array(
+	],
+	'mandrill' => [
 		'secret' => '',
-	),
-
-	'stripe' => array(
+	],
+	'stripe'   => [
 		'model'  => 'User',
 		'secret' => '',
-	),
+	],
 
-);
+];

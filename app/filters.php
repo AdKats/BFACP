@@ -18,9 +18,10 @@ App::before(function ($request) {
     try {
         Request::setTrustedProxies(Cache::remember('cloudflare.ips', 24 * 60 * 7, function () {
             $request = App::make('guzzle')->get('https://www.cloudflare.com/ips-v4');
+
             return explode("\n", $request->getBody());
         }));
-    } catch(Exception $e) {
+    } catch (Exception $e) {
         Cache::forget('cloudflare.ips');
         Log::error($e);
     }
@@ -28,7 +29,9 @@ App::before(function ($request) {
 
     // If request is not secured and force secured connection is enabled
     // then we need to redirect the user to a secure link.
-    if (!Request::secure() && Config::get('bfacp.site.ssl') && $_SERVER['REMOTE_ADDR'] != '127.0.0.1' && filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE)) {
+    if (!Request::secure() && Config::get('bfacp.site.ssl') && $_SERVER['REMOTE_ADDR'] != '127.0.0.1' && filter_var($_SERVER['REMOTE_ADDR'],
+            FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE)
+    ) {
         $path = Request::path();
 
         if (strlen(Request::server('QUERY_STRING')) > 0) {
@@ -136,12 +139,14 @@ Route::filter('user.register.enabled', function () {
 });
 
 Route::filter('chatlogs', function () {
-    if ((Auth::guest() && !Config::get('bfacp.site.chatlogs.guest')) || (Auth::check() && !Auth::user()->ability(null, 'chatlogs'))) {
+    if ((Auth::guest() && !Config::get('bfacp.site.chatlogs.guest')) || (Auth::check() && !Auth::user()->ability(null,
+                'chatlogs'))
+    ) {
         return Redirect::route('home');
     }
 });
 
-Route::filter('ip.whitelisted', function() {
+Route::filter('ip.whitelisted', function () {
     $clientIp = $_SERVER['REMOTE_ADDR'];
     $whitelist = getenv('IP_WHITELIST') !== false ? explode('|', getenv('IP_WHITELIST')) : [];
 

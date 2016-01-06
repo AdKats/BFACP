@@ -1,24 +1,24 @@
 <?php
 
 return [
-    'account' => [
+    'account'       => [
         'settings' => [
             'blocks' => [
-                'general' => [
-                    'title' => 'Общее',
+                'general'  => [
+                    'title'  => 'Общее',
                     'inputs' => [
-                        'email' => 'Email',
+                        'email'    => 'Email',
                         'language' => 'Язык',
                     ],
                 ],
                 'password' => [
-                    'title' => 'Изменить пароль',
-                    'inputs' => [
-                        'password' => 'Пароль',
+                    'title'       => 'Изменить пароль',
+                    'inputs'      => [
+                        'password'         => 'Пароль',
                         'password_confirm' => 'Повторите пароль',
                     ],
                     'inputs_help' => [
-                        'password' => 'Чтобы изменить пароль, введите его здесь.',
+                        'password'         => 'Чтобы изменить пароль, введите его здесь.',
                         'password_confirm' => 'Введите пароль заного, чтобы применить изменения.',
                     ],
                 ],
@@ -27,7 +27,7 @@ return [
     ],
     'notifications' => [
         'account' => [
-            'email' => [
+            'email'    => [
                 'changed' => 'Email был изменен на :addr!',
             ],
             'password' => [

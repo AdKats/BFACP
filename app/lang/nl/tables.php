@@ -3,7 +3,7 @@
 return [
 
     'playerlist' => [
-        'columns' => [
+        'columns'         => [
             'col1' => 'ID',
             'col2' => 'Spel',
             'col3' => 'Rank',
@@ -13,9 +13,9 @@ return [
             'col7' => 'Totaal Overtredingen',
             'col8' => 'Land',
         ],
-        'button_next' => 'Volgende',
+        'button_next'     => 'Volgende',
         'button_previous' => 'Vorige',
-        'button_reset' => 'Herstel',
+        'button_reset'    => 'Herstel',
     ],
 
 ];

@@ -1,9 +1,5 @@
 <?php
 
-use BFACP\Account\Role;
-use BFACP\Account\Setting;
-use BFACP\Account\User;
-
 class UserTableSeeder extends Seeder
 {
     private $repository;
@@ -15,9 +11,9 @@ class UserTableSeeder extends Seeder
         $password = 'password';
 
         $user = $this->repository->signup([
-            'username' => 'Admin',
-            'email' => 'admin@example.com',
-            'password' => $password,
+            'username'              => 'Admin',
+            'email'                 => 'admin@example.com',
+            'password'              => $password,
             'password_confirmation' => $password,
         ], 1, true, false, true);
     }

@@ -3,7 +3,7 @@
 return [
 
     'playerlist' => [
-        'columns' => [
+        'columns'         => [
             'col1' => 'ID',
             'col2' => 'Game',
             'col3' => 'Rank',
@@ -13,9 +13,9 @@ return [
             'col7' => 'Total Infractions',
             'col8' => 'Country',
         ],
-        'button_next' => 'Next',
+        'button_next'     => 'Next',
         'button_previous' => 'Previous',
-        'button_reset' => 'Reset',
+        'button_reset'    => 'Reset',
     ],
 
 ];

@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/*
 	|--------------------------------------------------------------------------
@@ -13,8 +13,7 @@ return array(
 	|
 	*/
 
-	'default' => 'production',
-
+	'default'     => 'production',
 	/*
 	|--------------------------------------------------------------------------
 	| Remote Server Connections
@@ -26,19 +25,18 @@ return array(
 	|
 	*/
 
-	'connections' => array(
+	'connections' => [
 
-		'production' => array(
+		'production' => [
 			'host'      => '',
 			'username'  => '',
 			'password'  => '',
 			'key'       => '',
 			'keyphrase' => '',
 			'root'      => '/var/www',
-		),
+		],
 
-	),
-
+	],
 	/*
 	|--------------------------------------------------------------------------
 	| Remote Server Groups
@@ -50,10 +48,10 @@ return array(
 	|
 	*/
 
-	'groups' => array(
+	'groups'      => [
 
-		'web' => array('production')
+		'web' => ['production'],
 
-	),
+	],
 
-);
+];

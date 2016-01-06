@@ -36,11 +36,11 @@ class Metabans
      */
     public $supported_games = [
         'BFBC2' => 'BF_BC2',
-        'MOH' => 'MOH_2010',
-        'MOHW' => 'MOH_2012',
-        'BF3' => 'BF_3',
-        'BF4' => 'BF_4',
-        'BFHL' => 'BF_H',
+        'MOH'   => 'MOH_2010',
+        'MOHW'  => 'MOH_2012',
+        'BF3'   => 'BF_3',
+        'BF4'   => 'BF_4',
+        'BFHL'  => 'BF_H',
     ];
 
     /**
@@ -115,8 +115,8 @@ class Metabans
         $this->hash = sha1($this->salt . $this->key);
 
         $this->auth = [
-            'apikey' => $this->hash,
-            'salt' => $this->salt,
+            'apikey'   => $this->hash,
+            'salt'     => $this->salt,
             'username' => $this->user,
         ];
 
@@ -139,18 +139,18 @@ class Metabans
     {
         $rules = [
             'assessment_length' => 'required|numeric',
-            'assessment_type' => 'required|in:' . implode(',', $this->assessment_types),
-            'game_name' => 'required|in:' . implode(',', $this->supported_games),
-            'player_uid' => 'required|regex:/^EA_([0-9A-Z]{32}+)$/',
-            'reason' => 'required|max:200',
+            'assessment_type'   => 'required|in:' . implode(',', $this->assessment_types),
+            'game_name'         => 'required|in:' . implode(',', $this->supported_games),
+            'player_uid'        => 'required|regex:/^EA_([0-9A-Z]{32}+)$/',
+            'reason'            => 'required|max:200',
         ];
 
         $data = [
             'assessment_length' => $duration,
-            'assessment_type' => strtolower($type),
-            'game_name' => $this->supported_games[ $game ],
-            'player_uid' => $GUID,
-            'reason' => $reason,
+            'assessment_type'   => strtolower($type),
+            'game_name'         => $this->supported_games[ $game ],
+            'player_uid'        => $GUID,
+            'reason'            => $reason,
         ];
 
         if (!$this->validate($data, $rules)) {
@@ -250,7 +250,7 @@ class Metabans
                 'headers' => [
                     'User-Agent' => 'PRoCon Metabans Plugin/1.1.0.0',
                 ],
-                'body' => $payload,
+                'body'    => $payload,
             ]);
 
             $response = $request->json();
@@ -299,7 +299,7 @@ class Metabans
         $assessments = $this->request([
             'mbo_assessments' => [
                 'account_name' => $this->account,
-                'offset' => $offset,
+                'offset'       => $offset,
             ],
         ]);
 
@@ -333,7 +333,7 @@ class Metabans
         $feed = $this->request([
             'mbo_feed' => [
                 'account_name' => $this->account,
-                'offset' => $offset,
+                'offset'       => $offset,
             ],
         ]);
 
@@ -367,7 +367,7 @@ class Metabans
         $followers = new Collection($this->request([
             'mbo_followers' => [
                 'account_name' => $this->account,
-                'offset' => $offset,
+                'offset'       => $offset,
             ],
         ]));
 

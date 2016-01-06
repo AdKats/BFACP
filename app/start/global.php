@@ -87,8 +87,8 @@ App::error(function (Exception $exception, $code) {
             return MainHelper::response([
                 [
                     'message' => $exception->getMessage(),
-                    'line' => $exception->getLine(),
-                    'file' => $exception->getFile(),
+                    'line'    => $exception->getLine(),
+                    'file'    => $exception->getFile(),
                 ],
             ], 'Fatal Error', 'error', 500);
         }

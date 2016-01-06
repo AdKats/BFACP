@@ -1,24 +1,24 @@
 <?php
 
 return [
-    'account' => [
+    'account'       => [
         'settings' => [
             'blocks' => [
-                'general' => [
-                    'title' => 'General',
+                'general'  => [
+                    'title'  => 'General',
                     'inputs' => [
-                        'email' => 'Email',
+                        'email'    => 'Email',
                         'language' => 'Language',
                     ],
                 ],
                 'password' => [
-                    'title' => 'Change Password',
-                    'inputs' => [
-                        'password' => 'Password',
+                    'title'       => 'Change Password',
+                    'inputs'      => [
+                        'password'         => 'Password',
                         'password_confirm' => 'Confirm Password',
                     ],
                     'inputs_help' => [
-                        'password' => 'To change your password please enter it here.',
+                        'password'         => 'To change your password please enter it here.',
                         'password_confirm' => 'Retype your new password to confirm the change.',
                     ],
                 ],
@@ -27,7 +27,7 @@ return [
     ],
     'notifications' => [
         'account' => [
-            'email' => [
+            'email'    => [
                 'changed' => 'Email has been updated to :addr!',
             ],
             'password' => [

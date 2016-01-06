@@ -129,19 +129,20 @@ class CreateBaseTables extends Migration
                 $table->unique(['player_id', 'persona_id']);
                 $table->foreign('player_id')->references('PlayerID')->on('tbl_playerdata')->onUpdate('cascade')->onDelete('cascade');
             });
-        }
-        // If the table already exists we need to check and make sure it's set to InnoDB.
-        else if (Schema::hasTable('adkats_battlelog_players')) {
-            $query = DB::table('INFORMATION_SCHEMA.TABLES')
-                ->where('TABLE_SCHEMA', getenv('DB_NAME'))
-                ->where('TABLE_NAME', 'adkats_battlelog_players')
-                ->where('ENGINE', 'MyISAM')
-                ->count();
+        } // If the table already exists we need to check and make sure it's set to InnoDB.
+        else {
+            if (Schema::hasTable('adkats_battlelog_players')) {
+                $query = DB::table('INFORMATION_SCHEMA.TABLES')
+                    ->where('TABLE_SCHEMA', getenv('DB_NAME'))
+                    ->where('TABLE_NAME', 'adkats_battlelog_players')
+                    ->where('ENGINE', 'MyISAM')
+                    ->count();
 
-            if($query > 0) {
-                Schema::table('adkats_battlelog_players', function(Blueprint $table) {
-                    $table->engine = 'InnoDB';
-                });
+                if ($query > 0) {
+                    Schema::table('adkats_battlelog_players', function (Blueprint $table) {
+                        $table->engine = 'InnoDB';
+                    });
+                }
             }
         }
     }

@@ -56,14 +56,14 @@ class AntiCheat
      * @var array
      */
     private $allowedCategories = [
-        'BF3' => [
+        'BF3'  => [
             'carbines',
             'machine_guns',
             'assault_rifles',
             'sub_machine_guns',
             'handheld_weapons',
         ],
-        'BF4' => [
+        'BF4'  => [
             'carbines',
             'lmgs',
             'assault_rifles',
@@ -95,9 +95,9 @@ class AntiCheat
      * @var array
      */
     private $triggers = [
-        'DPS' => 60,
-        'HKP' => 40,
-        'KPM' => 4.5,
+        'DPS'   => 60,
+        'HKP'   => 40,
+        'KPM'   => 4.5,
         'Kills' => 50,
     ];
 

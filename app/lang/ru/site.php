@@ -3,9 +3,9 @@
 return [
 
     'admin' => [
-        'users' => [
+        'users'   => [
             'listing' => [
-                'table' => [
+                'table'  => [
                     'col1' => 'Имя',
                     'col2' => 'Email',
                     'col3' => 'Группа',
@@ -14,24 +14,24 @@ return [
                     'col6' => 'Создан',
                 ],
                 'status' => [
-                    'active' => 'Включен',
+                    'active'   => 'Включен',
                     'inactive' => 'Выключен',
                 ],
             ],
-            'edit' => [
+            'edit'    => [
                 'details' => 'Детали',
                 'buttons' => [
-                    'save' => 'Сохранить изменения',
+                    'save'   => 'Сохранить изменения',
                     'cancel' => 'Отмена',
                     'delete' => 'Удалить пользователя',
                 ],
-                'inputs' => [
-                    'username' => ['label' => 'Имя'],
-                    'email' => ['label' => 'Email'],
-                    'role' => ['label' => 'Группа'],
+                'inputs'  => [
+                    'username'       => ['label' => 'Имя'],
+                    'email'          => ['label' => 'Email'],
+                    'role'           => ['label' => 'Группа'],
                     'account_status' => ['label' => 'Статус'],
-                    'lang' => ['label' => 'Язык'],
-                    'genpass' => ['label' => 'Сгенерировать новый пароль'],
+                    'lang'           => ['label' => 'Язык'],
+                    'genpass'        => ['label' => 'Сгенерировать новый пароль'],
                 ],
             ],
             'updates' => [
@@ -39,31 +39,31 @@ return [
                     'generated' => 'Пользователю :username (:email) был отправлен новый пароль.',
                 ],
             ],
-            'create' => [
+            'create'  => [
                 'details' => 'Детали',
-                'inputs' => [
+                'inputs'  => [
                     'username' => ['label' => 'Имя'],
-                    'email' => ['label' => 'Email'],
-                    'role' => ['label' => 'Группа'],
-                    'lang' => ['label' => 'Язык'],
+                    'email'    => ['label' => 'Email'],
+                    'role'     => ['label' => 'Группа'],
+                    'lang'     => ['label' => 'Язык'],
                 ],
                 'buttons' => [
-                    'save' => 'Создать пользователя',
+                    'save'   => 'Создать пользователя',
                     'cancel' => 'Отмена',
                 ],
             ],
         ],
-        'roles' => [
-            'edit' => [
+        'roles'   => [
+            'edit'   => [
                 'buttons' => [
-                    'save' => 'Сохранить изменения',
+                    'save'   => 'Сохранить изменения',
                     'cancel' => 'Отмена',
                     'delete' => 'Удалить группу',
                 ],
             ],
             'create' => [
                 'buttons' => [
-                    'save' => 'Создать группу',
+                    'save'   => 'Создать группу',
                     'cancel' => 'Отмена',
                     'delete' => 'Удалить группу',
                 ],
@@ -72,7 +72,7 @@ return [
         'servers' => [
             'edit' => [
                 'buttons' => [
-                    'save' => 'Сохранить изменения',
+                    'save'   => 'Сохранить изменения',
                     'cancel' => 'Отмена',
                     'delete' => 'Удалить сервер',
                 ],

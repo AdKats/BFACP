@@ -13,9 +13,8 @@ return [
      */
 
     'ignore_environments' => [
-        'local'
+        'local',
     ],
-
     /*
     |--------------------------------------------------------------------------
     | CSS build path
@@ -29,7 +28,6 @@ return [
      */
 
     'css_build_path'      => '/css/builds/',
-
     /*
     |--------------------------------------------------------------------------
     | JS build path
@@ -43,7 +41,6 @@ return [
      */
 
     'js_build_path'       => '/js/builds/',
-
     /*
     |--------------------------------------------------------------------------
     | Base URL
@@ -53,5 +50,5 @@ return [
     | value. By default if empty HTTP_HOST would be used.
     |
      */
-    'base_url'            => ''
+    'base_url'            => '',
 ];

@@ -55,12 +55,12 @@ class GeoRepository extends BaseRepository
     public function all()
     {
         return [
-            'cc' => $this->cc(),
+            'cc'      => $this->cc(),
             'country' => $this->country(),
-            'city' => $this->city(),
-            'lat' => $this->lat(),
-            'lon' => $this->lon(),
-            'postal' => $this->postal(),
+            'city'    => $this->city(),
+            'lat'     => $this->lat(),
+            'lon'     => $this->lon(),
+            'postal'  => $this->postal(),
         ];
     }
 

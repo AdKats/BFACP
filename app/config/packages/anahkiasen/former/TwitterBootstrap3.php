@@ -1,25 +1,25 @@
-<?php return array(
+<?php return [
 
 	// Twitter Bootstrap 3 framework markup
 	////////////////////////////////////////////////////////////////////
 
 	// Map Former-supported viewports to Bootstrap 3 equivalents
-	'viewports'   => array(
+	'viewports'   => [
 		'large'  => 'lg',
 		'medium' => 'md',
 		'small'  => 'sm',
 		'mini'   => 'xs',
-	),
+	],
 	// Width of labels for horizontal forms expressed as viewport => grid columns
-	'labelWidths' => array(
+	'labelWidths' => [
 		'large' => 2,
 		'small' => 4,
-	),
+	],
 	// HTML markup and classes used by Bootstrap 3 for icons
-	'icon'        => array(
+	'icon'        => [
 		'tag'    => 'span',
 		'set'    => 'glyphicon',
 		'prefix' => 'glyphicon',
-	),
+	],
 
-);
+];

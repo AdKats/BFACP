@@ -104,7 +104,7 @@ class ScoreboardController extends BaseController
         $data = [
             'failed' => $this->errors,
             'passed' => $this->data,
-            'other' => $data,
+            'other'  => $data,
         ];
 
         if (!empty($this->errors)) {
@@ -151,9 +151,9 @@ class ScoreboardController extends BaseController
             foreach ($this->players as $player) {
                 try {
                     $this->data[] = [
-                        'player' => $player,
+                        'player'  => $player,
                         'message' => $message,
-                        'record' => $this->repository->adminYell($message, $player, null, $duration, 'Player'),
+                        'record'  => $this->repository->adminYell($message, $player, null, $duration, 'Player'),
                     ];
                 } catch (PlayerNotFoundException $e) {
                     $this->errors[] = $e->getMessage();
@@ -161,9 +161,9 @@ class ScoreboardController extends BaseController
             }
         } else {
             $this->data[] = [
-                'player' => null,
+                'player'  => null,
                 'message' => $message,
-                'record' => $this->repository->adminYell($message, null, $team, $duration, $type),
+                'record'  => $this->repository->adminYell($message, null, $team, $duration, $type),
             ];
         }
 
@@ -193,9 +193,9 @@ class ScoreboardController extends BaseController
             foreach ($this->players as $player) {
                 try {
                     $this->data[] = [
-                        'player' => $player,
+                        'player'  => $player,
                         'message' => $message,
-                        'record' => $this->repository->adminSay($message, $player, null, 'Player', $hideName),
+                        'record'  => $this->repository->adminSay($message, $player, null, 'Player', $hideName),
                     ];
                 } catch (PlayerNotFoundException $e) {
                     $this->errors[] = $e->getMessage();
@@ -203,9 +203,9 @@ class ScoreboardController extends BaseController
             }
         } else {
             $this->data[] = [
-                'player' => null,
+                'player'  => null,
                 'message' => $message,
-                'record' => $this->repository->adminSay($message, null, $team, $type, $hideName),
+                'record'  => $this->repository->adminSay($message, null, $team, $type, $hideName),
             ];
         }
 
@@ -246,7 +246,7 @@ class ScoreboardController extends BaseController
                 $this->data[] = $this->repository->adminKill($player, Input::get('message', null));
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = [
-                    'player' => $player,
+                    'player'  => $player,
                     'message' => $e->getMessage(),
                 ];
             }
@@ -293,7 +293,7 @@ class ScoreboardController extends BaseController
                 $this->data[] = $this->repository->adminKick($player, Input::get('message', null));
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = [
-                    'player' => $player,
+                    'player'  => $player,
                     'message' => $e->getMessage(),
                 ];
             }
@@ -320,12 +320,12 @@ class ScoreboardController extends BaseController
                 $this->data[] = $this->repository->adminMovePlayer($player, $team, $squad, $locked);
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = [
-                    'player' => $player,
+                    'player'  => $player,
                     'message' => $e->getMessage(),
                 ];
             } catch (RconException $e) {
                 $this->errors[] = [
-                    'player' => $player,
+                    'player'  => $player,
                     'message' => $e->getMessage(),
                 ];
             }
@@ -348,12 +348,12 @@ class ScoreboardController extends BaseController
                 $this->data[] = $this->repository->adminPunish($player, Input::get('message', null));
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = [
-                    'player' => $player,
+                    'player'  => $player,
                     'message' => $e->getMessage(),
                 ];
             } catch (RconException $e) {
                 $this->errors[] = [
-                    'player' => $player,
+                    'player'  => $player,
                     'message' => $e->getMessage(),
                 ];
             }
@@ -376,12 +376,12 @@ class ScoreboardController extends BaseController
                 $this->data[] = $this->repository->adminForgive($player, Input::get('message', null));
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = [
-                    'player' => $player,
+                    'player'  => $player,
                     'message' => $e->getMessage(),
                 ];
             } catch (RconException $e) {
                 $this->errors[] = [
-                    'player' => $player,
+                    'player'  => $player,
                     'message' => $e->getMessage(),
                 ];
             }
@@ -404,12 +404,12 @@ class ScoreboardController extends BaseController
                 $this->data[] = $this->repository->adminMute($player, Input::get('message', null));
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = [
-                    'player' => $player,
+                    'player'  => $player,
                     'message' => $e->getMessage(),
                 ];
             } catch (RconException $e) {
                 $this->errors[] = [
-                    'player' => $player,
+                    'player'  => $player,
                     'message' => $e->getMessage(),
                 ];
             }

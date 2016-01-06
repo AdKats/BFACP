@@ -283,9 +283,9 @@ class Server extends Elegant
         }
 
         $paths = [
-            'large' => sprintf('%s/large/%s', $base_path, $image),
+            'large'  => sprintf('%s/large/%s', $base_path, $image),
             'medium' => sprintf('%s/medium/%s', $base_path, $image),
-            'wide' => in_array($this->game->Name, ['BF4', 'BFHL']) ? sprintf('%s/wide/%s', $base_path,
+            'wide'   => in_array($this->game->Name, ['BF4', 'BFHL']) ? sprintf('%s/wide/%s', $base_path,
                 $image) : sprintf('%s/large/%s', $base_path, $image),
         ];
 

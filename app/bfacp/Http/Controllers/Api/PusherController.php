@@ -21,10 +21,10 @@ class PusherController extends BaseController
     {
         if (Input::has('channel_name') && Input::has('socket_id')) {
             $data = [
-                'id' => $this->user->id,
-                'username' => $this->user->username,
-                'avatar' => $this->user->gravatar,
-                'role' => $this->user->roles[0]->name,
+                'id'        => $this->user->id,
+                'username'  => $this->user->username,
+                'avatar'    => $this->user->gravatar,
+                'role'      => $this->user->roles[0]->name,
                 'timestamp' => Carbon::now()->getTimestamp(),
             ];
 
@@ -61,15 +61,15 @@ class PusherController extends BaseController
             $history = [];
 
             $data = [
-                'hash' => md5(sprintf('%s_%s', $timestamp->getTimestamp(), $this->user->id)),
-                'user' => [
-                    'id' => $this->user->id,
+                'hash'      => md5(sprintf('%s_%s', $timestamp->getTimestamp(), $this->user->id)),
+                'user'      => [
+                    'id'       => $this->user->id,
                     'username' => $this->user->username,
-                    'avatar' => $this->user->gravatar,
-                    'role' => $this->user->roles[0]->name,
+                    'avatar'   => $this->user->gravatar,
+                    'role'     => $this->user->roles[0]->name,
                 ],
                 'timestamp' => $timestamp->toIso8601String(),
-                'text' => Input::get('message'),
+                'text'      => Input::get('message'),
             ];
 
             if (Cache::has('site.chat.history')) {

@@ -3,9 +3,9 @@
 return [
 
     'admin' => [
-        'users' => [
+        'users'   => [
             'listing' => [
-                'table' => [
+                'table'  => [
                     'col1' => 'Benutzername',
                     'col2' => 'Email',
                     'col3' => 'Rolle',
@@ -14,24 +14,24 @@ return [
                     'col6' => 'Erstellt',
                 ],
                 'status' => [
-                    'active' => 'Aktiv',
+                    'active'   => 'Aktiv',
                     'inactive' => 'Inaktiv',
                 ],
             ],
-            'edit' => [
+            'edit'    => [
                 'details' => 'Details',
                 'buttons' => [
-                    'save' => 'Änderungen speichern',
+                    'save'   => 'Änderungen speichern',
                     'cancel' => 'Abbrechen',
                     'delete' => 'Benutzer löschen',
                 ],
-                'inputs' => [
-                    'username' => ['label' => 'Benutzername'],
-                    'email' => ['label' => 'Email'],
-                    'role' => ['label' => 'Rolle'],
+                'inputs'  => [
+                    'username'       => ['label' => 'Benutzername'],
+                    'email'          => ['label' => 'Email'],
+                    'role'           => ['label' => 'Rolle'],
                     'account_status' => ['label' => 'Status'],
-                    'lang' => ['label' => 'Sprache'],
-                    'genpass' => ['label' => 'Generiere neues Passwort für den Benutzer'],
+                    'lang'           => ['label' => 'Sprache'],
+                    'genpass'        => ['label' => 'Generiere neues Passwort für den Benutzer'],
                 ],
             ],
             'updates' => [
@@ -40,17 +40,17 @@ return [
                 ],
             ],
         ],
-        'roles' => [
-            'edit' => [
+        'roles'   => [
+            'edit'   => [
                 'buttons' => [
-                    'save' => 'Änderungen speichern',
+                    'save'   => 'Änderungen speichern',
                     'cancel' => 'Abbrechen',
                     'delete' => 'Rolle löschen',
                 ],
             ],
             'create' => [
                 'buttons' => [
-                    'save' => 'Rolle erstellen',
+                    'save'   => 'Rolle erstellen',
                     'cancel' => 'Abbrechen',
                     'delete' => 'Rolle löschen',
                 ],
@@ -59,7 +59,7 @@ return [
         'servers' => [
             'edit' => [
                 'buttons' => [
-                    'save' => 'Änderungen speicher',
+                    'save'   => 'Änderungen speicher',
                     'cancel' => 'Abbrechen',
                     'delete' => 'Server löschen',
                 ],
