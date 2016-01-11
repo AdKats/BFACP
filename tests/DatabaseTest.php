@@ -47,7 +47,7 @@ class DatabaseTest extends TestCase
             $table->unique('IP_Address');
         });
 
-        Artisan::call('migrate');
+        Artisan::call('migrate:refresh');
         Artisan::call('db:seed');
     }
 
