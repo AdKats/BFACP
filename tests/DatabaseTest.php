@@ -12,6 +12,9 @@ class DatabaseTest extends TestCase
         DB::unprepared($sql);
     }
 
+    /**
+     * @depends testPrerequisiteTables
+     */
     public function testDatabase()
     {
         Artisan::call('migrate:refresh');
