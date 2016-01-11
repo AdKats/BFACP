@@ -98,7 +98,7 @@ return [
     |
     */
 
-    'migrations' => 'migrations',
+    'migrations' => 'bfacp_migrations',
 
     /*
     |--------------------------------------------------------------------------
