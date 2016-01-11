@@ -1,11 +1,6 @@
-/bootstrap/compiled.php
-composer.phar
-.env.local.php
-.DS_Store
-Thumbs.db
-/resources
-/public/AdminLTE-master
-oracle.sqlite
-*.sublime-*
 /vendor
+/node_modules
+Homestead.yaml
+Homestead.json
+.env
 /.idea
