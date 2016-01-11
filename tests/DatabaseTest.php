@@ -1,13 +1,23 @@
 <?php
 
+use BFACP\Account\Permission;
+use BFACP\Account\Role;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class DatabaseTest extends TestCase
 {
     public function testPrerequisiteTables()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::dropIfExists('tbl_playerdata');
+        Schema::dropIfExists('tbl_server');
+        Schema::dropIfExists('tbl_games');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+
         Schema::create('tbl_games', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->tinyInteger('GameID', true, true);
@@ -47,8 +57,7 @@ class DatabaseTest extends TestCase
             $table->unique('IP_Address');
         });
 
-        Artisan::call('migrate:refresh');
-        Artisan::call('db:seed');
+        Artisan::call('migrate:refresh', ['--seed' => true]);
     }
 
     /**
@@ -59,5 +68,29 @@ class DatabaseTest extends TestCase
         $this->seeInDatabase('bfacp_roles', ['name' => 'Administrator']);
         $this->seeInDatabase('bfacp_roles', ['name' => 'Registered']);
         $this->seeInDatabase('bfacp_users', ['username' => 'Admin']);
+    }
+
+    /**
+     * @depends testDatabase
+     */
+    public function testDefaultAdminAccount()
+    {
+        $user = Auth::attempt([
+            'email'    => 'admin@example.com',
+            'password' => 'password',
+        ]);
+
+        $this->assertTrue($user);
+    }
+
+    /**
+     * @depends testDefaultAdminAccount
+     */
+    public function testAdministratorRoleHasAllPermissions()
+    {
+        $role = Role::findOrFail(1);
+        $permissionsTotal = Permission::count();
+        $rolePermissionsTotal = $role->permissions()->count();
+        $this->assertEquals($permissionsTotal, $rolePermissionsTotal);
     }
 }

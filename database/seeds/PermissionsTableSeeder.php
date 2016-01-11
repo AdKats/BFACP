@@ -262,6 +262,8 @@ class PermissionsTableSeeder extends Seeder
 
         Permission::insert($permissions);
 
-        Role::find(1)->permissions()->attach(Permission::lists('id'));
+        $perms_ids = Permission::pluck('id');
+
+        Role::find(1)->permissions()->sync($perms_ids->toArray());
     }
 }

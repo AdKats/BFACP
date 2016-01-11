@@ -39,13 +39,8 @@ class UserRepository
 
         $user->password = $pass;
 
-        // Generate a random confirmation code
-        $user->confirmation_code = md5(uniqid(mt_rand(), true));
-
         // Update last seen timestamp
         $user->lastseen_at = Carbon::now();
-
-        $user->confirmed = $confirmed;
 
         // Save if valid. Password field will be hashed before save
         $user->save();
@@ -71,7 +66,7 @@ class UserRepository
             }
 
             if (!$skipEmail) {
-                $this->sendPasswordChangeEmail($user->username, $user->email, $pass1);
+                $this->sendPasswordChangeEmail($user->username, $user->email, $pass);
             }
         }
 
