@@ -1,6 +1,8 @@
 <?php
 
-define('BFACP_VERSION', '2.0.2');
+if(!defined('BFACP_VERSION')) {
+    define('BFACP_VERSION', '2.0.2');
+}
 
 /*
 |--------------------------------------------------------------------------
