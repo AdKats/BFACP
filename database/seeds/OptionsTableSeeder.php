@@ -71,7 +71,7 @@ class OptionsTableSeeder extends Seeder
             [
                 'option_key'         => 'site.languages',
                 'option_title'       => 'Available Languages',
-                'option_value'       => implode(',', ['en', 'de', 'nl']),
+                'option_value'       => implode(',', ['en', 'de', 'nl', 'ru']),
                 'option_description' => 'List of languages compatible with the BFACP.',
             ],
             [
