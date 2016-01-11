@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS `tbl_playerdata`;
+DROP TABLE IF EXISTS `tbl_server`;
+DROP TABLE IF EXISTS `tbl_games`;
+
 CREATE TABLE `tbl_games` (
   `GameID` tinyint(4) unsigned NOT NULL AUTO_INCREMENT,
   `Name` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
