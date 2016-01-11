@@ -12,7 +12,7 @@
                         ->select($role->permissions->pluck('command_id'))
                         ->multiple()->size(count($permissions, COUNT_RECURSIVE))
                         ->help('Hold CTRL to select multiple permissions.')
-                    }}
+                    !!}
 
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-sm-offset-4 col-lg-10 col-sm-8">
@@ -66,20 +66,20 @@
                 btn.parent().find('button').attr('disabled', true);
                 $.ajax({
                     url: "{{ route('admin.adkats.roles.destroy', $role->role_id) }}",
-                    type: 'DELETE',
+                    type: 'DELETE'
                 })
-                        .done(function (data) {
-                            toastr.success('Role Deleted!');
-                            window.location.href = data.data.url;
-                        })
-                        .fail(function () {
-                            console.log("error");
-                            toastr.error('Unable to delete role');
-                        })
-                        .always(function () {
-                            btn.find('i').removeClass('fa-spinner fa-pulse').addClass('fa-trash');
-                            btn.parent().find('button').attr('disabled', false);
-                        });
+                .done(function (data) {
+                    toastr.success('Role Deleted!');
+                    window.location.href = data.data.url;
+                })
+                .fail(function () {
+                    console.log("error");
+                    toastr.error('Unable to delete role');
+                })
+                .always(function () {
+                    btn.find('i').removeClass('fa-spinner fa-pulse').addClass('fa-trash');
+                    btn.parent().find('button').attr('disabled', false);
+                });
             }
         });
     </script>

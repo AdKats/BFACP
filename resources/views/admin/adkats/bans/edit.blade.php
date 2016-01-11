@@ -41,8 +41,8 @@
                                 <i class="fa fa-calendar fa-lg"></i>&nbsp;
                                 <span></span> <strong class="caret"></strong>
                             </div>
-                            {!! Form::hidden('banStartDateTime', Input::old("banStartDateTime", $ban->ban_issued)) !!}
-                            {!! Form::hidden('banEndDateTime', Input::old("banEndDateTime", $ban->ban_expires)) !!}
+                            {!! Form::hidden('banStartDateTime', old("banStartDateTime", $ban->ban_issued)) !!}
+                            {!! Form::hidden('banEndDateTime', old("banEndDateTime", $ban->ban_expires)) !!}
                         </div>
                     </div>
 
@@ -117,7 +117,7 @@
                 $('#ban-range span').html(moment(date1).format('LLL') + '&nbsp;&ndash;&nbsp;' + moment(date2).format('LLL'));
             }
 
-            updateBanRangeDisplay(moment('<?php echo Input::old("banStartDateTime", $ban->ban_issued); ?>'), moment('<?php echo Input::old("banEndDateTime", $ban->ban_expires); ?>'));
+            updateBanRangeDisplay(moment('<?php echo old("banStartDateTime", $ban->ban_issued); ?>'), moment('<?php echo old("banEndDateTime", $ban->ban_expires); ?>'));
 
             $('#ban-range').daterangepicker({
                 ranges: {
@@ -134,9 +134,9 @@
                     '2 Months': [moment(), moment().add(2, 'M')],
                     '3 Months': [moment(), moment().add(3, 'M')]
                 },
-                startDate: moment('<?php echo Input::old("banStartDateTime", $ban->ban_issued); ?>'),
-                endDate: moment('<?php echo Input::old("banEndDateTime", $ban->ban_expires); ?>'),
-                minDate: moment('<?php echo Input::old("banStartDateTime", $ban->ban_issued); ?>').subtract(1, 'd'),
+                startDate: moment('<?php echo old("banStartDateTime", $ban->ban_issued); ?>'),
+                endDate: moment('<?php echo old("banEndDateTime", $ban->ban_expires); ?>'),
+                minDate: moment('<?php echo old("banStartDateTime", $ban->ban_issued); ?>').subtract(1, 'd'),
                 timePicker: true,
                 timePickerIncrement: 1,
                 timePicker12Hour: true,

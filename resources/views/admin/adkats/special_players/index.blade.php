@@ -71,17 +71,17 @@
                 dataType: 'json',
                 data: {
                     group: $(this).val()
-                },
+                }
             })
-                    .done(function (data) {
-                        toastr.success(data.message);
-                    })
-                    .fail(function (data) {
-                        toastr.error(data.responseJSON.message);
-                    })
-                    .always(function () {
-                        _this.attr('disabled', false);
-                    });
+            .done(function (data) {
+                toastr.success(data.message);
+            })
+            .fail(function (data) {
+                toastr.error(data.responseJSON.message);
+            })
+            .always(function () {
+                _this.attr('disabled', false);
+            });
         });
     </script>
 @stop

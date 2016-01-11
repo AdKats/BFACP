@@ -86,7 +86,7 @@ return [
     */
 
     'key'             => env('APP_KEY'),
-    'cipher'          => 'AES-256-CBC',
+    'cipher'          => MCRYPT_RIJNDAEL_256,
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration
@@ -158,6 +158,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         Devfactory\Minify\MinifyServiceProvider::class,
+        GrahamCampbell\Markdown\MarkdownServiceProvider::class,
     ],
     /*
     |--------------------------------------------------------------------------
@@ -209,6 +210,7 @@ return [
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
         'Entrust'     => Zizaco\Entrust\EntrustFacade::class,
         'Minify'      => Devfactory\Minify\Facades\MinifyFacade::class,
+        'Markdown'    => GrahamCampbell\Markdown\Facades\Markdown::class,
     ],
 
 ];

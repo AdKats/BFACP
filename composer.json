@@ -38,7 +38,8 @@
     "dingo/api": "1.0.*@dev",
     "laravelcollective/html": "^5.2",
     "devfactory/minify": "1.0.*",
-    "vierbergenlars/php-semver": "3.0.0"
+    "vierbergenlars/php-semver": "3.0.0",
+    "graham-campbell/markdown": "^5.3"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

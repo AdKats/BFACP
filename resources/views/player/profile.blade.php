@@ -592,7 +592,7 @@
                 series: [{
                     type: 'pie',
                     name: "{{ Lang::get('player.profile.charts.command_overview.chart.tooltip') }}",
-                    data: {{ $charts['overview']->toJson() }}
+                    data: {!! $charts['overview']->toJson() !!}
 
 
                 }]
@@ -621,7 +621,7 @@
                 series: [{
                     type: 'pie',
                     name: "{{ Lang::get('player.profile.charts.aliases.chart.tooltip') }}",
-                    data: {{ $charts['aliases']->toJson() }}
+                    data: {!! $charts['aliases']->toJson() !!}
 
 
                 }]
@@ -651,7 +651,7 @@
                         series: [{
                             type: 'pie',
                             name: "{{ Lang::get('player.profile.charts.ip_history.chart.tooltip') }}",
-                            data: {{ $charts['iphistory']->toJson() }}
+                            data: {!! $charts['iphistory']->toJson() !!}
 
 
                         }]
@@ -659,20 +659,20 @@
             @endif
 
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                        var target = $(e.target).data("target");
+                var target = $(e.target).data("target");
 
-                        switch (target) {
-                            case "#command-overview":
-                                $(target).highcharts().reflow();
-                                break;
-                            case "#ip-history":
-                                $("#ip-history-chart").highcharts().reflow();
-                                break;
-                            case "#aliases":
-                                $("#aliases-chart").highcharts().reflow();
-                                break;
-                        }
-                    });
+                switch (target) {
+                    case "#command-overview":
+                        $(target).highcharts().reflow();
+                        break;
+                    case "#ip-history":
+                        $("#ip-history-chart").highcharts().reflow();
+                        break;
+                    case "#aliases":
+                        $("#aliases-chart").highcharts().reflow();
+                        break;
+                }
+            });
         });
     </script>
 @stop

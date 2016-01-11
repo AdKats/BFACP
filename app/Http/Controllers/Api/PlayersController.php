@@ -2,6 +2,7 @@
 
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Repositories\PlayerRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class PlayersController extends Controller
@@ -14,11 +15,11 @@ class PlayersController extends Controller
         $this->repository = $repository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $limit = $this->request->get('limit', false);
+        $limit = $request->get('limit', false);
 
-        $name = $this->request->get('player', null);
+        $name = $request->get('player', null);
 
         $players = $this->repository->getAllPlayers($limit, $name);
 

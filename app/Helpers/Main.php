@@ -777,14 +777,26 @@ class Main
         });
 
         // Check if we have a soldier.
-        if (!empty($soldiers) && count($soldiers) > 0) {
-            $soldier = head(array_flatten($soldiers));
+        if (!$soldiers->isEmpty()) {
+            $soldiers = $soldiers->map(function ($soldier, $key) use (&$user) {
+                $percent = levenshtein($soldier->SoldierName, $user->username);
 
-            return $soldier->player;
+                return [
+                    'key'     => $key,
+                    'score'   => $percent,
+                    'soldier' => $soldier->player,
+                ];
+            });
+
+            $sorted = $soldiers->sortBy('score');
+
+            $soldier = $sorted->first();
+
+            return $soldier['soldier'];
         }
 
         // Return null if no match was able too be met.
-        return;
+        return null;
     }
 
     /**

@@ -12,13 +12,14 @@
 
                         <div class="col-lg-10 col-sm-8">
                             <select class="form-control" name="server" id="server">
-                                <option value="-1" <?php echo Input::has('server') && Input::get('server') == -1 ? 'selected' : ''?>>
+                                <option value="-1" <?php echo \Illuminate\Support\Facades\Input::has('server') && \Illuminate\Support\Facades\Input::get('server') == -1 ? 'selected' : ''?>>
                                     Select Server...
                                 </option>
                                 @foreach($games as $game)
+                                    <?php if($game->servers->count() == 0) { continue; } ?>
                                     <optgroup label="{{ $game->Name }}">
                                         @foreach($game->servers as $server)
-                                            <option value="{{ $server->ServerID }}"<?php echo Input::has('server') && Input::get('server') == $server->ServerID ? 'selected' : ''?>>
+                                            <option value="{{ $server->ServerID }}"<?php echo \Illuminate\Support\Facades\Input::has('server') && \Illuminate\Support\Facades\Input::get('server') == $server->ServerID ? 'selected' : ''?>>
                                                 {{ $server->ServerName }}
                                             </option>
                                         @endforeach
@@ -47,7 +48,7 @@
 
                     {!! Former::checkbox('showspam')->label('&nbsp;')->text('View Spam Messages') !!}
 
-                    {!! Former::hidden('pid', Input::get('pid', '')) !!}
+                    {!! Former::hidden('pid', \Illuminate\Support\Facades\Input::get('pid', '')) !!}
 
                     {!! Former::actions()->success_submit('Search') !!}
 
@@ -59,11 +60,19 @@
         @if(isset($chat))
             <div class="col-xs-12 col-lg-8">
                 <div class="box box-primary">
+                    <div class="box-header">
+                        <div class="box-title">
+                            <h3 class="box-title">&nbsp;</h3>
+                        </div>
+                        <div class="box-tools">
+                            {!! $chat->appends(\Illuminate\Support\Facades\Input::except('page'))->links() !!}
+                        </div>
+                    </div>
                     <div class="box-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-condensed">
                                 <thead>
-                                @if(Input::get('server', -1) <= 0)
+                                @if(\Illuminate\Support\Facades\Input::get('server', -1) <= 0)
                                     <th>Game</th>
                                     <th>Server</th>
                                     <th>Player</th>
@@ -81,14 +90,14 @@
                                 <tbody>
                                 @forelse($chat as $message)
                                     <tr>
-                                        @if(Input::get('server', -1) <= 0)
+                                        @if(\Illuminate\Support\Facades\Input::get('server', -1) <= 0)
                                             <td>
                                                 <span class="{{ $message->server->game->class_css }}">{{ $message->server->game->Name }}</span>
                                             </td>
                                             <td>
-                                    <span tooltip="{{ $message->server->ServerName }}">
-                                        {{ $message->server->server_name_short or str_limit($message->server->ServerName, 30) }}
-                                    </span>
+                                                <span tooltip="{{ $message->server->ServerName }}">
+                                                    {{ $message->server->server_name_short or str_limit($message->server->ServerName, 30) }}
+                                                </span>
                                             </td>
                                             <td>
                                                 @if(is_null($message->logPlayerID))
@@ -127,7 +136,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td <?php echo Input::get('server', -1) <= 0 ? 'colspan="4"' : 'colspan="6"';?>>
+                                        <td <?php echo \Illuminate\Support\Facades\Input::get('server', -1) <= 0 ? 'colspan="4"' : 'colspan="6"';?>>
                                             <alert type="info">{!! Macros::faicon('fa-info-circle') !!}&nbsp;No results
                                                 returned
                                             </alert>
@@ -140,7 +149,9 @@
                     </div>
 
                     <div class="box-footer">
-                        {!! $chat->appends(Input::except('page'))->links('pagination::simple') !!}
+                        <div class="pull-right">
+                            {!! $chat->appends(\Illuminate\Support\Facades\Input::except('page'))->links() !!}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -158,14 +169,19 @@
         }
 
         $(function () {
-            var startDate = <?php if (Input::has('StartDateTime')): ?>moment('{{ Input::get("StartDateTime") }}');
-            <?php else: ?>moment().startOf('month');
-                    <?php endif;?>
-                        var endDate = <?php if (Input::has('EndDateTime')): ?>moment('{{ Input::get("EndDateTime") }}').endOf('day');
-            <?php else: ?>moment().endOf('month');
-            <?php endif;?>
+            @if(\Illuminate\Support\Facades\Input::has('StartDateTime'))
+            var startDate = moment('{{ \Illuminate\Support\Facades\Input::get("StartDateTime") }}');
+            @else
+            var startDate = moment().startOf('month');
+            @endif
 
-                updateDateRangeDisplay(startDate, endDate);
+            @if(\Illuminate\Support\Facades\Input::has('EndDateTime'))
+            var endDate = moment('{{ \Illuminate\Support\Facades\Input::get("EndDateTime") }}').endOf('day');
+            @else
+            var endDate = moment().endOf('month');
+            @endif
+
+            updateDateRangeDisplay(startDate, endDate);
 
             $('#date-range').daterangepicker({
                 ranges: {

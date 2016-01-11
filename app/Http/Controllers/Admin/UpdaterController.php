@@ -9,25 +9,23 @@ class UpdaterController extends Controller
 {
     public function __construct()
     {
-        parent::__construct();
-
         $this->guzzle = app('Guzzle');
     }
 
     public function index()
     {
-        $page_title = 'BFAdminCP Updater';
+        $page_title = 'BFACP Versions';
 
         $latest_release = Cache::remember('latest_release', 30, function () {
             $response = $this->guzzle->get('https://api.github.com/repos/Prophet731/BFAdminCP/releases/latest');
-            $latest_release = json_decode($response->getBody());
+            $latest_release = json_decode($response->getBody(), true);
 
             return $latest_release;
         });
 
         $releases = Cache::remember('releases', 30, function () {
             $response = $this->guzzle->get('https://api.github.com/repos/Prophet731/BFAdminCP/releases');
-            $releases = json_decode($response->getBody());
+            $releases = json_decode($response->getBody(), true);
 
             return $releases;
         });

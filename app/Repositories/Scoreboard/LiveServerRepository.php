@@ -10,9 +10,11 @@ use BFACP\Exceptions\PlayerNotFoundException;
 use BFACP\Exceptions\RconException;
 use BFACP\Facades\Battlefield as BattlefieldHelper;
 use BFACP\Facades\Main as MainHelper;
+use BFACP\Libraries\BF3Conn;
+use BFACP\Libraries\BF4Conn;
+use BFACP\Libraries\BFHConn;
 use BFACP\Repositories\BaseRepository;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 
@@ -170,21 +172,21 @@ class LiveServerRepository extends BaseRepository
 
         switch ($this->gameName) {
             case 'BF3':
-                $this->client = App::make('BFACP\Libraries\BF3Conn', [
+                $this->client = app('BFACP\Libraries\BF3Conn', [
                     $this->server,
                     false,
                 ]);
                 break;
 
             case 'BF4':
-                $this->client = App::make('BFACP\Libraries\BF4Conn', [
+                $this->client = app('BFACP\Libraries\BF4Conn', [
                     $this->server,
                     false,
                 ]);
                 break;
 
             case 'BFHL':
-                $this->client = App::make('BFACP\Libraries\BFHConn', [
+                $this->client = app('BFACP\Libraries\BFHConn', [
                     $this->server,
                     false,
                 ]);
@@ -389,25 +391,6 @@ class LiveServerRepository extends BaseRepository
         $this->setFactions();
 
         $this->data['_presetmessages'] = isset($presetMessages) ? [''] + $presetMessages : [];
-
-        $this->data['_teams'] = [
-            [
-                'id'    => 1,
-                'label' => sprintf('%s (%s)', $this->TEAM1['full_name'], 'Team 1'),
-            ],
-            [
-                'id'    => 2,
-                'label' => sprintf('%s (%s)', $this->TEAM2['full_name'], 'Team 2'),
-            ],
-            [
-                'id'    => 3,
-                'label' => sprintf('%s (%s)', $this->TEAM3['full_name'], 'Team 3'),
-            ],
-            [
-                'id'    => 4,
-                'label' => sprintf('%s (%s)', $this->TEAM4['full_name'], 'Team 4'),
-            ],
-        ];
 
         return $this;
     }
@@ -1322,6 +1305,30 @@ class LiveServerRepository extends BaseRepository
 
         $this->data['lockedSquads'] = $lockedSquads;
         $this->data['teams'] = $temp;
+
+        $teams = collect([
+            [
+                'id'    => 1,
+                'label' => sprintf('%s (%s)', $this->TEAM1['full_name'], 'Team 1'),
+            ],
+            [
+                'id'    => 2,
+                'label' => sprintf('%s (%s)', $this->TEAM2['full_name'], 'Team 2'),
+            ],
+            [
+                'id'    => 3,
+                'label' => sprintf('%s (%s)', $this->TEAM3['full_name'], 'Team 3'),
+            ],
+            [
+                'id'    => 4,
+                'label' => sprintf('%s (%s)', $this->TEAM4['full_name'], 'Team 4'),
+            ],
+        ]);
+
+        $this->data['_teams'] = $teams->filter(function ($team) {
+            return array_key_exists($team['id'], $this->data['teams']) === true;
+        })->all();
+
         $this->getPlayerDBData();
 
         return $this;
