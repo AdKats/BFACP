@@ -51,7 +51,6 @@ class AppSettingsServiceProvider extends ServiceProvider
                 return $this->options;
             });
         } catch (QueryException $e) {
-            throw new \RuntimeException();
         }
 
         Config::set('bfacp', $this->options);

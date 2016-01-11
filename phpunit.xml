@@ -25,5 +25,6 @@
         <env name="QUEUE_DRIVER" value="sync"/>
         <env name="DB_DATABASE" value="circle_test"/>
         <env name="DB_USERNAME" value="ubuntu"/>
+        <env name="DB_HOST" value="127.0.0.1"/>
     </php>
 </phpunit>
