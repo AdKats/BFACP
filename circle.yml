@@ -2,6 +2,15 @@ machine:
    php:
       version: 5.5.9
 
+test:
+  override:
+    - mkdir -p $CIRCLE_TEST_REPORTS/phpunit
+    - phpunit --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml tests
+
 dependencies:
    override:
       - composer install --no-scripts --no-interaction --prefer-source --no-progress
+
+general:
+  artifacts:
+    - "storage/logs"
