@@ -1,20 +1,19 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class DatabaseTest extends TestCase
 {
-    public function testDatabase()
+    public function testPrerequisiteTables()
     {
         $sql = File::get(storage_path('sql/tests/PrerequisiteTables.sql'));
-
         DB::unprepared($sql);
+    }
 
+    public function testDatabase()
+    {
         Artisan::call('migrate:refresh');
         Artisan::call('db:seed');
         $this->seeInDatabase('bfacp_roles', ['name' => 'Administrator']);
