@@ -1306,24 +1306,17 @@ class LiveServerRepository extends BaseRepository
         $this->data['lockedSquads'] = $lockedSquads;
         $this->data['teams'] = $temp;
 
-        $teams = collect([
-            [
-                'id'    => 1,
-                'label' => sprintf('%s (%s)', $this->TEAM1['full_name'], 'Team 1'),
-            ],
-            [
-                'id'    => 2,
-                'label' => sprintf('%s (%s)', $this->TEAM2['full_name'], 'Team 2'),
-            ],
-            [
-                'id'    => 3,
-                'label' => sprintf('%s (%s)', $this->TEAM3['full_name'], 'Team 3'),
-            ],
-            [
-                'id'    => 4,
-                'label' => sprintf('%s (%s)', $this->TEAM4['full_name'], 'Team 4'),
-            ],
-        ]);
+        $teams = collect([]);
+
+        for ($i = 1; $i <= 4; $i++) {
+            $team = 'TEAM' . $i;
+            if (is_array($this->{$team})) {
+                $teams->push([
+                    'id'    => $i,
+                    'label' => sprintf('%s (%s)', $this->{$team}['full_name'], 'Team '.$i),
+                ]);
+            }
+        }
 
         $this->data['_teams'] = $teams->filter(function ($team) {
             return array_key_exists($team['id'], $this->data['teams']) === true;
