@@ -281,6 +281,9 @@ class Battlefield extends Main
                     case 'SquadHeist0':
                         $defaultTickets = 100;
                         break;
+
+                    default:
+                        return null;
                 }
                 break;
 
@@ -365,6 +368,9 @@ class Battlefield extends Main
                     case 'BloodMoney0':
                         $defaultTime = 1200;
                         break;
+
+                    default:
+                        return null;
                 }
                 break;
 
