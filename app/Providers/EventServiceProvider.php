@@ -4,6 +4,7 @@ namespace BFACP\Providers;
 
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\File;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -12,11 +13,7 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $listen = [
-        'BFACP\Events\SomeEvent' => [
-            'BFACP\Listeners\EventListener',
-        ],
-    ];
+    protected $listen = [];
 
     /**
      * Register any other events for your application.
@@ -29,6 +26,10 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot($events);
 
-        //
+        $files = File::files(app_path('/Events'));
+
+        foreach($files as $file) {
+            File::requireOnce($file);
+        }
     }
 }
