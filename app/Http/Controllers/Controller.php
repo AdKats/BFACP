@@ -26,6 +26,13 @@ class Controller extends BaseController
      */
     protected $isLoggedIn = false;
 
+    /**
+     * Any messages to be pushed to the view
+     *
+     * @var array
+     */
+    public $messages = [];
+
     public function __construct()
     {
         $this->user = Auth::user();
