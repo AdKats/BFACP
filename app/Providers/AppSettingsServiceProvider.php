@@ -5,8 +5,7 @@ namespace BFACP\Providers;
 use BFACP\Facades\Main;
 use BFACP\Option;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class AppSettingsServiceProvider extends ServiceProvider
@@ -29,8 +28,11 @@ class AppSettingsServiceProvider extends ServiceProvider
             $keys ? $format($options[ array_shift($keys) ], $keys, $value) : $options = $value;
         };
 
+        $cache = $this->app['cache'];
+        $config = $this->app['config'];
+
         try {
-            $this->options = Cache::remember('site.options', 15, function () use ($format) {
+            $this->options = $cache->remember('site.options', 15, function () use ($format) {
                 foreach (Option::all() as $option) {
                     $v = Main::stringToBool($option->option_value);
                     if (is_bool($v) && !is_null($v)) {
@@ -51,9 +53,12 @@ class AppSettingsServiceProvider extends ServiceProvider
                 return $this->options;
             });
         } catch (QueryException $e) {
+            Log::critical('Unable to load application settings.', [
+                'exception' => $e->getMessage()
+            ]);
         }
 
-        Config::set('bfacp', $this->options);
+        $config->set('bfacp', $this->options);
     }
 
     /**
