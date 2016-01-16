@@ -37,6 +37,25 @@ class BansController extends Controller
     {
         parent::__construct();
 
+        $this->middleware('permission:admin.adkats.bans.view', [
+            'only' => [
+                'index'
+            ]
+        ]);
+
+        $this->middleware('permission:admin.adkats.bans.create', [
+            'only' => [
+                'create'
+            ]
+        ]);
+
+        $this->middleware('permission:admin.adkats.bans.edit', [
+            'except' => [
+                'create',
+                'index'
+            ]
+        ]);
+
         $this->repository = App::make('BFACP\Repositories\BanRepository');
 
         try {
@@ -64,6 +83,8 @@ class BansController extends Controller
      * Shows the ban editing page
      *
      * @param  integer $id Ban ID
+     *
+     * @return $this
      */
     public function edit($id)
     {
@@ -90,8 +111,7 @@ class BansController extends Controller
             }
 
             $servers = Server::where('GameID', $player->game->GameID)->active()->pluck('ServerName', 'ServerID');
-            $bfacp = App::make('bfadmincp');
-            $admin = MainHelper::getAdminPlayer($bfacp->user, $player->game->GameID);
+            $admin = MainHelper::getAdminPlayer($this->user, $player->game->GameID);
 
             return view('admin.adkats.bans.create', compact('player', 'servers', 'admin'))->with('page_title',
                 'Create New Ban');
@@ -111,8 +131,7 @@ class BansController extends Controller
                 return Redirect::route('admin.adkats.bans.edit', [$player->ban->ban_id]);
             }
 
-            $bfacp = App::make('bfadmincp');
-            $admin = MainHelper::getAdminPlayer($bfacp->user, $player->game->GameID);
+            $admin = MainHelper::getAdminPlayer($this->user, $player->game->GameID);
 
             // Save the POST data
             $ban_notes = trim(Input::get('notes', null));
@@ -154,8 +173,7 @@ class BansController extends Controller
             // Fetch the ban
             $ban = $this->repository->getBanById($id);
 
-            $bfacp = App::make('bfadmincp');
-            $admin = MainHelper::getAdminPlayer($bfacp->user, $ban->player->game->GameID);
+            $admin = MainHelper::getAdminPlayer($this->user, $ban->player->game->GameID);
 
             // Purge the cache for the player
             Cache::forget(sprintf('api.player.%u', $ban->player_id));
@@ -308,11 +326,9 @@ class BansController extends Controller
             // Fetch the ban
             $ban = $this->repository->getBanById($id);
 
-            $bfacp = App::make('bfadmincp');
-
             $oldRecord = $ban->record;
 
-            $admin = MainHelper::getAdminPlayer($bfacp->user, $ban->player->game->GameID);
+            $admin = MainHelper::getAdminPlayer($this->user, $ban->player->game->GameID);
 
             // Only modify the old record if the command action is a temp or perma ban.
             if (in_array((int)$oldRecord->command_action, [7, 8])) {
