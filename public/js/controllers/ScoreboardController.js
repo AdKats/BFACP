@@ -856,7 +856,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 $scope.chat.sending = true;
 
                 SBA.say($scope.selectedId, undefined, undefined, message).success(function (data) {
-                    var chatrecord = data.data.passed[0].record;
+                    var chatrecord = data.data.passed[0].record.chat;
                     $scope.messages.push(chatrecord);
                     $scope.chat.message = '';
                 }).error(function (e) {
