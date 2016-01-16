@@ -103,16 +103,15 @@ class Setting extends Elegant
     public function getSettingValueAttribute()
     {
         $value = $this->attributes['setting_value'];
+        $settingName = $this->attributes['setting_name'];
 
-        if (!array_key_exists('setting_name',
-                $this->attributes) || $this->attributes['setting_name'] == 'Custom HTML Addition'
-        ) {
+        if (!array_key_exists('setting_name', $this->attributes) || $settingName == 'Custom HTML Addition') {
             return $value;
         }
 
         switch ($this->setting_type) {
             case 'multiline':
-                if (in_array($this->attributes['setting_name'], [
+                if (in_array($settingName, [
                     'Pre-Message List',
                     'Server Rule List',
                     'SpamBot Say List',
@@ -121,9 +120,13 @@ class Setting extends Elegant
                     $value = rawurldecode(urldecode($value));
                 }
 
+                if (strlen($value) == 0) {
+                    return $value;
+                }
+
                 $valueArray = explode('|', $value);
 
-                if (count($valueArray) == 1) {
+                if (is_array($valueArray)) {
                     return head($valueArray);
                 }
 
@@ -135,11 +138,15 @@ class Setting extends Elegant
                 break;
 
             case 'int':
-                return (int)$value;
+                return (int) $value;
                 break;
 
             case 'double':
-                return (float)$value;
+                return (float) $value;
+                break;
+
+            case 'stringarray':
+                return explode('|', $value);
                 break;
 
             default:
