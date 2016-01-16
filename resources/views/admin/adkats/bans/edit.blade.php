@@ -162,6 +162,8 @@
 
                 var notes = prompt("<?php echo Lang::get('adkats.bans.prompts.unban.notes') ?>");
 
+                var csrf = $("input[name='_token']").val();
+
                 if (unban !== null) {
                     btn.find("i").removeClass('fa-eraser').addClass('fa-spinner fa-pulse');
                     btn.attr('disabled', true);
@@ -172,20 +174,21 @@
                         type: 'DELETE',
                         data: {
                             message: unban,
-                            notes: notes
+                            notes: notes,
+                            _token: csrf
                         }
                     })
-                            .done(function (data, status) {
-                                location.reload();
-                            })
-                            .fail(function (xhr, err) {
-                                alert("<?php echo Lang::get('adkats.bans.prompts.unban.request_failed'); ?>");
-                            })
-                            .always(function () {
-                                btn.find("i").removeClass('fa-spinner fa-pulse').addClass('fa-eraser');
-                                btn.attr('disabled', false);
-                                btn.find('span').text("<?php echo Lang::get('adkats.bans.edit.buttons.submit.text3'); ?>");
-                            });
+                    .done(function () {
+                        location.reload();
+                    })
+                    .fail(function () {
+                        alert("<?php echo Lang::get('adkats.bans.prompts.unban.request_failed'); ?>");
+                    })
+                    .always(function () {
+                        btn.find("i").removeClass('fa-spinner fa-pulse').addClass('fa-eraser');
+                        btn.attr('disabled', false);
+                        btn.find('span').text("<?php echo Lang::get('adkats.bans.edit.buttons.submit.text3'); ?>");
+                    });
                 }
             });
         });
