@@ -45,18 +45,18 @@
     <h1>&nbsp;Database Error!</h1>
 
     <div>
-        @if($exception->getCode() == 2002)
+        @if($e->getCode() == 2002)
             <p>Sorry, application could not connect to the database.</p>
-        @elseif($exception->getCode() == 1045)
+        @elseif($e->getCode() == 1045)
             <p>Could not connect to database with provided credentials.</p>
-        @elseif($exception->getCode() == 1044)
+        @elseif($e->getCode() == 1044)
             <p>Database user doesn't have privileges to connect to the database.</p>
         @else
             <p>Sorry, something went wrong with the database.</p>
         @endif
 
-        @if(isset($isWhitelisted) && $isWhitelisted)
-            <pre>{{ $exception->getMessage() }}</pre>
+        @if(env('APP_DEBUG', false))
+            <pre>{{ $e->getMessage() }}</pre>
         @endif
     </div>
 </article>
