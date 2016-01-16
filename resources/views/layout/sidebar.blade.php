@@ -33,7 +33,7 @@
                 ->class('sidebar-form')
                 ->id('psearch') !!}
             <div class="input-group">
-                {!! Former::text('player')->placeholder(Lang::get('common.nav.extras.psearch.placeholder')) !!}
+                <input type="text" class="form-control" name="player" id="player" @if(\Illuminate\Support\Facades\Input::has('player')) value="{{ old('player') }}" @endif placeholder="{{ Lang::get('common.nav.extras.psearch.placeholder') }}">
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-flat">
                         <i class="fa fa-search"></i>

@@ -84,15 +84,17 @@
                 </div>
             @endforeach
 
-            @foreach($errors->all() as $message)
-                <div class="row">
-                    <div class="col-xs-12">
-                        <alert type="error">
-                            <i class="fa fa-times"></i>&nbsp;{{ $message }}
-                        </alert>
+            @if(isset($errors))
+                @foreach($errors->all() as $message)
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <alert type="error">
+                                <i class="fa fa-times"></i>&nbsp;{{ $message }}
+                            </alert>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            @endif
 
             @yield('content')
         </section>
