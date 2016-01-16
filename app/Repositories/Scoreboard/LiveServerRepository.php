@@ -17,6 +17,7 @@ use BFACP\Repositories\BaseRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Log;
 
 class LiveServerRepository extends BaseRepository
 {
@@ -1121,6 +1122,10 @@ class LiveServerRepository extends BaseRepository
 
         $data['record'] = $record;
 
+        Log::info(sprintf('%s issued command %s on %s', $source_name, $command->command_name, $target_name), [
+            'record' => $record->toArray(),
+        ]);
+
         return $data;
     }
 
@@ -1313,7 +1318,7 @@ class LiveServerRepository extends BaseRepository
             if (is_array($this->{$team})) {
                 $teams->push([
                     'id'    => $i,
-                    'label' => sprintf('%s (%s)', $this->{$team}['full_name'], 'Team '.$i),
+                    'label' => sprintf('%s (%s)', $this->{$team}['full_name'], 'Team ' . $i),
                 ]);
             }
         }
