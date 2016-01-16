@@ -13,12 +13,16 @@
     <map uri="XP1_Nights" name="Code Blue" playmode="TurfWarLarge0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="TurfWarLarge0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="TurfWarLarge0"/>
-	<map uri="xp2_cargoship" name="The Docks" playmode="TurfWarLarge0"/>
+    <map uri="xp2_cargoship" name="The Docks" playmode="TurfWarLarge0"/>
     <map uri="xp2_coastal" name="Break Point" playmode="TurfWarLarge0"/>
     <map uri="xp2_museum02" name="Museum" playmode="TurfWarLarge0"/>
     <map uri="xp2_precinct7" name="Precinct" playmode="TurfWarLarge0"/>
     <map uri="xp25_bank" name="Night Job" playmode="TurfWarLarge0"/>
     <map uri="xp25_sawmill" name="Night Woods" playmode="TurfWarLarge0"/>
+    <map uri="xp3_border" name="Double Cross" playmode="TurfWarLarge0"/>
+    <map uri="xp3_cistern02" name="Diversion" playmode="TurfWarLarge0"/>
+    <map uri="xp3_highway" name="Pacific Highway" playmode="TurfWarLarge0"/>
+    <map uri="xp3_traindodge" name="Train Dodge" playmode="TurfWarLarge0"/>
 
     <!-- Small Conquest Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="TurfWarSmall0"/>
@@ -34,12 +38,16 @@
     <map uri="XP1_Nights" name="Code Blue" playmode="TurfWarSmall0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="TurfWarSmall0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="TurfWarSmall0"/>
-	<map uri="xp2_cargoship" name="The Docks" playmode="TurfWarSmall0"/>
+    <map uri="xp2_cargoship" name="The Docks" playmode="TurfWarSmall0"/>
     <map uri="xp2_coastal" name="Break Point" playmode="TurfWarSmall0"/>
     <map uri="xp2_museum02" name="Museum" playmode="TurfWarSmall0"/>
     <map uri="xp2_precinct7" name="Precinct" playmode="TurfWarSmall0"/>
     <map uri="xp25_bank" name="Night Job" playmode="TurfWarSmall0"/>
     <map uri="xp25_sawmill" name="Night Woods" playmode="TurfWarSmall0"/>
+    <map uri="xp3_border" name="Double Cross" playmode="TurfWarSmall0"/>
+    <map uri="xp3_cistern02" name="Diversion" playmode="TurfWarSmall0"/>
+    <map uri="xp3_highway" name="Pacific Highway" playmode="TurfWarSmall0"/>
+    <map uri="xp3_traindodge" name="Train Dodge" playmode="TurfWarSmall0"/>
 
     <!-- Hiest Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="Heist0"/>
@@ -55,12 +63,16 @@
     <map uri="XP1_Nights" name="Code Blue" playmode="Heist0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="Heist0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="Heist0"/>
-	<map uri="xp2_cargoship" name="The Docks" playmode="Heist0"/>
+    <map uri="xp2_cargoship" name="The Docks" playmode="Heist0"/>
     <map uri="xp2_coastal" name="Break Point" playmode="Heist0"/>
     <map uri="xp2_museum02" name="Museum" playmode="Heist0"/>
     <map uri="xp2_precinct7" name="Precinct" playmode="Heist0"/>
     <map uri="xp25_bank" name="Night Job" playmode="Heist0"/>
     <map uri="xp25_sawmill" name="Night Woods" playmode="Heist0"/>
+    <map uri="xp3_border" name="Double Cross" playmode="Heist0"/>
+    <map uri="xp3_cistern02" name="Diversion" playmode="Heist0"/>
+    <map uri="xp3_highway" name="Pacific Highway" playmode="Heist0"/>
+    <map uri="xp3_traindodge" name="Train Dodge" playmode="Heist0"/>
 
     <!-- Hotwire Maps -->
     <map uri="MP_Desert05" name="Dust Bowl" playmode="Hotwire0"/>
@@ -69,11 +81,14 @@
     <map uri="MP_Eastside" name="Derailed" playmode="Hotwire0"/>
     <map uri="MP_OffShore" name="Riptide" playmode="Hotwire0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="Hotwire0"/>
-	<map uri="xp2_cargoship" name="The Docks" playmode="Hotwire0"/>
+    <map uri="xp2_cargoship" name="The Docks" playmode="Hotwire0"/>
     <map uri="xp2_coastal" name="Break Point" playmode="Hotwire0"/>
     <map uri="xp2_precinct7" name="Precinct" playmode="Hotwire0"/>
     <map uri="xp25_bank" name="Night Job" playmode="Hotwire0"/>
     <map uri="xp25_sawmill" name="Night Woods" playmode="Hotwire0"/>
+    <map uri="xp3_border" name="Double Cross" playmode="Hotwire0"/>
+    <map uri="xp3_highway" name="Pacific Highway" playmode="Hotwire0"/>
+    <map uri="xp3_traindodge" name="Train Dodge" playmode="Hotwire0"/>
 
     <!-- Bloodmoney Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="BloodMoney0"/>
@@ -89,12 +104,16 @@
     <map uri="XP1_Nights" name="Code Blue" playmode="BloodMoney0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="BloodMoney0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="BloodMoney0"/>
-	<map uri="xp2_cargoship" name="The Docks" playmode="BloodMoney0"/>
+    <map uri="xp2_cargoship" name="The Docks" playmode="BloodMoney0"/>
     <map uri="xp2_coastal" name="Break Point" playmode="BloodMoney0"/>
     <map uri="xp2_museum02" name="Museum" playmode="BloodMoney0"/>
     <map uri="xp2_precinct7" name="Precinct" playmode="BloodMoney0"/>
     <map uri="xp25_bank" name="Night Job" playmode="BloodMoney0"/>
     <map uri="xp25_sawmill" name="Night Woods" playmode="BloodMoney0"/>
+    <map uri="xp3_border" name="Double Cross" playmode="BloodMoney0"/>
+    <map uri="xp3_cistern02" name="Diversion" playmode="BloodMoney0"/>
+    <map uri="xp3_highway" name="Pacific Highway" playmode="BloodMoney0"/>
+    <map uri="xp3_traindodge" name="Train Dodge" playmode="BloodMoney0"/>
 
     <!-- Crosshair Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="Hit0"/>
@@ -110,12 +129,16 @@
     <map uri="XP1_Nights" name="Code Blue" playmode="Hit0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="Hit0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="Hit0"/>
-	<map uri="xp2_cargoship" name="The Docks" playmode="Hit0"/>
+    <map uri="xp2_cargoship" name="The Docks" playmode="Hit0"/>
     <map uri="xp2_coastal" name="Break Point" playmode="Hit0"/>
     <map uri="xp2_museum02" name="Museum" playmode="Hit0"/>
     <map uri="xp2_precinct7" name="Precinct" playmode="Hit0"/>
     <map uri="xp25_bank" name="Night Job" playmode="Hit0"/>
     <map uri="xp25_sawmill" name="Night Woods" playmode="Hit0"/>
+    <map uri="xp3_border" name="Double Cross" playmode="Hit0"/>
+    <map uri="xp3_cistern02" name="Diversion" playmode="Hit0"/>
+    <map uri="xp3_highway" name="Pacific Highway" playmode="Hit0"/>
+    <map uri="xp3_traindodge" name="Train Dodge" playmode="Hit0"/>
 
     <!-- Rescue Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="Hostage0"/>
@@ -131,12 +154,16 @@
     <map uri="XP1_Nights" name="Code Blue" playmode="Hostage0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="Hostage0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="Hostage0"/>
-	<map uri="xp2_cargoship" name="The Docks" playmode="Hostage0"/>
+    <map uri="xp2_cargoship" name="The Docks" playmode="Hostage0"/>
     <map uri="xp2_coastal" name="Break Point" playmode="Hostage0"/>
     <map uri="xp2_museum02" name="Museum" playmode="Hostage0"/>
     <map uri="xp2_precinct7" name="Precinct" playmode="Hostage0"/>
     <map uri="xp25_bank" name="Night Job" playmode="Hostage0"/>
     <map uri="xp25_sawmill" name="Night Woods" playmode="Hostage0"/>
+    <map uri="xp3_border" name="Double Cross" playmode="Hostage0"/>
+    <map uri="xp3_cistern02" name="Diversion" playmode="Hostage0"/>
+    <map uri="xp3_highway" name="Pacific Highway" playmode="Hostage0"/>
+    <map uri="xp3_traindodge" name="Train Dodge" playmode="Hostage0"/>
 
     <!-- Team Deathmatch Maps -->
     <map uri="MP_Bank" name="Bank Job" playmode="TeamDeathMatch0"/>
@@ -152,26 +179,44 @@
     <map uri="XP1_Nights" name="Code Blue" playmode="TeamDeathMatch0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="TeamDeathMatch0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="TeamDeathMatch0"/>
-	<map uri="xp2_cargoship" name="The Docks" playmode="TeamDeathMatch0"/>
+    <map uri="xp2_cargoship" name="The Docks" playmode="TeamDeathMatch0"/>
     <map uri="xp2_coastal" name="Break Point" playmode="TeamDeathMatch0"/>
     <map uri="xp2_museum02" name="Museum" playmode="TeamDeathMatch0"/>
     <map uri="xp2_precinct7" name="Precinct" playmode="TeamDeathMatch0"/>
     <map uri="xp25_bank" name="Night Job" playmode="TeamDeathMatch0"/>
     <map uri="xp25_sawmill" name="Night Woods" playmode="TeamDeathMatch0"/>
+    <map uri="xp3_border" name="Double Cross" playmode="TeamDeathMatch0"/>
+    <map uri="xp3_cistern02" name="Diversion" playmode="TeamDeathMatch0"/>
+    <map uri="xp3_highway" name="Pacific Highway" playmode="TeamDeathMatch0"/>
+    <map uri="xp3_traindodge" name="Train Dodge" playmode="TeamDeathMatch0"/>
 
     <!-- Bounty Hunter Maps -->
     <map uri="XP1_MallCops" name="Black Friday" playmode="CashGrab0"/>
     <map uri="XP1_Nights" name="Code Blue" playmode="CashGrab0"/>
     <map uri="XP1_Projects" name="The Beat" playmode="CashGrab0"/>
     <map uri="XP1_Sawmill" name="Backwoods" playmode="CashGrab0"/>
-	<map uri="xp2_cargoship" name="The Docks" playmode="CashGrab0"/>
+    <map uri="xp2_cargoship" name="The Docks" playmode="CashGrab0"/>
     <map uri="xp2_coastal" name="Break Point" playmode="CashGrab0"/>
     <map uri="xp2_museum02" name="Museum" playmode="CashGrab0"/>
     <map uri="xp2_precinct7" name="Precinct" playmode="CashGrab0"/>
+    <map uri="xp3_border" name="Double Cross" playmode="CashGrab0"/>
+    <map uri="xp3_cistern02" name="Diversion" playmode="CashGrab0"/>
+    <map uri="xp3_highway" name="Pacific Highway" playmode="CashGrab0"/>
+    <map uri="xp3_traindodge" name="Train Dodge" playmode="CashGrab0"/>
 
-	<!-- Squad Heist Maps -->
+    <!-- Squad Heist Maps -->
     <map uri="xp2_cargoship" name="The Docks" playmode="SquadHeist0"/>
     <map uri="xp2_coastal" name="Break Point" playmode="SquadHeist0"/>
     <map uri="xp2_museum02" name="Museum" playmode="SquadHeist0"/>
     <map uri="xp2_precinct7" name="Precinct" playmode="SquadHeist0"/>
+    <map uri="xp3_border" name="Double Cross" playmode="SquadHeist0"/>
+    <map uri="xp3_cistern02" name="Diversion" playmode="SquadHeist0"/>
+    <map uri="xp3_highway" name="Pacific Highway" playmode="SquadHeist0"/>
+    <map uri="xp3_traindodge" name="Train Dodge" playmode="SquadHeist0"/>
+
+    <!-- Capture the Bag Maps -->
+    <map uri="xp3_border" name="Double Cross" playmode="CaptureTheFlag0"/>
+    <map uri="xp3_cistern02" name="Diversion" playmode="CaptureTheFlag0"/>
+    <map uri="xp3_highway" name="Pacific Highway" playmode="CaptureTheFlag0"/>
+    <map uri="xp3_traindodge" name="Train Dodge" playmode="CaptureTheFlag0"/>
 </mapNames>
