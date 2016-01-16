@@ -84,6 +84,7 @@
                                             ], [
                                                 'target' => '_blank'
                                             ]) !!}
+                                            {!! Former::hidden('player_ip', $player->IP_Address) !!}
                                             <a href="javascript://" class="dotted-info" uib-popover-template="geoPopover.templateUrl" popover-trigger="mouseenter"><i class="fa fa-info-circle"></i></a>
                                         @else
                                             <span class="text-red">N/A</span>
@@ -348,7 +349,7 @@
                                 </table>
                             @elseif( ! is_null($player->ban) && (!$player->ban->is_active || $player->ban->is_expired))
                                 <alert type="info">
-                                    <i class="fa fa-info-circle"></i>&nbsp;{{ Lang::get('player.profile.bans.current.inactive', ['status' => $player->ban->ban_status]) }}
+                                    <i class="fa fa-info-circle"></i>&nbsp;{!! Lang::get('player.profile.bans.current.inactive', ['status' => $player->ban->ban_status]) !!}
                                 </alert>
                             @else
                                 <alert type="success">
@@ -461,8 +462,8 @@
                                 <div id="ip-history-chart"></div>
                                 <table class="table table-condensed table-striped">
                                     <thead>
-                                    <th>IP</th>
-                                    <th>Used</th>
+                                        <th>IP</th>
+                                        <th>Used</th>
                                     </thead>
 
                                     <tbody>
@@ -593,8 +594,6 @@
                     type: 'pie',
                     name: "{{ Lang::get('player.profile.charts.command_overview.chart.tooltip') }}",
                     data: {!! $charts['overview']->toJson() !!}
-
-
                 }]
             });
 
@@ -622,40 +621,38 @@
                     type: 'pie',
                     name: "{{ Lang::get('player.profile.charts.aliases.chart.tooltip') }}",
                     data: {!! $charts['aliases']->toJson() !!}
-
-
                 }]
             });
 
             @if(Entrust::can('player.view.ip'))
-            $('#ip-history-chart').highcharts({
-                        title: {
-                            text: "{{ Lang::get('player.profile.charts.ip_history.title') }}"
-                        },
-                        tooltip: {
-                            pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.y})</b>'
-                        },
-                        plotOptions: {
-                            pie: {
-                                allowPointSelect: true,
-                                cursor: 'pointer',
-                                dataLabels: {
-                                    enabled: true,
-                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                                    style: {
-                                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                                    }
+                $('#ip-history-chart').highcharts({
+                    title: {
+                        text: "{{ Lang::get('player.profile.charts.ip_history.title') }}"
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.y})</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                                 }
                             }
-                        },
-                        series: [{
-                            type: 'pie',
-                            name: "{{ Lang::get('player.profile.charts.ip_history.chart.tooltip') }}",
-                            data: {!! $charts['iphistory']->toJson() !!}
+                        }
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: "{{ Lang::get('player.profile.charts.ip_history.chart.tooltip') }}",
+                        data: {!! $charts['iphistory']->toJson() !!}
 
 
-                        }]
-                    });
+                    }]
+                });
             @endif
 
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
