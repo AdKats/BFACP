@@ -282,7 +282,7 @@
 
     <!-- Team Deathmatch v2 Maps -->
     <map uri="XP6_CMP" name="Operation Outbreak" playmode="TeamDeathMatch1"/>
-    
+
     <!-- Capture The Flag Maps -->
     <map uri="XP0_Caspian" name="Caspian Border 2014" playmode="CaptureTheFlag0"/>
     <map uri="XP0_Firestorm" name="Operation Firestorm 2014" playmode="CaptureTheFlag0"/>
