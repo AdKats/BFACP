@@ -151,6 +151,7 @@ return [
         BFACP\Providers\HelpersProvider::class,
         BFACP\Providers\ComposerServiceProvider::class,
         BFACP\Providers\AppSettingsServiceProvider::class,
+        BFACP\Providers\CloudflareProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         Lavary\Menu\ServiceProvider::class,
         Dingo\Api\Provider\LaravelServiceProvider::class,
@@ -159,6 +160,7 @@ return [
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         Devfactory\Minify\MinifyServiceProvider::class,
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
     ],
     /*
     |--------------------------------------------------------------------------
