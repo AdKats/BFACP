@@ -72,7 +72,6 @@ Event::listen('player.ban', function ($input, $player, $ban = null) {
 
     // Stores how long the ban is in minutes
     $ban_duration = $ban->ban_startTime->diffInMinutes($ban->ban_endTime);
-    $ban_duration_seconds = $ban->ban_startTime->diffInSeconds($ban->ban_endTime);
 
     $record->command_type = array_get($input, 'ban_type');
     $record->command_action = array_get($input, 'ban_type');
