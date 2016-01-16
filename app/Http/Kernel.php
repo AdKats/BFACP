@@ -3,6 +3,7 @@
 namespace BFACP\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Support\Facades\Config;
 
 class Kernel extends HttpKernel
 {
@@ -51,4 +52,13 @@ class Kernel extends HttpKernel
         'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
         'ability'    => \Zizaco\Entrust\Middleware\EntrustAbility::class,
     ];
+
+    public function bootstrap()
+    {
+        parent::bootstrap();
+
+        if(Config::get('bfacp.site.ssl')) {
+            $this->middleware[] = \BFACP\Http\Middleware\Secure::class;
+        }
+    }
 }
