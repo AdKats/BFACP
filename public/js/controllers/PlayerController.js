@@ -118,8 +118,6 @@ angular.module('bfacp').controller('PlayerController', ['$scope', '$resource', '
                         );
                     }
                 });
-
-                $scope.geoRequest();
             }, function () {
                 setTimeout($scope.fetchExtendedDetails, 3 * 1000);
             });
@@ -135,14 +133,14 @@ angular.module('bfacp').controller('PlayerController', ['$scope', '$resource', '
             }
         };
 
-        $scope.geoRequest = function() {
-            var ip = $scope.player.IP_Address;
+        var geoRequest = function(ip) {
             var url = "http://ipinfo.io/" + ip + "/json";
             if(location.protocol === 'https:') {
                 url = 'api/helpers/ip/' + ip;
             }
 
             if(ip === '' || ip === null) {
+                console.log('Invalid IP Given: ' + ip);
                 return;
             }
 
@@ -152,9 +150,15 @@ angular.module('bfacp').controller('PlayerController', ['$scope', '$resource', '
                 $scope.geoPopover.content.org = data.org;
                 $scope.geoPopover.content.region = data.region;
             }).error(function(data) {
-                console.error(data)
+                console.error(data);
             });
         };
+
+        var player_ip = $("input[name='player_ip']");
+
+        if(player_ip.length != 0) {
+            geoRequest(player_ip.val());
+        }
 
         $scope.fetchRecords();
         $scope.fetchAcs();
