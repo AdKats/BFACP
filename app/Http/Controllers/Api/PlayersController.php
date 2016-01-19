@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Api;
+<?php
+
+namespace BFACP\Http\Controllers\Api;
 
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Repositories\PlayerRepository;
@@ -27,9 +29,9 @@ class PlayersController extends Controller
     }
 
     /**
-     * Get a player by their player database id
+     * Get a player by their player database id.
      *
-     * @param  integer $id
+     * @param  int $id
      *
      * @return \Illuminate\Support\Facades\Response
      */
@@ -57,9 +59,9 @@ class PlayersController extends Controller
     }
 
     /**
-     * Gets the players record history
+     * Gets the players record history.
      *
-     * @param  integer $id
+     * @param  int $id
      *
      * @return \Illuminate\Support\Facades\Response
      */
@@ -71,9 +73,9 @@ class PlayersController extends Controller
     }
 
     /**
-     * Gets the players chatlogs
+     * Gets the players chatlogs.
      *
-     * @param  integer $id
+     * @param  int $id
      *
      * @return \Illuminate\Support\Facades\Response
      */
@@ -85,9 +87,9 @@ class PlayersController extends Controller
     }
 
     /**
-     * Gets the players sessions
+     * Gets the players sessions.
      *
-     * @param  integer $id
+     * @param  int $id
      *
      * @return \Illuminate\Support\Facades\Response
      */

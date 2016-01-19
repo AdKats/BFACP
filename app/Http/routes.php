@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Route API Registering
+ * Route API Registering.
  */
-
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', ['namespace' => 'BFACP\Http\Controllers\Api', 'middleware' => 'web'], function ($api) {
@@ -134,7 +133,7 @@ $api->version('v1', ['namespace' => 'BFACP\Http\Controllers\Api', 'middleware' =
     $api->controller('reports', 'ReportsController');
 });
 
-/**
+/*
  * Route Application Registering
  */
 Route::group(['middleware' => 'web'], function () {
@@ -165,7 +164,6 @@ Route::group(['middleware' => 'web'], function () {
         ['as' => 'user.account.save', 'uses' => 'UsersController@saveAccountSettings', 'before' => 'auth']);
 
     /*=====  End of User Router  ======*/
-
 
     Route::get('chatlogs', ['as' => 'chatlog.search', 'uses' => 'ChatlogController@index', 'before' => 'chatlogs']);
 
@@ -296,7 +294,7 @@ Route::group(['middleware' => 'web'], function () {
     });
 });
 
-/**
+/*
  * Route Permissions
  */
 
@@ -366,4 +364,3 @@ Route::group(['middleware' => 'web'], function () {
 //========================================*/
 //Entrust::routeNeedsPermission(Config::get('logviewer::base_url'), 'admin.site.system.logs');
 //Entrust::routeNeedsPermission(Config::get('logviewer::base_url') . '/*', 'admin.site.system.logs');
-

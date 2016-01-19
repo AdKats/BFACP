@@ -1,53 +1,55 @@
-<?php namespace BFACP\Adkats;
+<?php
+
+namespace BFACP\Adkats;
 
 use BFACP\Elegant;
 
 class Record extends Elegant
 {
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'adkats_records_main';
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'record_id';
 
     /**
-     * Fields not allowed to be mass assigned
+     * Fields not allowed to be mass assigned.
      *
      * @var array
      */
     protected $guarded = ['record_id'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
     protected $dates = ['record_time'];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
     protected $appends = ['is_web', 'stamp'];
 
     /**
-     * Models to be loaded automatically
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -104,7 +106,7 @@ class Record extends Elegant
     }
 
     /**
-     * Was record issued from the web
+     * Was record issued from the web.
      *
      * @return bool
      */

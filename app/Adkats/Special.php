@@ -1,4 +1,6 @@
-<?php namespace BFACP\Adkats;
+<?php
+
+namespace BFACP\Adkats;
 
 use BFACP\Elegant;
 use BFACP\Facades\Main as MainHelper;
@@ -6,49 +8,49 @@ use BFACP\Facades\Main as MainHelper;
 class Special extends Elegant
 {
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'adkats_specialplayers';
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'specialplayer_id';
 
     /**
-     * Fields not allowed to be mass assigned
+     * Fields not allowed to be mass assigned.
      *
      * @var array
      */
     protected $guarded = ['specialplayer_id'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
     protected $dates = ['player_effective', 'player_expiration'];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
     protected $appends = ['effective_stamp', 'expiration_stamp', 'group'];
 
     /**
-     * Models to be loaded automatically
+     * Models to be loaded automatically.
      *
      * @var array
      */

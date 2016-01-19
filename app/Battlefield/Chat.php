@@ -1,53 +1,55 @@
-<?php namespace BFACP\Battlefield;
+<?php
+
+namespace BFACP\Battlefield;
 
 use BFACP\Elegant;
 
 class Chat extends Elegant
 {
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'tbl_chatlog';
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'ID';
 
     /**
-     * Fields not allowed to be mass assigned
+     * Fields not allowed to be mass assigned.
      *
      * @var array
      */
     protected $guarded = ['ID'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
     protected $dates = ['logDate'];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
     protected $appends = ['stamp', 'class_css', 'profile_url'];
 
     /**
-     * Models to be loaded automatically
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -70,20 +72,20 @@ class Chat extends Elegant
     }
 
     /**
-     * Gets the URL to the players profile
+     * Gets the URL to the players profile.
      *
      * @return string
      */
     public function getProfileUrlAttribute()
     {
-        return !is_null($this->logPlayerID) ? route('player.show', [
+        return ! is_null($this->logPlayerID) ? route('player.show', [
             'id'   => $this->logPlayerID,
             'name' => $this->logSoldierName,
         ]) : null;
     }
 
     /**
-     * Excludes server and player chat spam from the result
+     * Excludes server and player chat spam from the result.
      *
      * @param $query
      *
@@ -109,7 +111,7 @@ class Chat extends Elegant
     }
 
     /**
-     * Converts the chat timestamp to an ISO 8601 stamp
+     * Converts the chat timestamp to an ISO 8601 stamp.
      *
      * @return string
      */
@@ -119,7 +121,7 @@ class Chat extends Elegant
     }
 
     /**
-     * Returns the class that should be applied based on the chat visibility
+     * Returns the class that should be applied based on the chat visibility.
      *
      * @return string
      */

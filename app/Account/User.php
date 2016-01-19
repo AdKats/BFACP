@@ -1,4 +1,6 @@
-<?php namespace BFACP\Account;
+<?php
+
+namespace BFACP\Account;
 
 use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;
@@ -12,7 +14,7 @@ class User extends Authenticatable
     use EntrustUserTrait;
 
     /**
-     * Validation rules
+     * Validation rules.
      *
      * @var array
      */
@@ -23,28 +25,28 @@ class User extends Authenticatable
     ];
 
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = true;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'bfacp_users';
 
     /**
-     * Fields allowed to be mass assigned
+     * Fields allowed to be mass assigned.
      *
      * @var array
      */
     protected $guarded = ['id'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
@@ -58,14 +60,14 @@ class User extends Authenticatable
     protected $hidden = ['password', 'remember_token'];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
     protected $appends = ['gravatar', 'stamp'];
 
     /**
-     * Models to be loaded automatically
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -102,7 +104,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the remember token for the user
+     * Get the remember token for the user.
      *
      * @return string
      */
@@ -112,7 +114,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Set the remember token for the user
+     * Set the remember token for the user.
      *
      * @param string $value
      */
@@ -122,7 +124,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Returns the name of the remember token
+     * Returns the name of the remember token.
      *
      * @return string
      */
@@ -156,9 +158,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Has user confirmed their account
+     * Has user confirmed their account.
      *
-     * @return boolean
+     * @return bool
      */
     public function getConfirmedAttribute()
     {
@@ -175,7 +177,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Gets users gravatar image
+     * Gets users gravatar image.
      *
      * @return string
      */

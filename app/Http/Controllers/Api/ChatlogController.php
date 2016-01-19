@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Api;
+<?php
+
+namespace BFACP\Http\Controllers\Api;
 
 use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Server\Server;
@@ -47,7 +49,7 @@ class ChatlogController extends Controller
 
             if ($startDate->gte($endDate)) {
                 return MainHelper::response(null,
-                    sprintf("%s is greater than %s. Please adjust your dates.", $startDate->toDateTimeString(),
+                    sprintf('%s is greater than %s. Please adjust your dates.', $startDate->toDateTimeString(),
                         $endDate->toDateTimeString()), 'error', null, false, true);
             }
 

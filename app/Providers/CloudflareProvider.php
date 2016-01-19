@@ -24,12 +24,12 @@ class CloudflareProvider extends ServiceProvider
                 $ipv6 = $guzzle->get('https://www.cloudflare.com/ips-v6');
                 $ipv4 = array_filter(explode("\n", $ipv4->getBody()));
                 Log::info('Cloudflare IPv4 Loaded', [
-                    'ips' => $ipv4
+                    'ips' => $ipv4,
                 ]);
 
                 $ipv6 = array_filter(explode("\n", $ipv6->getBody()));
                 Log::info('Cloudflare IPv6 Loaded', [
-                    'ips' => $ipv6
+                    'ips' => $ipv6,
                 ]);
 
                 return array_merge($ipv4, $ipv6);
@@ -39,7 +39,7 @@ class CloudflareProvider extends ServiceProvider
         } catch (Exception $e) {
             $cache->forget('cloudflare.ips');
             Log::warning('Unable to setup cloudflare trusted proxies.', [
-                'exception' => $e->getMessage()
+                'exception' => $e->getMessage(),
             ]);
         }
     }

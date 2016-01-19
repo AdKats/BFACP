@@ -1,4 +1,6 @@
-<?php namespace BFACP\Commands;
+<?php
+
+namespace BFACP\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
@@ -6,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class ReseedTables extends Command
 {
-
     /**
      * The console command name.
      *
@@ -28,7 +29,7 @@ class ReseedTables extends Command
     {
         parent::__construct();
 
-        if (!defined('STDIN')) {
+        if (! defined('STDIN')) {
             define('STDIN', fopen('php://stdin', 'r'));
         }
     }
@@ -60,5 +61,4 @@ class ReseedTables extends Command
             $this->info('Tables were not reseeded.');
         }
     }
-
 }

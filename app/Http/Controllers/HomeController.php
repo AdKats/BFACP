@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers;
+<?php
+
+namespace BFACP\Http\Controllers;
 
 use BFACP\Battlefield\Server\Server;
 use Illuminate\Support\Facades\App;
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\View;
 class HomeController extends Controller
 {
     /**
-     * Shows the dashboard
+     * Shows the dashboard.
      */
     public function index()
     {
@@ -24,7 +26,7 @@ class HomeController extends Controller
 
         // Cache results for 1 day
         $adkats_statistics = Cache::remember('adkats.statistics', 60 * 24, function () use (&$playerRepository) {
-            $results = DB::select(File::get(storage_path() . '/sql/adkats_statistics.sql'));
+            $results = DB::select(File::get(storage_path().'/sql/adkats_statistics.sql'));
 
             return head($results);
         });
@@ -42,7 +44,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Shows the live scoreboard
+     * Shows the live scoreboard.
      */
     public function scoreboard()
     {
@@ -55,7 +57,6 @@ class HomeController extends Controller
         });
 
         if ($this->isLoggedIn && $this->user->ability(null, Cache::get('admin.perm.list')['scoreboard'])) {
-
             $perms = $this->user->ability(null, Cache::get('admin.perm.list')['scoreboard'],
                 ['return_type' => 'array']);
             $permissions = $perms['permissions'];
@@ -65,7 +66,7 @@ class HomeController extends Controller
                     return true;
                 }
             })->map(function ($perm) {
-                $p = clone($perm);
+                $p = clone $perm;
                 $p->name = explode('.', $perm->name)[2];
 
                 return $p;

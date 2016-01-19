@@ -1,4 +1,6 @@
-<?php namespace BFACP;
+<?php
+
+namespace BFACP;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
@@ -7,28 +9,28 @@ use Illuminate\Support\MessageBag;
 class Elegant extends Model
 {
     /**
-     * Validation rules
+     * Validation rules.
      *
      * @var array
      */
     protected static $rules = [];
 
     /**
-     * Custom messages
+     * Custom messages.
      *
      * @var array
      */
     protected static $messages = [];
 
     /**
-     * Validation errors
+     * Validation errors.
      *
      * @var MessageBag
      */
     protected $errors = [];
 
     /**
-     * Validator instance
+     * Validator instance.
      *
      * @var Validator
      */
@@ -40,7 +42,7 @@ class Elegant extends Model
     }
 
     /**
-     * Listen for save event
+     * Listen for save event.
      */
     protected static function boot()
     {
@@ -52,7 +54,7 @@ class Elegant extends Model
     }
 
     /**
-     * Validates current attributes against rules
+     * Validates current attributes against rules.
      */
     public function validate()
     {
@@ -68,7 +70,7 @@ class Elegant extends Model
     }
 
     /**
-     * Retrieve error message bag
+     * Retrieve error message bag.
      */
     public function getErrors()
     {
@@ -76,7 +78,7 @@ class Elegant extends Model
     }
 
     /**
-     * Set error message bag
+     * Set error message bag.
      *
      * @var MessageBag
      */
@@ -86,15 +88,15 @@ class Elegant extends Model
     }
 
     /**
-     * Inverse of wasSaved
+     * Inverse of wasSaved.
      */
     public function hasErrors()
     {
-        return !empty($this->errors);
+        return ! empty($this->errors);
     }
 
     /**
-     * Retrieve the validation rules
+     * Retrieve the validation rules.
      */
     public function getRules()
     {

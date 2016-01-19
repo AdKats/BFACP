@@ -1,11 +1,12 @@
-<?php namespace BFACP\Commands;
+<?php
+
+namespace BFACP\Commands;
 
 use BFACP\Adkats\Infractions\Overall;
 use Illuminate\Console\Command;
 
 class InfractionsCleanup extends Command
 {
-
     /**
      * The console command name.
      *
@@ -50,5 +51,4 @@ class InfractionsCleanup extends Command
             }
         });
     }
-
 }

@@ -48,11 +48,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if($e instanceof \PDOException) {
+        if ($e instanceof \PDOException) {
             return response()->view('system.db', compact('e'), 500);
         }
 
-        if($e instanceof ModelNotFoundException || $e instanceof NotFoundHttpException) {
+        if ($e instanceof ModelNotFoundException || $e instanceof NotFoundHttpException) {
             return response()->view('errors.404', [], 404);
         }
 

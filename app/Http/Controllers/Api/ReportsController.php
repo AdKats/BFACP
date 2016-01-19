@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Api;
+<?php
+
+namespace BFACP\Http\Controllers\Api;
 
 use BFACP\Adkats\Setting;
 use BFACP\Facades\Main as MainHelper;
@@ -24,11 +26,11 @@ class ReportsController extends Controller
     }
 
     /**
-     * Returns the latest 30 reports
+     * Returns the latest 30 reports.
      */
     public function getIndex()
     {
-        if (!Auth::check() || !Auth::user()->ability(null, 'admin.adkats.reports.view')) {
+        if (! Auth::check() || ! Auth::user()->ability(null, 'admin.adkats.reports.view')) {
             throw new AccessDeniedHttpException;
         }
 
@@ -36,7 +38,7 @@ class ReportsController extends Controller
     }
 
     /**
-     * Returns the allowed commands to be issued
+     * Returns the allowed commands to be issued.
      *
      * @return array
      */
@@ -46,17 +48,17 @@ class ReportsController extends Controller
     }
 
     /**
-     * Updates the selected report
+     * Updates the selected report.
      */
     public function putIndex()
     {
-        if (!Auth::check() || !Auth::user()->ability(null, 'admin.adkats.reports.edit')) {
+        if (! Auth::check() || ! Auth::user()->ability(null, 'admin.adkats.reports.edit')) {
             throw new AccessDeniedHttpException;
         }
 
         $v = Validator::make(Input::all(), [
             'id'                   => 'required|numeric|exists:adkats_records_main,record_id',
-            'action'               => 'required|numeric|in:' . implode(',', $this->repository->getAllowedCommands()),
+            'action'               => 'required|numeric|in:'.implode(',', $this->repository->getAllowedCommands()),
             'reason'               => 'required|string|between:3,500',
             'extras.tban.duration' => 'required_if:action,7|numeric|between:1,525960',
         ], [
@@ -71,7 +73,7 @@ class ReportsController extends Controller
         try {
             $record = $this->repository->getReportById(Input::get('id'));
 
-            if (!in_array($record->command_action, [18, 20])) {
+            if (! in_array($record->command_action, [18, 20])) {
                 throw new UpdateResourceFailedException('Unable to complete action. Report has already been acted on.');
             }
 
@@ -90,7 +92,7 @@ class ReportsController extends Controller
 
                     $duration = Input::get('extras.tban.duration', $maxDuration);
 
-                    $commandNumeric = (int)$duration > (int)$maxDuration ? $maxDuration : $duration;
+                    $commandNumeric = (int) $duration > (int) $maxDuration ? $maxDuration : $duration;
                 } else {
                     $commandNumeric = 0;
                 }
@@ -100,13 +102,13 @@ class ReportsController extends Controller
                 $newMessage = trim(Input::get('reason', $newRecord->record_message));
                 $oldMessage = trim($newRecord->record_message);
 
-                if ($newMessage != $oldMessage && !empty($newMessage)) {
+                if ($newMessage != $oldMessage && ! empty($newMessage)) {
                     $newRecord->record_message = $newMessage;
                 }
 
                 $source = MainHelper::getAdminPlayer($this->user, $newRecord->server->game->GameID);
 
-                if (!is_null($source)) {
+                if (! is_null($source)) {
                     $newRecord->source_id = $source->PlayerID;
                     $newRecord->source_name = $source->SoldierName;
                 } else {

@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Api;
+<?php
+
+namespace BFACP\Http\Controllers\Api;
 
 use Artdarek\Pusherer\Facades\Pusherer;
 use BFACP\Facades\Main;

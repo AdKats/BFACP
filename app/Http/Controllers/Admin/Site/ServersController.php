@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Admin\Site;
+<?php
+
+namespace BFACP\Http\Controllers\Admin\Site;
 
 use BFACP\Battlefield\Server\Server as Server;
 use BFACP\Battlefield\Setting as Setting;
@@ -28,7 +30,6 @@ class ServersController extends Controller
 
             // If no setting entry exists for the server we need to create it
             if (is_null($server->setting)) {
-
                 try {
                     $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogServer')->server($server);
                     $serverguid = $battlelog->guid();
@@ -58,7 +59,7 @@ class ServersController extends Controller
             $server = Server::findOrFail($id);
             $setting = $server->setting;
 
-            if (Input::has('rcon_password') && !empty(trim(Input::get('rcon_password')))) {
+            if (Input::has('rcon_password') && ! empty(trim(Input::get('rcon_password')))) {
                 $password = Input::get('rcon_password');
                 $setting->rcon_password = trim($password);
             }

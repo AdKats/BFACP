@@ -1,4 +1,6 @@
-<?php namespace BFACP\Repositories;
+<?php
+
+namespace BFACP\Repositories;
 
 use BFACP\Account\Setting;
 use BFACP\Account\Soldier;
@@ -14,10 +16,10 @@ use Illuminate\Support\Facades\Mail;
 class UserRepository
 {
     /**
-     * Create a new user
+     * Create a new user.
      *
      * @param  array   $input
-     * @param  integer $role        Default role is 2
+     * @param  int $role        Default role is 2
      * @param  bool    $confirmed
      * @param  bool    $autoGenPass Generate a secure password if true
      * @param bool     $skipEmail   Skips the sending of the email
@@ -45,13 +47,13 @@ class UserRepository
         // Save if valid. Password field will be hashed before save
         $user->save();
 
-        if (!is_null($user->id)) {
+        if (! is_null($user->id)) {
             $user->roles()->attach($role);
             $user->setting()->save(new Setting([
                 'lang' => array_get($input, 'lang', 'en'),
             ]));
 
-            if (!empty(array_get($input, 'ign'))) {
+            if (! empty(array_get($input, 'ign'))) {
                 $players = Player::where('SoldierName', array_get($input, 'ign'))->pluck('PlayerID');
 
                 foreach ($players as $player) {
@@ -65,7 +67,7 @@ class UserRepository
                 }
             }
 
-            if (!$skipEmail) {
+            if (! $skipEmail) {
                 $this->sendPasswordChangeEmail($user->username, $user->email, $pass);
             }
         }
@@ -78,11 +80,11 @@ class UserRepository
      *
      * @param  array $input
      *
-     * @return boolean
+     * @return bool
      */
     public function login($input)
     {
-        if (!isset($input['password'])) {
+        if (! isset($input['password'])) {
             $input['password'] = null;
         }
 
@@ -90,7 +92,7 @@ class UserRepository
     }
 
     /**
-     * Log out the user
+     * Log out the user.
      *
      * @return null
      */
@@ -101,11 +103,11 @@ class UserRepository
 
     /**
      * Checks if the credentials has been throttled by too
-     * many failed login attempts
+     * many failed login attempts.
      *
      * @param  array $input
      *
-     * @return boolean
+     * @return bool
      */
     public function isThrottled($input)
     {
@@ -114,11 +116,11 @@ class UserRepository
 
     /**
      * Checks if the given credentials correponds to a user
-     * that exists but is not confirmed
+     * that exists but is not confirmed.
      *
      * @param  array $input
      *
-     * @return boolean
+     * @return bool
      */
     public function existsButNotConfirmed($input)
     {
@@ -127,7 +129,7 @@ class UserRepository
         if ($user) {
             $correctPassword = Hash::check(isset($input['password']) ? $input['password'] : false, $user->password);
 
-            return !$user->confirmed && $correctPassword;
+            return ! $user->confirmed && $correctPassword;
         }
 
         return false;
@@ -138,7 +140,7 @@ class UserRepository
      *
      * @param  array $input Array containing 'token', 'password' and 'password_confirmation' keys.
      *
-     * @return boolean
+     * @return bool
      */
     public function resetPassword($input)
     {
@@ -160,17 +162,17 @@ class UserRepository
     }
 
     /**
-     * Attempt to confirm the account with code
+     * Attempt to confirm the account with code.
      *
      * @param  string $code
      *
-     * @return boolean
+     * @return bool
      */
     public function confirm($code)
     {
         $user = User::where('confirmation_code', $code)->first();
 
-        if (!$user['confirmed']) {
+        if (! $user['confirmed']) {
             return Confide::confirm($code);
         }
 
@@ -178,9 +180,9 @@ class UserRepository
     }
 
     /**
-     * Generates a strong password
+     * Generates a strong password.
      *
-     * @param  integer $len Length of generated password
+     * @param  int $len Length of generated password
      *
      * @return string
      */
@@ -198,7 +200,6 @@ class UserRepository
      *
      * @return null
      * @internal param string $password
-     *
      */
     public function sendPasswordChangeEmail($username, $email, $newPassword)
     {

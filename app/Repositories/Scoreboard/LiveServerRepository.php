@@ -1,4 +1,6 @@
-<?php namespace BFACP\Repositories\Scoreboard;
+<?php
+
+namespace BFACP\Repositories\Scoreboard;
 
 use BFACP\Adkats\Command;
 use BFACP\Adkats\Record;
@@ -27,42 +29,42 @@ class LiveServerRepository extends BaseRepository
     public $server = null;
 
     /**
-     * Game DB ID
+     * Game DB ID.
      *
-     * @var integer
+     * @var int
      */
     protected $gameID = 0;
 
     /**
-     * Game abbreviation
+     * Game abbreviation.
      *
      * @var null
      */
     protected $gameName = null;
 
     /**
-     * Server ID
+     * Server ID.
      *
-     * @var integer
+     * @var int
      */
     protected $serverID = 0;
 
     /**
-     * Server IPv4 Address
+     * Server IPv4 Address.
      *
      * @var string
      */
     protected $serverIP = '';
 
     /**
-     * RCON Port
+     * RCON Port.
      *
-     * @var integer
+     * @var int
      */
     protected $port = 0;
 
     /**
-     * Formatted Response
+     * Formatted Response.
      *
      * @var array
      */
@@ -88,49 +90,49 @@ class LiveServerRepository extends BaseRepository
     protected $authenticated = false;
 
     /**
-     * Holds the server information block
+     * Holds the server information block.
      *
      * @var array
      */
     protected $serverinfo = [];
 
     /**
-     * Stores the admin player object
+     * Stores the admin player object.
      *
      * @var Player|null
      */
     protected $admin = null;
 
     /**
-     * Neutral Team
+     * Neutral Team.
      *
      * @var string
      */
     private $TEAM0 = 'Neutral';
 
     /**
-     * Team 1 Name
+     * Team 1 Name.
      *
      * @var string
      */
     private $TEAM1 = 'US Army';
 
     /**
-     * Team 2 Name
+     * Team 2 Name.
      *
      * @var string
      */
     private $TEAM2 = 'RU Army';
 
     /**
-     * Team 3 Name
+     * Team 3 Name.
      *
      * @var string
      */
     private $TEAM3 = 'US Army';
 
     /**
-     * Team 4 Name
+     * Team 4 Name.
      *
      * @var string
      */
@@ -147,13 +149,13 @@ class LiveServerRepository extends BaseRepository
         $this->serverIP = $server->ip;
         $this->port = $server->port;
 
-        if (!is_null($this->user)) {
+        if (! is_null($this->user)) {
             $this->setAdmin();
         }
     }
 
     /**
-     * Sets the admin for future use
+     * Sets the admin for future use.
      */
     private function setAdmin()
     {
@@ -167,7 +169,7 @@ class LiveServerRepository extends BaseRepository
      */
     public function attempt()
     {
-        if (!is_null($this->client)) {
+        if (! is_null($this->client)) {
             return $this;
         }
 
@@ -201,7 +203,7 @@ class LiveServerRepository extends BaseRepository
         $this->connected = $this->client->isConnected();
 
         // If we are not connected throw exception and abort
-        if (!$this->connected) {
+        if (! $this->connected) {
             throw new RconException(410, Lang::get('system.exceptions.rcon.conn_failed'));
         }
 
@@ -216,7 +218,7 @@ class LiveServerRepository extends BaseRepository
         $this->authenticated = $this->client->isLoggedIn();
 
         // If we are connected but not logged in throw exception and abort
-        if (!$this->authenticated) {
+        if (! $this->authenticated) {
             throw new RconException(401, Lang::get('system.exceptions.rcon.bad_password'));
         }
 
@@ -226,7 +228,7 @@ class LiveServerRepository extends BaseRepository
     }
 
     /**
-     * Gathers the server information
+     * Gathers the server information.
      *
      * @return $this
      */
@@ -241,8 +243,8 @@ class LiveServerRepository extends BaseRepository
                 case 'SquadDeathMatch0':
                 case 'TeamDeathMatch0':
                     $ticketcap = $length < 28 ? null : intval($info[13]);
-                    $uptime = $length < 28 ? (int)$info[14] : (int)$info[18];
-                    $round = $length < 28 ? (int)$info[15] : (int)$info[19];
+                    $uptime = $length < 28 ? (int) $info[14] : (int) $info[18];
+                    $round = $length < 28 ? (int) $info[15] : (int) $info[19];
                     break;
 
                 case 'CaptureTheFlag0':
@@ -258,8 +260,8 @@ class LiveServerRepository extends BaseRepository
                         $ticketcap = $length < 26 ? null : intval($info[11]);
                     }
 
-                    $uptime = $length < 26 ? (int)$info[14] : (int)$info[16];
-                    $round = $length < 26 ? (int)$info[15] : (int)$info[17];
+                    $uptime = $length < 26 ? (int) $info[14] : (int) $info[16];
+                    $round = $length < 26 ? (int) $info[15] : (int) $info[17];
                     break;
 
                 default:
@@ -273,8 +275,8 @@ class LiveServerRepository extends BaseRepository
                 case 'SquadDeathMatch0':
                 case 'TeamDeathMatch0':
                     $ticketcap = $length < 25 ? null : intval($info[11]);
-                    $uptime = $length < 25 ? (int)$info[12] : (int)$info[16];
-                    $round = $length < 25 ? (int)$info[13] : (int)$info[17];
+                    $uptime = $length < 25 ? (int) $info[12] : (int) $info[16];
+                    $round = $length < 25 ? (int) $info[13] : (int) $info[17];
                     break;
 
                 case 'CaptureTheFlag0':
@@ -290,8 +292,8 @@ class LiveServerRepository extends BaseRepository
                         $ticketcap = $length < 25 ? null : intval($info[11]);
                     }
 
-                    $uptime = $length < 25 ? (int)$info[12] : (int)$info[16];
-                    $round = $length < 25 ? (int)$info[13] : (int)$info[17];
+                    $uptime = $length < 25 ? (int) $info[12] : (int) $info[16];
+                    $round = $length < 25 ? (int) $info[13] : (int) $info[17];
                     break;
 
                 default:
@@ -312,8 +314,8 @@ class LiveServerRepository extends BaseRepository
                 case 'TeamDeathMatch0':
                 case 'CashGrab0':
                     $ticketcap = $length < 25 ? null : intval($info[11]);
-                    $uptime = $length < 25 ? (int)$info[14] : (int)$info[16];
-                    $round = $length < 25 ? (int)$info[15] : (int)$info[17];
+                    $uptime = $length < 25 ? (int) $info[14] : (int) $info[16];
+                    $round = $length < 25 ? (int) $info[15] : (int) $info[17];
                     break;
 
                 default:
@@ -354,18 +356,18 @@ class LiveServerRepository extends BaseRepository
                 'adminVarGetNoobJoin') ? $this->client->adminVarGetNoobJoin() : null,
             'game'             => $this->server->game,
             'players'          => [
-                'online'     => (int)$info[2],
-                'max'        => (int)$info[3],
+                'online'     => (int) $info[2],
+                'max'        => (int) $info[3],
                 'spectators' => 0,
                 'commanders' => 0,
                 'queue'      => $this->server->in_queue,
             ],
             'mode'             => [
-                'name' => !is_string($_playmode) ? head($_playmode) : $_playmode,
+                'name' => ! is_string($_playmode) ? head($_playmode) : $_playmode,
                 'uri'  => $info[4],
             ],
             'map'              => [
-                'name'   => !is_string($_map) ? head($_map) : $_map,
+                'name'   => ! is_string($_map) ? head($_map) : $_map,
                 'uri'    => $info[5],
                 'next'   => $this->getNextMap(),
                 'images' => $this->server->map_image_paths,
@@ -376,11 +378,11 @@ class LiveServerRepository extends BaseRepository
             'times'            => [
                 'round'     => [
                     'humanize' => MainHelper::secToStr($round, true),
-                    'seconds'  => (int)$round,
+                    'seconds'  => (int) $round,
                 ],
                 'uptime'    => [
                     'humanize' => MainHelper::secToStr($uptime, true),
-                    'seconds'  => (int)$uptime,
+                    'seconds'  => (int) $uptime,
                 ],
                 'remaining' => [
                     'humanize' => $info[2] >= 4 ? MainHelper::secToStr($startingTimer - $round, true) : 'PreMatch',
@@ -397,7 +399,7 @@ class LiveServerRepository extends BaseRepository
     }
 
     /**
-     * Gets the next map in the rotation
+     * Gets the next map in the rotation.
      *
      * @return array|null
      */
@@ -410,14 +412,13 @@ class LiveServerRepository extends BaseRepository
             if ($map['index'] == $index) {
                 return $map;
             }
-
         }
 
-        return null;
+        return;
     }
 
     /**
-     * Gets the map list
+     * Gets the map list.
      *
      * @return array
      */
@@ -437,14 +438,14 @@ class LiveServerRepository extends BaseRepository
 
             $list[] = [
                 'map'    => [
-                    'name' => !is_string($_map) ? head($_map) : $_map,
+                    'name' => ! is_string($_map) ? head($_map) : $_map,
                     'uri'  => $map,
                 ],
                 'mode'   => [
-                    'name' => !is_string($_playmode) ? head($_playmode) : $_playmode,
+                    'name' => ! is_string($_playmode) ? head($_playmode) : $_playmode,
                     'uri'  => $mode,
                 ],
-                'rounds' => (int)$rounds,
+                'rounds' => (int) $rounds,
                 'index'  => $i,
             ];
         }
@@ -453,14 +454,14 @@ class LiveServerRepository extends BaseRepository
     }
 
     /**
-     * Sets the correct team factions based on game and mode
+     * Sets the correct team factions based on game and mode.
      *
      * @return $this
      * @throws RconException
      */
     private function setFactions()
     {
-        if (!$this->check()) {
+        if (! $this->check()) {
             throw new RconException(500, Lang::get('system.exceptions.rcon.factions'));
         }
 
@@ -525,7 +526,7 @@ class LiveServerRepository extends BaseRepository
      */
     protected function isValidName($player)
     {
-        return (bool)preg_match('/^[a-zA-Z0-9_\\-]+$/', $player);
+        return (bool) preg_match('/^[a-zA-Z0-9_\\-]+$/', $player);
     }
 
     /*======================================
@@ -533,7 +534,7 @@ class LiveServerRepository extends BaseRepository
     ======================================*/
 
     /**
-     * Kills the players
+     * Kills the players.
      *
      * @param string $player
      * @param string $message
@@ -545,7 +546,7 @@ class LiveServerRepository extends BaseRepository
         // Save the original message for use later.
         $originalMessage = $message;
 
-        if (!empty($message)) {
+        if (! empty($message)) {
             $message = sprintf('You were killed by an admin. Reason: %s', $message);
         } else {
             $message = 'You were killed by an admin.';
@@ -576,7 +577,7 @@ class LiveServerRepository extends BaseRepository
     }
 
     /**
-     * Nukes the targeted team
+     * Nukes the targeted team.
      *
      * @param int $team
      *
@@ -603,7 +604,7 @@ class LiveServerRepository extends BaseRepository
     }
 
     /**
-     * Sends both a yell and say message to the player
+     * Sends both a yell and say message to the player.
      *
      * @param string     $player
      * @param string     $message
@@ -628,7 +629,7 @@ class LiveServerRepository extends BaseRepository
 
         $this->adminYell($message, $player, null, $yellDuration, 'Player', true);
 
-        if (!$skipLog) {
+        if (! $skipLog) {
             $this->log($player, 'player_tell', $message);
         }
 
@@ -671,7 +672,7 @@ class LiveServerRepository extends BaseRepository
                     $this->client->adminSayMessageToAll($message);
                 }
 
-                if (!$skipLog) {
+                if (! $skipLog) {
                     return $this->log(null, 'admin_say', $message);
                 }
 
@@ -684,7 +685,7 @@ class LiveServerRepository extends BaseRepository
                 }
 
                 // Checks if the team id is a number or not in valid id list
-                if (!is_numeric($teamId) || !in_array($teamId, [1, 2, 3, 4])) {
+                if (! is_numeric($teamId) || ! in_array($teamId, [1, 2, 3, 4])) {
                     throw new RconException(400, sprintf('"%s" is not a valid team id', $teamId));
                 }
 
@@ -705,7 +706,6 @@ class LiveServerRepository extends BaseRepository
                 }
 
                 if ($this->isValidName($player)) {
-
                     if ($displayAdminName) {
                         $response = $this->client->adminSayMessageToPlayer($player,
                             sprintf('[%s] %s', $adminName, $message));
@@ -718,7 +718,7 @@ class LiveServerRepository extends BaseRepository
                         throw new PlayerNotFoundException(404, sprintf('No player found with the name "%s"', $player));
                     }
 
-                    if (!$skipLog) {
+                    if (! $skipLog) {
                         return $this->log($player, 'player_say', $message);
                     }
                 } else {
@@ -766,7 +766,7 @@ class LiveServerRepository extends BaseRepository
             case 'All':
                 $this->client->adminYellMessage($message, '{%all%}', $duration);
 
-                if (!$skipLog) {
+                if (! $skipLog) {
                     $this->log(null, 'admin_yell', $message, $duration);
                 }
 
@@ -779,7 +779,7 @@ class LiveServerRepository extends BaseRepository
                 }
 
                 // Checks if the team id is a number or not in valid id list
-                if (!is_numeric($teamId) || !in_array($teamId, [1, 2, 3, 4])) {
+                if (! is_numeric($teamId) || ! in_array($teamId, [1, 2, 3, 4])) {
                     throw new RconException(400, sprintf('"%s" is not a valid team id', $teamId));
                 }
 
@@ -803,7 +803,7 @@ class LiveServerRepository extends BaseRepository
                         throw new PlayerNotFoundException(404, sprintf('No player found with the name "%s"', $player));
                     }
 
-                    if (!$skipLog) {
+                    if (! $skipLog) {
                         $record = $this->log($player, 'player_yell', $message, $duration);
 
                         return $record['record'];
@@ -821,7 +821,7 @@ class LiveServerRepository extends BaseRepository
     }
 
     /**
-     * Moves the player to a different team and/or squad
+     * Moves the player to a different team and/or squad.
      *
      * @param            $player
      * @param null       $teamId
@@ -833,11 +833,11 @@ class LiveServerRepository extends BaseRepository
      */
     public function adminMovePlayer($player, $teamId = null, $squadId = 0, $locked = false)
     {
-        if (!is_numeric($squadId) || empty($squadId) || !in_array($squadId, range(0, 32))) {
+        if (! is_numeric($squadId) || empty($squadId) || ! in_array($squadId, range(0, 32))) {
             $squadId = 0;
         }
 
-        if (!is_numeric($teamId) || empty($teamId) || !in_array($teamId, range(1, 4))) {
+        if (! is_numeric($teamId) || empty($teamId) || ! in_array($teamId, range(1, 4))) {
             $teamId = $this->client->getPlayerTeamId($player);
         }
 
@@ -868,7 +868,7 @@ class LiveServerRepository extends BaseRepository
                 }
             }
 
-            $response = $this->client->adminMovePlayerSwitchSquad($player, (int)$squadId, true, (int)$teamId);
+            $response = $this->client->adminMovePlayerSwitchSquad($player, (int) $squadId, true, (int) $teamId);
 
             // Check if the server returned a player not found error
             if ($response == 'InvalidPlayerName') {
@@ -894,7 +894,6 @@ class LiveServerRepository extends BaseRepository
 
             $this->adminTell($player, $message, 5, false, true, 1);
             $this->log($player, 'player_fmove', $dbMessage);
-
         } else {
             throw new RconException(400, sprintf('"%s" is not a valid name.', $player));
         }
@@ -906,7 +905,7 @@ class LiveServerRepository extends BaseRepository
     }
 
     /**
-     * Kick the player from the server
+     * Kick the player from the server.
      *
      * @param string     $player
      * @param null       $message
@@ -930,7 +929,7 @@ class LiveServerRepository extends BaseRepository
             }
 
             // If adminKick was called from the adminBan function do not send the kick message
-            if (!$isBan) {
+            if (! $isBan) {
                 // Send a general message to the server about the kicked player
                 $this->adminSay(sprintf('%s was kicked from the server. Reason: %s', $player, $message), null, null,
                     'All', false, true);
@@ -948,7 +947,7 @@ class LiveServerRepository extends BaseRepository
     }
 
     /**
-     * Punish player
+     * Punish player.
      *
      * @param $player
      * @param $message
@@ -962,7 +961,7 @@ class LiveServerRepository extends BaseRepository
         if ($this->isValidName($player)) {
             $p = Player::where('GameID', $this->gameID)->where('SoldierName', $player)->first();
 
-            if (!$p) {
+            if (! $p) {
                 throw new PlayerNotFoundException(404, 'Unable to punish. %s was not found.', $player);
             }
 
@@ -981,11 +980,11 @@ class LiveServerRepository extends BaseRepository
     }
 
     /**
-     * Forgive player
+     * Forgive player.
      *
      * @param  string  $player  Name of player
      * @param  string  $message Message to be sent
-     * @param  integer $count   How many forgives should be issued
+     * @param  int $count   How many forgives should be issued
      *
      * @return array
      * @throws RconException
@@ -996,7 +995,7 @@ class LiveServerRepository extends BaseRepository
         if ($this->isValidName($player)) {
             $p = Player::where('GameID', $this->gameID)->where('SoldierName', $player)->first();
 
-            if (!$p) {
+            if (! $p) {
                 throw new PlayerNotFoundException(404, 'Unable to forgive. %s was not found.', $player);
             }
 
@@ -1015,19 +1014,19 @@ class LiveServerRepository extends BaseRepository
     }
 
     /**
-     * Mute player
+     * Mute player.
      *
      * @param  string $player  Name of player
      * @param  string $message Message to be sent
      *
-     * @return boolean
+     * @return bool
      */
     public function adminMute($player, $message)
     {
         if ($this->isValidName($player)) {
             $p = Player::where('GameID', $this->gameID)->where('SoldierName', $player)->first();
 
-            if (!$p) {
+            if (! $p) {
                 throw new PlayerNotFoundException(404, 'Unable to mute. %s was not found.', $player);
             }
 
@@ -1048,7 +1047,7 @@ class LiveServerRepository extends BaseRepository
     /*-----  End of Admin Commands  ------*/
 
     /**
-     * Logs action to database
+     * Logs action to database.
      *
      * @param string|Player $target
      * @param string        $command
@@ -1064,11 +1063,11 @@ class LiveServerRepository extends BaseRepository
 
         $command = Command::where('command_key', $command)->first();
 
-        if (!$command) {
+        if (! $command) {
             throw new RconException(500, 'Invalid command type');
         }
 
-        if (!$target instanceof Player && is_string($target) && !in_array($command->command_key, ['server_nuke'])) {
+        if (! $target instanceof Player && is_string($target) && ! in_array($command->command_key, ['server_nuke'])) {
             $target = Player::where('GameID', $this->gameID)->where('SoldierName', $target)->first();
         }
 
@@ -1130,7 +1129,7 @@ class LiveServerRepository extends BaseRepository
     }
 
     /**
-     * Simply returns the correct team name by their ID
+     * Simply returns the correct team name by their ID.
      *
      * @param $teamID
      *
@@ -1167,7 +1166,7 @@ class LiveServerRepository extends BaseRepository
     }
 
     /**
-     * Returns what's in $this->data
+     * Returns what's in $this->data.
      *
      * @param bool|false $verbose
      *
@@ -1194,7 +1193,7 @@ class LiveServerRepository extends BaseRepository
         $this->data['_raw']['playerlist'] = $this->client->adminGetPlayerlist();
 
         for ($i = 0; $i < count($serverinfo); $i++) {
-            $key = 'K' . $i;
+            $key = 'K'.$i;
 
             $this->data['_raw']['serverinfo'][ $key ] = $serverinfo[ $i ];
 
@@ -1218,7 +1217,7 @@ class LiveServerRepository extends BaseRepository
     }
 
     /**
-     * Loops over the players and sorts them into teams
+     * Loops over the players and sorts them into teams.
      *
      * @return $this
      */
@@ -1257,19 +1256,19 @@ class LiveServerRepository extends BaseRepository
                     break;
 
                 case 1:
-                    $score = (int)$this->serverinfo[9];
+                    $score = (int) $this->serverinfo[9];
                     break;
 
                 case 2:
-                    $score = (int)$this->serverinfo[10];
+                    $score = (int) $this->serverinfo[10];
                     break;
 
                 case 3:
-                    $score = (int)$this->serverinfo[11];
+                    $score = (int) $this->serverinfo[11];
                     break;
 
                 case 4:
-                    $score = (int)$this->serverinfo[12];
+                    $score = (int) $this->serverinfo[12];
                     break;
             }
 
@@ -1314,11 +1313,11 @@ class LiveServerRepository extends BaseRepository
         $teams = collect([]);
 
         for ($i = 1; $i <= 4; $i++) {
-            $team = 'TEAM' . $i;
+            $team = 'TEAM'.$i;
             if (is_array($this->{$team})) {
                 $teams->push([
                     'id'    => $i,
-                    'label' => sprintf('%s (%s)', $this->{$team}['full_name'], 'Team ' . $i),
+                    'label' => sprintf('%s (%s)', $this->{$team}['full_name'], 'Team '.$i),
                 ]);
             }
         }
@@ -1333,7 +1332,7 @@ class LiveServerRepository extends BaseRepository
     }
 
     /**
-     * Gets players DB information and passes it to playerDBLoop function
+     * Gets players DB information and passes it to playerDBLoop function.
      *
      * @return $this|bool
      */
@@ -1376,7 +1375,7 @@ class LiveServerRepository extends BaseRepository
     }
 
     /**
-     * Assigns the player with their DB profile
+     * Assigns the player with their DB profile.
      *
      * @param array  $dbPlayers
      * @param string $type
@@ -1396,7 +1395,7 @@ class LiveServerRepository extends BaseRepository
                     }
 
                     foreach ($dbPlayers as $index2 => $player2) {
-                        $guid = !is_string($player) ? $player['guid'] : $player;
+                        $guid = ! is_string($player) ? $player['guid'] : $player;
 
                         if ($guid == $player2->EAGUID) {
                             if ($type == 'commander') {
@@ -1462,7 +1461,7 @@ class LiveServerRepository extends BaseRepository
                 if (array_key_exists($type, $team)) {
                     foreach ($team[ $type ] as $index => $player) {
                         foreach ($adminlist as $index2 => $player2) {
-                            $guid = !is_string($player) ? $player['guid'] : $player;
+                            $guid = ! is_string($player) ? $player['guid'] : $player;
 
                             if ($guid == $player2->EAGUID) {
                                 if ($type == 'commander') {

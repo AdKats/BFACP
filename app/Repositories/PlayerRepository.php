@@ -1,4 +1,6 @@
-<?php namespace BFACP\Repositories;
+<?php
+
+namespace BFACP\Repositories;
 
 use BFACP\Adkats\Record;
 use BFACP\Battlefield\Chat;
@@ -14,7 +16,7 @@ use Illuminate\Support\Facades\Input;
 class PlayerRepository extends BaseRepository
 {
     /**
-     * Eager loading options
+     * Eager loading options.
      *
      * @var array
      */
@@ -29,7 +31,7 @@ class PlayerRepository extends BaseRepository
     ];
 
     /**
-     * Returns a paginate result of all players
+     * Returns a paginate result of all players.
      *
      * @param int  $limit
      * @param null $names
@@ -48,7 +50,7 @@ class PlayerRepository extends BaseRepository
 
         $soldierNames = [];
 
-        if (!empty($names)) {
+        if (! empty($names)) {
             $query->where(function ($q) use (&$names, &$soldierNames) {
                 $names->each(function ($name) use (&$q, &$soldierNames) {
                     // Checks if string is an EAGUID
@@ -72,7 +74,7 @@ class PlayerRepository extends BaseRepository
                             $name = sprintf('%s%%', $matches[1]);
                         }
 
-                        if (isset($matches[1]) && !empty($matches[1])) {
+                        if (isset($matches[1]) && ! empty($matches[1])) {
                             $q->orWhere('SoldierName', 'LIKE', $name);
                             $soldierNames[] = $name;
                         }
@@ -80,7 +82,7 @@ class PlayerRepository extends BaseRepository
                 });
             });
 
-            if (!empty($soldierNames)) {
+            if (! empty($soldierNames)) {
                 $playerIds = Player::whereIn('PlayerID', function ($q) use (&$soldierNames) {
                     $q->select('target_id')->from('adkats_records_main')->where(function ($q2) use (&$soldierNames) {
                         foreach ($soldierNames as $name) {
@@ -89,7 +91,7 @@ class PlayerRepository extends BaseRepository
                     })->where('command_type', 48);
                 })->pluck('PlayerID');
 
-                if (!empty($playerIds)) {
+                if (! empty($playerIds)) {
                     $query->orWhereIn('PlayerID', $playerIds);
                 }
             }
@@ -103,9 +105,9 @@ class PlayerRepository extends BaseRepository
     }
 
     /**
-     * Returns a player by their ID
+     * Returns a player by their ID.
      *
-     * @param  integer $id Database Player ID
+     * @param  int $id Database Player ID
      *
      * @return object
      */
@@ -117,14 +119,13 @@ class PlayerRepository extends BaseRepository
             App::make('BFACP\Libraries\Reputation')->setPlayer($player)->createOrUpdate();
 
             return $player;
-
         } catch (ModelNotFoundException $e) {
             throw new PlayerNotFoundException(404, 'Player Not Found');
         }
     }
 
     /**
-     * Returns the player with the givin guid
+     * Returns the player with the givin guid.
      *
      * @param  string $guid EA GUID
      *
@@ -142,9 +143,9 @@ class PlayerRepository extends BaseRepository
     }
 
     /**
-     * Gets the total number of players in the database
+     * Gets the total number of players in the database.
      *
-     * @return integer
+     * @return int
      */
     public function getPlayerCount()
     {
@@ -154,7 +155,7 @@ class PlayerRepository extends BaseRepository
     }
 
     /**
-     * Gets the total number of players seen from each country
+     * Gets the total number of players seen from each country.
      *
      * @return array
      */
@@ -175,10 +176,10 @@ class PlayerRepository extends BaseRepository
     }
 
     /**
-     * Returns the player record history
+     * Returns the player record history.
      *
-     * @param  integer $id    Player ID
-     * @param  integer $limit Results to return
+     * @param  int $id    Player ID
+     * @param  int $limit Results to return
      *
      * @return object
      */
@@ -196,7 +197,7 @@ class PlayerRepository extends BaseRepository
             $cmdid = Input::get('cmdid', null);
 
             // Make sure the input is a number and greater than zero
-            if (!is_null($cmdid) && is_numeric($cmdid) && $cmdid > 0) {
+            if (! is_null($cmdid) && is_numeric($cmdid) && $cmdid > 0) {
                 $records->where(function ($query) use ($cmdid) {
                     $query->where('command_type', $cmdid);
                     $query->orWhere('command_action', $cmdid);
@@ -208,9 +209,9 @@ class PlayerRepository extends BaseRepository
     }
 
     /**
-     * Returns the player session history
+     * Returns the player session history.
      *
-     * @param  integer $id Player ID
+     * @param  int $id Player ID
      *
      * @return object
      */
@@ -226,10 +227,10 @@ class PlayerRepository extends BaseRepository
     }
 
     /**
-     * Returns the player chatlogs
+     * Returns the player chatlogs.
      *
-     * @param  integer $id    Player ID
-     * @param  integer $limit Results to return
+     * @param  int $id    Player ID
+     * @param  int $limit Results to return
      *
      * @return object
      */
@@ -241,7 +242,7 @@ class PlayerRepository extends BaseRepository
         if (Input::has('server')) {
             $serverId = Input::get('server', null);
 
-            if (!is_null($serverId) && is_numeric($serverId) && $serverId > 0) {
+            if (! is_null($serverId) && is_numeric($serverId) && $serverId > 0) {
                 $chatlogs->where('ServerID', $serverId);
             }
         }
@@ -250,7 +251,7 @@ class PlayerRepository extends BaseRepository
         if (Input::has('keywords')) {
             $keywords = trim(Input::get('keywords', null));
 
-            if (!is_null($keywords) && $keywords != '') {
+            if (! is_null($keywords) && $keywords != '') {
 
                 // Remove spaces before and after the comma
                 $keywords = preg_replace('/\s*,\s*/', ',', $keywords);
@@ -260,7 +261,7 @@ class PlayerRepository extends BaseRepository
 
                 $chatlogs->where(function ($query) use ($keywords) {
                     foreach ($keywords as $keyword) {
-                        $query->orWhere('logMessage', 'LIKE', '%' . $keyword . '%');
+                        $query->orWhere('logMessage', 'LIKE', '%'.$keyword.'%');
                     }
                 });
             }
@@ -270,7 +271,7 @@ class PlayerRepository extends BaseRepository
     }
 
     /**
-     * Sets which relations should be returned
+     * Sets which relations should be returned.
      *
      * @param  array $opts
      * @param  bool  $custom
@@ -280,7 +281,6 @@ class PlayerRepository extends BaseRepository
     public function setopts($opts = [], $custom = false)
     {
         if (empty($opts) || $custom) {
-
             if ($custom) {
                 $this->opts = $opts;
             }
@@ -292,19 +292,19 @@ class PlayerRepository extends BaseRepository
             $opts = explode(',', $opts);
         }
 
-        if (!in_array('bans', $opts)) {
+        if (! in_array('bans', $opts)) {
             unset($this->opts[0]);
         }
 
-        if (!in_array('reputation', $opts)) {
+        if (! in_array('reputation', $opts)) {
             unset($this->opts[1]);
         }
 
-        if (!in_array('infractions', $opts)) {
+        if (! in_array('infractions', $opts)) {
             unset($this->opts[2], $this->opts[3]);
         }
 
-        if (!in_array('stats', $opts)) {
+        if (! in_array('stats', $opts)) {
             unset($this->opts[4], $this->opts[5], $this->opts[6]);
         }
 

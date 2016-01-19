@@ -1,53 +1,55 @@
-<?php namespace BFACP\Adkats\Account;
+<?php
+
+namespace BFACP\Adkats\Account;
 
 use BFACP\Elegant;
 
 class User extends Elegant
 {
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'adkats_users';
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'user_id';
 
     /**
-     * Fields allowed to be mass assigned
+     * Fields allowed to be mass assigned.
      *
      * @var array
      */
     protected $guarded = ['user_id'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
     protected $dates = ['user_expiration'];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
     protected $appends = ['stamp'];
 
     /**
-     * Models to be loaded automaticly
+     * Models to be loaded automaticly.
      *
      * @var array
      */

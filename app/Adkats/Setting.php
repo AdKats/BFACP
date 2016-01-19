@@ -1,53 +1,55 @@
-<?php namespace BFACP\Adkats;
+<?php
+
+namespace BFACP\Adkats;
 
 use BFACP\Elegant;
 
 class Setting extends Elegant
 {
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'adkats_settings';
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'server_id';
 
     /**
-     * Fields not allowed to be mass assigned
+     * Fields not allowed to be mass assigned.
      *
      * @var array
      */
     protected $fillable = ['setting_value'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
     protected $dates = [];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
     protected $appends = [];
 
     /**
-     * Models to be loaded automatically
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -62,7 +64,7 @@ class Setting extends Elegant
     }
 
     /**
-     * Quick way of selecting specific commands
+     * Quick way of selecting specific commands.
      *
      * @param               $query
      * @param  array|string $names Command Names
@@ -79,7 +81,7 @@ class Setting extends Elegant
     }
 
     /**
-     * Quick way of selecting servers
+     * Quick way of selecting servers.
      *
      * @param              $query
      * @param  array       $ids Array of server ids
@@ -96,7 +98,7 @@ class Setting extends Elegant
     }
 
     /**
-     * Convert value to correct type
+     * Convert value to correct type.
      *
      * @return mixed
      */
@@ -105,7 +107,7 @@ class Setting extends Elegant
         $value = $this->attributes['setting_value'];
         $settingName = $this->attributes['setting_name'];
 
-        if (!array_key_exists('setting_name', $this->attributes) || $settingName == 'Custom HTML Addition') {
+        if (! array_key_exists('setting_name', $this->attributes) || $settingName == 'Custom HTML Addition') {
             return $value;
         }
 

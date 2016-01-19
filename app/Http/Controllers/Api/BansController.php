@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Api;
+<?php
+
+namespace BFACP\Http\Controllers\Api;
 
 use BFACP\Adkats\Ban;
 use BFACP\Facades\Main as MainHelper;
@@ -83,7 +85,7 @@ class BansController extends Controller
         });
 
         $avgBansPerDay = Cache::remember('bans.stats.average', 180, function () {
-            $result = head(DB::select(File::get(storage_path() . '/sql/avgBansPerDay.sql')));
+            $result = head(DB::select(File::get(storage_path().'/sql/avgBansPerDay.sql')));
 
             return intval($result->total);
         });

@@ -1,21 +1,23 @@
-<?php namespace BFACP\Helpers;
+<?php
+
+namespace BFACP\Helpers;
 
 use Exception;
 
 class Battlefield extends Main
 {
     /**
-     * Gets the name of the squad by ID
+     * Gets the name of the squad by ID.
      *
-     * @param  integer $id Squad ID
+     * @param  int $id Squad ID
      *
      * @return string Squad Name
      * @throws Exception
      */
     public function squad($id)
     {
-        if (!is_numeric($id)) {
-            throw new Exception('Invalid squad id: ' . $id);
+        if (! is_numeric($id)) {
+            throw new Exception('Invalid squad id: '.$id);
         }
 
         switch (intval($id)) {
@@ -128,11 +130,11 @@ class Battlefield extends Main
     }
 
     /**
-     * Calculates kill/death ratio
+     * Calculates kill/death ratio.
      *
-     * @param  integer $kills
-     * @param  integer $deaths
-     * @param  integer $precision
+     * @param  int $kills
+     * @param  int $deaths
+     * @param  int $precision
      *
      * @return float
      */
@@ -150,11 +152,11 @@ class Battlefield extends Main
     }
 
     /**
-     * Calculates headshot kill ratio
+     * Calculates headshot kill ratio.
      *
-     * @param  integer $headshots
-     * @param  integer $kills
-     * @param  integer $precision
+     * @param  int $headshots
+     * @param  int $kills
+     * @param  int $precision
      *
      * @return float
      */
@@ -168,13 +170,13 @@ class Battlefield extends Main
     }
 
     /**
-     * Calculates the number of tickets on round start
+     * Calculates the number of tickets on round start.
      *
      * @param  string  $gamemode
-     * @param  integer $modifier
+     * @param  int $modifier
      * @param  string  $gameName
      *
-     * @return integer
+     * @return int
      */
     public function startingTickets($gamemode, $modifier, $gameName)
     {
@@ -226,7 +228,7 @@ class Battlefield extends Main
                         break;
 
                     default:
-                        return null;
+                        return;
                 }
                 break;
 
@@ -262,7 +264,7 @@ class Battlefield extends Main
                         break;
 
                     default:
-                        return null;
+                        return;
                 }
                 break;
 
@@ -283,12 +285,12 @@ class Battlefield extends Main
                         break;
 
                     default:
-                        return null;
+                        return;
                 }
                 break;
 
             default:
-                return null;
+                return;
         }
 
         $startingTicketCount = ($this->divide($defaultTickets, 100) * $modifier);
@@ -297,13 +299,13 @@ class Battlefield extends Main
     }
 
     /**
-     * Calculates the round timer on round start
+     * Calculates the round timer on round start.
      *
      * @param  string  $gamemode
-     * @param  integer $modifier
+     * @param  int $modifier
      * @param  string  $gameName
      *
-     * @return integer
+     * @return int
      */
     public function roundStartingTimer($gamemode, $modifier, $gameName)
     {
@@ -346,7 +348,7 @@ class Battlefield extends Main
                         break;
 
                     default:
-                        return null;
+                        return;
                 }
                 break;
 
@@ -370,12 +372,12 @@ class Battlefield extends Main
                         break;
 
                     default:
-                        return null;
+                        return;
                 }
                 break;
 
             default:
-                return null;
+                return;
         }
 
         $startingRoundTimer = ($this->divide($defaultTime, 100) * $modifier);
@@ -396,7 +398,7 @@ class Battlefield extends Main
             }
         }
 
-        return !is_string($mapName) ? head($mapName) : $mapName;
+        return ! is_string($mapName) ? head($mapName) : $mapName;
     }
 
     public function playmodeName($playmodeURI, $xmlFilePath)
@@ -410,6 +412,6 @@ class Battlefield extends Main
             }
         }
 
-        return !is_string($playmodeName) ? head($playmodeName) : $playmodeName;
+        return ! is_string($playmodeName) ? head($playmodeName) : $playmodeName;
     }
 }

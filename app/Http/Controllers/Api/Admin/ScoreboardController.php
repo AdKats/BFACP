@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Api\Admin;
+<?php
+
+namespace BFACP\Http\Controllers\Api\Admin;
 
 use BFACP\Battlefield\Server\Server as Server;
 use BFACP\Exceptions\PlayerNotFoundException as PlayerNotFoundException;
@@ -17,35 +19,35 @@ class ScoreboardController extends Controller
     const COMPLETE_WITH_ERRORS = 'Completed with errors';
 
     /**
-     * \BFACP\Repositories\Scoreboard\LiveServerRepository
+     * \BFACP\Repositories\Scoreboard\LiveServerRepository.
      *
      * @var null
      */
     protected $repository = null;
 
     /**
-     * \BFACP\Battlefield\Server\Server
+     * \BFACP\Battlefield\Server\Server.
      *
      * @var null
      */
     protected $server = null;
 
     /**
-     * List of player names
+     * List of player names.
      *
      * @var array
      */
     protected $players = [];
 
     /**
-     * Errors list
+     * Errors list.
      *
      * @var array
      */
     protected $errors = [];
 
     /**
-     * Data to be passed to response
+     * Data to be passed to response.
      *
      * @var array
      */
@@ -57,13 +59,13 @@ class ScoreboardController extends Controller
 
         $permissions = Cache::get('admin.perm.list');
 
-        if (!$this->isLoggedIn || !$this->user->ability(null, $permissions['scoreboard'])) {
+        if (! $this->isLoggedIn || ! $this->user->ability(null, $permissions['scoreboard'])) {
             throw new AccessDeniedHttpException();
         }
 
         $id = Input::get('server_id');
 
-        if (!is_numeric($id) || !filter_var($id, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]])) {
+        if (! is_numeric($id) || ! filter_var($id, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]])) {
             throw new NotFoundHttpException('Invalid Server ID');
         }
 
@@ -81,7 +83,7 @@ class ScoreboardController extends Controller
     }
 
     /**
-     * Index
+     * Index.
      *
      * @return MainHelper
      */
@@ -91,7 +93,7 @@ class ScoreboardController extends Controller
     }
 
     /**
-     * Wrapper for \BFACP\Facades\Main
+     * Wrapper for \BFACP\Facades\Main.
      *
      * @param  array  $data
      * @param  string $message
@@ -107,7 +109,7 @@ class ScoreboardController extends Controller
             'other'  => $data,
         ];
 
-        if (!empty($this->errors)) {
+        if (! empty($this->errors)) {
             $message = self::COMPLETE_WITH_ERRORS;
         }
 
@@ -120,13 +122,13 @@ class ScoreboardController extends Controller
      * @param  string $permission Name of the permission
      * @param  string $message
      *
-     * @return boolean
+     * @return bool
      */
     private function hasPermission(
         $permission,
         $message = 'Access Denied! You do have permission to issue this command.'
     ) {
-        if (!$this->user->ability(null, $permission)) {
+        if (! $this->user->ability(null, $permission)) {
             throw new AccessDeniedHttpException($message);
         }
 
@@ -147,7 +149,7 @@ class ScoreboardController extends Controller
         $type = Input::get('type', 'All');
         $team = Input::get('team', null);
 
-        if (Input::get('type') == 'Player' && !empty($this->players)) {
+        if (Input::get('type') == 'Player' && ! empty($this->players)) {
             foreach ($this->players as $player) {
                 try {
                     $this->data[] = [
@@ -183,13 +185,13 @@ class ScoreboardController extends Controller
         $team = Input::get('team', null);
         $type = Input::get('type', 'All');
 
-        if ((bool)Input::get('hideName', false) == true) {
+        if ((bool) Input::get('hideName', false) == true) {
             $hideName = false;
         } else {
             $hideName = true;
         }
 
-        if (Input::get('type') == 'Player' && !empty($this->players)) {
+        if (Input::get('type') == 'Player' && ! empty($this->players)) {
             foreach ($this->players as $player) {
                 try {
                     $this->data[] = [
@@ -256,7 +258,7 @@ class ScoreboardController extends Controller
     }
 
     /**
-     * Nukes a targeted team
+     * Nukes a targeted team.
      *
      * @return MainHelper
      */
@@ -270,11 +272,11 @@ class ScoreboardController extends Controller
             return $this->_response(null, 'Team ID Required', 'error');
         }
 
-        if (!is_numeric($teamId)) {
+        if (! is_numeric($teamId)) {
             return $this->_response(null, 'Invalid Team ID', 'error');
         }
 
-        $this->repository->adminNuke((int)$teamId);
+        $this->repository->adminNuke((int) $teamId);
 
         return $this->_response();
     }

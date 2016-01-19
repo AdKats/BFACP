@@ -1,12 +1,13 @@
-<?php namespace BFACP\Libraries\Battlelog;
+<?php
 
+namespace BFACP\Libraries\Battlelog;
 
 use Exception;
 
 class BattlelogServer extends BattlelogAPI
 {
     /**
-     * Battlelog Search Options
+     * Battlelog Search Options.
      *
      * @var array
      */
@@ -52,7 +53,7 @@ class BattlelogServer extends BattlelogAPI
     ];
 
     /**
-     * Returns the number of players currently in queue
+     * Returns the number of players currently in queue.
      *
      * @return int
      */
@@ -73,14 +74,14 @@ class BattlelogServer extends BattlelogAPI
 
             $response = $this->sendRequest($uri);
 
-            return (int)$response['slots'][1]['current'];
+            return (int) $response['slots'][1]['current'];
         } catch (Exception $e) {
             return -1;
         }
     }
 
     /**
-     * Returns the server GUID
+     * Returns the server GUID.
      *
      * @return string
      */
@@ -88,7 +89,7 @@ class BattlelogServer extends BattlelogAPI
     {
         $servers = $this->search();
 
-        if (!is_null($servers) && !empty($servers)) {
+        if (! is_null($servers) && ! empty($servers)) {
             if (count($servers) > 1) {
                 foreach ($servers as $server) {
                     if ($server['name'] == $this->server->ServerName) {
@@ -100,11 +101,11 @@ class BattlelogServer extends BattlelogAPI
             }
         }
 
-        return null;
+        return;
     }
 
     /**
-     * Search for server on battlelog
+     * Search for server on battlelog.
      *
      * @return array
      */
@@ -131,6 +132,6 @@ class BattlelogServer extends BattlelogAPI
             return $response['globalContext']['servers'];
         }
 
-        return null;
+        return;
     }
 }

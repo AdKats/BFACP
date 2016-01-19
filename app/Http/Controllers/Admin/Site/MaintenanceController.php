@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Admin\Site;
+<?php
+
+namespace BFACP\Http\Controllers\Admin\Site;
 
 use BFACP\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
@@ -21,13 +23,13 @@ class MaintenanceController extends Controller
         if (Input::has('maintenance_mode')) {
             switch (Input::get('maintenance_mode')) {
                 case 1:
-                    if (!File::exists(storage_path() . '/meta/down')) {
+                    if (! File::exists(storage_path().'/meta/down')) {
                         $this->messages[] = 'Maintenance mode enabled';
                         Artisan::call('down');
                     }
                     break;
                 case 0:
-                    if (File::exists(storage_path() . '/meta/down')) {
+                    if (File::exists(storage_path().'/meta/down')) {
                         $this->messages[] = 'Maintenance mode disabled';
                         Artisan::call('up');
                     }

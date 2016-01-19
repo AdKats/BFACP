@@ -1,4 +1,6 @@
-<?php namespace BFACP\Account;
+<?php
+
+namespace BFACP\Account;
 
 use BFACP\Elegant;
 use Illuminate\Database\Eloquent\Model;
@@ -6,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Setting extends Elegant
 {
     /**
-     * Validation rules
+     * Validation rules.
      *
      * @var array
      */
@@ -17,35 +19,35 @@ class Setting extends Elegant
     ];
 
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = true;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'bfacp_settings_users';
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'user_id';
 
     /**
-     * Fields allowed to be mass assigned
+     * Fields allowed to be mass assigned.
      *
      * @var array
      */
     protected $guarded = ['user_id'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
@@ -59,14 +61,14 @@ class Setting extends Elegant
     protected $hidden = [];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
     protected $appends = [];
 
     /**
-     * Models to be loaded automatically
+     * Models to be loaded automatically.
      *
      * @var array
      */

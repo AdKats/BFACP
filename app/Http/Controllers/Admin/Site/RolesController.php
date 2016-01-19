@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Admin\Site;
+<?php
+
+namespace BFACP\Http\Controllers\Admin\Site;
 
 use BFACP\Account\Permission;
 use BFACP\Account\Role;
@@ -60,7 +62,7 @@ class RolesController extends Controller
                         return true;
                     }
                 })->map(function ($id) {
-                    return (int)$id;
+                    return (int) $id;
                 });
             }
 
@@ -132,14 +134,14 @@ class RolesController extends Controller
                         return true;
                     }
                 })->map(function ($id) {
-                    return (int)$id;
+                    return (int) $id;
                 });
             }
 
             // Update role permissions
             $role->permissions()->sync($permissions->toArray());
 
-            if (Input::get('display_name') != $role->name && !in_array($role->id, [1, 2])) {
+            if (Input::get('display_name') != $role->name && ! in_array($role->id, [1, 2])) {
                 $role->name = trim(Input::get('display_name'));
                 $role->save();
             } else {

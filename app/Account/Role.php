@@ -1,4 +1,6 @@
-<?php namespace BFACP\Account;
+<?php
+
+namespace BFACP\Account;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
@@ -7,7 +9,7 @@ use Zizaco\Entrust\EntrustRole;
 class Role extends EntrustRole
 {
     /**
-     * Validation rules
+     * Validation rules.
      *
      * @var array
      */
@@ -16,28 +18,28 @@ class Role extends EntrustRole
     ];
 
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = true;
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'id';
 
     /**
-     * Fields allowed to be mass assigned
+     * Fields allowed to be mass assigned.
      *
      * @var array
      */
     protected $fillable = ['name'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
@@ -51,14 +53,14 @@ class Role extends EntrustRole
     protected $hidden = [];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
     protected $appends = [];
 
     /**
-     * Models to be loaded automatically
+     * Models to be loaded automatically.
      *
      * @var array
      */

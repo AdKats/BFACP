@@ -1,4 +1,6 @@
-<?php namespace BFACP\Libraries;
+<?php
+
+namespace BFACP\Libraries;
 
 use BFACP\Adkats\Record;
 use BFACP\Battlefield\Player;
@@ -11,49 +13,49 @@ use Illuminate\Support\Facades\DB;
 class Reputation
 {
     /**
-     * Player Object
+     * Player Object.
      *
      * @var Player
      */
     public $player;
 
     /**
-     * Source reputation
+     * Source reputation.
      *
-     * @var integer
+     * @var int
      */
     public $sourceReputation = 0;
 
     /**
-     * Target reputation
+     * Target reputation.
      *
-     * @var integer
+     * @var int
      */
     public $targetReputation = 0;
 
     /**
-     * Sum of source and target reputation
+     * Sum of source and target reputation.
      *
-     * @var integer
+     * @var int
      */
     public $totalReputation = 0;
 
     /**
-     * Real reputation
+     * Real reputation.
      *
-     * @var integer
+     * @var int
      */
     public $finalReputation = 0;
 
     /**
-     * Guzzle Client
+     * Guzzle Client.
      *
      * @var Client
      */
     protected $guzzle;
 
     /**
-     * Array of weights
+     * Array of weights.
      *
      * @var array
      */
@@ -66,7 +68,7 @@ class Reputation
     }
 
     /**
-     * Fetch the reputation weights and cache them for 1 day
+     * Fetch the reputation weights and cache them for 1 day.
      *
      * @return mixed
      */
@@ -86,7 +88,7 @@ class Reputation
     }
 
     /**
-     * Set the player
+     * Set the player.
      *
      * @param Player $player
      *
@@ -115,7 +117,7 @@ class Reputation
     }
 
     /**
-     * Creates or Updates the player reputation then reloads it
+     * Creates or Updates the player reputation then reloads it.
      *
      * @return mixed
      */
@@ -154,7 +156,7 @@ class Reputation
     }
 
     /**
-     * Fetches records by player to calculate the source reputation
+     * Fetches records by player to calculate the source reputation.
      *
      * @return mixed
      */
@@ -178,7 +180,7 @@ class Reputation
     }
 
     /**
-     * Fetches records targeted on player to calculate the target reputation
+     * Fetches records targeted on player to calculate the target reputation.
      *
      * @return mixed
      */
@@ -225,7 +227,7 @@ class Reputation
     }
 
     /**
-     * Fetches special records to be applied to the reputation values
+     * Fetches special records to be applied to the reputation values.
      *
      * @return mixed
      */
@@ -251,7 +253,7 @@ class Reputation
     }
 
     /**
-     * Calculates the total/final reputation
+     * Calculates the total/final reputation.
      *
      * @return mixed
      */

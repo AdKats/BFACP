@@ -1,4 +1,6 @@
-<?php namespace BFACP\Libraries;
+<?php
+
+namespace BFACP\Libraries;
 
 use BFACP\Exceptions\MetabansException;
 use BFACP\Facades\Main as MainHelper;
@@ -13,12 +15,12 @@ use Illuminate\Support\MessageBag;
 class Metabans
 {
     /**
-     * Metabans API URL
+     * Metabans API URL.
      */
     const URL = 'http://metabans.com/mb-api.php';
 
     /**
-     * Valid assessment types
+     * Valid assessment types.
      *
      * @var array
      */
@@ -30,7 +32,7 @@ class Metabans
     ];
 
     /**
-     * Supported Games
+     * Supported Games.
      *
      * @var array
      */
@@ -44,31 +46,31 @@ class Metabans
     ];
 
     /**
-     * GuzzleHttp\Client
+     * GuzzleHttp\Client.
      */
     protected $guzzle;
 
     /**
-     * Base62
+     * Base62.
      */
     protected $base62;
 
     /**
-     * API Key Hash
+     * API Key Hash.
      *
      * @var string
      */
     private $hash = '';
 
     /**
-     * API Key
+     * API Key.
      *
      * @var string
      */
     private $key = '';
 
     /**
-     * API Username
+     * API Username.
      *
      * @var string
      */
@@ -83,14 +85,14 @@ class Metabans
     private $account = '';
 
     /**
-     * API Salt
+     * API Salt.
      *
      * @var string
      */
     private $salt = '';
 
     /**
-     * Auth creds
+     * Auth creds.
      *
      * @var array
      */
@@ -102,7 +104,7 @@ class Metabans
         $this->user = Config::get('bfacp.metabans.user', null);
         $this->account = Config::get('bfacp.metabans.account', null);
 
-        if (!Config::get('bfacp.metabans.enabled')) {
+        if (! Config::get('bfacp.metabans.enabled')) {
             throw new MetabansException(500, 'Metabans integration is not enabled.');
         }
 
@@ -112,7 +114,7 @@ class Metabans
         }
 
         $this->salt = mt_rand(10000, 99999);
-        $this->hash = sha1($this->salt . $this->key);
+        $this->hash = sha1($this->salt.$this->key);
 
         $this->auth = [
             'apikey'   => $this->hash,
@@ -125,13 +127,13 @@ class Metabans
     }
 
     /**
-     * Assess player
+     * Assess player.
      *
      * @param  string  $game     BF_BC2, MOH_2010, BF_3, MOH_2012, BF_4
      * @param  string  $GUID     Player GUID
      * @param  string  $type     None, Watch, White, Black
      * @param  string  $reason   Ban Reason - Max 200 chars
-     * @param  integer $duration Length of time in seconds ban should be enforced. Defaults to 3 months.
+     * @param  int $duration Length of time in seconds ban should be enforced. Defaults to 3 months.
      *
      * @return Collection
      */
@@ -139,8 +141,8 @@ class Metabans
     {
         $rules = [
             'assessment_length' => 'required|numeric',
-            'assessment_type'   => 'required|in:' . implode(',', $this->assessment_types),
-            'game_name'         => 'required|in:' . implode(',', $this->supported_games),
+            'assessment_type'   => 'required|in:'.implode(',', $this->assessment_types),
+            'game_name'         => 'required|in:'.implode(',', $this->supported_games),
             'player_uid'        => 'required|regex:/^EA_([0-9A-Z]{32}+)$/',
             'reason'            => 'required|max:200',
         ];
@@ -153,7 +155,7 @@ class Metabans
             'reason'            => $reason,
         ];
 
-        if (!$this->validate($data, $rules)) {
+        if (! $this->validate($data, $rules)) {
             return MainHelper::response($this->getErrors(), 'Validation failed.', 'error', 400);
         }
 
@@ -167,7 +169,7 @@ class Metabans
     }
 
     /**
-     * Validator
+     * Validator.
      *
      * @param  array $data
      * @param  array $rules
@@ -189,7 +191,7 @@ class Metabans
     }
 
     /**
-     * Set error message bag
+     * Set error message bag.
      *
      * @var MessageBag
      */
@@ -199,7 +201,7 @@ class Metabans
     }
 
     /**
-     * Retrieve error message bag
+     * Retrieve error message bag.
      */
     public function getErrors()
     {
@@ -207,10 +209,10 @@ class Metabans
     }
 
     /**
-     * Generates the request
+     * Generates the request.
      *
      * @param  array   $requests
-     * @param  boolean $auth Request requires authentication
+     * @param  bool $auth Request requires authentication
      *
      * @return mixed [type]            [description]
      */
@@ -237,7 +239,7 @@ class Metabans
     }
 
     /**
-     * Send request to metabans API
+     * Send request to metabans API.
      *
      * @param  array $payload
      *
@@ -270,9 +272,7 @@ class Metabans
             }
 
             return $response;
-
         } catch (RequestException $e) {
-
             if ($e->hasResponse()) {
                 throw new MetabansException(400, sprintf('Request encountered an error. %s', $e->getResponse()));
             }
@@ -284,15 +284,15 @@ class Metabans
     }
 
     /**
-     * Fetchs the assessments for an account
+     * Fetchs the assessments for an account.
      *
-     * @param integer $offset
+     * @param int $offset
      *
      * @return Collection
      */
     public function assessments($offset = 0)
     {
-        if (!is_numeric($offset)) {
+        if (! is_numeric($offset)) {
             $offset = 0;
         }
 
@@ -318,15 +318,15 @@ class Metabans
     }
 
     /**
-     * Fetchs the feed for an account
+     * Fetchs the feed for an account.
      *
-     * @param integer $offset
+     * @param int $offset
      *
      * @return Collection
      */
     public function feed($offset = 0)
     {
-        if (!is_numeric($offset)) {
+        if (! is_numeric($offset)) {
             $offset = 0;
         }
 
@@ -352,15 +352,15 @@ class Metabans
     }
 
     /**
-     * Fetchs the followers for an account
+     * Fetchs the followers for an account.
      *
-     * @param integer $offset
+     * @param int $offset
      *
      * @return \Illuminate\Support\Facades\Response
      */
     public function followers($offset = 0)
     {
-        if (!is_numeric($offset)) {
+        if (! is_numeric($offset)) {
             $offset = 0;
         }
 
@@ -375,9 +375,9 @@ class Metabans
     }
 
     /**
-     * Get player aliases
+     * Get player aliases.
      *
-     * @param integer $id Metabans player id
+     * @param int $id Metabans player id
      *
      * @return \Illuminate\Support\Facades\Response
      */
@@ -391,7 +391,7 @@ class Metabans
             'player_id' => $id,
         ];
 
-        if (!$this->validate($data, $rules)) {
+        if (! $this->validate($data, $rules)) {
             return MainHelper::response($this->getErrors(), 'Validation failed.', 'error', 400);
         }
 
@@ -403,7 +403,7 @@ class Metabans
     }
 
     /**
-     * Search for playeers
+     * Search for playeers.
      *
      * @param string $phrase
      *
@@ -419,7 +419,7 @@ class Metabans
             'phrase' => trim($phrase),
         ];
 
-        if (!$this->validate($data, $rules)) {
+        if (! $this->validate($data, $rules)) {
             return MainHelper::response($this->getErrors(), 'Validation failed.', 'error', 400);
         }
 
@@ -431,7 +431,7 @@ class Metabans
     }
 
     /**
-     * Returns the API Key
+     * Returns the API Key.
      *
      * @return string
      */
@@ -441,7 +441,7 @@ class Metabans
     }
 
     /**
-     * Returns the API Username
+     * Returns the API Username.
      *
      * @return string
      */
@@ -451,10 +451,10 @@ class Metabans
     }
 
     /**
-     * Do we have errors
+     * Do we have errors.
      */
     public function hasErrors()
     {
-        return !empty($this->errors);
+        return ! empty($this->errors);
     }
 }

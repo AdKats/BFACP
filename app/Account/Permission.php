@@ -1,4 +1,6 @@
-<?php namespace BFACP\Account;
+<?php
+
+namespace BFACP\Account;
 
 use Illuminate\Support\Facades\Config;
 use Zizaco\Entrust\EntrustPermission;
@@ -6,7 +8,7 @@ use Zizaco\Entrust\EntrustPermission;
 class Permission extends EntrustPermission
 {
     /**
-     * Validation rules
+     * Validation rules.
      *
      * @var array
      */
@@ -15,21 +17,21 @@ class Permission extends EntrustPermission
     ];
 
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = true;
 
     /**
-     * Fields allowed to be mass assigned
+     * Fields allowed to be mass assigned.
      *
      * @var array
      */
     protected $guarded = ['id'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
@@ -43,14 +45,14 @@ class Permission extends EntrustPermission
     protected $hidden = [];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
     protected $appends = [];
 
     /**
-     * Models to be loaded automatically
+     * Models to be loaded automatically.
      *
      * @var array
      */

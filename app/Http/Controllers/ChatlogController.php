@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers;
+<?php
+
+namespace BFACP\Http\Controllers;
 
 use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Game;
@@ -33,7 +35,7 @@ class ChatlogController extends Controller
         $chat = $this->chat->with('player', 'server')->orderBy('logDate', 'desc');
 
         // If the show spam checkbox was not checked then exclude it
-        if (!Input::has('showspam')) {
+        if (! Input::has('showspam')) {
             $chat = $chat->excludeSpam();
         }
 
@@ -57,7 +59,7 @@ class ChatlogController extends Controller
                 } else {
                     $chat = $chat->where(function ($query) use ($keywords) {
                         foreach ($keywords as $keyword) {
-                            $query->orWhere('logMessage', 'LIKE', '%' . $keyword . '%');
+                            $query->orWhere('logMessage', 'LIKE', '%'.$keyword.'%');
                         }
                     });
                 }
@@ -98,9 +100,9 @@ class ChatlogController extends Controller
     }
 
     /**
-     * Checks if we have any of the required inputs
+     * Checks if we have any of the required inputs.
      *
-     * @return boolean
+     * @return bool
      */
     private function hasInput()
     {

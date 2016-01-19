@@ -1,4 +1,6 @@
-<?php namespace BFACP\Composers;
+<?php
+
+namespace BFACP\Composers;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;

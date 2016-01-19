@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Api;
+<?php
+
+namespace BFACP\Http\Controllers\Api;
 
 use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Server\Server;
@@ -20,7 +22,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ServersController extends Controller
 {
     /**
-     * Gathers the population for all servers
+     * Gathers the population for all servers.
      *
      * @param $id
      *
@@ -44,7 +46,7 @@ class ServersController extends Controller
     }
 
     /**
-     * Live Scoreboard
+     * Live Scoreboard.
      *
      * @return array
      * @internal param int $id Server ID
@@ -122,26 +124,26 @@ class ServersController extends Controller
 
     public function scoreboardExtra($id)
     {
-        $sql = File::get(storage_path() . DIRECTORY_SEPARATOR . 'sql' . DIRECTORY_SEPARATOR . 'sbRoundStats.sql');
+        $sql = File::get(storage_path().DIRECTORY_SEPARATOR.'sql'.DIRECTORY_SEPARATOR.'sbRoundStats.sql');
 
         $stats = [
             [
-                'name'    => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Tickets',
+                'name'    => Lang::get('scoreboard.factions')[1]['full_name'].' - Tickets',
                 'data'    => [],
                 'visible' => true,
             ],
             [
-                'name'    => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Tickets',
+                'name'    => Lang::get('scoreboard.factions')[2]['full_name'].' - Tickets',
                 'data'    => [],
                 'visible' => true,
             ],
             [
-                'name'    => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Players',
+                'name'    => Lang::get('scoreboard.factions')[1]['full_name'].' - Players',
                 'data'    => [],
                 'visible' => false,
             ],
             [
-                'name'    => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Players',
+                'name'    => Lang::get('scoreboard.factions')[2]['full_name'].' - Players',
                 'data'    => [],
                 'visible' => false,
             ],
@@ -163,27 +165,27 @@ class ServersController extends Controller
 
             $stats[0]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int)$result->team1_tickets,
+                (int) $result->team1_tickets,
             ];
 
             $stats[1]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int)$result->team2_tickets,
+                (int) $result->team2_tickets,
             ];
 
             $stats[2]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int)$result->team1_count,
+                (int) $result->team1_count,
             ];
 
             $stats[3]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int)$result->team2_count,
+                (int) $result->team2_count,
             ];
 
             $stats[4]['data'][] = [
                 strtotime($result->roundstat_time) * 1000,
-                (int)($result->team1_count + $result->team2_count),
+                (int) ($result->team1_count + $result->team2_count),
             ];
         }
 
@@ -197,7 +199,7 @@ class ServersController extends Controller
         try {
             $id = Input::get('server_id');
 
-            if (!is_numeric($id) || $id <= 0) {
+            if (! is_numeric($id) || $id <= 0) {
                 throw new NotFoundHttpException('Invalid Server ID');
             }
 
@@ -212,18 +214,17 @@ class ServersController extends Controller
 
             $permissions = Cache::get('admin.perm.list');
 
-            if (!Input::has('method') || !in_array(Input::get('method'), $allowedMethods)) {
+            if (! Input::has('method') || ! in_array(Input::get('method'), $allowedMethods)) {
                 throw new NotFoundHttpException();
             }
 
-            if (!$this->isLoggedIn || !$this->user->ability(null, $permissions['scoreboard'])) {
+            if (! $this->isLoggedIn || ! $this->user->ability(null, $permissions['scoreboard'])) {
                 throw new AccessDeniedHttpException();
             }
 
             $scoreboard = new LiveServerRepository(Server::findOrFail($id));
 
             if ($scoreboard->attempt()->check()) {
-
                 $players = [];
 
                 if (Input::has('players')) {
@@ -275,10 +276,9 @@ class ServersController extends Controller
                                 }
                             }
 
-                            if (!empty($unkilled)) {
+                            if (! empty($unkilled)) {
                                 $data = $unkilled;
                             }
-
                         } else {
                             throw new RconException(400, 'No players selected.');
                         }
@@ -301,7 +301,7 @@ class ServersController extends Controller
                                 }
                             }
 
-                            if (!empty($unkicked)) {
+                            if (! empty($unkicked)) {
                                 $data = $unkicked;
                             }
                         } else {
@@ -332,10 +332,9 @@ class ServersController extends Controller
                                 }
                             }
 
-                            if (!empty($unmoved)) {
+                            if (! empty($unmoved)) {
                                 $data = $unmoved;
                             }
-
                         } else {
                             throw new RconException(400, 'No player selected.');
                         }
@@ -369,7 +368,7 @@ class ServersController extends Controller
                         throw new NotFoundHttpException();
                 }
 
-                if (!isset($data)) {
+                if (! isset($data)) {
                     $data = [];
                 }
 
@@ -390,11 +389,11 @@ class ServersController extends Controller
      * @param  string $permission Name of the permission
      * @param  string $message    [description]
      *
-     * @return boolean             [description]
+     * @return bool             [description]
      */
     private function hasPermission($permission, $message = 'You do have permission to issue this command')
     {
-        if (!$this->user->ability(null, $permission)) {
+        if (! $this->user->ability(null, $permission)) {
             throw new AccessDeniedHttpException($message);
         }
 

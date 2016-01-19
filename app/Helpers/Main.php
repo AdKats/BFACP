@@ -1,4 +1,6 @@
-<?php namespace BFACP\Helpers;
+<?php
+
+namespace BFACP\Helpers;
 
 use BFACP\Account\User;
 use BFACP\Adkats\Setting as AdKatsSetting;
@@ -20,14 +22,14 @@ class Main
     }
 
     /**
-     * Return a JSON response
+     * Return a JSON response.
      *
      * @param  array   $input
      * @param  string  $message
      * @param  string  $status
-     * @param  integer $httpcode
-     * @param  boolean $cached
-     * @param  boolean $collectionOnly
+     * @param  int $httpcode
+     * @param  bool $cached
+     * @param  bool $collectionOnly
      *
      * @return Response
      */
@@ -73,7 +75,7 @@ class Main
     }
 
     /**
-     * Returns how long the application took to complete
+     * Returns how long the application took to complete.
      *
      * @param bool $isPage
      *
@@ -89,17 +91,17 @@ class Main
         } else {
             return [
                 'time' => $time,
-                'text' => 'Data crunched in ' . $this->secToStr($time),
+                'text' => 'Data crunched in '.$this->secToStr($time),
             ];
         }
 
-        return $string . $this->secToStr($time);
+        return $string.$this->secToStr($time);
     }
 
     /**
-     * Convert seconds to a human-readable string
+     * Convert seconds to a human-readable string.
      *
-     * @param  integer $secs
+     * @param  int $secs
      * @param bool     $shorthand
      *
      * @return string
@@ -116,7 +118,7 @@ class Main
         }
 
         // If $secs is not a number throw an error
-        if (!is_numeric($secs)) {
+        if (! is_numeric($secs)) {
             throw new Exception('Input not numeric');
         }
 
@@ -129,70 +131,65 @@ class Main
         if ($secs >= 604800) {
             $week = floor($secs / 604800);
             $secs = $secs % 604800;
-            $output = $week . ' week';
-            if ($week != 1 && !$shorthand) {
+            $output = $week.' week';
+            if ($week != 1 && ! $shorthand) {
                 $output .= 's';
             }
 
             if ($secs > 0) {
                 $output .= ', ';
             }
-
         }
 
         // Day
         if ($secs >= 86400) {
             $days = floor($secs / 86400);
             $secs = $secs % 86400;
-            $output .= $days . ' day';
-            if ($days != 1 && !$shorthand) {
+            $output .= $days.' day';
+            if ($days != 1 && ! $shorthand) {
                 $output .= 's';
             }
 
             if ($secs > 0) {
                 $output .= ', ';
             }
-
         }
 
         // Hour
         if ($secs >= 3600) {
             $hours = floor($secs / 3600);
             $secs = $secs % 3600;
-            $output .= $hours . ' hour';
-            if ($hours != 1 && !$shorthand) {
+            $output .= $hours.' hour';
+            if ($hours != 1 && ! $shorthand) {
                 $output .= 's';
             }
 
             if ($secs > 0) {
                 $output .= ', ';
             }
-
         }
 
         // Minute
         if ($secs >= 60) {
             $minutes = floor($secs / 60);
             $secs = $secs % 60;
-            $output .= $minutes . ' minute';
-            if ($minutes != 1 && !$shorthand) {
+            $output .= $minutes.' minute';
+            if ($minutes != 1 && ! $shorthand) {
                 $output .= 's';
             }
 
             if ($secs > 0) {
                 $output .= ', ';
             }
-
         }
 
         // Second
         if ($secs > 0) {
-            $output .= $secs . ' second';
+            $output .= $secs.' second';
 
-            if ($secs != 1 && !$shorthand) {
+            if ($secs != 1 && ! $shorthand) {
                 $output .= 's';
             }
-
         }
 
         // If short version is requested replace all
@@ -206,11 +203,11 @@ class Main
 
     /**
      * Function to divide two numbers together and catch
-     * divide by zero exception
+     * divide by zero exception.
      *
-     * @param  integer $num1
-     * @param  integer $num2
-     * @param  integer $precision
+     * @param  int $num1
+     * @param  int $num2
+     * @param  int $precision
      *
      * @return float
      */
@@ -225,11 +222,11 @@ class Main
 
     /**
      * Function to get percentage of two numbers together and
-     * catch divide by zero exception
+     * catch divide by zero exception.
      *
-     * @param  integer $num1
-     * @param  integer $num2
-     * @param  integer $precision
+     * @param  int $num1
+     * @param  int $num2
+     * @param  int $precision
      *
      * @return float
      */
@@ -243,11 +240,11 @@ class Main
     }
 
     /**
-     * Allows the ability to call empty on a static class method
+     * Allows the ability to call empty on a static class method.
      *
      * @param  mixed $var
      *
-     * @return boolean
+     * @return bool
      */
     public function isEmpty($var)
     {
@@ -255,11 +252,11 @@ class Main
     }
 
     /**
-     * Generates the site title
+     * Generates the site title.
      *
      * @param  string  $page  Page Title
      * @param  string  $clan  Use clan name if set
-     * @param  boolean $short If true it will just return without the page title
+     * @param  bool $short If true it will just return without the page title
      *
      * @return string
      */
@@ -267,11 +264,11 @@ class Main
     {
         $title = '';
 
-        if (!$short && $page !== false) {
-            $title .= $page . ' | ';
+        if (! $short && $page !== false) {
+            $title .= $page.' | ';
         }
 
-        if (!is_null($clan)) {
+        if (! is_null($clan)) {
             $title .= $clan;
         } else {
             $title .= 'BFAdminCP';
@@ -281,7 +278,7 @@ class Main
     }
 
     /**
-     * Return country name by code
+     * Return country name by code.
      *
      * @param  string $code Two digit country code
      * @param bool    $list
@@ -552,7 +549,7 @@ class Main
     }
 
     /**
-     * Returns the language name if code is specified
+     * Returns the language name if code is specified.
      *
      * @param  string $lang     Language Code
      * @param  bool   $onlyKeys Only return comma delimited list
@@ -748,7 +745,7 @@ class Main
             'zu' => 'Zulu',
         ];
 
-        if (!empty($lang) && array_key_exists($lang, $languages)) {
+        if (! empty($lang) && array_key_exists($lang, $languages)) {
             return $languages[ $lang ];
         }
 
@@ -763,7 +760,7 @@ class Main
      * Returns the correct soldier assigned to user for the correct game.
      *
      * @param  \BFACP\Account\User $user
-     * @param  integer             $gameID
+     * @param  int             $gameID
      *
      * @return Player
      */
@@ -777,7 +774,7 @@ class Main
         });
 
         // Check if we have a soldier.
-        if (!$soldiers->isEmpty()) {
+        if (! $soldiers->isEmpty()) {
             $soldiers = $soldiers->map(function ($soldier, $key) use (&$user) {
                 $percent = levenshtein($soldier->SoldierName, $user->username);
 
@@ -796,7 +793,7 @@ class Main
         }
 
         // Return null if no match was able too be met.
-        return null;
+        return;
     }
 
     /**
@@ -809,8 +806,8 @@ class Main
      * Note: the $add_dashes option will increase the length of the password by
      * floor(sqrt(N)) characters.
      *
-     * @param  integer $length
-     * @param  boolean $add_dashes
+     * @param  int $length
+     * @param  bool $add_dashes
      * @param  string  $available_sets
      *
      * @return string
@@ -849,14 +846,14 @@ class Main
 
         $password = str_shuffle($password);
 
-        if (!$add_dashes) {
+        if (! $add_dashes) {
             return $password;
         }
 
         $dash_len = floor(sqrt($length));
         $dash_str = '';
         while (strlen($password) > $dash_len) {
-            $dash_str .= substr($password, 0, $dash_len) . '-';
+            $dash_str .= substr($password, 0, $dash_len).'-';
             $password = substr($password, $dash_len);
         }
         $dash_str .= $password;
@@ -865,11 +862,11 @@ class Main
     }
 
     /**
-     * Converts a string to a boolean
+     * Converts a string to a boolean.
      *
      * @param  string $string
      *
-     * @return boolean
+     * @return bool
      */
     public function stringToBool($string)
     {
@@ -881,11 +878,11 @@ class Main
             }
         }
 
-        return null;
+        return;
     }
 
     /**
-     * Converts log error codes to correct css styles
+     * Converts log error codes to correct css styles.
      *
      * @param  string $name Exception Level
      *
@@ -917,10 +914,10 @@ class Main
     }
 
     /**
-     * Returns files in a directory
+     * Returns files in a directory.
      *
      * @param  string  $dir       Directory Path
-     * @param  boolean $onlyNames Only return the filename
+     * @param  bool $onlyNames Only return the filename
      * @param  string  $prepend   Prepend custom path to use in front of filename
      *
      * @return array
@@ -933,9 +930,9 @@ class Main
             if ($onlyNames) {
                 $file = pathinfo($path);
 
-                $extension = '.' . $file['extension'];
+                $extension = '.'.$file['extension'];
 
-                $files[] = $prepend === null ? $file['filename'] . $extension : $prepend . $file['filename'] . $extension;
+                $files[] = $prepend === null ? $file['filename'].$extension : $prepend.$file['filename'].$extension;
             } else {
                 $files[] = $path;
             }
@@ -945,7 +942,7 @@ class Main
     }
 
     /**
-     * Returns a list of accounts that match $player
+     * Returns a list of accounts that match $player.
      *
      * @param  object $player \BFACP\Battlefield\Player
      *
@@ -954,19 +951,19 @@ class Main
     public function linkedAccounts($player)
     {
         $players = Player::where('PlayerID', '!=', $player->PlayerID)->where(function ($query) use (&$player) {
-            if (!empty($player->EAGUID)) {
+            if (! empty($player->EAGUID)) {
                 $query->orWhere('EAGUID', $player->EAGUID);
             }
 
-            if (!empty($player->PBGUID)) {
+            if (! empty($player->PBGUID)) {
                 $query->orWhere('PBGUID', $player->PBGUID);
             }
 
-            if (!empty($player->SoldierName)) {
+            if (! empty($player->SoldierName)) {
                 $query->orWhere('SoldierName', $player->SoldierName);
             }
 
-            if (!empty($player->IP_Address)) {
+            if (! empty($player->IP_Address)) {
                 $query->orWhere('IP_Address', $player->IP_Address);
             }
         });
@@ -975,7 +972,7 @@ class Main
     }
 
     /**
-     * Returns the valid AdKats Special groups
+     * Returns the valid AdKats Special groups.
      *
      * @param null $keys   Only return the requested group(s)
      * @param null $objkey The object property to use if $keys contains array of objects
@@ -998,7 +995,7 @@ class Main
             return new Collection($data);
         });
 
-        if (!is_null($keys)) {
+        if (! is_null($keys)) {
             return $groups->filter(function ($group) use (&$keys, &$objkey) {
                 if (is_array($keys)) {
                     foreach ($keys as $k) {
@@ -1036,7 +1033,7 @@ class Main
                     }
                 }
 
-                return array_merge($group, (array)$special);
+                return array_merge($group, (array) $special);
             });
         }
 
@@ -1053,7 +1050,7 @@ class Main
      */
     public function hasFulltextSupport($table, $column)
     {
-        $sql = File::get(storage_path() . '/sql/fulltextCheck.sql');
+        $sql = File::get(storage_path().'/sql/fulltextCheck.sql');
 
         $results = DB::select($sql, [Config::get('database.connections.mysql.database'), $table]);
 
@@ -1069,7 +1066,7 @@ class Main
     }
 
     /**
-     * Gets users gravatar image
+     * Gets users gravatar image.
      *
      * @param string $email
      * @param string $hash
@@ -1079,11 +1076,11 @@ class Main
      */
     public function gravatar($email = '', $hash = '', $size = 80)
     {
-        if (!empty($email)) {
+        if (! empty($email)) {
             return sprintf('https://www.gravatar.com/avatar/%s?s=%u&d=mm&r=x', md5(strtolower(trim($email))), $size);
         }
 
-        if (!empty($hash)) {
+        if (! empty($hash)) {
             return sprintf('https://www.gravatar.com/avatar/%s?s=%u&d=mm&r=x', $hash, $size);
         }
 
@@ -1091,11 +1088,11 @@ class Main
     }
 
     /**
-     * Gets the next punishment name
+     * Gets the next punishment name.
      *
      * @param string|null  $key
-     * @param integer|null $index
-     * @param integer|null $serverid
+     * @param int|null $index
+     * @param int|null $serverid
      *
      * @return string|null
      */
@@ -1107,7 +1104,7 @@ class Main
                 return false;
             }
 
-            if (!is_null($index) && !is_null($serverid)) {
+            if (! is_null($index) && ! is_null($serverid)) {
                 $settings = AdKatsSetting::servers($serverid)->settings('Punishment Hierarchy')->first();
 
                 $key = $settings->setting_value[ $index ];
@@ -1132,6 +1129,6 @@ class Main
         } catch (Exception $e) {
         }
 
-        return null;
+        return;
     }
 }

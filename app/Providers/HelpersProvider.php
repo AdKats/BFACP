@@ -1,4 +1,6 @@
-<?php namespace BFACP\Providers;
+<?php
+
+namespace BFACP\Providers;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;

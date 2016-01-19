@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Admin\AdKats;
+<?php
+
+namespace BFACP\Http\Controllers\Admin\AdKats;
 
 use BFACP\Adkats\Special;
 use BFACP\Facades\Main as MainHelper;
@@ -13,7 +15,7 @@ use Illuminate\Support\Facades\View;
 class SpecialPlayersController extends Controller
 {
     /**
-     * GuzzleHttp\Client
+     * GuzzleHttp\Client.
      */
     protected $guzzle;
 

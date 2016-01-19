@@ -1,11 +1,13 @@
-<?php namespace BFACP\Repositories;
+<?php
+
+namespace BFACP\Repositories;
 
 use Illuminate\Support\Facades\Auth;
 
 class BaseRepository
 {
     /**
-     * Stores the currently logged in user
+     * Stores the currently logged in user.
      *
      * @var \BFACP\Account\User
      */

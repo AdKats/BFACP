@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Admin\AdKats;
+<?php
+
+namespace BFACP\Http\Controllers\Admin\AdKats;
 
 use BFACP\Adkats\Setting;
 use BFACP\Battlefield\Server\Server;

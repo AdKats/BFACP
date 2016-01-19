@@ -1,4 +1,6 @@
-<?php namespace BFACP\Events;
+<?php
+
+namespace BFACP\Events;
 
 use BFACP\Adkats\Ban;
 use BFACP\Adkats\Record;
@@ -27,7 +29,6 @@ Event::listen('player.ban', function ($input, $player, $ban = null) {
         // Associate the player with the ban.
         $ban->player()->associate($player);
     } else {
-
         if ($ban instanceof Ban) {
             // Don't need too do anything else.
         } else {
@@ -56,8 +57,7 @@ Event::listen('player.ban', function ($input, $player, $ban = null) {
     if (array_get($input, 'ban_type') == 7) {
         $ban_start = array_get($input, 'ban_start');
         $ban_end = array_get($input, 'ban_end');
-        if (!empty($ban_start) && !empty($ban_end)) {
-
+        if (! empty($ban_start) && ! empty($ban_end)) {
             $startDate = Carbon::parse(array_get($input, 'ban_start'))->setTimezone(new \DateTimeZone('UTC'));
             $endDate = Carbon::parse(array_get($input, 'ban_end'))->setTimezone(new \DateTimeZone('UTC'));
 

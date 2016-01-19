@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Admin\Site;
+<?php
+
+namespace BFACP\Http\Controllers\Admin\Site;
 
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\Controller;
@@ -28,7 +30,7 @@ class SettingsController extends Controller
                 $key = str_replace('-', '.', $key);
                 $value = trim($value);
 
-                if (!is_null(MainHelper::stringToBool($value))) {
+                if (! is_null(MainHelper::stringToBool($value))) {
                     $value = MainHelper::stringToBool($value);
                 } else {
                     if (empty($value)) {

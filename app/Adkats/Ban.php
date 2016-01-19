@@ -1,4 +1,6 @@
-<?php namespace BFACP\Adkats;
+<?php
+
+namespace BFACP\Adkats;
 
 use BFACP\Elegant;
 use Carbon\Carbon;
@@ -6,42 +8,42 @@ use Carbon\Carbon;
 class Ban extends Elegant
 {
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'adkats_bans';
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'ban_id';
 
     /**
-     * Fields not allowed to be mass assigned
+     * Fields not allowed to be mass assigned.
      *
      * @var array
      */
     protected $guarded = ['ban_id', 'ban_sync'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
     protected $dates = ['ban_startTime', 'ban_endTime'];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
@@ -58,7 +60,7 @@ class Ban extends Elegant
     ];
 
     /**
-     * Models to be loaded automaticly
+     * Models to be loaded automaticly.
      *
      * @var array
      */
@@ -81,10 +83,10 @@ class Ban extends Elegant
     }
 
     /**
-     * Gets the latest bans that are in effect
+     * Gets the latest bans that are in effect.
      *
      * @param  object  $query
-     * @param  integer $limit
+     * @param  int $limit
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -94,7 +96,7 @@ class Ban extends Elegant
     }
 
     /**
-     * Gets the bans done yesterday (UTC)
+     * Gets the bans done yesterday (UTC).
      *
      * @param  object $query
      *
@@ -106,11 +108,11 @@ class Ban extends Elegant
     }
 
     /**
-     * Get the bans that the player ids have done
+     * Get the bans that the player ids have done.
      *
      * @param  object  $query
      * @param  array   $playerIds
-     * @param  integer $limit
+     * @param  int $limit
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -145,7 +147,7 @@ class Ban extends Elegant
     }
 
     /**
-     * Is ban enforced by name
+     * Is ban enforced by name.
      *
      * @return bool
      */
@@ -155,7 +157,7 @@ class Ban extends Elegant
     }
 
     /**
-     * IS ban enforced by guid
+     * IS ban enforced by guid.
      *
      * @return bool
      */
@@ -165,7 +167,7 @@ class Ban extends Elegant
     }
 
     /**
-     * Is ban enforced by ip
+     * Is ban enforced by ip.
      *
      * @return bool
      */
@@ -175,7 +177,7 @@ class Ban extends Elegant
     }
 
     /**
-     * Is ban active
+     * Is ban active.
      *
      * @return bool
      */
@@ -185,7 +187,7 @@ class Ban extends Elegant
     }
 
     /**
-     * Is ban expired
+     * Is ban expired.
      *
      * @return bool
      */
@@ -195,7 +197,7 @@ class Ban extends Elegant
     }
 
     /**
-     * Is unbanned
+     * Is unbanned.
      *
      * @return bool
      */
@@ -207,7 +209,7 @@ class Ban extends Elegant
     }
 
     /**
-     * Is ban permanent
+     * Is ban permanent.
      *
      * @return bool
      */

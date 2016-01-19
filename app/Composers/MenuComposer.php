@@ -1,4 +1,6 @@
-<?php namespace BFACP\Composers;
+<?php
+
+namespace BFACP\Composers;
 
 class MenuComposer
 {
@@ -8,7 +10,7 @@ class MenuComposer
         =            Require the Menu Builder            =
         ================================================*/
 
-        if (!file_exists(app_path('setup.php'))) {
+        if (! file_exists(app_path('setup.php'))) {
             require_once app_path('menu.php');
         }
     }

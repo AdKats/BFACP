@@ -1,53 +1,55 @@
-<?php namespace BFACP\Adkats\Account;
+<?php
+
+namespace BFACP\Adkats\Account;
 
 use BFACP\Elegant;
 
 class Role extends Elegant
 {
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'adkats_roles';
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'role_id';
 
     /**
-     * Fields allowed to be mass assigned
+     * Fields allowed to be mass assigned.
      *
      * @var array
      */
     protected $guarded = ['role_id'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
     protected $dates = [];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
     protected $appends = [];
 
     /**
-     * Models to be loaded automaticly
+     * Models to be loaded automaticly.
      *
      * @var array
      */
@@ -62,7 +64,7 @@ class Role extends Elegant
     }
 
     /**
-     * Return the power level of the role
+     * Return the power level of the role.
      *
      * @param $count
      *
@@ -74,7 +76,7 @@ class Role extends Elegant
     }
 
     /**
-     * Trims $value and sets the role key
+     * Trims $value and sets the role key.
      *
      * @param $value
      */
