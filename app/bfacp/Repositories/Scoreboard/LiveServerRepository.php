@@ -494,6 +494,8 @@ class LiveServerRepository extends BaseRepository
         } elseif ($this->data['server']['mode']['uri'] == 'RushLarge0') {
             $this->TEAM1 = $teamFactions[0][4];
             $this->TEAM2 = $teamFactions[0][5];
+            $this->TEAM3 = $teamFactions[0][4];
+            $this->TEAM4 = $teamFactions[0][5];
         } else {
             if ($this->gameName == 'BF3') {
                 $this->TEAM0 = $teamFactions[0][0];
