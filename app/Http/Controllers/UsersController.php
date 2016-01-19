@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers;
+<?php
+
+namespace BFACP\Http\Controllers;
 
 use BFACP\Account\User;
 use BFACP\Repositories\UserRepository;
@@ -15,7 +17,7 @@ use Illuminate\Support\Facades\View;
 class UsersController extends Controller
 {
     /**
-     * User Repository
+     * User Repository.
      *
      * @var UserRepository
      */
@@ -28,14 +30,14 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the account settings page
+     * Show the account settings page.
      *
      * @return View
      */
     public function showAccountSettings()
     {
         $page_title = 'Account Settings';
-        $user =& $this->user;
+        $user = &$this->user;
 
         // Populate the form fields with the user information
         Former::populate($user);
@@ -44,7 +46,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Save the changes made to the users account
+     * Save the changes made to the users account.
      *
      * @return Redirect
      */
@@ -58,8 +60,8 @@ class UsersController extends Controller
         $password_confirmation = trim(Input::get('password_confirmation', null));
 
         $v = Validator::make(Input::all(), [
-            'email'    => 'required|email|unique:bfacp_users,email,' . $user->id,
-            'language' => 'required|in:' . implode(',', array_keys(Config::get('bfacp.site.languages'))),
+            'email'    => 'required|email|unique:bfacp_users,email,'.$user->id,
+            'language' => 'required|in:'.implode(',', array_keys(Config::get('bfacp.site.languages'))),
             'password' => 'min:8|confirmed',
         ]);
 
@@ -97,7 +99,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Shows the login form
+     * Shows the login form.
      *
      * @return View
      */
@@ -107,7 +109,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Shows the signup form
+     * Shows the signup form.
      *
      * @return View
      */
@@ -117,7 +119,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Attempt to confirm the account with code
+     * Attempt to confirm the account with code.
      *
      * @param  string $code
      *
@@ -136,7 +138,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Create a new user
+     * Create a new user.
      *
      * @return Redirect
      */
@@ -197,7 +199,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Log out the user
+     * Log out the user.
      */
     public function logout()
     {

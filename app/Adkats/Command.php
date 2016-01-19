@@ -1,60 +1,62 @@
-<?php namespace BFACP\Adkats;
+<?php
+
+namespace BFACP\Adkats;
 
 use BFACP\Elegant;
 
 class Command extends Elegant
 {
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'adkats_commands';
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'command_id';
 
     /**
-     * Fields not allowed to be mass assigned
+     * Fields not allowed to be mass assigned.
      *
      * @var array
      */
     protected $guarded = ['*'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
     protected $dates = [];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
     protected $appends = ['is_interactive', 'is_enabled', 'is_invisible'];
 
     /**
-     * Models to be loaded automaticly
+     * Models to be loaded automaticly.
      *
      * @var array
      */
     protected $with = [];
 
     /**
-     * Returns the commands that usable by the guest
+     * Returns the commands that usable by the guest.
      *
      * @param $query
      *
@@ -66,7 +68,7 @@ class Command extends Elegant
     }
 
     /**
-     * Returns the commands that usable by the admin
+     * Returns the commands that usable by the admin.
      *
      * @param $query
      *
@@ -78,7 +80,7 @@ class Command extends Elegant
     }
 
     /**
-     * Returns commands with the selected $type
+     * Returns commands with the selected $type.
      *
      * @param $query
      * @param $type
@@ -91,7 +93,7 @@ class Command extends Elegant
     }
 
     /**
-     * Command can be interacted with by player
+     * Command can be interacted with by player.
      *
      * @return bool
      */
@@ -101,7 +103,7 @@ class Command extends Elegant
     }
 
     /**
-     * Command is enabled
+     * Command is enabled.
      *
      * @return bool
      */
@@ -111,7 +113,7 @@ class Command extends Elegant
     }
 
     /**
-     * Command is invisible
+     * Command is invisible.
      *
      * @return bool
      */

@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Api;
+<?php
+
+namespace BFACP\Http\Controllers\Api;
 
 use BFACP\Exceptions\MetabansException;
 use BFACP\Facades\Main as MainHelper;

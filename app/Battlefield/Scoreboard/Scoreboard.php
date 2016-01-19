@@ -1,4 +1,6 @@
-<?php namespace BFACP\Battlefield\Scoreboard;
+<?php
+
+namespace BFACP\Battlefield\Scoreboard;
 
 use BFACP\Elegant;
 use BFACP\Facades\Battlefield as BattlefieldHelper;
@@ -6,49 +8,49 @@ use BFACP\Facades\Battlefield as BattlefieldHelper;
 class Scoreboard extends Elegant
 {
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'tbl_currentplayers';
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'ServerID';
 
     /**
-     * Fields not allowed to be mass assigned
+     * Fields not allowed to be mass assigned.
      *
      * @var array
      */
     protected $guarded = ['*'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
     protected $dates = ['PlayerJoined'];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
     protected $appends = ['player_joined_iso', 'squad', 'kd_ratio', 'hsk_ratio'];
 
     /**
-     * Models to be loaded automaticly
+     * Models to be loaded automaticly.
      *
      * @var array
      */

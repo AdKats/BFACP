@@ -1,4 +1,6 @@
-<?php namespace BFACP\Libraries\Battlelog;
+<?php
+
+namespace BFACP\Libraries\Battlelog;
 
 use BFACP\Adkats\Battlelog;
 use BFACP\Battlefield\Player;
@@ -9,42 +11,42 @@ use Illuminate\Database\Eloquent\Collection;
 class BattlelogPlayer extends BattlelogAPI
 {
     /**
-     * Persona ID
+     * Persona ID.
      *
-     * @var integer
+     * @var int
      */
     public $personaID = 0;
 
     /**
-     * Persona User ID
+     * Persona User ID.
      *
-     * @var integer
+     * @var int
      */
     public $personaUserID = 0;
 
     /**
-     * Persona Gravatar MD5 Hash
+     * Persona Gravatar MD5 Hash.
      *
      * @var string
      */
     public $personaGravatar = '';
 
     /**
-     * Player Object
+     * Player Object.
      *
      * @var Player
      */
     public $player;
 
     /**
-     * Profile object
+     * Profile object.
      *
      * @var array
      */
     public $profile;
 
     /**
-     * Name of game
+     * Name of game.
      *
      * @var string
      */
@@ -66,7 +68,7 @@ class BattlelogPlayer extends BattlelogAPI
         }
 
         // Always call fetch profile if no persona already exists for the player
-        if (!$this->player->hasPersona()) {
+        if (! $this->player->hasPersona()) {
             $this->fetchProfile();
         } else {
             $this->personaID = $this->player->battlelog->persona_id;
@@ -78,7 +80,7 @@ class BattlelogPlayer extends BattlelogAPI
     }
 
     /**
-     * Fetches the players battlelog profile
+     * Fetches the players battlelog profile.
      *
      * @return mixed
      * @throws BattlelogException
@@ -114,7 +116,7 @@ class BattlelogPlayer extends BattlelogAPI
         }
 
         // If we don't have an existing stored persona we need to create one
-        if (!$this->player->hasPersona()) {
+        if (! $this->player->hasPersona()) {
 
             // Clear old cache for player
             $this->player->forget();
@@ -135,7 +137,7 @@ class BattlelogPlayer extends BattlelogAPI
     }
 
     /**
-     * Gets the soldier information so we can update the clan tag and name if needed
+     * Gets the soldier information so we can update the clan tag and name if needed.
      *
      * @return mixed
      * @throws BattlelogException
@@ -151,7 +153,7 @@ class BattlelogPlayer extends BattlelogAPI
         $oldName = $this->player->SoldierName;
         $oldClan = $this->player->ClanTag;
 
-        if (!array_key_exists('statsPersona', $results['context'])) {
+        if (! array_key_exists('statsPersona', $results['context'])) {
             throw new BattlelogException(500, sprintf('Could not retrieve stats for %s.', $oldName));
         }
 
@@ -174,7 +176,7 @@ class BattlelogPlayer extends BattlelogAPI
     }
 
     /**
-     * Gets the player weapon stats
+     * Gets the player weapon stats.
      *
      * @return array
      */
@@ -191,7 +193,6 @@ class BattlelogPlayer extends BattlelogAPI
 
         // Loop over the weapons and add them to the weapons array
         foreach ($results['mainWeaponStats'] as $weapon) {
-
             if ($this->game == 'bf3') {
                 $weaponURI = sprintf('%s/soldier/%s/iteminfo/%s/%u/pc/', $this->game, $this->player->SoldierName,
                     strtolower($weapon['slug']), $this->personaID);
@@ -214,7 +215,7 @@ class BattlelogPlayer extends BattlelogAPI
                 'kpm'          => MainHelper::divide($weapon['kills'], MainHelper::divide($weapon['timeEquipped'], 60)),
                 'hskp'         => MainHelper::percent($weapon['headshots'], $weapon['kills']),
                 'dps'          => MainHelper::percent($weapon['kills'], $weapon['shotsHit']),
-                'weapon_link'  => parent::BLOG . $weaponURI,
+                'weapon_link'  => parent::BLOG.$weaponURI,
             ]);
         }
 
@@ -222,7 +223,7 @@ class BattlelogPlayer extends BattlelogAPI
     }
 
     /**
-     * Gets the player overview stats
+     * Gets the player overview stats.
      *
      * @return array
      */
@@ -240,7 +241,7 @@ class BattlelogPlayer extends BattlelogAPI
     }
 
     /**
-     * Gets the player vehicle stats
+     * Gets the player vehicle stats.
      *
      * @return array
      */
@@ -312,7 +313,7 @@ class BattlelogPlayer extends BattlelogAPI
 
         $battlereport = new Collection([
             'game'   => $this->game,
-            'url'    => parent::BLOG . sprintf('%s/battlereport/show/1/%s/%u', $this->game, $id, $this->personaID),
+            'url'    => parent::BLOG.sprintf('%s/battlereport/show/1/%s/%u', $this->game, $id, $this->personaID),
             'report' => is_null($results) ? [] : $results,
         ]);
 

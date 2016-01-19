@@ -1,4 +1,6 @@
-<?php namespace BFACP\Helpers;
+<?php
+
+namespace BFACP\Helpers;
 
 class Macros extends Main
 {
@@ -12,15 +14,15 @@ class Macros extends Main
      */
     public function moment($timestamp = null, $duration = null, $durationFormat = 'seconds', $fromNow = false)
     {
-        if (!is_null($timestamp) && is_null($duration) && !$fromNow) {
+        if (! is_null($timestamp) && is_null($duration) && ! $fromNow) {
             return sprintf('{{ moment(\'%s\').format(\'lll\') }}', $timestamp);
-        } elseif (!is_null($timestamp) && is_null($duration) && $fromNow) {
+        } elseif (! is_null($timestamp) && is_null($duration) && $fromNow) {
             return sprintf('{{ moment(\'%s\').fromNow() }}', $timestamp);
-        } elseif (is_null($timestamp) && !is_null($duration) && !$fromNow) {
-            return sprintf('{{ momentDuration(%u, \'%s\') }}', (int)$duration, $durationFormat);
+        } elseif (is_null($timestamp) && ! is_null($duration) && ! $fromNow) {
+            return sprintf('{{ momentDuration(%u, \'%s\') }}', (int) $duration, $durationFormat);
         }
 
-        return null;
+        return;
     }
 
     /**

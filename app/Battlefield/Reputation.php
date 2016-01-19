@@ -1,53 +1,55 @@
-<?php namespace BFACP\Battlefield;
+<?php
+
+namespace BFACP\Battlefield;
 
 use BFACP\Elegant;
 
 class Reputation extends Elegant
 {
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'adkats_player_reputation';
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'player_id';
 
     /**
-     * Fields allowed to be mass assigned
+     * Fields allowed to be mass assigned.
      *
      * @var array
      */
     protected $guarded = ['player_id'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
     protected $dates = [];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
     protected $appends = ['color'];
 
     /**
-     * Models to be loaded automaticly
+     * Models to be loaded automaticly.
      *
      * @var array
      */
@@ -61,7 +63,7 @@ class Reputation extends Elegant
     }
 
     /**
-     * Gets the class name for the view
+     * Gets the class name for the view.
      *
      * @return string
      */

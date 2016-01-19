@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Admin\AdKats;
+<?php
+
+namespace BFACP\Http\Controllers\Admin\AdKats;
 
 use BFACP\Adkats\Account\Role;
 use BFACP\Adkats\Command as Command;
@@ -86,7 +88,7 @@ class RolesController extends Controller
                         return true;
                     }
                 })->map(function ($id) {
-                    return (int)$id;
+                    return (int) $id;
                 });
             }
 
@@ -149,7 +151,7 @@ class RolesController extends Controller
                         return true;
                     }
                 })->map(function ($id) {
-                    return (int)$id;
+                    return (int) $id;
                 });
             }
 

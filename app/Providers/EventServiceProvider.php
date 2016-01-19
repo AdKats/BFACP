@@ -28,7 +28,7 @@ class EventServiceProvider extends ServiceProvider
 
         $files = File::files(app_path('/Events'));
 
-        foreach($files as $file) {
+        foreach ($files as $file) {
             File::requireOnce($file);
         }
     }

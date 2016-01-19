@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Admin\AdKats;
+<?php
+
+namespace BFACP\Http\Controllers\Admin\AdKats;
 
 use BFACP\Battlefield\Player as Player;
 use BFACP\Battlefield\Server\Server as Server;
@@ -20,14 +22,14 @@ use Illuminate\Support\Facades\Redirect as Redirect;
 class BansController extends Controller
 {
     /**
-     * Ban Repository
+     * Ban Repository.
      *
      * @var BanRepository
      */
     protected $repository;
 
     /**
-     * Metabans Class
+     * Metabans Class.
      *
      * @var Metabans
      */
@@ -39,21 +41,21 @@ class BansController extends Controller
 
         $this->middleware('permission:admin.adkats.bans.view', [
             'only' => [
-                'index'
-            ]
+                'index',
+            ],
         ]);
 
         $this->middleware('permission:admin.adkats.bans.create', [
             'only' => [
-                'create'
-            ]
+                'create',
+            ],
         ]);
 
         $this->middleware('permission:admin.adkats.bans.edit', [
             'except' => [
                 'create',
-                'index'
-            ]
+                'index',
+            ],
         ]);
 
         $this->repository = App::make('BFACP\Repositories\BanRepository');
@@ -65,7 +67,7 @@ class BansController extends Controller
     }
 
     /**
-     * Shows the ban listing
+     * Shows the ban listing.
      */
     public function index()
     {
@@ -80,16 +82,15 @@ class BansController extends Controller
     }
 
     /**
-     * Shows the ban editing page
+     * Shows the ban editing page.
      *
-     * @param  integer $id Ban ID
+     * @param  int $id Ban ID
      *
      * @return $this
      */
     public function edit($id)
     {
         try {
-
             $ban = $this->repository->getBanById($id);
             $servers = Server::where('GameID', $ban->player->GameID)->active()->pluck('ServerName', 'ServerID');
 
@@ -103,10 +104,9 @@ class BansController extends Controller
     public function create()
     {
         try {
-
             $player = Player::findOrFail(Input::get('player_id'));
 
-            if (!is_null($player->ban)) {
+            if (! is_null($player->ban)) {
                 return Redirect::route('admin.adkats.bans.edit', [$player->ban->ban_id]);
             }
 
@@ -127,7 +127,7 @@ class BansController extends Controller
         try {
             $player = Player::findOrfail(Input::get('player_id'));
 
-            if (!is_null($player->ban)) {
+            if (! is_null($player->ban)) {
                 return Redirect::route('admin.adkats.bans.edit', [$player->ban->ban_id]);
             }
 
@@ -140,9 +140,9 @@ class BansController extends Controller
             $ban_start = Input::get('banStartDateTime', null);
             $ban_end = Input::get('banEndDateTime', null);
             $ban_type = Input::get('type', null);
-            $ban_enforce_guid = (bool)Input::get('enforce_guid', false) ? 'Y' : 'N';
-            $ban_enforce_name = (bool)Input::get('enforce_name', false) ? 'Y' : 'N';
-            $ban_enforce_ip = (bool)Input::get('enforce_ip', false) ? 'Y' : 'N';
+            $ban_enforce_guid = (bool) Input::get('enforce_guid', false) ? 'Y' : 'N';
+            $ban_enforce_name = (bool) Input::get('enforce_name', false) ? 'Y' : 'N';
+            $ban_enforce_ip = (bool) Input::get('enforce_ip', false) ? 'Y' : 'N';
 
             $admin_id = is_null($admin) ? null : $admin->PlayerID;
             $admin_name = is_null($admin) ? Auth::user()->username : $admin->SoldierName;
@@ -163,9 +163,9 @@ class BansController extends Controller
     }
 
     /**
-     * Updates a existing ban
+     * Updates a existing ban.
      *
-     * @param  integer $id Ban ID
+     * @param  int $id Ban ID
      */
     public function update($id)
     {
@@ -186,14 +186,13 @@ class BansController extends Controller
             $ban_start = Input::get('banStartDateTime', null);
             $ban_end = Input::get('banEndDateTime', null);
             $ban_type = Input::get('type', null);
-            $ban_enforce_guid = (bool)Input::get('enforce_guid', false);
-            $ban_enforce_name = (bool)Input::get('enforce_name', false);
-            $ban_enforce_ip = (bool)Input::get('enforce_ip', false);
+            $ban_enforce_guid = (bool) Input::get('enforce_guid', false);
+            $ban_enforce_name = (bool) Input::get('enforce_name', false);
+            $ban_enforce_ip = (bool) Input::get('enforce_ip', false);
 
             // Temp Ban
             if ($ban_type == 7) {
-                if (!empty($ban_start) && !empty($ban_end)) {
-
+                if (! empty($ban_start) && ! empty($ban_end)) {
                     $startDate = Carbon::parse($ban_start)->setTimezone(new \DateTimeZone('UTC'));
                     $endDate = Carbon::parse($ban_end)->setTimezone(new \DateTimeZone('UTC'));
 
@@ -269,7 +268,7 @@ class BansController extends Controller
                         $ban->record()->associate($record);
 
                         try {
-                            if (!is_null($this->metabans)) {
+                            if (! is_null($this->metabans)) {
                                 $this->metabans->assess($ban->player->game->Name, $ban->player->EAGUID, 'Black',
                                     $ban_message, $ban_duration_seconds);
                             }
@@ -307,16 +306,15 @@ class BansController extends Controller
             $this->messages[] = sprintf('Ban #%u has been updated.', $ban->ban_id);
 
             return Redirect::route('admin.adkats.bans.edit', [$ban->ban_id])->with('messages', $this->messages);
-
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.adkats.bans.index')->withErrors([sprintf('Ban #%u doesn\'t exist.', $id)]);
         }
     }
 
     /**
-     * Unbans the player
+     * Unbans the player.
      *
-     * @param  integer $id Ban ID
+     * @param  int $id Ban ID
      *
      * @return \Illuminate\Support\Facades\Response
      */
@@ -331,7 +329,7 @@ class BansController extends Controller
             $admin = MainHelper::getAdminPlayer($this->user, $ban->player->game->GameID);
 
             // Only modify the old record if the command action is a temp or perma ban.
-            if (in_array((int)$oldRecord->command_action, [7, 8])) {
+            if (in_array((int) $oldRecord->command_action, [7, 8])) {
                 // 72 => Previous Temp Ban
                 // 73 => Previous Perm Ban
                 $oldRecord->command_action = $oldRecord->command_action == 8 ? 73 : 72;
@@ -353,14 +351,14 @@ class BansController extends Controller
             $ban->record()->associate($record);
             $ban->ban_status = 'Disabled';
 
-            if (!is_null(Input::get('notes', null))) {
+            if (! is_null(Input::get('notes', null))) {
                 $ban->ban_notes = Input::get('notes', 'NoNotes');
             }
 
             $ban->save();
 
             try {
-                if (!is_null($this->metabans)) {
+                if (! is_null($this->metabans)) {
                     $this->metabans->assess($ban->player->game->Name, $ban->player->EAGUID, 'None',
                         Input::get('message', 'Unbanned'));
                 }

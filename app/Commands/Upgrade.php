@@ -1,10 +1,11 @@
-<?php namespace BFACP\Commands;
+<?php
+
+namespace BFACP\Commands;
 
 use Illuminate\Console\Command;
 
 class Upgrade extends Command
 {
-
     /**
      * The console command name.
      *
@@ -36,5 +37,4 @@ class Upgrade extends Command
     {
         //
     }
-
 }

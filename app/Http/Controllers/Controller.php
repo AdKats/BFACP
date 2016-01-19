@@ -13,7 +13,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
-     * Stores the currently logged in user
+     * Stores the currently logged in user.
      *
      * @var \BFACP\Account\User
      */
@@ -27,7 +27,7 @@ class Controller extends BaseController
     protected $isLoggedIn = false;
 
     /**
-     * Any messages to be pushed to the view
+     * Any messages to be pushed to the view.
      *
      * @var array
      */

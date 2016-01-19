@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Middleware;
+<?php
+
+namespace BFACP\Http\Middleware;
 
 use Closure;
 
@@ -13,14 +15,12 @@ use Closure;
  */
 class Secure
 {
-
     public function handle($request, Closure $next)
     {
-        if (!$request->secure() && app()->environment('production')) {
+        if (! $request->secure() && app()->environment('production')) {
             return redirect()->secure($request->getRequestUri(), 301);
         }
 
         return $next($request);
     }
-
 }

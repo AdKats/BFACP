@@ -1,4 +1,6 @@
-<?php namespace BFACP\Battlefield;
+<?php
+
+namespace BFACP\Battlefield;
 
 use BFACP\Elegant;
 use BFACP\Facades\Main as MainHelper;
@@ -9,49 +11,49 @@ use Illuminate\Support\Facades\Route;
 class Player extends Elegant
 {
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'tbl_playerdata';
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'PlayerID';
 
     /**
-     * Fields not allowed to be mass assigned
+     * Fields not allowed to be mass assigned.
      *
      * @var array
      */
     protected $guarded = ['PlayerID'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
     protected $dates = [];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
     protected $appends = ['profile_url', 'country_flag', 'country_name', 'rank_image', 'links'];
 
     /**
-     * Models to be loaded automatically
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -154,27 +156,27 @@ class Player extends Elegant
     }
 
     /**
-     * Does the player have a battlelog persona id linked
+     * Does the player have a battlelog persona id linked.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPersona()
     {
-        return !empty($this->battlelog);
+        return ! empty($this->battlelog);
     }
 
     /**
-     * Checks if player has a reputation record
+     * Checks if player has a reputation record.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasReputation()
     {
-        return !empty($this->reputation);
+        return ! empty($this->reputation);
     }
 
     /**
-     * Purge the cache for the player
+     * Purge the cache for the player.
      *
      * @return $this
      */
@@ -187,7 +189,7 @@ class Player extends Elegant
     }
 
     /**
-     * Gets the URL to the players profile
+     * Gets the URL to the players profile.
      *
      * @return string
      */
@@ -200,7 +202,7 @@ class Player extends Elegant
     }
 
     /**
-     * Get the country name
+     * Get the country name.
      *
      * @return string
      */
@@ -224,7 +226,7 @@ class Player extends Elegant
     }
 
     /**
-     * Get the country image flag
+     * Get the country image flag.
      *
      * @return string
      */
@@ -237,7 +239,7 @@ class Player extends Elegant
 
             $path = sprintf('images/flags/24/%s.png', strtoupper($this->CountryCode));
 
-            if (!file_exists(sprintf('%s/%s', public_path(), $path))) {
+            if (! file_exists(sprintf('%s/%s', public_path(), $path))) {
                 throw new Exception();
             }
 
@@ -319,7 +321,7 @@ class Player extends Elegant
             'metabans' => sprintf('http://metabans.com/search/?phrase=%s', $this->SoldierName),
             'bf4db'    => $game == 'BF4' ? $bf4db_profile : null,
             'chatlogs' => route('chatlog.search', ['pid' => $this->PlayerID]),
-            'pbbans'   => !empty($this->PBGUID) ? sprintf('http://www.pbbans.com/mbi-guid-search-%s.html',
+            'pbbans'   => ! empty($this->PBGUID) ? sprintf('http://www.pbbans.com/mbi-guid-search-%s.html',
                 $this->PBGUID) : null,
         ];
 
@@ -330,7 +332,7 @@ class Player extends Elegant
     }
 
     /**
-     * Get the rank image
+     * Get the rank image.
      *
      * @return string
      */

@@ -1,4 +1,6 @@
-<?php namespace BFACP\Commands;
+<?php
+
+namespace BFACP\Commands;
 
 use BFACP\Battlefield\Player;
 use BFACP\Exceptions\MetabansException;
@@ -8,7 +10,6 @@ use Illuminate\Support\Facades\App;
 
 class MetabansUnban extends Command
 {
-
     /**
      * The console command name.
      *
@@ -57,7 +58,7 @@ class MetabansUnban extends Command
         do {
             $playerID = $this->ask($this->questions['Q1']);
             try {
-                if (!is_numeric($playerID)) {
+                if (! is_numeric($playerID)) {
                     throw new \InvalidArgumentException();
                 }
 
@@ -69,7 +70,7 @@ class MetabansUnban extends Command
                 if ($this->confirm($question, false)) {
                     $_playerFound = true;
 
-                    if (!is_null($metabans)) {
+                    if (! is_null($metabans)) {
                         $unbanReason = $this->ask($this->questions['Q3']);
 
                         if (empty($unbanReason)) {
@@ -98,5 +99,4 @@ class MetabansUnban extends Command
             }
         } while ($_playerFound == false);
     }
-
 }

@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Admin;
+<?php
+
+namespace BFACP\Http\Controllers\Admin;
 
 use BFACP\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;

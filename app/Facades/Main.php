@@ -1,4 +1,6 @@
-<?php namespace BFACP\Facades;
+<?php
+
+namespace BFACP\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

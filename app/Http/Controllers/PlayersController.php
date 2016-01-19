@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers;
+<?php
+
+namespace BFACP\Http\Controllers;
 
 use BFACP\Adkats\Record;
 use BFACP\Facades\Main as MainHelper;
@@ -21,7 +23,7 @@ class PlayersController extends Controller
     }
 
     /**
-     * Shows player listing
+     * Shows player listing.
      */
     public function listing()
     {
@@ -31,9 +33,9 @@ class PlayersController extends Controller
     }
 
     /**
-     * Shows the player profile
+     * Shows the player profile.
      *
-     * @param  integer $id
+     * @param  int $id
      * @param  string  $name
      */
     public function profile($id, $name = '')
@@ -61,9 +63,9 @@ class PlayersController extends Controller
 
         $charts = Cache::remember(sprintf('player.%u.charts', $id), 5, function () use ($id) {
             $charts = [];
-            $charts['overview'] = new Collection(DB::select(File::get(storage_path() . '/sql/playerCommandOverview.sql'),
+            $charts['overview'] = new Collection(DB::select(File::get(storage_path().'/sql/playerCommandOverview.sql'),
                 [$id]));
-            $charts['spline'] = new Collection(DB::select(File::get(storage_path() . '/sql/playerCommandHistory.sql'),
+            $charts['spline'] = new Collection(DB::select(File::get(storage_path().'/sql/playerCommandHistory.sql'),
                 [$id]));
             $charts['aliases'] = Record::where('command_type', 48)->where('target_id',
                 $id)->select(DB::raw('record_message AS `player_name`, COUNT(record_id) AS `seen`'))->groupBy('player_name')->get();
@@ -98,7 +100,7 @@ class PlayersController extends Controller
 
         $groups = MainHelper::specialGroups($player->special_groups, 'player_group');
 
-        $page_title = !empty($player->ClanTag) ? sprintf('[%s] %s', $player->ClanTag,
+        $page_title = ! empty($player->ClanTag) ? sprintf('[%s] %s', $player->ClanTag,
             $player->SoldierName) : $player->SoldierName;
 
         return View::make('player.profile', compact('player', 'page_title', 'charts', 'isCached', 'groups'));

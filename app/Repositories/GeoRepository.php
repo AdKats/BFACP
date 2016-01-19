@@ -1,25 +1,27 @@
-<?php namespace BFACP\Repositories;
+<?php
+
+namespace BFACP\Repositories;
 
 use GeoIp2\Database\Reader;
 
 class GeoRepository extends BaseRepository
 {
     /**
-     * GeoIP2\Database\Reader
+     * GeoIP2\Database\Reader.
      *
      * @var object
      */
     protected $geo;
 
     /**
-     * IP Address
+     * IP Address.
      *
      * @var null
      */
     protected $ip = null;
 
     /**
-     * GeoIP Reader
+     * GeoIP Reader.
      *
      * @var object
      */
@@ -28,12 +30,12 @@ class GeoRepository extends BaseRepository
     public function __construct()
     {
         parent::__construct();
-        $path = app_path() . '/bfacp/ThirdParty/GeoIP2/GeoLite2-City.mmdb';
+        $path = app_path().'/bfacp/ThirdParty/GeoIP2/GeoLite2-City.mmdb';
         $this->geo = new Reader($path);
     }
 
     /**
-     * Set the IP Address to be used
+     * Set the IP Address to be used.
      *
      * @param string $ip IPv4 Address
      *
@@ -48,7 +50,7 @@ class GeoRepository extends BaseRepository
     }
 
     /**
-     * Simply returns all values
+     * Simply returns all values.
      *
      * @return array
      */
@@ -65,7 +67,7 @@ class GeoRepository extends BaseRepository
     }
 
     /**
-     * Returns the country ISO Code
+     * Returns the country ISO Code.
      *
      * @return string
      */
@@ -75,7 +77,7 @@ class GeoRepository extends BaseRepository
     }
 
     /**
-     * Returns the country name
+     * Returns the country name.
      *
      * @return string
      */
@@ -85,7 +87,7 @@ class GeoRepository extends BaseRepository
     }
 
     /**
-     * Returns the name of the city the IP is located in
+     * Returns the name of the city the IP is located in.
      *
      * @return string
      */
@@ -95,7 +97,7 @@ class GeoRepository extends BaseRepository
     }
 
     /**
-     * Returns the latitude
+     * Returns the latitude.
      *
      * @return float
      */
@@ -105,7 +107,7 @@ class GeoRepository extends BaseRepository
     }
 
     /**
-     * Returns the longitude
+     * Returns the longitude.
      *
      * @return float
      */
@@ -115,7 +117,7 @@ class GeoRepository extends BaseRepository
     }
 
     /**
-     * Returns the postal code of the city
+     * Returns the postal code of the city.
      *
      * @return string
      */

@@ -1,4 +1,6 @@
-<?php namespace BFACP\Commands;
+<?php
+
+namespace BFACP\Commands;
 
 use BFACP\Battlefield\Player;
 use Exception;
@@ -8,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class ReputationCalculation extends Command
 {
-
     /**
      * The console command name.
      *
@@ -42,7 +43,7 @@ class ReputationCalculation extends Command
 
         $r = App::make('BFACP\Libraries\Reputation');
 
-        $this->info("Counting up total players.");
+        $this->info('Counting up total players.');
 
         $count = Player::where('GameID', '>', 0)->count();
 
@@ -59,14 +60,13 @@ class ReputationCalculation extends Command
 
                     $execClock = $endClock - $startClock;
 
-                    $txt = sprintf("[%u][%u ms] %s", $player->PlayerID, $execClock, $player->SoldierName);
+                    $txt = sprintf('[%u][%u ms] %s', $player->PlayerID, $execClock, $player->SoldierName);
 
-                    $this->info("Updated player: " . $txt);
+                    $this->info('Updated player: '.$txt);
                 } catch (Exception $e) {
-                    $this->error('Update failed. Reason: ' . $e->getMessage());
+                    $this->error('Update failed. Reason: '.$e->getMessage());
                 }
             }
         });
     }
-
 }

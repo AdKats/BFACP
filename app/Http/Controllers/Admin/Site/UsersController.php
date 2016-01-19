@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Admin\Site;
+<?php
+
+namespace BFACP\Http\Controllers\Admin\Site;
 
 use BFACP\Account\Role;
 use BFACP\Account\Soldier;
@@ -18,7 +20,7 @@ use Illuminate\Support\Facades\View;
 class UsersController extends Controller
 {
     /**
-     * Shows the user listing
+     * Shows the user listing.
      */
     public function index()
     {
@@ -45,7 +47,7 @@ class UsersController extends Controller
         $v = Validator::make(Input::all(), [
             'username' => 'required|alpha_dash|min:4|unique:bfacp_users,username',
             'email'    => 'required|email|unique:bfacp_users,email',
-            'language' => 'required|in:' . implode(',', array_keys(Config::get('bfacp.site.languages'))),
+            'language' => 'required|in:'.implode(',', array_keys(Config::get('bfacp.site.languages'))),
             'soldier'  => 'exists:tbl_playerdata,SoldierName',
             'role'     => 'required',
         ]);
@@ -70,9 +72,9 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the editing page
+     * Show the editing page.
      *
-     * @param integer $id User ID
+     * @param int $id User ID
      */
     public function edit($id)
     {
@@ -102,9 +104,9 @@ class UsersController extends Controller
     }
 
     /**
-     * Update user
+     * Update user.
      *
-     * @param  integer $id User ID
+     * @param  int $id User ID
      */
     public function update($id)
     {
@@ -119,9 +121,9 @@ class UsersController extends Controller
             $soldiers = explode(',', Input::get('soldiers', ''));
 
             $v = Validator::make(Input::all(), [
-                'username'      => 'required|alpha_dash|min:4|unique:bfacp_users,username,' . $id,
-                'email'         => 'required|email|unique:bfacp_users,email,' . $id,
-                'language'      => 'required|in:' . implode(',', array_keys(Config::get('bfacp.site.languages'))),
+                'username'      => 'required|alpha_dash|min:4|unique:bfacp_users,username,'.$id,
+                'email'         => 'required|email|unique:bfacp_users,email,'.$id,
+                'language'      => 'required|in:'.implode(',', array_keys(Config::get('bfacp.site.languages'))),
                 'generate_pass' => 'boolean',
                 'confirmed'     => 'boolean',
             ]);
@@ -159,7 +161,6 @@ class UsersController extends Controller
             }
 
             if (Input::has('generate_pass')) {
-
                 $repo = app('BFACP\Repositories\UserRepository');
 
                 // Generate a new password
@@ -189,14 +190,13 @@ class UsersController extends Controller
                 $players = Player::where('SoldierName', Input::get('soldier'))->pluck('PlayerID');
 
                 foreach ($players as $player) {
-                    if (!in_array($player, $soldiers)) {
+                    if (! in_array($player, $soldiers)) {
                         $soldier_ids[] = new Soldier(['player_id' => $player]);
                     }
                 }
             }
 
-            if (!empty($soldier_ids)) {
-
+            if (! empty($soldier_ids)) {
                 foreach ($soldier_ids as $key => $soldier) {
                     // Check if an existing user already has claimed the player
                     // and if so do not associate with the account.
@@ -220,9 +220,9 @@ class UsersController extends Controller
     }
 
     /**
-     * Delete user
+     * Delete user.
      *
-     * @param  integer $id User ID
+     * @param  int $id User ID
      *
      * @return \Illuminate\Support\Facades\Response
      */

@@ -1,4 +1,6 @@
-<?php namespace BFACP\Libraries\Battlelog;
+<?php
+
+namespace BFACP\Libraries\Battlelog;
 
 use BFACP\Battlefield\Server\Server;
 use GuzzleHttp\Client;
@@ -6,26 +8,26 @@ use GuzzleHttp\Client;
 class BattlelogAPI
 {
     /**
-     * Battlelog Base URL
+     * Battlelog Base URL.
      */
     const BLOG = 'http://battlelog.battlefield.com/';
 
     /**
-     * Guzzle Client
+     * Guzzle Client.
      *
      * @var Client
      */
     protected $guzzle;
 
     /**
-     * Server object
+     * Server object.
      *
      * @var Server
      */
     protected $server;
 
     /**
-     * URIs for battlelog
+     * URIs for battlelog.
      *
      * @var array
      */
@@ -63,7 +65,7 @@ class BattlelogAPI
     ];
 
     /**
-     * Battlelog Game Codes
+     * Battlelog Game Codes.
      *
      * @var array
      */
@@ -79,7 +81,7 @@ class BattlelogAPI
     }
 
     /**
-     * Set the server
+     * Set the server.
      *
      * @param  Server $server
      *
@@ -93,7 +95,7 @@ class BattlelogAPI
     }
 
     /**
-     * Sends the request to battlelog
+     * Sends the request to battlelog.
      *
      * @param  string $uri
      *
@@ -101,7 +103,7 @@ class BattlelogAPI
      */
     protected function sendRequest($uri)
     {
-        $request = $this->guzzle->get(static::BLOG . $uri, [
+        $request = $this->guzzle->get(static::BLOG.$uri, [
             'headers' => [
                 'X-AjaxNavigation' => true,
             ],

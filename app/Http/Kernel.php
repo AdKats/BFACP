@@ -57,7 +57,7 @@ class Kernel extends HttpKernel
     {
         parent::bootstrap();
 
-        if(Config::get('bfacp.site.ssl')) {
+        if (Config::get('bfacp.site.ssl')) {
             $this->middleware[] = \BFACP\Http\Middleware\Secure::class;
         }
     }

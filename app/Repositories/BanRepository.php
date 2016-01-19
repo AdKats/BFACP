@@ -1,4 +1,6 @@
-<?php namespace BFACP\Repositories;
+<?php
+
+namespace BFACP\Repositories;
 
 use BFACP\Adkats\Ban;
 use Illuminate\Support\Facades\Cache;
@@ -7,10 +9,10 @@ use Illuminate\Support\Facades\Input;
 class BanRepository extends BaseRepository
 {
     /**
-     * Gets the latest bans
+     * Gets the latest bans.
      *
      * @param  string  $cacheKey Caching key to use
-     * @param  integer $ttl      Cache for X minutes
+     * @param  int $ttl      Cache for X minutes
      *
      * @return array
      */
@@ -24,7 +26,7 @@ class BanRepository extends BaseRepository
     }
 
     /**
-     * Gets the bans of the users soldiers
+     * Gets the bans of the users soldiers.
      *
      * @param  array $ids Player IDs
      *
@@ -38,9 +40,9 @@ class BanRepository extends BaseRepository
     }
 
     /**
-     * Gets the banlist
+     * Gets the banlist.
      *
-     * @param  integer $limit Results to return
+     * @param  int $limit Results to return
      *
      * @return object
      */
@@ -58,9 +60,9 @@ class BanRepository extends BaseRepository
     }
 
     /**
-     * Gets a ban by their ID
+     * Gets a ban by their ID.
      *
-     * @param  integer $id Ban ID
+     * @param  int $id Ban ID
      *
      * @return object
      */

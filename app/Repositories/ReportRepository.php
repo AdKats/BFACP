@@ -1,4 +1,6 @@
-<?php namespace BFACP\Repositories;
+<?php
+
+namespace BFACP\Repositories;
 
 use BFACP\Adkats\Command;
 use BFACP\Adkats\Record;
@@ -8,11 +10,11 @@ use Illuminate\Support\Facades\Input;
 class ReportRepository extends BaseRepository
 {
     /**
-     * Commands allowed for reports
+     * Commands allowed for reports.
      *
      * @var array
      */
-    static public $allowedCommands = [3, 6, 7, 8, 9, 10, 11, 40, 41, 61];
+    public static $allowedCommands = [3, 6, 7, 8, 9, 10, 11, 40, 41, 61];
 
     /**
      * @return array
@@ -23,7 +25,7 @@ class ReportRepository extends BaseRepository
     }
 
     /**
-     * Actions allowed to be used on reports
+     * Actions allowed to be used on reports.
      *
      * @return array
      */
@@ -37,10 +39,10 @@ class ReportRepository extends BaseRepository
     }
 
     /**
-     * Returns the latest reports
+     * Returns the latest reports.
      *
-     * @param  boolean $paginate Paginate response
-     * @param  integer $take     Get X amount
+     * @param  bool $paginate Paginate response
+     * @param  int $take     Get X amount
      *
      * @return array
      */
@@ -52,7 +54,7 @@ class ReportRepository extends BaseRepository
         if (Input::has('last_id')) {
             $lastId = Input::get('last_id', null);
 
-            if (!is_null($lastId) && is_numeric($lastId)) {
+            if (! is_null($lastId) && is_numeric($lastId)) {
                 $reports->where('record_id', '>', abs($lastId));
             }
         }
@@ -67,9 +69,9 @@ class ReportRepository extends BaseRepository
     }
 
     /**
-     * Get's a report by its ID
+     * Get's a report by its ID.
      *
-     * @param  integer $id
+     * @param  int $id
      *
      * @return object
      */

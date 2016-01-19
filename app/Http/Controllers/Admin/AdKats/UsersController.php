@@ -1,4 +1,6 @@
-<?php namespace BFACP\Http\Controllers\Admin\AdKats;
+<?php
+
+namespace BFACP\Http\Controllers\Admin\AdKats;
 
 use BFACP\Adkats\Account\Role;
 use BFACP\Adkats\Account\Soldier;
@@ -23,7 +25,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the user listing
+     * Show the user listing.
      */
     public function index()
     {
@@ -35,7 +37,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Create a new user
+     * Create a new user.
      */
     public function store()
     {
@@ -59,14 +61,13 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the editing page
+     * Show the editing page.
      *
-     * @param integer $id User ID
+     * @param int $id User ID
      */
     public function edit($id)
     {
         try {
-
             $user = User::with('role', 'soldiers.player')->findOrFail($id);
 
             $roles = Role::lists('role_name', 'role_id');
@@ -76,16 +77,15 @@ class UsersController extends Controller
             Former::populate($user);
 
             return View::make('admin.adkats.users.edit', compact('user', 'page_title', 'roles'));
-
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
         }
     }
 
     /**
-     * Update user
+     * Update user.
      *
-     * @param  integer $id User ID
+     * @param  int $id User ID
      */
     public function update($id)
     {
@@ -145,13 +145,13 @@ class UsersController extends Controller
                 $players = Player::where('SoldierName', Input::get('soldier'))->pluck('PlayerID');
 
                 foreach ($players as $player) {
-                    if (!in_array($player, $soldiers)) {
+                    if (! in_array($player, $soldiers)) {
                         $soldier_ids[] = new Soldier(['player_id' => $player]);
                     }
                 }
             }
 
-            if (!empty($soldier_ids)) {
+            if (! empty($soldier_ids)) {
                 $user->soldiers()->saveMany($soldier_ids);
             }
 
@@ -160,16 +160,15 @@ class UsersController extends Controller
             $this->messages[] = sprintf('Changes Saved!');
 
             return Redirect::route('admin.adkats.users.edit', [$id])->with('messages', $this->messages);
-
         } catch (ModelNotFoundException $e) {
             return Redirect::route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
         }
     }
 
     /**
-     * Delete user
+     * Delete user.
      *
-     * @param  integer $id User ID
+     * @param  int $id User ID
      *
      * @return \Illuminate\Support\Facades\Response
      */

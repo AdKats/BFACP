@@ -11,7 +11,7 @@ use Illuminate\Support\ServiceProvider;
 class AppSettingsServiceProvider extends ServiceProvider
 {
     /**
-     * Init options array
+     * Init options array.
      *
      * @var array
      */
@@ -35,7 +35,7 @@ class AppSettingsServiceProvider extends ServiceProvider
             $this->options = $cache->remember('site.options', 15, function () use ($format) {
                 foreach (Option::all() as $option) {
                     $v = Main::stringToBool($option->option_value);
-                    if (is_bool($v) && !is_null($v)) {
+                    if (is_bool($v) && ! is_null($v)) {
                         $format($this->options, explode('.', $option->option_key), $v);
                     } else {
                         if ($option->option_key == 'site.languages') {
@@ -54,7 +54,7 @@ class AppSettingsServiceProvider extends ServiceProvider
             });
         } catch (QueryException $e) {
             Log::critical('Unable to load application settings.', [
-                'exception' => $e->getMessage()
+                'exception' => $e->getMessage(),
             ]);
         }
 

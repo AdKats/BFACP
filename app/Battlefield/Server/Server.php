@@ -1,4 +1,6 @@
-<?php namespace BFACP\Battlefield\Server;
+<?php
+
+namespace BFACP\Battlefield\Server;
 
 use BFACP\Elegant;
 use BFACP\Facades\Battlefield as BattlefieldHelper;
@@ -10,42 +12,42 @@ use Illuminate\Support\Str;
 class Server extends Elegant
 {
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'tbl_server';
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'ServerID';
 
     /**
-     * Fields not allowed to be mass assigned
+     * Fields not allowed to be mass assigned.
      *
      * @var array
      */
     protected $guarded = ['ServerID'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
     protected $dates = [];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
@@ -74,7 +76,7 @@ class Server extends Elegant
     protected $hidden = ['maps_file_path', 'modes_file_path', 'squads_file_path', 'teams_file_path'];
 
     /**
-     * Models to be loaded automatically
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -121,7 +123,7 @@ class Server extends Elegant
     }
 
     /**
-     * Only return servers that should be active
+     * Only return servers that should be active.
      *
      * @param $query
      *
@@ -141,7 +143,7 @@ class Server extends Elegant
     public function getServerNameShortAttribute()
     {
         if (is_null($this->setting) || empty($this->setting->filter)) {
-            return null;
+            return;
         }
 
         $strings = explode(',', $this->setting->filter);
@@ -150,7 +152,7 @@ class Server extends Elegant
     }
 
     /**
-     * Calculates how full the server is represented by a percentage
+     * Calculates how full the server is represented by a percentage.
      *
      * @return float
      */
@@ -160,7 +162,7 @@ class Server extends Elegant
     }
 
     /**
-     * Gets the IP Address
+     * Gets the IP Address.
      *
      * @return string
      */
@@ -172,19 +174,19 @@ class Server extends Elegant
     }
 
     /**
-     * Gets the RCON port from the IP Address
+     * Gets the RCON port from the IP Address.
      *
-     * @return integer
+     * @return int
      */
     public function getPortAttribute()
     {
         $port = explode(':', $this->IP_Address)[1];
 
-        return (int)$port;
+        return (int) $port;
     }
 
     /**
-     * Gets the human readable name of the current map
+     * Gets the human readable name of the current map.
      *
      * @return string
      */
@@ -194,7 +196,7 @@ class Server extends Elegant
     }
 
     /**
-     * Gets the human readable name of the current mode
+     * Gets the human readable name of the current mode.
      *
      * @return string
      */
@@ -204,13 +206,13 @@ class Server extends Elegant
     }
 
     /**
-     * Gets the number of players currently in queue and caches the result for 5 minutes
+     * Gets the number of players currently in queue and caches the result for 5 minutes.
      *
-     * @return integer
+     * @return int
      */
     public function getInQueueAttribute()
     {
-        $result = Cache::remember('server.' . $this->ServerID . '.queue', 5, function () {
+        $result = Cache::remember('server.'.$this->ServerID.'.queue', 5, function () {
             $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogServer');
 
             return $battlelog->server($this)->inQueue();
@@ -220,55 +222,55 @@ class Server extends Elegant
     }
 
     /**
-     * Gets the path of the maps xml file
+     * Gets the path of the maps xml file.
      *
      * @return string
      */
     public function getMapsFilePathAttribute()
     {
-        $path = app_path() . DIRECTORY_SEPARATOR . 'ThirdParty' . DIRECTORY_SEPARATOR . strtoupper($this->game->Name) . DIRECTORY_SEPARATOR . 'mapNames.xml';
+        $path = app_path().DIRECTORY_SEPARATOR.'ThirdParty'.DIRECTORY_SEPARATOR.strtoupper($this->game->Name).DIRECTORY_SEPARATOR.'mapNames.xml';
 
         return $path;
     }
 
     /**
-     * Gets the path of the gamemodes xml file
+     * Gets the path of the gamemodes xml file.
      *
      * @return string
      */
     public function getModesFilePathAttribute()
     {
-        $path = app_path() . DIRECTORY_SEPARATOR . 'ThirdParty' . DIRECTORY_SEPARATOR . strtoupper($this->game->Name) . DIRECTORY_SEPARATOR . 'playModes.xml';
+        $path = app_path().DIRECTORY_SEPARATOR.'ThirdParty'.DIRECTORY_SEPARATOR.strtoupper($this->game->Name).DIRECTORY_SEPARATOR.'playModes.xml';
 
         return $path;
     }
 
     /**
-     * Gets the path of the squads xml file
+     * Gets the path of the squads xml file.
      *
      * @return string
      */
     public function getSquadsFilePathAttribute()
     {
-        $path = app_path() . DIRECTORY_SEPARATOR . 'ThirdParty' . DIRECTORY_SEPARATOR . strtoupper($this->game->Name) . DIRECTORY_SEPARATOR . 'squadNames.xml';
+        $path = app_path().DIRECTORY_SEPARATOR.'ThirdParty'.DIRECTORY_SEPARATOR.strtoupper($this->game->Name).DIRECTORY_SEPARATOR.'squadNames.xml';
 
         return $path;
     }
 
     /**
-     * Gets the path of the teams xml file
+     * Gets the path of the teams xml file.
      *
      * @return string
      */
     public function getTeamsFilePathAttribute()
     {
-        $path = app_path() . DIRECTORY_SEPARATOR . 'ThirdParty' . DIRECTORY_SEPARATOR . strtoupper($this->game->Name) . DIRECTORY_SEPARATOR . 'teamNames.xml';
+        $path = app_path().DIRECTORY_SEPARATOR.'ThirdParty'.DIRECTORY_SEPARATOR.strtoupper($this->game->Name).DIRECTORY_SEPARATOR.'teamNames.xml';
 
         return $path;
     }
 
     /**
-     * Gets the current map image banner
+     * Gets the current map image banner.
      *
      * @return string
      */

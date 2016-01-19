@@ -1,4 +1,6 @@
-<?php namespace BFACP\Battlefield;
+<?php
+
+namespace BFACP\Battlefield;
 
 use BFACP\Elegant;
 use BFACP\Exceptions\RconException;
@@ -7,28 +9,28 @@ use Illuminate\Support\Facades\Crypt;
 class Setting extends Elegant
 {
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = true;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'bfacp_settings_servers';
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'server_id';
 
     /**
-     * Fields not allowed to be mass assigned
+     * Fields not allowed to be mass assigned.
      *
      * @var array
      */
@@ -42,21 +44,21 @@ class Setting extends Elegant
     protected $hidden = ['rcon_password', 'monitor_key'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
     protected $dates = [];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
     protected $appends = [];
 
     /**
-     * Models to be loaded automaticly
+     * Models to be loaded automaticly.
      *
      * @var array
      */
@@ -71,7 +73,7 @@ class Setting extends Elegant
     }
 
     /**
-     * Decypts the RCON Password
+     * Decypts the RCON Password.
      *
      * @return string
      */
@@ -85,7 +87,7 @@ class Setting extends Elegant
     }
 
     /**
-     * Encrypts the password to be safely stored
+     * Encrypts the password to be safely stored.
      *
      * @param string $value
      */

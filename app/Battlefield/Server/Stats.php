@@ -1,46 +1,48 @@
-<?php namespace BFACP\Battlefield\Server;
+<?php
+
+namespace BFACP\Battlefield\Server;
 
 use BFACP\Elegant;
 
 class Stats extends Elegant
 {
     /**
-     * Should model handle timestamps
+     * Should model handle timestamps.
      *
-     * @var boolean
+     * @var bool
      */
     public $timestamps = false;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     protected $table = 'tbl_server_stats';
 
     /**
-     * Table primary key
+     * Table primary key.
      *
      * @var string
      */
     protected $primaryKey = 'ServerID';
 
     /**
-     * Fields not allowed to be mass assigned
+     * Fields not allowed to be mass assigned.
      *
      * @var array
      */
     protected $guarded = ['ServerID'];
 
     /**
-     * Date fields to convert to carbon instances
+     * Date fields to convert to carbon instances.
      *
      * @var array
      */
     protected $dates = [];
 
     /**
-     * Append custom attributes to output
+     * Append custom attributes to output.
      *
      * @var array
      */
@@ -54,7 +56,7 @@ class Stats extends Elegant
     protected $hidden = [];
 
     /**
-     * Models to be loaded automatically
+     * Models to be loaded automatically.
      *
      * @var array
      */

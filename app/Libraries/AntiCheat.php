@@ -1,4 +1,6 @@
-<?php namespace BFACP\Libraries;
+<?php
+
+namespace BFACP\Libraries;
 
 use BFACP\Battlefield\Player;
 use BFACP\Facades\Main as MainHelper;
@@ -15,42 +17,42 @@ class AntiCheat
     public $battlelog;
 
     /**
-     * Player Object
+     * Player Object.
      *
      * @var Player
      */
     public $player;
 
     /**
-     * Stores the weapons with their damages
+     * Stores the weapons with their damages.
      *
      * @var array
      */
     public $weapons = [];
 
     /**
-     * Weapons that were triggered by the Anti-Cheat System
+     * Weapons that were triggered by the Anti-Cheat System.
      *
      * @var array
      */
     public $triggered = [];
 
     /**
-     * Name of game
+     * Name of game.
      *
      * @var string
      */
     public $game = '';
 
     /**
-     * Guzzle Client
+     * Guzzle Client.
      *
      * @var Client
      */
     protected $guzzle;
 
     /**
-     * Categories allowed to be parsed
+     * Categories allowed to be parsed.
      *
      * @var array
      */
@@ -89,7 +91,7 @@ class AntiCheat
     ];
 
     /**
-     * Trigger values
+     * Trigger values.
      *
      * @var array
      */
@@ -110,7 +112,7 @@ class AntiCheat
     }
 
     /**
-     * Fetches the weapon damages from GitHub and caches it for 24 hours (1 day)
+     * Fetches the weapon damages from GitHub and caches it for 24 hours (1 day).
      *
      * @return mixed
      */
@@ -130,7 +132,7 @@ class AntiCheat
     }
 
     /**
-     * Returns a array of triggered weapons
+     * Returns a array of triggered weapons.
      *
      * @return array
      */
@@ -140,7 +142,7 @@ class AntiCheat
     }
 
     /**
-     * Parse the battlelog weapons list
+     * Parse the battlelog weapons list.
      *
      * @param  array $weapons
      *
@@ -148,15 +150,15 @@ class AntiCheat
      */
     public function parse($weapons)
     {
-        if (!array_key_exists($this->game, $this->weapons)) {
+        if (! array_key_exists($this->game, $this->weapons)) {
             throw new HttpException(500, sprintf('The game "%s" is not supported.', $this->game));
         }
 
         foreach ($weapons as $weapon) {
             $category = str_replace(' ', '_', strtolower(trim($weapon['category'])));
 
-            if (!in_array($category, $this->allowedCategories[ $this->game ]) || !array_key_exists($category,
-                    $this->weapons[ $this->game ]) || !array_key_exists($weapon['slug'],
+            if (! in_array($category, $this->allowedCategories[ $this->game ]) || ! array_key_exists($category,
+                    $this->weapons[ $this->game ]) || ! array_key_exists($weapon['slug'],
                     $this->weapons[ $this->game ][ $category ])
             ) {
                 continue;
