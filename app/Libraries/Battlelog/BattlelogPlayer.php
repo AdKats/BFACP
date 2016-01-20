@@ -290,7 +290,11 @@ class BattlelogPlayer extends BattlelogAPI
         // Send request
         $results = $this->sendRequest($uri)['data'];
 
-        $battlereports = new Collection($results['gameReports']);
+        if(array_key_exists('gameReports', $results)) {
+            $battlereports = new Collection($results['gameReports']);
+        } else {
+            $battlereports = [];
+        }
 
         return $battlereports;
     }
