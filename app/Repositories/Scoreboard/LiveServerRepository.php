@@ -1270,6 +1270,10 @@ class LiveServerRepository extends BaseRepository
                 case 4:
                     $score = (int) $this->serverinfo[12];
                     break;
+
+                default:
+                    $score = 0;
+                    break;
             }
 
             $teamName = $this->getTeamName($teamID);
