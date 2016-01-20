@@ -14,7 +14,7 @@ class ReportRepository extends BaseRepository
      *
      * @var array
      */
-    public static $allowedCommands = [3, 6, 7, 8, 9, 10, 11, 40, 41, 61];
+    public static $allowedCommands = [3, 6, 7, 8, 9, 10, 11, 40, 42, 61];
 
     /**
      * @return array
