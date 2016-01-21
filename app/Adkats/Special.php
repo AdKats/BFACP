@@ -6,8 +6,7 @@ use BFACP\Elegant;
 use BFACP\Facades\Main as MainHelper;
 
 /**
- * Class Special
- * @package BFACP\Adkats
+ * Class Special.
  */
 class Special extends Elegant
 {

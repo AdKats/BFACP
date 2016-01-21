@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 /**
- * Class Server
- * @package BFACP\Battlefield\Server
+ * Class Server.
  */
 class Server extends Elegant
 {

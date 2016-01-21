@@ -3,8 +3,7 @@
 namespace BFACP\Helpers;
 
 /**
- * Class Macros
- * @package BFACP\Helpers
+ * Class Macros.
  */
 class Macros extends Main
 {

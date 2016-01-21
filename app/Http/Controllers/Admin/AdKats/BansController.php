@@ -20,8 +20,7 @@ use Illuminate\Support\Facades\Lang as Lang;
 use Illuminate\Support\Facades\Redirect as Redirect;
 
 /**
- * Class BansController
- * @package BFACP\Http\Controllers\Admin\Adkats
+ * Class BansController.
  */
 class BansController extends Controller
 {
@@ -91,7 +90,7 @@ class BansController extends Controller
     /**
      * Shows the ban editing page.
      *
-     * @param  int $id Ban ID
+     * @param int $id Ban ID
      *
      * @return $this
      */
@@ -175,7 +174,7 @@ class BansController extends Controller
     /**
      * Updates a existing ban.
      *
-     * @param  int $id Ban ID
+     * @param int $id Ban ID
      */
     public function update($id)
     {
@@ -324,7 +323,7 @@ class BansController extends Controller
     /**
      * Unbans the player.
      *
-     * @param  int $id Ban ID
+     * @param int $id Ban ID
      *
      * @return \Illuminate\Support\Facades\Response
      */

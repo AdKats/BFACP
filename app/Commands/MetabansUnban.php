@@ -9,8 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
 
 /**
- * Class MetabansUnban
- * @package BFACP\Commands
+ * Class MetabansUnban.
  */
 class MetabansUnban extends Command
 {

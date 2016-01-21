@@ -13,8 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 
 /**
- * Class Metabans
- * @package BFACP\Libraries
+ * Class Metabans.
  */
 class Metabans
 {
@@ -141,11 +140,11 @@ class Metabans
     /**
      * Assess player.
      *
-     * @param  string $game     BF_BC2, MOH_2010, BF_3, MOH_2012, BF_4
-     * @param  string $GUID     Player GUID
-     * @param  string $type     None, Watch, White, Black
-     * @param  string $reason   Ban Reason - Max 200 chars
-     * @param  int    $duration Length of time in seconds ban should be enforced. Defaults to 3 months.
+     * @param string $game     BF_BC2, MOH_2010, BF_3, MOH_2012, BF_4
+     * @param string $GUID     Player GUID
+     * @param string $type     None, Watch, White, Black
+     * @param string $reason   Ban Reason - Max 200 chars
+     * @param int    $duration Length of time in seconds ban should be enforced. Defaults to 3 months.
      *
      * @return Collection
      */
@@ -183,9 +182,9 @@ class Metabans
     /**
      * Validator.
      *
-     * @param  array $data
-     * @param  array $rules
-     * @param  array $messages
+     * @param array $data
+     * @param array $rules
+     * @param array $messages
      *
      * @return bool
      */
@@ -223,8 +222,8 @@ class Metabans
     /**
      * Generates the request.
      *
-     * @param  array $requests
-     * @param  bool  $auth Request requires authentication
+     * @param array $requests
+     * @param bool  $auth     Request requires authentication
      *
      * @return mixed [type]            [description]
      */
@@ -253,7 +252,7 @@ class Metabans
     /**
      * Send request to metabans API.
      *
-     * @param  array $payload
+     * @param array $payload
      *
      * @return mixed
      */

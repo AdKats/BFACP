@@ -6,8 +6,7 @@ use BFACP\Elegant;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Setting
- * @package BFACP\Account
+ * Class Setting.
  */
 class Setting extends Elegant
 {

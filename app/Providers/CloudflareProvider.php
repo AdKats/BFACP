@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class CloudflareProvider
- * @package BFACP\Providers
+ * Class CloudflareProvider.
  */
 class CloudflareProvider extends ServiceProvider
 {

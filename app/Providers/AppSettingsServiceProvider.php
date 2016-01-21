@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class AppSettingsServiceProvider
- * @package BFACP\Providers
+ * Class AppSettingsServiceProvider.
  */
 class AppSettingsServiceProvider extends ServiceProvider
 {

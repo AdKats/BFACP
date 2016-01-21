@@ -3,8 +3,7 @@
 namespace BFACP\Composers;
 
 /**
- * Class MenuComposer
- * @package BFACP\Composers
+ * Class MenuComposer.
  */
 class MenuComposer
 {

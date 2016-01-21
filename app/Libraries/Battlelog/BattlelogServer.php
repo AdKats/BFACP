@@ -5,8 +5,7 @@ namespace BFACP\Libraries\Battlelog;
 use Exception;
 
 /**
- * Class BattlelogServer
- * @package BFACP\Libraries\Battlelog
+ * Class BattlelogServer.
  */
 class BattlelogServer extends BattlelogAPI
 {

@@ -6,8 +6,7 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class HelpersProvider
- * @package BFACP\Providers
+ * Class HelpersProvider.
  */
 class HelpersProvider extends ServiceProvider
 {

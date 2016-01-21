@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
- * Class AntiCheat
- * @package BFACP\Libraries
+ * Class AntiCheat.
  */
 class AntiCheat
 {
@@ -151,7 +150,7 @@ class AntiCheat
     /**
      * Parse the battlelog weapons list.
      *
-     * @param  array $weapons
+     * @param array $weapons
      *
      * @return $this
      */

@@ -5,8 +5,7 @@ namespace BFACP\Repositories;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class BaseRepository
- * @package BFACP\Repositories
+ * Class BaseRepository.
  */
 class BaseRepository
 {

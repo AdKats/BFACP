@@ -13,8 +13,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 
 /**
- * Class PlayersController
- * @package BFACP\Http\Controllers
+ * Class PlayersController.
  */
 class PlayersController extends Controller
 {
@@ -42,8 +41,8 @@ class PlayersController extends Controller
     /**
      * Shows the player profile.
      *
-     * @param  int    $id
-     * @param  string $name
+     * @param int    $id
+     * @param string $name
      */
     public function profile($id, $name = '')
     {

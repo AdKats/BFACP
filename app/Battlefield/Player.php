@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Route;
 
 /**
- * Class Player
- * @package BFACP\Battlefield
+ * Class Player.
  */
 class Player extends Elegant
 {

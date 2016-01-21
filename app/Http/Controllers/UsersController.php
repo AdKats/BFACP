@@ -15,8 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
 /**
- * Class UsersController
- * @package BFACP\Http\Controllers
+ * Class UsersController.
  */
 class UsersController extends Controller
 {
@@ -128,7 +127,7 @@ class UsersController extends Controller
     /**
      * Attempt to confirm the account with code.
      *
-     * @param  string $code
+     * @param string $code
      *
      * @return Redirect
      */

@@ -15,8 +15,7 @@ use Illuminate\Support\Facades\Session as Session;
 use Illuminate\Support\Facades\View as View;
 
 /**
- * Class ServersController
- * @package BFACP\Http\Controllers\Admin\Site
+ * Class ServersController.
  */
 class ServersController extends Controller
 {

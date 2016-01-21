@@ -82,7 +82,7 @@ class BFHConn
 
     /**
      * @param Server $server
-     * @param string $debug for debugging, use "-d"
+     * @param string $debug  for debugging, use "-d"
      */
     public function __construct(Server $server, $debug = '-d')
     {
@@ -1668,7 +1668,7 @@ class BFHConn
      * TODO: banreason.
      *
      * @param           string
-     * @param int       $timerange
+     * @param int $timerange
      *
      * @return string
      */
@@ -1943,7 +1943,7 @@ class BFHConn
     /**
      * Gives player leader of their current squad.
      *
-     * @param  string $playerName
+     * @param string $playerName
      *
      * @return string
      */
@@ -1975,8 +1975,8 @@ class BFHConn
     /**
      * Checks if the squad is locked.
      *
-     * @param  int $teamID
-     * @param  int $squadID
+     * @param int $teamID
+     * @param int $squadID
      *
      * @return bool
      */
@@ -1988,9 +1988,9 @@ class BFHConn
     /**
      * Set the squad to private or not.
      *
-     * @param  int  $teamID
-     * @param  int  $squadID
-     * @param  bool $private
+     * @param int  $teamID
+     * @param int  $squadID
+     * @param bool $private
      *
      * @return bool
      */
@@ -2002,7 +2002,7 @@ class BFHConn
     /**
      * Get all squads that have players in them on a specific team.
      *
-     * @param  int $teamID
+     * @param int $teamID
      *
      * @return array
      */
@@ -2014,8 +2014,8 @@ class BFHConn
     /**
      * Get player count and names of soldiers in a specific squad.
      *
-     * @param  int $teamID
-     * @param  int $squadID
+     * @param int $teamID
+     * @param int $squadID
      *
      * @return array
      */
@@ -2769,7 +2769,7 @@ class BFHConn
     /**
      * gets the team name by there faction id.
      *
-     * @param  int $integer Team ID
+     * @param int $integer Team ID
      *
      * @return array
      */
@@ -2810,7 +2810,7 @@ class BFHConn
     /**
      * Tabulates a result containing columns and rows.
      *
-     * @param  array $res
+     * @param array $res
      *
      * @return array
      */
@@ -2845,5 +2845,6 @@ class BFHConn
 
         return $rows;
     }
+
     // TODO: server moderation mode
 }

@@ -5,8 +5,7 @@ namespace BFACP\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * Class Main
- * @package BFACP\Facades
+ * Class Main.
  */
 class Main extends Facade
 {

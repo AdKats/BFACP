@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 
 /**
- * Class PusherController
- * @package BFACP\Http\Controllers\Api
+ * Class PusherController.
  */
 class PusherController extends Controller
 {

@@ -5,8 +5,7 @@ namespace BFACP\Adkats;
 use BFACP\Elegant;
 
 /**
- * Class Setting
- * @package BFACP\Adkats
+ * Class Setting.
  */
 class Setting extends Elegant
 {
@@ -70,8 +69,8 @@ class Setting extends Elegant
     /**
      * Quick way of selecting specific commands.
      *
-     * @param               $query
-     * @param  array|string $names Command Names
+     * @param              $query
+     * @param array|string $names Command Names
      *
      * @return
      */
@@ -87,8 +86,8 @@ class Setting extends Elegant
     /**
      * Quick way of selecting servers.
      *
-     * @param              $query
-     * @param  array       $ids Array of server ids
+     * @param       $query
+     * @param array $ids   Array of server ids
      *
      * @return
      */

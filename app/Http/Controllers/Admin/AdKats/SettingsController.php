@@ -8,8 +8,7 @@ use BFACP\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 
 /**
- * Class SettingsController
- * @package BFACP\Http\Controllers\Admin\Adkats
+ * Class SettingsController.
  */
 class SettingsController extends Controller
 {

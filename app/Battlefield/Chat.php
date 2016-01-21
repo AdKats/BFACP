@@ -5,8 +5,7 @@ namespace BFACP\Battlefield;
 use BFACP\Elegant;
 
 /**
- * Class Chat
- * @package BFACP\Battlefield
+ * Class Chat.
  */
 class Chat extends Elegant
 {

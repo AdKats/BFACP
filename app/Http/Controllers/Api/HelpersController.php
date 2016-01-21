@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class HelpersController
- * @package BFACP\Http\Controllers\Api
+ * Class HelpersController.
  */
 class HelpersController extends Controller
 {

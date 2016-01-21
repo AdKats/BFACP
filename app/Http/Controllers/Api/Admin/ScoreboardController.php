@@ -15,8 +15,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException as AccessDe
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException as NotFoundHttpException;
 
 /**
- * Class ScoreboardController
- * @package BFACP\Http\Controllers\Api\Admin
+ * Class ScoreboardController.
  */
 class ScoreboardController extends Controller
 {
@@ -102,9 +101,9 @@ class ScoreboardController extends Controller
     /**
      * Wrapper for \BFACP\Facades\Main.
      *
-     * @param  array  $data
-     * @param  string $message
-     * @param  string $type
+     * @param array  $data
+     * @param string $message
+     * @param string $type
      *
      * @return MainHelper
      */
@@ -126,8 +125,8 @@ class ScoreboardController extends Controller
     /**
      * Quick function for checking permissions for the scoreboard admin.
      *
-     * @param  string $permission Name of the permission
-     * @param  string $message
+     * @param string $permission Name of the permission
+     * @param string $message
      *
      * @return bool
      */

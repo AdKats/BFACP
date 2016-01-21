@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
 
 /**
- * Class HomeController
- * @package BFACP\Http\Controllers
+ * Class HomeController.
  */
 class HomeController extends Controller
 {

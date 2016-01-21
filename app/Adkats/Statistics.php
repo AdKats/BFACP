@@ -5,8 +5,7 @@ namespace BFACP\Adkats;
 use BFACP\Elegant;
 
 /**
- * Class Statistics
- * @package BFACP\Adkats
+ * Class Statistics.
  */
 class Statistics extends Elegant
 {
@@ -70,8 +69,8 @@ class Statistics extends Elegant
     /**
      * Only get certian types.
      *
-     * @param        $query
-     * @param  array $type
+     * @param       $query
+     * @param array $type
      *
      * @return object
      */

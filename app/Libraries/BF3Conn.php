@@ -80,7 +80,7 @@ class BF3Conn
 
     /**
      * @param Server $server
-     * @param string $debug for debugging, use "-d"
+     * @param string $debug  for debugging, use "-d"
      */
     public function __construct(Server $server, $debug = '-d')
     {
@@ -1905,7 +1905,7 @@ class BF3Conn
     /**
      * Gives player leader of their current squad.
      *
-     * @param  string $playerName
+     * @param string $playerName
      *
      * @return string
      */
@@ -1937,8 +1937,8 @@ class BF3Conn
     /**
      * Checks if the squad is locked.
      *
-     * @param  int $teamID
-     * @param  int $squadID
+     * @param int $teamID
+     * @param int $squadID
      *
      * @return bool
      */
@@ -1965,9 +1965,9 @@ class BF3Conn
     /**
      * Set the squad to private or not.
      *
-     * @param  int  $teamID
-     * @param  int  $squadID
-     * @param  bool $private
+     * @param int  $teamID
+     * @param int  $squadID
+     * @param bool $private
      *
      * @return bool
      */
@@ -1979,7 +1979,7 @@ class BF3Conn
     /**
      * Get all squads that have players in them on a specific team.
      *
-     * @param  int $teamID
+     * @param int $teamID
      *
      * @return array
      */
@@ -1991,8 +1991,8 @@ class BF3Conn
     /**
      * Get player count and names of soldiers in a specific squad.
      *
-     * @param  int $teamID
-     * @param  int $squadID
+     * @param int $teamID
+     * @param int $squadID
      *
      * @return array
      */
@@ -2794,7 +2794,7 @@ class BF3Conn
     /**
      * Tabulates a result containing columns and rows.
      *
-     * @param  array $res
+     * @param array $res
      *
      * @return array
      */
@@ -2829,5 +2829,6 @@ class BF3Conn
 
         return $rows;
     }
+
     // TODO: server moderation mode
 }

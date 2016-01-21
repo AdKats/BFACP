@@ -9,8 +9,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class Controller
- * @package BFACP\Http\Controllers
+ * Class Controller.
  */
 class Controller extends BaseController
 {

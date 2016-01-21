@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Config as Config;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 /**
- * Class User
- * @package BFACP\Account
+ * Class User.
  */
 class User extends Authenticatable
 {

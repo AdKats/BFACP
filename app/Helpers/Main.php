@@ -15,8 +15,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 
 /**
- * Class Main
- * @package BFACP\Helpers
+ * Class Main.
  */
 class Main
 {
@@ -31,12 +30,12 @@ class Main
     /**
      * Return a JSON response.
      *
-     * @param  array  $input
-     * @param  string $message
-     * @param  string $status
-     * @param  int    $httpcode
-     * @param  bool   $cached
-     * @param  bool   $collectionOnly
+     * @param array  $input
+     * @param string $message
+     * @param string $status
+     * @param int    $httpcode
+     * @param bool   $cached
+     * @param bool   $collectionOnly
      *
      * @return Response
      */
@@ -107,7 +106,7 @@ class Main
     /**
      * Convert seconds to a human-readable string.
      *
-     * @param  int $secs
+     * @param int  $secs
      * @param bool $shorthand
      *
      * @return string
@@ -211,9 +210,9 @@ class Main
      * Function to divide two numbers together and catch
      * divide by zero exception.
      *
-     * @param  int $num1
-     * @param  int $num2
-     * @param  int $precision
+     * @param int $num1
+     * @param int $num2
+     * @param int $precision
      *
      * @return float
      */
@@ -230,9 +229,9 @@ class Main
      * Function to get percentage of two numbers together and
      * catch divide by zero exception.
      *
-     * @param  int $num1
-     * @param  int $num2
-     * @param  int $precision
+     * @param int $num1
+     * @param int $num2
+     * @param int $precision
      *
      * @return float
      */
@@ -248,7 +247,7 @@ class Main
     /**
      * Allows the ability to call empty on a static class method.
      *
-     * @param  mixed $var
+     * @param mixed $var
      *
      * @return bool
      */
@@ -260,9 +259,9 @@ class Main
     /**
      * Generates the site title.
      *
-     * @param  string $page  Page Title
-     * @param  string $clan  Use clan name if set
-     * @param  bool   $short If true it will just return without the page title
+     * @param string $page  Page Title
+     * @param string $clan  Use clan name if set
+     * @param bool   $short If true it will just return without the page title
      *
      * @return string
      */
@@ -286,8 +285,8 @@ class Main
     /**
      * Return country name by code.
      *
-     * @param  string $code Two digit country code
-     * @param bool    $list
+     * @param string $code Two digit country code
+     * @param bool   $list
      *
      * @return string
      */
@@ -557,10 +556,10 @@ class Main
     /**
      * Returns the language name if code is specified.
      *
-     * @param  string $lang     Language Code
-     * @param  bool   $onlyKeys Only return comma delimited list
+     * @param string $lang     Language Code
+     * @param bool   $onlyKeys Only return comma delimited list
      *
-     * @return mixed        String or Array
+     * @return mixed String or Array
      */
     public function languages($lang = '', $onlyKeys = false)
     {
@@ -765,8 +764,8 @@ class Main
     /**
      * Returns the correct soldier assigned to user for the correct game.
      *
-     * @param  \BFACP\Account\User $user
-     * @param  int                 $gameID
+     * @param \BFACP\Account\User $user
+     * @param int                 $gameID
      *
      * @return Player
      */
@@ -812,9 +811,9 @@ class Main
      * Note: the $add_dashes option will increase the length of the password by
      * floor(sqrt(N)) characters.
      *
-     * @param  int    $length
-     * @param  bool   $add_dashes
-     * @param  string $available_sets
+     * @param int    $length
+     * @param bool   $add_dashes
+     * @param string $available_sets
      *
      * @return string
      * @source https://gist.github.com/tylerhall/521810
@@ -870,7 +869,7 @@ class Main
     /**
      * Converts a string to a boolean.
      *
-     * @param  string $string
+     * @param string $string
      *
      * @return bool
      */
@@ -890,7 +889,7 @@ class Main
     /**
      * Converts log error codes to correct css styles.
      *
-     * @param  string $name Exception Level
+     * @param string $name Exception Level
      *
      * @return string
      */
@@ -922,9 +921,9 @@ class Main
     /**
      * Returns files in a directory.
      *
-     * @param  string $dir       Directory Path
-     * @param  bool   $onlyNames Only return the filename
-     * @param  string $prepend   Prepend custom path to use in front of filename
+     * @param string $dir       Directory Path
+     * @param bool   $onlyNames Only return the filename
+     * @param string $prepend   Prepend custom path to use in front of filename
      *
      * @return array
      */
@@ -950,7 +949,7 @@ class Main
     /**
      * Returns a list of accounts that match $player.
      *
-     * @param  object $player \BFACP\Battlefield\Player
+     * @param object $player \BFACP\Battlefield\Player
      *
      * @return array
      */

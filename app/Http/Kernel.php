@@ -6,8 +6,7 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Class Kernel
- * @package BFACP\Http
+ * Class Kernel.
  */
 class Kernel extends HttpKernel
 {

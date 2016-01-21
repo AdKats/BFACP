@@ -5,8 +5,7 @@ namespace BFACP\Player;
 use BFACP\Elegant;
 
 /**
- * Class Session
- * @package BFACP\Player
+ * Class Session.
  */
 class Session extends Elegant
 {

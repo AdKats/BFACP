@@ -9,8 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
 
 /**
- * Class ChatlogController
- * @package BFACP\Http\Controllers\Api
+ * Class ChatlogController.
  */
 class ChatlogController extends Controller
 {

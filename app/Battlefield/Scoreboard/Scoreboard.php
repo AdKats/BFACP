@@ -6,8 +6,7 @@ use BFACP\Elegant;
 use BFACP\Facades\Battlefield as BattlefieldHelper;
 
 /**
- * Class Scoreboard
- * @package BFACP\Battlefield\Scoreboard
+ * Class Scoreboard.
  */
 class Scoreboard extends Elegant
 {

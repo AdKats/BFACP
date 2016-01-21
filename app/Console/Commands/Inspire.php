@@ -6,8 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
 
 /**
- * Class Inspire
- * @package BFACP\Console\Commands
+ * Class Inspire.
  */
 class Inspire extends Command
 {

@@ -5,8 +5,7 @@ namespace BFACP\Battlefield;
 use BFACP\Elegant;
 
 /**
- * Class Reputation
- * @package BFACP\Battlefield
+ * Class Reputation.
  */
 class Reputation extends Elegant
 {

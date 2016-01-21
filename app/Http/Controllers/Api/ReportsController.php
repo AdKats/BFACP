@@ -14,8 +14,7 @@ use Illuminate\Support\Facades\Validator as Validator;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException as AccessDeniedHttpException;
 
 /**
- * Class ReportsController
- * @package BFACP\Http\Controllers\Api
+ * Class ReportsController.
  */
 class ReportsController extends Controller
 {

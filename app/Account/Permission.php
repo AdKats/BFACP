@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Config;
 use Zizaco\Entrust\EntrustPermission;
 
 /**
- * Class Permission
- * @package BFACP\Account
+ * Class Permission.
  */
 class Permission extends EntrustPermission
 {

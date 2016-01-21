@@ -5,8 +5,7 @@ namespace BFACP\Battlefield;
 use BFACP\Elegant;
 
 /**
- * Class Game
- * @package BFACP\Battlefield
+ * Class Game.
  */
 class Game extends Elegant
 {

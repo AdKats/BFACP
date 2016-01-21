@@ -5,8 +5,7 @@ namespace BFACP\Commands;
 use Illuminate\Console\Command;
 
 /**
- * Class Upgrade
- * @package BFACP\Commands
+ * Class Upgrade.
  */
 class Upgrade extends Command
 {

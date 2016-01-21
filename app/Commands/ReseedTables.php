@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class ReseedTables
- * @package BFACP\Commands
+ * Class ReseedTables.
  */
 class ReseedTables extends Command
 {

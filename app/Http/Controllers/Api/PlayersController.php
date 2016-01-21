@@ -8,8 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 /**
- * Class PlayersController
- * @package BFACP\Http\Controllers\Api
+ * Class PlayersController.
  */
 class PlayersController extends Controller
 {
@@ -43,7 +42,7 @@ class PlayersController extends Controller
     /**
      * Get a player by their player database id.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Support\Facades\Response
      */
@@ -73,7 +72,7 @@ class PlayersController extends Controller
     /**
      * Gets the players record history.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Support\Facades\Response
      */
@@ -87,7 +86,7 @@ class PlayersController extends Controller
     /**
      * Gets the players chatlogs.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Support\Facades\Response
      */
@@ -101,7 +100,7 @@ class PlayersController extends Controller
     /**
      * Gets the players sessions.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Support\Facades\Response
      */

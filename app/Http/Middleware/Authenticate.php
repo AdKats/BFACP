@@ -6,17 +6,16 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class Authenticate
- * @package BFACP\Http\Middleware
+ * Class Authenticate.
  */
 class Authenticate
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
-     * @param  string|null              $guard
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     * @param string|null              $guard
      *
      * @return mixed
      */

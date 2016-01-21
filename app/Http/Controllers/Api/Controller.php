@@ -6,8 +6,7 @@ use BFACP\Http\Controllers\Controller as BaseController;
 use Dingo\Api\Routing\Helpers;
 
 /**
- * Class Controller
- * @package BFACP\Http\Controllers\Api
+ * Class Controller.
  */
 class Controller extends BaseController
 {

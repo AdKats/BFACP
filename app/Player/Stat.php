@@ -5,8 +5,7 @@ namespace BFACP\Player;
 use BFACP\Elegant;
 
 /**
- * Class Stat
- * @package BFACP\Player
+ * Class Stat.
  */
 class Stat extends Elegant
 {
