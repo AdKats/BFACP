@@ -1,6 +1,6 @@
 <?php
 
-namespace BFACP\Http\Controllers\Admin\AdKats;
+namespace BFACP\Http\Controllers\Admin\Adkats;
 
 use BFACP\Adkats\Special;
 use BFACP\Facades\Main as MainHelper;
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\View;
 
 /**
  * Class SpecialPlayersController
- * @package BFACP\Http\Controllers\Admin\AdKats
+ * @package BFACP\Http\Controllers\Admin\Adkats
  */
 class SpecialPlayersController extends Controller
 {
@@ -55,6 +55,8 @@ class SpecialPlayersController extends Controller
             $groups = Cache::get('admin.adkats.special.groups');
 
             $player = Special::findOrFail($id);
+
+            $newGroup = null;
 
             foreach ($groups as $group) {
                 if ($group['group_key'] == Input::get('group')) {

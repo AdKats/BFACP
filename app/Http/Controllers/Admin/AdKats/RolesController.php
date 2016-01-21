@@ -1,6 +1,6 @@
 <?php
 
-namespace BFACP\Http\Controllers\Admin\AdKats;
+namespace BFACP\Http\Controllers\Admin\Adkats;
 
 use BFACP\Adkats\Account\Role;
 use BFACP\Adkats\Command as Command;
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\View as View;
 
 /**
  * Class RolesController
- * @package BFACP\Http\Controllers\Admin\AdKats
+ * @package BFACP\Http\Controllers\Admin\Adkats
  */
 class RolesController extends Controller
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BFACP\Http\Controllers\Admin\AdKats;
+namespace BFACP\Http\Controllers\Admin\Adkats;
 
 use BFACP\Battlefield\Player as Player;
 use BFACP\Battlefield\Server\Server as Server;
@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Redirect as Redirect;
 
 /**
  * Class BansController
- * @package BFACP\Http\Controllers\Admin\AdKats
+ * @package BFACP\Http\Controllers\Admin\Adkats
  */
 class BansController extends Controller
 {

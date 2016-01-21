@@ -180,7 +180,7 @@ Route::group(['middleware' => 'web'], function () {
     });
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
-        Route::group(['prefix' => 'adkats', 'namespace' => 'AdKats'], function () {
+        Route::group(['prefix' => 'adkats', 'namespace' => 'Adkats'], function () {
 
             // Adkats Settings
             Route::resource('settings', 'SettingsController', [

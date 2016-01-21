@@ -1,6 +1,6 @@
 <?php
 
-namespace BFACP\Http\Controllers\Admin\AdKats;
+namespace BFACP\Http\Controllers\Admin\Adkats;
 
 use BFACP\Adkats\Account\Role;
 use BFACP\Adkats\Account\Soldier;
@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\View;
 
 /**
  * Class UsersController
- * @package BFACP\Http\Controllers\Admin\AdKats
+ * @package BFACP\Http\Controllers\Admin\Adkats
  */
 class UsersController extends Controller
 {

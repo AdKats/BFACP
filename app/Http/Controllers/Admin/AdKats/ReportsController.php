@@ -1,13 +1,13 @@
 <?php
 
-namespace BFACP\Http\Controllers\Admin\AdKats;
+namespace BFACP\Http\Controllers\Admin\Adkats;
 
 use BFACP\Http\Controllers\Controller;
 use Illuminate\Support\Facades\App as App;
 
 /**
  * Class ReportsController
- * @package BFACP\Http\Controllers\Admin\AdKats
+ * @package BFACP\Http\Controllers\Admin\Adkats
  */
 class ReportsController extends Controller
 {

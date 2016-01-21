@@ -1,6 +1,6 @@
 <?php
 
-namespace BFACP\Http\Controllers\Admin\AdKats;
+namespace BFACP\Http\Controllers\Admin\Adkats;
 
 use BFACP\Adkats\Setting;
 use BFACP\Battlefield\Server\Server;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\View;
 
 /**
  * Class SettingsController
- * @package BFACP\Http\Controllers\Admin\AdKats
+ * @package BFACP\Http\Controllers\Admin\Adkats
  */
 class SettingsController extends Controller
 {
