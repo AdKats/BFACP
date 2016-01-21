@@ -22,15 +22,14 @@ class UserRepository
     /**
      * Create a new user.
      *
-     * @param  array   $input
-     * @param  int $role        Default role is 2
-     * @param  bool    $confirmed
-     * @param  bool    $autoGenPass Generate a secure password if true
-     * @param bool     $skipEmail   Skips the sending of the email
+     * @param  array $input
+     * @param  int   $role        Default role is 2
+     * @param  bool  $autoGenPass Generate a secure password if true
+     * @param bool   $skipEmail   Skips the sending of the email
      *
      * @return User
      */
-    public function signup($input = [], $role = 2, $confirmed = false, $autoGenPass = false, $skipEmail = false)
+    public function signup($input = [], $role = 2, $autoGenPass = false, $skipEmail = false)
     {
         $user = new User();
 

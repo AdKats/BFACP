@@ -94,7 +94,7 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        $user = $this->repository->signup($data, 2, false, false, true);
+        $user = $this->repository->signup($data, 2, false, true);
 
         return $user;
     }
