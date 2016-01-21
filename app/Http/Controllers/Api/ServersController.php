@@ -218,9 +218,9 @@ class ServersController extends Controller
      */
     public function scoreboardAdmin()
     {
-        try {
-            $id = Input::get('server_id');
+        $id = Input::get('server_id');
 
+        try {
             if (! is_numeric($id) || $id <= 0) {
                 throw new NotFoundHttpException('Invalid Server ID');
             }
