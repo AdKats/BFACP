@@ -1,6 +1,6 @@
 <?php
 
-namespace BFACP\Http\Controllers\Admin\AdKats;
+namespace BFACP\Http\Controllers\Admin\Adkats;
 
 use BFACP\Adkats\Account\Role;
 use BFACP\Adkats\Command as Command;
@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Redirect as Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View as View;
 
+/**
+ * Class RolesController.
+ */
 class RolesController extends Controller
 {
     public function index()
@@ -25,6 +28,9 @@ class RolesController extends Controller
             Lang::get('navigation.admin.adkats.items.roles.title'));
     }
 
+    /**
+     * @return mixed
+     */
     public function create()
     {
         $permissions = [];
@@ -39,13 +45,18 @@ class RolesController extends Controller
                 $group = 'Public';
             }
 
-            $permissions[ $group ][ $command_id ] = $command_name;
+            $permissions[$group][$command_id] = $command_name;
         });
 
         return View::make('admin.adkats.roles.create', compact('permissions'))->with('page_title',
             Lang::get('navigation.admin.adkats.items.roles.items.create.title'));
     }
 
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function edit($id)
     {
         try {
@@ -63,7 +74,7 @@ class RolesController extends Controller
                     $group = 'Public';
                 }
 
-                $permissions[ $group ][ $command_id ] = $command_name;
+                $permissions[$group][$command_id] = $command_name;
             });
 
             return View::make('admin.adkats.roles.edit', compact('permissions', 'role'))->with('page_title',
@@ -75,6 +86,11 @@ class RolesController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function update($id)
     {
         try {
@@ -109,6 +125,11 @@ class RolesController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function destroy($id)
     {
         try {

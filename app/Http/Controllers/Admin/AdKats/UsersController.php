@@ -1,6 +1,6 @@
 <?php
 
-namespace BFACP\Http\Controllers\Admin\AdKats;
+namespace BFACP\Http\Controllers\Admin\Adkats;
 
 use BFACP\Adkats\Account\Role;
 use BFACP\Adkats\Account\Soldier;
@@ -17,8 +17,14 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class UsersController.
+ */
 class UsersController extends Controller
 {
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -85,7 +91,7 @@ class UsersController extends Controller
     /**
      * Update user.
      *
-     * @param  int $id User ID
+     * @param int $id User ID
      */
     public function update($id)
     {
@@ -168,7 +174,7 @@ class UsersController extends Controller
     /**
      * Delete user.
      *
-     * @param  int $id User ID
+     * @param int $id User ID
      *
      * @return \Illuminate\Support\Facades\Response
      */

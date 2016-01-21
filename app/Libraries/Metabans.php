@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 
+/**
+ * Class Metabans.
+ */
 class Metabans
 {
     /**
@@ -44,6 +47,11 @@ class Metabans
         'BF4'   => 'BF_4',
         'BFHL'  => 'BF_H',
     ];
+
+    /**
+     * @var array
+     */
+    public $errors = [];
 
     /**
      * GuzzleHttp\Client.
@@ -98,6 +106,9 @@ class Metabans
      */
     private $auth = [];
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->key = Config::get('bfacp.metabans.key', null);
@@ -129,11 +140,11 @@ class Metabans
     /**
      * Assess player.
      *
-     * @param  string  $game     BF_BC2, MOH_2010, BF_3, MOH_2012, BF_4
-     * @param  string  $GUID     Player GUID
-     * @param  string  $type     None, Watch, White, Black
-     * @param  string  $reason   Ban Reason - Max 200 chars
-     * @param  int $duration Length of time in seconds ban should be enforced. Defaults to 3 months.
+     * @param string $game     BF_BC2, MOH_2010, BF_3, MOH_2012, BF_4
+     * @param string $GUID     Player GUID
+     * @param string $type     None, Watch, White, Black
+     * @param string $reason   Ban Reason - Max 200 chars
+     * @param int    $duration Length of time in seconds ban should be enforced. Defaults to 3 months.
      *
      * @return Collection
      */
@@ -150,7 +161,7 @@ class Metabans
         $data = [
             'assessment_length' => $duration,
             'assessment_type'   => strtolower($type),
-            'game_name'         => $this->supported_games[ $game ],
+            'game_name'         => $this->supported_games[$game],
             'player_uid'        => $GUID,
             'reason'            => $reason,
         ];
@@ -171,9 +182,9 @@ class Metabans
     /**
      * Validator.
      *
-     * @param  array $data
-     * @param  array $rules
-     * @param  array $messages
+     * @param array $data
+     * @param array $rules
+     * @param array $messages
      *
      * @return bool
      */
@@ -211,8 +222,8 @@ class Metabans
     /**
      * Generates the request.
      *
-     * @param  array   $requests
-     * @param  bool $auth Request requires authentication
+     * @param array $requests
+     * @param bool  $auth     Request requires authentication
      *
      * @return mixed [type]            [description]
      */
@@ -241,7 +252,7 @@ class Metabans
     /**
      * Send request to metabans API.
      *
-     * @param  array $payload
+     * @param array $payload
      *
      * @return mixed
      */
@@ -308,8 +319,8 @@ class Metabans
             $assessment_url = sprintf('http://metabans.com/assessment?i=%s',
                 $this->base62->encode($assessment['assessment_id']));
 
-            $assessments['assessments'][ $key ]['player_url'] = $player_url;
-            $assessments['assessments'][ $key ]['assessment_url'] = $assessment_url;
+            $assessments['assessments'][$key]['player_url'] = $player_url;
+            $assessments['assessments'][$key]['assessment_url'] = $assessment_url;
         }
 
         $assessments = new Collection($assessments);
@@ -342,8 +353,8 @@ class Metabans
             $assessment_url = sprintf('http://metabans.com/assessment?i=%s',
                 $this->base62->encode($f['assessment_id']));
 
-            $feed['feed'][ $key ]['player_url'] = $player_url;
-            $feed['feed'][ $key ]['assessment_url'] = $assessment_url;
+            $feed['feed'][$key]['player_url'] = $player_url;
+            $feed['feed'][$key]['assessment_url'] = $assessment_url;
         }
 
         $feed = new Collection($feed);

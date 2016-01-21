@@ -15,10 +15,16 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Roumen\Feed\Facades\Feed;
 
+/**
+ * Class BansController.
+ */
 class BansController extends Controller
 {
     private $repository;
 
+    /**
+     * @param BanRepository $repo
+     */
     public function __construct(BanRepository $repo)
     {
         parent::__construct();
@@ -26,6 +32,9 @@ class BansController extends Controller
         $this->repository = $repo;
     }
 
+    /**
+     * @return mixed
+     */
     public function latest()
     {
         if ($this->isLoggedIn && Input::has('personal') && Input::get('personal') == 'true') {
@@ -59,14 +68,8 @@ class BansController extends Controller
                     'banReason'  => $ban['record']['record_message'],
                 ]);
 
-                $feed->add(
-                    $title,
-                    $ban['record']['source_name'],
-                    $ban['player']['profile_url'],
-                    $ban['ban_startTime'],
-                    $title,
-                    $view->render()
-                );
+                $feed->add($title, $ban['record']['source_name'], $ban['player']['profile_url'], $ban['ban_startTime'],
+                    $title, $view->render());
             }
 
             return $feed->render('atom');
@@ -78,6 +81,9 @@ class BansController extends Controller
         ], null, null, null, $isCached, true);
     }
 
+    /**
+     * @return mixed
+     */
     public function stats()
     {
         $yesterdaysBans = Cache::remember('bans.stats.yesterday', 120, function () {

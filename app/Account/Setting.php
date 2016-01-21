@@ -5,6 +5,9 @@ namespace BFACP\Account;
 use BFACP\Elegant;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Setting.
+ */
 class Setting extends Elegant
 {
     /**

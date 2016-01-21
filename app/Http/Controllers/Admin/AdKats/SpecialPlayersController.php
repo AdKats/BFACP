@@ -1,6 +1,6 @@
 <?php
 
-namespace BFACP\Http\Controllers\Admin\AdKats;
+namespace BFACP\Http\Controllers\Admin\Adkats;
 
 use BFACP\Adkats\Special;
 use BFACP\Facades\Main as MainHelper;
@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class SpecialPlayersController.
+ */
 class SpecialPlayersController extends Controller
 {
     /**
@@ -19,6 +22,9 @@ class SpecialPlayersController extends Controller
      */
     protected $guzzle;
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -35,12 +41,19 @@ class SpecialPlayersController extends Controller
             Lang::get('navigation.admin.adkats.items.special_players.title'));
     }
 
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function update($id)
     {
         try {
             $groups = Cache::get('admin.adkats.special.groups');
 
             $player = Special::findOrFail($id);
+
+            $newGroup = null;
 
             foreach ($groups as $group) {
                 if ($group['group_key'] == Input::get('group')) {

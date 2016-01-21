@@ -8,6 +8,9 @@ use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App;
 
+/**
+ * Class MetabansUnban.
+ */
 class MetabansUnban extends Command
 {
     /**
@@ -64,8 +67,7 @@ class MetabansUnban extends Command
 
                 $player = Player::findOrFail($playerID);
 
-                $question = sprintf($this->questions['Q2'], $player->game->Name,
-                    $player->SoldierName);
+                $question = sprintf($this->questions['Q2'], $player->game->Name, $player->SoldierName);
 
                 if ($this->confirm($question, false)) {
                     $_playerFound = true;
@@ -77,8 +79,7 @@ class MetabansUnban extends Command
                             $unbanReason = 'Unbanned';
                         }
 
-                        $question2 = sprintf($this->questions['Q4'],
-                            $player->SoldierName, $unbanReason);
+                        $question2 = sprintf($this->questions['Q4'], $player->SoldierName, $unbanReason);
 
                         if ($this->confirm($question2, false)) {
                             $metabans->assess($player->game->Name, $player->EAGUID, 'None', $unbanReason);

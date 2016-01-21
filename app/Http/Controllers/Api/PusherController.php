@@ -8,8 +8,14 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 
+/**
+ * Class PusherController.
+ */
 class PusherController extends Controller
 {
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -40,6 +46,9 @@ class PusherController extends Controller
         return \Response::make('Forbidden', 403);
     }
 
+    /**
+     * @return mixed
+     */
     public function getChatHistory()
     {
         $history = [];

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class MaintenanceController.
+ */
 class MaintenanceController extends Controller
 {
     public function index()

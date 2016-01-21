@@ -7,10 +7,16 @@ use BFACP\Facades\Main as MainHelper;
 use BFACP\Libraries\Metabans;
 use Illuminate\Support\Facades\Lang;
 
+/**
+ * Class MetabansController.
+ */
 class MetabansController extends Controller
 {
     protected $metabans;
 
+    /**
+     * @param Metabans $metabans
+     */
     public function __construct(Metabans $metabans)
     {
         parent::__construct();
@@ -22,6 +28,9 @@ class MetabansController extends Controller
         throw new MetabansException(405, 'Invalid Resource');
     }
 
+    /**
+     * @return mixed
+     */
     public function getFeedAssessments()
     {
         $feed = $this->metabans->feed();
@@ -37,6 +46,9 @@ class MetabansController extends Controller
             ], null, null, null, false, true);
     }
 
+    /**
+     * @return mixed
+     */
     public function getFeed()
     {
         $feed = $this->metabans->feed();
@@ -44,6 +56,9 @@ class MetabansController extends Controller
         return MainHelper::response($feed, null, null, null, false, true);
     }
 
+    /**
+     * @return mixed
+     */
     public function getAssessments()
     {
         $assessments = $this->metabans->assessments();

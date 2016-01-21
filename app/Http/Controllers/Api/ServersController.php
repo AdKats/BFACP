@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Lang;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * Class ServersController.
+ */
 class ServersController extends Controller
 {
     /**
@@ -70,7 +73,7 @@ class ServersController extends Controller
             $gameKey = strtolower($server->game->Name);
 
             // Add the server to the collection
-            $newCollection[ $gameKey ]['servers'][] = $server;
+            $newCollection[$gameKey]['servers'][] = $server;
         }
 
         foreach ($newCollection as $key => $collection) {
@@ -82,7 +85,7 @@ class ServersController extends Controller
                 $total += $server->maxSlots;
             }
 
-            $newCollection[ $key ]['stats'] = [
+            $newCollection[$key]['stats'] = [
                 'online'     => $online,
                 'totalSlots' => $total,
                 'percentage' => MainHelper::percent($online, $total),
@@ -97,6 +100,12 @@ class ServersController extends Controller
             ] + Lang::get('dashboard.population'), null, null, null, false, true);
     }
 
+    /**
+     * @param $id
+     *
+     * @return mixed
+     * @throws Exception
+     */
     public function scoreboard($id)
     {
         try {
@@ -122,6 +131,11 @@ class ServersController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function scoreboardExtra($id)
     {
         $sql = File::get(storage_path().DIRECTORY_SEPARATOR.'sql'.DIRECTORY_SEPARATOR.'sbRoundStats.sql');
@@ -194,11 +208,15 @@ class ServersController extends Controller
         return MainHelper::response($data, null, null, null, false, true);
     }
 
+    /**
+     * @return mixed
+     * @throws Exception
+     */
     public function scoreboardAdmin()
     {
-        try {
-            $id = Input::get('server_id');
+        $id = Input::get('server_id');
 
+        try {
             if (! is_numeric($id) || $id <= 0) {
                 throw new NotFoundHttpException('Invalid Server ID');
             }
@@ -386,10 +404,10 @@ class ServersController extends Controller
     /**
      * Quick function for checking permissions for the scoreboard admin.
      *
-     * @param  string $permission Name of the permission
-     * @param  string $message    [description]
+     * @param string $permission Name of the permission
+     * @param string $message    [description]
      *
-     * @return bool             [description]
+     * @return bool [description]
      */
     private function hasPermission($permission, $message = 'You do have permission to issue this command')
     {

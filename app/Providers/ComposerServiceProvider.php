@@ -4,6 +4,9 @@ namespace BFACP\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class ComposerServiceProvider.
+ */
 class ComposerServiceProvider extends ServiceProvider
 {
     /**

@@ -14,8 +14,14 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class RolesController.
+ */
 class RolesController extends Controller
 {
+    /**
+     * @return mixed
+     */
     public function index()
     {
         $roles = Role::with('users')->get();
@@ -25,6 +31,9 @@ class RolesController extends Controller
         return View::make('admin.site.roles.index', compact('roles', 'page_title'));
     }
 
+    /**
+     * @return mixed
+     */
     public function create()
     {
         $permissions = [];
@@ -36,11 +45,11 @@ class RolesController extends Controller
                 $key = ucfirst($matches[1]);
 
                 // Push to array
-                $permissions[ $key ][ $permission->id ] = $permission->display_name;
+                $permissions[$key][$permission->id] = $permission->display_name;
             } else {
 
                 // Push to array
-                $permissions['General'][ $permission->id ] = $permission->display_name;
+                $permissions['General'][$permission->id] = $permission->display_name;
             }
         }
 
@@ -49,6 +58,9 @@ class RolesController extends Controller
         return View::make('admin.site.roles.create', compact('permissions', 'page_title'));
     }
 
+    /**
+     * @return mixed
+     */
     public function store()
     {
         try {
@@ -88,6 +100,11 @@ class RolesController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function edit($id)
     {
         try {
@@ -102,11 +119,11 @@ class RolesController extends Controller
                     $key = ucfirst($matches[1]);
 
                     // Push to array
-                    $permissions[ $key ][ $permission->id ] = $permission->display_name;
+                    $permissions[$key][$permission->id] = $permission->display_name;
                 } else {
 
                     // Push to array
-                    $permissions['General'][ $permission->id ] = $permission->display_name;
+                    $permissions['General'][$permission->id] = $permission->display_name;
                 }
             }
 
@@ -118,6 +135,11 @@ class RolesController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function update($id)
     {
         try {
@@ -157,6 +179,11 @@ class RolesController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function destroy($id)
     {
         try {

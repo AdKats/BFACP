@@ -8,12 +8,19 @@ use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
 
+/**
+ * Class ChatlogController.
+ */
 class ChatlogController extends Controller
 {
     protected $chat;
 
     protected $server;
 
+    /**
+     * @param Chat   $chat
+     * @param Server $server
+     */
     public function __construct(Chat $chat, Server $server)
     {
         parent::__construct();
@@ -21,6 +28,9 @@ class ChatlogController extends Controller
         $this->server = $server;
     }
 
+    /**
+     * @return mixed
+     */
     public function getIndex()
     {
         $limit = 100;

@@ -4,6 +4,9 @@ namespace BFACP\Http\Middleware;
 
 use Illuminate\Cookie\Middleware\EncryptCookies as BaseEncrypter;
 
+/**
+ * Class EncryptCookies.
+ */
 class EncryptCookies extends BaseEncrypter
 {
     /**

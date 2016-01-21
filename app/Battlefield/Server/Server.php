@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
+/**
+ * Class Server.
+ */
 class Server extends Elegant
 {
     /**
@@ -304,6 +307,9 @@ class Server extends Elegant
         return $this->ConnectionState == 'on';
     }
 
+    /**
+     * @return string
+     */
     public function getSlugAttribute()
     {
         return Str::slug($this->ServerName);

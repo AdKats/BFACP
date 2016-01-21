@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Redirect as Redirect;
 use Illuminate\Support\Facades\Session as Session;
 use Illuminate\Support\Facades\View as View;
 
+/**
+ * Class ServersController.
+ */
 class ServersController extends Controller
 {
     public function index()
@@ -23,6 +26,11 @@ class ServersController extends Controller
         return View::make('admin.site.servers.index', compact('servers'))->with('page_title', 'Servers');
     }
 
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function edit($id)
     {
         try {
@@ -53,6 +61,11 @@ class ServersController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function update($id)
     {
         try {

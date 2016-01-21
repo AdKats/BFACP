@@ -82,7 +82,7 @@ class BFHConn
 
     /**
      * @param Server $server
-     * @param string $debug for debugging, use "-d"
+     * @param string $debug  for debugging, use "-d"
      */
     public function __construct(Server $server, $debug = '-d')
     {
@@ -102,6 +102,11 @@ class BFHConn
         }
     }
 
+    /**
+     * @param null $debug
+     *
+     * @return bool|null|resource
+     */
     private function _openConnection($debug = null)
     {
         $connection = false;
@@ -188,11 +193,22 @@ class BFHConn
         }
     }
 
+    /**
+     * @param     $array
+     * @param int $key
+     *
+     * @return mixed
+     */
     private function _array2String($array, $key = 1)
     {
-        return $array[ $key ];
+        return $array[$key];
     }
 
+    /**
+     * @param $clientRequest
+     *
+     * @return mixed
+     */
     private function _clientRequest($clientRequest)
     {
         $data = $this->_encodeClientRequest($clientRequest);
@@ -210,6 +226,11 @@ class BFHConn
         return $requestAnswer;
     }
 
+    /**
+     * @param $data
+     *
+     * @return string
+     */
     private function _encodeClientRequest($data)
     {
         $packet = $this->_encodePacket(false, false, $this->_clientSequenceNr, $data);
@@ -218,6 +239,14 @@ class BFHConn
         return $packet;
     }
 
+    /**
+     * @param $isFromServer
+     * @param $isResponse
+     * @param $sequence
+     * @param $data
+     *
+     * @return string
+     */
     private function _encodePacket($isFromServer, $isResponse, $sequence, $data)
     {
         $data = explode(' ', $data);
@@ -257,7 +286,7 @@ class BFHConn
                             $adminYell[3] = $yellStyle;
                         } else {
                             if ($key == $yellKey - 1) {
-                                $adminYell[2] = $data[ $yellKey - 1 ];
+                                $adminYell[2] = $data[$yellKey - 1];
                             }
                         }
                     }
@@ -276,7 +305,7 @@ class BFHConn
                                 $adminYell[3] = $yellStyle;
                             } else {
                                 if ($key == $yellKey - 1) {
-                                    $adminYell[2] = $data[ $yellKey - 1 ];
+                                    $adminYell[2] = $data[$yellKey - 1];
                                 } else {
                                     if ($key > $yellKey) {
                                         $adminYell[4] .= $content.' ';
@@ -361,7 +390,7 @@ class BFHConn
                         $banPlayer[2] = trim($banPlayer[2]); // trim whitespace
 
                         if ($data[0] == 'banList.add') {
-                            $banPlayer[3] = $data[ $dataCount ];
+                            $banPlayer[3] = $data[$dataCount];
                         }
 
                         $data = $banPlayer;
@@ -461,9 +490,9 @@ class BFHConn
                                             }
 
                                             $adminMovePlayer[1] = trim($adminMovePlayer[1]); // trim whitespace
-                                            $adminMovePlayer[2] = $data[ $dataCount ];
-                                            $adminMovePlayer[3] = $data[ $dataCount + 1 ];
-                                            $adminMovePlayer[4] = $data[ $dataCount + 2 ];
+                                            $adminMovePlayer[2] = $data[$dataCount];
+                                            $adminMovePlayer[3] = $data[$dataCount + 1];
+                                            $adminMovePlayer[4] = $data[$dataCount + 2];
 
                                             $data = $adminMovePlayer;
                                         }
@@ -484,6 +513,13 @@ class BFHConn
         return $encodedHeader.$encodedSize.$encodedNumWords.$encodedWords;
     }
 
+    /**
+     * @param $isFromServer
+     * @param $isResponse
+     * @param $sequence
+     *
+     * @return string
+     */
     private function _encodeHeader($isFromServer, $isResponse, $sequence)
     {
         $header = $sequence & 0x3fffffff;
@@ -497,6 +533,11 @@ class BFHConn
         return pack('I', $header);
     }
 
+    /**
+     * @param $words
+     *
+     * @return array
+     */
     private function _encodeWords($words)
     {
         $size = 0;
@@ -515,11 +556,21 @@ class BFHConn
         ];
     }
 
+    /**
+     * @param $size
+     *
+     * @return string
+     */
     private function _encodeInt32($size)
     {
         return pack('I', $size);
     }
 
+    /**
+     * @param $receiveBuffer
+     *
+     * @return array
+     */
     private function _receivePacket($receiveBuffer)
     {
         $count = 0;
@@ -550,6 +601,11 @@ class BFHConn
         ];
     }
 
+    /**
+     * @param $data
+     *
+     * @return bool
+     */
     private function _containsCompletePacket($data)
     {
         if (strlen($data) < 8) {
@@ -563,6 +619,11 @@ class BFHConn
         return true;
     }
 
+    /**
+     * @param $data
+     *
+     * @return mixed
+     */
     private function _decodeInt32($data)
     {
         $decode = unpack('I', $data);
@@ -570,6 +631,11 @@ class BFHConn
         return $decode[1];
     }
 
+    /**
+     * @param $data
+     *
+     * @return array
+     */
     private function _decodePacket($data)
     {
         list($isFromServer, $isResponse, $sequence) = $this->_decodeHeader($data);
@@ -584,6 +650,11 @@ class BFHConn
         ];
     }
 
+    /**
+     * @param $data
+     *
+     * @return array
+     */
     private function _decodeHeader($data)
     {
         $header = unpack('I', $data);
@@ -597,6 +668,12 @@ class BFHConn
 
     /*-- internal methods --*/
 
+    /**
+     * @param $size
+     * @param $data
+     *
+     * @return array
+     */
     private function _decodeWords($size, $data)
     {
         $numWords = $this->_decodeInt32($data);
@@ -637,11 +714,16 @@ class BFHConn
         }
     }
 
+    /**
+     * @param $hex
+     *
+     * @return string
+     */
     private function _hex_str($hex)
     {
         $string = '';
         for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
-            $string .= chr(hexdec($hex[ $i ].$hex[ $i + 1 ]));
+            $string .= chr(hexdec($hex[$i].$hex[$i + 1]));
         }
 
         return $string;
@@ -695,8 +777,8 @@ class BFHConn
         $squadName = $this->_globalMsg['SQUAD_NOT_FOUND'];
 
         for ($i = 0; $i <= (count($squadNamesXML->squad) - 1); $i++) {
-            if ($squadID == $squadNamesXML->squad[ $i ]->attributes()->id) {
-                $squadName = $squadNamesXML->squad[ $i ]->attributes()->name;
+            if ($squadID == $squadNamesXML->squad[$i]->attributes()->id) {
+                $squadName = $squadNamesXML->squad[$i]->attributes()->name;
             }
         }
 
@@ -721,8 +803,8 @@ class BFHConn
         $playModes = count($teamNameXML->teamName[0]) - 1;
         if ($playModes >= $teamID) {
             for ($i = 0; $i <= $playModes; $i++) {
-                if ($teamNameXML->teamName[0]->playMode[ $i ]->attributes()->uri == $playmodeURI) {
-                    $teamName = $teamNameXML->teamName[0]->playMode[ $i ]->team[ $teamID ]->name;
+                if ($teamNameXML->teamName[0]->playMode[$i]->attributes()->uri == $playmodeURI) {
+                    $teamName = $teamNameXML->teamName[0]->playMode[$i]->team[$teamID]->name;
                 }
             }
         }
@@ -808,8 +890,8 @@ class BFHConn
         $playmodeName = $this->_globalMsg['PLAYMODE_NOT_FOUND'];
 
         for ($i = 0; $i <= (count($playModesXML->playmode) - 1); $i++) {
-            if ($playmodeURI == $playModesXML->playmode[ $i ]->attributes()->uri) {
-                $playmodeName = $playModesXML->playmode[ $i ]->attributes()->name;
+            if ($playmodeURI == $playModesXML->playmode[$i]->attributes()->uri) {
+                $playmodeName = $playModesXML->playmode[$i]->attributes()->name;
             }
         }
 
@@ -856,9 +938,9 @@ class BFHConn
 
         for ($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
             if (strcasecmp($mapURI,
-                    $mapNamesXML->map[ $i ]->attributes()->uri) == 0 && $currentPlaymode == $mapNamesXML->map[ $i ]->attributes()->playmode
+                    $mapNamesXML->map[$i]->attributes()->uri) == 0 && $currentPlaymode == $mapNamesXML->map[$i]->attributes()->playmode
             ) {
-                $mapName = $mapNamesXML->map[ $i ]->attributes()->name;
+                $mapName = $mapNamesXML->map[$i]->attributes()->name;
             }
         }
 
@@ -983,7 +1065,7 @@ class BFHConn
 
         $playersParameters = (int) $players[1];
         for ($i = 0; $i < $playersAmount; $i++) {
-            $playersNames[] = $players[ ($playersParameters) * $i + $playersParameters + 3 ];
+            $playersNames[] = $players[($playersParameters) * $i + $playersParameters + 3];
         }
 
         return $playersNames;
@@ -1084,9 +1166,15 @@ class BFHConn
         return $this->_array2boolean($this->_clientRequest('admin.eventsEnabled'));
     }
 
+    /**
+     * @param     $array
+     * @param int $key
+     *
+     * @return bool
+     */
     private function _array2boolean($array, $key = 1)
     {
-        if (isset($array[ $key ]) && $array[ $key ] == 'true') {
+        if (isset($array[$key]) && $array[$key] == 'true') {
             return true;
         } else {
             return false;
@@ -1106,6 +1194,11 @@ class BFHConn
         return $this->_clientRequest('admin.eventsEnabled '.$this->_bool2String($boolean));
     }
 
+    /**
+     * @param $boolean
+     *
+     * @return string
+     */
     private function _bool2String($boolean)
     {
         $onOrOff = '';
@@ -1248,7 +1341,7 @@ class BFHConn
      * @param string
      * @param string  (optional) - if not set, message will be sent to all
      *                players
-     * @param int (optional) - amount of time the message will be displayed,
+     * @param int     (optional) - amount of time the message will be displayed,
      *                must be 1-60
      *
      * @return string
@@ -1263,8 +1356,7 @@ class BFHConn
             $playerName = '{%player%}'.' '.$playerName;
         }
 
-        return $this->_array2String($this->_clientRequest('admin.yell '.$text.' '.$durationInMS.' '.$playerName),
-            0);
+        return $this->_array2String($this->_clientRequest('admin.yell '.$text.' '.$durationInMS.' '.$playerName), 0);
     }
 
     /**
@@ -1274,7 +1366,7 @@ class BFHConn
      *
      * @param string
      * @param int
-     * @param int (optional) - amount of time the message will be displayed,
+     * @param int     (optional) - amount of time the message will be displayed,
      *                must be 1-60
      *
      * @return string
@@ -1531,8 +1623,7 @@ class BFHConn
      */
     public function adminKickPlayerWithReason($playerName, $reason = 'Kicked by administrator')
     {
-        return $this->_array2String($this->_clientRequest('admin.kickPlayer '.$playerName.' {%reason%} '.$reason),
-            0);
+        return $this->_array2String($this->_clientRequest('admin.kickPlayer '.$playerName.' {%reason%} '.$reason), 0);
     }
 
     /**
@@ -1577,7 +1668,7 @@ class BFHConn
      * TODO: banreason.
      *
      * @param           string
-     * @param int       $timerange
+     * @param int $timerange
      *
      * @return string
      */
@@ -1852,7 +1943,7 @@ class BFHConn
     /**
      * Gives player leader of their current squad.
      *
-     * @param  string $playerName
+     * @param string $playerName
      *
      * @return string
      */
@@ -1861,8 +1952,7 @@ class BFHConn
         $teamID = $this->getPlayerTeamID($playerName);
         $squadID = $this->getPlayerSquadID($playerName);
 
-        return $this->_array2String($this->_clientRequest('squad.leader '.$teamID.' '.$squadID.' '.$playerName),
-            0);
+        return $this->_array2String($this->_clientRequest('squad.leader '.$teamID.' '.$squadID.' '.$playerName), 0);
     }
 
     /**
@@ -1885,8 +1975,8 @@ class BFHConn
     /**
      * Checks if the squad is locked.
      *
-     * @param  int $teamID
-     * @param  int $squadID
+     * @param int $teamID
+     * @param int $squadID
      *
      * @return bool
      */
@@ -1898,9 +1988,9 @@ class BFHConn
     /**
      * Set the squad to private or not.
      *
-     * @param  int $teamID
-     * @param  int $squadID
-     * @param  bool $private
+     * @param int  $teamID
+     * @param int  $squadID
+     * @param bool $private
      *
      * @return bool
      */
@@ -1912,7 +2002,7 @@ class BFHConn
     /**
      * Get all squads that have players in them on a specific team.
      *
-     * @param  int $teamID
+     * @param int $teamID
      *
      * @return array
      */
@@ -1924,8 +2014,8 @@ class BFHConn
     /**
      * Get player count and names of soldiers in a specific squad.
      *
-     * @param  int $teamID
-     * @param  int $squadID
+     * @param int $teamID
+     * @param int $squadID
      *
      * @return array
      */
@@ -2001,8 +2091,7 @@ class BFHConn
      */
     public function adminVarSetAllUnlocksUnlocked($boolean)
     {
-        return $this->_array2String($this->_clientRequest('vars.allUnlocksUnlocked '.$this->_bool2String($boolean)),
-            0);
+        return $this->_array2String($this->_clientRequest('vars.allUnlocksUnlocked '.$this->_bool2String($boolean)), 0);
     }
 
     /**
@@ -2471,9 +2560,11 @@ class BFHConn
     /**
      * sets the soldier health modifier in %.
      *
-     * @param $integer
+     * @param $soldierHealthInteger
      *
      * @return string
+     * @internal param $integer
+     *
      * @internal param $soldierHealthInteger
      */
     public function adminVarSetSoldierHealthModifier($soldierHealthInteger)
@@ -2633,9 +2724,11 @@ class BFHConn
     /**
      * sets the vehicle spawn modifier in %.
      *
-     * @param $integer
+     * @param $vehicleSpawnDelayInteger
      *
      * @return string
+     * @internal param $integer
+     *
      * @internal param $vehicleSpawnDelayInteger
      */
     public function adminVarSetVehicleSpawnDelayModifier($vehicleSpawnDelayInteger)
@@ -2676,7 +2769,7 @@ class BFHConn
     /**
      * gets the team name by there faction id.
      *
-     * @param  int $integer Team ID
+     * @param int $integer Team ID
      *
      * @return array
      */
@@ -2693,7 +2786,7 @@ class BFHConn
             ];
         }
 
-        return $factions[ $teamFactions[ $integer ] ];
+        return $factions[$teamFactions[$integer]];
     }
 
     /**
@@ -2706,6 +2799,9 @@ class BFHConn
         return (int) $this->_array2String($this->_clientRequest('vars.gameModeCounter'), 1);
     }
 
+    /**
+     * @return int
+     */
     public function adminVarGetRoundTimeLimit()
     {
         return (int) $this->_array2String($this->_clientRequest('vars.roundTimeLimit'), 1);
@@ -2714,7 +2810,7 @@ class BFHConn
     /**
      * Tabulates a result containing columns and rows.
      *
-     * @param  array $res
+     * @param array $res
      *
      * @return array
      */
@@ -2725,7 +2821,7 @@ class BFHConn
         $columns = [];
 
         for ($i = 1; $i <= $nColumns; $i++) {
-            $columns[] = $res[ $i ];
+            $columns[] = $res[$i];
         }
 
         $nRows = $res[11];
@@ -2738,8 +2834,8 @@ class BFHConn
             $row = [];
 
             for ($j = 0; $j < count($columns); $j++) {
-                $value = $res[ ++$i ];
-                $row[ $columns[ $j ] ] = is_numeric($value) ? (int) $value : $value;
+                $value = $res[++$i];
+                $row[$columns[$j]] = is_numeric($value) ? (int) $value : $value;
             }
 
             $rows['players'][] = $row;

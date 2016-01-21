@@ -4,6 +4,9 @@ namespace BFACP\Adkats\Account;
 
 use BFACP\Elegant;
 
+/**
+ * Class User.
+ */
 class User extends Elegant
 {
     /**
@@ -71,6 +74,9 @@ class User extends Elegant
         return $this->hasMany('BFACP\Adkats\Account\Soldier', 'user_id');
     }
 
+    /**
+     * @return mixed
+     */
     public function getStampAttribute()
     {
         return $this->user_expiration->toIso8601String();

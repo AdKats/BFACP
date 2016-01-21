@@ -5,6 +5,9 @@ namespace BFACP\Providers;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class HelpersProvider.
+ */
 class HelpersProvider extends ServiceProvider
 {
     public function register()

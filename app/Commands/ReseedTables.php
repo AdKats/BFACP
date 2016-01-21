@@ -6,6 +6,9 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class ReseedTables.
+ */
 class ReseedTables extends Command
 {
     /**

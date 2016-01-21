@@ -13,20 +13,22 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
 
+/**
+ * Class UserRepository.
+ */
 class UserRepository
 {
     /**
      * Create a new user.
      *
-     * @param  array   $input
-     * @param  int $role        Default role is 2
-     * @param  bool    $confirmed
-     * @param  bool    $autoGenPass Generate a secure password if true
-     * @param bool     $skipEmail   Skips the sending of the email
+     * @param array $input
+     * @param int   $role        Default role is 2
+     * @param bool  $autoGenPass Generate a secure password if true
+     * @param bool  $skipEmail   Skips the sending of the email
      *
      * @return User
      */
-    public function signup($input = [], $role = 2, $confirmed = false, $autoGenPass = false, $skipEmail = false)
+    public function signup($input = [], $role = 2, $autoGenPass = false, $skipEmail = false)
     {
         $user = new User();
 
@@ -78,7 +80,7 @@ class UserRepository
     /**
      * Attempts to login with the given credentials.
      *
-     * @param  array $input
+     * @param array $input
      *
      * @return bool
      */
@@ -105,7 +107,7 @@ class UserRepository
      * Checks if the credentials has been throttled by too
      * many failed login attempts.
      *
-     * @param  array $input
+     * @param array $input
      *
      * @return bool
      */
@@ -118,7 +120,7 @@ class UserRepository
      * Checks if the given credentials correponds to a user
      * that exists but is not confirmed.
      *
-     * @param  array $input
+     * @param array $input
      *
      * @return bool
      */
@@ -138,7 +140,7 @@ class UserRepository
     /**
      * Resets the password of a user. The $input['token'] will tell which user.
      *
-     * @param  array $input Array containing 'token', 'password' and 'password_confirmation' keys.
+     * @param array $input Array containing 'token', 'password' and 'password_confirmation' keys.
      *
      * @return bool
      */
@@ -164,7 +166,7 @@ class UserRepository
     /**
      * Attempt to confirm the account with code.
      *
-     * @param  string $code
+     * @param string $code
      *
      * @return bool
      */
@@ -182,7 +184,7 @@ class UserRepository
     /**
      * Generates a strong password.
      *
-     * @param  int $len Length of generated password
+     * @param int $len Length of generated password
      *
      * @return string
      */
@@ -194,9 +196,9 @@ class UserRepository
     }
 
     /**
-     * @param  string $username
-     * @param  string $email
-     * @param         $newPassword
+     * @param string $username
+     * @param string $email
+     * @param        $newPassword
      *
      * @return null
      * @internal param string $password
@@ -206,8 +208,7 @@ class UserRepository
         // Send the email to the user with their new password
         Mail::send('emails.user.passwordchange', compact('username', 'newPassword'),
             function ($message) use ($username, $email) {
-                $message->to($email, $username)
-                    ->subject(Lang::get('email.password_changed.subject'));
+                $message->to($email, $username)->subject(Lang::get('email.password_changed.subject'));
             });
     }
 }

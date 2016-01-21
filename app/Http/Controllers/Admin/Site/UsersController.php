@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class UsersController.
+ */
 class UsersController extends Controller
 {
     /**
@@ -31,6 +34,9 @@ class UsersController extends Controller
             Lang::get('navigation.admin.site.items.users.title'));
     }
 
+    /**
+     * @return mixed
+     */
     public function create()
     {
         // Get the list of roles
@@ -40,6 +46,9 @@ class UsersController extends Controller
             Lang::get('navigation.admin.site.items.users.items.create.title'));
     }
 
+    /**
+     * @return mixed
+     */
     public function store()
     {
         $repo = app('BFACP\Repositories\UserRepository');
@@ -106,7 +115,7 @@ class UsersController extends Controller
     /**
      * Update user.
      *
-     * @param  int $id User ID
+     * @param int $id User ID
      */
     public function update($id)
     {
@@ -202,7 +211,7 @@ class UsersController extends Controller
                     // and if so do not associate with the account.
                     if (Soldier::where('player_id', $soldier->player_id)->count() == 1) {
                         $this->messages[] = Lang::get('alerts.user.soldier_taken', ['playerid' => $soldier->player_id]);
-                        unset($soldier_ids[ $key ]);
+                        unset($soldier_ids[$key]);
                     }
                 }
 
@@ -222,7 +231,7 @@ class UsersController extends Controller
     /**
      * Delete user.
      *
-     * @param  int $id User ID
+     * @param int $id User ID
      *
      * @return \Illuminate\Support\Facades\Response
      */

@@ -8,6 +8,9 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class ReputationCalculation.
+ */
 class ReputationCalculation extends Command
 {
     /**

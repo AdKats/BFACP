@@ -1,12 +1,18 @@
 <?php
 
-namespace BFACP\Http\Controllers\Admin\AdKats;
+namespace BFACP\Http\Controllers\Admin\Adkats;
 
 use BFACP\Http\Controllers\Controller;
 use Illuminate\Support\Facades\App as App;
 
+/**
+ * Class ReportsController.
+ */
 class ReportsController extends Controller
 {
+    /**
+     * @return $this
+     */
     public function index()
     {
         $r = App::make('BFACP\Repositories\ReportRepository');

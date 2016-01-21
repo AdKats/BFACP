@@ -5,6 +5,9 @@ namespace BFACP\Battlefield\Scoreboard;
 use BFACP\Elegant;
 use BFACP\Facades\Battlefield as BattlefieldHelper;
 
+/**
+ * Class Scoreboard.
+ */
 class Scoreboard extends Elegant
 {
     /**
@@ -72,21 +75,33 @@ class Scoreboard extends Elegant
         return $this->belongsTo('BFACP\Battlefield\Player', 'EA_GUID', 'EAGUID');
     }
 
+    /**
+     * @return mixed
+     */
     public function getPlayerJoinedIsoAttribute()
     {
         return $this->PlayerJoined->toIso8601String();
     }
 
+    /**
+     * @return mixed
+     */
     public function getSquadAttribute()
     {
         return BattlefieldHelper::squad($this->SquadID);
     }
 
+    /**
+     * @return mixed
+     */
     public function getKdRatioAttribute()
     {
         return BattlefieldHelper::kd($this->Kills, $this->Deaths);
     }
 
+    /**
+     * @return mixed
+     */
     public function getHskRatioAttribute()
     {
         return BattlefieldHelper::hsk($this->Headshots, $this->Kills);

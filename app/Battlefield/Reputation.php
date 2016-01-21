@@ -4,6 +4,9 @@ namespace BFACP\Battlefield;
 
 use BFACP\Elegant;
 
+/**
+ * Class Reputation.
+ */
 class Reputation extends Elegant
 {
     /**
@@ -55,6 +58,12 @@ class Reputation extends Elegant
      */
     protected $with = [];
 
+    /**
+     * @param $query
+     * @param $game
+     *
+     * @return mixed
+     */
     public function scopeOfGame($query, $game)
     {
         return $query->whereHas('game', function ($q) use ($game) {

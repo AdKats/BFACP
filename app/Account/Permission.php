@@ -5,6 +5,9 @@ namespace BFACP\Account;
 use Illuminate\Support\Facades\Config;
 use Zizaco\Entrust\EntrustPermission;
 
+/**
+ * Class Permission.
+ */
 class Permission extends EntrustPermission
 {
     /**
@@ -58,6 +61,9 @@ class Permission extends EntrustPermission
      */
     protected $with = [];
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();

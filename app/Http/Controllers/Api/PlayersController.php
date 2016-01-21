@@ -7,16 +7,27 @@ use BFACP\Repositories\PlayerRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
+/**
+ * Class PlayersController.
+ */
 class PlayersController extends Controller
 {
     private $repository;
 
+    /**
+     * @param PlayerRepository $repository
+     */
     public function __construct(PlayerRepository $repository)
     {
         parent::__construct();
         $this->repository = $repository;
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
     public function index(Request $request)
     {
         $limit = $request->get('limit', false);
@@ -31,7 +42,7 @@ class PlayersController extends Controller
     /**
      * Get a player by their player database id.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Support\Facades\Response
      */
@@ -61,7 +72,7 @@ class PlayersController extends Controller
     /**
      * Gets the players record history.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Support\Facades\Response
      */
@@ -75,7 +86,7 @@ class PlayersController extends Controller
     /**
      * Gets the players chatlogs.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Support\Facades\Response
      */
@@ -89,7 +100,7 @@ class PlayersController extends Controller
     /**
      * Gets the players sessions.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Support\Facades\Response
      */

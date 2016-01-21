@@ -5,6 +5,9 @@ namespace BFACP\Adkats;
 use BFACP\Elegant;
 use BFACP\Facades\Main as MainHelper;
 
+/**
+ * Class Special.
+ */
 class Special extends Elegant
 {
     /**
@@ -80,16 +83,25 @@ class Special extends Elegant
         return $this->belongsTo('BFACP\Battlefield\Server\Server', 'server_id');
     }
 
+    /**
+     * @return mixed
+     */
     public function getEffectiveStampAttribute()
     {
         return $this->player_effective->toIso8601String();
     }
 
+    /**
+     * @return mixed
+     */
     public function getExpirationStampAttribute()
     {
         return $this->player_expiration->toIso8601String();
     }
 
+    /**
+     * @return mixed
+     */
     public function getGroupAttribute()
     {
         $group = MainHelper::specialGroups($this->player_group);

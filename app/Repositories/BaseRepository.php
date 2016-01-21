@@ -4,6 +4,9 @@ namespace BFACP\Repositories;
 
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class BaseRepository.
+ */
 class BaseRepository
 {
     /**
@@ -20,6 +23,9 @@ class BaseRepository
      */
     protected $isLoggedIn = false;
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->user = Auth::user();

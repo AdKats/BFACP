@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Input as Input;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException as AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException as NotFoundHttpException;
 
+/**
+ * Class ScoreboardController.
+ */
 class ScoreboardController extends Controller
 {
     const COMPLETE_WITH_ERRORS = 'Completed with errors';
@@ -53,6 +56,9 @@ class ScoreboardController extends Controller
      */
     protected $data = [];
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -95,9 +101,9 @@ class ScoreboardController extends Controller
     /**
      * Wrapper for \BFACP\Facades\Main.
      *
-     * @param  array  $data
-     * @param  string $message
-     * @param  string $type
+     * @param array  $data
+     * @param string $message
+     * @param string $type
      *
      * @return MainHelper
      */
@@ -119,8 +125,8 @@ class ScoreboardController extends Controller
     /**
      * Quick function for checking permissions for the scoreboard admin.
      *
-     * @param  string $permission Name of the permission
-     * @param  string $message
+     * @param string $permission Name of the permission
+     * @param string $message
      *
      * @return bool
      */

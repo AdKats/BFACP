@@ -12,10 +12,16 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class PlayersController.
+ */
 class PlayersController extends Controller
 {
     private $repository;
 
+    /**
+     * @param PlayerRepository $repository
+     */
     public function __construct(PlayerRepository $repository)
     {
         parent::__construct();
@@ -35,8 +41,8 @@ class PlayersController extends Controller
     /**
      * Shows the player profile.
      *
-     * @param  int $id
-     * @param  string  $name
+     * @param int    $id
+     * @param string $name
      */
     public function profile($id, $name = '')
     {

@@ -5,6 +5,9 @@ namespace BFACP\Commands;
 use BFACP\Adkats\Infractions\Overall;
 use Illuminate\Console\Command;
 
+/**
+ * Class InfractionsCleanup.
+ */
 class InfractionsCleanup extends Command
 {
     /**

@@ -4,14 +4,17 @@ namespace BFACP\Helpers;
 
 use Exception;
 
+/**
+ * Class Battlefield.
+ */
 class Battlefield extends Main
 {
     /**
      * Gets the name of the squad by ID.
      *
-     * @param  int $id Squad ID
+     * @param int $id Squad ID
      *
-     * @return string Squad Name
+     * @return string    Squad Name
      * @throws Exception
      */
     public function squad($id)
@@ -132,9 +135,9 @@ class Battlefield extends Main
     /**
      * Calculates kill/death ratio.
      *
-     * @param  int $kills
-     * @param  int $deaths
-     * @param  int $precision
+     * @param int $kills
+     * @param int $deaths
+     * @param int $precision
      *
      * @return float
      */
@@ -154,9 +157,9 @@ class Battlefield extends Main
     /**
      * Calculates headshot kill ratio.
      *
-     * @param  int $headshots
-     * @param  int $kills
-     * @param  int $precision
+     * @param int $headshots
+     * @param int $kills
+     * @param int $precision
      *
      * @return float
      */
@@ -172,9 +175,9 @@ class Battlefield extends Main
     /**
      * Calculates the number of tickets on round start.
      *
-     * @param  string  $gamemode
-     * @param  int $modifier
-     * @param  string  $gameName
+     * @param string $gamemode
+     * @param int    $modifier
+     * @param string $gameName
      *
      * @return int
      */
@@ -301,9 +304,9 @@ class Battlefield extends Main
     /**
      * Calculates the round timer on round start.
      *
-     * @param  string  $gamemode
-     * @param  int $modifier
-     * @param  string  $gameName
+     * @param string $gamemode
+     * @param int    $modifier
+     * @param string $gameName
      *
      * @return int
      */
@@ -385,6 +388,13 @@ class Battlefield extends Main
         return intval($startingRoundTimer);
     }
 
+    /**
+     * @param $mapURI
+     * @param $xmlFilePath
+     * @param $playmodeURI
+     *
+     * @return mixed|string
+     */
     public function mapName($mapURI, $xmlFilePath, $playmodeURI)
     {
         $mapNamesXML = simplexml_load_file($xmlFilePath);
@@ -392,23 +402,29 @@ class Battlefield extends Main
 
         for ($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
             if (strcasecmp($mapURI,
-                    $mapNamesXML->map[ $i ]->attributes()->uri) == 0 && $playmodeURI == $mapNamesXML->map[ $i ]->attributes()->playmode
+                    $mapNamesXML->map[$i]->attributes()->uri) == 0 && $playmodeURI == $mapNamesXML->map[$i]->attributes()->playmode
             ) {
-                $mapName = $mapNamesXML->map[ $i ]->attributes()->name;
+                $mapName = $mapNamesXML->map[$i]->attributes()->name;
             }
         }
 
         return ! is_string($mapName) ? head($mapName) : $mapName;
     }
 
+    /**
+     * @param $playmodeURI
+     * @param $xmlFilePath
+     *
+     * @return mixed|string
+     */
     public function playmodeName($playmodeURI, $xmlFilePath)
     {
         $playModesXML = simplexml_load_file($xmlFilePath);
         $playmodeName = 'PlaymodeNameNotFoundError';
 
         for ($i = 0; $i <= (count($playModesXML->playmode) - 1); $i++) {
-            if ($playmodeURI == $playModesXML->playmode[ $i ]->attributes()->uri) {
-                $playmodeName = $playModesXML->playmode[ $i ]->attributes()->name;
+            if ($playmodeURI == $playModesXML->playmode[$i]->attributes()->uri) {
+                $playmodeName = $playModesXML->playmode[$i]->attributes()->name;
             }
         }
 

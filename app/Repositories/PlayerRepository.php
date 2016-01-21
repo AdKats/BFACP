@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\App as App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
+/**
+ * Class PlayerRepository.
+ */
 class PlayerRepository extends BaseRepository
 {
     /**
@@ -107,7 +110,7 @@ class PlayerRepository extends BaseRepository
     /**
      * Returns a player by their ID.
      *
-     * @param  int $id Database Player ID
+     * @param int $id Database Player ID
      *
      * @return object
      */
@@ -127,7 +130,7 @@ class PlayerRepository extends BaseRepository
     /**
      * Returns the player with the givin guid.
      *
-     * @param  string $guid EA GUID
+     * @param string $guid EA GUID
      *
      * @return object
      */
@@ -178,8 +181,8 @@ class PlayerRepository extends BaseRepository
     /**
      * Returns the player record history.
      *
-     * @param  int $id    Player ID
-     * @param  int $limit Results to return
+     * @param int $id    Player ID
+     * @param int $limit Results to return
      *
      * @return object
      */
@@ -211,7 +214,7 @@ class PlayerRepository extends BaseRepository
     /**
      * Returns the player session history.
      *
-     * @param  int $id Player ID
+     * @param int $id Player ID
      *
      * @return object
      */
@@ -229,8 +232,8 @@ class PlayerRepository extends BaseRepository
     /**
      * Returns the player chatlogs.
      *
-     * @param  int $id    Player ID
-     * @param  int $limit Results to return
+     * @param int $id    Player ID
+     * @param int $limit Results to return
      *
      * @return object
      */
@@ -273,8 +276,8 @@ class PlayerRepository extends BaseRepository
     /**
      * Sets which relations should be returned.
      *
-     * @param  array $opts
-     * @param  bool  $custom
+     * @param array $opts
+     * @param bool  $custom
      *
      * @return $this
      */

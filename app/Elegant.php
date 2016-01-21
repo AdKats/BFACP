@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 
+/**
+ * Class Elegant.
+ */
 class Elegant extends Model
 {
     /**
@@ -36,6 +39,9 @@ class Elegant extends Model
      */
     protected $validator;
 
+    /**
+     * @param array $attributes
+     */
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);

@@ -6,6 +6,9 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class CloudflareProvider.
+ */
 class CloudflareProvider extends ServiceProvider
 {
     /**

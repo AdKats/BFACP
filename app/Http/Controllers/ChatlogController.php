@@ -11,8 +11,16 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class ChatlogController.
+ */
 class ChatlogController extends Controller
 {
+    /**
+     * @param Game   $game
+     * @param Chat   $chat
+     * @param Player $player
+     */
     public function __construct(Game $game, Chat $chat, Player $player)
     {
         parent::__construct();

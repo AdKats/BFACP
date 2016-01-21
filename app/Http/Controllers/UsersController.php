@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class UsersController.
+ */
 class UsersController extends Controller
 {
     /**
@@ -23,6 +26,9 @@ class UsersController extends Controller
      */
     private $repository;
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -81,7 +87,7 @@ class UsersController extends Controller
                 'lang' => $lang,
             ]);
 
-            $langHuman = Config::get('bfacp.site.languages')[ $lang ];
+            $langHuman = Config::get('bfacp.site.languages')[$lang];
 
             $this->messages[] = Lang::get('user.notifications.account.language.changed', ['lang' => $langHuman]);
         }
@@ -121,7 +127,7 @@ class UsersController extends Controller
     /**
      * Attempt to confirm the account with code.
      *
-     * @param  string $code
+     * @param string $code
      *
      * @return Redirect
      */
@@ -155,7 +161,7 @@ class UsersController extends Controller
                 'password_confirmation'))->withErrors($v);
         }
 
-        $user = $this->repository->signup($input, 2, false, false, true);
+        $user = $this->repository->signup($input, 2, false, true);
 
         if (is_null($user->id)) {
             return Redirect::route('user.register')->withInput(Input::except('password',

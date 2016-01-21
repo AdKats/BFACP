@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Lang as Lang;
 use Illuminate\Support\Facades\Redirect as Redirect;
 use Illuminate\Support\Facades\View as View;
 
+/**
+ * Class SettingsController.
+ */
 class SettingsController extends Controller
 {
     public function index()
@@ -38,7 +41,7 @@ class SettingsController extends Controller
                     }
                 }
 
-                if ($value != $settings[ $key ]) {
+                if ($value != $settings[$key]) {
                     Option::where('option_key', $key)->update(['option_value' => $value]);
                 }
             }

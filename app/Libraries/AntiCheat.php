@@ -9,6 +9,9 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
+/**
+ * Class AntiCheat.
+ */
 class AntiCheat
 {
     /**
@@ -102,6 +105,9 @@ class AntiCheat
         'Kills' => 50,
     ];
 
+    /**
+     * @param Player $player
+     */
     public function __construct(Player $player)
     {
         $this->battlelog = new BattlelogPlayer($player);
@@ -144,7 +150,7 @@ class AntiCheat
     /**
      * Parse the battlelog weapons list.
      *
-     * @param  array $weapons
+     * @param array $weapons
      *
      * @return $this
      */
@@ -157,9 +163,9 @@ class AntiCheat
         foreach ($weapons as $weapon) {
             $category = str_replace(' ', '_', strtolower(trim($weapon['category'])));
 
-            if (! in_array($category, $this->allowedCategories[ $this->game ]) || ! array_key_exists($category,
-                    $this->weapons[ $this->game ]) || ! array_key_exists($weapon['slug'],
-                    $this->weapons[ $this->game ][ $category ])
+            if (! in_array($category, $this->allowedCategories[$this->game]) || ! array_key_exists($category,
+                    $this->weapons[$this->game]) || ! array_key_exists($weapon['slug'],
+                    $this->weapons[$this->game][$category])
             ) {
                 continue;
             }
@@ -170,7 +176,7 @@ class AntiCheat
                 'KPM' => false,
             ];
 
-            $_weaponDPS = $this->weapons[ $this->game ][ $category ][ $weapon['slug'] ];
+            $_weaponDPS = $this->weapons[$this->game][$category][$weapon['slug']];
 
             $DPSDiff = 1 - MainHelper::divide(($_weaponDPS['max'] - $weapon['dps']), $_weaponDPS['max']);
 
