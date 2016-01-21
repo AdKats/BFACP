@@ -20,8 +20,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Class ServersController
- * @package BFACP\Http\Controllers\Api
+ * Class ServersController.
  */
 class ServersController extends Controller
 {
@@ -405,10 +404,10 @@ class ServersController extends Controller
     /**
      * Quick function for checking permissions for the scoreboard admin.
      *
-     * @param  string $permission Name of the permission
-     * @param  string $message    [description]
+     * @param string $permission Name of the permission
+     * @param string $message    [description]
      *
-     * @return bool             [description]
+     * @return bool [description]
      */
     private function hasPermission($permission, $message = 'You do have permission to issue this command')
     {

@@ -5,8 +5,7 @@ namespace BFACP\Player;
 use BFACP\Elegant;
 
 /**
- * Class Dogtag
- * @package BFACP\Player
+ * Class Dogtag.
  */
 class Dogtag extends Elegant
 {

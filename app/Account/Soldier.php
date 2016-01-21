@@ -6,8 +6,7 @@ use BFACP\Elegant;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Soldier
- * @package BFACP\Account
+ * Class Soldier.
  */
 class Soldier extends Elegant
 {

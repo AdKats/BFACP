@@ -5,8 +5,7 @@ namespace BFACP\Adkats\Account;
 use BFACP\Elegant;
 
 /**
- * Class User
- * @package BFACP\Adkats\Account
+ * Class User.
  */
 class User extends Elegant
 {

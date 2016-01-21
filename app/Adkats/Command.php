@@ -5,8 +5,7 @@ namespace BFACP\Adkats;
 use BFACP\Elegant;
 
 /**
- * Class Command
- * @package BFACP\Adkats
+ * Class Command.
  */
 class Command extends Elegant
 {

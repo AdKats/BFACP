@@ -5,8 +5,7 @@ namespace BFACP\Http\Middleware;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 
 /**
- * Class VerifyCsrfToken
- * @package BFACP\Http\Middleware
+ * Class VerifyCsrfToken.
  */
 class VerifyCsrfToken extends BaseVerifier
 {

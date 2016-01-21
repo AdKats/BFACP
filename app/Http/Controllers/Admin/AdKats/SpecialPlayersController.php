@@ -13,8 +13,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
 
 /**
- * Class SpecialPlayersController
- * @package BFACP\Http\Controllers\Admin\Adkats
+ * Class SpecialPlayersController.
  */
 class SpecialPlayersController extends Controller
 {

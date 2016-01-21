@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 
 /**
- * Class Elegant
- * @package BFACP
+ * Class Elegant.
  */
 class Elegant extends Model
 {

@@ -14,18 +14,17 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
 
 /**
- * Class UserRepository
- * @package BFACP\Repositories
+ * Class UserRepository.
  */
 class UserRepository
 {
     /**
      * Create a new user.
      *
-     * @param  array $input
-     * @param  int   $role        Default role is 2
-     * @param  bool  $autoGenPass Generate a secure password if true
-     * @param bool   $skipEmail   Skips the sending of the email
+     * @param array $input
+     * @param int   $role        Default role is 2
+     * @param bool  $autoGenPass Generate a secure password if true
+     * @param bool  $skipEmail   Skips the sending of the email
      *
      * @return User
      */
@@ -81,7 +80,7 @@ class UserRepository
     /**
      * Attempts to login with the given credentials.
      *
-     * @param  array $input
+     * @param array $input
      *
      * @return bool
      */
@@ -108,7 +107,7 @@ class UserRepository
      * Checks if the credentials has been throttled by too
      * many failed login attempts.
      *
-     * @param  array $input
+     * @param array $input
      *
      * @return bool
      */
@@ -121,7 +120,7 @@ class UserRepository
      * Checks if the given credentials correponds to a user
      * that exists but is not confirmed.
      *
-     * @param  array $input
+     * @param array $input
      *
      * @return bool
      */
@@ -141,7 +140,7 @@ class UserRepository
     /**
      * Resets the password of a user. The $input['token'] will tell which user.
      *
-     * @param  array $input Array containing 'token', 'password' and 'password_confirmation' keys.
+     * @param array $input Array containing 'token', 'password' and 'password_confirmation' keys.
      *
      * @return bool
      */
@@ -167,7 +166,7 @@ class UserRepository
     /**
      * Attempt to confirm the account with code.
      *
-     * @param  string $code
+     * @param string $code
      *
      * @return bool
      */
@@ -185,7 +184,7 @@ class UserRepository
     /**
      * Generates a strong password.
      *
-     * @param  int $len Length of generated password
+     * @param int $len Length of generated password
      *
      * @return string
      */
@@ -197,9 +196,9 @@ class UserRepository
     }
 
     /**
-     * @param  string $username
-     * @param  string $email
-     * @param         $newPassword
+     * @param string $username
+     * @param string $email
+     * @param        $newPassword
      *
      * @return null
      * @internal param string $password

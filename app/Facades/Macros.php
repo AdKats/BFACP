@@ -5,8 +5,7 @@ namespace BFACP\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * Class Macros
- * @package BFACP\Facades
+ * Class Macros.
  */
 class Macros extends Facade
 {

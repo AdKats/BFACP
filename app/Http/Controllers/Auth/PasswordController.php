@@ -6,8 +6,7 @@ use BFACP\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 /**
- * Class PasswordController
- * @package BFACP\Http\Controllers\Auth
+ * Class PasswordController.
  */
 class PasswordController extends Controller
 {
@@ -26,7 +25,6 @@ class PasswordController extends Controller
 
     /**
      * Create a new password controller instance.
-     *
      */
     public function __construct()
     {

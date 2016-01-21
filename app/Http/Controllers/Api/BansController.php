@@ -16,8 +16,7 @@ use Illuminate\Support\Facades\View;
 use Roumen\Feed\Facades\Feed;
 
 /**
- * Class BansController
- * @package BFACP\Http\Controllers\Api
+ * Class BansController.
  */
 class BansController extends Controller
 {

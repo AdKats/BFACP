@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Config;
 use Zizaco\Entrust\EntrustRole;
 
 /**
- * Class Role
- * @package BFACP\Account
+ * Class Role.
  */
 class Role extends EntrustRole
 {

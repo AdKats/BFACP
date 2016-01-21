@@ -6,8 +6,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Routing\Router;
 
 /**
- * Class RouteServiceProvider
- * @package BFACP\Providers
+ * Class RouteServiceProvider.
  */
 class RouteServiceProvider extends ServiceProvider
 {
@@ -23,7 +22,7 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param  \Illuminate\Routing\Router $router
+     * @param \Illuminate\Routing\Router $router
      *
      * @return void
      */
@@ -37,7 +36,7 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define the routes for the application.
      *
-     * @param  \Illuminate\Routing\Router $router
+     * @param \Illuminate\Routing\Router $router
      *
      * @return void
      */

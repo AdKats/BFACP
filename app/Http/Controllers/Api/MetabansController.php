@@ -8,8 +8,7 @@ use BFACP\Libraries\Metabans;
 use Illuminate\Support\Facades\Lang;
 
 /**
- * Class MetabansController
- * @package BFACP\Http\Controllers\Api
+ * Class MetabansController.
  */
 class MetabansController extends Controller
 {

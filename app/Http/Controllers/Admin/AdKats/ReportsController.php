@@ -6,8 +6,7 @@ use BFACP\Http\Controllers\Controller;
 use Illuminate\Support\Facades\App as App;
 
 /**
- * Class ReportsController
- * @package BFACP\Http\Controllers\Admin\Adkats
+ * Class ReportsController.
  */
 class ReportsController extends Controller
 {

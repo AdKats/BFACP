@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
 
 /**
- * Class ChatlogController
- * @package BFACP\Http\Controllers
+ * Class ChatlogController.
  */
 class ChatlogController extends Controller
 {

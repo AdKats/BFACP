@@ -6,8 +6,7 @@ use BFACP\Elegant;
 use BFACP\Facades\Main as MainHelper;
 
 /**
- * Class Battlelog
- * @package BFACP\Adkats
+ * Class Battlelog.
  */
 class Battlelog extends Elegant
 {

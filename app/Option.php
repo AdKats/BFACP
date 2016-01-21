@@ -3,8 +3,7 @@
 namespace BFACP;
 
 /**
- * Class Option
- * @package BFACP
+ * Class Option.
  */
 class Option extends Elegant
 {

@@ -5,8 +5,7 @@ namespace BFACP\Repositories;
 use GeoIp2\Database\Reader;
 
 /**
- * Class GeoRepository
- * @package BFACP\Repositories
+ * Class GeoRepository.
  */
 class GeoRepository extends BaseRepository
 {

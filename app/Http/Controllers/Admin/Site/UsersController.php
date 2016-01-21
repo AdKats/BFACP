@@ -18,8 +18,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
 /**
- * Class UsersController
- * @package BFACP\Http\Controllers\Admin\Site
+ * Class UsersController.
  */
 class UsersController extends Controller
 {
@@ -116,7 +115,7 @@ class UsersController extends Controller
     /**
      * Update user.
      *
-     * @param  int $id User ID
+     * @param int $id User ID
      */
     public function update($id)
     {
@@ -232,7 +231,7 @@ class UsersController extends Controller
     /**
      * Delete user.
      *
-     * @param  int $id User ID
+     * @param int $id User ID
      *
      * @return \Illuminate\Support\Facades\Response
      */

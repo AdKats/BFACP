@@ -5,8 +5,7 @@ namespace BFACP\Adkats;
 use BFACP\Elegant;
 
 /**
- * Class Record
- * @package BFACP\Adkats
+ * Class Record.
  */
 class Record extends Elegant
 {

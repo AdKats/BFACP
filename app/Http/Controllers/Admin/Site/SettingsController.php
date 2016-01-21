@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\Redirect as Redirect;
 use Illuminate\Support\Facades\View as View;
 
 /**
- * Class SettingsController
- * @package BFACP\Http\Controllers\Admin\Site
+ * Class SettingsController.
  */
 class SettingsController extends Controller
 {

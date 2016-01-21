@@ -6,8 +6,7 @@ use BFACP\Adkats\Infractions\Overall;
 use Illuminate\Console\Command;
 
 /**
- * Class InfractionsCleanup
- * @package BFACP\Commands
+ * Class InfractionsCleanup.
  */
 class InfractionsCleanup extends Command
 {

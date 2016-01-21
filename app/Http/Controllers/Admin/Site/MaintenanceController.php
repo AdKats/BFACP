@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 
 /**
- * Class MaintenanceController
- * @package BFACP\Http\Controllers\Admin\Site
+ * Class MaintenanceController.
  */
 class MaintenanceController extends Controller
 {

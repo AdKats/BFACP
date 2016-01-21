@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 /**
- * Class UserComposer
- * @package BFACP\Composers
+ * Class UserComposer.
  */
 class UserComposer
 {

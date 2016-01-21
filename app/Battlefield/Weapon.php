@@ -5,8 +5,7 @@ namespace BFACP\Battlefield;
 use BFACP\Elegant;
 
 /**
- * Class Weapon
- * @package BFACP\Battlefield
+ * Class Weapon.
  */
 class Weapon extends Elegant
 {

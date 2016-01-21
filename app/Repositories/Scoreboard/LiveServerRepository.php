@@ -22,8 +22,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 
 /**
- * Class LiveServerRepository
- * @package BFACP\Repositories\Scoreboard
+ * Class LiveServerRepository.
  */
 class LiveServerRepository extends BaseRepository
 {
@@ -975,8 +974,8 @@ class LiveServerRepository extends BaseRepository
     /**
      * Forgive player.
      *
-     * @param  string $player  Name of player
-     * @param  string $message Message to be sent
+     * @param string $player  Name of player
+     * @param string $message Message to be sent
      *
      * @return array
      * @throws RconException
@@ -1008,8 +1007,8 @@ class LiveServerRepository extends BaseRepository
     /**
      * Mute player.
      *
-     * @param  string $player  Name of player
-     * @param  string $message Message to be sent
+     * @param string $player  Name of player
+     * @param string $message Message to be sent
      *
      * @return bool
      */

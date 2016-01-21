@@ -5,17 +5,16 @@ namespace BFACP\Helpers;
 use Exception;
 
 /**
- * Class Battlefield
- * @package BFACP\Helpers
+ * Class Battlefield.
  */
 class Battlefield extends Main
 {
     /**
      * Gets the name of the squad by ID.
      *
-     * @param  int $id Squad ID
+     * @param int $id Squad ID
      *
-     * @return string Squad Name
+     * @return string    Squad Name
      * @throws Exception
      */
     public function squad($id)
@@ -136,9 +135,9 @@ class Battlefield extends Main
     /**
      * Calculates kill/death ratio.
      *
-     * @param  int $kills
-     * @param  int $deaths
-     * @param  int $precision
+     * @param int $kills
+     * @param int $deaths
+     * @param int $precision
      *
      * @return float
      */
@@ -158,9 +157,9 @@ class Battlefield extends Main
     /**
      * Calculates headshot kill ratio.
      *
-     * @param  int $headshots
-     * @param  int $kills
-     * @param  int $precision
+     * @param int $headshots
+     * @param int $kills
+     * @param int $precision
      *
      * @return float
      */
@@ -176,9 +175,9 @@ class Battlefield extends Main
     /**
      * Calculates the number of tickets on round start.
      *
-     * @param  string $gamemode
-     * @param  int    $modifier
-     * @param  string $gameName
+     * @param string $gamemode
+     * @param int    $modifier
+     * @param string $gameName
      *
      * @return int
      */
@@ -305,9 +304,9 @@ class Battlefield extends Main
     /**
      * Calculates the round timer on round start.
      *
-     * @param  string $gamemode
-     * @param  int    $modifier
-     * @param  string $gameName
+     * @param string $gamemode
+     * @param int    $modifier
+     * @param string $gameName
      *
      * @return int
      */

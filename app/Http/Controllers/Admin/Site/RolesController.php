@@ -15,8 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
 /**
- * Class RolesController
- * @package BFACP\Http\Controllers\Admin\Site
+ * Class RolesController.
  */
 class RolesController extends Controller
 {

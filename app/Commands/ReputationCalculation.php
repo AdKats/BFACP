@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class ReputationCalculation
- * @package BFACP\Commands
+ * Class ReputationCalculation.
  */
 class ReputationCalculation extends Command
 {

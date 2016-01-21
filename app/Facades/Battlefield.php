@@ -5,8 +5,7 @@ namespace BFACP\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * Class Battlefield
- * @package BFACP\Facades
+ * Class Battlefield.
  */
 class Battlefield extends Facade
 {

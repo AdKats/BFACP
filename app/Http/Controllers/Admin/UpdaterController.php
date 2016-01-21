@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\View;
 use vierbergenlars\SemVer\version;
 
 /**
- * Class UpdaterController
- * @package BFACP\Http\Controllers\Admin
+ * Class UpdaterController.
  */
 class UpdaterController extends Controller
 {

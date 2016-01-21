@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 
 /**
- * Class ReportRepository
- * @package BFACP\Repositories
+ * Class ReportRepository.
  */
 class ReportRepository extends BaseRepository
 {
@@ -45,8 +44,8 @@ class ReportRepository extends BaseRepository
     /**
      * Returns the latest reports.
      *
-     * @param  bool $paginate Paginate response
-     * @param  int  $take     Get X amount
+     * @param bool $paginate Paginate response
+     * @param int  $take     Get X amount
      *
      * @return array
      */
@@ -75,7 +74,7 @@ class ReportRepository extends BaseRepository
     /**
      * Get's a report by its ID.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return object
      */

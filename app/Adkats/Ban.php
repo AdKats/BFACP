@@ -6,8 +6,7 @@ use BFACP\Elegant;
 use Carbon\Carbon;
 
 /**
- * Class Ban
- * @package BFACP\Adkats
+ * Class Ban.
  */
 class Ban extends Elegant
 {
@@ -89,8 +88,8 @@ class Ban extends Elegant
     /**
      * Gets the latest bans that are in effect.
      *
-     * @param  object $query
-     * @param  int    $limit
+     * @param object $query
+     * @param int    $limit
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -102,7 +101,7 @@ class Ban extends Elegant
     /**
      * Gets the bans done yesterday (UTC).
      *
-     * @param  object $query
+     * @param object $query
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -114,9 +113,9 @@ class Ban extends Elegant
     /**
      * Get the bans that the player ids have done.
      *
-     * @param  object $query
-     * @param  array  $playerIds
-     * @param  int    $limit
+     * @param object $query
+     * @param array  $playerIds
+     * @param int    $limit
      *
      * @return \Illuminate\Database\Eloquent\Model
      */

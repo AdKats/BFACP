@@ -9,8 +9,7 @@ use BFACP\Facades\Main as MainHelper;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * Class BattlelogPlayer
- * @package BFACP\Libraries\Battlelog
+ * Class BattlelogPlayer.
  */
 class BattlelogPlayer extends BattlelogAPI
 {
