@@ -42,7 +42,7 @@ class SettingsController extends Controller
                     }
                 }
 
-                if ($value != $settings[ $key ]) {
+                if ($value != $settings[$key]) {
                     Option::where('option_key', $key)->update(['option_value' => $value]);
                 }
             }

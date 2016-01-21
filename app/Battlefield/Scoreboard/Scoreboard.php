@@ -76,7 +76,6 @@ class Scoreboard extends Elegant
         return $this->belongsTo('BFACP\Battlefield\Player', 'EA_GUID', 'EAGUID');
     }
 
-
     /**
      * @return mixed
      */
@@ -84,7 +83,6 @@ class Scoreboard extends Elegant
     {
         return $this->PlayerJoined->toIso8601String();
     }
-
 
     /**
      * @return mixed
@@ -94,7 +92,6 @@ class Scoreboard extends Elegant
         return BattlefieldHelper::squad($this->SquadID);
     }
 
-
     /**
      * @return mixed
      */
@@ -102,7 +99,6 @@ class Scoreboard extends Elegant
     {
         return BattlefieldHelper::kd($this->Kills, $this->Deaths);
     }
-
 
     /**
      * @return mixed

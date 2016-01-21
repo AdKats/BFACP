@@ -13,7 +13,6 @@ use vierbergenlars\SemVer\version;
  */
 class UpdaterController extends Controller
 {
-
     /**
      *
      */

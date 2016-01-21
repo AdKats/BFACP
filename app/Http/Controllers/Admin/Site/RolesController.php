@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\View;
  */
 class RolesController extends Controller
 {
-
     /**
      * @return mixed
      */
@@ -32,7 +31,6 @@ class RolesController extends Controller
 
         return View::make('admin.site.roles.index', compact('roles', 'page_title'));
     }
-
 
     /**
      * @return mixed
@@ -48,11 +46,11 @@ class RolesController extends Controller
                 $key = ucfirst($matches[1]);
 
                 // Push to array
-                $permissions[ $key ][ $permission->id ] = $permission->display_name;
+                $permissions[$key][$permission->id] = $permission->display_name;
             } else {
 
                 // Push to array
-                $permissions['General'][ $permission->id ] = $permission->display_name;
+                $permissions['General'][$permission->id] = $permission->display_name;
             }
         }
 
@@ -60,7 +58,6 @@ class RolesController extends Controller
 
         return View::make('admin.site.roles.create', compact('permissions', 'page_title'));
     }
-
 
     /**
      * @return mixed
@@ -104,7 +101,6 @@ class RolesController extends Controller
         }
     }
 
-
     /**
      * @param $id
      *
@@ -124,11 +120,11 @@ class RolesController extends Controller
                     $key = ucfirst($matches[1]);
 
                     // Push to array
-                    $permissions[ $key ][ $permission->id ] = $permission->display_name;
+                    $permissions[$key][$permission->id] = $permission->display_name;
                 } else {
 
                     // Push to array
-                    $permissions['General'][ $permission->id ] = $permission->display_name;
+                    $permissions['General'][$permission->id] = $permission->display_name;
                 }
             }
 
@@ -139,7 +135,6 @@ class RolesController extends Controller
             return Redirect::route('admin.site.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);
         }
     }
-
 
     /**
      * @param $id
@@ -184,7 +179,6 @@ class RolesController extends Controller
             return Redirect::route('admin.site.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);
         }
     }
-
 
     /**
      * @param $id

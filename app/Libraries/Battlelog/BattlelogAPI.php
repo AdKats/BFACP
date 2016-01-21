@@ -79,7 +79,6 @@ class BattlelogAPI
         'bf3' => 2,
     ];
 
-
     /**
      *
      */

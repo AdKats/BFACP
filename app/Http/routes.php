@@ -114,8 +114,7 @@ $api->version('v1', ['namespace' => 'BFACP\Http\Controllers\Api', 'middleware' =
         $api->get('scoreboard/roundstats/{id}',
             ['as' => 'api.servers.scoreboard.roundstats', 'uses' => 'ServersController@scoreboardExtra'])->where('id',
             '[0-9]+');
-        $api->get('chat/{id}', ['as' => 'api.servers.chat', 'uses' => 'ServersController@chat'])->where('id',
-            '[0-9]+');
+        $api->get('chat/{id}', ['as' => 'api.servers.chat', 'uses' => 'ServersController@chat'])->where('id', '[0-9]+');
         $api->controller('admin/scoreboard', 'Admin\ScoreboardController');
     });
 

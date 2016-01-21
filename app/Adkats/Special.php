@@ -84,7 +84,6 @@ class Special extends Elegant
         return $this->belongsTo('BFACP\Battlefield\Server\Server', 'server_id');
     }
 
-
     /**
      * @return mixed
      */
@@ -93,7 +92,6 @@ class Special extends Elegant
         return $this->player_effective->toIso8601String();
     }
 
-
     /**
      * @return mixed
      */
@@ -101,7 +99,6 @@ class Special extends Elegant
     {
         return $this->player_expiration->toIso8601String();
     }
-
 
     /**
      * @return mixed

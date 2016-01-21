@@ -57,7 +57,6 @@ class ScoreboardController extends Controller
      */
     protected $data = [];
 
-
     /**
      *
      */

@@ -39,7 +39,6 @@ class BansController extends Controller
      */
     protected $metabans = null;
 
-
     /**
      *
      */
@@ -108,7 +107,6 @@ class BansController extends Controller
             return Redirect::route('admin.adkats.bans.index')->withErrors([sprintf('Ban #%u doesn\'t exist.', $id)]);
         }
     }
-
 
     /**
      * @return $this

@@ -20,7 +20,6 @@ class PlayersController extends Controller
 {
     private $repository;
 
-
     /**
      * @param PlayerRepository $repository
      */
@@ -43,8 +42,8 @@ class PlayersController extends Controller
     /**
      * Shows the player profile.
      *
-     * @param  int $id
-     * @param  string  $name
+     * @param  int    $id
+     * @param  string $name
      */
     public function profile($id, $name = '')
     {

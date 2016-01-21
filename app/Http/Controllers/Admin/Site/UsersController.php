@@ -35,7 +35,6 @@ class UsersController extends Controller
             Lang::get('navigation.admin.site.items.users.title'));
     }
 
-
     /**
      * @return mixed
      */
@@ -47,7 +46,6 @@ class UsersController extends Controller
         return View::make('admin.site.users.create', compact('roles'))->with('page_title',
             Lang::get('navigation.admin.site.items.users.items.create.title'));
     }
-
 
     /**
      * @return mixed
@@ -214,7 +212,7 @@ class UsersController extends Controller
                     // and if so do not associate with the account.
                     if (Soldier::where('player_id', $soldier->player_id)->count() == 1) {
                         $this->messages[] = Lang::get('alerts.user.soldier_taken', ['playerid' => $soldier->player_id]);
-                        unset($soldier_ids[ $key ]);
+                        unset($soldier_ids[$key]);
                     }
                 }
 

@@ -75,7 +75,6 @@ class User extends Elegant
         return $this->hasMany('BFACP\Adkats\Account\Soldier', 'user_id');
     }
 
-
     /**
      * @return mixed
      */

@@ -70,7 +70,6 @@ class Role extends EntrustRole
      */
     protected $with = [];
 
-
     /**
      *
      */

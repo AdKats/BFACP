@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\App as App;
  */
 class ReportsController extends Controller
 {
-
     /**
      * @return $this
      */

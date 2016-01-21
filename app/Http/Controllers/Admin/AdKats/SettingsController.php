@@ -21,7 +21,6 @@ class SettingsController extends Controller
             'AdKats Settings Server List');
     }
 
-
     /**
      * @param $id
      *

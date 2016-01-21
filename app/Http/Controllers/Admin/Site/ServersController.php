@@ -27,7 +27,6 @@ class ServersController extends Controller
         return View::make('admin.site.servers.index', compact('servers'))->with('page_title', 'Servers');
     }
 
-
     /**
      * @param $id
      *
@@ -62,7 +61,6 @@ class ServersController extends Controller
             return Redirect::route('admin.site.servers.index')->withErrors(['Server doesn\'t exist.']);
         }
     }
-
 
     /**
      * @param $id

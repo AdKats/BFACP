@@ -29,7 +29,7 @@ class AppSettingsServiceProvider extends ServiceProvider
     public function boot()
     {
         $format = function (&$options, $keys, $value) use (&$format) {
-            $keys ? $format($options[ array_shift($keys) ], $keys, $value) : $options = $value;
+            $keys ? $format($options[array_shift($keys)], $keys, $value) : $options = $value;
         };
 
         $cache = $this->app['cache'];
@@ -45,7 +45,7 @@ class AppSettingsServiceProvider extends ServiceProvider
                         if ($option->option_key == 'site.languages') {
                             $values = [];
                             foreach (explode(',', $option->option_value) as $value) {
-                                $values[ $value ] = Main::languages($value);
+                                $values[$value] = Main::languages($value);
                             }
                             $format($this->options, explode('.', $option->option_key), $values);
                         } else {

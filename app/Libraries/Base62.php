@@ -22,7 +22,6 @@ class Base62
 
     public static $base = 62;
 
-
     /**
      * @param $var
      *
@@ -35,12 +34,11 @@ class Base62
         while (bccomp($var, 0) != 0) {
             $remainder = bcmod($var, self::$base);
             $var = bcdiv(bcsub($var, $remainder), self::$base);
-            array_push($stack, self::$characters[ $remainder ]);
+            array_push($stack, self::$characters[$remainder]);
         }
 
         return implode('', array_reverse($stack));
     }
-
 
     /**
      * @param $var
@@ -53,12 +51,11 @@ class Base62
         $result = 0;
 
         for ($i = 0; $i < $length; $i++) {
-            $result = bcadd($result, bcmul(self::getDigit($var[ $i ]), bcpow(self::$base, ($length - ($i + 1)))));
+            $result = bcadd($result, bcmul(self::getDigit($var[$i]), bcpow(self::$base, ($length - ($i + 1)))));
         }
 
         return $result;
     }
-
 
     /**
      * @param $var

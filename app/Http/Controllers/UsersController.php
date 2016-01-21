@@ -27,7 +27,6 @@ class UsersController extends Controller
      */
     private $repository;
 
-
     /**
      *
      */
@@ -89,7 +88,7 @@ class UsersController extends Controller
                 'lang' => $lang,
             ]);
 
-            $langHuman = Config::get('bfacp.site.languages')[ $lang ];
+            $langHuman = Config::get('bfacp.site.languages')[$lang];
 
             $this->messages[] = Lang::get('user.notifications.account.language.changed', ['lang' => $langHuman]);
         }

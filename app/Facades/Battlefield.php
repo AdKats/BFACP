@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Facade;
  */
 class Battlefield extends Facade
 {
-
     /**
      * @return string
      */

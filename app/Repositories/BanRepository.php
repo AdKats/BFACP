@@ -15,8 +15,8 @@ class BanRepository extends BaseRepository
     /**
      * Gets the latest bans.
      *
-     * @param  string  $cacheKey Caching key to use
-     * @param  int $ttl      Cache for X minutes
+     * @param  string $cacheKey Caching key to use
+     * @param  int    $ttl      Cache for X minutes
      *
      * @return array
      */

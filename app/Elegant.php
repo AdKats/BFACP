@@ -40,7 +40,6 @@ class Elegant extends Model
      */
     protected $validator;
 
-
     /**
      * @param array $attributes
      */

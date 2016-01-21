@@ -15,7 +15,6 @@ use Closure;
  */
 class Secure
 {
-
     /**
      * @param         $request
      * @param Closure $next

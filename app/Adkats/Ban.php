@@ -89,8 +89,8 @@ class Ban extends Elegant
     /**
      * Gets the latest bans that are in effect.
      *
-     * @param  object  $query
-     * @param  int $limit
+     * @param  object $query
+     * @param  int    $limit
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -114,9 +114,9 @@ class Ban extends Elegant
     /**
      * Get the bans that the player ids have done.
      *
-     * @param  object  $query
-     * @param  array   $playerIds
-     * @param  int $limit
+     * @param  object $query
+     * @param  array  $playerIds
+     * @param  int    $limit
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -140,7 +140,6 @@ class Ban extends Elegant
             [7, 8, 72, 73])->orderBy('record_time', 'desc');
     }
 
-
     /**
      * @return mixed
      */
@@ -148,7 +147,6 @@ class Ban extends Elegant
     {
         return $this->ban_startTime->toIso8601String();
     }
-
 
     /**
      * @return mixed

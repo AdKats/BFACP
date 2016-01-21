@@ -37,7 +37,6 @@ class Controller extends BaseController
      */
     public $messages = [];
 
-
     /**
      *
      */

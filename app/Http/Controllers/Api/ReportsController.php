@@ -24,7 +24,6 @@ class ReportsController extends Controller
      */
     private $repository;
 
-
     /**
      *
      */

@@ -56,7 +56,6 @@ class BattlelogPlayer extends BattlelogAPI
      */
     public $game = '';
 
-
     /**
      * @param Player $player
      */
@@ -153,7 +152,7 @@ class BattlelogPlayer extends BattlelogAPI
     private function getSoldierAndUpdate()
     {
         // Generate URI for request
-        $uri = sprintf($this->uris[ $this->game ]['soldier'], $this->game, $this->personaUserID, $this->personaID);
+        $uri = sprintf($this->uris[$this->game]['soldier'], $this->game, $this->personaUserID, $this->personaID);
 
         // Send request
         $results = $this->sendRequest($uri);
@@ -191,7 +190,7 @@ class BattlelogPlayer extends BattlelogAPI
     public function getWeaponStats()
     {
         // Generate URI for request
-        $uri = sprintf($this->uris[ $this->game ]['weapons'], $this->game, $this->personaID);
+        $uri = sprintf($this->uris[$this->game]['weapons'], $this->game, $this->personaID);
 
         // Send request
         $results = $this->sendRequest($uri)['data'];
@@ -238,7 +237,7 @@ class BattlelogPlayer extends BattlelogAPI
     public function getOverviewStats()
     {
         // Generate URI for request
-        $uri = sprintf($this->uris[ $this->game ]['overview'], $this->game, $this->personaID);
+        $uri = sprintf($this->uris[$this->game]['overview'], $this->game, $this->personaID);
 
         // Send request
         $results = $this->sendRequest($uri)['data'];
@@ -256,7 +255,7 @@ class BattlelogPlayer extends BattlelogAPI
     public function getVehicleStats()
     {
         // Generate URI for request
-        $uri = sprintf($this->uris[ $this->game ]['vehicles'], $this->game, $this->personaID);
+        $uri = sprintf($this->uris[$this->game]['vehicles'], $this->game, $this->personaID);
 
         // Send request
         $results = $this->sendRequest($uri)['data'];
@@ -293,7 +292,7 @@ class BattlelogPlayer extends BattlelogAPI
         }
 
         // Generate URI for request
-        $uri = sprintf($this->uris[ $this->game ]['battlereports'], $this->game, $this->personaID);
+        $uri = sprintf($this->uris[$this->game]['battlereports'], $this->game, $this->personaID);
 
         // Send request
         $results = $this->sendRequest($uri)['data'];
@@ -319,7 +318,7 @@ class BattlelogPlayer extends BattlelogAPI
         }
 
         // Generate URI for request
-        $uri = sprintf($this->uris[ $this->game ]['battlereport'], $this->game, $id, $this->personaID);
+        $uri = sprintf($this->uris[$this->game]['battlereport'], $this->game, $id, $this->personaID);
 
         $results = $this->sendRequest($uri);
 

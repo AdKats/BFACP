@@ -119,7 +119,6 @@ class Record extends Elegant
         return $this->attributes['adkats_web'] == 1;
     }
 
-
     /**
      * @return mixed
      */

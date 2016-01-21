@@ -67,7 +67,6 @@ class Session extends Elegant
         return $this->belongsToMany('BFACP\Battlefield\Server\Server', 'tbl_server_player', 'StatsID', 'ServerID');
     }
 
-
     /**
      * @return mixed
      */
@@ -75,7 +74,6 @@ class Session extends Elegant
     {
         return $this->StartTime->toIso8601String();
     }
-
 
     /**
      * @return mixed

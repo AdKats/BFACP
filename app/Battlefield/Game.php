@@ -67,7 +67,6 @@ class Game extends Elegant
         return $this->hasMany('BFACP\Battlefield\Server\Server', 'GameID');
     }
 
-
     /**
      * @return string
      */

@@ -74,7 +74,7 @@ class ServersController extends Controller
             $gameKey = strtolower($server->game->Name);
 
             // Add the server to the collection
-            $newCollection[ $gameKey ]['servers'][] = $server;
+            $newCollection[$gameKey]['servers'][] = $server;
         }
 
         foreach ($newCollection as $key => $collection) {
@@ -86,7 +86,7 @@ class ServersController extends Controller
                 $total += $server->maxSlots;
             }
 
-            $newCollection[ $key ]['stats'] = [
+            $newCollection[$key]['stats'] = [
                 'online'     => $online,
                 'totalSlots' => $total,
                 'percentage' => MainHelper::percent($online, $total),
@@ -100,7 +100,6 @@ class ServersController extends Controller
                 'games'      => $newCollection,
             ] + Lang::get('dashboard.population'), null, null, null, false, true);
     }
-
 
     /**
      * @param $id
@@ -132,7 +131,6 @@ class ServersController extends Controller
             throw $e;
         }
     }
-
 
     /**
      * @param $id
@@ -210,7 +208,6 @@ class ServersController extends Controller
 
         return MainHelper::response($data, null, null, null, false, true);
     }
-
 
     /**
      * @return mixed

@@ -15,7 +15,6 @@ class PlayersController extends Controller
 {
     private $repository;
 
-
     /**
      * @param PlayerRepository $repository
      */
@@ -24,7 +23,6 @@ class PlayersController extends Controller
         parent::__construct();
         $this->repository = $repository;
     }
-
 
     /**
      * @param Request $request

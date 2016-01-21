@@ -29,7 +29,6 @@ class RolesController extends Controller
             Lang::get('navigation.admin.adkats.items.roles.title'));
     }
 
-
     /**
      * @return mixed
      */
@@ -47,13 +46,12 @@ class RolesController extends Controller
                 $group = 'Public';
             }
 
-            $permissions[ $group ][ $command_id ] = $command_name;
+            $permissions[$group][$command_id] = $command_name;
         });
 
         return View::make('admin.adkats.roles.create', compact('permissions'))->with('page_title',
             Lang::get('navigation.admin.adkats.items.roles.items.create.title'));
     }
-
 
     /**
      * @param $id
@@ -77,7 +75,7 @@ class RolesController extends Controller
                     $group = 'Public';
                 }
 
-                $permissions[ $group ][ $command_id ] = $command_name;
+                $permissions[$group][$command_id] = $command_name;
             });
 
             return View::make('admin.adkats.roles.edit', compact('permissions', 'role'))->with('page_title',
@@ -88,7 +86,6 @@ class RolesController extends Controller
             ]);
         }
     }
-
 
     /**
      * @param $id
@@ -128,7 +125,6 @@ class RolesController extends Controller
             ]);
         }
     }
-
 
     /**
      * @param $id

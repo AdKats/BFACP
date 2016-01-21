@@ -171,7 +171,6 @@ class User extends Authenticatable
         return $this->attributes['confirmed'] == 1;
     }
 
-
     /**
      * @return mixed|string
      */

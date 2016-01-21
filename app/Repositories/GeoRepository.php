@@ -31,7 +31,6 @@ class GeoRepository extends BaseRepository
      */
     protected $reader;
 
-
     /**
      *
      */

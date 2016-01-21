@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Facade;
  */
 class Main extends Facade
 {
-
     /**
      * @return string
      */

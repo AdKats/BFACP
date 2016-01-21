@@ -39,7 +39,6 @@ class AuthController extends Controller
      */
     private $repository;
 
-
     /**
      * Create a new authentication controller instance.
      *

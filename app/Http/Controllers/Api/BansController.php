@@ -23,7 +23,6 @@ class BansController extends Controller
 {
     private $repository;
 
-
     /**
      * @param BanRepository $repo
      */
@@ -33,7 +32,6 @@ class BansController extends Controller
 
         $this->repository = $repo;
     }
-
 
     /**
      * @return mixed
@@ -71,14 +69,8 @@ class BansController extends Controller
                     'banReason'  => $ban['record']['record_message'],
                 ]);
 
-                $feed->add(
-                    $title,
-                    $ban['record']['source_name'],
-                    $ban['player']['profile_url'],
-                    $ban['ban_startTime'],
-                    $title,
-                    $view->render()
-                );
+                $feed->add($title, $ban['record']['source_name'], $ban['player']['profile_url'], $ban['ban_startTime'],
+                    $title, $view->render());
             }
 
             return $feed->render('atom');
@@ -89,7 +81,6 @@ class BansController extends Controller
             'bans' => $bans,
         ], null, null, null, $isCached, true);
     }
-
 
     /**
      * @return mixed

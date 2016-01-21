@@ -59,7 +59,6 @@ class Reputation extends Elegant
      */
     protected $with = [];
 
-
     /**
      * @param $query
      * @param $game

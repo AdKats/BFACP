@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\View;
  */
 class ChatlogController extends Controller
 {
-
     /**
      * @param Game   $game
      * @param Chat   $chat

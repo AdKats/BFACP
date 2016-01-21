@@ -102,7 +102,6 @@ class BF4Conn
         }
     }
 
-
     /**
      * @param null $debug
      *
@@ -194,7 +193,6 @@ class BF4Conn
         }
     }
 
-
     /**
      * @param     $array
      * @param int $key
@@ -203,9 +201,8 @@ class BF4Conn
      */
     private function _array2String($array, $key = 1)
     {
-        return $array[ $key ];
+        return $array[$key];
     }
-
 
     /**
      * @param $clientRequest
@@ -229,7 +226,6 @@ class BF4Conn
         return $requestAnswer;
     }
 
-
     /**
      * @param $data
      *
@@ -242,7 +238,6 @@ class BF4Conn
 
         return $packet;
     }
-
 
     /**
      * @param $isFromServer
@@ -291,7 +286,7 @@ class BF4Conn
                             $adminYell[3] = $yellStyle;
                         } else {
                             if ($key == $yellKey - 1) {
-                                $adminYell[2] = $data[ $yellKey - 1 ];
+                                $adminYell[2] = $data[$yellKey - 1];
                             }
                         }
                     }
@@ -310,7 +305,7 @@ class BF4Conn
                                 $adminYell[3] = $yellStyle;
                             } else {
                                 if ($key == $yellKey - 1) {
-                                    $adminYell[2] = $data[ $yellKey - 1 ];
+                                    $adminYell[2] = $data[$yellKey - 1];
                                 } else {
                                     if ($key > $yellKey) {
                                         $adminYell[4] .= $content.' ';
@@ -395,7 +390,7 @@ class BF4Conn
                         $banPlayer[2] = trim($banPlayer[2]); // trim whitespace
 
                         if ($data[0] == 'banList.add') {
-                            $banPlayer[3] = $data[ $dataCount ];
+                            $banPlayer[3] = $data[$dataCount];
                         }
 
                         $data = $banPlayer;
@@ -495,9 +490,9 @@ class BF4Conn
                                             }
 
                                             $adminMovePlayer[1] = trim($adminMovePlayer[1]); // trim whitespace
-                                            $adminMovePlayer[2] = $data[ $dataCount ];
-                                            $adminMovePlayer[3] = $data[ $dataCount + 1 ];
-                                            $adminMovePlayer[4] = $data[ $dataCount + 2 ];
+                                            $adminMovePlayer[2] = $data[$dataCount];
+                                            $adminMovePlayer[3] = $data[$dataCount + 1];
+                                            $adminMovePlayer[4] = $data[$dataCount + 2];
 
                                             $data = $adminMovePlayer;
                                         }
@@ -518,7 +513,6 @@ class BF4Conn
         return $encodedHeader.$encodedSize.$encodedNumWords.$encodedWords;
     }
 
-
     /**
      * @param $isFromServer
      * @param $isResponse
@@ -538,7 +532,6 @@ class BF4Conn
 
         return pack('I', $header);
     }
-
 
     /**
      * @param $words
@@ -563,7 +556,6 @@ class BF4Conn
         ];
     }
 
-
     /**
      * @param $size
      *
@@ -573,7 +565,6 @@ class BF4Conn
     {
         return pack('I', $size);
     }
-
 
     /**
      * @param $receiveBuffer
@@ -610,7 +601,6 @@ class BF4Conn
         ];
     }
 
-
     /**
      * @param $data
      *
@@ -629,7 +619,6 @@ class BF4Conn
         return true;
     }
 
-
     /**
      * @param $data
      *
@@ -641,7 +630,6 @@ class BF4Conn
 
         return $decode[1];
     }
-
 
     /**
      * @param $data
@@ -661,7 +649,6 @@ class BF4Conn
             $words,
         ];
     }
-
 
     /**
      * @param $data
@@ -727,7 +714,6 @@ class BF4Conn
         }
     }
 
-
     /**
      * @param $hex
      *
@@ -737,7 +723,7 @@ class BF4Conn
     {
         $string = '';
         for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
-            $string .= chr(hexdec($hex[ $i ].$hex[ $i + 1 ]));
+            $string .= chr(hexdec($hex[$i].$hex[$i + 1]));
         }
 
         return $string;
@@ -791,8 +777,8 @@ class BF4Conn
         $squadName = $this->_globalMsg['SQUAD_NOT_FOUND'];
 
         for ($i = 0; $i <= (count($squadNamesXML->squad) - 1); $i++) {
-            if ($squadID == $squadNamesXML->squad[ $i ]->attributes()->id) {
-                $squadName = $squadNamesXML->squad[ $i ]->attributes()->name;
+            if ($squadID == $squadNamesXML->squad[$i]->attributes()->id) {
+                $squadName = $squadNamesXML->squad[$i]->attributes()->name;
             }
         }
 
@@ -817,8 +803,8 @@ class BF4Conn
         $playModes = count($teamNameXML->teamName[0]) - 1;
         if ($playModes >= $teamID) {
             for ($i = 0; $i <= $playModes; $i++) {
-                if ($teamNameXML->teamName[0]->playMode[ $i ]->attributes()->uri == $playmodeURI) {
-                    $teamName = $teamNameXML->teamName[0]->playMode[ $i ]->team[ $teamID ]->name;
+                if ($teamNameXML->teamName[0]->playMode[$i]->attributes()->uri == $playmodeURI) {
+                    $teamName = $teamNameXML->teamName[0]->playMode[$i]->team[$teamID]->name;
                 }
             }
         }
@@ -904,8 +890,8 @@ class BF4Conn
         $playmodeName = $this->_globalMsg['PLAYMODE_NOT_FOUND'];
 
         for ($i = 0; $i <= (count($playModesXML->playmode) - 1); $i++) {
-            if ($playmodeURI == $playModesXML->playmode[ $i ]->attributes()->uri) {
-                $playmodeName = $playModesXML->playmode[ $i ]->attributes()->name;
+            if ($playmodeURI == $playModesXML->playmode[$i]->attributes()->uri) {
+                $playmodeName = $playModesXML->playmode[$i]->attributes()->name;
             }
         }
 
@@ -952,9 +938,9 @@ class BF4Conn
 
         for ($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
             if (strcasecmp($mapURI,
-                    $mapNamesXML->map[ $i ]->attributes()->uri) == 0 && $currentPlaymode == $mapNamesXML->map[ $i ]->attributes()->playmode
+                    $mapNamesXML->map[$i]->attributes()->uri) == 0 && $currentPlaymode == $mapNamesXML->map[$i]->attributes()->playmode
             ) {
-                $mapName = $mapNamesXML->map[ $i ]->attributes()->name;
+                $mapName = $mapNamesXML->map[$i]->attributes()->name;
             }
         }
 
@@ -1079,7 +1065,7 @@ class BF4Conn
 
         $playersParameters = (int) $players[1];
         for ($i = 0; $i < $playersAmount; $i++) {
-            $playersNames[] = $players[ ($playersParameters) * $i + $playersParameters + 3 ];
+            $playersNames[] = $players[($playersParameters) * $i + $playersParameters + 3];
         }
 
         return $playersNames;
@@ -1180,7 +1166,6 @@ class BF4Conn
         return $this->_array2boolean($this->_clientRequest('admin.eventsEnabled'));
     }
 
-
     /**
      * @param     $array
      * @param int $key
@@ -1189,7 +1174,7 @@ class BF4Conn
      */
     private function _array2boolean($array, $key = 1)
     {
-        if (isset($array[ $key ]) && $array[ $key ] == 'true') {
+        if (isset($array[$key]) && $array[$key] == 'true') {
             return true;
         } else {
             return false;
@@ -1208,7 +1193,6 @@ class BF4Conn
     {
         return $this->_clientRequest('admin.eventsEnabled '.$this->_bool2String($boolean));
     }
-
 
     /**
      * @param $boolean
@@ -1357,7 +1341,7 @@ class BF4Conn
      * @param string
      * @param string  (optional) - if not set, message will be sent to all
      *                players
-     * @param int (optional) - amount of time the message will be displayed,
+     * @param int     (optional) - amount of time the message will be displayed,
      *                must be 1-60
      *
      * @return string
@@ -1372,8 +1356,7 @@ class BF4Conn
             $playerName = '{%player%}'.' '.$playerName;
         }
 
-        return $this->_array2String($this->_clientRequest('admin.yell '.$text.' '.$durationInMS.' '.$playerName),
-            0);
+        return $this->_array2String($this->_clientRequest('admin.yell '.$text.' '.$durationInMS.' '.$playerName), 0);
     }
 
     /**
@@ -1383,7 +1366,7 @@ class BF4Conn
      *
      * @param string
      * @param int
-     * @param int (optional) - amount of time the message will be displayed,
+     * @param int     (optional) - amount of time the message will be displayed,
      *                must be 1-60
      *
      * @return string
@@ -1640,8 +1623,7 @@ class BF4Conn
      */
     public function adminKickPlayerWithReason($playerName, $reason = 'Kicked by administrator')
     {
-        return $this->_array2String($this->_clientRequest('admin.kickPlayer '.$playerName.' {%reason%} '.$reason),
-            0);
+        return $this->_array2String($this->_clientRequest('admin.kickPlayer '.$playerName.' {%reason%} '.$reason), 0);
     }
 
     /**
@@ -1970,8 +1952,7 @@ class BF4Conn
         $teamID = $this->getPlayerTeamID($playerName);
         $squadID = $this->getPlayerSquadID($playerName);
 
-        return $this->_array2String($this->_clientRequest('squad.leader '.$teamID.' '.$squadID.' '.$playerName),
-            0);
+        return $this->_array2String($this->_clientRequest('squad.leader '.$teamID.' '.$squadID.' '.$playerName), 0);
     }
 
     /**
@@ -2007,8 +1988,8 @@ class BF4Conn
     /**
      * Set the squad to private or not.
      *
-     * @param  int $teamID
-     * @param  int $squadID
+     * @param  int  $teamID
+     * @param  int  $squadID
      * @param  bool $private
      *
      * @return bool
@@ -2110,8 +2091,7 @@ class BF4Conn
      */
     public function adminVarSetAllUnlocksUnlocked($boolean)
     {
-        return $this->_array2String($this->_clientRequest('vars.allUnlocksUnlocked '.$this->_bool2String($boolean)),
-            0);
+        return $this->_array2String($this->_clientRequest('vars.allUnlocksUnlocked '.$this->_bool2String($boolean)), 0);
     }
 
     /**
@@ -2577,7 +2557,6 @@ class BF4Conn
         return $this->_array2String($this->_clientRequest('vars.serverName '.$serverName), 0);
     }
 
-
     /**
      * sets the soldier health modifier in %.
      *
@@ -2742,11 +2721,11 @@ class BF4Conn
         return $this->_array2boolean($this->_clientRequest('vars.vehicleSpawnAllowed'));
     }
 
-
     /**
      * sets the vehicle spawn modifier in %.
      *
      * @param $vehicleSpawnDelayInteger
+     *
      * @return string
      * @internal param $integer
      *
@@ -2807,7 +2786,7 @@ class BF4Conn
             ];
         }
 
-        return $factions[ $teamFactions[ $integer ] ];
+        return $factions[$teamFactions[$integer]];
     }
 
     /**
@@ -2819,7 +2798,6 @@ class BF4Conn
     {
         return (int) $this->_array2String($this->_clientRequest('vars.gameModeCounter'), 1);
     }
-
 
     /**
      * @return int
@@ -2843,7 +2821,7 @@ class BF4Conn
         $columns = [];
 
         for ($i = 1; $i <= $nColumns; $i++) {
-            $columns[] = $res[ $i ];
+            $columns[] = $res[$i];
         }
 
         $nRows = $res[11];
@@ -2856,8 +2834,8 @@ class BF4Conn
             $row = [];
 
             for ($j = 0; $j < count($columns); $j++) {
-                $value = $res[ ++$i ];
-                $row[ $columns[ $j ] ] = is_numeric($value) ? (int) $value : $value;
+                $value = $res[++$i];
+                $row[$columns[$j]] = is_numeric($value) ? (int) $value : $value;
             }
 
             $rows['players'][] = $row;
@@ -2867,6 +2845,5 @@ class BF4Conn
 
         return $rows;
     }
-
     // TODO: server moderation mode
 }

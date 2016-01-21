@@ -57,7 +57,7 @@ class HomeController extends Controller
         ];
 
         Server::active()->get()->each(function ($server) use (&$servers) {
-            $servers[ $server->game->Name ][ $server->ServerID ] = $server->ServerName;
+            $servers[$server->game->Name][$server->ServerID] = $server->ServerName;
         });
 
         if ($this->isLoggedIn && $this->user->ability(null, Cache::get('admin.perm.list')['scoreboard'])) {
@@ -66,7 +66,7 @@ class HomeController extends Controller
             $permissions = $perms['permissions'];
 
             $validPermissions = $this->user->roles[0]->perms->filter(function ($perm) use (&$permissions) {
-                if (array_key_exists($perm->name, $permissions) && $permissions[ $perm->name ]) {
+                if (array_key_exists($perm->name, $permissions) && $permissions[$perm->name]) {
                     return true;
                 }
             })->map(function ($perm) {

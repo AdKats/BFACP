@@ -46,7 +46,7 @@ class ReportRepository extends BaseRepository
      * Returns the latest reports.
      *
      * @param  bool $paginate Paginate response
-     * @param  int $take     Get X amount
+     * @param  int  $take     Get X amount
      *
      * @return array
      */

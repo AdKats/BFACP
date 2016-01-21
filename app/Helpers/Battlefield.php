@@ -176,9 +176,9 @@ class Battlefield extends Main
     /**
      * Calculates the number of tickets on round start.
      *
-     * @param  string  $gamemode
-     * @param  int $modifier
-     * @param  string  $gameName
+     * @param  string $gamemode
+     * @param  int    $modifier
+     * @param  string $gameName
      *
      * @return int
      */
@@ -305,9 +305,9 @@ class Battlefield extends Main
     /**
      * Calculates the round timer on round start.
      *
-     * @param  string  $gamemode
-     * @param  int $modifier
-     * @param  string  $gameName
+     * @param  string $gamemode
+     * @param  int    $modifier
+     * @param  string $gameName
      *
      * @return int
      */
@@ -389,7 +389,6 @@ class Battlefield extends Main
         return intval($startingRoundTimer);
     }
 
-
     /**
      * @param $mapURI
      * @param $xmlFilePath
@@ -404,15 +403,14 @@ class Battlefield extends Main
 
         for ($i = 0; $i <= (count($mapNamesXML->map) - 1); $i++) {
             if (strcasecmp($mapURI,
-                    $mapNamesXML->map[ $i ]->attributes()->uri) == 0 && $playmodeURI == $mapNamesXML->map[ $i ]->attributes()->playmode
+                    $mapNamesXML->map[$i]->attributes()->uri) == 0 && $playmodeURI == $mapNamesXML->map[$i]->attributes()->playmode
             ) {
-                $mapName = $mapNamesXML->map[ $i ]->attributes()->name;
+                $mapName = $mapNamesXML->map[$i]->attributes()->name;
             }
         }
 
         return ! is_string($mapName) ? head($mapName) : $mapName;
     }
-
 
     /**
      * @param $playmodeURI
@@ -426,8 +424,8 @@ class Battlefield extends Main
         $playmodeName = 'PlaymodeNameNotFoundError';
 
         for ($i = 0; $i <= (count($playModesXML->playmode) - 1); $i++) {
-            if ($playmodeURI == $playModesXML->playmode[ $i ]->attributes()->uri) {
-                $playmodeName = $playModesXML->playmode[ $i ]->attributes()->name;
+            if ($playmodeURI == $playModesXML->playmode[$i]->attributes()->uri) {
+                $playmodeName = $playModesXML->playmode[$i]->attributes()->name;
             }
         }
 

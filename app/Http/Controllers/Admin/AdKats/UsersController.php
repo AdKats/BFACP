@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\View;
  */
 class UsersController extends Controller
 {
-
     /**
      *
      */

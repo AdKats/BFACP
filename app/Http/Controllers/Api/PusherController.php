@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Input;
  */
 class PusherController extends Controller
 {
-
     /**
      *
      */
@@ -47,7 +46,6 @@ class PusherController extends Controller
 
         return \Response::make('Forbidden', 403);
     }
-
 
     /**
      * @return mixed

@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Response;
  */
 class Main
 {
-
     /**
      *
      */
@@ -32,12 +31,12 @@ class Main
     /**
      * Return a JSON response.
      *
-     * @param  array   $input
-     * @param  string  $message
-     * @param  string  $status
-     * @param  int $httpcode
-     * @param  bool $cached
-     * @param  bool $collectionOnly
+     * @param  array  $input
+     * @param  string $message
+     * @param  string $status
+     * @param  int    $httpcode
+     * @param  bool   $cached
+     * @param  bool   $collectionOnly
      *
      * @return Response
      */
@@ -78,8 +77,7 @@ class Main
         }
 
         return Response::json($collection, $httpcode, [], JSON_NUMERIC_CHECK)->header('X-Robots-Tag',
-            'noindex')->header('Cache-Control',
-            'no-cache, must-revalidate');
+                'noindex')->header('Cache-Control', 'no-cache, must-revalidate');
     }
 
     /**
@@ -110,7 +108,7 @@ class Main
      * Convert seconds to a human-readable string.
      *
      * @param  int $secs
-     * @param bool     $shorthand
+     * @param bool $shorthand
      *
      * @return string
      * @throws Exception
@@ -262,9 +260,9 @@ class Main
     /**
      * Generates the site title.
      *
-     * @param  string  $page  Page Title
-     * @param  string  $clan  Use clan name if set
-     * @param  bool $short If true it will just return without the page title
+     * @param  string $page  Page Title
+     * @param  string $clan  Use clan name if set
+     * @param  bool   $short If true it will just return without the page title
      *
      * @return string
      */
@@ -550,7 +548,7 @@ class Main
         $code = strtoupper($code);
 
         if (array_key_exists($code, $countries)) {
-            return $countries[ $code ];
+            return $countries[$code];
         }
 
         return;
@@ -754,7 +752,7 @@ class Main
         ];
 
         if (! empty($lang) && array_key_exists($lang, $languages)) {
-            return $languages[ $lang ];
+            return $languages[$lang];
         }
 
         if ($onlyKeys) {
@@ -768,7 +766,7 @@ class Main
      * Returns the correct soldier assigned to user for the correct game.
      *
      * @param  \BFACP\Account\User $user
-     * @param  int             $gameID
+     * @param  int                 $gameID
      *
      * @return Player
      */
@@ -814,9 +812,9 @@ class Main
      * Note: the $add_dashes option will increase the length of the password by
      * floor(sqrt(N)) characters.
      *
-     * @param  int $length
-     * @param  bool $add_dashes
-     * @param  string  $available_sets
+     * @param  int    $length
+     * @param  bool   $add_dashes
+     * @param  string $available_sets
      *
      * @return string
      * @source https://gist.github.com/tylerhall/521810
@@ -843,13 +841,13 @@ class Main
         $all = '';
         $password = '';
         foreach ($sets as $set) {
-            $password .= $set[ array_rand(str_split($set)) ];
+            $password .= $set[array_rand(str_split($set))];
             $all .= $set;
         }
 
         $all = str_split($all);
         for ($i = 0; $i < $length - count($sets); $i++) {
-            $password .= $all[ array_rand($all) ];
+            $password .= $all[array_rand($all)];
         }
 
         $password = str_shuffle($password);
@@ -924,9 +922,9 @@ class Main
     /**
      * Returns files in a directory.
      *
-     * @param  string  $dir       Directory Path
-     * @param  bool $onlyNames Only return the filename
-     * @param  string  $prepend   Prepend custom path to use in front of filename
+     * @param  string $dir       Directory Path
+     * @param  bool   $onlyNames Only return the filename
+     * @param  string $prepend   Prepend custom path to use in front of filename
      *
      * @return array
      */
@@ -1098,9 +1096,9 @@ class Main
     /**
      * Gets the next punishment name.
      *
-     * @param string|null  $key
-     * @param int|null $index
-     * @param int|null $serverid
+     * @param string|null $key
+     * @param int|null    $index
+     * @param int|null    $serverid
      *
      * @return string|null
      */
@@ -1115,7 +1113,7 @@ class Main
             if (! is_null($index) && ! is_null($serverid)) {
                 $settings = AdKatsSetting::servers($serverid)->settings('Punishment Hierarchy')->first();
 
-                $key = $settings->setting_value[ $index ];
+                $key = $settings->setting_value[$index];
             }
 
             $hierarchy = [
@@ -1132,7 +1130,7 @@ class Main
             ];
 
             if (array_key_exists($key, $hierarchy)) {
-                return $hierarchy[ $key ];
+                return $hierarchy[$key];
             }
         } catch (Exception $e) {
         }

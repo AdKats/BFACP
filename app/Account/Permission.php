@@ -62,7 +62,6 @@ class Permission extends EntrustPermission
      */
     protected $with = [];
 
-
     /**
      *
      */

@@ -18,7 +18,6 @@ class ChatlogController extends Controller
 
     protected $server;
 
-
     /**
      * @param Chat   $chat
      * @param Server $server
@@ -29,7 +28,6 @@ class ChatlogController extends Controller
         $this->chat = $chat;
         $this->server = $server;
     }
-
 
     /**
      * @return mixed

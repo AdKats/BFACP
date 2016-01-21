@@ -12,7 +12,6 @@ use Illuminate\View\View;
  */
 class UserComposer
 {
-
     /**
      * @param View $view
      */

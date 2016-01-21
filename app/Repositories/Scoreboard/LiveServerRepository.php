@@ -142,7 +142,6 @@ class LiveServerRepository extends BaseRepository
      */
     private $TEAM4 = 'RU Army';
 
-
     /**
      * @param Server $server
      */
@@ -423,9 +422,9 @@ class LiveServerRepository extends BaseRepository
         $list = [];
 
         for ($i = 0; $i < $maps[1]; $i++) {
-            $map = $maps[ ($maps[2]) * $i + $maps[2] ];
-            $mode = $maps[ ($maps[2]) * $i + $maps[2] + 1 ];
-            $rounds = $maps[ ($maps[2]) * $i + $maps[2] + 2 ];
+            $map = $maps[($maps[2]) * $i + $maps[2]];
+            $mode = $maps[($maps[2]) * $i + $maps[2] + 1];
+            $rounds = $maps[($maps[2]) * $i + $maps[2] + 2];
 
             $_playmode = $this->client->getPlaymodeName($mode);
             $_map = $this->client->getMapName($map);
@@ -487,10 +486,10 @@ class LiveServerRepository extends BaseRepository
                 $this->TEAM4 = $teamFactions[0][7];
             } else {
                 $this->TEAM0 = $teamFactions[0][0];
-                $this->TEAM1 = $teamFactions[0][ $teamFactions[1][1] + 1 ];
-                $this->TEAM2 = $teamFactions[0][ $teamFactions[1][2] + 1 ];
-                $this->TEAM3 = $teamFactions[0][ $teamFactions[1][3] + 1 ];
-                $this->TEAM4 = $teamFactions[0][ $teamFactions[1][4] + 1 ];
+                $this->TEAM1 = $teamFactions[0][$teamFactions[1][1] + 1];
+                $this->TEAM2 = $teamFactions[0][$teamFactions[1][2] + 1];
+                $this->TEAM3 = $teamFactions[0][$teamFactions[1][3] + 1];
+                $this->TEAM4 = $teamFactions[0][$teamFactions[1][4] + 1];
             }
         }
 
@@ -1188,13 +1187,13 @@ class LiveServerRepository extends BaseRepository
         for ($i = 0; $i < count($serverinfo); $i++) {
             $key = 'K'.$i;
 
-            $this->data['_raw']['serverinfo'][ $key ] = $serverinfo[ $i ];
+            $this->data['_raw']['serverinfo'][$key] = $serverinfo[$i];
 
-            if (is_numeric($this->data['_raw']['serverinfo'][ $key ])) {
-                $this->data['_raw']['serverinfo'][ $key ] = intval($this->data['_raw']['serverinfo'][ $key ]);
+            if (is_numeric($this->data['_raw']['serverinfo'][$key])) {
+                $this->data['_raw']['serverinfo'][$key] = intval($this->data['_raw']['serverinfo'][$key]);
             } else {
-                if ($this->data['_raw']['serverinfo'][ $key ] == 'true' || $this->data['_raw']['serverinfo'][ $key ] == 'false') {
-                    $this->data['_raw']['serverinfo'][ $key ] = ($this->data['_raw']['serverinfo'][ $key ] == 'true' ? true : false);
+                if ($this->data['_raw']['serverinfo'][$key] == 'true' || $this->data['_raw']['serverinfo'][$key] == 'false') {
+                    $this->data['_raw']['serverinfo'][$key] = ($this->data['_raw']['serverinfo'][$key] == 'true' ? true : false);
                 }
             }
         }
@@ -1233,13 +1232,13 @@ class LiveServerRepository extends BaseRepository
             $squadID = $player['squadId'];
             $squadName = BattlefieldHelper::squad($squadID);
 
-            if (array_key_exists($squadName, $lockedSquads[ $teamID ]) !== true) {
-                $lockedSquads[ $teamID ][ $squadName ] = $this->client->adminGetSquadPrivate($teamID, $squadID);
+            if (array_key_exists($squadName, $lockedSquads[$teamID]) !== true) {
+                $lockedSquads[$teamID][$squadName] = $this->client->adminGetSquadPrivate($teamID, $squadID);
             }
 
             $additional = [
                 'isSquadLocked' => array_key_exists($squadName,
-                    $lockedSquads[ $teamID ]) !== false ? $lockedSquads[ $teamID ][ $squadName ] : null,
+                    $lockedSquads[$teamID]) !== false ? $lockedSquads[$teamID][$squadName] : null,
                 'squadName'     => $squadName,
             ];
 
@@ -1271,16 +1270,16 @@ class LiveServerRepository extends BaseRepository
 
             $teamName = $this->getTeamName($teamID);
 
-            $temp[ $teamID ]['team'] = $teamName;
+            $temp[$teamID]['team'] = $teamName;
 
             $serverInfoLength = count($this->serverinfo);
 
             if (($serverInfoLength >= 26 && $serverInfoLength <= 28 && in_array($this->gameName,
                         ['BF4', 'BFHL'])) || ($serverInfoLength == 25 && $this->gameName == 'BF3')
             ) {
-                $temp[ $teamID ]['score'] = $score;
+                $temp[$teamID]['score'] = $score;
             } else {
-                $temp[ $teamID ]['score'] = 0;
+                $temp[$teamID]['score'] = 0;
             }
 
             if (array_key_exists('ping', $player) && $player['ping'] == 65535) {
@@ -1289,18 +1288,18 @@ class LiveServerRepository extends BaseRepository
 
             switch (array_key_exists('type', $player) ? $player['type'] : 0) {
                 case 1:
-                    $temp[ $teamID ]['spectators'][] = $player;
+                    $temp[$teamID]['spectators'][] = $player;
                     $this->data['server']['players']['spectators']++;
                     break;
 
                 case 2:
                 case 3:
-                    $temp[ $teamID ]['commander'] = $player;
+                    $temp[$teamID]['commander'] = $player;
                     $this->data['server']['players']['commanders']++;
                     break;
 
                 default:
-                    $temp[ $teamID ]['players'][] = array_merge($player, $additional);
+                    $temp[$teamID]['players'][] = array_merge($player, $additional);
             }
         }
 
@@ -1383,11 +1382,11 @@ class LiveServerRepository extends BaseRepository
     {
         foreach ($this->data['teams'] as $teamID => $team) {
             if (array_key_exists($type, $team)) {
-                foreach ($team[ $type ] as $index => $player) {
+                foreach ($team[$type] as $index => $player) {
                     if (is_array($player) && array_key_exists('kills', $player) && array_key_exists('deaths',
                             $player)
                     ) {
-                        $this->data['teams'][ $teamID ][ $type ][ $index ]['kd'] = BattlefieldHelper::kd($player['kills'],
+                        $this->data['teams'][$teamID][$type][$index]['kd'] = BattlefieldHelper::kd($player['kills'],
                             $player['deaths']);
                     }
 
@@ -1424,7 +1423,7 @@ class LiveServerRepository extends BaseRepository
                                 }
                             }
 
-                            $this->data['teams'][ $teamID ][ $type ][ $index ]['_player'] = $player2;
+                            $this->data['teams'][$teamID][$type][$index]['_player'] = $player2;
 
                             break;
                         }
@@ -1456,7 +1455,7 @@ class LiveServerRepository extends BaseRepository
         foreach (['players', 'spectators', 'commander'] as $type) {
             foreach ($this->data['teams'] as $teamID => $team) {
                 if (array_key_exists($type, $team)) {
-                    foreach ($team[ $type ] as $index => $player) {
+                    foreach ($team[$type] as $index => $player) {
                         foreach ($adminlist as $index2 => $player2) {
                             $guid = ! is_string($player) ? $player['guid'] : $player;
 
@@ -1465,7 +1464,7 @@ class LiveServerRepository extends BaseRepository
                                     return false;
                                 }
 
-                                $this->data['admins'][ $player['name'] ] = $this->data['teams'][ $teamID ][ $type ][ $index ];
+                                $this->data['admins'][$player['name']] = $this->data['teams'][$teamID][$type][$index];
                             }
                         }
                     }

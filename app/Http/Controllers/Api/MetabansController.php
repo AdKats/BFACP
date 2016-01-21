@@ -15,7 +15,6 @@ class MetabansController extends Controller
 {
     protected $metabans;
 
-
     /**
      * @param Metabans $metabans
      */
@@ -29,7 +28,6 @@ class MetabansController extends Controller
     {
         throw new MetabansException(405, 'Invalid Resource');
     }
-
 
     /**
      * @return mixed
@@ -49,7 +47,6 @@ class MetabansController extends Controller
             ], null, null, null, false, true);
     }
 
-
     /**
      * @return mixed
      */
@@ -59,7 +56,6 @@ class MetabansController extends Controller
 
         return MainHelper::response($feed, null, null, null, false, true);
     }
-
 
     /**
      * @return mixed

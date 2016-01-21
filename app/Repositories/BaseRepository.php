@@ -24,7 +24,6 @@ class BaseRepository
      */
     protected $isLoggedIn = false;
 
-
     /**
      *
      */

@@ -75,7 +75,6 @@ class Stat extends Elegant
         return $this->belongsToMany('BFACP\Player\Weapon', 'tbl_server_player', 'StatsID', 'StatsID');
     }
 
-
     /**
      * @return mixed
      */
@@ -83,7 +82,6 @@ class Stat extends Elegant
     {
         return $this->FirstSeenOnServer->toIso8601String();
     }
-
 
     /**
      * @return mixed

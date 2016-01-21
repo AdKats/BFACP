@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Facade;
  */
 class Macros extends Facade
 {
-
     /**
      * @return string
      */

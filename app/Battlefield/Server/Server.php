@@ -308,7 +308,6 @@ class Server extends Elegant
         return $this->ConnectionState == 'on';
     }
 
-
     /**
      * @return string
      */

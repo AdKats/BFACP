@@ -23,7 +23,6 @@ class SpecialPlayersController extends Controller
      */
     protected $guzzle;
 
-
     /**
      *
      */
@@ -42,7 +41,6 @@ class SpecialPlayersController extends Controller
         return View::make('admin.adkats.special_players.index', compact('players', 'groups'))->with('page_title',
             Lang::get('navigation.admin.adkats.items.special_players.title'));
     }
-
 
     /**
      * @param $id
