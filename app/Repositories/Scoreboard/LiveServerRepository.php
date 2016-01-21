@@ -238,6 +238,10 @@ class LiveServerRepository extends BaseRepository
         $this->serverinfo = $info;
         $length = count($info);
 
+        $ticketcap = null;
+        $uptime = -1;
+        $round = -1;
+
         if ($this->gameName == 'BF4') {
             switch ($info[4]) {
                 case 'SquadDeathMatch0':
@@ -262,12 +266,6 @@ class LiveServerRepository extends BaseRepository
 
                     $uptime = $length < 26 ? (int) $info[14] : (int) $info[16];
                     $round = $length < 26 ? (int) $info[15] : (int) $info[17];
-                    break;
-
-                default:
-                    $ticketcap = null;
-                    $uptime = -1;
-                    $round = -1;
                     break;
             }
         } elseif ($this->gameName == 'BF3') {
@@ -295,12 +293,6 @@ class LiveServerRepository extends BaseRepository
                     $uptime = $length < 25 ? (int) $info[12] : (int) $info[16];
                     $round = $length < 25 ? (int) $info[13] : (int) $info[17];
                     break;
-
-                default:
-                    $ticketcap = null;
-                    $uptime = -1;
-                    $round = -1;
-                    break;
             }
         } elseif ($this->gameName == 'BFHL') {
             switch ($info[4]) {
@@ -316,12 +308,6 @@ class LiveServerRepository extends BaseRepository
                     $ticketcap = $length < 25 ? null : intval($info[11]);
                     $uptime = $length < 25 ? (int) $info[14] : (int) $info[16];
                     $round = $length < 25 ? (int) $info[15] : (int) $info[17];
-                    break;
-
-                default:
-                    $ticketcap = null;
-                    $uptime = -1;
-                    $round = -1;
                     break;
             }
         }
