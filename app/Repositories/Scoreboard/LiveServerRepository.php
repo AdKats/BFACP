@@ -976,15 +976,14 @@ class LiveServerRepository extends BaseRepository
     /**
      * Forgive player.
      *
-     * @param  string  $player  Name of player
-     * @param  string  $message Message to be sent
-     * @param  int $count   How many forgives should be issued
+     * @param  string $player  Name of player
+     * @param  string $message Message to be sent
      *
      * @return array
      * @throws RconException
      * @throws PlayerNotFoundException
      */
-    public function adminForgive($player, $message, $count = 1)
+    public function adminForgive($player, $message)
     {
         if ($this->isValidName($player)) {
             $p = Player::where('GameID', $this->gameID)->where('SoldierName', $player)->first();
