@@ -323,7 +323,7 @@ class Player extends Elegant
             'istats'   => sprintf('http://i-stats.net/index.php?action=pcheck&player=%s&game=%s&sub=Check+Player',
                 $this->SoldierName, $game),
             'metabans' => sprintf('http://metabans.com/search/?phrase=%s', $this->SoldierName),
-            'bf4db'    => $game == 'BF4' ? $bf4db_profile : null,
+            'bf4db'    => ($game == 'BF4' && isset($bf4db_profile)) ? $bf4db_profile : null,
             'chatlogs' => route('chatlog.search', ['pid' => $this->PlayerID]),
             'pbbans'   => ! empty($this->PBGUID) ? sprintf('http://www.pbbans.com/mbi-guid-search-%s.html',
                 $this->PBGUID) : null,
