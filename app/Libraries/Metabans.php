@@ -50,6 +50,11 @@ class Metabans
     ];
 
     /**
+     * @var array
+     */
+    public $errors = [];
+
+    /**
      * GuzzleHttp\Client.
      */
     protected $guzzle;
