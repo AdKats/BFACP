@@ -5,6 +5,10 @@ namespace BFACP\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class RedirectIfAuthenticated
+ * @package BFACP\Http\Middleware
+ */
 class RedirectIfAuthenticated
 {
     /**

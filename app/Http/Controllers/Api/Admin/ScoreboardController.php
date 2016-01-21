@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Input as Input;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException as AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException as NotFoundHttpException;
 
+/**
+ * Class ScoreboardController
+ * @package BFACP\Http\Controllers\Api\Admin
+ */
 class ScoreboardController extends Controller
 {
     const COMPLETE_WITH_ERRORS = 'Completed with errors';
@@ -53,6 +57,10 @@ class ScoreboardController extends Controller
      */
     protected $data = [];
 
+
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();

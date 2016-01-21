@@ -4,6 +4,10 @@ namespace BFACP\Adkats;
 
 use BFACP\Elegant;
 
+/**
+ * Class Setting
+ * @package BFACP\Adkats
+ */
 class Setting extends Elegant
 {
     /**

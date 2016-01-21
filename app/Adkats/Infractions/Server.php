@@ -4,6 +4,10 @@ namespace BFACP\Adkats\Infractions;
 
 use BFACP\Elegant;
 
+/**
+ * Class Server
+ * @package BFACP\Adkats\Infractions
+ */
 class Server extends Elegant
 {
     /**

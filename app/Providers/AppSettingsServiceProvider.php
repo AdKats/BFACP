@@ -8,6 +8,10 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class AppSettingsServiceProvider
+ * @package BFACP\Providers
+ */
 class AppSettingsServiceProvider extends ServiceProvider
 {
     /**

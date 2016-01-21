@@ -4,6 +4,10 @@ namespace BFACP\Battlefield\Server;
 
 use BFACP\Elegant;
 
+/**
+ * Class Stats
+ * @package BFACP\Battlefield\Server
+ */
 class Stats extends Elegant
 {
     /**

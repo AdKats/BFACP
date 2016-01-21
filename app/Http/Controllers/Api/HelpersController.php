@@ -7,8 +7,16 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class HelpersController
+ * @package BFACP\Http\Controllers\Api
+ */
 class HelpersController extends Controller
 {
+
+    /**
+     * @return mixed
+     */
     public function getSpecialGroups()
     {
         $groups = MainHelper::specialGroups();
@@ -16,6 +24,10 @@ class HelpersController extends Controller
         return MainHelper::response($groups, null, null, null, false, true);
     }
 
+
+    /**
+     * @return mixed
+     */
     public function onlineAdmins()
     {
         $admins = DB::table('tbl_currentplayers')->select('SoldierName', 'ServerName',
@@ -42,6 +54,12 @@ class HelpersController extends Controller
         return MainHelper::response($admins, null, null, null, false, true);
     }
 
+
+    /**
+     * @param $addy
+     *
+     * @return mixed
+     */
     public function iplookup($addy)
     {
         $hash = md5($addy);

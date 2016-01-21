@@ -4,6 +4,10 @@ namespace BFACP\Player;
 
 use BFACP\Elegant;
 
+/**
+ * Class Server
+ * @package BFACP\Player
+ */
 class Server extends Elegant
 {
     /**

@@ -10,6 +10,10 @@ use Illuminate\Foundation\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * Class Handler
+ * @package BFACP\Exceptions
+ */
 class Handler extends ExceptionHandler
 {
     /**

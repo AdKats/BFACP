@@ -2,6 +2,10 @@
 
 namespace BFACP\Composers;
 
+/**
+ * Class MenuComposer
+ * @package BFACP\Composers
+ */
 class MenuComposer
 {
     public function compose()

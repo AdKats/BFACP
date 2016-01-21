@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Lang;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * Class ServersController
+ * @package BFACP\Http\Controllers\Api
+ */
 class ServersController extends Controller
 {
     /**
@@ -97,6 +101,13 @@ class ServersController extends Controller
             ] + Lang::get('dashboard.population'), null, null, null, false, true);
     }
 
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     * @throws Exception
+     */
     public function scoreboard($id)
     {
         try {
@@ -122,6 +133,12 @@ class ServersController extends Controller
         }
     }
 
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function scoreboardExtra($id)
     {
         $sql = File::get(storage_path().DIRECTORY_SEPARATOR.'sql'.DIRECTORY_SEPARATOR.'sbRoundStats.sql');
@@ -194,6 +211,11 @@ class ServersController extends Controller
         return MainHelper::response($data, null, null, null, false, true);
     }
 
+
+    /**
+     * @return mixed
+     * @throws Exception
+     */
     public function scoreboardAdmin()
     {
         try {

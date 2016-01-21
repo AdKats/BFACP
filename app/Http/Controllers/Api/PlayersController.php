@@ -7,16 +7,30 @@ use BFACP\Repositories\PlayerRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
+/**
+ * Class PlayersController
+ * @package BFACP\Http\Controllers\Api
+ */
 class PlayersController extends Controller
 {
     private $repository;
 
+
+    /**
+     * @param PlayerRepository $repository
+     */
     public function __construct(PlayerRepository $repository)
     {
         parent::__construct();
         $this->repository = $repository;
     }
 
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
     public function index(Request $request)
     {
         $limit = $request->get('limit', false);

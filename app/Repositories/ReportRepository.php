@@ -7,6 +7,10 @@ use BFACP\Adkats\Record;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 
+/**
+ * Class ReportRepository
+ * @package BFACP\Repositories
+ */
 class ReportRepository extends BaseRepository
 {
     /**

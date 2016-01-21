@@ -15,10 +15,18 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Roumen\Feed\Facades\Feed;
 
+/**
+ * Class BansController
+ * @package BFACP\Http\Controllers\Api
+ */
 class BansController extends Controller
 {
     private $repository;
 
+
+    /**
+     * @param BanRepository $repo
+     */
     public function __construct(BanRepository $repo)
     {
         parent::__construct();
@@ -26,6 +34,10 @@ class BansController extends Controller
         $this->repository = $repo;
     }
 
+
+    /**
+     * @return mixed
+     */
     public function latest()
     {
         if ($this->isLoggedIn && Input::has('personal') && Input::get('personal') == 'true') {
@@ -78,6 +90,10 @@ class BansController extends Controller
         ], null, null, null, $isCached, true);
     }
 
+
+    /**
+     * @return mixed
+     */
     public function stats()
     {
         $yesterdaysBans = Cache::remember('bans.stats.yesterday', 120, function () {

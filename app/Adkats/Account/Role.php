@@ -4,6 +4,10 @@ namespace BFACP\Adkats\Account;
 
 use BFACP\Elegant;
 
+/**
+ * Class Role
+ * @package BFACP\Adkats\Account
+ */
 class Role extends Elegant
 {
     /**

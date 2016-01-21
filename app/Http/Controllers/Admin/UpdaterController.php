@@ -7,8 +7,16 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 use vierbergenlars\SemVer\version;
 
+/**
+ * Class UpdaterController
+ * @package BFACP\Http\Controllers\Admin
+ */
 class UpdaterController extends Controller
 {
+
+    /**
+     *
+     */
     public function __construct()
     {
         $this->guzzle = app('Guzzle');

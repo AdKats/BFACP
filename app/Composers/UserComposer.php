@@ -6,8 +6,16 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
+/**
+ * Class UserComposer
+ * @package BFACP\Composers
+ */
 class UserComposer
 {
+
+    /**
+     * @param View $view
+     */
     public function compose(View $view)
     {
         $app = new \stdClass();

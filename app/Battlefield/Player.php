@@ -8,6 +8,10 @@ use Exception;
 use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Route;
 
+/**
+ * Class Player
+ * @package BFACP\Battlefield
+ */
 class Player extends Elegant
 {
     /**

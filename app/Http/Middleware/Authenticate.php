@@ -5,6 +5,10 @@ namespace BFACP\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class Authenticate
+ * @package BFACP\Http\Middleware
+ */
 class Authenticate
 {
     /**

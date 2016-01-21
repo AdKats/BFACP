@@ -4,6 +4,10 @@ namespace BFACP\Adkats\Infractions;
 
 use BFACP\Elegant;
 
+/**
+ * Class Overall
+ * @package BFACP\Adkats\Infractions
+ */
 class Overall extends Elegant
 {
     /**

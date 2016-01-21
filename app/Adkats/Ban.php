@@ -5,6 +5,10 @@ namespace BFACP\Adkats;
 use BFACP\Elegant;
 use Carbon\Carbon;
 
+/**
+ * Class Ban
+ * @package BFACP\Adkats
+ */
 class Ban extends Elegant
 {
     /**
@@ -136,11 +140,19 @@ class Ban extends Elegant
             [7, 8, 72, 73])->orderBy('record_time', 'desc');
     }
 
+
+    /**
+     * @return mixed
+     */
     public function getBanIssuedAttribute()
     {
         return $this->ban_startTime->toIso8601String();
     }
 
+
+    /**
+     * @return mixed
+     */
     public function getBanExpiresAttribute()
     {
         return $this->ban_endTime->toIso8601String();

@@ -9,6 +9,10 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
+/**
+ * Class AntiCheat
+ * @package BFACP\Libraries
+ */
 class AntiCheat
 {
     /**
@@ -102,6 +106,10 @@ class AntiCheat
         'Kills' => 50,
     ];
 
+
+    /**
+     * @param Player $player
+     */
     public function __construct(Player $player)
     {
         $this->battlelog = new BattlelogPlayer($player);

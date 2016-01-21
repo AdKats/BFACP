@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class HomeController
+ * @package BFACP\Http\Controllers
+ */
 class HomeController extends Controller
 {
     /**

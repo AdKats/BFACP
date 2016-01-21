@@ -6,6 +6,10 @@ use BFACP\Elegant;
 use BFACP\Exceptions\RconException;
 use Illuminate\Support\Facades\Crypt;
 
+/**
+ * Class Setting
+ * @package BFACP\Battlefield
+ */
 class Setting extends Elegant
 {
     /**

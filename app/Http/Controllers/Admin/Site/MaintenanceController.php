@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class MaintenanceController
+ * @package BFACP\Http\Controllers\Admin\Site
+ */
 class MaintenanceController extends Controller
 {
     public function index()

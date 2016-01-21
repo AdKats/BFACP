@@ -6,6 +6,10 @@ use BFACP\Adkats\Ban;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 
+/**
+ * Class BanRepository
+ * @package BFACP\Repositories
+ */
 class BanRepository extends BaseRepository
 {
     /**

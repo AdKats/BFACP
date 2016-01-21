@@ -100,6 +100,12 @@ class BF3Conn
         }
     }
 
+
+    /**
+     * @param null $debug
+     *
+     * @return bool|null|resource
+     */
     private function _openConnection($debug = null)
     {
         $connection = false;
@@ -184,11 +190,25 @@ class BF3Conn
         }
     }
 
+
+    /**
+     * @param     $array
+     * @param int $key
+     *
+     * @return mixed
+     */
     private function _array2String($array, $key = 1)
     {
         return $array[ $key ];
     }
 
+
+    /**
+     * @param $clientRequest
+     *
+     * @return mixed
+     * @throws Exception
+     */
     private function _clientRequest($clientRequest)
     {
         $data = $this->_encodeClientRequest($clientRequest);
@@ -206,6 +226,12 @@ class BF3Conn
         return $requestAnswer;
     }
 
+
+    /**
+     * @param $data
+     *
+     * @return string
+     */
     private function _encodeClientRequest($data)
     {
         $packet = $this->_encodePacket(false, false, $this->_clientSequenceNr, $data);
@@ -214,6 +240,15 @@ class BF3Conn
         return $packet;
     }
 
+
+    /**
+     * @param $isFromServer
+     * @param $isResponse
+     * @param $sequence
+     * @param $data
+     *
+     * @return string
+     */
     private function _encodePacket($isFromServer, $isResponse, $sequence, $data)
     {
         $data = explode(' ', $data);
@@ -480,6 +515,14 @@ class BF3Conn
         return $encodedHeader.$encodedSize.$encodedNumWords.$encodedWords;
     }
 
+
+    /**
+     * @param $isFromServer
+     * @param $isResponse
+     * @param $sequence
+     *
+     * @return string
+     */
     private function _encodeHeader($isFromServer, $isResponse, $sequence)
     {
         $header = $sequence & 0x3fffffff;
@@ -493,11 +536,23 @@ class BF3Conn
         return pack('I', $header);
     }
 
+
+    /**
+     * @param $size
+     *
+     * @return string
+     */
     private function _encodeInt32($size)
     {
         return pack('I', $size);
     }
 
+
+    /**
+     * @param $words
+     *
+     * @return array
+     */
     private function _encodeWords($words)
     {
         $size = 0;
@@ -516,6 +571,13 @@ class BF3Conn
         ];
     }
 
+
+    /**
+     * @param $receiveBuffer
+     *
+     * @return array
+     * @throws Exception
+     */
     private function _receivePacket($receiveBuffer)
     {
         $count = 0;
@@ -546,6 +608,12 @@ class BF3Conn
         ];
     }
 
+
+    /**
+     * @param $data
+     *
+     * @return bool
+     */
     private function _containsCompletePacket($data)
     {
         if (strlen($data) < 8) {
@@ -559,6 +627,12 @@ class BF3Conn
         return true;
     }
 
+
+    /**
+     * @param $data
+     *
+     * @return mixed
+     */
     private function _decodeInt32($data)
     {
         $decode = unpack('I', $data);
@@ -566,6 +640,12 @@ class BF3Conn
         return $decode[1];
     }
 
+
+    /**
+     * @param $data
+     *
+     * @return array
+     */
     private function _decodePacket($data)
     {
         list($isFromServer, $isResponse, $sequence) = $this->_decodeHeader($data);
@@ -580,6 +660,12 @@ class BF3Conn
         ];
     }
 
+
+    /**
+     * @param $data
+     *
+     * @return array
+     */
     private function _decodeHeader($data)
     {
         $header = unpack('I', $data);
@@ -593,6 +679,12 @@ class BF3Conn
 
     /*-- internal methods --*/
 
+    /**
+     * @param $size
+     * @param $data
+     *
+     * @return array
+     */
     private function _decodeWords($size, $data)
     {
         $numWords = $this->_decodeInt32($data);
@@ -633,6 +725,12 @@ class BF3Conn
         }
     }
 
+
+    /**
+     * @param $hex
+     *
+     * @return string
+     */
     private function _hex_str($hex)
     {
         $string = '';
@@ -1803,6 +1901,12 @@ class BF3Conn
         return (int) $this->_array2String($playerInfo, 13);
     }
 
+
+    /**
+     * @param $boolean
+     *
+     * @return string
+     */
     private function _bool2String($boolean)
     {
         $onOrOff = '';
@@ -1861,6 +1965,13 @@ class BF3Conn
         return $this->_array2boolean($this->_clientRequest('squad.private '.$teamID.' '.$squadID));
     }
 
+
+    /**
+     * @param     $array
+     * @param int $key
+     *
+     * @return bool
+     */
     private function _array2boolean($array, $key = 1)
     {
         if (isset($array[ $key ]) && $array[ $key ] == 'true') {
@@ -2491,12 +2602,15 @@ class BF3Conn
         return $this->_array2String($this->_clientRequest('vars.serverName '.$serverName), 0);
     }
 
+
     /**
      * sets the soldier health modifier in %.
      *
-     * @param $integer
+     * @param $soldierHealthInteger
      *
      * @return string
+     * @internal param $integer
+     *
      * @internal param $soldierHealthInteger
      */
     public function adminVarSetSoldierHealthModifier($soldierHealthInteger)
@@ -2653,12 +2767,14 @@ class BF3Conn
         return $this->_array2boolean($this->_clientRequest('vars.vehicleSpawnAllowed'));
     }
 
+
     /**
      * sets the vehicle spawn modifier in %.
      *
-     * @param $integer
-     *
+     * @param $vehicleSpawnDelayInteger
      * @return string
+     * @internal param $integer
+     *
      * @internal param $vehicleSpawnDelayInteger
      */
     public function adminVarSetVehicleSpawnDelayModifier($vehicleSpawnDelayInteger)
@@ -2676,6 +2792,12 @@ class BF3Conn
         return (int) $this->_array2String($this->_clientRequest('vars.vehicleSpawnDelay'));
     }
 
+
+    /**
+     * @param $integer
+     *
+     * @return mixed
+     */
     public function adminVarSetEffectivePlayers($integer)
     {
         return $this->_array2String($this->_clientRequest('vars.maxPlayers '.$integer), 0);

@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Input as Input;
 use Illuminate\Support\Facades\Lang as Lang;
 use Illuminate\Support\Facades\Redirect as Redirect;
 
+/**
+ * Class BansController
+ * @package BFACP\Http\Controllers\Admin\AdKats
+ */
 class BansController extends Controller
 {
     /**
@@ -35,6 +39,10 @@ class BansController extends Controller
      */
     protected $metabans = null;
 
+
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -101,6 +109,10 @@ class BansController extends Controller
         }
     }
 
+
+    /**
+     * @return $this
+     */
     public function create()
     {
         try {

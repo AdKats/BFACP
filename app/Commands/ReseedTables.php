@@ -6,6 +6,10 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class ReseedTables
+ * @package BFACP\Commands
+ */
 class ReseedTables extends Command
 {
     /**

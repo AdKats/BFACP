@@ -4,6 +4,10 @@ namespace BFACP\Battlefield;
 
 use BFACP\Elegant;
 
+/**
+ * Class Game
+ * @package BFACP\Battlefield
+ */
 class Game extends Elegant
 {
     /**
@@ -63,6 +67,10 @@ class Game extends Elegant
         return $this->hasMany('BFACP\Battlefield\Server\Server', 'GameID');
     }
 
+
+    /**
+     * @return string
+     */
     public function getClassCssAttribute()
     {
         switch ($this->Name) {

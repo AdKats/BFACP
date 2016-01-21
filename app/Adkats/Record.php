@@ -4,6 +4,10 @@ namespace BFACP\Adkats;
 
 use BFACP\Elegant;
 
+/**
+ * Class Record
+ * @package BFACP\Adkats
+ */
 class Record extends Elegant
 {
     /**
@@ -115,6 +119,10 @@ class Record extends Elegant
         return $this->attributes['adkats_web'] == 1;
     }
 
+
+    /**
+     * @return mixed
+     */
     public function getStampAttribute()
     {
         return $this->record_time->toIso8601String();

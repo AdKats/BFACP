@@ -21,6 +21,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Class LiveServerRepository
+ * @package BFACP\Repositories\Scoreboard
+ */
 class LiveServerRepository extends BaseRepository
 {
     /**
@@ -138,6 +142,10 @@ class LiveServerRepository extends BaseRepository
      */
     private $TEAM4 = 'RU Army';
 
+
+    /**
+     * @param Server $server
+     */
     public function __construct(Server $server)
     {
         parent::__construct();

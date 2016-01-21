@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 use Zizaco\Entrust\EntrustRole;
 
+/**
+ * Class Role
+ * @package BFACP\Account
+ */
 class Role extends EntrustRole
 {
     /**
@@ -66,6 +70,10 @@ class Role extends EntrustRole
      */
     protected $with = [];
 
+
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();

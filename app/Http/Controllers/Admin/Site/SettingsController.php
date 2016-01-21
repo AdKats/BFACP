@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Lang as Lang;
 use Illuminate\Support\Facades\Redirect as Redirect;
 use Illuminate\Support\Facades\View as View;
 
+/**
+ * Class SettingsController
+ * @package BFACP\Http\Controllers\Admin\Site
+ */
 class SettingsController extends Controller
 {
     public function index()

@@ -22,6 +22,12 @@ class Base62
 
     public static $base = 62;
 
+
+    /**
+     * @param $var
+     *
+     * @return string
+     */
     public function encode($var)
     {
         $stack = [];
@@ -35,6 +41,12 @@ class Base62
         return implode('', array_reverse($stack));
     }
 
+
+    /**
+     * @param $var
+     *
+     * @return int|string
+     */
     public function decode($var)
     {
         $length = strlen($var);
@@ -47,6 +59,12 @@ class Base62
         return $result;
     }
 
+
+    /**
+     * @param $var
+     *
+     * @return int
+     */
     private function getDigit($var)
     {
         if (preg_match('/[0-9]/', $var)) {

@@ -5,6 +5,10 @@ namespace BFACP\Libraries\Battlelog;
 use BFACP\Battlefield\Server\Server;
 use GuzzleHttp\Client;
 
+/**
+ * Class BattlelogAPI
+ * @package BFACP\Libraries\Battlelog
+ */
 class BattlelogAPI
 {
     /**
@@ -75,6 +79,10 @@ class BattlelogAPI
         'bf3' => 2,
     ];
 
+
+    /**
+     *
+     */
     public function __construct()
     {
         $this->guzzle = app('Guzzle');

@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Redirect as Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View as View;
 
+/**
+ * Class RolesController
+ * @package BFACP\Http\Controllers\Admin\AdKats
+ */
 class RolesController extends Controller
 {
     public function index()
@@ -25,6 +29,10 @@ class RolesController extends Controller
             Lang::get('navigation.admin.adkats.items.roles.title'));
     }
 
+
+    /**
+     * @return mixed
+     */
     public function create()
     {
         $permissions = [];
@@ -46,6 +54,12 @@ class RolesController extends Controller
             Lang::get('navigation.admin.adkats.items.roles.items.create.title'));
     }
 
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function edit($id)
     {
         try {
@@ -75,6 +89,12 @@ class RolesController extends Controller
         }
     }
 
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function update($id)
     {
         try {
@@ -109,6 +129,12 @@ class RolesController extends Controller
         }
     }
 
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function destroy($id)
     {
         try {

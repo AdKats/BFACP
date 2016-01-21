@@ -4,6 +4,10 @@ namespace BFACP\Jobs;
 
 use Illuminate\Bus\Queueable;
 
+/**
+ * Class Job
+ * @package BFACP\Jobs
+ */
 abstract class Job
 {
     /*

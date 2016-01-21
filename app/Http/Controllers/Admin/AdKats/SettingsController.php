@@ -7,6 +7,10 @@ use BFACP\Battlefield\Server\Server;
 use BFACP\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class SettingsController
+ * @package BFACP\Http\Controllers\Admin\AdKats
+ */
 class SettingsController extends Controller
 {
     public function index()
@@ -17,6 +21,12 @@ class SettingsController extends Controller
             'AdKats Settings Server List');
     }
 
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function edit($id)
     {
         $settings = Setting::where('server_id', $id)->get();

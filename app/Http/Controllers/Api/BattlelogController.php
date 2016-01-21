@@ -7,6 +7,10 @@ use BFACP\Facades\Main as MainHelper;
 use BFACP\Libraries\AntiCheat;
 use BFACP\Libraries\Battlelog\BattlelogPlayer;
 
+/**
+ * Class BattlelogController
+ * @package BFACP\Http\Controllers\Api
+ */
 class BattlelogController extends Controller
 {
     /**

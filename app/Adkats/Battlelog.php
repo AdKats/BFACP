@@ -5,6 +5,10 @@ namespace BFACP\Adkats;
 use BFACP\Elegant;
 use BFACP\Facades\Main as MainHelper;
 
+/**
+ * Class Battlelog
+ * @package BFACP\Adkats
+ */
 class Battlelog extends Elegant
 {
     /**

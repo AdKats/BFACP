@@ -8,6 +8,10 @@ use BFACP\Exceptions\BattlelogException;
 use BFACP\Facades\Main as MainHelper;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Class BattlelogPlayer
+ * @package BFACP\Libraries\Battlelog
+ */
 class BattlelogPlayer extends BattlelogAPI
 {
     /**
@@ -52,6 +56,10 @@ class BattlelogPlayer extends BattlelogAPI
      */
     public $game = '';
 
+
+    /**
+     * @param Player $player
+     */
     public function __construct(Player $player)
     {
         parent::__construct();

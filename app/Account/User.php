@@ -9,6 +9,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Config as Config;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
+/**
+ * Class User
+ * @package BFACP\Account
+ */
 class User extends Authenticatable
 {
     use EntrustUserTrait;
@@ -167,6 +171,10 @@ class User extends Authenticatable
         return $this->attributes['confirmed'] == 1;
     }
 
+
+    /**
+     * @return mixed|string
+     */
     public function getStampAttribute()
     {
         if ($this->created_at instanceof Carbon) {

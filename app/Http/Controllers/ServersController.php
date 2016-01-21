@@ -5,6 +5,10 @@ namespace BFACP\Http\Controllers;
 use BFACP\Battlefield\Server\Server;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class ServersController
+ * @package BFACP\Http\Controllers
+ */
 class ServersController extends Controller
 {
     public function index()

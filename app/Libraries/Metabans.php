@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 
+/**
+ * Class Metabans
+ * @package BFACP\Libraries
+ */
 class Metabans
 {
     /**
@@ -98,6 +102,10 @@ class Metabans
      */
     private $auth = [];
 
+
+    /**
+     *
+     */
     public function __construct()
     {
         $this->key = Config::get('bfacp.metabans.key', null);

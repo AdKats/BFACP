@@ -8,6 +8,10 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Class AuthController
+ * @package BFACP\Http\Controllers\Auth
+ */
 class AuthController extends Controller
 {
     /*
@@ -35,10 +39,10 @@ class AuthController extends Controller
      */
     private $repository;
 
+
     /**
      * Create a new authentication controller instance.
      *
-     * @return void
      */
     public function __construct()
     {

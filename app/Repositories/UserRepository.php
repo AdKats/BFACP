@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
 
+/**
+ * Class UserRepository
+ * @package BFACP\Repositories
+ */
 class UserRepository
 {
     /**

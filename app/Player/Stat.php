@@ -4,6 +4,10 @@ namespace BFACP\Player;
 
 use BFACP\Elegant;
 
+/**
+ * Class Stat
+ * @package BFACP\Player
+ */
 class Stat extends Elegant
 {
     /**
@@ -71,11 +75,19 @@ class Stat extends Elegant
         return $this->belongsToMany('BFACP\Player\Weapon', 'tbl_server_player', 'StatsID', 'StatsID');
     }
 
+
+    /**
+     * @return mixed
+     */
     public function getFirstSeenAttribute()
     {
         return $this->FirstSeenOnServer->toIso8601String();
     }
 
+
+    /**
+     * @return mixed
+     */
     public function getLastSeenAttribute()
     {
         return $this->LastSeenOnServer->toIso8601String();

@@ -10,6 +10,10 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class Reputation
+ * @package BFACP\Libraries
+ */
 class Reputation
 {
     /**
@@ -61,6 +65,10 @@ class Reputation
      */
     protected $weights = [];
 
+
+    /**
+     *
+     */
     public function __construct()
     {
         $this->guzzle = app('Guzzle');

@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Input as Input;
 use Illuminate\Support\Facades\Validator as Validator;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException as AccessDeniedHttpException;
 
+/**
+ * Class ReportsController
+ * @package BFACP\Http\Controllers\Api
+ */
 class ReportsController extends Controller
 {
     /**
@@ -20,6 +24,10 @@ class ReportsController extends Controller
      */
     private $repository;
 
+
+    /**
+     *
+     */
     public function __construct()
     {
         $this->repository = app('BFACP\Repositories\ReportRepository');

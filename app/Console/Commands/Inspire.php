@@ -5,6 +5,10 @@ namespace BFACP\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
 
+/**
+ * Class Inspire
+ * @package BFACP\Console\Commands
+ */
 class Inspire extends Command
 {
     /**

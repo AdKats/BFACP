@@ -4,6 +4,10 @@ namespace BFACP\Adkats;
 
 use BFACP\Elegant;
 
+/**
+ * Class Statistics
+ * @package BFACP\Adkats
+ */
 class Statistics extends Elegant
 {
     /**

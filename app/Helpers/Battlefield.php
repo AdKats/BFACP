@@ -4,6 +4,10 @@ namespace BFACP\Helpers;
 
 use Exception;
 
+/**
+ * Class Battlefield
+ * @package BFACP\Helpers
+ */
 class Battlefield extends Main
 {
     /**
@@ -385,6 +389,14 @@ class Battlefield extends Main
         return intval($startingRoundTimer);
     }
 
+
+    /**
+     * @param $mapURI
+     * @param $xmlFilePath
+     * @param $playmodeURI
+     *
+     * @return mixed|string
+     */
     public function mapName($mapURI, $xmlFilePath, $playmodeURI)
     {
         $mapNamesXML = simplexml_load_file($xmlFilePath);
@@ -401,6 +413,13 @@ class Battlefield extends Main
         return ! is_string($mapName) ? head($mapName) : $mapName;
     }
 
+
+    /**
+     * @param $playmodeURI
+     * @param $xmlFilePath
+     *
+     * @return mixed|string
+     */
     public function playmodeName($playmodeURI, $xmlFilePath)
     {
         $playModesXML = simplexml_load_file($xmlFilePath);

@@ -4,6 +4,10 @@ namespace BFACP\Battlefield\Scoreboard;
 
 use BFACP\Elegant;
 
+/**
+ * Class Scores
+ * @package BFACP\Battlefield\Scoreboard
+ */
 class Scores extends Elegant
 {
     /**

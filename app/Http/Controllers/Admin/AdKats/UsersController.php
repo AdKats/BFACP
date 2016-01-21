@@ -17,8 +17,16 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class UsersController
+ * @package BFACP\Http\Controllers\Admin\AdKats
+ */
 class UsersController extends Controller
 {
+
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();

@@ -4,6 +4,10 @@ namespace BFACP\Player;
 
 use BFACP\Elegant;
 
+/**
+ * Class Weapon
+ * @package BFACP\Player
+ */
 class Weapon extends Elegant
 {
     /**

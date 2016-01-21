@@ -5,6 +5,10 @@ namespace BFACP\Providers;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
+/**
+ * Class AuthServiceProvider
+ * @package BFACP\Providers
+ */
 class AuthServiceProvider extends ServiceProvider
 {
     /**

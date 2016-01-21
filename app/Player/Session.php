@@ -4,6 +4,10 @@ namespace BFACP\Player;
 
 use BFACP\Elegant;
 
+/**
+ * Class Session
+ * @package BFACP\Player
+ */
 class Session extends Elegant
 {
     /**
@@ -63,11 +67,19 @@ class Session extends Elegant
         return $this->belongsToMany('BFACP\Battlefield\Server\Server', 'tbl_server_player', 'StatsID', 'ServerID');
     }
 
+
+    /**
+     * @return mixed
+     */
     public function getSessionStartAttribute()
     {
         return $this->StartTime->toIso8601String();
     }
 
+
+    /**
+     * @return mixed
+     */
     public function getSessionEndAttribute()
     {
         return $this->EndTime->toIso8601String();

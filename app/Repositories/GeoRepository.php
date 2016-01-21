@@ -4,6 +4,10 @@ namespace BFACP\Repositories;
 
 use GeoIp2\Database\Reader;
 
+/**
+ * Class GeoRepository
+ * @package BFACP\Repositories
+ */
 class GeoRepository extends BaseRepository
 {
     /**
@@ -27,6 +31,10 @@ class GeoRepository extends BaseRepository
      */
     protected $reader;
 
+
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();

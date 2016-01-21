@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class UsersController
+ * @package BFACP\Http\Controllers
+ */
 class UsersController extends Controller
 {
     /**
@@ -23,6 +27,10 @@ class UsersController extends Controller
      */
     private $repository;
 
+
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();

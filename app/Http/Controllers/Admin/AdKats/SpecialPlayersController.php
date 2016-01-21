@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class SpecialPlayersController
+ * @package BFACP\Http\Controllers\Admin\AdKats
+ */
 class SpecialPlayersController extends Controller
 {
     /**
@@ -19,6 +23,10 @@ class SpecialPlayersController extends Controller
      */
     protected $guzzle;
 
+
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -35,6 +43,12 @@ class SpecialPlayersController extends Controller
             Lang::get('navigation.admin.adkats.items.special_players.title'));
     }
 
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
     public function update($id)
     {
         try {

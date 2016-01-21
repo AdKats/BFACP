@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class UsersController
+ * @package BFACP\Http\Controllers\Admin\Site
+ */
 class UsersController extends Controller
 {
     /**
@@ -31,6 +35,10 @@ class UsersController extends Controller
             Lang::get('navigation.admin.site.items.users.title'));
     }
 
+
+    /**
+     * @return mixed
+     */
     public function create()
     {
         // Get the list of roles
@@ -40,6 +48,10 @@ class UsersController extends Controller
             Lang::get('navigation.admin.site.items.users.items.create.title'));
     }
 
+
+    /**
+     * @return mixed
+     */
     public function store()
     {
         $repo = app('BFACP\Repositories\UserRepository');

@@ -12,10 +12,18 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Class PlayersController
+ * @package BFACP\Http\Controllers
+ */
 class PlayersController extends Controller
 {
     private $repository;
 
+
+    /**
+     * @param PlayerRepository $repository
+     */
     public function __construct(PlayerRepository $repository)
     {
         parent::__construct();

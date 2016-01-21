@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\App as App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
+/**
+ * Class PlayerRepository
+ * @package BFACP\Repositories
+ */
 class PlayerRepository extends BaseRepository
 {
     /**

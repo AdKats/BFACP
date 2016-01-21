@@ -15,6 +15,13 @@ use Closure;
  */
 class Secure
 {
+
+    /**
+     * @param         $request
+     * @param Closure $next
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function handle($request, Closure $next)
     {
         if (! $request->secure() && app()->environment('production')) {

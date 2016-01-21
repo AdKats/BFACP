@@ -14,8 +14,16 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 
+/**
+ * Class Main
+ * @package BFACP\Helpers
+ */
 class Main
 {
+
+    /**
+     *
+     */
     public function __construct()
     {
         $this->guzzle = app('Guzzle');
