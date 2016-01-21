@@ -32,7 +32,7 @@ class AppSettingsServiceProvider extends ServiceProvider
         $config = $this->app['config'];
 
         try {
-            /**
+            /*
              * Fetches application settings from database and caches them for 15 minutes.
              * @var array
              */
@@ -57,7 +57,7 @@ class AppSettingsServiceProvider extends ServiceProvider
                             foreach (explode(',', $option->option_value) as $value) {
                                 $lang = main::languages($value);
                                 $values[$value] = $lang;
-                                if(env('APP_DEBUG')) {
+                                if (env('APP_DEBUG')) {
                                     Log::debug(sprintf('Adding %s language to list.', $lang));
                                 }
                             }
@@ -71,7 +71,7 @@ class AppSettingsServiceProvider extends ServiceProvider
                 return $this->options;
             });
 
-            if(empty($this->options)) {
+            if (empty($this->options)) {
                 throw new Exception('Application settings array is empty.');
             }
         } catch (QueryException $e) {
@@ -82,7 +82,7 @@ class AppSettingsServiceProvider extends ServiceProvider
             abort(500);
         } catch (Exception $e) {
             Log::critical('Application settings were not set.', [
-                'exception' => $e->getMessage()
+                'exception' => $e->getMessage(),
             ]);
 
             abort(500);

@@ -18,14 +18,14 @@ class CloudflareProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (!env('USE_CLOUDFLARE', false)) {
+        if (! env('USE_CLOUDFLARE', false)) {
             return;
         }
 
         $request = $this->app['request'];
         $cache = $this->app['cache'];
 
-        /**
+        /*
          * Downloads the cloudflare ip addresses and caches the result for 1 week. This is needed if
          * your site is behind the cloudflare services. You can disable this by setting USE_CLOUDFLARE
          * in the .env file from false to true.
