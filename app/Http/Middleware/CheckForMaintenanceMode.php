@@ -9,13 +9,13 @@ use Illuminate\Http\Request;
 class CheckForMaintenanceMode
 {
     /**
-     * \Illuminate\Http\Request
+     * \Illuminate\Http\Request.
      * @var object
      */
     protected $request;
 
     /**
-     * \Illuminate\Contracts\Foundation\Application
+     * \Illuminate\Contracts\Foundation\Application.
      * @var object
      */
     protected $app;
@@ -31,21 +31,21 @@ class CheckForMaintenanceMode
     }
 
     /**
-     * @param  Request  $request
-     * @param  Closure  $next
+     * @param  Request $request
+     * @param  Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
         $list = env('IP_WHITELIST', false);
 
-        if(! $list) {
+        if (! $list) {
             $whitelist = [];
         } else {
             $whitelist = explode('|', $list);
         }
 
-        if ($this->app->isDownForMaintenance() && !in_array($this->request->getClientIp(), $whitelist)) {
+        if ($this->app->isDownForMaintenance() && ! in_array($this->request->getClientIp(), $whitelist)) {
             return response()->view('system.maintenance', [], 503);
         }
 
