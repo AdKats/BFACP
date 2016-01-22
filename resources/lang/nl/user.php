@@ -5,21 +5,21 @@ return [
         'settings' => [
             'blocks' => [
                 'general'  => [
-                    'title'  => 'General',
+                    'title'  => 'Algemeen',
                     'inputs' => [
                         'email'    => 'Email',
                         'language' => 'Language',
                     ],
                 ],
                 'password' => [
-                    'title'       => 'Change Password',
+                    'title'       => 'Verander wachtwoord',
                     'inputs'      => [
-                        'password'         => 'Password',
-                        'password_confirm' => 'Confirm Password',
+                        'password'         => 'Wachtwoord',
+                        'password_confirm' => 'bevestig wachtwoord',
                     ],
                     'inputs_help' => [
-                        'password'         => 'To change your password please enter it here.',
-                        'password_confirm' => 'Retype your new password to confirm the change.',
+                        'password'         => 'Om uw wachtwoord te wijzigen kunt u dat hier invoeren.',
+                        'password_confirm' => 'Typ uw nieuwe wachtwoord in om de wijziging te bevestigen.',
                     ],
                 ],
             ],
@@ -28,13 +28,13 @@ return [
     'notifications' => [
         'account' => [
             'email'    => [
-                'changed' => 'Email has been updated to :addr!',
+                'changed' => 'E-mail is bijgewerkt naar :addr!',
             ],
             'password' => [
-                'changed' => 'Password has been changed!',
+                'changed' => 'Wachtwoord is veranderd!',
             ],
             'language' => [
-                'changed' => 'Language has been changed to :lang!',
+                'changed' => 'Taal is gewijzigd in:lang!',
             ],
         ],
     ],

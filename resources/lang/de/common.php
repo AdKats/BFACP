@@ -2,9 +2,9 @@
 
 return [
     'version'       => 'Version',
-    'login'         => 'Login',
-    'logout'        => 'Logout',
-    'motd'          => 'Message of the Day',
+    'login'         => 'Anmeldung',
+    'logout'        => 'Abmelden',
+    'motd'          => 'Nachricht des Tages',
     'metabans'      => [
         'title'       => 'Metabans',
         'assessments' => 'Letzte Banns',
@@ -30,7 +30,7 @@ return [
         ],
     ],
     'right_sidebar' => [
-        'online_users' => 'Online Users',
+        'online_users' => 'Online Benutzer',
         'chat_room'    => 'Chat Room',
     ],
 ];

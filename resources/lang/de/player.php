@@ -8,7 +8,7 @@ return [
          * Details Block
          */
         'details'     => [
-            'title' => 'Details',
+            'title' => 'Einzelheiten',
             'items' => [
                 'id'         => 'ID',
                 'game'       => 'Spiel',
@@ -16,7 +16,7 @@ return [
                 'pbguid'     => 'PB GUID',
                 'ip'         => 'IP',
                 'country'    => 'Land',
-                'reputation' => 'Reputation',
+                'reputation' => 'Ruf',
                 'rank'       => 'Rang',
             ],
         ],
@@ -48,14 +48,14 @@ return [
             'title'   => 'Verstöße',
             'none'    => 'Keine Verstöße vorhanden.',
             'overall' => [
-                'title' => 'Total',
+                'title' => 'Gesamt',
             ],
             'table'   => [
                 'col1' => 'Server',
                 'col2' => 'Bestrafungen',
                 'col3' => 'Vergebungen',
-                'col4' => 'Total',
-                'col5' => 'Next Punishment',
+                'col4' => 'Gesamt',
+                'col5' => 'Weiter Punishment',
             ],
         ],
         'bans'        => [

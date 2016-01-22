@@ -44,7 +44,7 @@ return [
             'unban' => [
                 'request_failed' => 'Verzoek mislukt. Probeer het later opnieuw.',
                 'reason'         => 'Geef de reden voor het opheffen van de ban',
-                'notes'          => 'Would you like to update the ban notes?\nClick cancel to keep current notes.',
+                'notes'          => 'Wilt u de bankbiljetten te werken?\nKlik annuleren om de huidige notities houden.',
             ],
         ],
     ],

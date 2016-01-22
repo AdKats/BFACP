@@ -30,7 +30,7 @@ return [
         ],
     ],
     'right_sidebar' => [
-        'online_users' => 'Online Users',
+        'online_users' => 'Сейчас на сайте',
         'chat_room'    => 'Chat Room',
     ],
 ];

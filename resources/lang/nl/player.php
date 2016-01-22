@@ -20,7 +20,7 @@ return [
                 'rank'            => 'Rank',
                 'linked_accounts' => 'Verbonden Spelers',
             ],
-            'cached' => 'Viewing Cached Version',
+            'cached' => 'Bekijk Cache versie',
         ],
         'links'       => [
             'title' => 'Links',

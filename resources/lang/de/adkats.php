@@ -75,7 +75,7 @@ return [
             ],
         ],
         'edit'        => [
-            'details' => 'Details',
+            'details' => 'Einzelheiten',
             'buttons' => [
                 'save'   => 'Änderungen speichern',
                 'cancel' => 'Abbrechen',

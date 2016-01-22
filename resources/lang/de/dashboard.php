@@ -21,7 +21,7 @@ return [
         ],
     ],
     'population'                    => [
-        'title'   => 'Population',
+        'title'   => 'Bevölkerung',
         'footer'  => 'Gesamt',
         'columns' => [
             'col1' => 'Server',

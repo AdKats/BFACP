@@ -120,7 +120,7 @@ return [
                     ],
                 ],
                 'special_players' => [
-                    'title' => 'Special Players',
+                    'title' => 'Sonder Spieler',
                     'icon'  => [
                         'fa'  => 'fa-users',
                         'ion' => null,

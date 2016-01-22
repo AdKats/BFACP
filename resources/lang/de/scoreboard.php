@@ -38,7 +38,7 @@ return [
     ],
     'admin'    => [
         'inputs' => [
-            'message' => 'Type or select preset :action message...',
+            'message' => 'Oder wählen Sie voreingestellte :action Nachricht...',
         ],
     ],
 ];
