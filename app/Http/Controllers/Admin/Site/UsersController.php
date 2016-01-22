@@ -219,6 +219,8 @@ class UsersController extends Controller
 
             $user->save();
 
+            $this->messages[] = trans('alerts.user.saved');
+
             return redirect()->route('admin.site.users.edit', [$id])
                 ->withMessages($this->messages)
                 ->withErrors($this->errors);
