@@ -2,8 +2,21 @@
 
 namespace BFACP\Http;
 
+use BFACP\Http\Middleware\Authenticate;
+use BFACP\Http\Middleware\CheckForMaintenanceMode;
+use BFACP\Http\Middleware\EncryptCookies;
+use BFACP\Http\Middleware\RedirectIfAuthenticated;
+use BFACP\Http\Middleware\Secure;
+use BFACP\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Routing\Middleware\ThrottleRequests;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Zizaco\Entrust\Middleware\EntrustAbility;
+use Zizaco\Entrust\Middleware\EntrustPermission;
+use Zizaco\Entrust\Middleware\EntrustRole;
 
 /**
  * Class Kernel.
@@ -18,7 +31,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        \BFACP\Http\Middleware\CheckForMaintenanceMode::class,
+        CheckForMaintenanceMode::class,
     ];
 
     /**
@@ -28,11 +41,11 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \BFACP\Http\Middleware\EncryptCookies::class,
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \BFACP\Http\Middleware\VerifyCsrfToken::class,
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
         ],
         'api' => [
             'throttle:60,1',
@@ -47,21 +60,21 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'       => \BFACP\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest'      => \BFACP\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle'   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'role'       => \Zizaco\Entrust\Middleware\EntrustRole::class,
-        'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
-        'ability'    => \Zizaco\Entrust\Middleware\EntrustAbility::class,
+        'auth'       => Authenticate::class,
+        'auth.basic' => AuthenticateWithBasicAuth::class,
+        'guest'      => RedirectIfAuthenticated::class,
+        'throttle'   => ThrottleRequests::class,
+        'role'       => EntrustRole::class,
+        'permission' => EntrustPermission::class,
+        'ability'    => EntrustAbility::class,
     ];
 
     public function bootstrap()
     {
         parent::bootstrap();
 
-        if (Config::get('bfacp.site.ssl')) {
-            $this->middleware[] = \BFACP\Http\Middleware\Secure::class;
+        if ($this->app['config']->get('bfacp.site.ssl')) {
+            $this->middleware[] = Secure::class;
         }
     }
 }
