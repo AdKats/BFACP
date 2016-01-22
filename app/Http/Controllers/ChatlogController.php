@@ -8,7 +8,6 @@ use BFACP\Battlefield\Player;
 use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
 
 /**

@@ -6,7 +6,6 @@ use BFACP\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 

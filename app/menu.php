@@ -5,7 +5,6 @@ use BFACP\Facades\Macros;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Lang;
 
 $adminPermsList = Cache::remember('admin.perm.list', 60 * 24, function () {
     $temp = [];

@@ -18,7 +18,6 @@ use BFACP\Libraries\BFHConn;
 use BFACP\Repositories\BaseRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 
 /**
