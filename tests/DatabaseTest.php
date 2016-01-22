@@ -12,6 +12,8 @@ class DatabaseTest extends TestCase
 {
     public function setUp()
     {
+        parent::setUp();
+
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('tbl_playerdata');
         Schema::dropIfExists('tbl_server');
