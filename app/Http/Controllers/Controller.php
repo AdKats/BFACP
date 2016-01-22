@@ -37,6 +37,13 @@ class Controller extends BaseController
     public $messages = [];
 
     /**
+     * Any error messages to be pushed to the view.
+     *
+     * @var array
+     */
+    public $errors = [];
+
+    /**
      *
      */
     public function __construct()
