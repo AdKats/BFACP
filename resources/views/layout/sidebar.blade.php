@@ -10,7 +10,7 @@
 
                     <a href="{{ route('user.logout') }}" target="_self">
                         {!! Macros::faicon('fa-sign-out') !!}
-                        <span>{{ Lang::get('common.logout') }}</span>
+                        <span>{{ trans('common.logout') }}</span>
                     </a>
                 </div>
             @else
@@ -21,7 +21,7 @@
                     <p>Hello, Guest</p>
                     <a href="{{ route('user.login') }}" target="_self">
                         {!! Macros::faicon('fa-sign-in') !!}
-                        <span>{{ Lang::get('common.login') }}</span>
+                        <span>{{ trans('common.login') }}</span>
                     </a>
                 </div>
             @endif
@@ -33,7 +33,7 @@
                 ->class('sidebar-form')
                 ->id('psearch') !!}
             <div class="input-group">
-                <input type="text" class="form-control" name="player" id="player" @if(\Illuminate\Support\Facades\Input::has('player')) value="{{ old('player') }}" @endif placeholder="{{ Lang::get('common.nav.extras.psearch.placeholder') }}">
+                <input type="text" class="form-control" name="player" id="player" @if(\Illuminate\Support\Facades\Input::has('player')) value="{{ old('player') }}" @endif placeholder="{{ trans('common.nav.extras.psearch.placeholder') }}">
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-flat">
                         <i class="fa fa-search"></i>

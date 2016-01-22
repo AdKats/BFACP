@@ -30,9 +30,9 @@
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-sm-offset-4 col-lg-10 col-sm-8">
                             <button type="submit" class="btn bg-green">
-                                <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ Lang::get('site.admin.servers.edit.buttons.save') }}</span>
+                                <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ trans('site.admin.servers.edit.buttons.save') }}</span>
                             </button>
-                            {!! link_to_route('admin.site.servers.index', Lang::get('site.admin.servers.edit.buttons.cancel'), [], ['class' => 'btn bg-blue', 'target' => '_self']) !!}
+                            {!! link_to_route('admin.site.servers.index', trans('site.admin.servers.edit.buttons.cancel'), [], ['class' => 'btn bg-blue', 'target' => '_self']) !!}
                         </div>
                     </div>
                 </div>

@@ -9,10 +9,10 @@
             <div class="col-xs-12 col-lg-5">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <div class="box-title">{{ Lang::get('player.profile.details.title') }}</div>
+                        <div class="box-title">{{ trans('player.profile.details.title') }}</div>
                         <div class="box-tools">
                             @if($isCached)
-                                <label class="label bg-green">{{ Lang::get('player.profile.details.cached') }}</label>
+                                <label class="label bg-green">{{ trans('player.profile.details.cached') }}</label>
                             @endif
                         </div>
                     </div>
@@ -20,7 +20,7 @@
                     <div class="box-body">
                         <div class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.id') }}</label>
+                                <label class="col-sm-3 control-label">{{ trans('player.profile.details.items.id') }}</label>
 
                                 <div class="col-sm-9">
                                     <p class="form-control-static">{{ $player->PlayerID }}</p>
@@ -30,7 +30,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.game') }}</label>
+                                <label class="col-sm-3 control-label">{{ trans('player.profile.details.items.game') }}</label>
 
                                 <div class="col-sm-9">
                                     <p class="form-control-static">{{ $player->game->Name }}</p>
@@ -38,7 +38,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.eaguid') }}</label>
+                                <label class="col-sm-3 control-label">{{ trans('player.profile.details.items.eaguid') }}</label>
 
                                 <div class="col-sm-9">
                                     <p class="form-control-static">
@@ -56,7 +56,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.pbguid') }}</label>
+                                <label class="col-sm-3 control-label">{{ trans('player.profile.details.items.pbguid') }}</label>
 
                                 <div class="col-sm-9">
                                     <p class="form-control-static">
@@ -74,7 +74,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.ip') }}</label>
+                                <label class="col-sm-3 control-label">{{ trans('player.profile.details.items.ip') }}</label>
 
                                 <div class="col-sm-9">
                                     <p class="form-control-static">
@@ -94,7 +94,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.country') }}</label>
+                                <label class="col-sm-3 control-label">{{ trans('player.profile.details.items.country') }}</label>
 
                                 <div class="col-sm-9">
                                     <p class="form-control-static">
@@ -105,7 +105,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.reputation') }}</label>
+                                <label class="col-sm-3 control-label">{{ trans('player.profile.details.items.reputation') }}</label>
 
                                 <div class="col-sm-9">
                                     <p class="form-control-static">
@@ -125,7 +125,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.linked_accounts') }}</label>
+                                <label class="col-sm-3 control-label">{{ trans('player.profile.details.items.linked_accounts') }}</label>
 
                                 <div class="col-sm-9">
                                     <div class="form-control-static">
@@ -168,7 +168,7 @@
                             @endif
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">{{ Lang::get('player.profile.details.items.rank') }}</label>
+                                <label class="col-sm-3 control-label">{{ trans('player.profile.details.items.rank') }}</label>
 
                                 <div class="col-sm-9">
                                     <p class="form-control-static">
@@ -186,27 +186,27 @@
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         <li>
-                            <a href="javascript://" data-target="#infractions" data-toggle="tab">{{ Lang::get('player.profile.infractions.title') }}
+                            <a href="javascript://" data-target="#infractions" data-toggle="tab">{{ trans('player.profile.infractions.title') }}
                                 <span class="badge bg-green">{{ $player->infractions_global->total_points or 0 }}</span></a>
                         </li>
                         <li>
-                            <a href="javascript://" data-target="#ban-current" data-toggle="tab">{{ Lang::get('player.profile.bans.current.title') }}</a>
+                            <a href="javascript://" data-target="#ban-current" data-toggle="tab">{{ trans('player.profile.bans.current.title') }}</a>
                         </li>
                         <li>
-                            <a href="javascript://" data-target="#ban-previous" data-toggle="tab">{{ Lang::get('player.profile.bans.previous.title') }}</a>
+                            <a href="javascript://" data-target="#ban-previous" data-toggle="tab">{{ trans('player.profile.bans.previous.title') }}</a>
                         </li>
                         <li class="active">
-                            <a href="javascript://" data-target="#links" data-toggle="tab">{{ Lang::get('player.profile.links.title') }}</a>
+                            <a href="javascript://" data-target="#links" data-toggle="tab">{{ trans('player.profile.links.title') }}</a>
                         </li>
                         <li>
-                            <a href="javascript://" data-target="#command-overview" data-toggle="tab">{{ Lang::get('player.profile.charts.command_overview.title') }}
+                            <a href="javascript://" data-target="#command-overview" data-toggle="tab">{{ trans('player.profile.charts.command_overview.title') }}
                                 <span class="badge bg-green">{{ $charts['overview']->count() }}</span></a></li>
                         <li>
-                            <a href="javascript://" data-target="#aliases" data-toggle="tab">{{ Lang::get('player.profile.charts.aliases.title') }}
+                            <a href="javascript://" data-target="#aliases" data-toggle="tab">{{ trans('player.profile.charts.aliases.title') }}
                                 <span class="badge bg-green">{{ $charts['aliases']->count() }}</span></a></li>
                         @if(Entrust::can('player.view.ip'))
                             <li>
-                                <a href="javascript://" data-target="#ip-history" data-toggle="tab">{{ Lang::get('player.profile.charts.ip_history.title') }}
+                                <a href="javascript://" data-target="#ip-history" data-toggle="tab">{{ trans('player.profile.charts.ip_history.title') }}
                                     <span class="badge bg-green">{{ $charts['iphistory']->count() }}</span></a></li>
                         @endif
                     </ul>
@@ -216,11 +216,11 @@
                             @if( ! is_null($player->infractions_global) && ! is_null($player->infractions_server))
                                 <table class="table table-striped table-condensed">
                                     <thead>
-                                    <th>{{ Lang::get('player.profile.infractions.table.col1') }}</th>
-                                    <th>{{ Lang::get('player.profile.infractions.table.col2') }}</th>
-                                    <th>{{ Lang::get('player.profile.infractions.table.col3') }}</th>
-                                    <th>{{ Lang::get('player.profile.infractions.table.col4') }}</th>
-                                    <th>{{ Lang::get('player.profile.infractions.table.col5') }}</th>
+                                    <th>{{ trans('player.profile.infractions.table.col1') }}</th>
+                                    <th>{{ trans('player.profile.infractions.table.col2') }}</th>
+                                    <th>{{ trans('player.profile.infractions.table.col3') }}</th>
+                                    <th>{{ trans('player.profile.infractions.table.col4') }}</th>
+                                    <th>{{ trans('player.profile.infractions.table.col5') }}</th>
                                     </thead>
 
                                     <tbody>
@@ -245,7 +245,7 @@
                                     <tfoot>
                                     <tr>
                                         <td>
-                                            <span class="pull-right">{{ Lang::get('player.profile.infractions.overall.title') }}</span>
+                                            <span class="pull-right">{{ trans('player.profile.infractions.overall.title') }}</span>
                                         </td>
                                         <td>{{ $player->infractions_global->punish_points }}</td>
                                         <td>{{ $player->infractions_global->forgive_points }}</td>
@@ -257,11 +257,11 @@
 
                                 <table class="table table-striped table-condensed">
                                     <thead>
-                                    <th>{{ Lang::get('player.profile.infractions.table2.col1') }}</th>
-                                    <th>{{ Lang::get('player.profile.infractions.table2.col2') }}</th>
-                                    <th>{{ Lang::get('player.profile.infractions.table2.col3') }}</th>
-                                    <th>{{ Lang::get('player.profile.infractions.table2.col4') }}</th>
-                                    <th>{{ Lang::get('player.profile.infractions.table2.col5') }}</th>
+                                    <th>{{ trans('player.profile.infractions.table2.col1') }}</th>
+                                    <th>{{ trans('player.profile.infractions.table2.col2') }}</th>
+                                    <th>{{ trans('player.profile.infractions.table2.col3') }}</th>
+                                    <th>{{ trans('player.profile.infractions.table2.col4') }}</th>
+                                    <th>{{ trans('player.profile.infractions.table2.col5') }}</th>
                                     </thead>
 
                                     <tbody>
@@ -289,7 +289,7 @@
                                 </table>
                             @else
                                 <div class="alert alert-success">
-                                    <i class="fa fa-check"></i> {{ Lang::get('player.profile.infractions.none') }}
+                                    <i class="fa fa-check"></i> {{ trans('player.profile.infractions.none') }}
                                 </div>
                             @endif
                         </div>
@@ -298,14 +298,14 @@
                             @if( ! is_null($player->ban) && $player->ban->is_active )
                                 <table class="table table-condensed">
                                     <thead>
-                                    <th>{{ Lang::get('player.profile.bans.current.table.col1') }}</th>
+                                    <th>{{ trans('player.profile.bans.current.table.col1') }}</th>
                                     @if(!$player->ban->is_perm)
-                                        <th>{{ Lang::get('player.profile.bans.current.table.col2') }}</th>
+                                        <th>{{ trans('player.profile.bans.current.table.col2') }}</th>
                                     @endif
-                                    <th>{{ Lang::get('player.profile.bans.current.table.col3') }}</th>
-                                    <th>{{ Lang::get('player.profile.bans.current.table.col4') }}</th>
-                                    <th>{{ Lang::get('player.profile.bans.current.table.col5') }}</th>
-                                    <th width="25%">{{ Lang::get('player.profile.bans.current.table.col6') }}</th>
+                                    <th>{{ trans('player.profile.bans.current.table.col3') }}</th>
+                                    <th>{{ trans('player.profile.bans.current.table.col4') }}</th>
+                                    <th>{{ trans('player.profile.bans.current.table.col5') }}</th>
+                                    <th width="25%">{{ trans('player.profile.bans.current.table.col6') }}</th>
                                     </thead>
 
                                     <tbody>
@@ -329,18 +329,18 @@
                                         </td>
                                         <td>
                                             @if($player->ban->is_perm)
-                                                <label class="label label-danger">{{ Lang::get('player.profile.bans.type.permanent.short') }}</label>
+                                                <label class="label label-danger">{{ trans('player.profile.bans.type.permanent.short') }}</label>
                                             @else
-                                                <label class="label label-warning">{{ Lang::get('player.profile.bans.type.temporary.short') }}</label>
+                                                <label class="label label-warning">{{ trans('player.profile.bans.type.temporary.short') }}</label>
                                             @endif
                                         </td>
                                         <td>
                                             @if($player->ban->is_active)
-                                                <label class="label label-danger">{{ Lang::get('player.profile.bans.status.enabled') }}</label>
+                                                <label class="label label-danger">{{ trans('player.profile.bans.status.enabled') }}</label>
                                             @elseif($player->ban->is_expired)
-                                                <label class="label label-success">{{ Lang::get('player.profile.bans.status.expired') }}</label>
+                                                <label class="label label-success">{{ trans('player.profile.bans.status.expired') }}</label>
                                             @elseif( ! $player->ban->is_active && ! $player->ban->is_expired)
-                                                <label class="label label-primary">{{ Lang::get('player.profile.bans.status.disabled') }}</label>
+                                                <label class="label label-primary">{{ trans('player.profile.bans.status.disabled') }}</label>
                                             @endif
                                         </td>
                                         <td>{{ $player->ban->record->record_message }}</td>
@@ -349,11 +349,11 @@
                                 </table>
                             @elseif( ! is_null($player->ban) && (!$player->ban->is_active || $player->ban->is_expired))
                                 <alert type="info">
-                                    <i class="fa fa-info-circle"></i>&nbsp;{!! Lang::get('player.profile.bans.current.inactive', ['status' => $player->ban->ban_status]) !!}
+                                    <i class="fa fa-info-circle"></i>&nbsp;{!! trans('player.profile.bans.current.inactive', ['status' => $player->ban->ban_status]) !!}
                                 </alert>
                             @else
                                 <alert type="success">
-                                    <i class="fa fa-check"></i> {{ Lang::get('player.profile.bans.current.none') }}
+                                    <i class="fa fa-check"></i> {{ trans('player.profile.bans.current.none') }}
                                 </alert>
                             @endif
 
@@ -368,11 +368,11 @@
                             @if( ! is_null($player->ban) && ! is_null($player->ban->previous) && count($player->ban->previous) > 1 )
                                 <table class="table table-striped table-condensed">
                                     <thead>
-                                    <th>{{ Lang::get('player.profile.bans.previous.table.col1') }}</th>
-                                    <th>{{ Lang::get('player.profile.bans.previous.table.col2') }}</th>
-                                    <th>{{ Lang::get('player.profile.bans.previous.table.col3') }}</th>
-                                    <th>{{ Lang::get('player.profile.bans.previous.table.col4') }}</th>
-                                    <th width="25%">{{ Lang::get('player.profile.bans.previous.table.col5') }}</th>
+                                    <th>{{ trans('player.profile.bans.previous.table.col1') }}</th>
+                                    <th>{{ trans('player.profile.bans.previous.table.col2') }}</th>
+                                    <th>{{ trans('player.profile.bans.previous.table.col3') }}</th>
+                                    <th>{{ trans('player.profile.bans.previous.table.col4') }}</th>
+                                    <th width="25%">{{ trans('player.profile.bans.previous.table.col5') }}</th>
                                     </thead>
 
                                     <tbody>
@@ -398,9 +398,9 @@
                                                 </td>
                                                 <td>
                                                     @if(in_array($ban->command_action, [8, 73]))
-                                                        <label class="label label-danger">{{ Lang::get('player.profile.bans.type.permanent.short') }}</label>
+                                                        <label class="label label-danger">{{ trans('player.profile.bans.type.permanent.short') }}</label>
                                                     @else
-                                                        <label class="label label-warning">{{ Lang::get('player.profile.bans.type.temporary.short') }}</label>
+                                                        <label class="label label-warning">{{ trans('player.profile.bans.type.temporary.short') }}</label>
                                                     @endif
                                                 </td>
                                                 <td>{{ $ban->record_message }}</td>
@@ -411,7 +411,7 @@
                                 </table>
                             @else
                                 <div class="alert alert-success">
-                                    <i class="fa fa-check"></i> {{ Lang::get('player.profile.bans.previous.none') }}
+                                    <i class="fa fa-check"></i> {{ trans('player.profile.bans.previous.none') }}
                                 </div>
                             @endif
                         </div>
@@ -421,9 +421,9 @@
                                 @unless(is_null($link))
                                     @if($key == 'bf4db')
                                         @if(!is_null($link->cheatscore))
-                                            {!! Html::link($link->url, Lang::get(sprintf('player.profile.links.items.%s', $key)) . sprintf(' - %u%%', $link->cheatscore), ['class' => 'btn bg-blue', 'target' => '_blank']) !!}
+                                            {!! Html::link($link->url, trans(sprintf('player.profile.links.items.%s', $key)) . sprintf(' - %u%%', $link->cheatscore), ['class' => 'btn bg-blue', 'target' => '_blank']) !!}
                                         @else
-                                            {!! Html::link($link->url, Lang::get(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => '_blank']) !!}
+                                            {!! Html::link($link->url, trans(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => '_blank']) !!}
                                         @endif
                                     @else
                                         @if($key == 'chatlogs' && ((!$bfacp->isLoggedIn && !Config::get('bfacp.site.chatlogs.guest')) || ($bfacp->isLoggedIn && !Auth::user()->ability(null, 'chatlogs'))))
@@ -431,7 +431,7 @@
                                         @elseif($key == 'pbbans' && (is_null($bfacp->user) || !Auth::user()->ability(null, 'player.view.guids')))
                                             {{-- Do not show the pbbans button --}}
                                         @else
-                                            {!! Html::link($link, Lang::get(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => '_blank']) !!}
+                                            {!! Html::link($link, trans(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => '_blank']) !!}
                                         @endif
                                     @endif
                                 @endunless
@@ -488,18 +488,18 @@
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="javascript://" data-target="#server-stats-active" data-toggle="tab">{{ Lang::get('player.profile.stats.server.title') }} &ndash;
+                            <a href="javascript://" data-target="#server-stats-active" data-toggle="tab">{{ trans('player.profile.stats.server.title') }} &ndash;
                                 <span class="badge bg-green">Active</span></a></li>
                         <li>
-                            <a href="javascript://" data-target="#server-stats-inactive" data-toggle="tab">{{ Lang::get('player.profile.stats.server.title') }} &ndash;
+                            <a href="javascript://" data-target="#server-stats-inactive" data-toggle="tab">{{ trans('player.profile.stats.server.title') }} &ndash;
                                 <span class="badge bg-gray">Inactive</span></a></li>
                         <li>
-                            <a href="javascript://" data-target="#sessions" data-toggle="tab"><span ng-if="refresh.sessions"><i class="fa fa-refresh fa-spin"></i>&nbsp;</span>{{ Lang::get('player.profile.stats.sessions.title') }}
+                            <a href="javascript://" data-target="#sessions" data-toggle="tab"><span ng-if="refresh.sessions"><i class="fa fa-refresh fa-spin"></i>&nbsp;</span>{{ trans('player.profile.stats.sessions.title') }}
                             </a></li>
                         <li><a href="javascript://" data-target="#acs" data-toggle="tab"><span ng-if="refresh.acs">
                         <i class="fa fa-refresh fa-spin"></i>&nbsp;</span>
                                 <span class="badge" ng-class="{'bg-green': weapons.acs.length === 0, 'bg-red': weapons.acs.length > 0}" ng-bind="weapons.acs.length"></span>
-                                {{ Lang::get('player.profile.acs.title') }}
+                                {{ trans('player.profile.acs.title') }}
                             </a>
                         </li>
                     </ul>
@@ -522,7 +522,7 @@
 
                             <alert type="info" class="hidden-xs hidden-sm">
                                 <i class="fa fa-info-circle"></i>&nbsp;
-                                {{ Lang::get('player.profile.acs.help') }}
+                                {{ trans('player.profile.acs.help') }}
                             </alert>
                         </div>
                     </div>
@@ -534,7 +534,7 @@
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">{{ Lang::get('player.profile.records.title') }}</h3>
+                        <h3 class="box-title">{{ trans('player.profile.records.title') }}</h3>
 
                         <div class="box-tools pull-right">
                             <pagination class="pagination-sm inline" total-items="records.total" ng-change="fetchRecords()" ng-model="records.current_page" max-size="5" boundary-links="true" items-per-page="records.per_page"></pagination>
@@ -547,9 +547,9 @@
 
                     <div class="box-footer">
                         <div class="pull-left">
-                            {{ Lang::get('player.profile.records.viewing.p1') }}
-                            <span ng-bind="records.from | number"></span> {{ Lang::get('player.profile.records.viewing.p2') }}
-                            <span ng-bind="records.to | number"></span> {{ Lang::get('player.profile.records.viewing.p3') }}
+                            {{ trans('player.profile.records.viewing.p1') }}
+                            <span ng-bind="records.from | number"></span> {{ trans('player.profile.records.viewing.p2') }}
+                            <span ng-bind="records.to | number"></span> {{ trans('player.profile.records.viewing.p3') }}
                             <span ng-bind="records.total | number"></span>.
                         </div>
 
@@ -572,7 +572,7 @@
         $(function () {
             $('#command-overview').highcharts({
                 title: {
-                    text: "{{ Lang::get('player.profile.charts.command_overview.chart.title') }}"
+                    text: "{{ trans('player.profile.charts.command_overview.chart.title') }}"
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.y})</b>'
@@ -592,14 +592,14 @@
                 },
                 series: [{
                     type: 'pie',
-                    name: "{{ Lang::get('player.profile.charts.command_overview.chart.tooltip') }}",
+                    name: "{{ trans('player.profile.charts.command_overview.chart.tooltip') }}",
                     data: {!! $charts['overview']->toJson() !!}
                 }]
             });
 
             $('#aliases-chart').highcharts({
                 title: {
-                    text: "{{ Lang::get('player.profile.charts.aliases.title') }}"
+                    text: "{{ trans('player.profile.charts.aliases.title') }}"
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.y})</b>'
@@ -619,7 +619,7 @@
                 },
                 series: [{
                     type: 'pie',
-                    name: "{{ Lang::get('player.profile.charts.aliases.chart.tooltip') }}",
+                    name: "{{ trans('player.profile.charts.aliases.chart.tooltip') }}",
                     data: {!! $charts['aliases']->toJson() !!}
                 }]
             });
@@ -627,7 +627,7 @@
             @if(Entrust::can('player.view.ip'))
                 $('#ip-history-chart').highcharts({
                     title: {
-                        text: "{{ Lang::get('player.profile.charts.ip_history.title') }}"
+                        text: "{{ trans('player.profile.charts.ip_history.title') }}"
                     },
                     tooltip: {
                         pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.y})</b>'
@@ -647,7 +647,7 @@
                     },
                     series: [{
                         type: 'pie',
-                        name: "{{ Lang::get('player.profile.charts.ip_history.chart.tooltip') }}",
+                        name: "{{ trans('player.profile.charts.ip_history.chart.tooltip') }}",
                         data: {!! $charts['iphistory']->toJson() !!}
 
 

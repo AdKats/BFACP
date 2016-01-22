@@ -10,7 +10,7 @@
 
                         <div class="box-tools pull-right">
                             <button class="btn bg-green" id="create-user">
-                                <i class="fa fa-plus"></i>&nbsp;<span>{{ Lang::get('adkats.users.listing.buttons.create') }}</span>
+                                <i class="fa fa-plus"></i>&nbsp;<span>{{ trans('adkats.users.listing.buttons.create') }}</span>
                             </button>
                         </div>
                     </div>
@@ -19,12 +19,12 @@
                     <div class="table-responsive">
                         <table class="table table-condensed table-striped">
                             <thead>
-                            <th>{{ Lang::get('adkats.users.listing.table.col1') }}</th>
-                            <th>{{ Lang::get('adkats.users.listing.table.col2') }}</th>
-                            <th>{{ Lang::get('adkats.users.listing.table.col3') }}</th>
-                            <th>{{ Lang::get('adkats.users.listing.table.col4') }}</th>
-                            <th>{{ Lang::get('adkats.users.listing.table.col5') }}</th>
-                            <th>{{ Lang::get('adkats.users.listing.table.col6') }}</th>
+                            <th>{{ trans('adkats.users.listing.table.col1') }}</th>
+                            <th>{{ trans('adkats.users.listing.table.col2') }}</th>
+                            <th>{{ trans('adkats.users.listing.table.col3') }}</th>
+                            <th>{{ trans('adkats.users.listing.table.col4') }}</th>
+                            <th>{{ trans('adkats.users.listing.table.col5') }}</th>
+                            <th>{{ trans('adkats.users.listing.table.col6') }}</th>
                             </thead>
 
                             <tbody>
@@ -55,7 +55,7 @@
                                                     @endif
                                                 </li>
                                             @empty
-                                                <label class="label bg-red">{{ Lang::get('adkats.users.no_soldiers') }}</label>
+                                                <label class="label bg-red">{{ trans('adkats.users.no_soldiers') }}</label>
                                             @endforelse
                                         </ul>
                                     </td>
@@ -66,7 +66,7 @@
                             @empty
                                 <alert type="info">
                                     {!! Macros::faicon('fa-info') !!}
-                                    {{ Lang::get('adkats.users.no_users') }}
+                                    {{ trans('adkats.users.no_users') }}
                                 </alert>
                             @endforelse
                             </tbody>

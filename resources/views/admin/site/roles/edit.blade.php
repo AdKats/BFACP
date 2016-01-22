@@ -29,12 +29,12 @@
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-sm-offset-4 col-lg-10 col-sm-8">
                             <button type="submit" class="btn bg-green" @if($role->id == 1)disabled="disabled"@endif>
-                                <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ Lang::get('site.admin.roles.edit.buttons.save') }}</span>
+                                <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ trans('site.admin.roles.edit.buttons.save') }}</span>
                             </button>
-                            {!! link_to_route('admin.site.roles.index', Lang::get('site.admin.roles.edit.buttons.cancel'), [], ['class' => 'btn bg-blue', 'target' => '_self']) !!}
+                            {!! link_to_route('admin.site.roles.index', trans('site.admin.roles.edit.buttons.cancel'), [], ['class' => 'btn bg-blue', 'target' => '_self']) !!}
                             @if(!in_array($role->id, [1, 2]))
                                 <button class="btn bg-red" id="delete-role">
-                                    <i class="fa fa-trash"></i>&nbsp;<span>{{ Lang::get('site.admin.roles.edit.buttons.delete') }}</span>
+                                    <i class="fa fa-trash"></i>&nbsp;<span>{{ trans('site.admin.roles.edit.buttons.delete') }}</span>
                                 </button>
                             @endif
                         </div>

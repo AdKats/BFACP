@@ -11,31 +11,31 @@
         <div class="col-xs-12 col-md-6">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">{{ Lang::get('site.admin.users.edit.details') }}</h3>
+                    <h3 class="box-title">{{ trans('site.admin.users.edit.details') }}</h3>
                 </div>
 
                 <div class="box-body">
-                    {!! Former::text('username')->label(Lang::get('site.admin.users.edit.inputs.username.label')) !!}
-                    {!! Former::email('email')->label(Lang::get('site.admin.users.edit.inputs.email.label')) !!}
-                    {!! Former::select('role')->options($roles, $user->roles[0]->id)->label(Lang::get('site.admin.users.edit.inputs.role.label')) !!}
-                    {!! Former::inline_radios('account_status')->label(Lang::get('site.admin.users.edit.inputs.account_status.label'))->radios([
+                    {!! Former::text('username')->label(trans('site.admin.users.edit.inputs.username.label')) !!}
+                    {!! Former::email('email')->label(trans('site.admin.users.edit.inputs.email.label')) !!}
+                    {!! Former::select('role')->options($roles, $user->roles[0]->id)->label(trans('site.admin.users.edit.inputs.role.label')) !!}
+                    {!! Former::inline_radios('account_status')->label(trans('site.admin.users.edit.inputs.account_status.label'))->radios([
                         'Inactive' => 'confirmed',
                         'Active'   => 'confirmed'
                     ])->check([
                         'confirmed0' => !$user->confirmed,
                         'confirmed1' => $user->confirmed
                     ]) !!}
-                    {!! Former::select('language')->label(Lang::get('site.admin.users.edit.inputs.lang.label'))->options(Config::get('bfacp.site.languages'))->value($user->setting->lang) !!}
-                    {!! Former::checkbox('generate_pass')->text(Lang::get('site.admin.users.edit.inputs.genpass.label'))->label('&nbsp;') !!}
+                    {!! Former::select('language')->label(trans('site.admin.users.edit.inputs.lang.label'))->options(Config::get('bfacp.site.languages'))->value($user->setting->lang) !!}
+                    {!! Former::checkbox('generate_pass')->text(trans('site.admin.users.edit.inputs.genpass.label'))->label('&nbsp;') !!}
 
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-sm-offset-4 col-lg-10 col-sm-8">
                             <button type="submit" class="btn bg-green">
-                                <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ Lang::get('site.admin.users.edit.buttons.save') }}</span>
+                                <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ trans('site.admin.users.edit.buttons.save') }}</span>
                             </button>
-                            {!! link_to_route('admin.site.users.index', Lang::get('site.admin.users.edit.buttons.cancel'), [], ['class' => 'btn bg-blue', 'target' => '_self']) !!}
+                            {!! link_to_route('admin.site.users.index', trans('site.admin.users.edit.buttons.cancel'), [], ['class' => 'btn bg-blue', 'target' => '_self']) !!}
                             <button class="btn bg-red" id="delete-user">
-                                <i class="fa fa-trash"></i>&nbsp;<span>{{ Lang::get('site.admin.users.edit.buttons.delete') }}</span>
+                                <i class="fa fa-trash"></i>&nbsp;<span>{{ trans('site.admin.users.edit.buttons.delete') }}</span>
                             </button>
                         </div>
                     </div>

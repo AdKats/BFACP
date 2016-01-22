@@ -8,7 +8,7 @@
                     <h3 class="box-title">&nbsp;</h3>
 
                     <div class="box-tools">
-                        {!! link_to_route('admin.site.users.create', Lang::get('navigation.admin.site.items.users.items.create.title'), [], ['class' => 'btn bg-green btn-xs pull-right', 'target' => '_self']) !!}
+                        {!! link_to_route('admin.site.users.create', trans('navigation.admin.site.items.users.items.create.title'), [], ['class' => 'btn bg-green btn-xs pull-right', 'target' => '_self']) !!}
                     </div>
                 </div>
 
@@ -16,12 +16,12 @@
                     <div class="table-responsive">
                         <table class="table table-striped table-condensed">
                             <thead>
-                            <th>{{ Lang::get('site.admin.users.listing.table.col1') }}</th>
-                            <th>{{ Lang::get('site.admin.users.listing.table.col2') }}</th>
-                            <th>{{ Lang::get('site.admin.users.listing.table.col3') }}</th>
-                            <th>{{ Lang::get('site.admin.users.listing.table.col4') }}</th>
-                            <th>{{ Lang::get('site.admin.users.listing.table.col5') }}</th>
-                            <th>{{ Lang::get('site.admin.users.listing.table.col6') }}</th>
+                            <th>{{ trans('site.admin.users.listing.table.col1') }}</th>
+                            <th>{{ trans('site.admin.users.listing.table.col2') }}</th>
+                            <th>{{ trans('site.admin.users.listing.table.col3') }}</th>
+                            <th>{{ trans('site.admin.users.listing.table.col4') }}</th>
+                            <th>{{ trans('site.admin.users.listing.table.col5') }}</th>
+                            <th>{{ trans('site.admin.users.listing.table.col6') }}</th>
                             </thead>
 
                             <tbody>
@@ -33,9 +33,9 @@
                                     <td>{{ MainHelper::languages($user->setting->lang) }}</td>
                                     <td>
                                         @if($user->confirmed)
-                                            <span class="label bg-green">{{ Lang::get('site.admin.users.listing.status.active') }}</span>
+                                            <span class="label bg-green">{{ trans('site.admin.users.listing.status.active') }}</span>
                                         @else
-                                            <span class="label bg-red">{{ Lang::get('site.admin.users.listing.status.inactive') }}</span>
+                                            <span class="label bg-red">{{ trans('site.admin.users.listing.status.inactive') }}</span>
                                         @endif
                                     </td>
                                     <td ng-bind="moment('{{ $user->stamp }}').format('LLL')"></td>

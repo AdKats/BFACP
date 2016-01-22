@@ -6,29 +6,29 @@
         <div class="col-xs-6">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">{{ Lang::get('adkats.users.edit.details') }}</h3>
+                    <h3 class="box-title">{{ trans('adkats.users.edit.details') }}</h3>
                 </div>
 
                 <div class="box-body">
-                    {!! Former::text('user_name')->label(Lang::get('adkats.users.edit.inputs.username.label')) !!}
-                    {!! Former::email('user_email')->label(Lang::get('adkats.users.edit.inputs.email.label')) !!}
-                    {!! Former::select('user_role')->options($roles)->label(Lang::get('adkats.users.edit.inputs.role.label')) !!}
+                    {!! Former::text('user_name')->label(trans('adkats.users.edit.inputs.username.label')) !!}
+                    {!! Former::email('user_email')->label(trans('adkats.users.edit.inputs.email.label')) !!}
+                    {!! Former::select('user_role')->options($roles)->label(trans('adkats.users.edit.inputs.role.label')) !!}
                     {!! Former::date('user_expiration')
                         ->forceValue($user->user_expiration->toDateString())
                         ->min(Carbon::now()->toDateString())
                         ->max(Carbon::now()->addYears(30)->toDateString())
-                        ->label(Lang::get('adkats.users.edit.inputs.expiration.label'))
-                        ->help(Lang::get('adkats.users.edit.inputs.expiration.help')) !!}
-                    {!! Former::text('user_notes')->maxlength(1000)->label(Lang::get('adkats.users.edit.inputs.notes.label')) !!}
+                        ->label(trans('adkats.users.edit.inputs.expiration.label'))
+                        ->help(trans('adkats.users.edit.inputs.expiration.help')) !!}
+                    {!! Former::text('user_notes')->maxlength(1000)->label(trans('adkats.users.edit.inputs.notes.label')) !!}
 
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-sm-offset-4 col-lg-10 col-sm-8">
                             <button type="submit" class="btn bg-green">
-                                <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ Lang::get('adkats.users.edit.buttons.save') }}</span>
+                                <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ trans('adkats.users.edit.buttons.save') }}</span>
                             </button>
-                            {!! link_to_route('admin.adkats.users.index', Lang::get('adkats.users.edit.buttons.cancel'), [], ['class' => 'btn bg-blue', 'target' => '_self']) !!}
+                            {!! link_to_route('admin.adkats.users.index', trans('adkats.users.edit.buttons.cancel'), [], ['class' => 'btn bg-blue', 'target' => '_self']) !!}
                             <button class="btn bg-red" id="delete-user">
-                                <i class="fa fa-trash"></i>&nbsp;<span>{{ Lang::get('adkats.users.edit.buttons.delete') }}</span>
+                                <i class="fa fa-trash"></i>&nbsp;<span>{{ trans('adkats.users.edit.buttons.delete') }}</span>
                             </button>
                         </div>
                     </div>

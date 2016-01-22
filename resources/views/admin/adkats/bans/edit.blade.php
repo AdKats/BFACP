@@ -10,7 +10,7 @@
                     <div class="box-tools">
                         {!! Former::open()->method('DELETE')->route('admin.adkats.bans.destroy', [$ban->ban_id])->id('unban-form') !!}
                         <button type="submit" class="btn bg-maroon" <?php echo $ban->is_unbanned ? 'disabled' : null; ?>>
-                            <i class="fa fa-eraser"></i>&nbsp;<span>{{ Lang::get('adkats.bans.edit.buttons.submit.text3') }}</span>
+                            <i class="fa fa-eraser"></i>&nbsp;<span>{{ trans('adkats.bans.edit.buttons.submit.text3') }}</span>
                         </button>
                         {!! Former::close() !!}
                     </div>
@@ -23,18 +23,18 @@
                             'message' => 'required'
                         ]) !!}
 
-                    {!! Former::text('player')->value($ban->player->SoldierName)->label(Lang::get('adkats.bans.edit.fields.field1'))->disabled() !!}
+                    {!! Former::text('player')->value($ban->player->SoldierName)->label(trans('adkats.bans.edit.fields.field1'))->disabled() !!}
 
-                    {!! Former::text('admin')->value($ban->record->source_name)->label(Lang::get('adkats.bans.edit.fields.field2'))->disabled() !!}
+                    {!! Former::text('admin')->value($ban->record->source_name)->label(trans('adkats.bans.edit.fields.field2'))->disabled() !!}
 
-                    {!! Former::text('notes')->value($ban->ban_notes)->label(Lang::get('adkats.bans.edit.fields.field3'))->maxlength(150) !!}
+                    {!! Former::text('notes')->value($ban->ban_notes)->label(trans('adkats.bans.edit.fields.field3'))->maxlength(150) !!}
 
-                    {!! Former::text('message')->value($ban->record->record_message)->label(Lang::get('adkats.bans.edit.fields.field4'))->maxlength(500) !!}
+                    {!! Former::text('message')->value($ban->record->record_message)->label(trans('adkats.bans.edit.fields.field4'))->maxlength(500) !!}
 
-                    {!! Former::select('server')->options($servers, $ban->record->server_id)->label(Lang::get('adkats.bans.edit.fields.field5')) !!}
+                    {!! Former::select('server')->options($servers, $ban->record->server_id)->label(trans('adkats.bans.edit.fields.field5')) !!}
 
                     <div class="form-group" id="ban-range-container">
-                        <label class="control-label col-lg-2 col-sm-4">{!! Lang::get('adkats.bans.edit.fields.field6') !!}</label>
+                        <label class="control-label col-lg-2 col-sm-4">{!! trans('adkats.bans.edit.fields.field6') !!}</label>
 
                         <div class="col-lg-10 col-sm-8">
                             <div id="ban-range">
@@ -47,40 +47,40 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-lg-2 col-sm-4">{{ Lang::get('adkats.bans.edit.fields.field7') }}</label>
+                        <label class="control-label col-lg-2 col-sm-4">{{ trans('adkats.bans.edit.fields.field7') }}</label>
 
                         <div class="col-lg-10 col-sm-8">
                             @if($ban->is_active)
-                                <label class="label label-danger">{{ Lang::get('player.profile.bans.status.enabled') }}</label>
+                                <label class="label label-danger">{{ trans('player.profile.bans.status.enabled') }}</label>
                             @elseif($ban->is_expired)
-                                <label class="label label-success">{{ Lang::get('player.profile.bans.status.expired') }}</label>
+                                <label class="label label-success">{{ trans('player.profile.bans.status.expired') }}</label>
                             @elseif(!$ban->is_active && !$ban->is_expired)
-                                <label class="label label-primary">{{ Lang::get('player.profile.bans.status.disabled') }}</label>
+                                <label class="label label-primary">{{ trans('player.profile.bans.status.disabled') }}</label>
                             @endif
                         </div>
                     </div>
 
-                    {!! Former::radios('type')->label(Lang::get('adkats.bans.edit.fields.field8'))->radios([
-                        '&nbsp;' . Lang::get('player.profile.bans.type.permanent.long') => ['name' => 'type', 'value' => 8],
-                        '&nbsp;' . Lang::get('player.profile.bans.type.temporary.long') => ['name' => 'type', 'value' => 7]
+                    {!! Former::radios('type')->label(trans('adkats.bans.edit.fields.field8'))->radios([
+                        '&nbsp;' . trans('player.profile.bans.type.permanent.long') => ['name' => 'type', 'value' => 8],
+                        '&nbsp;' . trans('player.profile.bans.type.temporary.long') => ['name' => 'type', 'value' => 7]
                     ])->inline()->check([
                         8 => $ban->is_perm,
                         7 => !$ban->is_perm
                     ]) !!}
 
-                    {!! Former::checkbox('enforce_guid')->label(Lang::get('adkats.bans.edit.fields.field9'))->check($ban->ban_enforceGUID) !!}
+                    {!! Former::checkbox('enforce_guid')->label(trans('adkats.bans.edit.fields.field9'))->check($ban->ban_enforceGUID) !!}
 
-                    {!! Former::checkbox('enforce_name')->label(Lang::get('adkats.bans.edit.fields.field10'))->check($ban->ban_enforceName) !!}
+                    {!! Former::checkbox('enforce_name')->label(trans('adkats.bans.edit.fields.field10'))->check($ban->ban_enforceName) !!}
 
-                    {!! Former::checkbox('enforce_ip')->label(Lang::get('adkats.bans.edit.fields.field11'))->check($ban->ban_enforceIP) !!}
+                    {!! Former::checkbox('enforce_ip')->label(trans('adkats.bans.edit.fields.field11'))->check($ban->ban_enforceIP) !!}
 
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-sm-offset-4 col-lg-10 col-sm-8">
                             <button type="submit" class="btn bg-green">
-                                <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ Lang::get('adkats.bans.edit.buttons.submit.text1') }}</span>
+                                <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ trans('adkats.bans.edit.buttons.submit.text1') }}</span>
                             </button>
-                            {!! link_to_route('admin.adkats.bans.index', Lang::get('adkats.bans.edit.buttons.cancel'), [], ['class' => 'btn bg-red', 'target' => '_self']) !!}
-                            {!! link_to_route('player.show', Lang::get('adkats.bans.edit.buttons.profile'), [$ban->player->PlayerID, $ban->player->SoldierName], ['class' => 'btn bg-navy', 'target' => '_self']) !!}
+                            {!! link_to_route('admin.adkats.bans.index', trans('adkats.bans.edit.buttons.cancel'), [], ['class' => 'btn bg-red', 'target' => '_self']) !!}
+                            {!! link_to_route('player.show', trans('adkats.bans.edit.buttons.profile'), [$ban->player->PlayerID, $ban->player->SoldierName], ['class' => 'btn bg-navy', 'target' => '_self']) !!}
                         </div>
                     </div>
                     {!! Former::close() !!}
@@ -151,23 +151,23 @@
                 var btn = $(this).find('button');
                 btn.find("i").removeClass('fa-eraser').addClass('fa-spinner fa-pulse');
                 btn.attr('disabled', true);
-                btn.find('span').text("<?php echo Lang::get('adkats.bans.edit.buttons.submit.text2'); ?>");
+                btn.find('span').text("<?php echo trans('adkats.bans.edit.buttons.submit.text2'); ?>");
             });
 
             $('#unban-form').submit(function (e) {
                 e.preventDefault();
 
-                var unban = prompt("<?php echo Lang::get('adkats.bans.prompts.unban.reason'); ?>", "Unbanning <?php echo $ban->player->SoldierName; ?>");
+                var unban = prompt("<?php echo trans('adkats.bans.prompts.unban.reason'); ?>", "Unbanning <?php echo $ban->player->SoldierName; ?>");
                 var btn = $(this).find('button');
 
-                var notes = prompt("<?php echo Lang::get('adkats.bans.prompts.unban.notes') ?>");
+                var notes = prompt("<?php echo trans('adkats.bans.prompts.unban.notes') ?>");
 
                 var csrf = $("input[name='_token']").val();
 
                 if (unban !== null) {
                     btn.find("i").removeClass('fa-eraser').addClass('fa-spinner fa-pulse');
                     btn.attr('disabled', true);
-                    btn.find('span').text("<?php echo Lang::get('adkats.bans.edit.buttons.submit.text2'); ?>")
+                    btn.find('span').text("<?php echo trans('adkats.bans.edit.buttons.submit.text2'); ?>")
 
                     $.ajax({
                         url: $(this).attr('action'),
@@ -182,12 +182,12 @@
                         location.reload();
                     })
                     .fail(function () {
-                        alert("<?php echo Lang::get('adkats.bans.prompts.unban.request_failed'); ?>");
+                        alert("<?php echo trans('adkats.bans.prompts.unban.request_failed'); ?>");
                     })
                     .always(function () {
                         btn.find("i").removeClass('fa-spinner fa-pulse').addClass('fa-eraser');
                         btn.attr('disabled', false);
-                        btn.find('span').text("<?php echo Lang::get('adkats.bans.edit.buttons.submit.text3'); ?>");
+                        btn.find('span').text("<?php echo trans('adkats.bans.edit.buttons.submit.text3'); ?>");
                     });
                 }
             });

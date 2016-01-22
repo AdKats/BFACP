@@ -27,12 +27,12 @@
 
                     <div class="form-group">
                         <button type="button" class="btn btn-primary btn-xs" ng-click="previousPage()" ng-disabled="main.page <= 1">
-                            {{ Lang::get('tables.playerlist.button_previous') }}
+                            {{ trans('tables.playerlist.button_previous') }}
                         </button>
                         <button type="button" class="btn btn-primary btn-xs" ng-click="nextPage()" ng-disabled="main.page == main.last_page">
-                            {{ Lang::get('tables.playerlist.button_next') }}
+                            {{ trans('tables.playerlist.button_next') }}
                         </button>
-                        {{ link_to_route('player.listing', Lang::get('tables.playerlist.button_reset'), [], ['class' => 'btn btn-success btn-xs', 'target' => '_self']) }}
+                        {{ link_to_route('player.listing', trans('tables.playerlist.button_reset'), [], ['class' => 'btn btn-success btn-xs', 'target' => '_self']) }}
                     </div>
                 </div>
             </div>
@@ -40,13 +40,13 @@
             <div class="box-body">
                 <table class="table table-striped">
                     <thead>
-                        <th width="32px">{{ Lang::get('tables.playerlist.columns.col1') }}</th>
-                        <th width="32px">{{ Lang::get('tables.playerlist.columns.col2') }}</th>
-                        <th width="32px">{{ Lang::get('tables.playerlist.columns.col3') }}</th>
-                        <th width="300px">{{ Lang::get('tables.playerlist.columns.col4') }}</th>
-                        <th>{{ Lang::get('tables.playerlist.columns.col5') }}</th>
-                        <th class="hidden-xs hidden-sm">{{ Lang::get('tables.playerlist.columns.col6') }}</th>
-                        <th class="hidden-xs hidden-sm">{{ Lang::get('tables.playerlist.columns.col7') }}</th>
+                        <th width="32px">{{ trans('tables.playerlist.columns.col1') }}</th>
+                        <th width="32px">{{ trans('tables.playerlist.columns.col2') }}</th>
+                        <th width="32px">{{ trans('tables.playerlist.columns.col3') }}</th>
+                        <th width="300px">{{ trans('tables.playerlist.columns.col4') }}</th>
+                        <th>{{ trans('tables.playerlist.columns.col5') }}</th>
+                        <th class="hidden-xs hidden-sm">{{ trans('tables.playerlist.columns.col6') }}</th>
+                        <th class="hidden-xs hidden-sm">{{ trans('tables.playerlist.columns.col7') }}</th>
                         <th class="hidden-xs">{{ Lang::Get('tables.playerlist.columns.col8') }}</th>
                     </thead>
                     <tbody>
@@ -68,27 +68,27 @@
                                         <div ng-if="player.ban.is_active">
                                             <div ng-switch on="player.ban.is_perm">
                                                 <span ng-switch-when="true" ng-cloak class="label bg-red" tooltip="@{{ player.ban.record.record_message }}">
-                                                    {{ Lang::get('player.profile.bans.type.permanent.long') }}
+                                                    {{ trans('player.profile.bans.type.permanent.long') }}
                                                 </span>
                                                 <span ng-switch-default class="label bg-purple">
-                                                    {{ Lang::get('player.profile.bans.status.expire') }} <span ng-cloak ng-bind="moment(player.ban.ban_expires).fromNow()" tooltip="@{{ player.ban.ban_expires | date: 'medium' }}"></span>
+                                                    {{ trans('player.profile.bans.status.expire') }} <span ng-cloak ng-bind="moment(player.ban.ban_expires).fromNow()" tooltip="@{{ player.ban.ban_expires | date: 'medium' }}"></span>
                                                 </span>
                                             </div>
                                         </div>
 
                                         <div ng-if="player.ban.ban_status == 'Disabled'">
                                             <span class="label label-default">
-                                                {{ Lang::get('player.profile.bans.status.disabled') }}
+                                                {{ trans('player.profile.bans.status.disabled') }}
                                             </span>
                                         </div>
 
                                         <span ng-if="player.ban.is_expired" ng-cloak class="label bg-blue" tooltip="@{{ player.ban.ban_expires | date: 'medium' }}">
-                                            {{ Lang::get('player.profile.bans.status.expired') }} <span ng-bind="moment(player.ban.ban_expires).fromNow()"></span>
+                                            {{ trans('player.profile.bans.status.expired') }} <span ng-bind="moment(player.ban.ban_expires).fromNow()"></span>
                                         </span>
                                     </div>
 
                                     <div ng-switch-default>
-                                        <span class="label bg-green">{{ Lang::get('player.profile.bans.current.none') }}</span>
+                                        <span class="label bg-green">{{ trans('player.profile.bans.current.none') }}</span>
                                     </div>
                                 </ng-switch>
                             </td>
@@ -105,7 +105,7 @@
                             <td class="hidden-xs hidden-sm">
                                 <ng-switch on="player.infractions_global !== null">
                                     <span ng-switch-when="true" ng-bind="player.infractions_global.total_points" class="label bg-navy"></span>
-                                    <span ng-switch-default class="label bg-green">{{ Lang::get('player.profile.infractions.none') }}</span>
+                                    <span ng-switch-default class="label bg-green">{{ trans('player.profile.infractions.none') }}</span>
                                 </ng-switch>
                             </td>
                             <td class="hidden-xs"><img ng-src="@{{ player.country_flag }}" tooltip="@{{ player.country_name }}"></td>

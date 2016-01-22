@@ -10,19 +10,19 @@
         <div class="col-xs-12 col-md-6">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">{{ Lang::get('user.account.settings.blocks.general.title') }}</h3>
+                    <h3 class="box-title">{{ trans('user.account.settings.blocks.general.title') }}</h3>
                 </div>
 
                 <div class="box-body">
-                    {!! Former::email('email')->label(Lang::get('user.account.settings.blocks.general.inputs.email')) !!}
-                    {!! Former::select('language')->label(Lang::get('user.account.settings.blocks.general.inputs.language'))->options(Config::get('bfacp.site.languages'))->value($user->setting->lang) !!}
+                    {!! Former::email('email')->label(trans('user.account.settings.blocks.general.inputs.email')) !!}
+                    {!! Former::select('language')->label(trans('user.account.settings.blocks.general.inputs.language'))->options(Config::get('bfacp.site.languages'))->value($user->setting->lang) !!}
 
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-sm-offset-4 col-lg-10 col-sm-8">
                             <button type="submit" class="btn bg-green">
-                                <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ Lang::get('site.admin.users.edit.buttons.save') }}</span>
+                                <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ trans('site.admin.users.edit.buttons.save') }}</span>
                             </button>
-                            {!! link_to_route('user.account', Lang::get('site.admin.users.edit.buttons.cancel'), [], ['class' => 'btn bg-blue', 'target' => '_self']) !!}
+                            {!! link_to_route('user.account', trans('site.admin.users.edit.buttons.cancel'), [], ['class' => 'btn bg-blue', 'target' => '_self']) !!}
                         </div>
                     </div>
 
@@ -33,12 +33,12 @@
         <div class="col-xs-12 col-md-6">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">{{ Lang::get('user.account.settings.blocks.password.title') }}</h3>
+                    <h3 class="box-title">{{ trans('user.account.settings.blocks.password.title') }}</h3>
                 </div>
 
                 <div class="box-body">
-                    {!! Former::password('password')->label(Lang::get('user.account.settings.blocks.password.inputs.password'))->help(Lang::get('user.account.settings.blocks.password.inputs_help.password'))->autocomplete('off') !!}
-                    {!! Former::password('password_confirmation')->label(Lang::get('user.account.settings.blocks.password.inputs.password_confirm'))->help(Lang::get('user.account.settings.blocks.password.inputs_help.password_confirm'))->autocomplete('off') !!}
+                    {!! Former::password('password')->label(trans('user.account.settings.blocks.password.inputs.password'))->help(trans('user.account.settings.blocks.password.inputs_help.password'))->autocomplete('off') !!}
+                    {!! Former::password('password_confirmation')->label(trans('user.account.settings.blocks.password.inputs.password_confirm'))->help(trans('user.account.settings.blocks.password.inputs_help.password_confirm'))->autocomplete('off') !!}
                 </div>
             </div>
         </div>

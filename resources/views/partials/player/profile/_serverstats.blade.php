@@ -1,28 +1,28 @@
 <div class="table-responsive">
     <table class="table table-striped table-condensed">
         <thead>
-        <th>{{ Lang::get('player.profile.stats.server.table.col1') }}</th>
-        <th>{{ Lang::get('player.profile.stats.server.table.col2') }}</th>
-        <th>{{ Lang::get('player.profile.stats.server.table.col3') }}</th>
-        <th>{{ Lang::get('player.profile.stats.server.table.col5') }}</th>
-        <th class="hidden-sm hidden-md">{{ Lang::get('player.profile.stats.server.table.col6') }}</th>
+        <th>{{ trans('player.profile.stats.server.table.col1') }}</th>
+        <th>{{ trans('player.profile.stats.server.table.col2') }}</th>
+        <th>{{ trans('player.profile.stats.server.table.col3') }}</th>
+        <th>{{ trans('player.profile.stats.server.table.col5') }}</th>
+        <th class="hidden-sm hidden-md">{{ trans('player.profile.stats.server.table.col6') }}</th>
         <th class="hidden-sm hidden-md">
-            <span tooltip="Headshot Kill Ratio">{{ Lang::get('player.profile.stats.server.table.extra.hskr') }}</span>
+            <span tooltip="Headshot Kill Ratio">{{ trans('player.profile.stats.server.table.extra.hskr') }}</span>
         </th>
-        <th>{{ Lang::get('player.profile.stats.server.table.col7') }}</th>
+        <th>{{ trans('player.profile.stats.server.table.col7') }}</th>
         <th class="hidden-sm hidden-md">
-            <span tooltip="Kill/Death Ratio">{{ Lang::get('player.profile.stats.server.table.extra.kd') }}</span>
+            <span tooltip="Kill/Death Ratio">{{ trans('player.profile.stats.server.table.extra.kd') }}</span>
         </th>
-        <th class="hidden-sm hidden-md">{{ Lang::get('player.profile.stats.server.table.col8') }}</th>
-        <th class="hidden-sm hidden-md">{{ Lang::get('player.profile.stats.server.table.col9') }}</th>
-        <th>{{ Lang::get('player.profile.stats.server.table.col10') }}</th>
-        <th class="hidden-sm hidden-md">{{ Lang::get('player.profile.stats.server.table.col11') }}</th>
-        <th class="hidden-sm hidden-md">{{ Lang::get('player.profile.stats.server.table.col14') }}</th>
-        <th class="hidden-sm hidden-md">{{ Lang::get('player.profile.stats.server.table.col15') }}</th>
+        <th class="hidden-sm hidden-md">{{ trans('player.profile.stats.server.table.col8') }}</th>
+        <th class="hidden-sm hidden-md">{{ trans('player.profile.stats.server.table.col9') }}</th>
+        <th>{{ trans('player.profile.stats.server.table.col10') }}</th>
+        <th class="hidden-sm hidden-md">{{ trans('player.profile.stats.server.table.col11') }}</th>
+        <th class="hidden-sm hidden-md">{{ trans('player.profile.stats.server.table.col14') }}</th>
+        <th class="hidden-sm hidden-md">{{ trans('player.profile.stats.server.table.col15') }}</th>
         <th class="hidden-sm hidden-md">
-            <span tooltip="Win/Loss Ratio">{{ Lang::get('player.profile.stats.server.table.extra.wlr') }}</span>
+            <span tooltip="Win/Loss Ratio">{{ trans('player.profile.stats.server.table.extra.wlr') }}</span>
         </th>
-        <th>{{ Lang::get('player.profile.stats.server.table.col16') }}</th>
+        <th>{{ trans('player.profile.stats.server.table.col16') }}</th>
         </thead>
 
         <tbody>

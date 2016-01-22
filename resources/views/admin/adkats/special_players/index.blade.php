@@ -8,12 +8,12 @@
                     <div class="table-responsive">
                         <table class="table table-condensed table-striped">
                             <thead>
-                            <th width="50px">{{ Lang::get('adkats.special_players.listing.table.col1') }}</th>
-                            <th width="50px">{{ Lang::get('adkats.special_players.listing.table.col2') }}</th>
-                            <th width="250px">{{ Lang::get('adkats.special_players.listing.table.col3') }}</th>
-                            <th width="500px">{{ Lang::get('adkats.special_players.listing.table.col4') }}</th>
-                            <th>{{ Lang::get('adkats.special_players.listing.table.col5') }}</th>
-                            <th>{{ Lang::get('adkats.special_players.listing.table.col6') }}</th>
+                            <th width="50px">{{ trans('adkats.special_players.listing.table.col1') }}</th>
+                            <th width="50px">{{ trans('adkats.special_players.listing.table.col2') }}</th>
+                            <th width="250px">{{ trans('adkats.special_players.listing.table.col3') }}</th>
+                            <th width="500px">{{ trans('adkats.special_players.listing.table.col4') }}</th>
+                            <th>{{ trans('adkats.special_players.listing.table.col5') }}</th>
+                            <th>{{ trans('adkats.special_players.listing.table.col6') }}</th>
                             </thead>
 
                             <tbody>
@@ -45,7 +45,7 @@
                             @empty
                                 <alert type="info">
                                     {!! Macros::faicon('fa-info') !!}
-                                    {{ Lang::get('adkats.users.no_users') }}
+                                    {{ trans('adkats.users.no_users') }}
                                 </alert>
                             @endforelse
                             </tbody>

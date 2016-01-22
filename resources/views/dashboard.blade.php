@@ -11,7 +11,7 @@
             <div class="col-xs-12">
                 <div class="box box-info">
                     <div class="box-header">
-                        <h3 class="box-title">{{ Lang::get('common.motd') }}</h3>
+                        <h3 class="box-title">{{ trans('common.motd') }}</h3>
                     </div>
 
                     <div class="box-body">
@@ -29,7 +29,7 @@
                     <span class="info-box-icon" ng-class="populationColor(results.population.percentage, true)"><i class="ion ion-ios-people-outline"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ Lang::get('dashboard.metro.players_online') }}</span>
+                        <span class="info-box-text">{{ trans('dashboard.metro.players_online') }}</span>
                     <span class="info-box-number">
                         <span count-to="@{{ results.population.online }}" value="@{{ results.population.old.online }}" duration="1"></span>&nbsp;/
                         <span count-to="@{{ results.population.total }}" value="@{{ results.population.old.total }}" duration="1"></span>
@@ -43,7 +43,7 @@
                     <span class="info-box-icon bg-green"><i class="ion ion-stats-bars"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ Lang::get('dashboard.metro.player_count') }}</span>
+                        <span class="info-box-text">{{ trans('dashboard.metro.player_count') }}</span>
                     <span class="info-box-number">
                         <span count-to="{{ $uniquePlayers }}" value="0" duration="3"></span>
                     </span>
@@ -58,7 +58,7 @@
                     <span class="info-box-icon bg-red"><i class="ion ion-hammer"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ Lang::get('dashboard.metro.average_bans') }}</span>
+                        <span class="info-box-text">{{ trans('dashboard.metro.average_bans') }}</span>
                     <span class="info-box-number">
                         <span count-to="@{{ results.banstats.average }}" value="0" duration="1"></span>
                     </span>
@@ -71,7 +71,7 @@
                     <span class="info-box-icon bg-red"><i class="ion ion-hammer"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ Lang::get('dashboard.metro.yesterday_bans') }}</span>
+                        <span class="info-box-text">{{ trans('dashboard.metro.yesterday_bans') }}</span>
                     <span class="info-box-number">
                         <span count-to="@{{ results.banstats.yesterday }}" value="0" duration="1"></span>
                     </span>
@@ -87,14 +87,14 @@
                     <span class="info-box-icon">&#9760;</span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ Lang::get('dashboard.metro.adkats.titles.killed') }}</span>
+                        <span class="info-box-text">{{ trans('dashboard.metro.adkats.titles.killed') }}</span>
                         <span class="info-box-number" ng-bind="{{ (int) $adkats_statistics->PercentageKilled }} | number"></span>
 
                         <div class="progress">
                             <div class="progress-bar" style="width: {{ MainHelper::percent($adkats_statistics->PercentageKilled, $uniquePlayers) }}%"></div>
                         </div>
                     <span class="progress-description">
-                    {{ Lang::get('dashboard.metro.adkats.killed', [
+                    {{ trans('dashboard.metro.adkats.killed', [
                         'killed' => MainHelper::percent($adkats_statistics->PercentageKilled, $uniquePlayers)
                     ]) }}
                     </span>
@@ -107,14 +107,14 @@
                     <span class="info-box-icon"><i class="fa fa-trash"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ Lang::get('dashboard.metro.adkats.titles.kicked') }}</span>
+                        <span class="info-box-text">{{ trans('dashboard.metro.adkats.titles.kicked') }}</span>
                         <span class="info-box-number" ng-bind="{{ (int) $adkats_statistics->PercentageKicked }} | number"></span>
 
                         <div class="progress">
                             <div class="progress-bar" style="width: {{ MainHelper::percent($adkats_statistics->PercentageKicked, $uniquePlayers) }}%"></div>
                         </div>
                     <span class="progress-description">
-                    {{ Lang::get('dashboard.metro.adkats.kicked', [
+                    {{ trans('dashboard.metro.adkats.kicked', [
                         'kicked' => MainHelper::percent($adkats_statistics->PercentageKicked, $uniquePlayers)
                     ]) }}
                     </span>
@@ -129,14 +129,14 @@
                     <span class="info-box-icon"><i class="ion ion-hammer"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ Lang::get('dashboard.metro.adkats.titles.banned') }}</span>
+                        <span class="info-box-text">{{ trans('dashboard.metro.adkats.titles.banned') }}</span>
                         <span class="info-box-number" ng-bind="{{ (int) $adkats_statistics->PercentageBanned }} | number"></span>
 
                         <div class="progress">
                             <div class="progress-bar" style="width: {{ MainHelper::percent($adkats_statistics->PercentageBanned, $uniquePlayers) }}%"></div>
                         </div>
                     <span class="progress-description">
-                    {{ Lang::get('dashboard.metro.adkats.banned', [
+                    {{ trans('dashboard.metro.adkats.banned', [
                         'banned' => MainHelper::percent($adkats_statistics->PercentageBanned, $uniquePlayers)
                     ]) }}
                     </span>
@@ -149,14 +149,14 @@
                     <span class="info-box-icon"><i class="fa fa-frown-o"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ Lang::get('dashboard.metro.adkats.titles.banned_active') }}</span>
+                        <span class="info-box-text">{{ trans('dashboard.metro.adkats.titles.banned_active') }}</span>
                         <span class="info-box-number" ng-bind="{{ (int) $adkats_statistics->PercentageBanned_Active }} | number"></span>
 
                         <div class="progress">
                             <div class="progress-bar" style="width: {{ MainHelper::percent($adkats_statistics->PercentageBanned_Active, $uniquePlayers) }}%"></div>
                         </div>
                     <span class="progress-description">
-                    {{ Lang::get('dashboard.metro.adkats.banned_active', [
+                    {{ trans('dashboard.metro.adkats.banned_active', [
                         'banned' => MainHelper::percent($adkats_statistics->PercentageBanned_Active, $uniquePlayers)
                     ]) }}
                     </span>
@@ -176,7 +176,7 @@
                         <i class="fa fa-map-marker"></i>
 
                         <h3 class="box-title">
-                            {{ Lang::get('dashboard.players_seen_country_past_day.title') }}
+                            {{ trans('dashboard.players_seen_country_past_day.title') }}
                         </h3>
                     </div>
 
@@ -187,8 +187,8 @@
                     <div class="box-footer no-border" style="color: black">
                         <table class="table table-condensed table-striped">
                             <thead>
-                            <th>{{ Lang::get('dashboard.players_seen_country_past_day.table.col1') }}</th>
-                            <th>{{ Lang::get('dashboard.players_seen_country_past_day.table.col2') }}</th>
+                            <th>{{ trans('dashboard.players_seen_country_past_day.table.col1') }}</th>
+                            <th>{{ trans('dashboard.players_seen_country_past_day.table.col2') }}</th>
                             </thead>
 
                             <tbody>
@@ -211,7 +211,7 @@
                 <div class="box box-solid">
                     <div class="box-header">
                         <h3 class="box-title">
-                            {{ Lang::get('dashboard.online_admin') }}
+                            {{ trans('dashboard.online_admin') }}
                         </h3>
                     </div>
 
@@ -224,7 +224,7 @@
             <div class="col-xs-12 col-md-7 col-lg-6">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">{{ Lang::get('dashboard.bans.title') }}</h3>
+                        <h3 class="box-title">{{ trans('dashboard.bans.title') }}</h3>
 
                         <div class="box-tools pull-right">
                             <button class="btn btn-box-tool" ng-click="latestBans()" tooltip="Refresh" id="latest-ban-refresh-btn">

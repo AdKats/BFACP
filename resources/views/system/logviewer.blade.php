@@ -11,9 +11,9 @@
 
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav">
-                            {!! Html::nav_item(sprintf('%s/%s/%s/%s/%s', $url, $path, $sapi_plain, $date, 'all'), ucfirst(Lang::get('logviewer::logviewer.levels.all'))) !!}
+                            {!! Html::nav_item(sprintf('%s/%s/%s/%s/%s', $url, $path, $sapi_plain, $date, 'all'), ucfirst(trans('logviewer::logviewer.levels.all'))) !!}
                             @foreach($levels as $level)
-                                {!! Html::nav_item(sprintf('%s/%s/%s/%s/%s', $url, $path, $sapi_plain, $date, $level), ucfirst(Lang::get('logviewer::logviewer.levels.'.$level))) !!}
+                                {!! Html::nav_item(sprintf('%s/%s/%s/%s/%s', $url, $path, $sapi_plain, $date, $level), ucfirst(trans('logviewer::logviewer.levels.'.$level))) !!}
                             @endforeach
                         </ul>
                     </div>
@@ -43,15 +43,15 @@
                                     </ul>
                                 @endunless
                             @empty
-                                <p class="alert alert-info">{{ Lang::get('logviewer::logviewer.empty_file', ['sapi' => $sapi, 'date' => $date]) }}</p>
+                                <p class="alert alert-info">{{ trans('logviewer::logviewer.empty_file', ['sapi' => $sapi, 'date' => $date]) }}</p>
                             @endforelse
                         @empty
-                            <p class="alert alert-info">{{ Lang::get('logviewer::logviewer.no_log', ['sapi' => $sapi, 'date' => $date]) }}</p>
+                            <p class="alert alert-info">{{ trans('logviewer::logviewer.no_log', ['sapi' => $sapi, 'date' => $date]) }}</p>
                         @endforelse
                     </ul>
                 </div>
             @else
-                <p class="alert alert-info">{{ Lang::get('logviewer::logviewer.no_log', ['sapi' => $sapi, 'date' => $date]) }}</p>
+                <p class="alert alert-info">{{ trans('logviewer::logviewer.no_log', ['sapi' => $sapi, 'date' => $date]) }}</p>
             @endif
         </div>
 
@@ -77,7 +77,7 @@
                         @endif
                     </div>
                 @empty
-                    <p class="alert alert-info">{{ Lang::get('logviewer::logviewer.empty_file', ['sapi' => $sapi, 'date' => $date]) }}</p>
+                    <p class="alert alert-info">{{ trans('logviewer::logviewer.empty_file', ['sapi' => $sapi, 'date' => $date]) }}</p>
                 @endforelse
                 {{ $paginator->links() }}
             @endunless

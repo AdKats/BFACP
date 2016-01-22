@@ -1,22 +1,22 @@
 <div class="box box-primary">
     <div class="box-header">
-        <h3 class="box-title">{{ Lang::get('adkats.users.soldiers') }}</h3>
+        <h3 class="box-title">{{ trans('adkats.users.soldiers') }}</h3>
     </div>
 
     <div class="box-body">
         {!! Former::text('soldiers')
             ->forceValue(implode(',', head($user->soldiers()->lists('player_id'))))
-            ->label(Lang::get('adkats.users.edit.inputs.soldiers.label'))
-            ->help(Lang::get('adkats.users.edit.inputs.soldiers.help')) !!}
+            ->label(trans('adkats.users.edit.inputs.soldiers.label'))
+            ->help(trans('adkats.users.edit.inputs.soldiers.help')) !!}
 
-        {!! Former::text('soldier')->label(Lang::get('adkats.users.edit.inputs.soldier.label'))->help(Lang::get('adkats.users.edit.inputs.soldier.help')) !!}
+        {!! Former::text('soldier')->label(trans('adkats.users.edit.inputs.soldier.label'))->help(trans('adkats.users.edit.inputs.soldier.help')) !!}
 
         @if($user->soldiers->count() > 0)
             <table class="table table-condensed table-striped">
                 <thead>
-                <th>{{ Lang::get('adkats.users.edit.table.col1') }}</th>
-                <th>{{ Lang::get('adkats.users.edit.table.col2') }}</th>
-                <th>{{ Lang::get('adkats.users.edit.table.col3') }}</th>
+                <th>{{ trans('adkats.users.edit.table.col1') }}</th>
+                <th>{{ trans('adkats.users.edit.table.col2') }}</th>
+                <th>{{ trans('adkats.users.edit.table.col3') }}</th>
                 </thead>
                 <tbody>
                 @foreach($user->soldiers as $soldier)
@@ -32,7 +32,7 @@
                 </tbody>
             </table>
         @else
-            <alert type="info">{!! Macros::faicon('fa-info-circle') !!} {{ Lang::get('adkats.users.no_soldiers') }}</alert>
+            <alert type="info">{!! Macros::faicon('fa-info-circle') !!} {{ trans('adkats.users.no_soldiers') }}</alert>
         @endif
     </div>
 </div>

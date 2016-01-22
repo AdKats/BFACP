@@ -102,7 +102,7 @@
 
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <strong>{{ Lang::get('common.version') }}</strong> {{ BFACP_VERSION }}
+            <strong>{{ trans('common.version') }}</strong> {{ BFACP_VERSION }}
         </div>
         <strong>&copy; 2013-{{ date('Y') }} <a href="http://www.adkgamers.com" target="_blank">A Different Kind, LLC</a>.
             All rights reserved.</strong> <em>{{ MainHelper::executionTime(true) }}</em>
@@ -120,7 +120,7 @@
             <!-- Home tab content -->
             <div class="tab-pane active" id="control-sidebar-users-tab" ng-controller="PusherChatController">
                 @if($bfacp->isLoggedIn && Auth::user()->ability(null, 'admin.site.pusher.users.view'))
-                    <h3 class="control-sidebar-heading">{{ Lang::get('common.right_sidebar.online_users') }}
+                    <h3 class="control-sidebar-heading">{{ trans('common.right_sidebar.online_users') }}
                         (<span ng-bind="members.online"></span>)</h3>
                     <ul class="control-sidebar-menu" id="sidebar-users">
                         <li ng-repeat="member in members.list track by member.id">
@@ -139,7 +139,7 @@
                 @endif
 
                 @if($bfacp->isLoggedIn && Auth::user()->ability(null, 'admin.site.pusher.chat.view'))
-                    <h3 class="control-sidebar-heading">{{ Lang::get('common.right_sidebar.chat_room') }}
+                    <h3 class="control-sidebar-heading">{{ trans('common.right_sidebar.chat_room') }}
                         <span class="badge" ng-bind="connectionState" ng-class="connStateClass"></span></h3>
                     <ul class="control-sidebar-menu">
                         <li>

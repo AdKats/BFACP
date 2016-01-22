@@ -18,15 +18,15 @@
                     <div class="table-responsive">
                         <table class="table table-striped table-condensed">
                             <thead>
-                            <th>{{ Lang::get('adkats.bans.listing.table.col1') }}</th>
-                            <th>{{ Lang::get('adkats.bans.listing.table.col2') }}</th>
-                            <th>{{ Lang::get('adkats.bans.listing.table.col3') }}</th>
-                            <th class="hidden-sm">{{ Lang::get('adkats.bans.listing.table.col4') }}</th>
-                            <th>{{ Lang::get('adkats.bans.listing.table.col5') }}</th>
-                            <th>{{ Lang::get('adkats.bans.listing.table.col6') }}</th>
-                            <th>{{ Lang::get('adkats.bans.listing.table.col7') }}</th>
-                            <th class="hidden-sm">{{ Lang::get('adkats.bans.listing.table.col8') }}</th>
-                            <th>{{ Lang::get('adkats.bans.listing.table.col9') }}</th>
+                            <th>{{ trans('adkats.bans.listing.table.col1') }}</th>
+                            <th>{{ trans('adkats.bans.listing.table.col2') }}</th>
+                            <th>{{ trans('adkats.bans.listing.table.col3') }}</th>
+                            <th class="hidden-sm">{{ trans('adkats.bans.listing.table.col4') }}</th>
+                            <th>{{ trans('adkats.bans.listing.table.col5') }}</th>
+                            <th>{{ trans('adkats.bans.listing.table.col6') }}</th>
+                            <th>{{ trans('adkats.bans.listing.table.col7') }}</th>
+                            <th class="hidden-sm">{{ trans('adkats.bans.listing.table.col8') }}</th>
+                            <th>{{ trans('adkats.bans.listing.table.col9') }}</th>
                             </thead>
 
                             <tbody>
@@ -46,11 +46,11 @@
                                     </td>
                                     <td>
                                         @if($ban->is_active)
-                                            <label class="label label-danger">{{ Lang::get('player.profile.bans.status.enabled') }}</label>
+                                            <label class="label label-danger">{{ trans('player.profile.bans.status.enabled') }}</label>
                                         @elseif($ban->is_expired)
-                                            <label class="label label-success">{{ Lang::get('player.profile.bans.status.expired') }}</label>
+                                            <label class="label label-success">{{ trans('player.profile.bans.status.expired') }}</label>
                                         @elseif( ! $ban->is_active && ! $ban->is_expired)
-                                            <label class="label label-primary">{{ Lang::get('player.profile.bans.status.disabled') }}</label>
+                                            <label class="label label-primary">{{ trans('player.profile.bans.status.disabled') }}</label>
                                         @endif
                                     </td>
                                     <td>
@@ -58,7 +58,7 @@
                                     </td>
                                     <td>
                                         @if($ban->is_perm)
-                                            <label class="label label-danger">{{ Lang::get('player.profile.bans.type.permanent.long') }}</label>
+                                            <label class="label label-danger">{{ trans('player.profile.bans.type.permanent.long') }}</label>
                                         @else
                                             <span ng-bind="moment('{{ $ban->ban_expires }}').fromNow()" tooltip="<?php echo '{{';?> moment('<?php echo $ban->ban_expires;?>').format('lll') <?php echo '}}';?>"></span>
                                         @endif
