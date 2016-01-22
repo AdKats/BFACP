@@ -7,7 +7,6 @@ use BFACP\Http\Controllers\Controller;
 use BFACP\Option as Option;
 use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Input as Input;
-use Illuminate\Support\Facades\Redirect as Redirect;
 use Illuminate\Support\Facades\View as View;
 
 /**

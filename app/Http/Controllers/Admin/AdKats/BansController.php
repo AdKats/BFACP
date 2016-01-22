@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Event as Event;
 use Illuminate\Support\Facades\Input as Input;
-use Illuminate\Support\Facades\Redirect as Redirect;
 
 /**
  * Class BansController.

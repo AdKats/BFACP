@@ -10,7 +10,6 @@ use Former\Facades\Former as Former;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App as App;
 use Illuminate\Support\Facades\Input as Input;
-use Illuminate\Support\Facades\Redirect as Redirect;
 use Illuminate\Support\Facades\Session as Session;
 use Illuminate\Support\Facades\View as View;
 
