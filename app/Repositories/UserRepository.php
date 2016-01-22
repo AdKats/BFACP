@@ -56,16 +56,24 @@ class UserRepository
             ]));
 
             if (! empty(array_get($input, 'ign'))) {
-                $players = Player::where('SoldierName', array_get($input, 'ign'))->pluck('PlayerID');
+                $players = Player::where('SoldierName', array_get($input, 'ign'))->get();
+
+                $soldiersTaken = [];
 
                 foreach ($players as $player) {
 
                     // Check if an existing user already has claimed the player
                     // and if so do not associate with the new account.
-                    if (Soldier::where('player_id', $player)->count() == 0) {
-                        $soldier = new Soldier(['player_id' => $player]);
+                    if (Soldier::where('player_id', $player->PlayerID)->count() == 0) {
+                        $soldier = new Soldier(['player_id' => $player->PlayerID]);
                         $soldier->user()->associate($user)->save();
+                    } else {
+                        $soldiersTaken[] = trans('alerts.user.soldier_taken', ['playerid' => $player->PlayerID]);
                     }
+                }
+
+                if (! empty($soldiersTaken)) {
+                    session()->flash('warnings', $soldiersTaken);
                 }
             }
 

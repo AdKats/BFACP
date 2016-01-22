@@ -243,13 +243,16 @@ class UsersController extends Controller
             $username = $user->username;
             $user->delete();
 
+            $this->messages[] = trans('alerts.user.deleted', compact('username'));
+
             return MainHelper::response([
                 'url' => route('admin.site.users.index'),
-            ], trans('alerts.user.deleted', compact('username')));
+                'messages' => $this->messages,
+            ]);
         } catch (ModelNotFoundException $e) {
-            $this->messages[] = trans('alerts.user.invalid', ['userid' => $id]);
+            $this->errors[] = trans('alerts.user.invalid', ['userid' => $id]);
 
-            return redirect()->route('admin.site.users.index')->withErrors($this->messages);
+            return redirect()->route('admin.site.users.index')->withErrors($this->errors);
         }
     }
 }

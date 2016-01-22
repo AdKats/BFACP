@@ -57,18 +57,27 @@
 
             var btn = $(this);
 
+            var csrf = $("input[name='_token']").val();
+
             if (confirm('Are you sure you want to delete {{ $user->username }}? This can\'t be undone.')) {
                 btn.find('i').removeClass('fa-trash').addClass('fa-spinner fa-pulse');
                 btn.parent().find('button').attr('disabled', true);
                 $.ajax({
                     url: "{{ route('admin.site.users.destroy', $user->id) }}",
                     type: 'DELETE',
+                    data: {
+                        _token: csrf
+                    }
                 })
                 .done(function (data) {
-                    window.location.href = data.data.url;
+                    toastr.success(data.data.messages[0]);
+                    setTimeout(function() {
+                        window.location.href = data.data.url;
+                    }, 2000);
                 })
                 .fail(function () {
                     console.log("error");
+                    toastr.error('Sorry, an error occurred and your request may not have gone through.');
                 })
                 .always(function () {
                     btn.find('i').removeClass('fa-spinner fa-pulse').addClass('fa-trash');
