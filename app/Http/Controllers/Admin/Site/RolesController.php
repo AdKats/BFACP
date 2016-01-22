@@ -26,7 +26,7 @@ class RolesController extends Controller
     {
         $roles = Role::with('users')->get();
 
-        $page_title = Lang::get('navigation.admin.site.items.roles.title');
+        $page_title = trans('navigation.admin.site.items.roles.title');
 
         return View::make('admin.site.roles.index', compact('roles', 'page_title'));
     }
@@ -53,7 +53,7 @@ class RolesController extends Controller
             }
         }
 
-        $page_title = Lang::get('navigation.admin.site.items.roles.items.create.title');
+        $page_title = trans('navigation.admin.site.items.roles.items.create.title');
 
         return View::make('admin.site.roles.create', compact('permissions', 'page_title'));
     }
@@ -83,7 +83,7 @@ class RolesController extends Controller
             ]);
 
             if ($v->fails()) {
-                return Redirect::route('admin.site.roles.create')->withErrors($v)->withInput();
+                return redirect()->route('admin.site.roles.create')->withErrors($v)->withInput();
             }
 
             $role->name = trim(Input::get('role_name'));
@@ -92,11 +92,11 @@ class RolesController extends Controller
             // Update role permissions
             $role->permissions()->sync($permissions->toArray());
 
-            return Redirect::route('admin.site.roles.edit', [$role->id])->with('messages', [
+            return redirect()->route('admin.site.roles.edit', [$role->id])->with('messages', [
                 'Role Created!',
             ]);
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.site.roles.index');
+            return redirect()->route('admin.site.roles.index');
         }
     }
 
@@ -127,11 +127,11 @@ class RolesController extends Controller
                 }
             }
 
-            $page_title = Lang::get('navigation.admin.site.items.roles.items.edit.title', ['name' => $role->name]);
+            $page_title = trans('navigation.admin.site.items.roles.items.edit.title', ['name' => $role->name]);
 
             return View::make('admin.site.roles.edit', compact('role', 'permissions', 'page_title'));
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.site.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);
+            return redirect()->route('admin.site.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);
         }
     }
 
@@ -171,11 +171,11 @@ class RolesController extends Controller
                 $role->touch();
             }
 
-            return Redirect::route('admin.site.roles.edit', [$id])->with('messages', [
+            return redirect()->route('admin.site.roles.edit', [$id])->with('messages', [
                 'Role Updated!',
             ]);
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.site.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);
+            return redirect()->route('admin.site.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);
         }
     }
 
@@ -211,7 +211,7 @@ class RolesController extends Controller
                 'url' => route('admin.site.roles.index'),
             ], sprintf('%s was deleted', $roleName));
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.site.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);
+            return redirect()->route('admin.site.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);
         }
     }
 }

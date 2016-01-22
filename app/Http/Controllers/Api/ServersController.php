@@ -97,7 +97,7 @@ class ServersController extends Controller
                 'totalSlots' => $totalSlots,
                 'percentage' => MainHelper::percent($usedSlots, $totalSlots),
                 'games'      => $newCollection,
-            ] + Lang::get('dashboard.population'), null, null, null, false, true);
+            ] + trans('dashboard.population'), null, null, null, false, true);
     }
 
     /**
@@ -142,22 +142,22 @@ class ServersController extends Controller
 
         $stats = [
             [
-                'name'    => Lang::get('scoreboard.factions')[1]['full_name'].' - Tickets',
+                'name'    => trans('scoreboard.factions')[1]['full_name'].' - Tickets',
                 'data'    => [],
                 'visible' => true,
             ],
             [
-                'name'    => Lang::get('scoreboard.factions')[2]['full_name'].' - Tickets',
+                'name'    => trans('scoreboard.factions')[2]['full_name'].' - Tickets',
                 'data'    => [],
                 'visible' => true,
             ],
             [
-                'name'    => Lang::get('scoreboard.factions')[1]['full_name'].' - Players',
+                'name'    => trans('scoreboard.factions')[1]['full_name'].' - Players',
                 'data'    => [],
                 'visible' => false,
             ],
             [
-                'name'    => Lang::get('scoreboard.factions')[2]['full_name'].' - Players',
+                'name'    => trans('scoreboard.factions')[2]['full_name'].' - Players',
                 'data'    => [],
                 'visible' => false,
             ],

@@ -21,7 +21,7 @@ class SettingsController extends Controller
         $settings = Option::where('option_key', '!=', 'site.languages')->get();
 
         return View::make('admin.site.settings.index', compact('settings'))->with('page_title',
-            Lang::get('navigation.admin.site.items.settings.title'));
+            trans('navigation.admin.site.items.settings.title'));
     }
 
     public function update()
@@ -49,6 +49,6 @@ class SettingsController extends Controller
 
         Cache::forget('site.options');
 
-        return Redirect::route('admin.site.settings.index')->with('messages', ['Settings Saved!']);
+        return redirect()->route('admin.site.settings.index')->with('messages', ['Settings Saved!']);
     }
 }

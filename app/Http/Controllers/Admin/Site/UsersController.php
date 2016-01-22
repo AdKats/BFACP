@@ -31,7 +31,7 @@ class UsersController extends Controller
         $users = User::orderBy('username')->paginate(60);
 
         return View::make('admin.site.users.index', compact('users'))->with('page_title',
-            Lang::get('navigation.admin.site.items.users.title'));
+            trans('navigation.admin.site.items.users.title'));
     }
 
     /**
@@ -43,7 +43,7 @@ class UsersController extends Controller
         $roles = Role::lists('name', 'id');
 
         return View::make('admin.site.users.create', compact('roles'))->with('page_title',
-            Lang::get('navigation.admin.site.items.users.items.create.title'));
+            trans('navigation.admin.site.items.users.items.create.title'));
     }
 
     /**
@@ -62,7 +62,7 @@ class UsersController extends Controller
         ]);
 
         if ($v->fails()) {
-            return Redirect::route('admin.site.users.create')->withErrors($v)->withInput();
+            return redirect()->route('admin.site.users.create')->withErrors($v)->withInput();
         }
 
         $data = [
@@ -74,10 +74,10 @@ class UsersController extends Controller
 
         $user = $repo->signup($data, Input::get('role', 2), true, true);
 
-        $this->messages[] = Lang::get('site.admin.users.updates.password.generated',
+        $this->messages[] = trans('site.admin.users.updates.password.generated',
             ['username' => $user->username, 'email' => $user->email]);
 
-        return Redirect::route('admin.site.users.edit', [$user->id])->withMessages($this->messages);
+        return redirect()->route('admin.site.users.edit', [$user->id])->withMessages($this->messages);
     }
 
     /**
@@ -99,16 +99,16 @@ class UsersController extends Controller
             $roles = Role::lists('name', 'id');
 
             // Set the page title
-            $page_title = Lang::get('navigation.admin.site.items.users.items.edit.title', ['id' => $id]);
+            $page_title = trans('navigation.admin.site.items.users.items.edit.title', ['id' => $id]);
 
             // Populate the form fields with the user information
             Former::populate($user);
 
             return View::make('admin.site.users.edit', compact('user', 'page_title', 'roles'));
         } catch (ModelNotFoundException $e) {
-            $this->messages[] = Lang::get('alerts.user.invlid', ['userid' => $id]);
+            $this->messages[] = trans('alerts.user.invalid', ['userid' => $id]);
 
-            return Redirect::route('admin.site.users.index')->withErrors($this->messages);
+            return redirect()->route('admin.site.users.index')->withErrors($this->messages);
         }
     }
 
@@ -138,7 +138,7 @@ class UsersController extends Controller
             ]);
 
             if ($v->fails()) {
-                return Redirect::route('admin.site.users.edit', [$id])->withErrors($v)->withInput();
+                return redirect()->route('admin.site.users.edit', [$id])->withErrors($v)->withInput();
             }
 
             // Update the user role if it's been changed
@@ -179,9 +179,8 @@ class UsersController extends Controller
 
                 // Change the user password
                 $user->password = $newPassword;
-                $user->password_confirmation = $newPassword;
 
-                $this->messages[] = Lang::get('site.admin.users.updates.password.generated',
+                $this->messages[] = trans('site.admin.users.updates.password.generated',
                     ['username' => $user->username, 'email' => $user->email]);
             }
 
@@ -210,7 +209,7 @@ class UsersController extends Controller
                     // Check if an existing user already has claimed the player
                     // and if so do not associate with the account.
                     if (Soldier::where('player_id', $soldier->player_id)->count() == 1) {
-                        $this->messages[] = Lang::get('alerts.user.soldier_taken', ['playerid' => $soldier->player_id]);
+                        $this->errors[] = trans('alerts.user.soldier_taken', ['playerid' => $soldier->player_id]);
                         unset($soldier_ids[$key]);
                     }
                 }
@@ -220,11 +219,13 @@ class UsersController extends Controller
 
             $user->save();
 
-            return Redirect::route('admin.site.users.edit', [$id])->withMessages($this->messages);
+            return redirect()->route('admin.site.users.edit', [$id])
+                ->withMessages($this->messages)
+                ->withErrors($this->errors);
         } catch (ModelNotFoundException $e) {
-            $this->messages[] = Lang::get('alerts.user.invlid', ['userid' => $id]);
+            $this->messages[] = trans('alerts.user.invalid', ['userid' => $id]);
 
-            return Redirect::route('admin.site.users.edit', [$id])->withErrors($this->messages);
+            return redirect()->route('admin.site.users.edit', [$id])->withErrors($this->messages);
         }
     }
 
@@ -244,11 +245,11 @@ class UsersController extends Controller
 
             return MainHelper::response([
                 'url' => route('admin.site.users.index'),
-            ], Lang::get('alerts.user.deleted', compact('username')));
+            ], trans('alerts.user.deleted', compact('username')));
         } catch (ModelNotFoundException $e) {
-            $this->messages[] = Lang::get('alerts.user.invlid', ['userid' => $id]);
+            $this->messages[] = trans('alerts.user.invalid', ['userid' => $id]);
 
-            return Redirect::route('admin.site.users.index')->withErrors($this->messages);
+            return redirect()->route('admin.site.users.index')->withErrors($this->messages);
         }
     }
 }

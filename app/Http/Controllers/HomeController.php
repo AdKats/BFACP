@@ -43,7 +43,7 @@ class HomeController extends Controller
 
         return View::make('dashboard',
             compact('uniquePlayers', 'adkats_statistics', 'countryMap', 'countryMapTable'))->with('page_title',
-            Lang::get('navigation.main.items.dashboard.title'));
+            trans('navigation.main.items.dashboard.title'));
     }
 
     /**
@@ -82,6 +82,6 @@ class HomeController extends Controller
         }
 
         return View::make('scoreboard', compact('servers', 'adminview'))->with('page_title',
-            Lang::get('navigation.main.items.scoreboard.title'));
+            trans('navigation.main.items.scoreboard.title'));
     }
 }

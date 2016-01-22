@@ -72,13 +72,13 @@ class UsersController extends Controller
         ]);
 
         if ($v->fails()) {
-            return Redirect::route('user.account')->withErrors($v)->withInput();
+            return redirect()->route('user.account')->withErrors($v)->withInput();
         }
 
         // Update email
         if ($email != $user->email) {
             $user->email = $email;
-            $this->messages[] = Lang::get('user.notifications.account.email.changed', ['addr' => $email]);
+            $this->messages[] = trans('user.notifications.account.email.changed', ['addr' => $email]);
         }
 
         // Update the user language if it's been changed
@@ -89,19 +89,19 @@ class UsersController extends Controller
 
             $langHuman = Config::get('bfacp.site.languages')[$lang];
 
-            $this->messages[] = Lang::get('user.notifications.account.language.changed', ['lang' => $langHuman]);
+            $this->messages[] = trans('user.notifications.account.language.changed', ['lang' => $langHuman]);
         }
 
         // Change the user password if they filled out the fields and new passwords match
         if (Input::has('password') && Input::has('password_confirmation') && $password == $password_confirmation) {
             $user->password = $password;
             $user->password_confirmation = $password;
-            $this->messages[] = Lang::get('user.notifications.password.email.changed');
+            $this->messages[] = trans('user.notifications.password.email.changed');
         }
 
         $user->save();
 
-        return Redirect::route('user.account')->withMessages($this->messages);
+        return redirect()->route('user.account')->withMessages($this->messages);
     }
 
     /**
@@ -135,12 +135,12 @@ class UsersController extends Controller
     {
         // If the code is valid then redirect to the login page.
         if ($this->repository->confirm($code)) {
-            return Redirect::route('user.login')->with('messages', [
-                Lang::get('confide::confide.alerts.confirmation'),
+            return redirect()->route('user.login')->with('messages', [
+                trans('confide::confide.alerts.confirmation'),
             ]);
         }
 
-        return Redirect::route('user.login')->with('error', Lang::get('confide::confide.alerts.wrong_confirmation'));
+        return redirect()->route('user.login')->with('error', trans('confide::confide.alerts.wrong_confirmation'));
     }
 
     /**
@@ -157,14 +157,14 @@ class UsersController extends Controller
         ]));
 
         if ($v->fails()) {
-            return Redirect::route('user.register')->withInput(Input::except('password',
+            return redirect()->route('user.register')->withInput(Input::except('password',
                 'password_confirmation'))->withErrors($v);
         }
 
         $user = $this->repository->signup($input, 2, false, true);
 
         if (is_null($user->id)) {
-            return Redirect::route('user.register')->withInput(Input::except('password',
+            return redirect()->route('user.register')->withInput(Input::except('password',
                 'password_confirmation'))->withErrors($user->errors());
         }
 
@@ -172,13 +172,13 @@ class UsersController extends Controller
             Mail::queueOn(Config::get('confide::email_queue'), 'emails.user.signup', compact('user'),
                 function ($message) use ($user) {
                     $message->to($user->email,
-                        $user->username)->subject(Lang::get('confide::confide.email.account_confirmation.subject'));
+                        $user->username)->subject(trans('confide::confide.email.account_confirmation.subject'));
                 });
         }
 
-        return Redirect::route('user.login')->with('messages', [
-            Lang::get('confide::confide.alerts.account_created'),
-            Lang::get('confide::confide.alerts.instructions_sent'),
+        return redirect()->route('user.login')->with('messages', [
+            trans('confide::confide.alerts.account_created'),
+            trans('confide::confide.alerts.instructions_sent'),
         ]);
     }
 
@@ -194,14 +194,14 @@ class UsersController extends Controller
         }
 
         if ($this->repository->isThrottled($input)) {
-            $error = Lang::get('confide::confide.alerts.too_many_attempts');
+            $error = trans('confide::confide.alerts.too_many_attempts');
         } elseif ($this->repository->existsButNotConfirmed($input)) {
-            $error = Lang::get('confide::confide.alerts.not_confirmed');
+            $error = trans('confide::confide.alerts.not_confirmed');
         } else {
-            $error = Lang::get('confide::confide.alerts.wrong_credentials');
+            $error = trans('confide::confide.alerts.wrong_credentials');
         }
 
-        return Redirect::route('user.login')->withInput(Input::except('password'))->with('error', $error);
+        return redirect()->route('user.login')->withInput(Input::except('password'))->with('error', $error);
     }
 
     /**
@@ -214,9 +214,9 @@ class UsersController extends Controller
         // If the application requires a login redirect
         // to the login form instead of the dashboard.
         if (Config::get('bfacp.site.auth')) {
-            return Redirect::route('user.login');
+            return redirect()->route('user.login');
         }
 
-        return Redirect::route('home');
+        return redirect()->route('home');
     }
 }

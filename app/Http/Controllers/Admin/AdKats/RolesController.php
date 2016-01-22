@@ -25,7 +25,7 @@ class RolesController extends Controller
         $roles = Role::with('users')->orderBy('role_name')->get();
 
         return View::make('admin.adkats.roles.index', compact('roles', 'guestCommandCount'))->with('page_title',
-            Lang::get('navigation.admin.adkats.items.roles.title'));
+            trans('navigation.admin.adkats.items.roles.title'));
     }
 
     /**
@@ -49,7 +49,7 @@ class RolesController extends Controller
         });
 
         return View::make('admin.adkats.roles.create', compact('permissions'))->with('page_title',
-            Lang::get('navigation.admin.adkats.items.roles.items.create.title'));
+            trans('navigation.admin.adkats.items.roles.items.create.title'));
     }
 
     /**
@@ -78,9 +78,9 @@ class RolesController extends Controller
             });
 
             return View::make('admin.adkats.roles.edit', compact('permissions', 'role'))->with('page_title',
-                Lang::get('navigation.admin.adkats.items.roles.items.edit.title'));
+                trans('navigation.admin.adkats.items.roles.items.edit.title'));
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.adkats.roles.index')->withErrors([
+            return redirect()->route('admin.adkats.roles.index')->withErrors([
                 sprintf('No role found with ID #%s.', $id),
             ]);
         }
@@ -115,11 +115,11 @@ class RolesController extends Controller
                 $role->save();
             }
 
-            return Redirect::route('admin.adkats.roles.edit', $id)->withMessages([
+            return redirect()->route('admin.adkats.roles.edit', $id)->withMessages([
                 'Role Updated!',
             ]);
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.adkats.roles.edit', $id)->withErrors([
+            return redirect()->route('admin.adkats.roles.edit', $id)->withErrors([
                 sprintf('No role found with ID #%s.', $id),
             ]);
         }
@@ -155,7 +155,7 @@ class RolesController extends Controller
                 'url' => route('admin.adkats.roles.index'),
             ], sprintf('%s was deleted', $roleName));
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.adkats.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);
+            return redirect()->route('admin.adkats.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);
         }
     }
 
@@ -181,7 +181,7 @@ class RolesController extends Controller
             ]);
 
             if ($v->fails()) {
-                return Redirect::route('admin.adkats.roles.create')->withErrors($v)->withInput();
+                return redirect()->route('admin.adkats.roles.create')->withErrors($v)->withInput();
             }
 
             $role->role_name = Input::get('role_name');
@@ -190,11 +190,11 @@ class RolesController extends Controller
             // Update role permissions
             $role->permissions()->sync($permissions->toArray());
 
-            return Redirect::route('admin.adkats.roles.edit', $role->role_id)->withMessages([
+            return redirect()->route('admin.adkats.roles.edit', $role->role_id)->withMessages([
                 'Role Created!',
             ]);
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.adkats.roles.index');
+            return redirect()->route('admin.adkats.roles.index');
         }
     }
 }

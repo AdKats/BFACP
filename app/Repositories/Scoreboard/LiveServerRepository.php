@@ -210,11 +210,11 @@ class LiveServerRepository extends BaseRepository
 
         // If we are not connected throw exception and abort
         if (! $this->connected) {
-            throw new RconException(410, Lang::get('system.exceptions.rcon.conn_failed'));
+            throw new RconException(410, trans('system.exceptions.rcon.conn_failed'));
         }
 
         if (is_null($this->server->setting)) {
-            throw new RconException(500, Lang::get('system.exceptions.rcon.not_configured'));
+            throw new RconException(500, trans('system.exceptions.rcon.not_configured'));
         }
 
         // Attempt to login with provided RCON password
@@ -225,7 +225,7 @@ class LiveServerRepository extends BaseRepository
 
         // If we are connected but not logged in throw exception and abort
         if (! $this->authenticated) {
-            throw new RconException(401, Lang::get('system.exceptions.rcon.bad_password'));
+            throw new RconException(401, trans('system.exceptions.rcon.bad_password'));
         }
 
         $this->serverinfo();
@@ -454,13 +454,13 @@ class LiveServerRepository extends BaseRepository
     private function setFactions()
     {
         if (! $this->check()) {
-            throw new RconException(500, Lang::get('system.exceptions.rcon.factions'));
+            throw new RconException(500, trans('system.exceptions.rcon.factions'));
         }
 
         if (method_exists($this->client, 'adminVarGetTeamFaction')) {
             $teamFactions = $this->client->adminVarGetTeamFaction(null);
         } else {
-            $teamFactions[0] = Lang::get('scoreboard.factions');
+            $teamFactions[0] = trans('scoreboard.factions');
         }
 
         if (in_array($this->data['server']['mode']['uri'], ['SquadDeathMatch0'])) {

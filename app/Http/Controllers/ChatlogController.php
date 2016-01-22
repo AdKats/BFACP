@@ -38,7 +38,7 @@ class ChatlogController extends Controller
             },
         ])->get();
 
-        $page_title = Lang::get('navigation.main.items.chatlogs.title');
+        $page_title = trans('navigation.main.items.chatlogs.title');
 
         $chat = $this->chat->with('player', 'server')->orderBy('logDate', 'desc');
 

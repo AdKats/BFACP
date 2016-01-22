@@ -208,7 +208,7 @@ class UserRepository
         // Send the email to the user with their new password
         Mail::send('emails.user.passwordchange', compact('username', 'newPassword'),
             function ($message) use ($username, $email) {
-                $message->to($email, $username)->subject(Lang::get('email.password_changed.subject'));
+                $message->to($email, $username)->subject(trans('email.password_changed.subject'));
             });
     }
 }

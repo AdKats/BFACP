@@ -42,7 +42,7 @@ class MetabansController extends Controller
         ];
 
         return MainHelper::response($feed_assessments + [
-                'locales' => Lang::get('common.metabans'),
+                'locales' => trans('common.metabans'),
             ], null, null, null, false, true);
     }
 

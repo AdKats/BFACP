@@ -84,7 +84,7 @@ class BansController extends Controller
         }
 
         return view('admin.adkats.bans.index', compact('bans'))->with('page_title',
-            Lang::get('navigation.admin.adkats.items.banlist.title'));
+            trans('navigation.admin.adkats.items.banlist.title'));
     }
 
     /**
@@ -101,9 +101,9 @@ class BansController extends Controller
             $servers = Server::where('GameID', $ban->player->GameID)->active()->pluck('ServerName', 'ServerID');
 
             return view('admin.adkats.bans.edit', compact('ban', 'servers'))->with('page_title',
-                Lang::get('navigation.admin.adkats.items.banlist.items.edit.title', ['id' => $id]));
+                trans('navigation.admin.adkats.items.banlist.items.edit.title', ['id' => $id]));
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.adkats.bans.index')->withErrors([sprintf('Ban #%u doesn\'t exist.', $id)]);
+            return redirect()->route('admin.adkats.bans.index')->withErrors([sprintf('Ban #%u doesn\'t exist.', $id)]);
         }
     }
 
@@ -116,7 +116,7 @@ class BansController extends Controller
             $player = Player::findOrFail(Input::get('player_id'));
 
             if (! is_null($player->ban)) {
-                return Redirect::route('admin.adkats.bans.edit', [$player->ban->ban_id]);
+                return redirect()->route('admin.adkats.bans.edit', [$player->ban->ban_id]);
             }
 
             $servers = Server::where('GameID', $player->game->GameID)->active()->pluck('ServerName', 'ServerID');
@@ -125,7 +125,7 @@ class BansController extends Controller
             return view('admin.adkats.bans.create', compact('player', 'servers', 'admin'))->with('page_title',
                 'Create New Ban');
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.adkats.bans.index')->withErrors([
+            return redirect()->route('admin.adkats.bans.index')->withErrors([
                 sprintf('Player #%u doesn\'t exist.', Input::get('player_id')),
             ]);
         }
@@ -137,7 +137,7 @@ class BansController extends Controller
             $player = Player::findOrfail(Input::get('player_id'));
 
             if (! is_null($player->ban)) {
-                return Redirect::route('admin.adkats.bans.edit', [$player->ban->ban_id]);
+                return redirect()->route('admin.adkats.bans.edit', [$player->ban->ban_id]);
             }
 
             $admin = MainHelper::getAdminPlayer($this->user, $player->game->GameID);
@@ -163,9 +163,9 @@ class BansController extends Controller
 
             $this->messages[] = sprintf('Ban #%u has been created.', $response->ban_id);
 
-            return Redirect::route('admin.adkats.bans.edit', [$response->ban_id])->with('messages', $this->messages);
+            return redirect()->route('admin.adkats.bans.edit', [$response->ban_id])->with('messages', $this->messages);
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.adkats.bans.index')->withErrors([
+            return redirect()->route('admin.adkats.bans.index')->withErrors([
                 sprintf('Player #%u doesn\'t exist.', Input::get('player_id')),
             ]);
         }
@@ -216,7 +216,7 @@ class BansController extends Controller
 
             // If the ban end datetime is passed the current datetime then redirect back and show an error
             if ($ban->ban_endTime->lte(Carbon::now())) {
-                return Redirect::route('admin.adkats.bans.edit',
+                return redirect()->route('admin.adkats.bans.edit',
                     [$ban->ban_id])->withErrors(['Ban expire date or time cannot be in the past. Cannot update the ban.'])->withInput()->with('messages',
                     ['Fields have been preserved with your changes.']);
             }
@@ -255,7 +255,7 @@ class BansController extends Controller
                         // If ban reason is the same as the unban reason then prevent the ban update.
                         // Ban reasons should be different from the unban reasons
                         if ($ban_message == $oldRecord->record_message && $oldRecord->command_type == 37) {
-                            return Redirect::route('admin.adkats.bans.edit',
+                            return redirect()->route('admin.adkats.bans.edit',
                                 [$ban->ban_id])->withErrors(['Ban reason is the same as the unban reason. Please change the ban reason.'])->withInput()->with('messages',
                                 ['Fields have been preserved with your changes.']);
                         }
@@ -314,9 +314,9 @@ class BansController extends Controller
 
             $this->messages[] = sprintf('Ban #%u has been updated.', $ban->ban_id);
 
-            return Redirect::route('admin.adkats.bans.edit', [$ban->ban_id])->with('messages', $this->messages);
+            return redirect()->route('admin.adkats.bans.edit', [$ban->ban_id])->with('messages', $this->messages);
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.adkats.bans.index')->withErrors([sprintf('Ban #%u doesn\'t exist.', $id)]);
+            return redirect()->route('admin.adkats.bans.index')->withErrors([sprintf('Ban #%u doesn\'t exist.', $id)]);
         }
     }
 

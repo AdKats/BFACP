@@ -57,7 +57,7 @@ class ServersController extends Controller
 
             return View::make('admin.site.servers.edit', compact('server'))->with('page_title', 'Server Settings');
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.site.servers.index')->withErrors(['Server doesn\'t exist.']);
+            return redirect()->route('admin.site.servers.index')->withErrors(['Server doesn\'t exist.']);
         }
     }
 
@@ -95,10 +95,10 @@ class ServersController extends Controller
             $server->ConnectionState = Input::get('status', 'off');
             $server->save();
 
-            return Redirect::route('admin.site.servers.index')->with('messages',
+            return redirect()->route('admin.site.servers.index')->with('messages',
                 [sprintf('Successfully Updated %s', $server->ServerName)]);
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.site.servers.index')->withErrors(['Server doesn\'t exist.']);
+            return redirect()->route('admin.site.servers.index')->withErrors(['Server doesn\'t exist.']);
         }
     }
 }

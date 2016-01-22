@@ -2775,7 +2775,7 @@ class BF4Conn
      */
     public function adminVarGetTeamFaction($integer)
     {
-        $factions = Lang::get('scoreboard.factions');
+        $factions = trans('scoreboard.factions');
 
         $teamFactions = $this->_clientRequest('vars.teamFactionOverride');
 

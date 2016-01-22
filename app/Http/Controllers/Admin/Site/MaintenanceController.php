@@ -18,7 +18,7 @@ class MaintenanceController extends Controller
     public function index()
     {
         return View::make('admin.site.maintenance.index')->with('page_title',
-            Lang::get('navigation.main.items.maintenance.title'));
+            trans('navigation.main.items.maintenance.title'));
     }
 
     public function update()
@@ -45,6 +45,6 @@ class MaintenanceController extends Controller
             Artisan::call('cache:clear');
         }
 
-        return Redirect::route('admin.site.maintenance.index')->withMessages($this->messages);
+        return redirect()->route('admin.site.maintenance.index')->withMessages($this->messages);
     }
 }

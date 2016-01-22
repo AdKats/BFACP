@@ -39,7 +39,7 @@ class UsersController extends Controller
             'soldiers.player')->orderBy('ar.role_name')->orderBy('user_name')->get();
 
         return View::make('admin.adkats.users.index', compact('users'))->with('page_title',
-            Lang::get('navigation.admin.adkats.items.users.title'));
+            trans('navigation.admin.adkats.items.users.title'));
     }
 
     /**
@@ -78,13 +78,13 @@ class UsersController extends Controller
 
             $roles = Role::lists('role_name', 'role_id');
 
-            $page_title = Lang::get('navigation.admin.adkats.items.users.items.edit.title', ['id' => $id]);
+            $page_title = trans('navigation.admin.adkats.items.users.items.edit.title', ['id' => $id]);
 
             Former::populate($user);
 
             return View::make('admin.adkats.users.edit', compact('user', 'page_title', 'roles'));
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
+            return redirect()->route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
         }
     }
 
@@ -113,7 +113,7 @@ class UsersController extends Controller
             ]);
 
             if ($v->fails()) {
-                return Redirect::route('admin.adkats.users.edit', [$id])->withErrors($v)->withInput();
+                return redirect()->route('admin.adkats.users.edit', [$id])->withErrors($v)->withInput();
             }
 
             if (Input::has('user_name') && $user->user_name != $username) {
@@ -165,9 +165,9 @@ class UsersController extends Controller
 
             $this->messages[] = sprintf('Changes Saved!');
 
-            return Redirect::route('admin.adkats.users.edit', [$id])->with('messages', $this->messages);
+            return redirect()->route('admin.adkats.users.edit', [$id])->with('messages', $this->messages);
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
+            return redirect()->route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
         }
     }
 
@@ -189,7 +189,7 @@ class UsersController extends Controller
                 'url' => route('admin.adkats.users.index'),
             ], sprintf('%s was deleted', $username));
         } catch (ModelNotFoundException $e) {
-            return Redirect::route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
+            return redirect()->route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
         }
     }
 }

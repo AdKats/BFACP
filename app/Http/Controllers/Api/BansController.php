@@ -76,7 +76,7 @@ class BansController extends Controller
         }
 
         return MainHelper::response([
-            'cols' => Lang::get('dashboard.bans.columns'),
+            'cols' => trans('dashboard.bans.columns'),
             'bans' => $bans,
         ], null, null, null, $isCached, true);
     }
