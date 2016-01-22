@@ -4,7 +4,6 @@ namespace BFACP\Libraries;
 
 use BFACP\Battlefield\Server\Server;
 use BFACP\Exceptions\RconException;
-use Illuminate\Support\Facades\Lang;
 
 /*
  * BF3Conn - PHP class for communicating with a Battlefield 3 gameserver

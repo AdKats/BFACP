@@ -5,7 +5,6 @@ namespace BFACP\Http\Controllers\Api;
 use BFACP\Exceptions\MetabansException;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Libraries\Metabans;
-use Illuminate\Support\Facades\Lang;
 
 /**
  * Class MetabansController.
