@@ -43,13 +43,6 @@ class ScoreboardController extends Controller
     protected $players = [];
 
     /**
-     * Errors list.
-     *
-     * @var array
-     */
-    protected $errors = [];
-
-    /**
      * Data to be passed to response.
      *
      * @var array
