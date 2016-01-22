@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Schema;
 
 class DatabaseTest extends TestCase
 {
-    public function testPrerequisiteTables()
+    public function setUp()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('tbl_playerdata');
@@ -60,9 +60,6 @@ class DatabaseTest extends TestCase
         Artisan::call('migrate:refresh', ['--seed' => true]);
     }
 
-    /**
-     * @depends testPrerequisiteTables
-     */
     public function testDatabase()
     {
         $this->seeInDatabase('bfacp_roles', ['name' => 'Administrator']);

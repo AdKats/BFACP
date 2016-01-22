@@ -78,14 +78,10 @@ class AppSettingsServiceProvider extends ServiceProvider
             Log::critical('Unable to load application settings from database.', [
                 'exception' => $e->getMessage(),
             ]);
-
-            abort(500);
         } catch (Exception $e) {
             Log::critical('Application settings were not set.', [
                 'exception' => $e->getMessage(),
             ]);
-
-            abort(500);
         }
 
         $config->set('bfacp', $this->options);
