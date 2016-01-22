@@ -17,6 +17,6 @@ class UserTableSeeder extends Seeder
             'email'                 => 'admin@example.com',
             'password'              => $password,
             'password_confirmation' => $password,
-        ], 1, true, false, true);
+        ], 1, false, true);
     }
 }
