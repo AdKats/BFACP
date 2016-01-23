@@ -3,9 +3,9 @@
 return [
 
     'user' => [
-        'soldier_taken' => 'Spieler #:playerid bereits von einem anderen Benutzer getroffen.',
+        'soldier_taken' => 'Spieler #:playerid wird bereits von einem anderen Benutzer verwendet.',
         'invalid'       => 'Benutzer #:userid ist nicht vorhanden.',
-        'deleted'       => ':username wurde gelöscht.',
+        'deleted'       => ':username wurde gelÃ¶scht.',
         'saved'         => 'Profil wurde aktualisiert!',
     ],
 
