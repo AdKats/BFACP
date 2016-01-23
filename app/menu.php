@@ -25,8 +25,14 @@ Menu::make('MainNav', function ($menu) use ($adminPermsList) {
     $menu->add(trans('navigation.main.items.dashboard.title'),
         ['route' => 'home'])->prepend(Macros::faicon(trans('navigation.main.items.dashboard.icon.fa'), true));
 
-    $menu->add(trans('navigation.main.items.scoreboard.title'),
-        ['route' => 'servers.live'])->prepend(Macros::faicon(trans('navigation.main.items.scoreboard.icon.fa'),
+    $servers = $menu->raw(trans('navigation.main.items.servers.title'));
+
+    $servers->add(trans('navigation.main.items.servers.list.title'),
+        ['route' => 'servers.list'])->prepend(Macros::faicon(trans('navigation.main.items.servers.list.icon.fa'),
+        true));
+
+    $servers->add(trans('navigation.main.items.servers.scoreboard.title'),
+        ['route' => 'servers.live'])->prepend(Macros::faicon(trans('navigation.main.items.servers.scoreboard.icon.fa'),
         true));
 
     if (Auth::check() && Auth::user()->ability(null, 'admin.adkats.bans.view')) {
