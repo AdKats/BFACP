@@ -59,7 +59,7 @@ return [
         'servers' => [
             'edit' => [
                 'buttons' => [
-                    'save'   => 'Änderungen speicher',
+                    'save'   => 'Änderungen speichern',
                     'cancel' => 'Abbrechen',
                     'delete' => 'Server löschen',
                 ],
