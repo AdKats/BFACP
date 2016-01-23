@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\View;
 use Roumen\Feed\Facades\Feed;
 
 /**
@@ -58,7 +57,7 @@ class BansController extends Controller
             foreach ($bans as $ban) {
                 $title = sprintf('%s banned for %s', $ban['player']['SoldierName'], $ban['record']['record_message']);
 
-                $view = View::make('system.rss.ban_entry_content', [
+                $view = view('system.rss.ban_entry_content', [
                     'playerId'   => $ban['player']['PlayerID'],
                     'playerName' => $ban['player']['SoldierName'],
                     'banreason'  => $ban['record']['record_message'],

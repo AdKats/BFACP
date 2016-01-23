@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Input as Input;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View as View;
 
 /**
  * Class RolesController.
@@ -22,7 +21,7 @@ class RolesController extends Controller
         $guestCommandCount = Command::guest()->count();
         $roles = Role::with('users')->orderBy('role_name')->get();
 
-        return View::make('admin.adkats.roles.index', compact('roles', 'guestCommandCount'))->with('page_title',
+        return view('admin.adkats.roles.index', compact('roles', 'guestCommandCount'))->with('page_title',
             trans('navigation.admin.adkats.items.roles.title'));
     }
 
@@ -46,7 +45,7 @@ class RolesController extends Controller
             $permissions[$group][$command_id] = $command_name;
         });
 
-        return View::make('admin.adkats.roles.create', compact('permissions'))->with('page_title',
+        return view('admin.adkats.roles.create', compact('permissions'))->with('page_title',
             trans('navigation.admin.adkats.items.roles.items.create.title'));
     }
 
@@ -75,7 +74,7 @@ class RolesController extends Controller
                 $permissions[$group][$command_id] = $command_name;
             });
 
-            return View::make('admin.adkats.roles.edit', compact('permissions', 'role'))->with('page_title',
+            return view('admin.adkats.roles.edit', compact('permissions', 'role'))->with('page_title',
                 trans('navigation.admin.adkats.items.roles.items.edit.title'));
         } catch (ModelNotFoundException $e) {
             return redirect()->route('admin.adkats.roles.index')->withErrors([

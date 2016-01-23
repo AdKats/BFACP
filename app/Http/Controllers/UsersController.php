@@ -47,7 +47,7 @@ class UsersController extends Controller
         // Populate the form fields with the user information
         Former::populate($user);
 
-        return View::make('user.account-settings', compact('user', 'page_title'));
+        return view('user.account-settings', compact('user', 'page_title'));
     }
 
     /**
@@ -110,7 +110,7 @@ class UsersController extends Controller
      */
     public function showLogin()
     {
-        return View::make('user.login');
+        return view('user.login');
     }
 
     /**
@@ -120,7 +120,7 @@ class UsersController extends Controller
      */
     public function showSignup()
     {
-        return View::make('user.register');
+        return view('user.register');
     }
 
     /**

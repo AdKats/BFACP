@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\View;
 
 /**
  * Class PlayersController.
@@ -35,7 +34,7 @@ class PlayersController extends Controller
     {
         $page_title = Input::has('player') ? 'Player Search' : 'Player Listing';
 
-        return View::make('player.listing', compact('page_title'));
+        return view('player.listing', compact('page_title'));
     }
 
     /**
@@ -109,6 +108,6 @@ class PlayersController extends Controller
         $page_title = ! empty($player->ClanTag) ? sprintf('[%s] %s', $player->ClanTag,
             $player->SoldierName) : $player->SoldierName;
 
-        return View::make('player.profile', compact('player', 'page_title', 'charts', 'isCached', 'groups'));
+        return view('player.profile', compact('player', 'page_title', 'charts', 'isCached', 'groups'));
     }
 }

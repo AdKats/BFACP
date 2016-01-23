@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\View;
 
 /**
  * Class HomeController.
@@ -40,7 +39,7 @@ class HomeController extends Controller
 
         $countryMapTable = $countryMap->sortByDesc('total')->take(5);
 
-        return View::make('dashboard',
+        return view('dashboard',
             compact('uniquePlayers', 'adkats_statistics', 'countryMap', 'countryMapTable'))->with('page_title',
             trans('navigation.main.items.dashboard.title'));
     }
@@ -74,13 +73,13 @@ class HomeController extends Controller
                 return $p;
             })->pluck('display_name', 'name');
 
-            $adminview = View::make('partials.scoreboard.admin.admin',
+            $adminview = view('partials.scoreboard.admin.admin',
                 compact('validPermissions', 'presetMessages'))->render();
         } else {
             $adminview = null;
         }
 
-        return View::make('scoreboard', compact('servers', 'adminview'))->with('page_title',
+        return view('scoreboard', compact('servers', 'adminview'))->with('page_title',
             trans('navigation.main.items.scoreboard.title'));
     }
 }

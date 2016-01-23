@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View;
 
 /**
  * Class RolesController.
@@ -26,7 +25,7 @@ class RolesController extends Controller
 
         $page_title = trans('navigation.admin.site.items.roles.title');
 
-        return View::make('admin.site.roles.index', compact('roles', 'page_title'));
+        return view('admin.site.roles.index', compact('roles', 'page_title'));
     }
 
     /**
@@ -53,7 +52,7 @@ class RolesController extends Controller
 
         $page_title = trans('navigation.admin.site.items.roles.items.create.title');
 
-        return View::make('admin.site.roles.create', compact('permissions', 'page_title'));
+        return view('admin.site.roles.create', compact('permissions', 'page_title'));
     }
 
     /**
@@ -127,7 +126,7 @@ class RolesController extends Controller
 
             $page_title = trans('navigation.admin.site.items.roles.items.edit.title', ['name' => $role->name]);
 
-            return View::make('admin.site.roles.edit', compact('role', 'permissions', 'page_title'));
+            return view('admin.site.roles.edit', compact('role', 'permissions', 'page_title'));
         } catch (ModelNotFoundException $e) {
             return redirect()->route('admin.site.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);
         }

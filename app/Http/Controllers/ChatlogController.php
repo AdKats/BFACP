@@ -8,7 +8,6 @@ use BFACP\Battlefield\Player;
 use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\View;
 
 /**
  * Class ChatlogController.
@@ -103,7 +102,7 @@ class ChatlogController extends Controller
         // Return paginated results
         $chat = $chat->simplePaginate(60);
 
-        return View::make('chatlogs', compact('games', 'chat', 'page_title'));
+        return view('chatlogs', compact('games', 'chat', 'page_title'));
     }
 
     /**

@@ -5,7 +5,6 @@ namespace BFACP\Http\Controllers\Admin\Adkats;
 use BFACP\Adkats\Setting;
 use BFACP\Battlefield\Server\Server;
 use BFACP\Http\Controllers\Controller;
-use Illuminate\Support\Facades\View;
 
 /**
  * Class SettingsController.
@@ -16,7 +15,7 @@ class SettingsController extends Controller
     {
         $servers = Server::all();
 
-        return View::make('admin.adkats.settings.index', compact('servers'))->with('page_title',
+        return view('admin.adkats.settings.index', compact('servers'))->with('page_title',
             'AdKats Settings Server List');
     }
 
@@ -29,7 +28,7 @@ class SettingsController extends Controller
     {
         $settings = Setting::where('server_id', $id)->get();
 
-        return View::make('admin.adkats.settings.edit', compact('settings'))->with('page_title',
+        return view('admin.adkats.settings.edit', compact('settings'))->with('page_title',
             sprintf('AdKats Settings for #%s', $id));
     }
 }

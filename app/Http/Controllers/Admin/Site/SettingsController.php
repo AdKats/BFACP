@@ -7,7 +7,6 @@ use BFACP\Http\Controllers\Controller;
 use BFACP\Option as Option;
 use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Input as Input;
-use Illuminate\Support\Facades\View as View;
 
 /**
  * Class SettingsController.
@@ -18,7 +17,7 @@ class SettingsController extends Controller
     {
         $settings = Option::where('option_key', '!=', 'site.languages')->get();
 
-        return View::make('admin.site.settings.index', compact('settings'))->with('page_title',
+        return view('admin.site.settings.index', compact('settings'))->with('page_title',
             trans('navigation.admin.site.items.settings.title'));
     }
 

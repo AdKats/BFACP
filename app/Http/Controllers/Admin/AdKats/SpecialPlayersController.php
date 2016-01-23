@@ -9,7 +9,6 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\View;
 
 /**
  * Class SpecialPlayersController.
@@ -36,7 +35,7 @@ class SpecialPlayersController extends Controller
 
         $groups = MainHelper::specialGroups();
 
-        return View::make('admin.adkats.special_players.index', compact('players', 'groups'))->with('page_title',
+        return view('admin.adkats.special_players.index', compact('players', 'groups'))->with('page_title',
             trans('navigation.admin.adkats.items.special_players.title'));
     }
 

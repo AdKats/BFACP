@@ -6,7 +6,6 @@ use BFACP\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\View;
 
 /**
  * Class MaintenanceController.
@@ -15,7 +14,7 @@ class MaintenanceController extends Controller
 {
     public function index()
     {
-        return View::make('admin.site.maintenance.index')->with('page_title',
+        return view('admin.site.maintenance.index')->with('page_title',
             trans('navigation.main.items.maintenance.title'));
     }
 

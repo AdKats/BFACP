@@ -13,7 +13,6 @@ use Former\Facades\Former;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View;
 
 /**
  * Class UsersController.
@@ -36,7 +35,7 @@ class UsersController extends Controller
         $users = User::join('adkats_roles AS ar', 'ar.role_id', '=', 'adkats_users.user_role')->with('role',
             'soldiers.player')->orderBy('ar.role_name')->orderBy('user_name')->get();
 
-        return View::make('admin.adkats.users.index', compact('users'))->with('page_title',
+        return view('admin.adkats.users.index', compact('users'))->with('page_title',
             trans('navigation.admin.adkats.items.users.title'));
     }
 
@@ -80,7 +79,7 @@ class UsersController extends Controller
 
             Former::populate($user);
 
-            return View::make('admin.adkats.users.edit', compact('user', 'page_title', 'roles'));
+            return view('admin.adkats.users.edit', compact('user', 'page_title', 'roles'));
         } catch (ModelNotFoundException $e) {
             return redirect()->route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
         }

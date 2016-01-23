@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App as App;
 use Illuminate\Support\Facades\Input as Input;
 use Illuminate\Support\Facades\Session as Session;
-use Illuminate\Support\Facades\View as View;
 
 /**
  * Class ServersController.
@@ -22,7 +21,7 @@ class ServersController extends Controller
     {
         $servers = Server::all();
 
-        return View::make('admin.site.servers.index', compact('servers'))->with('page_title', 'Servers');
+        return view('admin.site.servers.index', compact('servers'))->with('page_title', 'Servers');
     }
 
     /**
@@ -54,7 +53,7 @@ class ServersController extends Controller
 
             Former::populate($server->setting);
 
-            return View::make('admin.site.servers.edit', compact('server'))->with('page_title', 'Server Settings');
+            return view('admin.site.servers.edit', compact('server'))->with('page_title', 'Server Settings');
         } catch (ModelNotFoundException $e) {
             return redirect()->route('admin.site.servers.index')->withErrors(['Server doesn\'t exist.']);
         }

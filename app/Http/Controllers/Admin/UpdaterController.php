@@ -4,7 +4,6 @@ namespace BFACP\Http\Controllers\Admin;
 
 use BFACP\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\View;
 use vierbergenlars\SemVer\version;
 
 /**
@@ -41,7 +40,7 @@ class UpdaterController extends Controller
         $outofdate = version::lt(BFACP_VERSION, $latest_release['tag_name']);
         $unreleased = version::gt(BFACP_VERSION, $latest_release['tag_name']);
 
-        return View::make('system.updater.index',
+        return view('system.updater.index',
             compact('page_title', 'releases', 'outofdate', 'latest_release', 'unreleased'));
     }
 }

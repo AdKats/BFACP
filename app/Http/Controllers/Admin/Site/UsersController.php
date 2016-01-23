@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View;
 
 /**
  * Class UsersController.
@@ -28,7 +27,7 @@ class UsersController extends Controller
         // Fetch the users and paginate
         $users = User::orderBy('username')->paginate(60);
 
-        return View::make('admin.site.users.index', compact('users'))->with('page_title',
+        return view('admin.site.users.index', compact('users'))->with('page_title',
             trans('navigation.admin.site.items.users.title'));
     }
 
@@ -40,7 +39,7 @@ class UsersController extends Controller
         // Get the list of roles
         $roles = Role::lists('name', 'id');
 
-        return View::make('admin.site.users.create', compact('roles'))->with('page_title',
+        return view('admin.site.users.create', compact('roles'))->with('page_title',
             trans('navigation.admin.site.items.users.items.create.title'));
     }
 
@@ -102,7 +101,7 @@ class UsersController extends Controller
             // Populate the form fields with the user information
             Former::populate($user);
 
-            return View::make('admin.site.users.edit', compact('user', 'page_title', 'roles'));
+            return view('admin.site.users.edit', compact('user', 'page_title', 'roles'));
         } catch (ModelNotFoundException $e) {
             $this->messages[] = trans('alerts.user.invalid', ['userid' => $id]);
 
