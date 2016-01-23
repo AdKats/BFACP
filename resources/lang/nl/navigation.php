@@ -18,12 +18,22 @@ return [
                     'ion' => null,
                 ],
             ],
-            'scoreboard'  => [
-                'title' => 'Live Scorebord',
-                'icon'  => [
-                    'fa'  => 'fa-server',
-                    'ion' => null,
+            'servers' => [
+                'title' => 'Servers',
+                'scoreboard'  => [
+                    'title' => 'Live Scoreboard',
+                    'icon'  => [
+                        'fa'  => 'fa-server',
+                        'ion' => null,
+                    ],
                 ],
+                'list'  => [
+                    'title' => 'Listing',
+                    'icon'  => [
+                        'fa'  => 'fa-list',
+                        'ion' => null,
+                    ],
+                ]
             ],
             'playerlist'  => [
                 'title' => 'Spelerslijst',

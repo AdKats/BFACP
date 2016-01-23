@@ -18,12 +18,22 @@ return [
                     'ion' => null,
                 ],
             ],
-            'scoreboard'  => [
-                'title' => 'Онлайн таблица',
-                'icon'  => [
-                    'fa'  => 'fa-server',
-                    'ion' => null,
+            'servers' => [
+                'title' => 'Servers',
+                'scoreboard'  => [
+                    'title' => 'Онлайн таблица',
+                    'icon'  => [
+                        'fa'  => 'fa-server',
+                        'ion' => null,
+                    ],
                 ],
+                'list'  => [
+                    'title' => 'Listing',
+                    'icon'  => [
+                        'fa'  => 'fa-list',
+                        'ion' => null,
+                    ],
+                ]
             ],
             'playerlist'  => [
                 'title' => 'Список игроков',

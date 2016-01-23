@@ -17,5 +17,12 @@ return [
         'button_previous' => 'Previous',
         'button_reset'    => 'Reset',
     ],
-
+    'serverlist' => [
+        'columns' => [
+            'col1' => 'Total Playtime',
+            'col2' => 'Current Map',
+            'col3' => 'Current Gamemode',
+            'col4' => 'Players Online',
+        ]
+    ]
 ];

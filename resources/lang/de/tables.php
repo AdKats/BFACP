@@ -17,5 +17,12 @@ return [
         'button_previous' => 'Zurück',
         'button_reset'    => 'Reset',
     ],
-
+    'serverlist' => [
+        'columns' => [
+            'col1' => 'Gesamtspielzeit',
+            'col2' => 'Aktueller Karte',
+            'col3' => 'Aktueller Spielmodus',
+            'col4' => 'Spieler Online',
+        ]
+    ]
 ];

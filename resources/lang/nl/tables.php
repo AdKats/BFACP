@@ -17,5 +17,12 @@ return [
         'button_previous' => 'Vorige',
         'button_reset'    => 'Herstel',
     ],
-
+    'serverlist' => [
+        'columns' => [
+            'col1' => 'totale kijktijd',
+            'col2' => 'Actuele Kaart',
+            'col3' => 'Actuele Gamemode',
+            'col4' => 'pelers Online',
+        ]
+    ]
 ];
