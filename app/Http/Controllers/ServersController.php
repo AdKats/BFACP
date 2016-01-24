@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class ServersController extends Controller
 {
     /**
-     * Returns list of active servers
+     * Returns list of active servers.
      *
      * @param Request $request
      *
@@ -31,7 +31,7 @@ class ServersController extends Controller
     }
 
     /**
-     * Shows the selected server stats
+     * Shows the selected server stats.
      *
      * @param Server $server
      *

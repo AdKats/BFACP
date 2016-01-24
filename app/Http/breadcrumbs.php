@@ -7,21 +7,21 @@ use Illuminate\Support\Facades\Cache;
 
 Breadcrumbs::register('home', function ($b) {
     $b->push(trans('navigation.main.items.dashboard.title'), route('home'), [
-        'icon' => Macros::faicon(trans('navigation.main.items.dashboard.icon.fa'))
+        'icon' => Macros::faicon(trans('navigation.main.items.dashboard.icon.fa')),
     ]);
 });
 
 Breadcrumbs::register('servers.list', function ($b) {
     $b->parent('home');
     $b->push(trans('navigation.main.items.servers.list.title'), route('servers.list'), [
-        'icon' => Macros::faicon(trans('navigation.main.items.servers.list.icon.fa'))
+        'icon' => Macros::faicon(trans('navigation.main.items.servers.list.icon.fa')),
     ]);
 });
 
 Breadcrumbs::register('servers.live', function ($b) {
     $b->parent('servers.list');
     $b->push(trans('navigation.main.items.servers.scoreboard.title'), route('servers.live'), [
-        'icon' => Macros::faicon(trans('navigation.main.items.servers.scoreboard.icon.fa'))
+        'icon' => Macros::faicon(trans('navigation.main.items.servers.scoreboard.icon.fa')),
     ]);
 });
 
@@ -33,14 +33,14 @@ Breadcrumbs::register('servers.show', function ($b, $server) {
 Breadcrumbs::register('chatlog.search', function ($b) {
     $b->parent('home');
     $b->push(trans('navigation.main.items.chatlogs.title'), route('chatlog.search'), [
-        'icon' => Macros::faicon(trans('navigation.main.items.chatlogs.icon.fa'))
+        'icon' => Macros::faicon(trans('navigation.main.items.chatlogs.icon.fa')),
     ]);
 });
 
 Breadcrumbs::register('player.listing', function ($b) {
     $b->parent('home');
     $b->push(trans('navigation.main.items.playerlist.title'), route('player.listing'), [
-        'icon' => Macros::faicon(trans('navigation.main.items.playerlist.icon.fa'))
+        'icon' => Macros::faicon(trans('navigation.main.items.playerlist.icon.fa')),
     ]);
 });
 
@@ -76,7 +76,7 @@ Breadcrumbs::register('admin.site', function ($b) {
 Breadcrumbs::register('admin.adkats.bans.index', function ($b) {
     $b->parent('admin.adkats');
     $b->push(trans('navigation.admin.adkats.items.banlist.title'), route('admin.adkats.bans.index'), [
-        'icon' => Macros::ionicon(trans('navigation.admin.adkats.items.banlist.icon.ion'))
+        'icon' => Macros::ionicon(trans('navigation.admin.adkats.items.banlist.icon.ion')),
     ]);
 });
 
@@ -92,7 +92,7 @@ Breadcrumbs::register('admin.adkats.bans.edit', function ($b, $id) {
 Breadcrumbs::register('admin.adkats.users.index', function ($b) {
     $b->parent('admin.adkats');
     $b->push(trans('navigation.admin.adkats.items.users.title'), route('admin.adkats.users.index'), [
-        'icon' => Macros::faicon(trans('navigation.admin.adkats.items.users.icon.fa'))
+        'icon' => Macros::faicon(trans('navigation.admin.adkats.items.users.icon.fa')),
     ]);
 });
 
@@ -108,7 +108,7 @@ Breadcrumbs::register('admin.adkats.users.edit', function ($b, $id) {
 Breadcrumbs::register('admin.adkats.roles.index', function ($b) {
     $b->parent('admin.adkats');
     $b->push(trans('navigation.admin.adkats.items.roles.title'), route('admin.adkats.roles.index'), [
-        'icon' => Macros::faicon(trans('navigation.admin.adkats.items.roles.icon.fa'))
+        'icon' => Macros::faicon(trans('navigation.admin.adkats.items.roles.icon.fa')),
     ]);
 });
 
@@ -130,7 +130,7 @@ Breadcrumbs::register('admin.adkats.special_players.index', function ($b) {
     $b->parent('admin.adkats');
     $b->push(trans('navigation.admin.adkats.items.special_players.title'),
         route('admin.adkats.special_players.index'), [
-            'icon' => Macros::faicon(trans('navigation.admin.adkats.items.special_players.icon.fa'))
+            'icon' => Macros::faicon(trans('navigation.admin.adkats.items.special_players.icon.fa')),
         ]);
 });
 
@@ -141,7 +141,7 @@ Breadcrumbs::register('admin.adkats.special_players.index', function ($b) {
 Breadcrumbs::register('admin.site.users.index', function ($b) {
     $b->parent('admin.site');
     $b->push(trans('navigation.admin.site.items.users.title'), route('admin.site.users.index'), [
-        'icon' => Macros::faicon(trans('navigation.admin.site.items.users.icon.fa'))
+        'icon' => Macros::faicon(trans('navigation.admin.site.items.users.icon.fa')),
     ]);
 });
 
@@ -157,7 +157,7 @@ Breadcrumbs::register('admin.site.users.edit', function ($b, $id) {
 Breadcrumbs::register('admin.site.roles.index', function ($b) {
     $b->parent('admin.site');
     $b->push(trans('navigation.admin.site.items.roles.title'), route('admin.site.roles.index'), [
-        'icon' => Macros::faicon(trans('navigation.admin.site.items.roles.icon.fa'))
+        'icon' => Macros::faicon(trans('navigation.admin.site.items.roles.icon.fa')),
     ]);
 });
 
@@ -173,7 +173,7 @@ Breadcrumbs::register('admin.site.roles.edit', function ($b, $id) {
 Breadcrumbs::register('admin.site.settings.index', function ($b) {
     $b->parent('admin.site');
     $b->push(trans('navigation.admin.site.items.settings.title'), route('admin.site.settings.index'), [
-        'icon' => Macros::faicon(trans('navigation.admin.site.items.settings.icon.fa'))
+        'icon' => Macros::faicon(trans('navigation.admin.site.items.settings.icon.fa')),
     ]);
 });
 
@@ -184,7 +184,7 @@ Breadcrumbs::register('admin.site.settings.index', function ($b) {
 Breadcrumbs::register('admin.updater.index', function ($b) {
     $b->parent('admin.site');
     $b->push(trans('navigation.admin.site.items.updater.title'), route('admin.updater.index'), [
-        'icon' => Macros::faicon(trans('navigation.admin.site.items.updater.icon.fa'))
+        'icon' => Macros::faicon(trans('navigation.admin.site.items.updater.icon.fa')),
     ]);
 });
 
@@ -195,7 +195,7 @@ Breadcrumbs::register('admin.updater.index', function ($b) {
 Breadcrumbs::register('admin.site.servers.index', function ($b) {
     $b->parent('admin.site');
     $b->push(trans('navigation.admin.site.items.servers.title'), route('admin.site.servers.index'), [
-        'icon' => Macros::faicon(trans('navigation.admin.site.items.servers.icon.fa'))
+        'icon' => Macros::faicon(trans('navigation.admin.site.items.servers.icon.fa')),
     ]);
 });
 
