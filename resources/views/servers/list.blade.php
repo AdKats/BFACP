@@ -33,7 +33,7 @@
                                             <tr>
                                                 <td>
                                                     <label>
-                                                        <span class="text-blue">{{ Macros::moment(null, $server->stats->SumPlaytime) }}</span>
+                                                        <span class="text-blue">{{ $server->usedSlots }} / {{ $server->maxSlots }} ({{ $server->in_queue }})</span>
                                                     </label>
                                                 </td>
                                                 <td>
@@ -49,6 +49,7 @@
                                                 <td>
                                                     <label>
                                                         <span class="text-blue">{{ $server->usedSlots }} / {{ $server->maxSlots }} ({{ $server->in_queue }})</span>
+                                                        <span class="text-blue">{{ Macros::moment(null, $server->stats->SumPlaytime) }}</span>
                                                     </label>
                                                 </td>
                                             </tr>

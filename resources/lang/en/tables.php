@@ -19,10 +19,10 @@ return [
     ],
     'serverlist' => [
         'columns' => [
-            'col1' => 'Total Playtime',
+            'col1' => 'Players Online',
             'col2' => 'Current Map',
             'col3' => 'Current Gamemode',
-            'col4' => 'Players Online',
+            'col4' => 'Total Playtime',
         ]
     ]
 ];
