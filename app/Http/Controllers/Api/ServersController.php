@@ -441,7 +441,7 @@ class ServersController extends Controller
             'population' => $population,
         ];
 
-        return MainHelper::response($data, null, null, null, false, true);;
+        return MainHelper::response($data, null, null, null, false, true);
     }
 
     /**
