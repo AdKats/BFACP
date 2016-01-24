@@ -11,8 +11,8 @@ class CalendarSeeder extends Seeder
         DB::connection()->disableQueryLog();
         $data = collect([]);
 
-        $begin = Carbon::create(2010, 01, 01, 0, 0, 0);
-        $end = Carbon::create(2030, 12, 31, 23, 59, 59);
+        $begin = Carbon::create(2013, 01, 01, 0, 0, 0);
+        $end = Carbon::create(2020, 12, 31, 23, 59, 59);
 
         $interval = new DateInterval('PT1H');
         $daterange = new DatePeriod($begin, $interval, $end->addHour());
