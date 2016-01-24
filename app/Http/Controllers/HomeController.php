@@ -43,43 +43,4 @@ class HomeController extends Controller
             compact('uniquePlayers', 'adkats_statistics', 'countryMap', 'countryMapTable'))->with('page_title',
             trans('navigation.main.items.dashboard.title'));
     }
-
-    /**
-     * Shows the live scoreboard.
-     */
-    public function scoreboard()
-    {
-        $servers = [
-            '-1' => 'Select Server&hellip;',
-        ];
-
-        Server::active()->get()->each(function ($server) use (&$servers) {
-            $servers[$server->game->Name][$server->ServerID] = $server->ServerName;
-        });
-
-        if ($this->isLoggedIn && $this->user->ability(null, Cache::get('admin.perm.list')['scoreboard'])) {
-            $perms = $this->user->ability(null, Cache::get('admin.perm.list')['scoreboard'],
-                ['return_type' => 'array']);
-            $permissions = $perms['permissions'];
-
-            $validPermissions = $this->user->roles[0]->perms->filter(function ($perm) use (&$permissions) {
-                if (array_key_exists($perm->name, $permissions) && $permissions[$perm->name]) {
-                    return true;
-                }
-            })->map(function ($perm) {
-                $p = clone $perm;
-                $p->name = explode('.', $perm->name)[2];
-
-                return $p;
-            })->pluck('display_name', 'name');
-
-            $adminview = view('partials.scoreboard.admin.admin',
-                compact('validPermissions', 'presetMessages'))->render();
-        } else {
-            $adminview = null;
-        }
-
-        return view('scoreboard', compact('servers', 'adminview'))->with('page_title',
-            trans('navigation.main.items.scoreboard.title'));
-    }
 }
