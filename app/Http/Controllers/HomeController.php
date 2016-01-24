@@ -3,7 +3,6 @@
 namespace BFACP\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
@@ -20,19 +19,19 @@ class HomeController extends Controller
         $playerRepository = App::make('BFACP\Repositories\PlayerRepository');
 
         // Cache results for 1 day
-        $uniquePlayers = Cache::remember('players.unique.total', 60 * 24, function () use (&$playerRepository) {
+        $uniquePlayers = $this->cache->remember('players.unique.total', 60 * 24, function () use (&$playerRepository) {
             return $playerRepository->getPlayerCount();
         });
 
         // Cache results for 1 day
-        $adkats_statistics = Cache::remember('adkats.statistics', 60 * 24, function () use (&$playerRepository) {
+        $adkats_statistics = $this->cache->remember('adkats.statistics', 60 * 24, function () use (&$playerRepository) {
             $results = DB::select(File::get(storage_path().'/sql/adkats_statistics.sql'));
 
             return head($results);
         });
 
         // Cache results for 1 day
-        $countryMap = Cache::remember('players.seen.country', 60 * 24, function () use (&$playerRepository) {
+        $countryMap = $this->cache->remember('players.seen.country', 60 * 24, function () use (&$playerRepository) {
             return $playerRepository->getPlayersSeenByCountry();
         });
 

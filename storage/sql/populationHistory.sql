@@ -1,4 +1,5 @@
 SELECT
+  c.calendar_datetime                AS SelectedDate,
   DATE(c.calendar_datetime)          AS GameDate,
   HOUR(c.calendar_datetime)          AS hour_of_day,
   IFNULL(FORMAT(m.AvgPlayers, 0), 0) AS 'PlayerAvg'

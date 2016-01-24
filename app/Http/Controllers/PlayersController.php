@@ -6,7 +6,6 @@ use BFACP\Adkats\Record;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Repositories\PlayerRepository;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
@@ -16,6 +15,9 @@ use Illuminate\Support\Facades\Input;
  */
 class PlayersController extends Controller
 {
+    /**
+     * @var PlayerRepository
+     */
     private $repository;
 
     /**
@@ -29,6 +31,8 @@ class PlayersController extends Controller
 
     /**
      * Shows player listing.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function listing()
     {
@@ -42,6 +46,8 @@ class PlayersController extends Controller
      *
      * @param int    $id
      * @param string $name
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function profile($id, $name = '')
     {
@@ -49,10 +55,10 @@ class PlayersController extends Controller
         $key = sprintf('player.%u', $id);
 
         // Is there already a cached version for the player
-        $isCached = Cache::has($key);
+        $isCached = $this->cache->has($key);
 
         // Get or Set cache for player
-        $player = Cache::remember($key, 5, function () use ($id) {
+        $player = $this->cache->remember($key, 5, function () use ($id) {
             $json = $this->repository->setopts([
                 'ban.previous.server',
                 'ban.record.server',
@@ -66,7 +72,7 @@ class PlayersController extends Controller
             return json_decode($json);
         });
 
-        $charts = Cache::remember(sprintf('player.%u.charts', $id), 5, function () use ($id) {
+        $charts = $this->cache->remember(sprintf('player.%u.charts', $id), 5, function () use ($id) {
             $charts = [];
             $charts['overview'] = new Collection(DB::select(File::get(storage_path().'/sql/playerCommandOverview.sql'),
                 [$id]));

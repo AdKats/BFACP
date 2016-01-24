@@ -9,7 +9,6 @@ use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\Api\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
 use Illuminate\Support\Facades\App as App;
-use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Input as Input;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException as AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException as NotFoundHttpException;
@@ -56,7 +55,7 @@ class ScoreboardController extends Controller
     {
         parent::__construct();
 
-        $permissions = Cache::get('admin.perm.list');
+        $permissions = $this->cache->get('admin.perm.list');
 
         if (! $this->isLoggedIn || ! $this->user->ability(null, $permissions['scoreboard'])) {
             throw new AccessDeniedHttpException();

@@ -5,7 +5,6 @@ namespace BFACP\Http\Controllers\Api;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Repositories\PlayerRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 
 /**
  * Class PlayersController.
@@ -52,10 +51,10 @@ class PlayersController extends Controller
         $key = sprintf('api.player.%u', $id);
 
         // Is there already a cached version for the player
-        $isCached = Cache::has($key);
+        $isCached = $this->cache->has($key);
 
         // Get or Set cache for player
-        $player = Cache::remember($key, 5, function () use ($id) {
+        $player = $this->cache->remember($key, 5, function () use ($id) {
             return $this->repository->setopts([
                 'ban.previous',
                 'reputation',

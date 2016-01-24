@@ -5,7 +5,6 @@ namespace BFACP\Http\Controllers\Api;
 use Artdarek\Pusherer\Facades\Pusherer;
 use BFACP\Facades\Main;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 
 /**
@@ -53,8 +52,8 @@ class PusherController extends Controller
     {
         $history = [];
 
-        if (Cache::has('site.chat.history')) {
-            $history = Cache::get('site.chat.history');
+        if ($this->cache->has('site.chat.history')) {
+            $history = $this->cache->get('site.chat.history');
         }
 
         return Main::response($history, null, null, null, false, true);
@@ -82,13 +81,13 @@ class PusherController extends Controller
                 'text'      => Input::get('message'),
             ];
 
-            if (Cache::has('site.chat.history')) {
-                $history = array_merge($history, Cache::pull('site.chat.history'));
+            if ($this->cache->has('site.chat.history')) {
+                $history = array_merge($history, $this->cache->pull('site.chat.history'));
             }
 
             $history[] = $data;
 
-            Cache::put('site.chat.history', $history, $timestamp->addMinutes(10));
+            $this->cache->put('site.chat.history', $history, $timestamp->addMinutes(10));
 
             $channel_name = Input::get('channel_name');
             $event = Input::get('event');

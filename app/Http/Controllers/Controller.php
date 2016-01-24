@@ -2,9 +2,12 @@
 
 namespace BFACP\Http\Controllers;
 
+use Illuminate\Cache\Repository as Cache;
+use Illuminate\Database\Connection as DB;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,6 +17,21 @@ use Illuminate\Support\Facades\Auth;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * @var Cache
+     */
+    public $cache;
+
+    /**
+     * @var Request
+     */
+    public $request;
+
+    /**
+     * @var DB
+     */
+    public $db;
 
     /**
      * Stores the currently logged in user.
@@ -44,11 +62,16 @@ class Controller extends BaseController
     public $errors = [];
 
     /**
-     *
+     * @param Cache   $cache
+     * @param Request $request
+     * @param DB      $database
      */
-    public function __construct()
+    public function __construct(Cache $cache, Request $request, DB $database)
     {
         $this->user = Auth::user();
         $this->isLoggedIn = Auth::check();
+        $this->cache = $cache;
+        $this->request = $request;
+        $this->db = $database;
     }
 }

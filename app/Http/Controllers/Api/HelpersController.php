@@ -4,7 +4,6 @@ namespace BFACP\Http\Controllers\Api;
 
 use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -56,7 +55,7 @@ class HelpersController extends Controller
     public function iplookup($addy)
     {
         $hash = md5($addy);
-        $result = Cache::remember(sprintf('iplookup.%s', $hash), 24 * 60, function () use (&$addy) {
+        $result = $this->cache->remember(sprintf('iplookup.%s', $hash), 24 * 60, function () use (&$addy) {
             $request = app('Guzzle')->get('http://ipinfo.io/'.$addy.'/json');
 
             return json_decode($request->getBody(), true);

@@ -115,6 +115,7 @@ $api->version('v1', ['namespace' => 'BFACP\Http\Controllers\Api', 'middleware' =
             ['as' => 'api.servers.scoreboard.roundstats', 'uses' => 'ServersController@scoreboardExtra'])->where('id',
             '[0-9]+');
         $api->get('chat/{id}', ['as' => 'api.servers.chat', 'uses' => 'ServersController@chat'])->where('id', '[0-9]+');
+        $api->get('extras/{server}', ['as' => 'api.servers.extras', 'uses' => 'ServersController@extras']);
         $api->controller('admin/scoreboard', 'Admin\ScoreboardController');
     });
 
@@ -173,9 +174,9 @@ Route::group(['middleware' => 'web'], function () {
     });
 
     Route::group(['prefix' => 'servers'], function () {
-        Route::get('live', ['as' => 'servers.live', 'uses' => 'HomeController@scoreboard']);
+        Route::get('live', ['as' => 'servers.live', 'uses' => 'ServersController@scoreboard']);
         Route::get('list', ['as' => 'servers.list', 'uses' => 'ServersController@index']);
-        Route::get('show/{id}/{name?}', ['as' => 'servers.show', 'uses' => 'ServersController@show']);
+        Route::get('show/{server}/{slug?}', ['as' => 'servers.show', 'uses' => 'ServersController@show']);
     });
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {

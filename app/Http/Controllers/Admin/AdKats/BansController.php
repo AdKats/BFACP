@@ -13,7 +13,6 @@ use Carbon\Carbon as Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App as App;
 use Illuminate\Support\Facades\Auth as Auth;
-use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Event as Event;
 use Illuminate\Support\Facades\Input as Input;
 
@@ -183,8 +182,8 @@ class BansController extends Controller
             $admin = MainHelper::getAdminPlayer($this->user, $ban->player->game->GameID);
 
             // Purge the cache for the player
-            Cache::forget(sprintf('api.player.%u', $ban->player_id));
-            Cache::forget(sprintf('player.%u', $ban->player_id));
+            $this->cache->forget(sprintf('api.player.%u', $ban->player_id));
+            $this->cache->forget(sprintf('player.%u', $ban->player_id));
 
             // Save the POST data
             $ban_notes = trim(Input::get('notes', null));
@@ -373,8 +372,8 @@ class BansController extends Controller
             }
 
             // Purge the cache for the player
-            Cache::forget(sprintf('api.player.%u', $ban->player_id));
-            Cache::forget(sprintf('player.%u', $ban->player_id));
+            $this->cache->forget(sprintf('api.player.%u', $ban->player_id));
+            $this->cache->forget(sprintf('player.%u', $ban->player_id));
 
             return MainHelper::response();
         } catch (ModelNotFoundException $e) {

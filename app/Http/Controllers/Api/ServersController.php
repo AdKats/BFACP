@@ -6,13 +6,13 @@ use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Server\Server;
 use BFACP\Exceptions\PlayerNotFoundException;
 use BFACP\Exceptions\RconException;
+use BFACP\Facades\Battlefield;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Repositories\Scoreboard\LiveServerRepository;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config as Config;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -229,7 +229,7 @@ class ServersController extends Controller
                 'punish',
             ];
 
-            $permissions = Cache::get('admin.perm.list');
+            $permissions = $this->cache->get('admin.perm.list');
 
             if (! Input::has('method') || ! in_array(Input::get('method'), $allowedMethods)) {
                 throw new NotFoundHttpException();
@@ -398,6 +398,50 @@ class ServersController extends Controller
         } catch (Exception $e) {
             throw $e;
         }
+    }
+
+    /**
+     * @param Server $server
+     *
+     * @return mixed
+     */
+    public function extras(Server $server)
+    {
+        $cacheKeyMaps = sprintf('api.servers.%s.extra.maps', $server->ServerID);
+        $cacheKeyPop = sprintf('api.servers.%s.extra.pop', $server->ServerID);
+
+        $maps = $this->cache->remember($cacheKeyMaps, 60 * 24, function () use (&$server) {
+            return $server->maps()->popular(Carbon::parse('-2 Week'))->get()->map(function ($map) use (&$server, &$max) {
+                $mapname = Battlefield::mapName($map->MapName, $server->maps_file_path, $map->Gamemode);
+                $gamemode = Battlefield::playmodeName($map->Gamemode, $server->modes_file_path);
+
+                return [
+                    'name' => sprintf('%s (%s)', $mapname, $gamemode),
+                    'y'    => (int) $map->Total,
+                ];
+            });
+        });
+
+        $population = $this->cache->remember($cacheKeyPop, 60 * 24, function () use (&$server) {
+            $sql = File::get(storage_path('sql/populationHistory.sql'));
+            $results = collect($this->db->select($sql, [$server->ServerID]));
+
+            return $results->map(function ($result) {
+                $timestamp = Carbon::parse($result->SelectedDate)->getTimestamp();
+
+                return [
+                    $timestamp * 1000,
+                    (int) $result->PlayerAvg,
+                ];
+            });
+        });
+
+        $data = [
+            'maps'       => $maps,
+            'population' => $population,
+        ];
+
+        return MainHelper::response($data, null, null, null, false, true);;
     }
 
     /**

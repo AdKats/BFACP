@@ -5,7 +5,6 @@ namespace BFACP\Http\Controllers\Admin\Site;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\Controller;
 use BFACP\Option as Option;
-use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Input as Input;
 
 /**
@@ -44,7 +43,7 @@ class SettingsController extends Controller
             }
         }
 
-        Cache::forget('site.options');
+        $this->cache->forget('site.options');
 
         return redirect()->route('admin.site.settings.index')->with('messages', ['Settings Saved!']);
     }

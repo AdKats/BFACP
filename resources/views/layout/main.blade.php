@@ -51,7 +51,7 @@
 
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>{{ (isset($page_title) ? $page_title : false) }}</h1>
+            <h1>{!! (isset($page_title) ? $page_title : '&nbsp;') !!}</h1>
 
             {!! Breadcrumbs::renderIfExists() !!}
         </section>

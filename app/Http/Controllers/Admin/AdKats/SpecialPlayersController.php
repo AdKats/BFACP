@@ -7,7 +7,6 @@ use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 
 /**
@@ -47,7 +46,7 @@ class SpecialPlayersController extends Controller
     public function update($id)
     {
         try {
-            $groups = Cache::get('admin.adkats.special.groups');
+            $groups = $this->cache->get('admin.adkats.special.groups');
 
             $player = Special::findOrFail($id);
 
