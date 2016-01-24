@@ -83,7 +83,7 @@ class Maps extends Elegant
     public function scopePopular($query, Carbon $timeframe)
     {
         return $query->where('TimeMapLoad', '>=', $timeframe)
-            ->where(function($q) {
+            ->where(function ($q) {
                 $q->where('TimeRoundStarted', '!=', '0001-01-01 00:00:00');
                 $q->where('TimeRoundEnd', '!=', '0001-01-01 00:00:00');
                 $q->where('TimeMapLoad', '!=', '0001-01-01 00:00:00');
