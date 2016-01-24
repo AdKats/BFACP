@@ -21,15 +21,6 @@ class PlayersController extends Controller
     private $repository;
 
     /**
-     * @param PlayerRepository $repository
-     */
-    public function __construct(PlayerRepository $repository)
-    {
-        parent::__construct();
-        $this->repository = $repository;
-    }
-
-    /**
      * Shows player listing.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -56,6 +47,8 @@ class PlayersController extends Controller
 
         // Is there already a cached version for the player
         $isCached = $this->cache->has($key);
+
+        $this->repository = app(PlayerRepository::class);
 
         // Get or Set cache for player
         $player = $this->cache->remember($key, 5, function () use ($id) {
