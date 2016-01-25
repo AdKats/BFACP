@@ -457,7 +457,7 @@ class ServersController extends Controller
                         'avg'  => $map->AvgPlayers,
                         'join' => $map->PlayersJoinedServer,
                         'left' => $map->PlayersLeftServer,
-                    ]
+                    ],
                 ];
             });
         });
