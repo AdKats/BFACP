@@ -169,7 +169,7 @@ class ServersController extends Controller
 
         $data['roundId'] = null;
 
-        $results = DB::select($sql, [$id, $id]);
+        $results = $this->db->select($sql, [$id, $id]);
 
         foreach ($results as $result) {
             if (is_null($data['roundId'])) {
