@@ -407,11 +407,12 @@ class ServersController extends Controller
      */
     public function extras(Server $server)
     {
+        $cacheKeyMapsPopular = sprintf('api.servers.%s.extra.maps.popular', $server->ServerID);
         $cacheKeyMaps = sprintf('api.servers.%s.extra.maps', $server->ServerID);
         $cacheKeyPop = sprintf('api.servers.%s.extra.pop', $server->ServerID);
 
-        $maps = $this->cache->remember($cacheKeyMaps, 60 * 24, function () use (&$server) {
-            return $server->maps()->popular(Carbon::parse('-2 Week'))->get()->map(function ($map) use (&$server, &$max) {
+        $mapsPopular = $this->cache->remember($cacheKeyMapsPopular, 60 * 24, function () use (&$server) {
+            return $server->maps()->popular(Carbon::parse('-2 Week'))->get()->map(function ($map) use (&$server) {
                 $mapname = Battlefield::mapName($map->MapName, $server->maps_file_path, $map->Gamemode);
                 $gamemode = Battlefield::playmodeName($map->Gamemode, $server->modes_file_path);
 
@@ -436,9 +437,36 @@ class ServersController extends Controller
             });
         });
 
+        $rounds = $server->rounds()->since(Carbon::parse('-1 week'))->bare()->get();
+
+        $maps = $this->cache->remember($cacheKeyMaps, 60, function () use (&$server) {
+            return $server->maps()->since(Carbon::parse('-2 Weeks'))->get()->map(function ($map) use (&$server) {
+                $mapname = Battlefield::mapName($map->MapName, $server->maps_file_path, $map->Gamemode);
+                $gamemode = Battlefield::playmodeName($map->Gamemode, $server->modes_file_path);
+
+                return [
+                    'map_load'    => $map->TimeMapLoad->toIso8601String(),
+                    'round_start' => $map->TimeRoundStarted->toIso8601String(),
+                    'round_end'   => $map->TimeRoundEnd->toIso8601String(),
+                    'map_name'    => $mapname,
+                    'gamemode'    => $gamemode,
+                    'rounds'      => $map->NumberofRounds,
+                    'players'     => [
+                        'min'  => $map->MinPlayers,
+                        'max'  => $map->MaxPlayers,
+                        'avg'  => $map->AvgPlayers,
+                        'join' => $map->PlayersJoinedServer,
+                        'left' => $map->PlayersLeftServer,
+                    ]
+                ];
+            });
+        });
+
         $data = [
-            'maps'       => $maps,
-            'population' => $population,
+            'maps_popular' => $mapsPopular,
+            'population'   => $population,
+            'rounds'       => $rounds,
+            'maps'         => $maps,
         ];
 
         return MainHelper::response($data, null, null, null, false, true);

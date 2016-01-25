@@ -1,6 +1,6 @@
 <?php
 
-namespace BFACP\Battlefield\Server;
+namespace BFACP\Battlefield;
 
 use BFACP\Elegant;
 use Carbon\Carbon;
@@ -8,7 +8,7 @@ use Carbon\Carbon;
 /**
  * Class Stats.
  */
-class Maps extends Elegant
+class Round extends Elegant
 {
     /**
      * Should model handle timestamps.
@@ -22,28 +22,28 @@ class Maps extends Elegant
      *
      * @var string
      */
-    protected $table = 'tbl_mapstats';
+    protected $table = 'tbl_extendedroundstats';
 
     /**
      * Table primary key.
      *
      * @var string
      */
-    protected $primaryKey = 'ServerID';
+    protected $primaryKey = 'server_id';
 
     /**
      * Fields not allowed to be mass assigned.
      *
      * @var array
      */
-    protected $guarded = ['ServerID'];
+    protected $guarded = [];
 
     /**
      * Date fields to convert to carbon instances.
      *
      * @var array
      */
-    protected $dates = ['TimeMapLoad', 'TimeRoundStarted', 'TimeRoundEnd'];
+    protected $dates = ['roundstat_time'];
 
     /**
      * Append custom attributes to output.
@@ -75,18 +75,24 @@ class Maps extends Elegant
     }
 
     /**
-     * @param        $query
-     * @param Carbon $timeframe
+     * @param $query
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function scopeSince($query, Carbon $timeframe)
+    public function scopeCurrent($query)
     {
-        return $query->where('TimeMapLoad', '>=', $timeframe)->where(function ($q) {
-                $q->where('TimeRoundStarted', '!=', '0001-01-01 00:00:00');
-                $q->where('TimeRoundEnd', '!=', '0001-01-01 00:00:00');
-                $q->where('TimeMapLoad', '!=', '0001-01-01 00:00:00');
-            });
+        return $query->max('round_id');
+    }
+
+    /**
+     * @param $query
+     * @param $id
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function scopeRound($query, $id)
+    {
+        return $query->where('round_id', $id);
     }
 
     /**
@@ -95,12 +101,18 @@ class Maps extends Elegant
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function scopePopular($query, Carbon $timeframe)
+    public function scopeSince($query, Carbon $timeframe)
     {
-        return $query->where('TimeMapLoad', '>=', $timeframe)->where(function ($q) {
-                $q->where('TimeRoundStarted', '!=', '0001-01-01 00:00:00');
-                $q->where('TimeRoundEnd', '!=', '0001-01-01 00:00:00');
-                $q->where('TimeMapLoad', '!=', '0001-01-01 00:00:00');
-            })->where('MapName', '!=', '')->selectRaw("MapName, Gamemode, COUNT(ID) AS 'Total'")->groupBy('MapName');
+        return $query->where('roundstat_time', '>=', $timeframe);
+    }
+
+    /**
+     * @param $query
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function scopeBare($query)
+    {
+        return $query->groupBy('round_id')->selectRaw('round_id, MIN(roundstat_time) AS \'RoundStart\', MAX(roundstat_time) AS \'RoundEnd\'');
     }
 }

@@ -3,7 +3,6 @@
 namespace BFACP\Http\Controllers;
 
 use BFACP\Battlefield\Server\Server;
-use Illuminate\Http\Request;
 
 /**
  * Class ServersController.
@@ -13,17 +12,15 @@ class ServersController extends Controller
     /**
      * Returns list of active servers.
      *
-     * @param Request $request
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index()
     {
         $servers = Server::active()->with('stats')->get();
 
         $page_title = trans('navigation.main.items.servers.list.title');
 
-        if ($request->get('type') == 'json') {
+        if ($this->request->get('type') == 'json') {
             return $servers;
         }
 

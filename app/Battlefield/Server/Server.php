@@ -112,6 +112,14 @@ class Server extends Elegant
     /**
      * @return \Illuminate\Database\Eloquent\Model
      */
+    public function rounds()
+    {
+        return $this->hasMany('BFACP\Battlefield\Round', 'server_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
     public function scoreboard()
     {
         return $this->hasMany('BFACP\Battlefield\Scoreboard\Scoreboard', 'ServerID');

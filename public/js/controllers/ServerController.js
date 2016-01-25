@@ -1,6 +1,8 @@
-angular.module('bfacp').controller('ServerController', ['$scope', '$http', function ($scope, $http) {
+angular.module('bfacp').controller('ServerController', ['$scope', '$http', '$filter', 'ngTableParams', function ($scope, $http, $filter, ngTableParams) {
     $scope.population = [];
-    $scope.maps = [];
+    $scope.maps = {
+        'popular': []
+    };
     $scope.loading = false;
 
     var server_id = $('#server_id').val();
@@ -95,16 +97,33 @@ angular.module('bfacp').controller('ServerController', ['$scope', '$http', funct
         }]
     });
 
-    var fetchServerStats = function() {
+    var fetchServerStats = function () {
         $scope.loading = true;
-        $http.get('api/servers/extras/' + server_id).success(function(data) {
+        $http.get('api/servers/extras/' + server_id).success(function (data) {
             $scope.population = data.data.population;
-            $scope.maps = data.data.maps;
-            popular_maps.series[0].setData($scope.maps);
+            $scope.maps.popular = data.data.maps_popular;
+            $scope.maps.table = new ngTableParams({
+                page: 1,
+                count: 10,
+                sorting: {
+                    map_load: 'desc'
+                }
+            }, {
+                total: data.data.maps.length,
+                getData: function ($defer, params) {
+                    var orderedData = params.sorting() ? $filter('orderBy')(data.data.maps, params.orderBy()) : data.data.maps
+
+                    $defer.resolve(
+                        orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count())
+                    );
+                }
+            });
+
+            popular_maps.series[0].setData($scope.maps.popular);
             population_history.series[0].setData($scope.population);
             $scope.loading = false;
             $(window).resize();
-        }).error(function() {
+        }).error(function () {
             setTimeout(fetchServerStats, 2000);
         });
     };
