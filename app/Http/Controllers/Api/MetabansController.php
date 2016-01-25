@@ -11,6 +11,9 @@ use BFACP\Libraries\Metabans;
  */
 class MetabansController extends Controller
 {
+    /**
+     * @var Metabans
+     */
     protected $metabans;
 
     /**
@@ -18,10 +21,12 @@ class MetabansController extends Controller
      */
     public function __construct(Metabans $metabans)
     {
-        parent::__construct();
         $this->metabans = $metabans;
     }
 
+    /**
+     * @throws MetabansException
+     */
     public function getIndex()
     {
         throw new MetabansException(405, 'Invalid Resource');
