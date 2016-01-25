@@ -17,23 +17,18 @@ use Roumen\Feed\Facades\Feed;
  */
 class BansController extends Controller
 {
-    private $repository;
-
     /**
-     * @param BanRepository $repo
+     * @var \BFACP\Repositories\BanRepository
      */
-    public function __construct(BanRepository $repo)
-    {
-        parent::__construct();
-
-        $this->repository = $repo;
-    }
+    private $repository;
 
     /**
      * @return mixed
      */
     public function latest()
     {
+        $this->repository = app(BanRepository::class);
+
         if ($this->isLoggedIn && Input::has('personal') && Input::get('personal') == 'true') {
             $isCached = false;
 
