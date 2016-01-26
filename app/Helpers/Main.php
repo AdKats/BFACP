@@ -76,7 +76,7 @@ class Main
         }
 
         return Response::json($collection, $httpcode, [], JSON_NUMERIC_CHECK)->header('X-Robots-Tag',
-                'noindex')->header('Cache-Control', 'no-cache, must-revalidate');
+            'noindex')->header('Cache-Control', 'no-cache, must-revalidate');
     }
 
     /**
