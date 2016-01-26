@@ -5,7 +5,6 @@ namespace BFACP\Repositories;
 use BFACP\Adkats\Command;
 use BFACP\Adkats\Record;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Input;
 
 /**
  * Class ReportRepository.
