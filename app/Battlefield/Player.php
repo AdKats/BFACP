@@ -67,7 +67,7 @@ class Player extends Elegant
      */
     public function dogtags()
     {
-        return $this->hasMany('BFACP\Player\Dogtag', 'KillerID');
+        return $this->hasMany(\BFACP\Player\Dogtag::class, 'KillerID');
     }
 
     /**
@@ -75,7 +75,7 @@ class Player extends Elegant
      */
     public function ban()
     {
-        return $this->hasOne('BFACP\Adkats\Ban', 'player_id');
+        return $this->hasOne(\BFACP\Adkats\Ban::class, 'player_id');
     }
 
     /**
@@ -83,7 +83,7 @@ class Player extends Elegant
      */
     public function stats()
     {
-        return $this->hasManyThrough('BFACP\Player\Stat', 'BFACP\Player\Server', 'PlayerID', 'StatsID');
+        return $this->hasManyThrough(\BFACP\Player\Stat::class, 'BFACP\Player\Server', 'PlayerID', 'StatsID');
     }
 
     /**
@@ -91,7 +91,7 @@ class Player extends Elegant
      */
     public function sessions()
     {
-        return $this->hasManyThrough('BFACP\Player\Session', 'BFACP\Player\Server', 'PlayerID', 'StatsID');
+        return $this->hasManyThrough(\BFACP\Player\Session::class, 'BFACP\Player\Server', 'PlayerID', 'StatsID');
     }
 
     /**
@@ -99,7 +99,7 @@ class Player extends Elegant
      */
     public function infractionsGlobal()
     {
-        return $this->hasOne('BFACP\Adkats\Infractions\Overall', 'player_id');
+        return $this->hasOne(\BFACP\Adkats\Infractions\Overall::class, 'player_id');
     }
 
     /**
@@ -107,7 +107,7 @@ class Player extends Elegant
      */
     public function infractionsServer()
     {
-        return $this->hasMany('BFACP\Adkats\Infractions\Server', 'player_id');
+        return $this->hasMany(\BFACP\Adkats\Infractions\Server::class, 'player_id');
     }
 
     /**
@@ -115,7 +115,7 @@ class Player extends Elegant
      */
     public function game()
     {
-        return $this->belongsTo('BFACP\Battlefield\Game', 'GameID');
+        return $this->belongsTo(\BFACP\Battlefield\Game::class, 'GameID');
     }
 
     /**
@@ -123,7 +123,7 @@ class Player extends Elegant
      */
     public function reputation()
     {
-        return $this->hasOne('BFACP\Battlefield\Reputation', 'player_id');
+        return $this->hasOne(\BFACP\Battlefield\Reputation::class, 'player_id');
     }
 
     /**
@@ -131,7 +131,7 @@ class Player extends Elegant
      */
     public function recordsBy()
     {
-        return $this->hasMany('BFACP\Adkats\Record', 'source_id');
+        return $this->hasMany(\BFACP\Adkats\Record::class, 'source_id');
     }
 
     /**
@@ -139,7 +139,7 @@ class Player extends Elegant
      */
     public function recordsOn()
     {
-        return $this->hasMany('BFACP\Adkats\Record', 'target_id');
+        return $this->hasMany(\BFACP\Adkats\Record::class, 'target_id');
     }
 
     /**
@@ -147,7 +147,7 @@ class Player extends Elegant
      */
     public function battlelog()
     {
-        return $this->hasOne('BFACP\Adkats\Battlelog', 'player_id');
+        return $this->hasOne(\BFACP\Adkats\Battlelog::class, 'player_id');
     }
 
     /**
@@ -155,7 +155,7 @@ class Player extends Elegant
      */
     public function specialGroups()
     {
-        return $this->hasMany('BFACP\Adkats\Special', 'player_id');
+        return $this->hasMany(\BFACP\Adkats\Special::class, 'player_id');
     }
 
     /**

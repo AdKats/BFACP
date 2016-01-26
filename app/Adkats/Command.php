@@ -52,7 +52,7 @@ class Command extends Elegant
     protected $appends = ['is_interactive', 'is_enabled', 'is_invisible'];
 
     /**
-     * Models to be loaded automaticly.
+     * Models to be loaded automatically.
      *
      * @var array
      */

@@ -52,7 +52,7 @@ class Weapon extends Elegant
     protected $appends = [];
 
     /**
-     * Models to be loaded automaticly.
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -63,6 +63,6 @@ class Weapon extends Elegant
      */
     public function weapon()
     {
-        return $this->belongsTo('BFACP\Battlefield\Weapon', 'WeaponID', 'WeaponID');
+        return $this->belongsTo(\BFACP\Battlefield\Weapon::class, 'WeaponID', 'WeaponID');
     }
 }

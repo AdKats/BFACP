@@ -64,7 +64,7 @@ class Battlelog extends Elegant
      */
     public function player()
     {
-        return $this->belongsTo('BFACP\Battlefield\Player', 'player_id');
+        return $this->belongsTo(\BFACP\Battlefield\Player::class, 'player_id');
     }
 
     /**

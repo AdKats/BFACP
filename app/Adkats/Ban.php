@@ -63,7 +63,7 @@ class Ban extends Elegant
     ];
 
     /**
-     * Models to be loaded automaticly.
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -74,7 +74,7 @@ class Ban extends Elegant
      */
     public function record()
     {
-        return $this->belongsTo('BFACP\Adkats\Record', 'latest_record_id');
+        return $this->belongsTo(\BFACP\Adkats\Record::class, 'latest_record_id');
     }
 
     /**
@@ -82,7 +82,7 @@ class Ban extends Elegant
      */
     public function player()
     {
-        return $this->belongsTo('BFACP\Battlefield\Player', 'player_id');
+        return $this->belongsTo(\BFACP\Battlefield\Player::class, 'player_id');
     }
 
     /**

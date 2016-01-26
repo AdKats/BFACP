@@ -52,7 +52,7 @@ class Statistics extends Elegant
     protected $appends = [];
 
     /**
-     * Models to be loaded automaticly.
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -63,11 +63,11 @@ class Statistics extends Elegant
      */
     public function player()
     {
-        return $this->belongsTo('BFACP\Battlefield\Player', 'target_id');
+        return $this->belongsTo(\BFACP\Battlefield\Player::class, 'target_id');
     }
 
     /**
-     * Only get certian types.
+     * Only get certain types.
      *
      * @param       $query
      * @param array $type
@@ -84,7 +84,7 @@ class Statistics extends Elegant
      */
     public function server()
     {
-        return $this->belongsTo('BFACP\Battlefield\Server\Server', 'server_id')->select([
+        return $this->belongsTo(\BFACP\Battlefield\Server\Server::class, 'server_id')->select([
             'ServerID',
             'ServerName',
             'GameID',

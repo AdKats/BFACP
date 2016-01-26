@@ -141,7 +141,7 @@ class User extends Authenticatable
      */
     public function roles()
     {
-        return $this->belongsToMany('BFACP\Account\Role', Config::get('entrust.assigned_roles_table'));
+        return $this->belongsToMany(\BFACP\Account\Role::class, Config::get('entrust.assigned_roles_table'));
     }
 
     /**
@@ -149,7 +149,7 @@ class User extends Authenticatable
      */
     public function setting()
     {
-        return $this->hasOne('BFACP\Account\Setting', 'user_id');
+        return $this->hasOne(\BFACP\Account\Setting::class, 'user_id');
     }
 
     /**
@@ -157,7 +157,7 @@ class User extends Authenticatable
      */
     public function soldiers()
     {
-        return $this->hasMany('BFACP\Account\Soldier', 'user_id');
+        return $this->hasMany(\BFACP\Account\Soldier::class, 'user_id');
     }
 
     /**

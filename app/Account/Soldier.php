@@ -60,7 +60,7 @@ class Soldier extends Elegant
     protected $appends = [];
 
     /**
-     * Models to be loaded automaticly.
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -71,7 +71,7 @@ class Soldier extends Elegant
      */
     public function user()
     {
-        return $this->belongsTo('BFACP\Account\User', 'user_id');
+        return $this->belongsTo(\BFACP\Account\User::class, 'user_id');
     }
 
     /**
@@ -79,6 +79,6 @@ class Soldier extends Elegant
      */
     public function player()
     {
-        return $this->belongsTo('BFACP\Battlefield\Player', 'player_id');
+        return $this->belongsTo(\BFACP\Battlefield\Player::class, 'player_id');
     }
 }

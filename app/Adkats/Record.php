@@ -63,7 +63,7 @@ class Record extends Elegant
      */
     public function target()
     {
-        return $this->belongsTo('BFACP\Battlefield\Player', 'target_id');
+        return $this->belongsTo(\BFACP\Battlefield\Player::class, 'target_id');
     }
 
     /**
@@ -71,7 +71,7 @@ class Record extends Elegant
      */
     public function source()
     {
-        return $this->belongsTo('BFACP\Battlefield\Player', 'source_id');
+        return $this->belongsTo(\BFACP\Battlefield\Player::class, 'source_id');
     }
 
     /**
@@ -79,7 +79,7 @@ class Record extends Elegant
      */
     public function server()
     {
-        return $this->belongsTo('BFACP\Battlefield\Server\Server', 'server_id');
+        return $this->belongsTo(\BFACP\Battlefield\Server\Server::class, 'server_id');
     }
 
     /**
@@ -87,7 +87,7 @@ class Record extends Elegant
      */
     public function type()
     {
-        return $this->belongsTo('BFACP\Adkats\Command', 'command_type')->select([
+        return $this->belongsTo(\BFACP\Adkats\Command::class, 'command_type')->select([
             'command_id',
             'command_active',
             'command_name',
@@ -100,7 +100,7 @@ class Record extends Elegant
      */
     public function action()
     {
-        return $this->belongsTo('BFACP\Adkats\Command', 'command_action')->select([
+        return $this->belongsTo(\BFACP\Adkats\Command::class, 'command_action')->select([
             'command_id',
             'command_active',
             'command_name',

@@ -82,6 +82,6 @@ class Setting extends Elegant
      */
     public function user()
     {
-        return $this->belongsTo('BFACP\Account\User', 'user_id');
+        return $this->belongsTo(\BFACP\Account\User::class, 'user_id');
     }
 }

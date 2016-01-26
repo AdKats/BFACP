@@ -52,7 +52,7 @@ class Game extends Elegant
     protected $appends = ['class_css'];
 
     /**
-     * Models to be loaded automaticly.
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -63,7 +63,7 @@ class Game extends Elegant
      */
     public function servers()
     {
-        return $this->hasMany('BFACP\Battlefield\Server\Server', 'GameID');
+        return $this->hasMany(\BFACP\Battlefield\Server\Server::class, 'GameID');
     }
 
     /**

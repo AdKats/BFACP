@@ -71,7 +71,7 @@ class Maps extends Elegant
      */
     public function server()
     {
-        return $this->belongsTo('BFACP\Battlefield\Server\Server', 'ServerID');
+        return $this->belongsTo(\BFACP\Battlefield\Server\Server::class, 'ServerID');
     }
 
     /**
@@ -83,10 +83,10 @@ class Maps extends Elegant
     public function scopeSince($query, Carbon $timeframe)
     {
         return $query->where('TimeMapLoad', '>=', $timeframe)->where(function ($q) {
-                $q->where('TimeRoundStarted', '!=', '0001-01-01 00:00:00');
-                $q->where('TimeRoundEnd', '!=', '0001-01-01 00:00:00');
-                $q->where('TimeMapLoad', '!=', '0001-01-01 00:00:00');
-            });
+            $q->where('TimeRoundStarted', '!=', '0001-01-01 00:00:00');
+            $q->where('TimeRoundEnd', '!=', '0001-01-01 00:00:00');
+            $q->where('TimeMapLoad', '!=', '0001-01-01 00:00:00');
+        });
     }
 
     /**
@@ -98,9 +98,9 @@ class Maps extends Elegant
     public function scopePopular($query, Carbon $timeframe)
     {
         return $query->where('TimeMapLoad', '>=', $timeframe)->where(function ($q) {
-                $q->where('TimeRoundStarted', '!=', '0001-01-01 00:00:00');
-                $q->where('TimeRoundEnd', '!=', '0001-01-01 00:00:00');
-                $q->where('TimeMapLoad', '!=', '0001-01-01 00:00:00');
-            })->where('MapName', '!=', '')->selectRaw("MapName, Gamemode, COUNT(ID) AS 'Total'")->groupBy('MapName');
+            $q->where('TimeRoundStarted', '!=', '0001-01-01 00:00:00');
+            $q->where('TimeRoundEnd', '!=', '0001-01-01 00:00:00');
+            $q->where('TimeMapLoad', '!=', '0001-01-01 00:00:00');
+        })->where('MapName', '!=', '')->selectRaw("MapName, Gamemode, COUNT(ID) AS 'Total'")->groupBy('MapName');
     }
 }

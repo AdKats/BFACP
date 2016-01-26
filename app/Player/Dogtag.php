@@ -52,7 +52,7 @@ class Dogtag extends Elegant
     protected $appends = [];
 
     /**
-     * Models to be loaded automaticly.
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -63,7 +63,7 @@ class Dogtag extends Elegant
      */
     public function killer()
     {
-        return $this->belongsTo('BFACP\Battlefield\Player', 'KillerID');
+        return $this->belongsTo(\BFACP\Battlefield\Player::class, 'KillerID');
     }
 
     /**
@@ -71,6 +71,6 @@ class Dogtag extends Elegant
      */
     public function victim()
     {
-        return $this->belongsTo('BFACP\Battlefield\Player', 'VictimID');
+        return $this->belongsTo(\BFACP\Battlefield\Player::class, 'VictimID');
     }
 }

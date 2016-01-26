@@ -52,7 +52,7 @@ class Server extends Elegant
     protected $appends = [];
 
     /**
-     * Models to be loaded automaticly.
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -63,6 +63,6 @@ class Server extends Elegant
      */
     public function server()
     {
-        return $this->belongsTo('BFACP\Battlefield\Server\Server', 'ServerID');
+        return $this->belongsTo(\BFACP\Battlefield\Server\Server::class, 'ServerID');
     }
 }

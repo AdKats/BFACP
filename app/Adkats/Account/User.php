@@ -52,7 +52,7 @@ class User extends Elegant
     protected $appends = ['stamp'];
 
     /**
-     * Models to be loaded automaticly.
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -63,7 +63,7 @@ class User extends Elegant
      */
     public function role()
     {
-        return $this->belongsTo('BFACP\Adkats\Account\Role', 'user_role');
+        return $this->belongsTo(\BFACP\Adkats\Account\Role::class, 'user_role');
     }
 
     /**
@@ -71,7 +71,7 @@ class User extends Elegant
      */
     public function soldiers()
     {
-        return $this->hasMany('BFACP\Adkats\Account\Soldier', 'user_id');
+        return $this->hasMany(\BFACP\Adkats\Account\Soldier::class, 'user_id');
     }
 
     /**

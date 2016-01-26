@@ -90,7 +90,7 @@ class Server extends Elegant
      */
     public function game()
     {
-        return $this->belongsTo('BFACP\Battlefield\Game', 'GameID');
+        return $this->belongsTo(\BFACP\Battlefield\Game::class, 'GameID');
     }
 
     /**
@@ -98,7 +98,7 @@ class Server extends Elegant
      */
     public function stats()
     {
-        return $this->belongsTo('BFACP\Battlefield\Server\Stats', 'ServerID');
+        return $this->belongsTo(\BFACP\Battlefield\Server\Stats::class, 'ServerID');
     }
 
     /**
@@ -106,7 +106,7 @@ class Server extends Elegant
      */
     public function maps()
     {
-        return $this->hasMany('BFACP\Battlefield\Server\Maps', 'ServerID');
+        return $this->hasMany(\BFACP\Battlefield\Server\Maps::class, 'ServerID');
     }
 
     /**
@@ -114,7 +114,7 @@ class Server extends Elegant
      */
     public function rounds()
     {
-        return $this->hasMany('BFACP\Battlefield\Round', 'server_id');
+        return $this->hasMany(\BFACP\Battlefield\Round::class, 'server_id');
     }
 
     /**
@@ -122,7 +122,7 @@ class Server extends Elegant
      */
     public function scoreboard()
     {
-        return $this->hasMany('BFACP\Battlefield\Scoreboard\Scoreboard', 'ServerID');
+        return $this->hasMany(\BFACP\Battlefield\Scoreboard\Scoreboard::class, 'ServerID');
     }
 
     /**
@@ -130,7 +130,7 @@ class Server extends Elegant
      */
     public function setting()
     {
-        return $this->hasOne('BFACP\Battlefield\Setting', 'server_id');
+        return $this->hasOne(\BFACP\Battlefield\Setting::class, 'server_id');
     }
 
     /**
@@ -138,7 +138,7 @@ class Server extends Elegant
      */
     public function scores()
     {
-        return $this->hasMany('BFACP\Battlefield\Scoreboard\Scores', 'ServerID');
+        return $this->hasMany(\BFACP\Battlefield\Scoreboard\Scores::class, 'ServerID');
     }
 
     /**

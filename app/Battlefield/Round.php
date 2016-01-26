@@ -71,7 +71,7 @@ class Round extends Elegant
      */
     public function server()
     {
-        return $this->belongsTo('BFACP\Battlefield\Server\Server', 'ServerID');
+        return $this->belongsTo(\BFACP\Battlefield\Server\Server::class, 'ServerID');
     }
 
     /**

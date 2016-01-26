@@ -52,7 +52,7 @@ class Stat extends Elegant
     protected $appends = ['first_seen', 'last_seen'];
 
     /**
-     * Models to be loaded automaticly.
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -63,7 +63,8 @@ class Stat extends Elegant
      */
     public function server()
     {
-        return $this->belongsToMany('BFACP\Battlefield\Server\Server', 'tbl_server_player', 'StatsID', 'ServerID');
+        return $this->belongsToMany(\BFACP\Battlefield\Server\Server::class, 'tbl_server_player', 'StatsID',
+            'ServerID');
     }
 
     /**
@@ -71,7 +72,7 @@ class Stat extends Elegant
      */
     public function weapons()
     {
-        return $this->belongsToMany('BFACP\Player\Weapon', 'tbl_server_player', 'StatsID', 'StatsID');
+        return $this->belongsToMany(\BFACP\Player\Weapon::class, 'tbl_server_player', 'StatsID', 'StatsID');
     }
 
     /**

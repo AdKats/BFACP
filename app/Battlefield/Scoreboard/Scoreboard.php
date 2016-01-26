@@ -53,7 +53,7 @@ class Scoreboard extends Elegant
     protected $appends = ['player_joined_iso', 'squad', 'kd_ratio', 'hsk_ratio'];
 
     /**
-     * Models to be loaded automaticly.
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -64,7 +64,7 @@ class Scoreboard extends Elegant
      */
     public function server()
     {
-        return $this->belongsTo('BFACP\Battlefield\Server\Server', 'ServerID');
+        return $this->belongsTo(\BFACP\Battlefield\Server\Server::class, 'ServerID');
     }
 
     /**
@@ -72,7 +72,7 @@ class Scoreboard extends Elegant
      */
     public function player()
     {
-        return $this->belongsTo('BFACP\Battlefield\Player', 'EA_GUID', 'EAGUID');
+        return $this->belongsTo(\BFACP\Battlefield\Player::class, 'EA_GUID', 'EAGUID');
     }
 
     /**

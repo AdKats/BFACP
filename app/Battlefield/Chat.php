@@ -63,7 +63,7 @@ class Chat extends Elegant
      */
     public function server()
     {
-        return $this->belongsTo('BFACP\Battlefield\Server\Server', 'ServerID');
+        return $this->belongsTo(\BFACP\Battlefield\Server\Server::class, 'ServerID');
     }
 
     /**
@@ -71,7 +71,7 @@ class Chat extends Elegant
      */
     public function player()
     {
-        return $this->belongsTo('BFACP\Battlefield\Player', 'logPlayerID');
+        return $this->belongsTo(\BFACP\Battlefield\Player::class, 'logPlayerID');
     }
 
     /**

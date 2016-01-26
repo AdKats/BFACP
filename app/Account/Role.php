@@ -84,7 +84,7 @@ class Role extends EntrustRole
      */
     public function permissions()
     {
-        return $this->belongsToMany('BFACP\Account\Permission', Config::get('entrust.permission_role_table'));
+        return $this->belongsToMany(\BFACP\Account\Permission::class, Config::get('entrust.permission_role_table'));
     }
 
     /**
@@ -92,6 +92,6 @@ class Role extends EntrustRole
      */
     public function users()
     {
-        return $this->belongsToMany('BFACP\Account\User', Config::get('entrust.assigned_roles_table'));
+        return $this->belongsToMany(\BFACP\Account\User::class, Config::get('entrust.assigned_roles_table'));
     }
 }

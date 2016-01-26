@@ -63,7 +63,7 @@ class Overall extends Elegant
      */
     public function player()
     {
-        return $this->belongsTo('BFACP\Battlefield\Player', 'player_id');
+        return $this->belongsTo(\BFACP\Battlefield\Player::class, 'player_id');
     }
 
     /**
@@ -71,7 +71,7 @@ class Overall extends Elegant
      */
     public function servers()
     {
-        return $this->hasMany('BFACP\Adkats\Infractions\Server', 'player_id', 'player_id');
+        return $this->hasMany(\BFACP\Adkats\Infractions\Server::class, 'player_id', 'player_id');
     }
 
     /**
@@ -81,7 +81,7 @@ class Overall extends Elegant
      */
     public function history()
     {
-        return $this->hasMany('BFACP\Adkats\Record', 'target_id')->whereIn('command_type',
+        return $this->hasMany(\BFACP\Adkats\Record::class, 'target_id')->whereIn('command_type',
             [9, 10])->orderBy('record_time', 'desc');
     }
 }
