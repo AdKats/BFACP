@@ -87,7 +87,7 @@ class Setting extends Elegant
      * Quick way of selecting servers.
      *
      * @param       $query
-     * @param array $ids Array of server ids
+     * @param array $ids   Array of server ids
      *
      * @return
      */
