@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
+use InvalidArgumentException;
 
 /**
  * Class Main.
@@ -119,12 +120,12 @@ class Main
 
         // If $secs is null throw an error
         if (is_null($secs)) {
-            throw new Exception('Empty value not accepted');
+            throw new InvalidArgumentException('Empty value not accepted');
         }
 
         // If $secs is not a number throw an error
         if (! is_numeric($secs)) {
-            throw new Exception('Input not numeric');
+            throw new InvalidArgumentException('Input not numeric');
         }
 
         // If $secs is less than zero default to zero
@@ -877,10 +878,10 @@ class Main
     {
         if ($string === 1 || $string === '1' || $string === 'true' || $string === true) {
             return true;
-        } else {
-            if ($string === 0 || $string === '0' || $string === 'false' || $string === false) {
-                return false;
-            }
+        }
+
+        if ($string === 0 || $string === '0' || $string === 'false' || $string === false) {
+            return false;
         }
 
         return;

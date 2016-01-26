@@ -3,6 +3,7 @@
 namespace BFACP\Helpers;
 
 use Exception;
+use InvalidArgumentException;
 
 /**
  * Class Battlefield.
@@ -20,7 +21,7 @@ class Battlefield extends Main
     public function squad($id)
     {
         if (! is_numeric($id)) {
-            throw new Exception('Invalid squad id: '.$id);
+            throw new InvalidArgumentException('Invalid squad id: '.$id);
         }
 
         switch (intval($id)) {
