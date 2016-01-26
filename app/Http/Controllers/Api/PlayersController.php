@@ -18,7 +18,6 @@ class PlayersController extends Controller
      */
     public function __construct(PlayerRepository $repository)
     {
-        parent::__construct();
         $this->repository = $repository;
     }
 
@@ -83,7 +82,7 @@ class PlayersController extends Controller
     }
 
     /**
-     * Gets the players chatlogs.
+     * Gets the players chatlog.
      *
      * @param int $id
      *

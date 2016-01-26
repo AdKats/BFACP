@@ -18,6 +18,9 @@ class UpdaterController extends Controller
         $this->guzzle = app('Guzzle');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $page_title = 'BFACP Versions';

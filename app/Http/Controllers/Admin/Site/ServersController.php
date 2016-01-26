@@ -10,7 +10,6 @@ use BFACP\Libraries\Battlelog\BattlelogServer;
 use BFACP\Libraries\UptimeRobot;
 use Exception as Exception;
 use Former\Facades\Former as Former;
-use Illuminate\Support\Facades\Input as Input;
 use Illuminate\Support\Facades\Session as Session;
 
 /**
@@ -77,20 +76,20 @@ class ServersController extends Controller
         $id = $server->ServerID;
         $setting = $server->setting;
 
-        if (Input::has('rcon_password') && ! empty(trim(Input::get('rcon_password')))) {
-            $password = Input::get('rcon_password');
+        if ($this->request->has('rcon_password') && ! empty(trim($this->request->get('rcon_password')))) {
+            $password = $this->request->get('rcon_password');
             $setting->rcon_password = trim($password);
         }
 
-        if (Input::has('filter')) {
-            $chars = array_map('trim', explode(',', Input::get('filter')));
+        if ($this->request->has('filter')) {
+            $chars = array_map('trim', explode(',', $this->request->get('filter')));
             $setting->filter = implode(',', $chars);
         } else {
             $setting->filter = null;
         }
 
-        if (Input::has('battlelog_guid')) {
-            $setting->battlelog_guid = trim(Input::get('battlelog_guid'));
+        if ($this->request->has('battlelog_guid')) {
+            $setting->battlelog_guid = trim($this->request->get('battlelog_guid'));
         } else {
             $setting->battlelog_guid = null;
         }
@@ -115,7 +114,7 @@ class ServersController extends Controller
 
         $setting->save();
 
-        $server->ConnectionState = Input::get('status', 'off');
+        $server->ConnectionState = $this->request->get('status', 'off');
         $server->save();
 
         return redirect()->route('admin.site.servers.edit', [$id])->with('messages',

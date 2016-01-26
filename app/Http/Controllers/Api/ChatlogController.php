@@ -6,7 +6,6 @@ use BFACP\Battlefield\Chat;
 use BFACP\Battlefield\Server\Server;
 use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Input;
 
 /**
  * Class ChatlogController.
@@ -23,7 +22,6 @@ class ChatlogController extends Controller
      */
     public function __construct(Chat $chat, Server $server)
     {
-        parent::__construct();
         $this->chat = $chat;
         $this->server = $server;
     }
@@ -38,16 +36,16 @@ class ChatlogController extends Controller
         $chat = $this->chat->leftJoin('tbl_server', 'tbl_chatlog.ServerID', '=',
             'tbl_server.ServerID')->select('tbl_chatlog.*', 'tbl_server.ServerName')->orderBy('logDate', 'desc');
 
-        if (Input::has('limit') && in_array(Input::get('limit'), range(10, 100, 10))) {
-            $limit = Input::get('limit');
+        if ($this->request->has('limit') && in_array($this->request->get('limit'), range(10, 100, 10))) {
+            $limit = $this->request->get('limit');
         }
 
-        if (Input::has('nospam') && Input::get('nospam') == 1) {
+        if ($this->request->has('nospam') && $this->request->get('nospam') == 1) {
             $chat = $chat->excludeSpam();
         }
 
-        if (Input::has('between')) {
-            $between = explode(',', Input::get('between'));
+        if ($this->request->has('between')) {
+            $between = explode(',', $this->request->get('between'));
 
             $startDate = Carbon::createFromFormat('Y-m-d H:i:s', $between[0]);
 

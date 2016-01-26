@@ -11,10 +11,8 @@ use BFACP\Libraries\Metabans;
 use BFACP\Repositories\BanRepository;
 use Carbon\Carbon as Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\App as App;
 use Illuminate\Support\Facades\Auth as Auth;
 use Illuminate\Support\Facades\Event as Event;
-use Illuminate\Support\Facades\Input as Input;
 
 /**
  * Class BansController.
@@ -40,8 +38,6 @@ class BansController extends Controller
      */
     public function __construct()
     {
-        parent::__construct();
-
         $this->middleware('permission:admin.adkats.bans.view', [
             'only' => [
                 'index',
@@ -61,10 +57,10 @@ class BansController extends Controller
             ],
         ]);
 
-        $this->repository = App::make('BFACP\Repositories\BanRepository');
+        $this->repository = app(BanRepository::class);
 
         try {
-            $this->metabans = App::make('BFACP\Libraries\Metabans');
+            $this->metabans = app(Metabans::class);
         } catch (MetabansException $e) {
         }
     }
@@ -74,7 +70,7 @@ class BansController extends Controller
      */
     public function index()
     {
-        if (Input::has('personal')) {
+        if ($this->request->has('personal')) {
             $bans = $this->repository->getPersonalBans($this->user->soldiers->pluck('player_id'));
         } else {
             $bans = $this->repository->getBanList();
@@ -110,7 +106,7 @@ class BansController extends Controller
     public function create()
     {
         try {
-            $player = Player::findOrFail(Input::get('player_id'));
+            $player = Player::findOrFail($this->request->get('player_id'));
 
             if (! is_null($player->ban)) {
                 return redirect()->route('admin.adkats.bans.edit', [$player->ban->ban_id]);
@@ -123,15 +119,18 @@ class BansController extends Controller
                 'Create New Ban');
         } catch (ModelNotFoundException $e) {
             return redirect()->route('admin.adkats.bans.index')->withErrors([
-                sprintf('Player #%u doesn\'t exist.', Input::get('player_id')),
+                sprintf('Player #%u doesn\'t exist.', $this->request->get('player_id')),
             ]);
         }
     }
 
+    /**
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
     public function store()
     {
         try {
-            $player = Player::findOrfail(Input::get('player_id'));
+            $player = Player::findOrfail($this->request->get('player_id'));
 
             if (! is_null($player->ban)) {
                 return redirect()->route('admin.adkats.bans.edit', [$player->ban->ban_id]);
@@ -140,15 +139,15 @@ class BansController extends Controller
             $admin = MainHelper::getAdminPlayer($this->user, $player->game->GameID);
 
             // Save the POST data
-            $ban_notes = trim(Input::get('notes', null));
-            $ban_message = trim(Input::get('message', null));
-            $ban_server = Input::get('server', null);
-            $ban_start = Input::get('banStartDateTime', null);
-            $ban_end = Input::get('banEndDateTime', null);
-            $ban_type = Input::get('type', null);
-            $ban_enforce_guid = (bool) Input::get('enforce_guid', false) ? 'Y' : 'N';
-            $ban_enforce_name = (bool) Input::get('enforce_name', false) ? 'Y' : 'N';
-            $ban_enforce_ip = (bool) Input::get('enforce_ip', false) ? 'Y' : 'N';
+            $ban_notes = trim($this->request->get('notes', null));
+            $ban_message = trim($this->request->get('message', null));
+            $ban_server = $this->request->get('server', null);
+            $ban_start = $this->request->get('banStartDateTime', null);
+            $ban_end = $this->request->get('banEndDateTime', null);
+            $ban_type = $this->request->get('type', null);
+            $ban_enforce_guid = (bool) $this->request->get('enforce_guid', false) ? 'Y' : 'N';
+            $ban_enforce_name = (bool) $this->request->get('enforce_name', false) ? 'Y' : 'N';
+            $ban_enforce_ip = (bool) $this->request->get('enforce_ip', false) ? 'Y' : 'N';
 
             $admin_id = is_null($admin) ? null : $admin->PlayerID;
             $admin_name = is_null($admin) ? Auth::user()->username : $admin->SoldierName;
@@ -163,7 +162,7 @@ class BansController extends Controller
             return redirect()->route('admin.adkats.bans.edit', [$response->ban_id])->with('messages', $this->messages);
         } catch (ModelNotFoundException $e) {
             return redirect()->route('admin.adkats.bans.index')->withErrors([
-                sprintf('Player #%u doesn\'t exist.', Input::get('player_id')),
+                sprintf('Player #%u doesn\'t exist.', $this->request->get('player_id')),
             ]);
         }
     }
@@ -172,6 +171,8 @@ class BansController extends Controller
      * Updates a existing ban.
      *
      * @param int $id Ban ID
+     *
+     * @return $this|\Illuminate\Http\RedirectResponse
      */
     public function update($id)
     {
@@ -186,15 +187,15 @@ class BansController extends Controller
             $this->cache->forget(sprintf('player.%u', $ban->player_id));
 
             // Save the POST data
-            $ban_notes = trim(Input::get('notes', null));
-            $ban_message = trim(Input::get('message', null));
-            $ban_server = Input::get('server', null);
-            $ban_start = Input::get('banStartDateTime', null);
-            $ban_end = Input::get('banEndDateTime', null);
-            $ban_type = Input::get('type', null);
-            $ban_enforce_guid = (bool) Input::get('enforce_guid', false);
-            $ban_enforce_name = (bool) Input::get('enforce_name', false);
-            $ban_enforce_ip = (bool) Input::get('enforce_ip', false);
+            $ban_notes = trim($this->request->get('notes', null));
+            $ban_message = trim($this->request->get('message', null));
+            $ban_server = $this->request->get('server', null);
+            $ban_start = $this->request->get('banStartDateTime', null);
+            $ban_end = $this->request->get('banEndDateTime', null);
+            $ban_type = $this->request->get('type', null);
+            $ban_enforce_guid = (bool) $this->request->get('enforce_guid', false);
+            $ban_enforce_name = (bool) $this->request->get('enforce_name', false);
+            $ban_enforce_ip = (bool) $this->request->get('enforce_ip', false);
 
             // Temp Ban
             if ($ban_type == 7) {
@@ -292,7 +293,7 @@ class BansController extends Controller
                 $ban->ban_notes = $ban_notes;
             }
 
-            // If the ban not in effect we need to renable it
+            // If the ban not in effect we need to re-enable it
             if ($ban->is_unbanned) {
                 $ban->ban_status = 'Active';
             }
@@ -318,7 +319,7 @@ class BansController extends Controller
     }
 
     /**
-     * Unbans the player.
+     * Unban the player.
      *
      * @param int $id Ban ID
      *
@@ -348,7 +349,7 @@ class BansController extends Controller
             $record->command_action = 37;
             $record->source_id = is_null($admin) ? null : $admin->PlayerID;
             $record->source_name = is_null($admin) ? Auth::user()->username : $admin->SoldierName;
-            $record->record_message = Input::get('message', 'Unbanned');
+            $record->record_message = $this->request->get('message', 'Unbanned');
             $record->record_time = Carbon::now();
             $record->adkats_web = true;
             $record->save();
@@ -357,8 +358,8 @@ class BansController extends Controller
             $ban->record()->associate($record);
             $ban->ban_status = 'Disabled';
 
-            if (! is_null(Input::get('notes', null))) {
-                $ban->ban_notes = Input::get('notes', 'NoNotes');
+            if (! is_null($this->request->get('notes', null))) {
+                $ban->ban_notes = $this->request->get('notes', 'NoNotes');
             }
 
             $ban->save();
@@ -366,7 +367,7 @@ class BansController extends Controller
             try {
                 if (! is_null($this->metabans)) {
                     $this->metabans->assess($ban->player->game->Name, $ban->player->EAGUID, 'None',
-                        Input::get('message', 'Unbanned'));
+                        $this->request->get('message', 'Unbanned'));
                 }
             } catch (MetabansException $e) {
             }

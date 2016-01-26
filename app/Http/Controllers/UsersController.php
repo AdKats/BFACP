@@ -5,9 +5,6 @@ namespace BFACP\Http\Controllers;
 use BFACP\Account\User;
 use BFACP\Repositories\UserRepository;
 use Former\Facades\Former;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -24,15 +21,6 @@ class UsersController extends Controller
      * @var UserRepository
      */
     private $repository;
-
-    /**
-     *
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->repository = App::make('BFACP\Repositories\UserRepository');
-    }
 
     /**
      * Show the account settings page.
@@ -59,14 +47,14 @@ class UsersController extends Controller
     {
         $user = \Auth::user();
 
-        $email = trim(Input::get('email', null));
-        $lang = trim(Input::get('language', null));
-        $password = trim(Input::get('password', null));
-        $password_confirmation = trim(Input::get('password_confirmation', null));
+        $email = trim($this->request->get('email', null));
+        $lang = trim($this->request->get('language', null));
+        $password = trim($this->request->get('password', null));
+        $password_confirmation = trim($this->request->get('password_confirmation', null));
 
-        $v = Validator::make(Input::all(), [
+        $v = Validator::make($this->request->all(), [
             'email'    => 'required|email|unique:bfacp_users,email,'.$user->id,
-            'language' => 'required|in:'.implode(',', array_keys(Config::get('bfacp.site.languages'))),
+            'language' => 'required|in:'.implode(',', array_keys($this->config->get('bfacp.site.languages'))),
             'password' => 'min:8|confirmed',
         ]);
 
@@ -86,13 +74,13 @@ class UsersController extends Controller
                 'lang' => $lang,
             ]);
 
-            $langHuman = Config::get('bfacp.site.languages')[$lang];
+            $langHuman = $this->config->get('bfacp.site.languages')[$lang];
 
             $this->messages[] = trans('user.notifications.account.language.changed', ['lang' => $langHuman]);
         }
 
         // Change the user password if they filled out the fields and new passwords match
-        if (Input::has('password') && Input::has('password_confirmation') && $password == $password_confirmation) {
+        if ($this->request->has('password') && $this->request->has('password_confirmation') && $password == $password_confirmation) {
             $user->password = $password;
             $user->password_confirmation = $password;
             $this->messages[] = trans('user.notifications.password.email.changed');
@@ -132,6 +120,8 @@ class UsersController extends Controller
      */
     public function confirm($code)
     {
+        $this->repository = app(UserRepository::class);
+
         // If the code is valid then redirect to the login page.
         if ($this->repository->confirm($code)) {
             return redirect()->route('user.login')->with('messages', [
@@ -149,26 +139,28 @@ class UsersController extends Controller
      */
     public function signup()
     {
-        $input = Input::all();
+        $input = $this->request->all();
+
+        $this->repository = app(UserRepository::class);
 
         $v = Validator::make($input, array_merge(User::$rules, [
             'ign' => 'regex:/^([a-zA-Z0-9_\-]+)$/',
         ]));
 
         if ($v->fails()) {
-            return redirect()->route('user.register')->withInput(Input::except('password',
+            return redirect()->route('user.register')->withInput($this->request->except('password',
                 'password_confirmation'))->withErrors($v);
         }
 
         $user = $this->repository->signup($input, 2, false, true);
 
         if (is_null($user->id)) {
-            return redirect()->route('user.register')->withInput(Input::except('password',
+            return redirect()->route('user.register')->withInput($this->request->except('password',
                 'password_confirmation'))->withErrors($user->errors());
         }
 
-        if (Config::get('confide::signup_email')) {
-            Mail::queueOn(Config::get('confide::email_queue'), 'emails.user.signup', compact('user'),
+        if ($this->config->get('confide::signup_email')) {
+            Mail::queueOn($this->config->get('confide::email_queue'), 'emails.user.signup', compact('user'),
                 function ($message) use ($user) {
                     $message->to($user->email,
                         $user->username)->subject(trans('confide::confide.email.account_confirmation.subject'));
@@ -186,7 +178,9 @@ class UsersController extends Controller
      */
     public function login()
     {
-        $input = Input::all();
+        $input = $this->request->all();
+
+        $this->repository = app(UserRepository::class);
 
         if ($this->repository->login($input)) {
             return Redirect::intended();
@@ -200,7 +194,7 @@ class UsersController extends Controller
             $error = trans('confide::confide.alerts.wrong_credentials');
         }
 
-        return redirect()->route('user.login')->withInput(Input::except('password'))->with('error', $error);
+        return redirect()->route('user.login')->withInput($this->request->except('password'))->with('error', $error);
     }
 
     /**
@@ -208,11 +202,13 @@ class UsersController extends Controller
      */
     public function logout()
     {
+        $this->repository = app(UserRepository::class);
+
         $this->repository->logout();
 
         // If the application requires a login redirect
         // to the login form instead of the dashboard.
-        if (Config::get('bfacp.site.auth')) {
+        if ($this->config->get('bfacp.site.auth')) {
             return redirect()->route('user.login');
         }
 

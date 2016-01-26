@@ -8,7 +8,6 @@ use BFACP\Repositories\PlayerRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Input;
 
 /**
  * Class PlayersController.
@@ -27,7 +26,7 @@ class PlayersController extends Controller
      */
     public function listing()
     {
-        $page_title = Input::has('player') ? 'Player Search' : 'Player Listing';
+        $page_title = $this->request->has('player') ? 'Player Search' : 'Player Listing';
 
         return view('player.listing', compact('page_title'));
     }

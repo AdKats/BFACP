@@ -4,6 +4,7 @@ namespace BFACP\Http\Controllers\Auth;
 
 use BFACP\Account\User;
 use BFACP\Http\Controllers\Controller;
+use BFACP\Repositories\UserRepository;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Support\Facades\Validator;
@@ -34,7 +35,7 @@ class AuthController extends Controller
     protected $redirectTo = '/';
 
     /**
-     * @var \BFACP\Repositories\UserRepository
+     * @var UserRepository
      */
     private $repository;
 
@@ -44,8 +45,6 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'logout']);
-
-        $this->repository = app('BFACP\Repositories\UserRepository');
     }
 
     /**
@@ -91,6 +90,8 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $this->repository = app(UserRepository::class);
+
         $user = $this->repository->signup($data, 2, false, true);
 
         return $user;

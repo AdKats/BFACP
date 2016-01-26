@@ -54,8 +54,8 @@ class ReportRepository extends BaseRepository
         $reports = Record::with('server', 'type', 'action')->whereIn('command_type', [18, 20])->orderBy('record_time',
             'desc');
 
-        if (Input::has('last_id')) {
-            $lastId = Input::get('last_id', null);
+        if ($this->request->has('last_id')) {
+            $lastId = $this->request->get('last_id', null);
 
             if (! is_null($lastId) && is_numeric($lastId)) {
                 $reports->where('record_id', '>', abs($lastId));

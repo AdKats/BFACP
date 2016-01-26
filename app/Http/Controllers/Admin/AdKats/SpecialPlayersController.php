@@ -7,7 +7,6 @@ use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Input;
 
 /**
  * Class SpecialPlayersController.
@@ -24,10 +23,12 @@ class SpecialPlayersController extends Controller
      */
     public function __construct()
     {
-        parent::__construct();
         $this->guzzle = app('Guzzle');
     }
 
+    /**
+     * @return $this
+     */
     public function index()
     {
         $players = Special::with('player', 'game', 'server')->get();
@@ -53,13 +54,13 @@ class SpecialPlayersController extends Controller
             $newGroup = null;
 
             foreach ($groups as $group) {
-                if ($group['group_key'] == Input::get('group')) {
+                if ($group['group_key'] == $this->request->get('group')) {
                     $newGroup = $group['group_name'];
                     break;
                 }
             }
 
-            $player->player_group = Input::get('group');
+            $player->player_group = $this->request->get('group');
             $player->save();
 
             if (is_null($player->player)) {

@@ -5,10 +5,8 @@ namespace BFACP\Http\Controllers\Api;
 use BFACP\Adkats\Ban;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Repositories\BanRepository;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
 use Roumen\Feed\Facades\Feed;
 
@@ -29,7 +27,7 @@ class BansController extends Controller
     {
         $this->repository = app(BanRepository::class);
 
-        if ($this->isLoggedIn && Input::has('personal') && Input::get('personal') == 'true') {
+        if ($this->isLoggedIn && $this->request->has('personal') && $this->request->get('personal') == 'true') {
             $isCached = false;
 
             $bans = $this->repository->getPersonalBans($this->user->settings()->playerIds());
@@ -39,11 +37,11 @@ class BansController extends Controller
             $bans = $this->repository->getLatestBans();
         }
 
-        if (Input::has('type') && Input::get('type') == 'rss') {
+        if ($this->request->has('type') && $this->request->get('type') == 'rss') {
             $feed = Feed::make();
 
-            $feed->title = sprintf('Latest Battlefield Bans by %s', Config::get('bfacp.site.title'));
-            $feed->description = sprintf('Latest Battlefield Bans by %s', Config::get('bfacp.site.title'));
+            $feed->title = sprintf('Latest Battlefield Bans by %s', $this->config->get('bfacp.site.title'));
+            $feed->description = sprintf('Latest Battlefield Bans by %s', $this->config->get('bfacp.site.title'));
             $feed->setDateFormat('datetime');
             $feed->link = URL::to('api/bans/latest?type=rss');
             $feed->lang = 'en';

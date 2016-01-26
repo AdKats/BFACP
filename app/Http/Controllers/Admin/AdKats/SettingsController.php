@@ -11,6 +11,9 @@ use BFACP\Http\Controllers\Controller;
  */
 class SettingsController extends Controller
 {
+    /**
+     * @return $this
+     */
     public function index()
     {
         $servers = Server::all();

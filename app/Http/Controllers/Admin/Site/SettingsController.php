@@ -5,13 +5,15 @@ namespace BFACP\Http\Controllers\Admin\Site;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\Controller;
 use BFACP\Option as Option;
-use Illuminate\Support\Facades\Input as Input;
 
 /**
  * Class SettingsController.
  */
 class SettingsController extends Controller
 {
+    /**
+     * @return $this
+     */
     public function index()
     {
         $settings = Option::where('option_key', '!=', 'site.languages')->get();
@@ -20,11 +22,14 @@ class SettingsController extends Controller
             trans('navigation.admin.site.items.settings.title'));
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update()
     {
         $settings = Option::lists('option_value', 'option_key');
 
-        foreach (Input::all() as $key => $value) {
+        foreach ($this->request->all() as $key => $value) {
             if (starts_with($key, '_') === false) {
                 $key = str_replace('-', '.', $key);
                 $value = trim($value);

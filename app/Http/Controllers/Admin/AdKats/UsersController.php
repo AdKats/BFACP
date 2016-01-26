@@ -11,7 +11,6 @@ use BFACP\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Former\Facades\Former;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -19,14 +18,6 @@ use Illuminate\Support\Facades\Validator;
  */
 class UsersController extends Controller
 {
-    /**
-     *
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * Show the user listing.
      */
@@ -44,7 +35,7 @@ class UsersController extends Controller
      */
     public function store()
     {
-        $v = Validator::make(Input::all(), [
+        $v = Validator::make($this->request->all(), [
             'username' => 'required|unique:adkats_users,user_name|alpha_dash',
         ]);
 
@@ -53,7 +44,7 @@ class UsersController extends Controller
         }
 
         $user = new User();
-        $user->user_name = Input::get('username');
+        $user->user_name = $this->request->get('username');
         $user->user_role = 1;
         $user->user_expiration = Carbon::now()->addYears(20);
         $user->save();
@@ -67,6 +58,8 @@ class UsersController extends Controller
      * Show the editing page.
      *
      * @param int $id User ID
+     *
+     * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
@@ -81,7 +74,9 @@ class UsersController extends Controller
 
             return view('admin.adkats.users.edit', compact('user', 'page_title', 'roles'));
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
+            return redirect()->route('admin.adkats.users.index')->withErrors([
+                sprintf('User #%u doesn\'t exist.', $id),
+            ]);
         }
     }
 
@@ -89,23 +84,25 @@ class UsersController extends Controller
      * Update user.
      *
      * @param int $id User ID
+     *
+     * @return $this|\Illuminate\Http\RedirectResponse
      */
     public function update($id)
     {
         try {
             $user = User::findOrFail($id);
 
-            $username = trim(Input::get('user_name', null));
-            $email = trim(Input::get('user_email', null));
-            $roleId = trim(Input::get('user_role', null));
-            $expiration = trim(Input::get('user_expiration', null));
-            $notes = trim(Input::get('user_notes', 'No Notes'));
-            $soldiers = explode(',', Input::get('soldiers', ''));
+            $username = trim($this->request->get('user_name', null));
+            $email = trim($this->request->get('user_email', null));
+            $roleId = trim($this->request->get('user_role', null));
+            $expiration = trim($this->request->get('user_expiration', null));
+            $notes = trim($this->request->get('user_notes', 'No Notes'));
+            $soldiers = explode(',', $this->request->get('soldiers', ''));
 
-            $v = Validator::make(Input::all(), [
-                'user_name'  => 'required|alpha_dash',
+            $v = Validator::make($this->request->all(), [
+                'user_name' => 'required|alpha_dash',
                 'user_email' => 'email',
-                'user_role'  => 'required|exists:adkats_roles,role_id',
+                'user_role' => 'required|exists:adkats_roles,role_id',
                 'user_notes' => 'max:1000',
             ]);
 
@@ -113,11 +110,11 @@ class UsersController extends Controller
                 return redirect()->route('admin.adkats.users.edit', [$id])->withErrors($v)->withInput();
             }
 
-            if (Input::has('user_name') && $user->user_name != $username) {
+            if ($this->request->has('user_name') && $user->user_name != $username) {
                 $user->user_name = $username;
             }
 
-            if (Input::has('user_email') && $user->user_email != $email) {
+            if ($this->request->has('user_email') && $user->user_email != $email) {
                 $user->user_email = $email;
             }
 
@@ -125,7 +122,7 @@ class UsersController extends Controller
                 $user->user_role = $roleId;
             }
 
-            if (Input::has('user_expiration')) {
+            if ($this->request->has('user_expiration')) {
                 $user->user_expiration = Carbon::parse($expiration)->toDateTimeString();
             } else {
                 $user->user_expiration = Carbon::now()->addYears(20)->toDateTimeString();
@@ -138,14 +135,14 @@ class UsersController extends Controller
 
             $user->soldiers()->delete();
 
-            if (Input::has('soldiers')) {
+            if ($this->request->has('soldiers')) {
                 foreach ($soldiers as $soldier) {
                     $soldier_ids[] = new Soldier(['player_id' => $soldier]);
                 }
             }
 
-            if (Input::has('soldier')) {
-                $players = Player::where('SoldierName', Input::get('soldier'))->pluck('PlayerID');
+            if ($this->request->has('soldier')) {
+                $players = Player::where('SoldierName', $this->request->get('soldier'))->pluck('PlayerID');
 
                 foreach ($players as $player) {
                     if (! in_array($player, $soldiers)) {
@@ -164,7 +161,9 @@ class UsersController extends Controller
 
             return redirect()->route('admin.adkats.users.edit', [$id])->with('messages', $this->messages);
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
+            return redirect()->route('admin.adkats.users.index')->withErrors([
+                sprintf('User #%u doesn\'t exist.', $id),
+            ]);
         }
     }
 
@@ -186,7 +185,9 @@ class UsersController extends Controller
                 'url' => route('admin.adkats.users.index'),
             ], sprintf('%s was deleted', $username));
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('admin.adkats.users.index')->withErrors([sprintf('User #%u doesn\'t exist.', $id)]);
+            return redirect()->route('admin.adkats.users.index')->withErrors([
+                sprintf('User #%u doesn\'t exist.', $id),
+            ]);
         }
     }
 }

@@ -5,7 +5,6 @@ namespace BFACP\Http\Controllers\Api;
 use Artdarek\Pusherer\Facades\Pusherer;
 use BFACP\Facades\Main;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Input;
 
 /**
  * Class PusherController.
@@ -13,19 +12,11 @@ use Illuminate\Support\Facades\Input;
 class PusherController extends Controller
 {
     /**
-     *
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * @return mixed
      */
     public function postAuth()
     {
-        if (Input::has('channel_name') && Input::has('socket_id')) {
+        if ($this->request->has('channel_name') && $this->request->has('socket_id')) {
             $data = [
                 'id'        => $this->user->id,
                 'username'  => $this->user->username,
@@ -34,8 +25,8 @@ class PusherController extends Controller
                 'timestamp' => Carbon::now()->getTimestamp(),
             ];
 
-            $channel_name = Input::get('channel_name');
-            $socket_id = Input::get('socket_id');
+            $channel_name = $this->request->get('channel_name');
+            $socket_id = $this->request->get('socket_id');
 
             $socket = Pusherer::presence_auth($channel_name, $socket_id, $data['id'], $data);
 
@@ -64,7 +55,7 @@ class PusherController extends Controller
      */
     public function postChat()
     {
-        if (Input::has('channel_name') && Input::has('event')) {
+        if ($this->request->has('channel_name') && $this->request->has('event')) {
             $timestamp = Carbon::now();
 
             $history = [];
@@ -78,7 +69,7 @@ class PusherController extends Controller
                     'role'     => $this->user->roles[0]->name,
                 ],
                 'timestamp' => $timestamp->toIso8601String(),
-                'text'      => Input::get('message'),
+                'text'      => $this->request->get('message'),
             ];
 
             if ($this->cache->has('site.chat.history')) {
@@ -89,8 +80,8 @@ class PusherController extends Controller
 
             $this->cache->put('site.chat.history', $history, $timestamp->addMinutes(10));
 
-            $channel_name = Input::get('channel_name');
-            $event = Input::get('event');
+            $channel_name = $this->request->get('channel_name');
+            $event = $this->request->get('event');
 
             Pusherer::trigger($channel_name, $event, $data);
 

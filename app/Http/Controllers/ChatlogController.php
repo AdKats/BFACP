@@ -7,7 +7,6 @@ use BFACP\Battlefield\Game;
 use BFACP\Battlefield\Player;
 use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Input;
 
 /**
  * Class ChatlogController.
@@ -21,13 +20,14 @@ class ChatlogController extends Controller
      */
     public function __construct(Game $game, Chat $chat, Player $player)
     {
-        parent::__construct();
-
         $this->game = $game;
         $this->chat = $chat;
         $this->player = $player;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $games = $this->game->with([
@@ -41,7 +41,7 @@ class ChatlogController extends Controller
         $chat = $this->chat->with('player', 'server')->orderBy('logDate', 'desc');
 
         // If the show spam checkbox was not checked then exclude it
-        if (! Input::has('showspam')) {
+        if (! $this->request->has('showspam')) {
             $chat = $chat->excludeSpam();
         }
 
@@ -49,16 +49,16 @@ class ChatlogController extends Controller
         if ($this->hasInput()) {
 
             // Filtering by dates
-            if (Input::has('StartDateTime') && Input::has('EndDateTime')) {
-                $startDate = Carbon::parse(Input::get('StartDateTime'))->setTimezone(new \DateTimeZone('UTC'));
-                $endDate = Carbon::parse(Input::get('EndDateTime'))->setTimezone(new \DateTimeZone('UTC'));
+            if ($this->request->has('StartDateTime') && $this->request->has('EndDateTime')) {
+                $startDate = Carbon::parse($this->request->get('StartDateTime'))->setTimezone(new \DateTimeZone('UTC'));
+                $endDate = Carbon::parse($this->request->get('EndDateTime'))->setTimezone(new \DateTimeZone('UTC'));
                 $chat = $chat->whereBetween('logDate', [$startDate, $endDate]);
             }
 
             // Specific keywords the user has typed. Each word separated by a comma.
             // This can add significant time to fetching the results
-            if (Input::has('keywords')) {
-                $keywords = array_map('trim', explode(',', Input::get('keywords')));
+            if ($this->request->has('keywords')) {
+                $keywords = array_map('trim', explode(',', $this->request->get('keywords')));
 
                 if (MainHelper::hasFulltextSupport('tbl_chatlog', 'logMessage')) {
                     $chat = $chat->whereRaw('MATCH(logMessage) AGAINST(? IN BOOLEAN MODE)', [implode(' ', $keywords)]);
@@ -71,10 +71,10 @@ class ChatlogController extends Controller
                 }
             }
 
-            // Player names the user has typed. Partal names can be provided. Must be seprated
+            // Player names the user has typed. Partial names can be provided. Must be separated
             // by a comma to search multiple players.
-            if (Input::has('players')) {
-                $players = array_map('trim', explode(',', Input::get('players')));
+            if ($this->request->has('players')) {
+                $players = array_map('trim', explode(',', $this->request->get('players')));
 
                 $playerIds = $this->player->where(function ($query) use ($players) {
                     foreach ($players as $player) {
@@ -87,15 +87,15 @@ class ChatlogController extends Controller
                 $chat = $chat->whereIn('logPlayerID', $playerIds);
             }
 
-            if (Input::has('pid')) {
-                if (Input::get('pid') > 0 && is_numeric(Input::get('pid'))) {
-                    $chat = $chat->where('logPlayerID', Input::get('pid'));
+            if ($this->request->has('pid')) {
+                if ($this->request->get('pid') > 0 && is_numeric($this->request->get('pid'))) {
+                    $chat = $chat->where('logPlayerID', $this->request->get('pid'));
                 }
             }
 
             // Filter based on server if one is selected
-            if (Input::has('server') && is_numeric(Input::get('server')) && Input::get('server') > 0) {
-                $chat = $chat->where('ServerID', Input::get('server'));
+            if ($this->request->has('server') && is_numeric($this->request->get('server')) && $this->request->get('server') > 0) {
+                $chat = $chat->where('ServerID', $this->request->get('server'));
             }
         }
 
@@ -112,6 +112,6 @@ class ChatlogController extends Controller
      */
     private function hasInput()
     {
-        return Input::has('server') || Input::has('players') || Input::has('pid') || Input::has('keywords') || Input::has('showspam') || (Input::has('StartDateTime') && Input::has('EndDateTime'));
+        return $this->request->has('server') || $this->request->has('players') || $this->request->has('pid') || $this->request->has('keywords') || $this->request->has('showspam') || ($this->request->has('StartDateTime') && $this->request->has('EndDateTime'));
     }
 }

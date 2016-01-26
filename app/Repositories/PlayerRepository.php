@@ -196,8 +196,8 @@ class PlayerRepository extends BaseRepository
 
         // If a command id is present we are going to only pull records
         // that have the specific id
-        if (Input::has('cmdid')) {
-            $cmdid = Input::get('cmdid', null);
+        if ($this->request->has('cmdid')) {
+            $cmdid = $this->request->get('cmdid', null);
 
             // Make sure the input is a number and greater than zero
             if (! is_null($cmdid) && is_numeric($cmdid) && $cmdid > 0) {
@@ -242,8 +242,8 @@ class PlayerRepository extends BaseRepository
         $chatlogs = Chat::with('server')->where('logPlayerID', $id)->excludeSpam()->orderBy('logDate', 'desc');
 
         // If a server is specifed then we only pull logs from that server
-        if (Input::has('server')) {
-            $serverId = Input::get('server', null);
+        if ($this->request->has('server')) {
+            $serverId = $this->request->get('server', null);
 
             if (! is_null($serverId) && is_numeric($serverId) && $serverId > 0) {
                 $chatlogs->where('ServerID', $serverId);
@@ -251,8 +251,8 @@ class PlayerRepository extends BaseRepository
         }
 
         // If user has entered keywords only pull logs that contain those keywords
-        if (Input::has('keywords')) {
-            $keywords = trim(Input::get('keywords', null));
+        if ($this->request->has('keywords')) {
+            $keywords = trim($this->request->get('keywords', null));
 
             if (! is_null($keywords) && $keywords != '') {
 

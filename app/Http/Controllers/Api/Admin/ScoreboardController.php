@@ -7,9 +7,8 @@ use BFACP\Exceptions\PlayerNotFoundException as PlayerNotFoundException;
 use BFACP\Exceptions\RconException as RconException;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\Api\Controller;
+use BFACP\Repositories\Scoreboard\LiveServerRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
-use Illuminate\Support\Facades\App as App;
-use Illuminate\Support\Facades\Input as Input;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException as AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException as NotFoundHttpException;
 
@@ -53,15 +52,13 @@ class ScoreboardController extends Controller
      */
     public function __construct()
     {
-        parent::__construct();
-
         $permissions = $this->cache->get('admin.perm.list');
 
         if (! $this->isLoggedIn || ! $this->user->ability(null, $permissions['scoreboard'])) {
             throw new AccessDeniedHttpException();
         }
 
-        $id = Input::get('server_id');
+        $id = $this->request->get('server_id');
 
         if (! is_numeric($id) || ! filter_var($id, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]])) {
             throw new NotFoundHttpException('Invalid Server ID');
@@ -73,10 +70,10 @@ class ScoreboardController extends Controller
             throw new NotFoundHttpException(sprintf('No server found with id of %s.', $id));
         }
 
-        $this->repository = App::make('BFACP\Repositories\Scoreboard\LiveServerRepository', [$this->server])->attempt();
+        $this->repository = app(LiveServerRepository::class, [$this->server])->attempt();
 
-        if (Input::has('players')) {
-            $this->players = array_map('trim', explode(',', Input::get('players')));
+        if ($this->request->has('players')) {
+            $this->players = array_map('trim', explode(',', $this->request->get('players')));
         }
     }
 
@@ -87,7 +84,7 @@ class ScoreboardController extends Controller
      */
     public function anyIndex()
     {
-        return $this->_response(null, 'Resource Not Found', 'error', 404);
+        return $this->_response(null, 'Resource Not Found', 'error');
     }
 
     /**
@@ -142,12 +139,12 @@ class ScoreboardController extends Controller
     {
         $this->hasPermission('admin.scoreboard.yell');
 
-        $message = Input::get('message', null);
-        $duration = Input::get('duration', 5);
-        $type = Input::get('type', 'All');
-        $team = Input::get('team', null);
+        $message = $this->request->get('message', null);
+        $duration = $this->request->get('duration', 5);
+        $type = $this->request->get('type', 'All');
+        $team = $this->request->get('team', null);
 
-        if (Input::get('type') == 'Player' && ! empty($this->players)) {
+        if ($this->request->get('type') == 'Player' && ! empty($this->players)) {
             foreach ($this->players as $player) {
                 try {
                     $this->data[] = [
@@ -179,17 +176,17 @@ class ScoreboardController extends Controller
     {
         $this->hasPermission('admin.scoreboard.say');
 
-        $message = Input::get('message', null);
-        $team = Input::get('team', null);
-        $type = Input::get('type', 'All');
+        $message = $this->request->get('message', null);
+        $team = $this->request->get('team', null);
+        $type = $this->request->get('type', 'All');
 
-        if ((bool) Input::get('hideName', false) == true) {
+        if ((bool) $this->request->get('hideName', false) == true) {
             $hideName = false;
         } else {
             $hideName = true;
         }
 
-        if (Input::get('type') == 'Player' && ! empty($this->players)) {
+        if ($this->request->get('type') == 'Player' && ! empty($this->players)) {
             foreach ($this->players as $player) {
                 try {
                     $this->data[] = [
@@ -223,7 +220,7 @@ class ScoreboardController extends Controller
 
         foreach ($this->players as $player) {
             try {
-                $this->repository->adminTell($player, Input::get('message', null), 10, false);
+                $this->repository->adminTell($player, $this->request->get('message', null), 10, false);
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = $e->getMessage();
             }
@@ -243,7 +240,7 @@ class ScoreboardController extends Controller
 
         foreach ($this->players as $player) {
             try {
-                $this->data[] = $this->repository->adminKill($player, Input::get('message', null));
+                $this->data[] = $this->repository->adminKill($player, $this->request->get('message', null));
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = [
                     'player'  => $player,
@@ -264,8 +261,8 @@ class ScoreboardController extends Controller
     {
         $this->hasPermission('admin.scoreboard.nuke');
 
-        if (Input::has('teamId')) {
-            $teamId = Input::get('teamId', 0);
+        if ($this->request->has('teamId')) {
+            $teamId = $this->request->get('teamId', 0);
         } else {
             return $this->_response(null, 'Team ID Required', 'error');
         }
@@ -290,7 +287,7 @@ class ScoreboardController extends Controller
 
         foreach ($this->players as $player) {
             try {
-                $this->data[] = $this->repository->adminKick($player, Input::get('message', null));
+                $this->data[] = $this->repository->adminKick($player, $this->request->get('message', null));
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = [
                     'player'  => $player,
@@ -313,9 +310,9 @@ class ScoreboardController extends Controller
 
         foreach ($this->players as $player) {
             try {
-                $team = Input::get('team', null);
-                $squad = Input::get('squad', null);
-                $locked = Input::get('locked', false);
+                $team = $this->request->get('team', null);
+                $squad = $this->request->get('squad', null);
+                $locked = $this->request->get('locked', false);
 
                 $this->data[] = $this->repository->adminMovePlayer($player, $team, $squad, $locked);
             } catch (PlayerNotFoundException $e) {
@@ -345,7 +342,7 @@ class ScoreboardController extends Controller
 
         foreach ($this->players as $player) {
             try {
-                $this->data[] = $this->repository->adminPunish($player, Input::get('message', null));
+                $this->data[] = $this->repository->adminPunish($player, $this->request->get('message', null));
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = [
                     'player'  => $player,
@@ -373,7 +370,7 @@ class ScoreboardController extends Controller
 
         foreach ($this->players as $player) {
             try {
-                $this->data[] = $this->repository->adminForgive($player, Input::get('message', null));
+                $this->data[] = $this->repository->adminForgive($player, $this->request->get('message', null));
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = [
                     'player'  => $player,
@@ -401,7 +398,7 @@ class ScoreboardController extends Controller
 
         foreach ($this->players as $player) {
             try {
-                $this->data[] = $this->repository->adminMute($player, Input::get('message', null));
+                $this->data[] = $this->repository->adminMute($player, $this->request->get('message', null));
             } catch (PlayerNotFoundException $e) {
                 $this->errors[] = [
                     'player'  => $player,

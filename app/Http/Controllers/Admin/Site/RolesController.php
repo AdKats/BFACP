@@ -8,7 +8,6 @@ use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -63,9 +62,9 @@ class RolesController extends Controller
         try {
             $role = new Role();
 
-            $permissions = new Collection(Input::get('permissions', []));
+            $permissions = new Collection($this->request->get('permissions', []));
 
-            if (Input::has('permissions')) {
+            if ($this->request->has('permissions')) {
                 $permissions = $permissions->filter(function ($id) {
                     if (is_numeric($id)) {
                         return true;
@@ -75,7 +74,7 @@ class RolesController extends Controller
                 });
             }
 
-            $v = Validator::make(Input::all(), [
+            $v = Validator::make($this->request->all(), [
                 'role_name' => Role::$rules['name'],
             ]);
 
@@ -83,7 +82,7 @@ class RolesController extends Controller
                 return redirect()->route('admin.site.roles.create')->withErrors($v)->withInput();
             }
 
-            $role->name = trim(Input::get('role_name'));
+            $role->name = trim($this->request->get('role_name'));
             $role->save();
 
             // Update role permissions
@@ -145,9 +144,9 @@ class RolesController extends Controller
 
             $role = Role::findOrFail($id);
 
-            $permissions = new Collection(Input::get('permissions', []));
+            $permissions = new Collection($this->request->get('permissions', []));
 
-            if (Input::has('permissions')) {
+            if ($this->request->has('permissions')) {
                 $permissions = $permissions->filter(function ($id) {
                     if (is_numeric($id)) {
                         return true;
@@ -160,8 +159,8 @@ class RolesController extends Controller
             // Update role permissions
             $role->permissions()->sync($permissions->toArray());
 
-            if (Input::get('display_name') != $role->name && ! in_array($role->id, [1, 2])) {
-                $role->name = trim(Input::get('display_name'));
+            if ($this->request->get('display_name') != $role->name && ! in_array($role->id, [1, 2])) {
+                $role->name = trim($this->request->get('display_name'));
                 $role->save();
             } else {
                 // Update timestamp

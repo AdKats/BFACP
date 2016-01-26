@@ -5,23 +5,28 @@ namespace BFACP\Http\Controllers\Admin\Site;
 use BFACP\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Input;
 
 /**
  * Class MaintenanceController.
  */
 class MaintenanceController extends Controller
 {
+    /**
+     * @return $this
+     */
     public function index()
     {
         return view('admin.site.maintenance.index')->with('page_title',
             trans('navigation.main.items.maintenance.title'));
     }
 
+    /**
+     * @return mixed
+     */
     public function update()
     {
-        if (Input::has('maintenance_mode')) {
-            switch (Input::get('maintenance_mode')) {
+        if ($this->request->has('maintenance_mode')) {
+            switch ($this->request->get('maintenance_mode')) {
                 case 1:
                     if (! File::exists(storage_path().'/meta/down')) {
                         $this->messages[] = 'Maintenance mode enabled';
@@ -37,7 +42,7 @@ class MaintenanceController extends Controller
             }
         }
 
-        if (Input::has('cache_flush') && Input::get('cache_flush') == 1) {
+        if ($this->request->has('cache_flush') && $this->request->get('cache_flush') == 1) {
             $this->messages[] = 'Cache Cleared';
             Artisan::call('cache:clear');
         }

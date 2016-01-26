@@ -8,10 +8,9 @@ use BFACP\Account\User;
 use BFACP\Battlefield\Player;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Http\Controllers\Controller;
+use BFACP\Repositories\UserRepository;
 use Former\Facades\Former;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -48,12 +47,12 @@ class UsersController extends Controller
      */
     public function store()
     {
-        $repo = app('BFACP\Repositories\UserRepository');
+        $repo = app(UserRepository::class);
 
-        $v = Validator::make(Input::all(), [
+        $v = Validator::make($this->request->all(), [
             'username' => 'required|alpha_dash|min:4|unique:bfacp_users,username',
             'email'    => 'required|email|unique:bfacp_users,email',
-            'language' => 'required|in:'.implode(',', array_keys(Config::get('bfacp.site.languages'))),
+            'language' => 'required|in:'.implode(',', array_keys($this->config->get('bfacp.site.languages'))),
             'soldier'  => 'exists:tbl_playerdata,SoldierName',
             'role'     => 'required',
         ]);
@@ -63,13 +62,13 @@ class UsersController extends Controller
         }
 
         $data = [
-            'username' => Input::get('username'),
-            'email'    => Input::get('email'),
-            'ign'      => Input::get('soldier'),
-            'lang'     => Input::get('language', 'en'),
+            'username' => $this->request->get('username'),
+            'email'    => $this->request->get('email'),
+            'ign'      => $this->request->get('soldier'),
+            'lang'     => $this->request->get('language', 'en'),
         ];
 
-        $user = $repo->signup($data, Input::get('role', 2), true, true);
+        $user = $repo->signup($data, $this->request->get('role', 2), true, true);
 
         $this->messages[] = trans('site.admin.users.updates.password.generated',
             ['username' => $user->username, 'email' => $user->email]);
@@ -81,11 +80,13 @@ class UsersController extends Controller
      * Show the editing page.
      *
      * @param int $id User ID
+     *
+     * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
         try {
-            // If the user we are editing is the current logged in user don't refetch them.
+            // If the user we are editing is the current logged in user don't re-fetch them.
             if ($this->isLoggedIn && $this->user->id == $id) {
                 $user = $this->user;
             } else {
@@ -113,23 +114,25 @@ class UsersController extends Controller
      * Update user.
      *
      * @param int $id User ID
+     *
+     * @return $this
      */
     public function update($id)
     {
         try {
             $user = User::findOrFail($id);
 
-            $username = trim(Input::get('username', null));
-            $email = trim(Input::get('email', null));
-            $roleId = trim(Input::get('role', null));
-            $lang = trim(Input::get('language', null));
-            $status = trim(Input::get('confirmed', null));
-            $soldiers = explode(',', Input::get('soldiers', ''));
+            $username = trim($this->request->get('username', null));
+            $email = trim($this->request->get('email', null));
+            $roleId = trim($this->request->get('role', null));
+            $lang = trim($this->request->get('language', null));
+            $status = trim($this->request->get('confirmed', null));
+            $soldiers = explode(',', $this->request->get('soldiers', ''));
 
-            $v = Validator::make(Input::all(), [
+            $v = Validator::make($this->request->all(), [
                 'username'      => 'required|alpha_dash|min:4|unique:bfacp_users,username,'.$id,
                 'email'         => 'required|email|unique:bfacp_users,email,'.$id,
-                'language'      => 'required|in:'.implode(',', array_keys(Config::get('bfacp.site.languages'))),
+                'language'      => 'required|in:'.implode(',', array_keys($this->config->get('bfacp.site.languages'))),
                 'generate_pass' => 'boolean',
                 'confirmed'     => 'boolean',
             ]);
@@ -166,8 +169,8 @@ class UsersController extends Controller
                 $user->email = $email;
             }
 
-            if (Input::has('generate_pass')) {
-                $repo = app('BFACP\Repositories\UserRepository');
+            if ($this->request->has('generate_pass')) {
+                $repo = app(UserRepository::class);
 
                 // Generate a new password
                 $newPassword = $repo->generatePassword();
@@ -185,14 +188,14 @@ class UsersController extends Controller
 
             $user->soldiers()->delete();
 
-            if (Input::has('soldiers')) {
+            if ($this->request->has('soldiers')) {
                 foreach ($soldiers as $soldier) {
                     $soldier_ids[] = new Soldier(['player_id' => $soldier]);
                 }
             }
 
-            if (Input::has('soldier')) {
-                $players = Player::where('SoldierName', Input::get('soldier'))->pluck('PlayerID');
+            if ($this->request->has('soldier')) {
+                $players = Player::where('SoldierName', $this->request->get('soldier'))->pluck('PlayerID');
 
                 foreach ($players as $player) {
                     if (! in_array($player, $soldiers)) {
@@ -218,9 +221,8 @@ class UsersController extends Controller
 
             $this->messages[] = trans('alerts.user.saved');
 
-            return redirect()->route('admin.site.users.edit', [$id])
-                ->withMessages($this->messages)
-                ->withErrors($this->errors);
+            return redirect()->route('admin.site.users.edit',
+                [$id])->withMessages($this->messages)->withErrors($this->errors);
         } catch (ModelNotFoundException $e) {
             $this->messages[] = trans('alerts.user.invalid', ['userid' => $id]);
 
@@ -245,7 +247,7 @@ class UsersController extends Controller
             $this->messages[] = trans('alerts.user.deleted', compact('username'));
 
             return MainHelper::response([
-                'url' => route('admin.site.users.index'),
+                'url'      => route('admin.site.users.index'),
                 'messages' => $this->messages,
             ]);
         } catch (ModelNotFoundException $e) {

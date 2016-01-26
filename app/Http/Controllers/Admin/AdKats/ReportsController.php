@@ -3,7 +3,7 @@
 namespace BFACP\Http\Controllers\Admin\Adkats;
 
 use BFACP\Http\Controllers\Controller;
-use Illuminate\Support\Facades\App as App;
+use BFACP\Repositories\ReportRepository;
 
 /**
  * Class ReportsController.
@@ -15,7 +15,7 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        $r = App::make('BFACP\Repositories\ReportRepository');
+        $r = app(ReportRepository::class);
 
         $reports = $r->getReports(true);
         $commands = $r->getActions();

@@ -4,12 +4,12 @@ namespace BFACP\Http\Controllers\Api;
 
 use BFACP\Adkats\Setting;
 use BFACP\Facades\Main as MainHelper;
+use BFACP\Repositories\ReportRepository;
 use Carbon\Carbon;
 use Dingo\Api\Exception\ResourceException;
 use Dingo\Api\Exception\UpdateResourceFailedException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input as Input;
 use Illuminate\Support\Facades\Validator as Validator;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException as AccessDeniedHttpException;
 
@@ -19,17 +19,9 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException as AccessDe
 class ReportsController extends Controller
 {
     /**
-     * @var \BFACP\Repositories\ReportRepository
+     * @var ReportRepository
      */
     private $repository;
-
-    /**
-     *
-     */
-    public function __construct()
-    {
-        $this->repository = app('BFACP\Repositories\ReportRepository');
-    }
 
     /**
      * Returns the latest 30 reports.
@@ -39,6 +31,8 @@ class ReportsController extends Controller
         if (! Auth::check() || ! Auth::user()->ability(null, 'admin.adkats.reports.view')) {
             throw new AccessDeniedHttpException;
         }
+
+        $this->repository = app(ReportRepository::class);
 
         return MainHelper::response($this->repository->getReports(false), null, null, null, false, true);
     }
@@ -50,6 +44,8 @@ class ReportsController extends Controller
      */
     public function getActions()
     {
+        $this->repository = app(ReportRepository::class);
+
         return $this->repository->getActions();
     }
 
@@ -62,7 +58,9 @@ class ReportsController extends Controller
             throw new AccessDeniedHttpException;
         }
 
-        $v = Validator::make(Input::all(), [
+        $this->repository = app(ReportRepository::class);
+
+        $v = Validator::make($this->request->all(), [
             'id'                   => 'required|numeric|exists:adkats_records_main,record_id',
             'action'               => 'required|numeric|in:'.implode(',', $this->repository->getAllowedCommands()),
             'reason'               => 'required|string|between:3,500',
@@ -77,26 +75,26 @@ class ReportsController extends Controller
         }
 
         try {
-            $record = $this->repository->getReportById(Input::get('id'));
+            $record = $this->repository->getReportById($this->request->get('id'));
 
             if (! in_array($record->command_action, [18, 20])) {
                 throw new UpdateResourceFailedException('Unable to complete action. Report has already been acted on.');
             }
 
             // If the action is {Accept, Deny, Ignore} Round Report then we just need to update the existing record.
-            if (in_array(Input::get('action'), [40, 41, 61])) {
-                $record->command_action = Input::get('action');
+            if (in_array($this->request->get('action'), [40, 41, 61])) {
+                $record->command_action = $this->request->get('action');
                 $record->save();
             } else {
                 $newRecord = $record->replicate();
-                $newRecord->command_type = Input::get('action');
-                $newRecord->command_action = Input::get('action');
+                $newRecord->command_type = $this->request->get('action');
+                $newRecord->command_action = $this->request->get('action');
 
-                if (Input::get('action') == 7) {
+                if ($this->request->get('action') == 7) {
                     $maxDuration = Setting::where('setting_name',
                         'Maximum Temp-Ban Duration Minutes')->where('server_id', 1)->pluck('setting_value');
 
-                    $duration = Input::get('extras.tban.duration', $maxDuration);
+                    $duration = $this->request->get('extras.tban.duration', $maxDuration);
 
                     $commandNumeric = (int) $duration > (int) $maxDuration ? $maxDuration : $duration;
                 } else {
@@ -105,7 +103,7 @@ class ReportsController extends Controller
 
                 $newRecord->command_numeric = $commandNumeric;
 
-                $newMessage = trim(Input::get('reason', $newRecord->record_message));
+                $newMessage = trim($this->request->get('reason', $newRecord->record_message));
                 $oldMessage = trim($newRecord->record_message);
 
                 if ($newMessage != $oldMessage && ! empty($newMessage)) {

@@ -2,7 +2,7 @@
 
 namespace BFACP\Http\Controllers;
 
-use Illuminate\Support\Facades\App;
+use BFACP\Repositories\PlayerRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $playerRepository = App::make('BFACP\Repositories\PlayerRepository');
+        $playerRepository = app(PlayerRepository::class);
 
         // Cache results for 1 day
         $uniquePlayers = $this->cache->remember('players.unique.total', 60 * 24, function () use (&$playerRepository) {

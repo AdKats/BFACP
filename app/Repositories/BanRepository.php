@@ -53,9 +53,9 @@ class BanRepository extends BaseRepository
     {
         $bans = Ban::with('player', 'record')->orderBy('ban_startTime', 'desc');
 
-        if (Input::has('player')) {
+        if ($this->request->has('player')) {
             $bans = $bans->whereHas('player', function ($query) {
-                $query->where('SoldierName', 'LIKE', sprintf('%s%%', Input::get('player')));
+                $query->where('SoldierName', 'LIKE', sprintf('%s%%', $this->request->get('player')));
             });
         }
 
