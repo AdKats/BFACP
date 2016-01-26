@@ -1,7 +1,6 @@
 <?php
 
 use BFACP\Account\Role;
-use BFACP\Battlefield\Server\Server;
 use BFACP\Facades\Macros;
 use Illuminate\Support\Facades\Cache;
 
