@@ -266,7 +266,7 @@ Route::group(['middleware' => 'web'], function () {
                 ],
             ]);
 
-            Route::resource('servers', 'ServersController', [
+            Route::resource('server', 'ServersController', [
                 'names' => [
                     'index'  => 'admin.site.servers.index',
                     'edit'   => 'admin.site.servers.edit',
