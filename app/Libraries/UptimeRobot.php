@@ -8,7 +8,7 @@ use GuzzleHttp\Client;
 use Illuminate\Config\Repository as Config;
 
 /**
- * Class UptimeRobot
+ * Class UptimeRobot.
  */
 class UptimeRobot
 {
@@ -18,7 +18,7 @@ class UptimeRobot
     public static $apiurl = 'https://api.uptimerobot.com';
 
     /**
-     * Account specific
+     * Account specific.
      *
      * @var string
      */
@@ -84,14 +84,14 @@ class UptimeRobot
     private $options = [];
 
     /**
-     * Total monitors
+     * Total monitors.
      *
      * @var int
      */
     protected $total = 0;
 
     /**
-     * UptimeRobot timezone
+     * UptimeRobot timezone.
      *
      * @var string|null
      */
@@ -204,7 +204,7 @@ class UptimeRobot
     }
 
     /**
-     * Returns all monitors or only the ones in $monitorIds
+     * Returns all monitors or only the ones in $monitorIds.
      *
      * @param array $monitorIds
      *
@@ -240,30 +240,30 @@ class UptimeRobot
                         }
 
                         switch ($k) {
-                            case "alltimeuptimeratio":
+                            case 'alltimeuptimeratio':
                                 $monitor[$k] = (float) $v;
                                 break;
-                            case "status":
+                            case 'status':
                                 $monitor['status'] = self::$status[$monitor[$k]];
                                 break;
-                            case "friendlyname":
+                            case 'friendlyname':
                                 $monitor[$k] = html_entity_decode($monitor[$k]);
                                 break;
-                            case "type":
+                            case 'type':
                                 $monitor[$k] = self::$types[$monitor[$k]];
                                 break;
-                            case "subtype":
+                            case 'subtype':
                                 if ($monitor['type'] == 'Port') {
                                     $monitor[$k] = self::$subTypes[$monitor[$k]];
                                 }
                                 break;
-                            case "log":
+                            case 'log':
                                 for ($i = 0; $i < count($v); $i++) {
                                     $type = $monitor[$k][$i]['type'];
                                     $monitor[$k][$i]['type'] = self::$logTypes[$type];
                                 }
                                 break;
-                            case "responsetime":
+                            case 'responsetime':
                                 for ($i = 0; $i < count($v); $i++) {
                                     $monitor[$k][$i]['value'] = (int) $monitor[$k][$i]['value'];
                                 }
