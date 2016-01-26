@@ -13,11 +13,19 @@
                     {!! Former::text('rcon_password')
                         ->label('RCON Password')
                         ->help('Enter RCON password for server. This is required for the Live Scoreboard to function. Leave field blank to not change it.')
-                        ->forceValue(null) !!}
+                        ->forceValue('') !!}
 
                     {!! Former::text('battlelog_guid')
                         ->label('Battlelog GUID')
                         ->help('Battlelog GUID of your server. Required for certain information to be displayed.') !!}
+
+                    @if(Config::get('uptimerobot.enabled'))
+                    {!! Former::checkbox('use_uptimerobot')
+                        ->label('Enable Monitor')
+                        ->help('If checked this will setup this server on UptimeRobot.')
+                        ->value(1)
+                        ->check(!empty($server->setting->monitor_key)) !!}
+                    @endif
 
                     {!! Former::inline_radios('server_status')->label('Status')->radios([
                         'Inactive' => ['name' => 'status', 'value' => 'off'],

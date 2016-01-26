@@ -199,7 +199,7 @@ Breadcrumbs::register('admin.site.servers.index', function ($b) {
     ]);
 });
 
-Breadcrumbs::register('admin.site.servers.edit', function ($b, $id) {
+Breadcrumbs::register('admin.site.servers.edit', function ($b, $server) {
     $b->parent('admin.site.servers.index');
-    $b->push(sprintf('%s', Server::find($id)->ServerName));
+    $b->push($server->ServerName);
 });

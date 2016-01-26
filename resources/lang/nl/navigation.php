@@ -96,7 +96,9 @@ return [
                         'fa'  => 'fa-server',
                         'ion' => null,
                     ],
-                    'items' => [],
+                    'items' => [
+                        'edit' => 'Editing :servername',
+                    ],
                 ],
                 'updater'  => [
                     'title' => 'Updates',

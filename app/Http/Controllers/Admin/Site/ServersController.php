@@ -4,11 +4,12 @@ namespace BFACP\Http\Controllers\Admin\Site;
 
 use BFACP\Battlefield\Server\Server as Server;
 use BFACP\Battlefield\Setting as Setting;
+use BFACP\Exceptions\UptimeRobotException;
 use BFACP\Http\Controllers\Controller;
+use BFACP\Libraries\Battlelog\BattlelogServer;
+use BFACP\Libraries\UptimeRobot;
 use Exception as Exception;
 use Former\Facades\Former as Former;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\App as App;
 use Illuminate\Support\Facades\Input as Input;
 use Illuminate\Support\Facades\Session as Session;
 
@@ -17,86 +18,107 @@ use Illuminate\Support\Facades\Session as Session;
  */
 class ServersController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $servers = Server::all();
 
-        return view('admin.site.servers.index', compact('servers'))->with('page_title', 'Servers');
+        $page_title = trans('navigation.admin.site.items.servers.title');
+
+        return view('admin.site.servers.index', compact('servers', 'page_title'));
     }
 
     /**
-     * @param $id
+     * @param Server $server
      *
-     * @return mixed
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Server $server)
     {
-        try {
-            $server = Server::findOrFail($id);
+        $id = $server->ServerID;
 
-            // If no setting entry exists for the server we need to create it
-            if (is_null($server->setting)) {
-                try {
-                    $battlelog = App::make('BFACP\Libraries\Battlelog\BattlelogServer')->server($server);
-                    $serverguid = $battlelog->guid();
-                } catch (Exception $e) {
-                    $serverguid = null;
-                    Session::flash('warnings', [
-                        'Unable to automatically get the battlelog server guid. Please manually enter it.',
-                    ]);
+        // If no setting entry exists for the server we need to create it
+        if (is_null($server->setting)) {
+            try {
+                $battlelog = app(BattlelogServer::class)->server($server);
+                $serverguid = $battlelog->guid();
+
+                if (empty($serverguid)) {
+                    throw new Exception('Battlelog returned an empty string for the GUID.');
                 }
-
-                $setting = new Setting(['server_id' => $id, 'battlelog_guid' => $serverguid]);
-                $setting->server()->associate($server)->save();
-                $server->load('setting');
+            } catch (Exception $e) {
+                $serverguid = null;
+                Session::flash('warnings', [
+                    'Unable to automatically get the battlelog server guid. Please manually enter it.',
+                ]);
             }
 
-            Former::populate($server->setting);
-
-            return view('admin.site.servers.edit', compact('server'))->with('page_title', 'Server Settings');
-        } catch (ModelNotFoundException $e) {
-            return redirect()->route('admin.site.servers.index')->withErrors(['Server doesn\'t exist.']);
+            $setting = new Setting(['server_id' => $id, 'battlelog_guid' => $serverguid]);
+            $setting->server()->associate($server)->save();
+            $server->load('setting');
         }
+
+        Former::populate($server->setting);
+
+        $page_title = trans('navigation.admin.site.items.servers.items.edit', ['servername' => $server->ServerName]);
+
+        return view('admin.site.servers.edit', compact('server', 'page_title'));
     }
 
     /**
-     * @param $id
+     * @param Server $server
      *
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($id)
+    public function update(Server $server)
     {
-        try {
-            $server = Server::findOrFail($id);
-            $setting = $server->setting;
+        $id = $server->ServerID;
+        $setting = $server->setting;
 
-            if (Input::has('rcon_password') && ! empty(trim(Input::get('rcon_password')))) {
-                $password = Input::get('rcon_password');
-                $setting->rcon_password = trim($password);
-            }
-
-            if (Input::has('filter')) {
-                $chars = array_map('trim', explode(',', Input::get('filter')));
-                $setting->filter = implode(',', $chars);
-            } else {
-                $setting->filter = null;
-            }
-
-            if (Input::has('battlelog_guid')) {
-                $setting->battlelog_guid = trim(Input::get('battlelog_guid'));
-            } else {
-                $setting->battlelog_guid = null;
-            }
-
-            $setting->save();
-
-            $server->ConnectionState = Input::get('status', 'off');
-            $server->save();
-
-            return redirect()->route('admin.site.servers.index')->with('messages',
-                [sprintf('Successfully Updated %s', $server->ServerName)]);
-        } catch (ModelNotFoundException $e) {
-            return redirect()->route('admin.site.servers.index')->withErrors(['Server doesn\'t exist.']);
+        if (Input::has('rcon_password') && ! empty(trim(Input::get('rcon_password')))) {
+            $password = Input::get('rcon_password');
+            $setting->rcon_password = trim($password);
         }
+
+        if (Input::has('filter')) {
+            $chars = array_map('trim', explode(',', Input::get('filter')));
+            $setting->filter = implode(',', $chars);
+        } else {
+            $setting->filter = null;
+        }
+
+        if (Input::has('battlelog_guid')) {
+            $setting->battlelog_guid = trim(Input::get('battlelog_guid'));
+        } else {
+            $setting->battlelog_guid = null;
+        }
+
+        if ($this->config->get('uptimerobot.enabled')) {
+            try {
+                $uptimerobot = app(UptimeRobot::class);
+
+                if (empty($setting->monitor_key) && $this->request->has('use_uptimerobot')) {
+                    $robot_id = $uptimerobot->createMonitor($server);
+                    $setting->monitor_key = $robot_id;
+                } elseif (! empty($setting->monitor_key) && ! $this->request->has('use_uptimerobot')) {
+                    $uptimerobot->deleteMonitor($server);
+                    $setting->monitor_key = null;
+                }
+            } catch (UptimeRobotException $e) {
+                Session::flash('warnings', [
+                    $e->getMessage(),
+                ]);
+            }
+        }
+
+        $setting->save();
+
+        $server->ConnectionState = Input::get('status', 'off');
+        $server->save();
+
+        return redirect()->route('admin.site.servers.edit', [$id])->with('messages',
+            [sprintf('Successfully Updated %s', $server->ServerName)]);
     }
 }
