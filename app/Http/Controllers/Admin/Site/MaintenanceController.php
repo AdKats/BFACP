@@ -16,6 +16,7 @@ class MaintenanceController extends Controller
     public function index()
     {
         $page_title = trans('navigation.main.items.maintenance.title');
+
         return view('admin.site.maintenance.index', compact('page_title'));
     }
 
