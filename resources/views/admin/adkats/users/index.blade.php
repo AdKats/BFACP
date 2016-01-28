@@ -104,17 +104,17 @@
                             username: promptVal
                         }
                     })
-                            .done(function (data) {
-                                window.location.href = data.data.url;
-                            })
-                            .fail(function (xhr) {
-                                var response = xhr.responseJSON;
-                                alert(response.message);
-                            })
-                            .always(function () {
-                                btn.find('i').removeClass('fa-spinner fa-pulse').addClass('fa-plus');
-                                btn.attr('disabled', false);
-                            });
+                    .done(function (data) {
+                        window.location.href = data.data.url;
+                    })
+                    .fail(function (xhr) {
+                        var response = xhr.responseJSON;
+                        alert(response.message);
+                    })
+                    .always(function () {
+                        btn.find('i').removeClass('fa-spinner fa-pulse').addClass('fa-plus');
+                        btn.attr('disabled', false);
+                    });
                 }
             });
         </script>

@@ -57,7 +57,7 @@
         </section>
 
         <section class="content">
-            @if(isset($appdown) && $appdown)
+            @if(env('APP_DOWN'))
                 <div class="alert alert-warning">
                     <i class="fa fa-exclamation-triangle animated infinite flash"></i>
                     Maintenance Mode Enabled

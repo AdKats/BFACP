@@ -5,12 +5,18 @@
         <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header">
+                    <h3 class="box-title">&nbsp;</h3>
                     <div class="box-tools">
                         <div class="pull-right">
-                            {!! Former::text('player')->placeholder('Search for a player...') !!}
+                            {!! Former::text('player')->placeholder(trans('common.nav.extras.psearch.placeholder')) !!}
                         </div>
                         <div class="pull-left" style="padding-right: 20px">
-                            {!! Former::checkbox('personal')->text('Personal Bans Only') !!}
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="personal" id="personal" value="1" @if(request()->has('personal')) checked @endif>
+                                    {{ trans('adkats.bans.listing.personal') }}
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -32,13 +38,18 @@
                             <tbody>
                             @foreach($bans as $ban)
                                 <tr>
-                                    <td>{!! link_to_route('admin.adkats.bans.edit', $ban->ban_id, $ban->ban_id, ['target' => '_self']) !!}</td>
+                                    <td>
+                                        {!! link_to_route('admin.adkats.bans.edit', $ban->ban_id, $ban->ban_id, ['target' => '_self']) !!}
+                                        @if($ban->ban_notes != 'NoNotes' && ! empty($ban->ban_notes))
+                                        <a href="javascript://" class="dotted-info" tooltip="{{ $ban->ban_notes }}"><i class="fa fa-info-circle"></i></a>
+                                        @endif
+                                    </td>
                                     <td>
                                         <span class="{{ $ban->player->game->class_css }}">{{ $ban->player->game->Name }}</span>
                                     </td>
                                     <td>{!! link_to_route('player.show', $ban->player->SoldierName, [$ban->player->PlayerID, $ban->player->SoldierName], ['target' => '_self']) !!}</td>
                                     <td class="hidden-sm">
-                                        @if(!is_null($ban->record->source_id))
+                                        @if(! is_null($ban->record->source_id))
                                             {!! link_to_route('player.show', $ban->record->source_name, [$ban->record->source_id, $ban->record->source_name], ['target' => '_self']) !!}
                                         @else
                                             {{ $ban->record->source_name }}
@@ -93,7 +104,12 @@
 
 @section('scripts')
     <script type="text/javascript">
-        $(document).on('change', '#personal', function (e) {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-blue'
+        });
+
+        $('input[type="checkbox"][name="personal"]').on('ifToggled', function (e) {
             if (this.checked) {
                 if (window.location.href.split("?").length > 1) {
                     window.location.href = window.location.href.split("?")[0] + '?personal=1';

@@ -29,7 +29,13 @@
                                 <tr>
                                     <td>{!! link_to_route('admin.site.users.edit', $user->username, $user->id, ['target' => '_self']) !!}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->roles[0]->name }}</td>
+                                    <td>
+                                        @if(isset($user->roles[0]))
+                                            {{ $user->roles[0]->name }}
+                                        @else
+                                            <span class="text-red">No Role Linked - Sys. Error</span>
+                                        @endif
+                                    </td>
                                     <td>{{ MainHelper::languages($user->setting->lang) }}</td>
                                     <td>
                                         @if($user->confirmed)

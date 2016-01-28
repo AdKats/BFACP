@@ -281,12 +281,13 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('system/maintenance', [
                 'as'     => 'admin.site.maintenance.index',
                 'uses'   => 'MaintenanceController@index',
-                'before' => 'auth|ip.whitelisted',
+                'middleware' => ['auth', 'whitelisted'],
             ]);
+
             Route::post('system/maintenance', [
                 'as'     => 'admin.site.maintenance.update',
                 'uses'   => 'MaintenanceController@update',
-                'before' => 'auth|ip.whitelisted',
+                'middleware' => ['auth', 'whitelisted'],
             ]);
         });
 

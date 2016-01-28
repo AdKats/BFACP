@@ -20,20 +20,41 @@
                         ->help('Battlelog GUID of your server. Required for certain information to be displayed.') !!}
 
                     @if(Config::get('uptimerobot.enabled'))
-                    {!! Former::checkbox('use_uptimerobot')
-                        ->label('Enable Monitor')
-                        ->help('If checked this will setup this server on UptimeRobot.')
-                        ->value(1)
-                        ->check(!empty($server->setting->monitor_key)) !!}
+                        <div class="form-group">
+                            <label for="use_uptimerobot" class="col-sm-2 control-label">Enable Monitor</label>
+
+                            <div class="col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="use_uptimerobot" value="1" @if(!empty($server->setting->monitor_key)) checked @endif>
+                                        Enabled
+                                    </label>
+                                </div>
+
+                                <div class="help-block">
+                                    If checked this will setup this server on UptimeRobot.
+                                </div>
+                            </div>
+                        </div>
                     @endif
 
-                    {!! Former::inline_radios('server_status')->label('Status')->radios([
-                        'Inactive' => ['name' => 'status', 'value' => 'off'],
-                        'Active'   => ['name' => 'status', 'value' => 'on']
-                    ])->check([
-                        'off' => !$server->is_active,
-                        'on' => $server->is_active
-                    ]) !!}
+                    <div class="form-inline">
+                        <label for="server_status" class="col-sm-2 control-label">Status</label>
+
+                        <div class="col-sm-10">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="server_status" value="on" @if($server->is_active) checked @endif>
+                                    Active
+                                </label>
+                                &nbsp;
+                                <label>
+                                    <input type="radio" name="server_status" value="off" @if(! $server->is_active) checked @endif>
+                                    Inactive
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-sm-offset-4 col-lg-10 col-sm-8">

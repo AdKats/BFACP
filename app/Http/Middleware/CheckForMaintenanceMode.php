@@ -6,6 +6,9 @@ use Closure;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 
+/**
+ * Class CheckForMaintenanceMode.
+ */
 class CheckForMaintenanceMode
 {
     /**
@@ -33,6 +36,7 @@ class CheckForMaintenanceMode
     /**
      * @param  Request $request
      * @param  Closure $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -45,8 +49,14 @@ class CheckForMaintenanceMode
             $whitelist = explode('|', $list);
         }
 
-        if ($this->app->isDownForMaintenance() && ! in_array($this->request->getClientIp(), $whitelist)) {
-            return response()->view('system.maintenance', [], 503);
+        if ($this->app->isDownForMaintenance()) {
+            if (! in_array($this->request->getClientIp(), $whitelist)) {
+                return response()->view('system.maintenance', [], 503);
+            }
+
+            putenv('APP_DOWN=true');
+        } else {
+            putenv('APP_DOWN=false');
         }
 
         return $next($request);

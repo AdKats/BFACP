@@ -15,8 +15,8 @@
                     {!! Former::select('user_role')->options($roles)->label(trans('adkats.users.edit.inputs.role.label')) !!}
                     {!! Former::date('user_expiration')
                         ->forceValue($user->user_expiration->toDateString())
-                        ->min(Carbon::now()->toDateString())
-                        ->max(Carbon::now()->addYears(30)->toDateString())
+                        ->min(\Carbon\Carbon::now()->toDateString())
+                        ->max(\Carbon\Carbon::now()->addYears(30)->toDateString())
                         ->label(trans('adkats.users.edit.inputs.expiration.label'))
                         ->help(trans('adkats.users.edit.inputs.expiration.help')) !!}
                     {!! Former::text('user_notes')->maxlength(1000)->label(trans('adkats.users.edit.inputs.notes.label')) !!}

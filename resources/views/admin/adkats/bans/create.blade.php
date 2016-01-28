@@ -36,19 +36,61 @@
                         </div>
                     </div>
 
-                    {!! Former::radios('type')->label(trans('adkats.bans.edit.fields.field8'))->radios([
-                        '&nbsp;' . trans('player.profile.bans.type.permanent.long') => ['name' => 'type', 'value' => 8],
-                        '&nbsp;' . trans('player.profile.bans.type.temporary.long') => ['name' => 'type', 'value' => 7]
-                    ])->inline()->check([
-                        8 => false,
-                        7 => true
-                    ]) !!}
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <label for="type" class="col-sm-2 control-label">{{ trans('adkats.bans.edit.fields.field8') }}</label>
 
-                    {!! Former::checkbox('enforce_guid')->label(trans('adkats.bans.edit.fields.field9'))->check() !!}
+                            <div class="col-sm-10">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="type" value="8">
+                                        {{ trans('player.profile.bans.type.permanent.long') }}
+                                    </label>
+                                    &nbsp;
+                                    <label>
+                                        <input type="radio" name="type" value="7" checked>
+                                        {{ trans('player.profile.bans.type.temporary.long') }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    {!! Former::checkbox('enforce_name')->label(trans('adkats.bans.edit.fields.field10')) !!}
+                    <div class="form-group">
+                        <label for="enforce_guid" class="col-sm-2 control-label">{{ trans('adkats.bans.edit.fields.field9') }}</label>
 
-                    {!! Former::checkbox('enforce_ip')->label(trans('adkats.bans.edit.fields.field11')) !!}
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="enforce_guid" value="1" checked>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="enforce_name" class="col-sm-2 control-label">{{ trans('adkats.bans.edit.fields.field10') }}</label>
+
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="enforce_name" value="1">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="enforce_ip" class="col-sm-2 control-label">{{ trans('adkats.bans.edit.fields.field11') }}</label>
+
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="enforce_ip" value="1">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-sm-offset-4 col-lg-10 col-sm-8">

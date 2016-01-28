@@ -43,9 +43,9 @@
                         @foreach($role->users as $user)
                             <tr>
                                 <td>{!! link_to_route('admin.adkats.users.edit', $user->user_name, $user->user_id, ['target' => '_blank']) !!}</td>
-                    </tr>
-                    @endforeach
-                    </tbody>
+                            </tr>
+                        @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>

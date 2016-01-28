@@ -4,6 +4,7 @@ return [
 
     'bans'            => [
         'listing' => [
+            'personal' => 'Alleen mijn verboden.',
             'table' => [
                 'col1' => 'ID',
                 'col2' => 'Spel',

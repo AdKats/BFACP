@@ -67,19 +67,13 @@ class Controller extends BaseController
      */
     public $config;
 
-    /**
-     * @param Cache   $cache
-     * @param Request $request
-     * @param DB      $database
-     * @param Config  $config
-     */
-    public function __construct(Cache $cache, Request $request, DB $database, Config $config)
+    public function __construct()
     {
         $this->user = Auth::user();
         $this->isLoggedIn = Auth::check();
-        $this->cache = $cache;
-        $this->request = $request;
-        $this->db = $database;
-        $this->config = $config;
+        $this->cache = app(Cache::class);
+        $this->request = app(Request::class);
+        $this->db = app(DB::class);
+        $this->config = app(Config::class);
     }
 }

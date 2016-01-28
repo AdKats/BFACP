@@ -27,7 +27,7 @@ class SpecialPlayersController extends Controller
     }
 
     /**
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -35,8 +35,9 @@ class SpecialPlayersController extends Controller
 
         $groups = MainHelper::specialGroups();
 
-        return view('admin.adkats.special_players.index', compact('players', 'groups'))->with('page_title',
-            trans('navigation.admin.adkats.items.special_players.title'));
+        $page_title = trans('navigation.admin.adkats.items.special_players.title');
+
+        return view('admin.adkats.special_players.index', compact('players', 'groups', 'page_title'));
     }
 
     /**

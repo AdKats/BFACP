@@ -4,7 +4,6 @@ namespace BFACP\Http\Controllers\Admin\Site;
 
 use BFACP\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\File;
 
 /**
  * Class MaintenanceController.
@@ -12,12 +11,12 @@ use Illuminate\Support\Facades\File;
 class MaintenanceController extends Controller
 {
     /**
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        return view('admin.site.maintenance.index')->with('page_title',
-            trans('navigation.main.items.maintenance.title'));
+        $page_title = trans('navigation.main.items.maintenance.title');
+        return view('admin.site.maintenance.index', compact('page_title'));
     }
 
     /**
@@ -28,13 +27,13 @@ class MaintenanceController extends Controller
         if ($this->request->has('maintenance_mode')) {
             switch ($this->request->get('maintenance_mode')) {
                 case 1:
-                    if (! File::exists(storage_path().'/meta/down')) {
+                    if (! env('APP_DOWN')) {
                         $this->messages[] = 'Maintenance mode enabled';
                         Artisan::call('down');
                     }
                     break;
                 case 0:
-                    if (File::exists(storage_path().'/meta/down')) {
+                    if (env('APP_DOWN')) {
                         $this->messages[] = 'Maintenance mode disabled';
                         Artisan::call('up');
                     }

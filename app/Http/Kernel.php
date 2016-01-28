@@ -5,6 +5,7 @@ namespace BFACP\Http;
 use BFACP\Http\Middleware\Authenticate;
 use BFACP\Http\Middleware\CheckForMaintenanceMode;
 use BFACP\Http\Middleware\EncryptCookies;
+use BFACP\Http\Middleware\IpWhitelisted;
 use BFACP\Http\Middleware\RedirectIfAuthenticated;
 use BFACP\Http\Middleware\Secure;
 use BFACP\Http\Middleware\VerifyCsrfToken;
@@ -60,13 +61,14 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'       => Authenticate::class,
-        'auth.basic' => AuthenticateWithBasicAuth::class,
-        'guest'      => RedirectIfAuthenticated::class,
-        'throttle'   => ThrottleRequests::class,
-        'role'       => EntrustRole::class,
-        'permission' => EntrustPermission::class,
-        'ability'    => EntrustAbility::class,
+        'auth'        => Authenticate::class,
+        'auth.basic'  => AuthenticateWithBasicAuth::class,
+        'guest'       => RedirectIfAuthenticated::class,
+        'throttle'    => ThrottleRequests::class,
+        'role'        => EntrustRole::class,
+        'permission'  => EntrustPermission::class,
+        'ability'     => EntrustAbility::class,
+        'whitelisted' => IpWhitelisted::class,
     ];
 
     public function bootstrap()

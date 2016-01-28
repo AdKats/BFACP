@@ -11,7 +11,7 @@
                         ->options($permissions)
                         ->multiple()->size(count($permissions, COUNT_RECURSIVE))
                         ->help('Hold CTRL to select multiple permissions.')
-                    }}
+                    !!}
 
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-sm-offset-4 col-lg-10 col-sm-8">
@@ -19,11 +19,11 @@
                                 <i class="fa fa-floppy-o"></i>&nbsp;<span>{{ trans('site.admin.roles.create.buttons.save') }}</span>
                             </button>
                             {!! link_to_route('admin.site.roles.index', trans('site.admin.roles.create.buttons.cancel'), [], ['class' => 'btn bg-blue', 'target' => '_self']) !!}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
     </div>
     {!! Former::close() !!}
 @stop

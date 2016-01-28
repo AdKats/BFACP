@@ -4,6 +4,7 @@ return [
 
     'bans'            => [
         'listing' => [
+            'personal' => 'Show only my bans.',
             'table' => [
                 'col1' => 'ID',
                 'col2' => 'Game',

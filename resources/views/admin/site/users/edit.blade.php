@@ -18,15 +18,39 @@
                     {!! Former::text('username')->label(trans('site.admin.users.edit.inputs.username.label')) !!}
                     {!! Former::email('email')->label(trans('site.admin.users.edit.inputs.email.label')) !!}
                     {!! Former::select('role')->options($roles, $user->roles[0]->id)->label(trans('site.admin.users.edit.inputs.role.label')) !!}
-                    {!! Former::inline_radios('account_status')->label(trans('site.admin.users.edit.inputs.account_status.label'))->radios([
-                        'Inactive' => 'confirmed',
-                        'Active'   => 'confirmed'
-                    ])->check([
-                        'confirmed0' => !$user->confirmed,
-                        'confirmed1' => $user->confirmed
-                    ]) !!}
+
+                    <div class="form-inline">
+                        <label for="account_status" class="col-sm-2 control-label">{{ trans('site.admin.users.edit.inputs.account_status.label') }}</label>
+
+                        <div class="col-sm-10">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="account_status" value="confirmed" @if($user->confirmed) checked @endif>
+                                    Active
+                                </label>
+                                &nbsp;
+                                <label>
+                                    <input type="radio" name="account_status" value="confirmed" @if(! $user->confirmed) checked @endif>
+                                    Inactive
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                     {!! Former::select('language')->label(trans('site.admin.users.edit.inputs.lang.label'))->options(Config::get('bfacp.site.languages'))->value($user->setting->lang) !!}
-                    {!! Former::checkbox('generate_pass')->text(trans('site.admin.users.edit.inputs.genpass.label'))->label('&nbsp;') !!}
+
+                    <div class="form-group">
+                        <label for="generate_pass" class="col-sm-2 control-label">&nbsp;</label>
+
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="generate_pass" value="1">
+                                    {{ trans('site.admin.users.edit.inputs.genpass.label') }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-sm-offset-4 col-lg-10 col-sm-8">
