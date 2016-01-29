@@ -202,7 +202,7 @@
         {{ HTML::script('js/plugins/howler/howler.min.js') }}
         {{ HTML::script('js/plugins/slimScroll/jquery.slimscroll.min.js') }}
         {{ HTML::script('js/boot.js?v=1') }}
-        @if($bfacp->user->ability(null, ['admin.site.pusher.users.view', 'admin.site.pusher.chat.view']) && !empty(getenv('PUSHER_APP_KEY')))
+        @if($bfacp->isLoggedIn && $bfacp->user->ability(null, ['admin.site.pusher.users.view', 'admin.site.pusher.chat.view']) && !empty(getenv('PUSHER_APP_KEY')))
         <script type="text/javascript">
             var pusher = new Pusher('{{ getenv('PUSHER_APP_KEY') }}', {
                 authEndpoint: '/api/pusher/auth'
