@@ -67,6 +67,11 @@ class Controller extends BaseController
      */
     public $config;
 
+    /**
+     * @var PusherManager
+     */
+    public $pusher;
+
     public function __construct()
     {
         $this->user = Auth::user();

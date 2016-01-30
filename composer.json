@@ -41,7 +41,7 @@
     "vierbergenlars/php-semver": "3.0.0",
     "graham-campbell/markdown": "^5.3",
     "rap2hpoutre/laravel-log-viewer": "^0.5.2",
-    "vinkla/pusher": "^2.2"
+    "kryptonit3/pusher": "dev-master"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

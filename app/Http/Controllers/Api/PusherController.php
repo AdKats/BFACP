@@ -2,7 +2,6 @@
 
 namespace BFACP\Http\Controllers\Api;
 
-use Artdarek\Pusherer\Facades\Pusherer;
 use BFACP\Facades\Main;
 use Carbon\Carbon;
 
@@ -12,7 +11,7 @@ use Carbon\Carbon;
 class PusherController extends Controller
 {
     /**
-     * @return mixed
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function postAuth()
     {
@@ -28,16 +27,16 @@ class PusherController extends Controller
             $channel_name = $this->request->get('channel_name');
             $socket_id = $this->request->get('socket_id');
 
-            $socket = Pusherer::presence_auth($channel_name, $socket_id, $data['id'], $data);
+            $socket = pusher()->presence_auth($channel_name, $socket_id, $data['id'], $data);
 
-            return \Response::make($socket);
+            return response($socket);
         }
 
-        return \Response::make('Forbidden', 403);
+        return response('Forbidden', 403);
     }
 
     /**
-     * @return mixed
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getChatHistory()
     {
@@ -47,11 +46,13 @@ class PusherController extends Controller
             $history = $this->cache->get('site.chat.history');
         }
 
-        return Main::response($history, null, null, null, false, true);
+        $response = Main::response($history, null, null, null, false, true);
+
+        return response()->json($response);
     }
 
     /**
-     * @return mixed
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function postChat()
     {
@@ -83,11 +84,11 @@ class PusherController extends Controller
             $channel_name = $this->request->get('channel_name');
             $event = $this->request->get('event');
 
-            Pusherer::trigger($channel_name, $event, $data);
+            pusher()->trigger($channel_name, $event, $data);
 
-            return \Response::make('OK', 200);
+            return response('OK', 200);
         }
 
-        return \Response::make('Forbidden', 403);
+        return response('Forbidden', 403);
     }
 }

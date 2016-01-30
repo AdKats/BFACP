@@ -108,7 +108,7 @@
             All rights reserved.</strong> <em>{{ MainHelper::executionTime(true) }}</em>
     </footer>
 
-    @if($bfacp->isLoggedIn && $bfacp->user->ability(null, ['admin.site.pusher.users.view', 'admin.site.pusher.chat.view']) && !empty(getenv('PUSHER_APP_KEY')))
+    @if($bfacp->isLoggedIn && $bfacp->user->ability(null, ['admin.site.pusher.users.view', 'admin.site.pusher.chat.view']) && ! empty(env('PUSHER_KEY')))
             <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
@@ -208,9 +208,9 @@
 {!! Html::script('js/plugins/howler/howler.min.js') !!}
 {!! Html::script('js/plugins/slimScroll/jquery.slimscroll.min.js') !!}
 {!! Html::script('js/boot.js?v=1') !!}
-@if($bfacp->isLoggedIn && $bfacp->user->ability(null, ['admin.site.pusher.users.view', 'admin.site.pusher.chat.view']) && !empty(getenv('PUSHER_APP_KEY')))
+@if($bfacp->isLoggedIn && $bfacp->user->ability(null, ['admin.site.pusher.users.view', 'admin.site.pusher.chat.view']) && ! empty(env('PUSHER_KEY')))
     <script type="text/javascript">
-        var pusher = new Pusher('{{ getenv('PUSHER_APP_KEY') }}', {
+        var pusher = new Pusher('{{ env('PUSHER_KEY') }}', {
             authEndpoint: '/api/pusher/auth'
         });
 
@@ -238,10 +238,10 @@
     MainHelper::files(public_path() . '/js/controllers', true, '/js/controllers/')
 )) !!}
 <script type="text/javascript">
-            @if($bfacp->isLoggedIn)
-            var lang = "{{ Config::get('app.locale') }}";
-            @else
-            var lang = null;
+    @if($bfacp->isLoggedIn)
+    var lang = "{{ Config::get('app.locale') }}";
+    @else
+    var lang = null;
     @endif
     moment.locale(lang || navigator.language.split('-')[0]);
     $.widget.bridge('uibutton', $.ui.button);

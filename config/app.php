@@ -161,7 +161,7 @@ return [
         Devfactory\Minify\MinifyServiceProvider::class,
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
-        Vinkla\Pusher\PusherServiceProvider::class,
+        Kryptonit3\Pusher\PusherServiceProvider::class,
     ],
     /*
     |--------------------------------------------------------------------------
@@ -214,7 +214,6 @@ return [
         'Entrust'     => Zizaco\Entrust\EntrustFacade::class,
         'Minify'      => Devfactory\Minify\Facades\MinifyFacade::class,
         'Markdown'    => GrahamCampbell\Markdown\Facades\Markdown::class,
-        'Pusher'      => Vinkla\Pusher\Facades\Pusher::class,
     ],
 
 ];
