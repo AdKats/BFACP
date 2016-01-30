@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "735f097aa9f85cf1df2ff88b4f88b75f",
-    "content-hash": "704e446e510c9743dd10443e2e236c6f",
+    "hash": "7d56fbccea920aef92c44dca362fe975",
+    "content-hash": "c100af9e4aec4eb2ede16df2381cee05",
     "packages": [
         {
             "name": "anahkiasen/former",
@@ -610,6 +610,65 @@
             "time": "2014-09-09 13:34:57"
         },
         {
+            "name": "graham-campbell/manager",
+            "version": "v2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GrahamCampbell/Laravel-Manager.git",
+                "reference": "fd643e56c99cc80cd8019be1bbaeb4f4f66ebb8e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-Manager/zipball/fd643e56c99cc80cd8019be1bbaeb4f4f66ebb8e",
+                "reference": "fd643e56c99cc80cd8019be1bbaeb4f4f66ebb8e",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "5.1.*|5.2.*",
+                "illuminate/support": "5.1.*|5.2.*",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "graham-campbell/testbench-core": "^1.1",
+                "mockery/mockery": "^0.9.4",
+                "phpunit/phpunit": "^4.8|^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GrahamCampbell\\Manager\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "graham@alt-three.com"
+                }
+            ],
+            "description": "Manager Provides Some Manager Functionality For Laravel 5",
+            "keywords": [
+                "Graham Campbell",
+                "GrahamCampbell",
+                "Laravel Manager",
+                "Laravel-Manager",
+                "connector",
+                "framework",
+                "interface",
+                "laravel",
+                "manager"
+            ],
+            "time": "2015-11-14 11:41:39"
+        },
+        {
             "name": "graham-campbell/markdown",
             "version": "v5.3.0",
             "source": {
@@ -1178,7 +1237,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lavary/laravel-menu/zipball/23636e8b1af717b6bef5260fcb067b8e931e31e2",
+                "url": "https://api.github.com/repos/lavary/laravel-menu/zipball/fc7eb7dd2bff037b2ec1a2fa7b3193ed48be0991",
                 "reference": "23636e8b1af717b6bef5260fcb067b8e931e31e2",
                 "shasum": ""
             },
@@ -1944,6 +2003,50 @@
                 "shell"
             ],
             "time": "2015-11-12 16:18:56"
+        },
+        {
+            "name": "pusher/pusher-php-server",
+            "version": "v2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pusher/pusher-http-php.git",
+                "reference": "79d755cc5d5b02b67779e2a40782fd6e3726657d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pusher/pusher-http-php/zipball/79d755cc5d5b02b67779e2a40782fd6e3726657d",
+                "reference": "79d755cc5d5b02b67779e2a40782fd6e3726657d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Library for interacting with the Pusher REST API",
+            "homepage": "https://github.com/pusher/pusher-php-server",
+            "keywords": [
+                "events",
+                "php-pusher-server",
+                "publish",
+                "pusher",
+                "realtime",
+                "rest",
+                "trigger"
+            ],
+            "time": "2015-05-13 11:01:46"
         },
         {
             "name": "rap2hpoutre/laravel-log-viewer",
@@ -2972,6 +3075,68 @@
             "time": "2013-12-21 17:10:13"
         },
         {
+            "name": "vinkla/pusher",
+            "version": "2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vinkla/pusher.git",
+                "reference": "a57de19898343970758d43b62756b56c9174b9f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vinkla/pusher/zipball/a57de19898343970758d43b62756b56c9174b9f3",
+                "reference": "a57de19898343970758d43b62756b56c9174b9f3",
+                "shasum": ""
+            },
+            "require": {
+                "graham-campbell/manager": "^2.3",
+                "illuminate/contracts": "5.1.* || 5.2.*",
+                "illuminate/support": "5.1.* || 5.2.*",
+                "php": "^5.5.9 || ^7.0",
+                "pusher/pusher-php-server": "^2.2.1"
+            },
+            "require-dev": {
+                "graham-campbell/testbench": "^3.1",
+                "mockery/mockery": "^0.9.4",
+                "phpunit/phpunit": "^4.8 || ^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Vinkla\\Pusher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vincent Klaiber",
+                    "email": "hello@vinkla.com"
+                }
+            ],
+            "description": "A Pusher bridge for Laravel",
+            "keywords": [
+                "api",
+                "events",
+                "http",
+                "laravel",
+                "php-pusher-server",
+                "publish",
+                "pusher",
+                "realtime",
+                "rest",
+                "trigger"
+            ],
+            "time": "2016-01-17 20:44:56"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v2.2.0",
             "source": {
@@ -3032,7 +3197,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hiendv/entrust/zipball/6d27fa9ac5b2807d110eccb1f441c7757412b757",
+                "url": "https://api.github.com/repos/hiendv/entrust/zipball/74027a40e970192b55612e573c053a47103610d6",
                 "reference": "6d27fa9ac5b2807d110eccb1f441c7757412b757",
                 "shasum": ""
             },
