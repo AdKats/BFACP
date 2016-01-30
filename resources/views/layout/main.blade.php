@@ -108,7 +108,7 @@
             All rights reserved.</strong> <em>{{ MainHelper::executionTime(true) }}</em>
     </footer>
 
-    @if($bfacp->isLoggedIn && Auth::user()->ability(null, ['admin.site.pusher.users.view', 'admin.site.pusher.chat.view']) && !empty(getenv('PUSHER_APP_KEY')))
+    @if($bfacp->isLoggedIn && $bfacp->user->ability(null, ['admin.site.pusher.users.view', 'admin.site.pusher.chat.view']) && !empty(getenv('PUSHER_APP_KEY')))
             <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
@@ -119,7 +119,7 @@
         <div class="tab-content">
             <!-- Home tab content -->
             <div class="tab-pane active" id="control-sidebar-users-tab" ng-controller="PusherChatController">
-                @if($bfacp->isLoggedIn && Auth::user()->ability(null, 'admin.site.pusher.users.view'))
+                @if($bfacp->user->ability(null, 'admin.site.pusher.users.view'))
                     <h3 class="control-sidebar-heading">{{ trans('common.right_sidebar.online_users') }}
                         (<span ng-bind="members.online"></span>)</h3>
                     <ul class="control-sidebar-menu" id="sidebar-users">
@@ -138,7 +138,7 @@
                     <!-- /.control-sidebar-menu -->
                 @endif
 
-                @if($bfacp->isLoggedIn && Auth::user()->ability(null, 'admin.site.pusher.chat.view'))
+                @if($bfacp->isLoggedIn && $bfacp->user->ability(null, 'admin.site.pusher.chat.view'))
                     <h3 class="control-sidebar-heading">{{ trans('common.right_sidebar.chat_room') }}
                         <span class="badge" ng-bind="connectionState" ng-class="connStateClass"></span></h3>
                     <ul class="control-sidebar-menu">
@@ -208,7 +208,7 @@
 {!! Html::script('js/plugins/howler/howler.min.js') !!}
 {!! Html::script('js/plugins/slimScroll/jquery.slimscroll.min.js') !!}
 {!! Html::script('js/boot.js?v=1') !!}
-@if($bfacp->isLoggedIn && Auth::user()->ability(null, ['admin.site.pusher.users.view', 'admin.site.pusher.chat.view']) && !empty(getenv('PUSHER_APP_KEY')))
+@if($bfacp->isLoggedIn && $bfacp->user->ability(null, ['admin.site.pusher.users.view', 'admin.site.pusher.chat.view']) && !empty(getenv('PUSHER_APP_KEY')))
     <script type="text/javascript">
         var pusher = new Pusher('{{ getenv('PUSHER_APP_KEY') }}', {
             authEndpoint: '/api/pusher/auth'
@@ -216,14 +216,14 @@
 
         $('#site-navbar').append('<li><a href="#" data-toggle="control-sidebar" tooltip="Toggle the sidebar"><i class="fa fa-gears"></i></a></li>');
 
-        @if($bfacp->isLoggedIn && Auth::user()->ability(null, 'admin.site.pusher.users.view'))
+        @if($bfacp->isLoggedIn && $bfacp->user->ability(null, 'admin.site.pusher.users.view'))
         $('#sidebar-users').slimScroll({
                     height: '250px',
                     alwaysVisible: true
                 });
         @endif
 
-        @if($bfacp->isLoggedIn && Auth::user()->ability(null, 'admin.site.pusher.chat.view'))
+        @if($bfacp->isLoggedIn && $bfacp->user->ability(null, 'admin.site.pusher.chat.view'))
         $('#sidebar-chat').slimScroll({
                     height: '350px',
                     alwaysVisible: true

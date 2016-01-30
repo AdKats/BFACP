@@ -5,7 +5,9 @@
     <div class="col-xs-12">
         <div class="box box-info">
             <div class="box-header with-border">
-                <h4 class="box-title">Latest release (<small ng-bind="moment('{{ $latest_release['created_at'] }}').fromNow()"></small>) &ndash; {{ $latest_release['name'] }}</h4>
+                <h4 class="box-title">Latest release
+                    (<small ng-bind="moment('{{ $latest_release['created_at'] }}').fromNow()" tooltip="{!! \BFACP\Facades\Macros::moment($latest_release['created_at']) !!}"></small>)
+                    &ndash; {{ $latest_release['name'] }}</h4>
                 <div class="pull-right">
                     @if($outofdate)
                     <small class="label label-danger">Out of Date!</small>
@@ -43,7 +45,9 @@
 
             <div class="box-body">
                 @foreach($releases as $key => $release)
-                    <h2>{{ link_to($release['html_url'], $release['name'], ['target' => '_blank']) }} - <small ng-bind="moment('{{ $release['created_at'] }}').fromNow()"></small></h2>
+                    <h2>{{ link_to($release['html_url'], $release['name'], ['target' => '_blank']) }} -
+                        <small ng-bind="moment('{{ $release['created_at'] }}').fromNow()" tooltip="{!! \BFACP\Facades\Macros::moment($release['created_at']) !!}"></small>
+                    </h2>
 
                     @if($release['prerelease'])
                     <label class="label label-warning">Pre-Release</label>

@@ -15,6 +15,8 @@ class UpdaterController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->guzzle = app('Guzzle');
     }
 
