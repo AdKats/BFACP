@@ -94,7 +94,7 @@ class ServersController extends Controller
             $setting->battlelog_guid = null;
         }
 
-        if ($this->config->get('uptimerobot.enabled')) {
+        if ($this->config->get('bfacp.uptimerobot.enabled')) {
             try {
                 $uptimerobot = app(UptimeRobot::class);
 
