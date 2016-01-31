@@ -115,7 +115,7 @@ class UptimeRobot
      */
     private function boot()
     {
-        if (! $this->config->get('uptimerobot.enabled')) {
+        if (! $this->config->get('bfacp.uptimerobot.enabled')) {
             throw new UptimeRobotException('UptimeRobot functionality is not enabled. To enable update the setting in the site settings.');
         }
 
