@@ -17,12 +17,29 @@ return [
         'button_previous' => 'Previous',
         'button_reset'    => 'Reset',
     ],
-    'serverlist' => [
-        'columns' => [
-            'col1' => 'Players Online',
-            'col2' => 'Current Map',
-            'col3' => 'Current Gamemode',
-            'col4' => 'Total Playtime',
-        ]
-    ]
+    'servers' => [
+        'list' => [
+            'columns' => [
+                'col1' => 'Players Online',
+                'col2' => 'Current Map',
+                'col3' => 'Current Gamemode',
+                'col4' => 'Total Playtime',
+            ],
+        ],
+        'show' => [
+            'columns' => [
+                'col1'  => 'Map Loaded',
+                'col2'  => 'Round Start',
+                'col3'  => 'Round End',
+                'col4'  => 'Map',
+                'col5'  => 'Mode',
+                'col6'  => 'Rounds',
+                'col7'  => 'Min Players',
+                'col8'  => 'Avg Players',
+                'col9'  => 'Max Players',
+                'col10' => 'Players Joined',
+                'col11' => 'Players Left',
+            ],
+        ],
+    ],
 ];

@@ -17,12 +17,29 @@ return [
         'button_previous' => 'Zurück',
         'button_reset'    => 'Reset',
     ],
-    'serverlist' => [
-        'columns' => [
-            'col1' => 'Spieler Online',
-            'col2' => 'Aktueller Karte',
-            'col3' => 'Aktueller Spielmodus',
-            'col4' => 'Gesamtspielzeit',
-        ]
-    ]
+    'servers' => [
+        'list' => [
+            'columns' => [
+                'col1' => 'Spieler Online',
+                'col2' => 'Aktueller Karte',
+                'col3' => 'Aktueller Spielmodus',
+                'col4' => 'Gesamtspielzeit',
+            ],
+        ],
+        'show' => [
+            'columns' => [
+                'col1'  => 'Karte Loaded',
+                'col2'  => 'Runde starten',
+                'col3'  => 'Round End',
+                'col4'  => 'Karte',
+                'col5'  => 'Modus',
+                'col6'  => 'Folgende Runden',
+                'col7'  => 'Min Players',
+                'col8'  => 'Avg Players',
+                'col9'  => 'Max Players',
+                'col10' => 'Playern Anmeldungsdatum',
+                'col11' => 'Spieler übrig',
+            ],
+        ],
+    ],
 ];

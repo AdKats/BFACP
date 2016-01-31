@@ -33,4 +33,5 @@ return [
         'online_users' => 'Online Benutzer',
         'chat_room'    => 'Chat Room',
     ],
+    'loading' => 'Loading...',
 ];
