@@ -101,9 +101,11 @@ class ServersController extends Controller
                 if (empty($setting->monitor_key) && $this->request->has('use_uptimerobot')) {
                     $robot_id = $uptimerobot->createMonitor($server);
                     $setting->monitor_key = $robot_id;
+                    $this->messages[] = 'Server successfully added to UptimeRobot!';
                 } elseif (! empty($setting->monitor_key) && ! $this->request->has('use_uptimerobot')) {
                     $uptimerobot->deleteMonitor($server);
                     $setting->monitor_key = null;
+                    $this->messages[] = 'Server successfully removed to UptimeRobot!';
                 }
             } catch (UptimeRobotException $e) {
                 Session::flash('warnings', [
@@ -117,7 +119,8 @@ class ServersController extends Controller
         $server->ConnectionState = $this->request->get('server_status', 'off');
         $server->save();
 
-        return redirect()->route('admin.site.servers.edit', [$id])->with('messages',
-            [sprintf('Successfully Updated %s', $server->ServerName)]);
+        $this->messages[] = sprintf('Successfully Updated %s', $server->ServerName);
+
+        return redirect()->route('admin.site.servers.edit', [$id])->with('messages', $this->messages);
     }
 }
