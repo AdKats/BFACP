@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateBaseTables extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -47,7 +48,10 @@ class CreateBaseTables extends Migration
             $table->engine = 'InnoDB';
             $table->integer('user_id')->unsigned()->primary();
             $table->string('lang', 3)->default('en')->index();
+            $table->string('timezone')->default('UTC')->index();
             $table->boolean('notifications')->default(true);
+            $table->boolean('notifications_alert')->default(true);
+            $table->string('notifications_alert_sound', 30)->default('alert0');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('bfacp_users')->onUpdate('cascade')->onDelete('cascade');
         });
@@ -130,8 +134,8 @@ class CreateBaseTables extends Migration
         else {
             if (Schema::hasTable('adkats_battlelog_players')) {
                 $query = DB::table('INFORMATION_SCHEMA.TABLES')->where('TABLE_SCHEMA',
-                    getenv('DB_NAME'))->where('TABLE_NAME', 'adkats_battlelog_players')->where('ENGINE',
-                    'MyISAM')->count();
+                        getenv('DB_NAME'))->where('TABLE_NAME', 'adkats_battlelog_players')->where('ENGINE',
+                        'MyISAM')->count();
 
                 if ($query > 0) {
                     Schema::table('adkats_battlelog_players', function (Blueprint $table) {
