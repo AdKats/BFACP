@@ -114,7 +114,7 @@ class ServersController extends Controller
 
         $setting->save();
 
-        $server->ConnectionState = $this->request->get('status', 'off');
+        $server->ConnectionState = $this->request->get('server_status', 'off');
         $server->save();
 
         return redirect()->route('admin.site.servers.edit', [$id])->with('messages',
