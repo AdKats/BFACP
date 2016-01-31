@@ -572,7 +572,7 @@
         $(function () {
             $('#command-overview').highcharts({
                 title: {
-                    text: "{{ trans('player.profile.charts.command_overview.chart.title') }}"
+                    text: "{!! trans('player.profile.charts.command_overview.chart.title') !!}"
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.y})</b>'
@@ -592,14 +592,14 @@
                 },
                 series: [{
                     type: 'pie',
-                    name: "{{ trans('player.profile.charts.command_overview.chart.tooltip') }}",
+                    name: "{!! trans('player.profile.charts.command_overview.chart.tooltip') !!}",
                     data: {!! $charts['overview']->toJson() !!}
                 }]
             });
 
             $('#aliases-chart').highcharts({
                 title: {
-                    text: "{{ trans('player.profile.charts.aliases.title') }}"
+                    text: "{!! trans('player.profile.charts.aliases.title') !!}"
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.y})</b>'
@@ -619,7 +619,7 @@
                 },
                 series: [{
                     type: 'pie',
-                    name: "{{ trans('player.profile.charts.aliases.chart.tooltip') }}",
+                    name: "{!! trans('player.profile.charts.aliases.chart.tooltip') !!}",
                     data: {!! $charts['aliases']->toJson() !!}
                 }]
             });
@@ -627,7 +627,7 @@
             @if(Entrust::can('player.view.ip'))
                 $('#ip-history-chart').highcharts({
                     title: {
-                        text: "{{ trans('player.profile.charts.ip_history.title') }}"
+                        text: "{!! trans('player.profile.charts.ip_history.title') }}"
                     },
                     tooltip: {
                         pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.y})</b>'
@@ -647,7 +647,7 @@
                     },
                     series: [{
                         type: 'pie',
-                        name: "{{ trans('player.profile.charts.ip_history.chart.tooltip') }}",
+                        name: "{!! trans('player.profile.charts.ip_history.chart.tooltip') !!}",
                         data: {!! $charts['iphistory']->toJson() !!}
 
 
