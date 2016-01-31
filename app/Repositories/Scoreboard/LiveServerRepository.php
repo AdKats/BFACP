@@ -383,8 +383,12 @@ class LiveServerRepository extends BaseRepository
         ];
 
         $this->setFactions();
-
-        $this->data['_presetmessages'] = isset($presetMessages) ? [''] + $presetMessages : [];
+        
+        if (isset($presetMessages)) {
+            $this->data['_presetmessages'] = array_merge([''], $presetMessages);
+        } else {
+            $this->data['_presetmessages'] = [];
+        }
 
         return $this;
     }
