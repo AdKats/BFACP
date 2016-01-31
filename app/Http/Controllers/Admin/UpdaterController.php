@@ -12,21 +12,21 @@ use vierbergenlars\SemVer\version;
 class UpdaterController extends Controller
 {
     /**
-     * Github Client Id
+     * Github Client Id.
      *
      * @var string
      */
     private $githubClientId = '';
 
     /**
-     * Github Client Secret
+     * Github Client Secret.
      *
      * @var string
      */
     private $githubClientSecret = '';
 
     /**
-     * Query string
+     * Query string.
      *
      * @var string
      */
