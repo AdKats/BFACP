@@ -12,6 +12,27 @@ use vierbergenlars\SemVer\version;
 class UpdaterController extends Controller
 {
     /**
+     * Github Client Id
+     *
+     * @var string
+     */
+    private $githubClientId = '';
+
+    /**
+     * Github Client Secret
+     *
+     * @var string
+     */
+    private $githubClientSecret = '';
+
+    /**
+     * Query string
+     *
+     * @var string
+     */
+    private $queryString = '';
+
+    /**
      *
      */
     public function __construct()
@@ -19,6 +40,14 @@ class UpdaterController extends Controller
         parent::__construct();
 
         $this->guzzle = app('Guzzle');
+
+        $this->githubClientId = env('GITHUB_CLIENT_ID', '');
+        $this->githubClientSecret = env('GITHUB_CLIENT_SECRET', '');
+
+        $this->queryString = http_build_query([
+            'client_id'     => $this->githubClientId,
+            'client_secret' => $this->githubClientSecret,
+        ]);
     }
 
     /**
@@ -30,14 +59,14 @@ class UpdaterController extends Controller
 
         try {
             $latest_release = $this->cache->remember('latest_release', 30, function () {
-                $response = $this->guzzle->get('https://api.github.com/repos/Prophet731/BFAdminCP/releases/latest');
+                $response = $this->guzzle->get('https://api.github.com/repos/Prophet731/BFAdminCP/releases/latest?'.$this->queryString);
                 $latest_release = json_decode($response->getBody(), true);
 
                 return $latest_release;
             });
 
             $releases = $this->cache->remember('releases', 30, function () {
-                $response = $this->guzzle->get('https://api.github.com/repos/Prophet731/BFAdminCP/releases');
+                $response = $this->guzzle->get('https://api.github.com/repos/Prophet731/BFAdminCP/releases?'.$this->queryString);
                 $releases = json_decode($response->getBody(), true);
 
                 return $releases;
