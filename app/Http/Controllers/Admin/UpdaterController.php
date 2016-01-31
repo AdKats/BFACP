@@ -3,6 +3,7 @@
 namespace BFACP\Http\Controllers\Admin;
 
 use BFACP\Http\Controllers\Controller;
+use GuzzleHttp\Exception\RequestException;
 use vierbergenlars\SemVer\version;
 
 /**
@@ -27,24 +28,28 @@ class UpdaterController extends Controller
     {
         $page_title = 'BFACP Versions';
 
-        $latest_release = $this->cache->remember('latest_release', 30, function () {
-            $response = $this->guzzle->get('https://api.github.com/repos/Prophet731/BFAdminCP/releases/latest');
-            $latest_release = json_decode($response->getBody(), true);
+        try {
+            $latest_release = $this->cache->remember('latest_release', 30, function () {
+                $response = $this->guzzle->get('https://api.github.com/repos/Prophet731/BFAdminCP/releases/latest');
+                $latest_release = json_decode($response->getBody(), true);
 
-            return $latest_release;
-        });
+                return $latest_release;
+            });
 
-        $releases = $this->cache->remember('releases', 30, function () {
-            $response = $this->guzzle->get('https://api.github.com/repos/Prophet731/BFAdminCP/releases');
-            $releases = json_decode($response->getBody(), true);
+            $releases = $this->cache->remember('releases', 30, function () {
+                $response = $this->guzzle->get('https://api.github.com/repos/Prophet731/BFAdminCP/releases');
+                $releases = json_decode($response->getBody(), true);
 
-            return $releases;
-        });
+                return $releases;
+            });
 
-        $outofdate = version::lt(BFACP_VERSION, $latest_release['tag_name']);
-        $unreleased = version::gt(BFACP_VERSION, $latest_release['tag_name']);
+            $outofdate = version::lt(BFACP_VERSION, $latest_release['tag_name']);
+            $unreleased = version::gt(BFACP_VERSION, $latest_release['tag_name']);
 
-        return view('system.updater.index',
-            compact('page_title', 'releases', 'outofdate', 'latest_release', 'unreleased'));
+            return view('system.updater.index',
+                compact('page_title', 'releases', 'outofdate', 'latest_release', 'unreleased'));
+        } catch (RequestException $e) {
+            return response($e->getMessage(), 500);
+        }
     }
 }
