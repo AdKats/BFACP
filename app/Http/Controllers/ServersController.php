@@ -36,7 +36,9 @@ class ServersController extends Controller
      */
     public function show(Server $server)
     {
-        return view('servers.show', compact('server'));
+        $page_title = sprintf('[%s] %s', $server->game->Name, ($server->server_name_short ?: $server->ServerName));
+
+        return view('servers.show', compact('server', 'page_title'));
     }
 
     /**

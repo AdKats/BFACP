@@ -24,10 +24,10 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
-                                            <th>{{ trans('tables.serverlist.columns.col1') }}</th>
-                                            <th>{{ trans('tables.serverlist.columns.col2') }}</th>
-                                            <th>{{ trans('tables.serverlist.columns.col3') }}</th>
-                                            <th>{{ trans('tables.serverlist.columns.col4') }}</th>
+                                        <th>{{ trans('tables.servers.list.columns.col1') }}</th>
+                                        <th>{{ trans('tables.servers.list.columns.col2') }}</th>
+                                        <th>{{ trans('tables.servers.list.columns.col3') }}</th>
+                                        <th>{{ trans('tables.servers.list.columns.col4') }}</th>
                                         </thead>
                                         <tbody>
                                             <tr>
