@@ -19,7 +19,7 @@
                         ->label('Battlelog GUID')
                         ->help('Battlelog GUID of your server. Required for certain information to be displayed.') !!}
 
-                    @if(Config::get('uptimerobot.enabled'))
+                    @if(Config::get('bfacp.uptimerobot.enabled'))
                         <div class="form-group">
                             <label for="use_uptimerobot" class="col-sm-2 control-label">Enable Monitor</label>
 
@@ -38,20 +38,22 @@
                         </div>
                     @endif
 
-                    <div class="form-inline">
-                        <label for="server_status" class="col-sm-2 control-label">Status</label>
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <label for="server_status" class="col-sm-2 control-label">Status</label>
 
-                        <div class="col-sm-10">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="server_status" value="on" @if($server->is_active) checked @endif>
-                                    Active
-                                </label>
-                                &nbsp;
-                                <label>
-                                    <input type="radio" name="server_status" value="off" @if(! $server->is_active) checked @endif>
-                                    Inactive
-                                </label>
+                            <div class="col-sm-10">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="server_status" value="on" @if($server->is_active) checked @endif>
+                                        Active
+                                    </label>
+                                    &nbsp;
+                                    <label>
+                                        <input type="radio" name="server_status" value="off" @if(! $server->is_active) checked @endif>
+                                        Inactive
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>

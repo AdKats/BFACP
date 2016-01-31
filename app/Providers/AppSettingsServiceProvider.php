@@ -50,12 +50,13 @@ class AppSettingsServiceProvider extends ServiceProvider
                     }
 
                     if (is_bool($v) && ! is_null($v)) {
+                        Log::debug(sprintf('Setting type for "%s" is "%s".', $option->option_key, gettype($v)));
                         $format($this->options, $optionKey, $v);
                     } else {
                         if ($option->option_key == 'site.languages') {
                             $values = [];
                             foreach (explode(',', $option->option_value) as $value) {
-                                $lang = main::languages($value);
+                                $lang = Main::languages($value);
                                 $values[$value] = $lang;
                                 if (env('APP_DEBUG')) {
                                     Log::debug(sprintf('Adding %s language to list.', $lang));
