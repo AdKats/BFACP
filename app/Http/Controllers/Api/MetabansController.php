@@ -21,6 +21,8 @@ class MetabansController extends Controller
      */
     public function __construct(Metabans $metabans)
     {
+        parent::__construct();
+
         $this->metabans = $metabans;
     }
 

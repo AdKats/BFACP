@@ -18,6 +18,8 @@ class PlayersController extends Controller
      */
     public function __construct(PlayerRepository $repository)
     {
+        parent::__construct();
+
         $this->repository = $repository;
     }
 

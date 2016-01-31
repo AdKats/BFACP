@@ -52,6 +52,8 @@ class ScoreboardController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
+
         $permissions = $this->cache->get('admin.perm.list');
 
         if (! $this->isLoggedIn || ! $this->user->ability(null, $permissions['scoreboard'])) {

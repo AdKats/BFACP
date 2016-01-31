@@ -20,6 +20,8 @@ class ChatlogController extends Controller
      */
     public function __construct(Game $game, Chat $chat, Player $player)
     {
+        parent::__construct();
+
         $this->game = $game;
         $this->chat = $chat;
         $this->player = $player;

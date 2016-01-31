@@ -22,6 +22,8 @@ class ChatlogController extends Controller
      */
     public function __construct(Chat $chat, Server $server)
     {
+        parent::__construct();
+
         $this->chat = $chat;
         $this->server = $server;
     }

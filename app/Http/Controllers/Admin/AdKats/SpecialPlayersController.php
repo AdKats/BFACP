@@ -23,6 +23,8 @@ class SpecialPlayersController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->guzzle = app('Guzzle');
     }
 
