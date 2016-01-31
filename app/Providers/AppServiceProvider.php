@@ -31,6 +31,13 @@ class AppServiceProvider extends ServiceProvider
             $timestamp = Carbon::now()->subYears(10)->format("D, d M Y H:i:s \G\M\T");
             header('Expires: '.$timestamp);
         }
+
+        $ips = explode('|', env('IP_WHITELIST', ''));
+        $clientIP = $_SERVER['REMOTE_ADDR'];
+
+        if (in_array($clientIP, $ips)) {
+            putenv('APP_DEBUG=true');
+        }
     }
 
     /**

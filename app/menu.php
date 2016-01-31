@@ -123,10 +123,10 @@ Menu::make('MainNav', function ($menu) use ($adminPermsList) {
             }
         }
 
-        $clientIp = $_SERVER['REMOTE_ADDR'];
-        $whitelist = getenv('IP_WHITELIST') !== false ? explode('|', getenv('IP_WHITELIST')) : [];
+        $ips = explode('|', env('IP_WHITELIST', ''));
+        $clientIP = $_SERVER['REMOTE_ADDR'];
 
-        if (in_array($clientIp, $whitelist)) {
+        if (in_array($clientIP, $ips)) {
             $menu->add(trans('navigation.main.items.maintenance.title'),
                 ['route' => 'admin.site.maintenance.index'])->prepend(Macros::faicon(trans('navigation.main.items.maintenance.icon.fa'),
                 true));
