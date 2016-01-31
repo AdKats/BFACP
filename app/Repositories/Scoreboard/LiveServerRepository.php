@@ -332,7 +332,7 @@ class LiveServerRepository extends BaseRepository
         }
 
         if ($this->isLoggedIn) {
-            $presetMessages = Setting::servers($this->serverID)->settings('Pre-Message List')->first()->setting_value;
+            $presetMessages = Setting::servers($this->serverID)->settings('Pre-Message List')->first();
         }
 
         $_playmode = $this->client->getPlaymodeName($info[4]);
@@ -384,8 +384,8 @@ class LiveServerRepository extends BaseRepository
 
         $this->setFactions();
 
-        if (isset($presetMessages) && is_array($presetMessages)) {
-            $this->data['_presetmessages'] = array_merge([''], $presetMessages);
+        if (isset($presetMessages) && is_array($presetMessages->setting_value)) {
+            $this->data['_presetmessages'] = array_merge([''], $presetMessages->setting_value);
         } else {
             $this->data['_presetmessages'] = [];
         }
