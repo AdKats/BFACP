@@ -30,7 +30,7 @@ return [
     ],
 
     'stripe' => [
-        'model'  => BFACP\User::class,
+        'model'  => BFACP\Account\User::class,
         'key'    => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
