@@ -627,7 +627,7 @@
             @if(Entrust::can('player.view.ip'))
                 $('#ip-history-chart').highcharts({
                     title: {
-                        text: "{!! trans('player.profile.charts.ip_history.title') }}"
+                        text: "{!! trans('player.profile.charts.ip_history.title') !!}"
                     },
                     tooltip: {
                         pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.y})</b>'
