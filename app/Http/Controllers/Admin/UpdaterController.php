@@ -39,6 +39,7 @@ class UpdaterController extends Controller
     {
         parent::__construct();
 
+        $this->middleware('auth');
         $this->middleware('permission:admin.site.settings.site');
 
         $this->guzzle = app('Guzzle');

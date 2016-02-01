@@ -22,6 +22,7 @@ class RolesController extends Controller
     {
         parent::__construct();
 
+        $this->middleware('auth');
         $this->middleware('permission:admin.site.roles');
     }
 

@@ -18,6 +18,8 @@ class SettingsController extends Controller
     {
         parent::__construct();
 
+        $this->middleware('auth');
+
         $this->middleware('permission:admin.adkats.settings.view', [
             'only' => [
                 'index',

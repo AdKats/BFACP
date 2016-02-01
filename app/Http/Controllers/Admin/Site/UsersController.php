@@ -25,6 +25,7 @@ class UsersController extends Controller
     {
         parent::__construct();
 
+        $this->middleware('auth');
         $this->middleware('permission:admin.site.users');
     }
 

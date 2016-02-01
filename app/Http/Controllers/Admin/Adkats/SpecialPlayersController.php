@@ -25,6 +25,8 @@ class SpecialPlayersController extends Controller
     {
         parent::__construct();
 
+        $this->middleware('auth');
+
         $this->middleware('permission:admin.adkats.special.view', [
             'only' => [
                 'index',

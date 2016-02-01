@@ -22,6 +22,8 @@ class RolesController extends Controller
     {
         parent::__construct();
 
+        $this->middleware('auth');
+
         $this->middleware('permission:admin.adkats.roles.view', [
             'only' => [
                 'index',
