@@ -34,7 +34,7 @@ class ViewableChatlogs
      */
     public function handle($request, Closure $next)
     {
-        if ((\Auth::guest() && ! $this->app['config']->get('bfacp.site.chatlogs.guest')) || (\Auth::check() && \Auth::user()->ability(null, 'chatlogs'))) {
+        if (\Auth::guest() && ! $this->app['config']->get('bfacp.site.chatlogs.guest')) {
             return redirect()->route('home');
         }
 

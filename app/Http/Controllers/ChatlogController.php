@@ -22,6 +22,8 @@ class ChatlogController extends Controller
     {
         parent::__construct();
 
+        $this->middleware('permission:chatlogs');
+
         $this->game = $game;
         $this->chat = $chat;
         $this->player = $player;
