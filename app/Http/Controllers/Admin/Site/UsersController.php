@@ -73,6 +73,8 @@ class UsersController extends Controller
         $this->messages[] = trans('site.admin.users.updates.password.generated',
             ['username' => $user->username, 'email' => $user->email]);
 
+        $this->log->info(sprintf('%s created user "%s".', $this->user->username, $user->username), $user);
+
         return redirect()->route('admin.site.users.edit', [$user->id])->withMessages($this->messages);
     }
 
@@ -145,6 +147,9 @@ class UsersController extends Controller
             if ($roleId != $user->roles[0]->id) {
                 $user->roles()->detach($user->roles[0]->id);
                 $user->roles()->attach($roleId);
+                $role = Role::find($roleId);
+                $this->log->info(sprintf('%s changed %s role to %s.', $this->user->username, $user->username,
+                    $role->name));
             }
 
             // Update the user language if it's been changed
@@ -152,6 +157,9 @@ class UsersController extends Controller
                 $user->setting()->update([
                     'lang' => $lang,
                 ]);
+                $languages = $this->config->get('bfacp.site.languages');
+                $this->log->info(sprintf('%s changed %s language to %s.', $this->user->username, $user->username,
+                    $languages[$lang]));
             }
 
             // Update account stats
@@ -161,11 +169,14 @@ class UsersController extends Controller
 
             // Update username
             if ($username != $user->username) {
+                $this->log->info(sprintf('%s changed %s username to %s.', $this->user->username, $user->username,
+                    $username));
                 $user->username = $username;
             }
 
             // Update email
             if ($email != $user->email) {
+                $this->log->info(sprintf('%s changed %s email to %s.', $this->user->username, $user->username, $email));
                 $user->email = $email;
             }
 
@@ -182,6 +193,8 @@ class UsersController extends Controller
 
                 $this->messages[] = trans('site.admin.users.updates.password.generated',
                     ['username' => $user->username, 'email' => $user->email]);
+
+                $this->log->info(sprintf('%s changed %s password.', $this->user->username, $user->username));
             }
 
             $soldier_ids = [];
@@ -245,6 +258,8 @@ class UsersController extends Controller
             $user->delete();
 
             $this->messages[] = trans('alerts.user.deleted', compact('username'));
+
+            $this->log->info(sprintf('%s deleted user %s.', $this->user->username, $username));
 
             return MainHelper::response([
                 'url'      => route('admin.site.users.index'),
