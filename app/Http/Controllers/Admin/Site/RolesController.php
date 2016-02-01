@@ -85,6 +85,8 @@ class RolesController extends Controller
             $role->name = trim($this->request->get('role_name'));
             $role->save();
 
+            $this->log->info(sprintf('%s created role %s.', $this->user->username, $role->name));
+
             // Update role permissions
             $role->permissions()->sync($permissions->toArray());
 
@@ -103,32 +105,28 @@ class RolesController extends Controller
      */
     public function edit($id)
     {
-        try {
-            $role = Role::with('users', 'permissions')->findOrFail($id);
+        $role = Role::with('users', 'permissions')->findOrFail($id);
 
-            $permissions = [];
+        $permissions = [];
 
-            foreach (Permission::all() as $permission) {
-                if (preg_match('/^admin\\.([a-z]+)/A', $permission->name, $matches)) {
+        foreach (Permission::all() as $permission) {
+            if (preg_match('/^admin\\.([a-z]+)/A', $permission->name, $matches)) {
 
-                    // Uppercase the first letter
-                    $key = ucfirst($matches[1]);
+                // Uppercase the first letter
+                $key = ucfirst($matches[1]);
 
-                    // Push to array
-                    $permissions[$key][$permission->id] = $permission->display_name;
-                } else {
+                // Push to array
+                $permissions[$key][$permission->id] = $permission->display_name;
+            } else {
 
-                    // Push to array
-                    $permissions['General'][$permission->id] = $permission->display_name;
-                }
+                // Push to array
+                $permissions['General'][$permission->id] = $permission->display_name;
             }
-
-            $page_title = trans('navigation.admin.site.items.roles.items.edit.title', ['name' => $role->name]);
-
-            return view('admin.site.roles.edit', compact('role', 'permissions', 'page_title'));
-        } catch (ModelNotFoundException $e) {
-            return redirect()->route('admin.site.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);
         }
+
+        $page_title = trans('navigation.admin.site.items.roles.items.edit.title', ['name' => $role->name]);
+
+        return view('admin.site.roles.edit', compact('role', 'permissions', 'page_title'));
     }
 
     /**
@@ -138,41 +136,40 @@ class RolesController extends Controller
      */
     public function update($id)
     {
-        try {
-            // Disable rules on model
-            Role::$rules = [];
+        // Disable rules on model
+        Role::$rules = [];
 
-            $role = Role::findOrFail($id);
+        $role = Role::findOrFail($id);
 
-            $permissions = new Collection($this->request->get('permissions', []));
+        $permissions = new Collection($this->request->get('permissions', []));
 
-            if ($this->request->has('permissions')) {
-                $permissions = $permissions->filter(function ($id) {
-                    if (is_numeric($id)) {
-                        return true;
-                    }
-                })->map(function ($id) {
-                    return (int) $id;
-                });
-            }
-
-            // Update role permissions
-            $role->permissions()->sync($permissions->toArray());
-
-            if ($this->request->get('display_name') != $role->name && ! in_array($role->id, [1, 2])) {
-                $role->name = trim($this->request->get('display_name'));
-                $role->save();
-            } else {
-                // Update timestamp
-                $role->touch();
-            }
-
-            return redirect()->route('admin.site.roles.edit', [$id])->with('messages', [
-                'Role Updated!',
-            ]);
-        } catch (ModelNotFoundException $e) {
-            return redirect()->route('admin.site.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);
+        if ($this->request->has('permissions')) {
+            $permissions = $permissions->filter(function ($id) {
+                if (is_numeric($id)) {
+                    return true;
+                }
+            })->map(function ($id) {
+                return (int) $id;
+            });
         }
+
+        // Update role permissions
+        $role->permissions()->sync($permissions->toArray());
+
+        if ($this->request->get('display_name') != $role->name && ! in_array($role->id, [1, 2])) {
+            $this->log->info(sprintf('%s changed role name from %s to %s.', $this->user->username, $role->name,
+                $this->request->get('display_name')));
+            $role->name = trim($this->request->get('display_name'));
+            $role->save();
+        } else {
+            // Update timestamp
+            $role->touch();
+            $this->log->info(sprintf('%s updated role %s.', $this->user->username, $role->name));
+        }
+
+        return redirect()->route('admin.site.roles.edit', [$id])->with('messages', [
+            'Role Updated!',
+        ]);
     }
 
     /**
@@ -182,32 +179,30 @@ class RolesController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            // Disable rules on model
-            Role::$rules = [];
+        // Disable rules on model
+        Role::$rules = [];
 
-            // Get role
-            $role = Role::findOrFail($id);
+        // Get role
+        $role = Role::findOrFail($id);
 
-            if (in_array($role->id, [1, 2])) {
-                return MainHelper::response(null, sprintf('You can\'t delete the %s role.', $role->name), 'error');
-            }
-
-            // Save role name
-            $roleName = $role->name;
-
-            foreach ($role->users as $user) {
-                $user->roles()->detach($id);
-                $user->roles()->attach(2);
-            }
-
-            $role->delete();
-
-            return MainHelper::response([
-                'url' => route('admin.site.roles.index'),
-            ], sprintf('%s was deleted', $roleName));
-        } catch (ModelNotFoundException $e) {
-            return redirect()->route('admin.site.roles.index')->withErrors([sprintf('Role #%u doesn\'t exist.', $id)]);
+        if (in_array($role->id, [1, 2])) {
+            return MainHelper::response(null, sprintf('You can\'t delete the %s role.', $role->name), 'error');
         }
+
+        // Save role name
+        $roleName = $role->name;
+
+        foreach ($role->users as $user) {
+            $user->roles()->detach($id);
+            $user->roles()->attach(2);
+        }
+
+        $role->delete();
+
+        $this->log->info(sprintf('%s deleted role %s.', $this->user->username, $roleName));
+
+        return MainHelper::response([
+            'url' => route('admin.site.roles.index'),
+        ], sprintf('%s was deleted', $roleName));
     }
 }

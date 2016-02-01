@@ -79,6 +79,8 @@ class ServersController extends Controller
         if ($this->request->has('rcon_password') && ! empty(trim($this->request->get('rcon_password')))) {
             $password = $this->request->get('rcon_password');
             $setting->rcon_password = trim($password);
+            $this->log->info(sprintf('%s updated RCON password for server %s.', $this->user->username,
+                $server->ServerName));
         }
 
         if ($this->request->has('filter')) {
@@ -101,10 +103,14 @@ class ServersController extends Controller
                 if (empty($setting->monitor_key) && $this->request->has('use_uptimerobot')) {
                     $robot_id = $uptimerobot->createMonitor($server);
                     $setting->monitor_key = $robot_id;
+                    $this->log->info(sprintf('%s added server %s to UptimeRobot.', $this->user->username,
+                        $server->ServerName));
                     $this->messages[] = 'Server successfully added to UptimeRobot!';
                 } elseif (! empty($setting->monitor_key) && ! $this->request->has('use_uptimerobot')) {
                     $uptimerobot->deleteMonitor($server);
                     $setting->monitor_key = null;
+                    $this->log->info(sprintf('%s removed server %s from UptimeRobot.', $this->user->username,
+                        $server->ServerName));
                     $this->messages[] = 'Server successfully removed to UptimeRobot!';
                 }
             } catch (UptimeRobotException $e) {

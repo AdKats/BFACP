@@ -44,6 +44,7 @@ class SettingsController extends Controller
 
                 if ($value != $settings[$key]) {
                     Option::where('option_key', $key)->update(['option_value' => $value]);
+                    $this->log->info(sprintf('%s updated site setting %s.', $this->user->username, $key));
                 }
             }
         }
