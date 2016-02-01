@@ -30,8 +30,8 @@ return [
         ],
     ],
     'right_sidebar' => [
-        'online_users' => 'Online Benutzer',
+        'online_users' => 'Benutzer Online',
         'chat_room'    => 'Chat Room',
     ],
-    'loading' => 'Loading...',
+    'loading' => 'Laden...',
 ];
