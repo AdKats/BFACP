@@ -18,4 +18,14 @@ class RemoveUnusedUserSettingsColumns extends Migration
             $table->dropColumn('timezone');
         });
     }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        //
+    }
 }
