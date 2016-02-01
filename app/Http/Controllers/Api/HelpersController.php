@@ -72,13 +72,13 @@ class HelpersController extends Controller
      */
     public function getSquads()
     {
-        $squads = collect([]);
+        $squads = [];
 
         for ($i = 0; $i <= 32; $i++) {
-            $squads->push([
+            $squads[] = [
                 'id'   => $i,
                 'name' => BattlefieldHelper::squad($i),
-            ]);
+            ];
         }
 
         return $squads;
