@@ -25,6 +25,18 @@ class SpecialPlayersController extends Controller
     {
         parent::__construct();
 
+        $this->middleware('permission:admin.adkats.special.view', [
+            'only' => [
+                'index',
+            ],
+        ]);
+
+        $this->middleware('permission:admin.adkats.special.edit', [
+            'except' => [
+                'index',
+            ],
+        ]);
+
         $this->guzzle = app('Guzzle');
     }
 

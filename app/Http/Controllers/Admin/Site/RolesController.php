@@ -16,6 +16,16 @@ use Illuminate\Support\Facades\Validator;
 class RolesController extends Controller
 {
     /**
+     *
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware('permission:admin.site.roles');
+    }
+
+    /**
      * @return mixed
      */
     public function index()

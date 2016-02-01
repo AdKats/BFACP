@@ -159,13 +159,13 @@ Route::group(['middleware' => 'web'], function () {
     ===================================*/
 
     Route::get('account',
-        ['as' => 'user.account', 'uses' => 'UsersController@showAccountSettings', 'before' => 'auth']);
+        ['as' => 'user.account', 'uses' => 'UsersController@showAccountSettings', 'middleware' => 'auth']);
     Route::put('account',
-        ['as' => 'user.account.save', 'uses' => 'UsersController@saveAccountSettings', 'before' => 'auth']);
+        ['as' => 'user.account.save', 'uses' => 'UsersController@saveAccountSettings', 'middleware' => 'auth']);
 
     /*=====  End of User Router  ======*/
 
-    Route::get('chatlogs', ['as' => 'chatlog.search', 'uses' => 'ChatlogController@index', 'before' => 'chatlogs']);
+    Route::get('chatlogs', ['as' => 'chatlog.search', 'uses' => 'ChatlogController@index', 'middleware' => 'chatlogs']);
 
     Route::group(['prefix' => 'players'], function () {
         Route::get('/', ['as' => 'player.listing', 'uses' => 'PlayersController@listing']);
@@ -294,74 +294,3 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('updater', ['as' => 'admin.updater.index', 'uses' => 'UpdaterController@index']);
     });
 });
-
-/*
- * Route Permissions
- */
-
-/*===================================
-=            Adkats Bans            =
-===================================*/
-//Entrust::routeNeedsPermission('admin/adkats/bans', 'admin.adkats.bans.view');
-//Entrust::routeNeedsPermission('admin/adkats/bans/create', 'admin.adkats.bans.create');
-//Entrust::routeNeedsPermission('admin/adkats/bans/*', 'admin.adkats.bans.edit');
-//
-///*====================================
-//=            Adkats Users            =
-//====================================*/
-//Entrust::routeNeedsPermission('admin/adkats/users', 'admin.adkats.user.view');
-//Entrust::routeNeedsPermission('admin/adkats/users/*', 'admin.adkats.user.edit');
-//
-///*====================================
-//=            Adkats Roles            =
-//====================================*/
-//Entrust::routeNeedsPermission('admin/adkats/roles', 'admin.adkats.roles.view');
-//Entrust::routeNeedsPermission('admin/adkats/roles/*', 'admin.adkats.roles.edit');
-//
-///*============================================
-//=            Adkats Special Users            =
-//============================================*/
-//Entrust::routeNeedsPermission('admin/adkats/special_players', 'admin.adkats.special.view');
-//Entrust::routeNeedsPermission('admin/adkats/special_players/*', 'admin.adkats.special.edit');
-//
-///*=======================================
-//=            Adkats Settings            =
-//=======================================*/
-//Entrust::routeNeedsPermission('admin/adkats/settings', 'admin.adkats.settings.edit');
-//Entrust::routeNeedsPermission('admin/adkats/settings/*', 'admin.adkats.settings.edit');
-//
-///*==================================
-//=            Site Users            =
-//==================================*/
-//Entrust::routeNeedsPermission('admin/site/users', 'admin.site.users');
-//Entrust::routeNeedsPermission('admin/site/users/*', 'admin.site.users');
-//
-///*==================================
-//=            Site Users            =
-//==================================*/
-//Entrust::routeNeedsPermission('admin/site/users', 'admin.site.users');
-//Entrust::routeNeedsPermission('admin/site/users/*', 'admin.site.users');
-//
-///*==================================
-//=            Site Roles            =
-//==================================*/
-//Entrust::routeNeedsPermission('admin/site/roles', 'admin.site.roles');
-//Entrust::routeNeedsPermission('admin/site/roles/*', 'admin.site.roles');
-//
-///*=====================================
-//=            Site Settings            =
-//=====================================*/
-//Entrust::routeNeedsPermission('admin/site/settings', 'admin.site.settings.site');
-//Entrust::routeNeedsPermission('admin/updater', 'admin.site.settings.site');
-//
-///*============================================
-//=            Site Server Settings            =
-//============================================*/
-//Entrust::routeNeedsPermission('admin/site/servers', 'admin.site.settings.server');
-//Entrust::routeNeedsPermission('admin/site/servers/*', 'admin.site.settings.server');
-//
-///*========================================
-//=            Site System Logs            =
-//========================================*/
-//Entrust::routeNeedsPermission(Config::get('logviewer::base_url'), 'admin.site.system.logs');
-//Entrust::routeNeedsPermission(Config::get('logviewer::base_url') . '/*', 'admin.site.system.logs');

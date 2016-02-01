@@ -33,6 +33,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         CheckForMaintenanceMode::class,
+        CheckForAccessAuthUsersOnly::class,
     ];
 
     /**
@@ -69,6 +70,7 @@ class Kernel extends HttpKernel
         'permission'  => EntrustPermission::class,
         'ability'     => EntrustAbility::class,
         'whitelisted' => IpWhitelisted::class,
+        'chatlogs'    => ViewableChatlogs::class,
     ];
 
     public function bootstrap()

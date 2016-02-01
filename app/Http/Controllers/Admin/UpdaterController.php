@@ -39,6 +39,8 @@ class UpdaterController extends Controller
     {
         parent::__construct();
 
+        $this->middleware('permission:admin.site.settings.site');
+
         $this->guzzle = app('Guzzle');
 
         $this->githubClientId = env('GITHUB_CLIENT_ID', '');

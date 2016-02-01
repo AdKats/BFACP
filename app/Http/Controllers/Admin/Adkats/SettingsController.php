@@ -12,6 +12,26 @@ use BFACP\Http\Controllers\Controller;
 class SettingsController extends Controller
 {
     /**
+     *
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware('permission:admin.adkats.settings.view', [
+            'only' => [
+                'index',
+            ],
+        ]);
+
+        $this->middleware('permission:admin.adkats.settings.edit', [
+            'except' => [
+                'index',
+            ],
+        ]);
+    }
+
+    /**
      * @return $this
      */
     public function index()

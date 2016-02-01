@@ -16,6 +16,26 @@ use Illuminate\Support\Facades\Validator;
 class RolesController extends Controller
 {
     /**
+     *
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware('permission:admin.adkats.roles.view', [
+            'only' => [
+                'index',
+            ],
+        ]);
+
+        $this->middleware('permission:admin.adkats.roles.edit', [
+            'except' => [
+                'index',
+            ],
+        ]);
+    }
+
+    /**
      * @return $this
      */
     public function index()

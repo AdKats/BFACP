@@ -19,6 +19,26 @@ use Illuminate\Support\Facades\Validator;
 class UsersController extends Controller
 {
     /**
+     *
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware('permission:admin.adkats.user.view', [
+            'only' => [
+                'index',
+            ],
+        ]);
+
+        $this->middleware('permission:admin.adkats.user.edit', [
+            'except' => [
+                'index',
+            ],
+        ]);
+    }
+
+    /**
      * Show the user listing.
      */
     public function index()

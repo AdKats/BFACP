@@ -19,6 +19,16 @@ use Illuminate\Support\Facades\Validator;
 class UsersController extends Controller
 {
     /**
+     *
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware('permission:admin.site.users');
+    }
+
+    /**
      * Shows the user listing.
      */
     public function index()
@@ -68,7 +78,7 @@ class UsersController extends Controller
             'lang'     => $this->request->get('language', 'en'),
         ];
 
-        $user = $repo->signup($data, $this->request->get('role', 2), true, true);
+        $user = $repo->signup($data, $this->request->get('role', 2), true);
 
         $this->messages[] = trans('site.admin.users.updates.password.generated',
             ['username' => $user->username, 'email' => $user->email]);
@@ -128,15 +138,15 @@ class UsersController extends Controller
             $email = trim($this->request->get('email', null));
             $roleId = trim($this->request->get('role', null));
             $lang = trim($this->request->get('language', null));
-            $status = trim($this->request->get('confirmed', null));
+            $status = (bool) trim($this->request->get('account_status', false));
             $soldiers = explode(',', $this->request->get('soldiers', ''));
 
             $v = Validator::make($this->request->all(), [
-                'username'      => 'required|alpha_dash|min:4|unique:bfacp_users,username,'.$id,
-                'email'         => 'required|email|unique:bfacp_users,email,'.$id,
-                'language'      => 'required|in:'.implode(',', array_keys($this->config->get('bfacp.site.languages'))),
-                'generate_pass' => 'boolean',
-                'confirmed'     => 'boolean',
+                'username'       => 'required|alpha_dash|min:4|unique:bfacp_users,username,'.$id,
+                'email'          => 'required|email|unique:bfacp_users,email,'.$id,
+                'language'       => 'required|in:'.implode(',', array_keys($this->config->get('bfacp.site.languages'))),
+                'generate_pass'  => 'boolean',
+                'account_status' => 'boolean',
             ]);
 
             if ($v->fails()) {

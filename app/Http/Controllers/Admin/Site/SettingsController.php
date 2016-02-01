@@ -12,6 +12,16 @@ use BFACP\Option as Option;
 class SettingsController extends Controller
 {
     /**
+     *
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware('permission:admin.site.settings.site');
+    }
+
+    /**
      * @return $this
      */
     public function index()
