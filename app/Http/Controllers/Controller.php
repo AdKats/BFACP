@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Log\Writer;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,6 +73,11 @@ class Controller extends BaseController
      */
     public $pusher;
 
+    /**
+     * @var Writer
+     */
+    public $log;
+
     public function __construct()
     {
         $this->user = Auth::user();
@@ -80,5 +86,6 @@ class Controller extends BaseController
         $this->request = app(Request::class);
         $this->db = app(DB::class);
         $this->config = app(Config::class);
+        $this->log = app(Writer::class);
     }
 }
