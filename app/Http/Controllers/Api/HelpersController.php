@@ -2,6 +2,7 @@
 
 namespace BFACP\Http\Controllers\Api;
 
+use BFACP\Facades\Battlefield as BattlefieldHelper;
 use BFACP\Facades\Main as MainHelper;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -62,5 +63,24 @@ class HelpersController extends Controller
         });
 
         return $result;
+    }
+
+    /**
+     * Returns a list of squad names.
+     *
+     * @return mixed
+     */
+    public function getSquads()
+    {
+        $squads = collect([]);
+
+        for ($i = 0; $i <= 32; $i++) {
+            $squads->push([
+                'id'   => $i,
+                'name' => BattlefieldHelper::squad($i),
+            ]);
+        }
+
+        return $squads;
     }
 }

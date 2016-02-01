@@ -16,17 +16,7 @@ $api->version('v1', ['namespace' => 'BFACP\Http\Controllers\Api', 'middleware' =
         });
         $api->get('online/admins', 'HelpersController@onlineAdmins');
         $api->get('ip/{addy}', 'HelpersController@iplookup');
-        $api->get('squads', function () {
-            $squads = [];
-            for ($i = 0; $i <= 32; $i++) {
-                $squads[] = [
-                    'id'   => $i,
-                    'name' => BattlefieldHelper::squad($i),
-                ];
-            }
-
-            return $squads;
-        });
+        $api->get('squads', 'HelpersController@getSquads');
     });
 
     /*===================================
