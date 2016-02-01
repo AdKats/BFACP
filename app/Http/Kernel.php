@@ -3,12 +3,14 @@
 namespace BFACP\Http;
 
 use BFACP\Http\Middleware\Authenticate;
+use BFACP\Http\Middleware\CheckForAccessAuthUsersOnly;
 use BFACP\Http\Middleware\CheckForMaintenanceMode;
 use BFACP\Http\Middleware\EncryptCookies;
 use BFACP\Http\Middleware\IpWhitelisted;
 use BFACP\Http\Middleware\RedirectIfAuthenticated;
 use BFACP\Http\Middleware\Secure;
 use BFACP\Http\Middleware\VerifyCsrfToken;
+use BFACP\Http\Middleware\ViewableChatlogs;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
