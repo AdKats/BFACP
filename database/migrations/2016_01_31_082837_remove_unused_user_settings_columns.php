@@ -16,7 +16,6 @@ class RemoveUnusedUserSettingsColumns extends Migration
             $table->dropColumn('notifications_alert_sound');
             $table->dropColumn('notifications_alert');
             $table->dropColumn('timezone');
-            $table->dropIndex('bfacp_settings_users_timezone_index');
         });
     }
 }
