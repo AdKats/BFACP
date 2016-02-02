@@ -1062,7 +1062,7 @@ class Main
 
         if (count($results) > 0) {
             foreach ($results as $result) {
-                if ($result->column_name == $column) {
+                if ($result->COLUMN_NAME == $column) {
                     return true;
                 }
             }
