@@ -19,7 +19,7 @@ return [
                 ],
             ],
             'servers' => [
-                'title' => 'Servers',
+                'title' => 'Server',
                 'scoreboard'  => [
                     'title' => 'Live-Punkteübersicht',
                     'icon'  => [
@@ -28,7 +28,7 @@ return [
                     ],
                 ],
                 'list'  => [
-                    'title' => 'Listing',
+                    'title' => 'Serverübersicht',
                     'icon'  => [
                         'fa'  => 'fa-list',
                         'ion' => null,
@@ -36,7 +36,7 @@ return [
                 ]
             ],
             'playerlist' => [
-                'title' => 'Playerliste',
+                'title' => 'Spielerübersicht',
                 'icon'  => [
                     'fa'  => 'fa-users',
                     'ion' => null,
@@ -132,7 +132,7 @@ return [
                     ],
                 ],
                 'special_players' => [
-                    'title' => 'Sonder Spieler',
+                    'title' => 'Specialplayers',
                     'icon'  => [
                         'fa'  => 'fa-users',
                         'ion' => null,

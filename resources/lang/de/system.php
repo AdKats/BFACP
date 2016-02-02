@@ -3,10 +3,10 @@
 return [
     'exceptions' => [
         'rcon' => [
-            'conn_failed'    => 'Konnte keine Verbindung zum Server. Es ist möglicherweise offline oder Port geschlossen. Bitte versuchen Sie es später noch einmal.',
-            'not_configured' => 'Server ist noch nicht konfiguriert. Bitte kontaktieren Sie die Site-Administrator.',
-            'bad_password'   => 'alsche RCON Passwort. Bitte kontaktieren Sie die Site-Administrator.',
-            'factions'       => 'Einstellen Team Fraktionen erfordert RCON Login.',
+            'conn_failed'    => 'Konnte keine Verbindung zum Server herstellen. Er ist mÃ¶glicherweise offline oder der Port ist geschlossen. Bitte versuchen Sie es spÃ¤ter noch einmal.',
+            'not_configured' => 'Server ist noch nicht konfiguriert. Bitte kontaktieren Sie den Site-Administrator.',
+            'bad_password'   => 'Falsches RCON Passwort. Bitte kontaktieren Sie den Site-Administrator.',
+            'factions'       => 'Das Setzen von Teams erfordert RCON Login.',
         ],
     ],
 ];
