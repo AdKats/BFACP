@@ -212,6 +212,7 @@ class BansController extends Controller
 
         // Stores how long the ban is in minutes
         $ban_duration = $ban->ban_startTime->diffInMinutes($ban->ban_endTime);
+        $ban_duration_seconds = $ban->ban_startTime->diffInSeconds($ban->ban_endTime);
 
         $oldRecord = $ban->record;
 
