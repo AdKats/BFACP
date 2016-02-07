@@ -47,18 +47,18 @@ $app->singleton(
 
 $app->singleton('Guzzle', GuzzleHttp\Client::class);
 
-if (!$app->runningInConsole()) {
+if (! $app->runningInConsole()) {
     $setupFilePath = app_path('setup.php');
     $jsBuildDirectoryPath = public_path('js/builds');
     $minPHPVersion = '5.5.9';
 
-    if (version_compare(phpversion(), $minPHPVersion, '<') || !extension_loaded('mcrypt') || !extension_loaded('pdo')) {
+    if (version_compare(phpversion(), $minPHPVersion, '<') || ! extension_loaded('mcrypt') || ! extension_loaded('pdo')) {
         die(view('system.requirements', ['required_php_version' => $minPHPVersion]));
     }
 
     if (file_exists($setupFilePath) && $app->environment() == 'production') {
         require_once $setupFilePath;
-        if (!unlink($setupFilePath)) {
+        if (! unlink($setupFilePath)) {
             die(sprintf('Please delete installer located at "%s"', $setupFilePath));
         }
     }
