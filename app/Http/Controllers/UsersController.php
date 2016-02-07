@@ -82,7 +82,6 @@ class UsersController extends Controller
         // Change the user password if they filled out the fields and new passwords match
         if ($this->request->has('password') && $this->request->has('password_confirmation') && $password == $password_confirmation) {
             $user->password = $password;
-            $user->password_confirmation = $password;
             $this->messages[] = trans('user.notifications.password.email.changed');
         }
 
