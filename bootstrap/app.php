@@ -1,7 +1,7 @@
 <?php
 
 if (! defined('BFACP_VERSION')) {
-    define('BFACP_VERSION', '2.0.2');
+    define('BFACP_VERSION', '2.1.0');
 }
 
 /*
