@@ -131,10 +131,6 @@ class Setting extends Elegant
 
                 $valueArray = explode('|', $value);
 
-                if (is_array($valueArray)) {
-                    return head($valueArray);
-                }
-
                 return $valueArray;
                 break;
 
