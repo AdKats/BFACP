@@ -87,7 +87,7 @@
                 var btn = $(this);
 
                 var promptVal = prompt('Enter Username', '');
-                var csrf = $("input[name='_token']").val();
+                var csrf = "{{ csrf_token() }}";
 
                 if (promptVal === '') {
                     alert('Username can\'t be blank.');
