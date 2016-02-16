@@ -1,6 +1,6 @@
 <?php
 
-namespace BFACP\Commands;
+namespace BFACP\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;

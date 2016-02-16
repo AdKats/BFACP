@@ -1,6 +1,6 @@
 <?php
 
-namespace BFACP\Commands;
+namespace BFACP\Console\Commands;
 
 use BFACP\Adkats\Infractions\Overall;
 use Illuminate\Console\Command;
