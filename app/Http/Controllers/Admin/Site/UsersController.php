@@ -147,7 +147,6 @@ class UsersController extends Controller
                 'email'          => 'required|email|unique:bfacp_users,email,'.$id,
                 'language'       => 'required|in:'.implode(',', array_keys($this->config->get('bfacp.site.languages'))),
                 'generate_pass'  => 'boolean',
-                'account_status' => 'boolean',
             ]);
 
             if ($v->fails()) {
@@ -171,11 +170,6 @@ class UsersController extends Controller
                 $languages = $this->config->get('bfacp.site.languages');
                 $this->log->info(sprintf('%s changed %s language to %s.', $this->user->username, $user->username,
                     $languages[$lang]));
-            }
-
-            // Update account stats
-            if ($status != $user->confirmed) {
-                $user->confirmed = $status;
             }
 
             // Update username
