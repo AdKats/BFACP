@@ -22,20 +22,6 @@
                     <div class="form-block">
                         <div class="form-inline">
                             <label for="account_status" class="col-sm-2 control-label">{{ trans('site.admin.users.edit.inputs.account_status.label') }}</label>
-
-                            <div class="col-sm-10">
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="account_status" value="1" @if($user->confirmed) checked @endif>
-                                        Active
-                                    </label>
-                                    &nbsp;
-                                    <label>
-                                        <input type="radio" name="account_status" value="0" @if(! $user->confirmed) checked @endif>
-                                        Inactive
-                                    </label>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
