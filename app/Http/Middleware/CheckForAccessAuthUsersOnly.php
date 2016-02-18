@@ -4,6 +4,7 @@ namespace BFACP\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
 /**
