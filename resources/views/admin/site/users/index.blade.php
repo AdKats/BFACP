@@ -20,7 +20,6 @@
                             <th>{{ trans('site.admin.users.listing.table.col2') }}</th>
                             <th>{{ trans('site.admin.users.listing.table.col3') }}</th>
                             <th>{{ trans('site.admin.users.listing.table.col4') }}</th>
-                            <th>{{ trans('site.admin.users.listing.table.col5') }}</th>
                             <th>{{ trans('site.admin.users.listing.table.col6') }}</th>
                             </thead>
 
@@ -37,13 +36,6 @@
                                         @endif
                                     </td>
                                     <td>{{ MainHelper::languages($user->setting->lang) }}</td>
-                                    <td>
-                                        @if($user->confirmed)
-                                            <span class="label bg-green">{{ trans('site.admin.users.listing.status.active') }}</span>
-                                        @else
-                                            <span class="label bg-red">{{ trans('site.admin.users.listing.status.inactive') }}</span>
-                                        @endif
-                                    </td>
                                     <td ng-bind="moment('{{ $user->stamp }}').format('LLL')"></td>
                                 </tr>
                             @endforeach
