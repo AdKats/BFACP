@@ -213,12 +213,11 @@
 
                     $.ajax({
                         url: $(this).attr('action'),
-                        type: 'POST',
+                        type: 'DELETE',
                         data: {
                             message: unban,
                             notes: notes,
-                            _token: csrf,
-                            _method: 'DELETE'
+                            _token: csrf
                         }
                     })
                     .done(function () {
