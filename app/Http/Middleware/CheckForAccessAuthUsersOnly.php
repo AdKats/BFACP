@@ -31,15 +31,12 @@ class CheckForAccessAuthUsersOnly
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        $currentRoute = Request::route()->getName();
-
-        if ($this->app['config']->get('bfacp.site.auth') && Auth::guest() && in_array($currentRoute,
-                ['user.login', 'user.register', 'user.logout'])
-        ) {
+        if ($this->app['config']->get('bfacp.site.auth') && Auth::guest()) {
             return redirect()->route('user.login');
         }
 
