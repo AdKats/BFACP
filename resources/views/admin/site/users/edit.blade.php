@@ -19,12 +19,6 @@
                     {!! Former::email('email')->label(trans('site.admin.users.edit.inputs.email.label')) !!}
                     {!! Former::select('role')->options($roles, $user->roles[0]->id)->label(trans('site.admin.users.edit.inputs.role.label')) !!}
 
-                    <div class="form-block">
-                        <div class="form-inline">
-                            <label for="account_status" class="col-sm-2 control-label">{{ trans('site.admin.users.edit.inputs.account_status.label') }}</label>
-                        </div>
-                    </div>
-
                     {!! Former::select('language')->label(trans('site.admin.users.edit.inputs.lang.label'))->options(Config::get('bfacp.site.languages'))->value($user->setting->lang) !!}
 
                     <div class="form-group">
