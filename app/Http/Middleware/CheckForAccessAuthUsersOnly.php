@@ -4,6 +4,7 @@ namespace BFACP\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Route;
 
 /**
  * Class CheckForAccessAuthUsersOnly.
@@ -34,7 +35,11 @@ class CheckForAccessAuthUsersOnly
      */
     public function handle($request, Closure $next)
     {
-        if ($this->app['config']->get('bfacp.site.auth')) {
+        $currentRoute = Route::route()->getName();
+
+        if ($this->app['config']->get('bfacp.site.auth') && Auth::guest() && in_array($currentRoute,
+                ['user.login', 'user.register', 'user.logout'])
+        ) {
             return redirect()->route('user.login');
         }
 
