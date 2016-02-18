@@ -38,7 +38,7 @@ class CheckForAccessAuthUsersOnly
     public function handle($request, Closure $next)
     {
         if ($this->app['config']->get('bfacp.site.auth') && Auth::guest()) {
-            return redirect()->route('user.login');
+            //return redirect()->route('user.login');
         }
 
         return $next($request);
