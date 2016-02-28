@@ -47,9 +47,6 @@ class ScoreboardController extends Controller
      */
     protected $data = [];
 
-    /**
-     *
-     */
     public function __construct()
     {
         parent::__construct();

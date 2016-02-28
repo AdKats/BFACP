@@ -61,9 +61,6 @@ class Permission extends EntrustPermission
      */
     protected $with = [];
 
-    /**
-     *
-     */
     public function __construct()
     {
         parent::__construct();
