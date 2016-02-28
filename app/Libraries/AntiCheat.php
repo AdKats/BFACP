@@ -133,8 +133,6 @@ class AntiCheat
 
             return json_decode($request->getBody(), true);
         });
-
-        return;
     }
 
     /**

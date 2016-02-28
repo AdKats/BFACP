@@ -412,8 +412,6 @@ class LiveServerRepository extends BaseRepository
                 return $map;
             }
         }
-
-        return;
     }
 
     /**

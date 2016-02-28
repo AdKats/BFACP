@@ -103,8 +103,6 @@ class BattlelogServer extends BattlelogAPI
                 return $servers[0]['guid'];
             }
         }
-
-        return;
     }
 
     /**
@@ -134,7 +132,5 @@ class BattlelogServer extends BattlelogAPI
         if (array_key_exists('servers', $response['globalContext'])) {
             return $response['globalContext']['servers'];
         }
-
-        return;
     }
 }

@@ -20,9 +20,6 @@ use InvalidArgumentException;
  */
 class Main
 {
-    /**
-     *
-     */
     public function __construct()
     {
         $this->guzzle = app('Guzzle');
@@ -550,8 +547,6 @@ class Main
         if (array_key_exists($code, $countries)) {
             return $countries[$code];
         }
-
-        return;
     }
 
     /**
@@ -799,7 +794,6 @@ class Main
         }
 
         // Return null if no match was able too be met.
-        return;
     }
 
     /**
@@ -883,8 +877,6 @@ class Main
         if ($string === 0 || $string === '0' || $string === 'false' || $string === false) {
             return false;
         }
-
-        return;
     }
 
     /**
@@ -1134,7 +1126,5 @@ class Main
             }
         } catch (Exception $e) {
         }
-
-        return;
     }
 }
