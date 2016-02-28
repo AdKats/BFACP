@@ -50,23 +50,28 @@
 
             var btn = $(this);
 
+            var csrf = $("input[name='_token']").val();
+
             if (confirm('Are you sure you want to delete {{ $user->user_name }}? This can\'t be undone.')) {
                 btn.find('i').removeClass('fa-trash').addClass('fa-spinner fa-pulse');
                 btn.parent().find('button').attr('disabled', true);
                 $.ajax({
                     url: "{{ route('admin.adkats.users.destroy', $user->user_id) }}",
                     type: 'DELETE',
+                    data: {
+                        _token: csrf
+                    }
                 })
-                        .done(function (data) {
-                            window.location.href = data.data.url;
-                        })
-                        .fail(function () {
-                            console.log("error");
-                        })
-                        .always(function () {
-                            btn.find('i').removeClass('fa-spinner fa-pulse').addClass('fa-trash');
-                            btn.parent().find('button').attr('disabled', false);
-                        });
+                .done(function (data) {
+                    window.location.href = data.data.url;
+                })
+                .fail(function () {
+                    console.log("error");
+                })
+                .always(function () {
+                    btn.find('i').removeClass('fa-spinner fa-pulse').addClass('fa-trash');
+                    btn.parent().find('button').attr('disabled', false);
+                });
             }
         });
     </script>
