@@ -84,7 +84,7 @@ class UsersController extends Controller
         $this->messages[] = trans('site.admin.users.updates.password.generated',
             ['username' => $user->username, 'email' => $user->email]);
 
-        $this->log->info(sprintf('%s created user "%s".', $this->user->username, $user->username), $user);
+        $this->log->info(sprintf('%s created user "%s".', $this->user->username, $user->username), $user->toArray());
 
         return redirect()->route('admin.site.users.edit', [$user->id])->withMessages($this->messages);
     }
@@ -143,10 +143,10 @@ class UsersController extends Controller
             $soldiers = explode(',', $this->request->get('soldiers', ''));
 
             $v = Validator::make($this->request->all(), [
-                'username'       => 'required|alpha_dash|min:4|unique:bfacp_users,username,'.$id,
-                'email'          => 'required|email|unique:bfacp_users,email,'.$id,
-                'language'       => 'required|in:'.implode(',', array_keys($this->config->get('bfacp.site.languages'))),
-                'generate_pass'  => 'boolean',
+                'username'      => 'required|alpha_dash|min:4|unique:bfacp_users,username,'.$id,
+                'email'         => 'required|email|unique:bfacp_users,email,'.$id,
+                'language'      => 'required|in:'.implode(',', array_keys($this->config->get('bfacp.site.languages'))),
+                'generate_pass' => 'boolean',
             ]);
 
             if ($v->fails()) {
