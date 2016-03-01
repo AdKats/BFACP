@@ -24,8 +24,6 @@ class Macros extends Main
         } elseif (is_null($timestamp) && ! is_null($duration) && ! $fromNow) {
             return sprintf('{{ momentDuration(%u, \'%s\') }}', (int) $duration, $durationFormat);
         }
-
-        return;
     }
 
     /**
