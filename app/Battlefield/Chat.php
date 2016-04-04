@@ -96,7 +96,7 @@ class Chat extends Elegant
      */
     public function scopeExcludeSpam($query)
     {
-        return $query->whereNotNull('logPlayerID')->whereNotIn('logMessage', [
+        return $query->whereNotNull('logPlayerID')->where('logSoldierName', '!=', 'Server')->whereNotIn('logMessage', [
             'ID_CHAT_REQUEST_MEDIC',
             'ID_CHAT_REQUEST_AMMO',
             'ID_CHAT_THANKS',

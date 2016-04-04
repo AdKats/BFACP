@@ -136,7 +136,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td <?php echo \Illuminate\Support\Facades\Input::get('server', -1) <= 0 ? 'colspan="4"' : 'colspan="6"';?>>
+                                        <td <?php echo \Illuminate\Support\Facades\Input::get('server', -1) <= 0 ? 'colspan="6"' : 'colspan="4"';?>>
                                             <alert type="info">{!! Macros::faicon('fa-info-circle') !!}&nbsp;No results
                                                 returned
                                             </alert>
