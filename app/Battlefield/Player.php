@@ -2,6 +2,7 @@
 
 namespace BFACP\Battlefield;
 
+use BFACP\Adkats\Record;
 use BFACP\Elegant;
 use BFACP\Facades\Main as MainHelper;
 use Exception;
@@ -189,6 +190,19 @@ class Player extends Elegant
         Cache::forget(sprintf('player.%u', $this->PlayerID));
 
         return $this;
+    }
+
+    /**
+     * Get the players aliases.
+     *
+     * @return array
+     */
+    public function aliases()
+    {
+        $aliases = Record::where('command_type', 48)->where('target_id',
+            $this->PlayerID)->groupBy('record_message')->lists('record_message');
+
+        return $aliases;
     }
 
     /**
