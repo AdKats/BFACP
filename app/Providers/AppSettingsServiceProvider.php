@@ -25,7 +25,7 @@ class AppSettingsServiceProvider extends ServiceProvider
     public function boot()
     {
         $format = function (&$options, $keys, $value) use (&$format) {
-            $keys ? $format($options[ array_shift($keys) ], $keys, $value) : $options = $value;
+            $keys ? $format($options[array_shift($keys)], $keys, $value) : $options = $value;
         };
 
         $cache = $this->app['cache'];
