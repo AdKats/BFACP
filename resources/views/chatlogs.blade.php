@@ -48,7 +48,9 @@
 
                     {!! Former::checkbox('showspam')->label('&nbsp;')->text('View Spam Messages') !!}
 
+                    @if(\Illuminate\Support\Facades\Input::has('players') == '')
                     {!! Former::hidden('pid', \Illuminate\Support\Facades\Input::get('pid', '')) !!}
+                    @endif
 
                     {!! Former::actions()->success_submit('Search') !!}
 
@@ -104,6 +106,9 @@
                                                     {{ $message->logSoldierName }}
                                                 @else
                                                     {!! link_to_route('player.show', $message->player->SoldierName, [$message->player->PlayerID, $message->player->SoldierName], ['target' => '_self']) !!}
+                                                    @if($message->player->SoldierName != $message->logSoldierName)
+                                                        &nbsp;<i class="fa fa-info-circle" tooltip="{{ $message->logSoldierName }}"></i>
+                                                    @endif
                                                 @endif
                                             </td>
                                             <td>

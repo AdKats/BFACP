@@ -93,7 +93,13 @@ class ChatlogController extends Controller
 
             if ($this->request->has('pid')) {
                 if ($this->request->get('pid') > 0 && is_numeric($this->request->get('pid'))) {
-                    $chat = $chat->where('logPlayerID', $this->request->get('pid'));
+                    $chat = $chat->where(function ($query) {
+                        $query->where('logPlayerID', $this->request->get('pid'));
+
+                        $playerSoldierNames = $this->player->where('PlayerID', $this->request->get('pid'))->first();
+                        $a = $playerSoldierNames->aliases();
+                        $query->orWhereIn('logSoldierName', $a);
+                    });
                 }
             }
 
@@ -103,8 +109,13 @@ class ChatlogController extends Controller
             }
         }
 
-        // Return paginated results
-        $chat = $chat->simplePaginate(60);
+        if($this->request->has('pid')) {
+            // Return regular paginated results
+            $chat = $chat->paginate(60);
+        } else {
+            // Return simple paginated results
+            $chat = $chat->simplePaginate(60);
+        }
 
         return view('chatlogs', compact('games', 'chat', 'page_title'));
     }
