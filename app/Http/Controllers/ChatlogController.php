@@ -109,7 +109,7 @@ class ChatlogController extends Controller
             }
         }
 
-        if($this->request->has('pid')) {
+        if ($this->request->has('pid')) {
             // Return regular paginated results
             $chat = $chat->paginate(60);
         } else {
