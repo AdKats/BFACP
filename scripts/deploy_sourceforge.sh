@@ -1,6 +1,6 @@
 #!/bin/bash -eu
 parentdir="$(dirname "$(pwd)")/BFAdminCP"
-FILENAME="${CIRCLE_BRANCH}.zip"
+FILENAME="${CIRCLE_BRANCH:?CIRCLE_TAG}.zip"
 zip -9 -q -r $FILENAME . -x *.git*
 USER="prophet731"
 HOST="frs.sourceforge.net"
