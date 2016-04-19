@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/*
 	|--------------------------------------------------------------------------
@@ -15,8 +15,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'mailgun',
-
+	'driver'     => 'mailgun',
 	/*
 	|--------------------------------------------------------------------------
 	| SMTP Host Address
@@ -28,8 +27,7 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.mailgun.org',
-
+	'host'       => 'smtp.mailgun.org',
 	/*
 	|--------------------------------------------------------------------------
 	| SMTP Host Port
@@ -41,8 +39,7 @@ return array(
 	|
 	*/
 
-	'port' => 587,
-
+	'port'       => 587,
 	/*
 	|--------------------------------------------------------------------------
 	| Global "From" Address
@@ -54,12 +51,11 @@ return array(
 	|
 	*/
 
-	'from' => array(
+	'from'       => [
 		'address' => 'noreply@mg.gamerethos.net',
-		'name' => 'noreply@' . array_key_exists('SERVER_NAME', $_SERVER) ?
-			$_SERVER['SERVER_NAME'] : 'localhost'
-	),
-
+		'name'    => 'noreply@' . array_key_exists('SERVER_NAME', $_SERVER) ?
+			$_SERVER['SERVER_NAME'] : 'localhost',
+	],
 	/*
 	|--------------------------------------------------------------------------
 	| E-Mail Encryption Protocol
@@ -72,7 +68,6 @@ return array(
 	*/
 
 	'encryption' => 'tls',
-
 	/*
 	|--------------------------------------------------------------------------
 	| SMTP Server Username
@@ -84,8 +79,7 @@ return array(
 	|
 	*/
 
-	'username' => null,
-
+	'username'   => null,
 	/*
 	|--------------------------------------------------------------------------
 	| SMTP Server Password
@@ -97,8 +91,7 @@ return array(
 	|
 	*/
 
-	'password' => null,
-
+	'password'   => null,
 	/*
 	|--------------------------------------------------------------------------
 	| Sendmail System Path
@@ -110,8 +103,7 @@ return array(
 	|
 	*/
 
-	'sendmail' => '/usr/sbin/sendmail -bs',
-
+	'sendmail'   => '/usr/sbin/sendmail -bs',
 	/*
 	|--------------------------------------------------------------------------
 	| Mail "Pretend"
@@ -123,6 +115,6 @@ return array(
 	|
 	*/
 
-	'pretend' => false,
+	'pretend'    => false,
 
-);
+];

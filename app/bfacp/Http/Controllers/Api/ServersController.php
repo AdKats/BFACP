@@ -81,17 +81,17 @@ class ServersController extends BaseController
             }
 
             $newCollection[ $key ]['stats'] = [
-                'online' => $online,
+                'online'     => $online,
                 'totalSlots' => $total,
                 'percentage' => MainHelper::percent($online, $total),
             ];
         }
 
         return MainHelper::response([
-                'online' => $usedSlots,
+                'online'     => $usedSlots,
                 'totalSlots' => $totalSlots,
                 'percentage' => MainHelper::percent($usedSlots, $totalSlots),
-                'games' => $newCollection,
+                'games'      => $newCollection,
             ] + Lang::get('dashboard.population'), null, null, null, false, true);
     }
 
@@ -126,28 +126,28 @@ class ServersController extends BaseController
 
         $stats = [
             [
-                'name' => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Tickets',
-                'data' => [],
+                'name'    => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Tickets',
+                'data'    => [],
                 'visible' => true,
             ],
             [
-                'name' => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Tickets',
-                'data' => [],
+                'name'    => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Tickets',
+                'data'    => [],
                 'visible' => true,
             ],
             [
-                'name' => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Players',
-                'data' => [],
+                'name'    => Lang::get('scoreboard.factions')[1]['full_name'] . ' - Players',
+                'data'    => [],
                 'visible' => false,
             ],
             [
-                'name' => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Players',
-                'data' => [],
+                'name'    => Lang::get('scoreboard.factions')[2]['full_name'] . ' - Players',
+                'data'    => [],
                 'visible' => false,
             ],
             [
-                'name' => 'Players Online',
-                'data' => [],
+                'name'    => 'Players Online',
+                'data'    => [],
                 'visible' => false,
             ],
         ];
@@ -269,7 +269,7 @@ class ServersController extends BaseController
                                     $scoreboard->adminKill($player, Input::get('message', null));
                                 } catch (PlayerNotFoundException $e) {
                                     $unkilled[] = [
-                                        'name' => $player,
+                                        'name'   => $player,
                                         'reason' => $e->getMessage(),
                                     ];
                                 }
@@ -295,7 +295,7 @@ class ServersController extends BaseController
                                     $scoreboard->adminKick($player, Input::get('message', null));
                                 } catch (PlayerNotFoundException $e) {
                                     $unkicked[] = [
-                                        'name' => $player,
+                                        'name'   => $player,
                                         'reason' => $e->getMessage(),
                                     ];
                                 }
@@ -321,12 +321,12 @@ class ServersController extends BaseController
                                         Input::get('squad', null));
                                 } catch (PlayerNotFoundException $e) {
                                     $unmoved[] = [
-                                        'name' => $player,
+                                        'name'   => $player,
                                         'reason' => $e->getMessage(),
                                     ];
                                 } catch (RconException $e) {
                                     $unmoved[] = [
-                                        'name' => $player,
+                                        'name'   => $player,
                                         'reason' => $e->getMessage(),
                                     ];
                                 }

@@ -1,5 +1,5 @@
 <?php
 
-return array(
-	'bootstrap-items' => 'laravel-menu::bootstrap-navbar-items'
-);
+return [
+	'bootstrap-items' => 'laravel-menu::bootstrap-navbar-items',
+];

@@ -22,15 +22,4 @@ class AddRussianLanguage extends Migration
         $setting->option_value = implode(',', $keys);
         $setting->save();
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        //
-    }
-
 }

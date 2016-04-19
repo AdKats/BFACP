@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -11,9 +11,8 @@ return array(
     | the 'throttle_time_period', which is in minutes.
     |
     */
-    'throttle_limit' => 9,
-    'throttle_time_period' => 2,
-
+    'throttle_limit'             => 9,
+    'throttle_time_period'       => 2,
     /*
     |--------------------------------------------------------------------------
     | Login Throttle Field
@@ -25,8 +24,7 @@ return array(
     | Default: email
     |
     */
-    'login_cache_field' => 'email',
-
+    'login_cache_field'          => 'email',
     /*
     |--------------------------------------------------------------------------
     | Form Views
@@ -46,11 +44,10 @@ return array(
     |
     |
     */
-    'login_form' =>             'confide::login',
-    'signup_form' =>            'confide::signup',
-    'forgot_password_form' =>   'confide::forgot_password',
-    'reset_password_form' =>    'confide::reset_password',
-
+    'login_form'                 => 'confide::login',
+    'signup_form'                => 'confide::signup',
+    'forgot_password_form'       => 'confide::forgot_password',
+    'reset_password_form'        => 'confide::reset_password',
     /*
     |--------------------------------------------------------------------------
     | Email Views
@@ -68,7 +65,7 @@ return array(
     |
     |
     */
-    'email_reset_password' =>       'confide::emails.passwordreset', // with $user and $token.
+    'email_reset_password'       => 'confide::emails.passwordreset', // with $user and $token.
     'email_account_confirmation' => 'confide::emails.confirm', // with $user
 
     /*
@@ -81,7 +78,7 @@ return array(
     | requests here.
     |
     */
-    'password_reset_expiration' => 7, // hours
+    'password_reset_expiration'  => 7, // hours
 
     /*
     |--------------------------------------------------------------------------
@@ -105,9 +102,8 @@ return array(
     | table, otherwise they will not be able to login after the payment.
     |
     */
-    'signup_email'   => true,
-    'signup_confirm' => true,
-
+    'signup_email'               => true,
+    'signup_confirm'             => true,
     /*
     |--------------------------------------------------------------------------
     | E-Mail queue
@@ -124,6 +120,6 @@ return array(
     | You will have to run `php artisan queue:listen --queue=emails`
     |
     */
-    'email_queue' => 'default',
+    'email_queue'                => 'default',
 
-);
+];

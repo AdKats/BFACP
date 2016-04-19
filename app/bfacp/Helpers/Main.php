@@ -49,11 +49,11 @@ class Main extends BaseHelper
         }
 
         $collection = new Collection([
-            'status' => $status,
-            'message' => $message,
+            'status'         => $status,
+            'message'        => $message,
             'execution_time' => $this->executionTime(),
-            'cached' => $cached,
-            'data' => $input,
+            'cached'         => $cached,
+            'data'           => $input,
         ]);
 
         if ($collectionOnly) {
@@ -1095,16 +1095,16 @@ class Main extends BaseHelper
             }
 
             $hierarchy = [
-                'warn' => 'Warn',
-                'kill' => 'Kill',
-                'kick' => 'Kick',
-                'tban60' => 'Temp-Ban 1 Hour',
-                'tban120' => 'Temp-Ban 2 Hours',
-                'tbanday' => 'Temp-Ban 1 Day',
-                'tbanweek' => 'Temp-Ban 1 Week',
+                'warn'       => 'Warn',
+                'kill'       => 'Kill',
+                'kick'       => 'Kick',
+                'tban60'     => 'Temp-Ban 1 Hour',
+                'tban120'    => 'Temp-Ban 2 Hours',
+                'tbanday'    => 'Temp-Ban 1 Day',
+                'tbanweek'   => 'Temp-Ban 1 Week',
                 'tban2weeks' => 'Temp-Ban 2 Weeks',
-                'tbanmonth' => 'Temp-Ban 1 Month',
-                'ban' => 'Perma-Ban',
+                'tbanmonth'  => 'Temp-Ban 1 Month',
+                'ban'        => 'Perma-Ban',
             ];
 
             if (array_key_exists($key, $hierarchy)) {

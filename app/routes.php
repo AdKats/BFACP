@@ -1,23 +1,5 @@
 <?php
 
-Route::post('/pusher/auth', function () {
-    $bfacp = App::make('bfadmincp');
-
-    if (Input::has('channel_name') && Input::has('socket_id') && $bfacp->isLoggedIn) {
-        $socket = Pusherer::presence_auth(Input::get('channel_name'), Input::get('socket_id'), $bfacp->user->id, [
-            'id' => $bfacp->user->id,
-            'username' => $bfacp->user->username,
-            'avatar' => $bfacp->user->gravatar,
-            'role' => $bfacp->user->roles[0]->name,
-            'timestamp' => \Carbon\Carbon::now()->getTimestamp(),
-        ]);
-
-        return Response::make($socket);
-    }
-
-    return Response::make('Forbidden', 403);
-});
-
 /**
  * Route Model Bindings
  */
@@ -41,7 +23,7 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
             $squads = [];
             for ($i = 0; $i <= 32; $i++) {
                 $squads[] = [
-                    'id' => $i,
+                    'id'   => $i,
                     'name' => BattlefieldHelper::squad($i),
                 ];
             }
@@ -49,6 +31,12 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
             return $squads;
         });
     });
+
+    /*===================================
+    =            API Pusher             =
+    ===================================*/
+
+    Route::controller('pusher', 'PusherController');
 
     /*===================================
     =            API Players            =
@@ -76,12 +64,12 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
                 '[0-9]+');
 
             Route::get('{player}/overview', [
-                'as' => 'api.battlelog.players.overview',
+                'as'   => 'api.battlelog.players.overview',
                 'uses' => 'BattlelogController@getOverview',
             ])->where('player', '[0-9]+');
 
             Route::get('{player}/vehicles', [
-                'as' => 'api.battlelog.players.vehicles',
+                'as'   => 'api.battlelog.players.vehicles',
                 'uses' => 'BattlelogController@getVehicles',
             ])->where('player', '[0-9]+');
 
@@ -94,7 +82,7 @@ Route::api(['namespace' => 'BFACP\Http\Controllers\Api', 'version' => 'v1'], fun
                 '[0-9]+')->where('id', '[0-9]+');
 
             Route::get('{player}/acs', [
-                'as' => 'api.battlelog.players.acs',
+                'as'   => 'api.battlelog.players.acs',
                 'uses' => 'BattlelogController@getCheatDetection',
             ])->where('player', '[0-9]+');
         });
@@ -203,107 +191,107 @@ Route::group(['namespace' => 'BFACP\Http\Controllers'], function () {
             Route::resource('settings', 'SettingsController', [
                 'names' => [
                     'index' => 'admin.adkats.settings.index',
-                    'edit' => 'admin.adkats.settings.edit',
+                    'edit'  => 'admin.adkats.settings.edit',
                 ],
-                'only' => ['index', 'edit'],
+                'only'  => ['index', 'edit'],
             ]);
 
             // Adkats Bans
             Route::resource('bans', 'BansController', [
                 'names' => [
-                    'index' => 'admin.adkats.bans.index',
-                    'edit' => 'admin.adkats.bans.edit',
-                    'update' => 'admin.adkats.bans.update',
+                    'index'   => 'admin.adkats.bans.index',
+                    'edit'    => 'admin.adkats.bans.edit',
+                    'update'  => 'admin.adkats.bans.update',
                     'destroy' => 'admin.adkats.bans.destroy',
-                    'store' => 'admin.adkats.bans.store',
-                    'create' => 'admin.adkats.bans.create',
+                    'store'   => 'admin.adkats.bans.store',
+                    'create'  => 'admin.adkats.bans.create',
                 ],
-                'only' => ['index', 'edit', 'update', 'destroy', 'store', 'create'],
+                'only'  => ['index', 'edit', 'update', 'destroy', 'store', 'create'],
             ]);
 
             // Adkats Users
             Route::resource('users', 'UsersController', [
                 'names' => [
-                    'index' => 'admin.adkats.users.index',
-                    'edit' => 'admin.adkats.users.edit',
-                    'store' => 'admin.adkats.users.store',
-                    'update' => 'admin.adkats.users.update',
+                    'index'   => 'admin.adkats.users.index',
+                    'edit'    => 'admin.adkats.users.edit',
+                    'store'   => 'admin.adkats.users.store',
+                    'update'  => 'admin.adkats.users.update',
                     'destroy' => 'admin.adkats.users.destroy',
                 ],
-                'only' => ['index', 'edit', 'update', 'destroy', 'store'],
+                'only'  => ['index', 'edit', 'update', 'destroy', 'store'],
             ]);
 
             // Adkats Roles
             Route::resource('roles', 'RolesController', [
                 'names' => [
-                    'index' => 'admin.adkats.roles.index',
-                    'edit' => 'admin.adkats.roles.edit',
-                    'store' => 'admin.adkats.roles.store',
-                    'update' => 'admin.adkats.roles.update',
-                    'create' => 'admin.adkats.roles.create',
+                    'index'   => 'admin.adkats.roles.index',
+                    'edit'    => 'admin.adkats.roles.edit',
+                    'store'   => 'admin.adkats.roles.store',
+                    'update'  => 'admin.adkats.roles.update',
+                    'create'  => 'admin.adkats.roles.create',
                     'destroy' => 'admin.adkats.roles.destroy',
                 ],
             ]);
 
             Route::resource('special_players', 'SpecialPlayersController', [
                 'names' => [
-                    'index' => 'admin.adkats.special_players.index',
+                    'index'  => 'admin.adkats.special_players.index',
                     'update' => 'admin.adkats.special_players.update',
                 ],
-                'only' => ['index', 'update'],
+                'only'  => ['index', 'update'],
             ]);
 
             Route::resource('reports', 'ReportsController', [
                 'names' => [
                     'index' => 'admin.adkats.reports.index',
                 ],
-                'only' => ['index'],
+                'only'  => ['index'],
             ]);
         });
 
         Route::group(['prefix' => 'site', 'namespace' => 'Site'], function () {
             Route::resource('users', 'UsersController', [
                 'names' => [
-                    'index' => 'admin.site.users.index',
-                    'edit' => 'admin.site.users.edit',
+                    'index'   => 'admin.site.users.index',
+                    'edit'    => 'admin.site.users.edit',
                     'destroy' => 'admin.site.users.destroy',
-                    'update' => 'admin.site.users.update',
-                    'create' => 'admin.site.users.create',
-                    'store' => 'admin.site.users.store',
+                    'update'  => 'admin.site.users.update',
+                    'create'  => 'admin.site.users.create',
+                    'store'   => 'admin.site.users.store',
                 ],
             ]);
 
             Route::resource('roles', 'RolesController', [
                 'names' => [
-                    'index' => 'admin.site.roles.index',
-                    'edit' => 'admin.site.roles.edit',
+                    'index'   => 'admin.site.roles.index',
+                    'edit'    => 'admin.site.roles.edit',
                     'destroy' => 'admin.site.roles.destroy',
-                    'update' => 'admin.site.roles.update',
-                    'create' => 'admin.site.roles.create',
-                    'store' => 'admin.site.roles.store',
+                    'update'  => 'admin.site.roles.update',
+                    'create'  => 'admin.site.roles.create',
+                    'store'   => 'admin.site.roles.store',
                 ],
             ]);
 
             Route::resource('servers', 'ServersController', [
                 'names' => [
-                    'index' => 'admin.site.servers.index',
-                    'edit' => 'admin.site.servers.edit',
+                    'index'  => 'admin.site.servers.index',
+                    'edit'   => 'admin.site.servers.edit',
                     'update' => 'admin.site.servers.update',
                 ],
-                'only' => ['index', 'edit', 'update'],
+                'only'  => ['index', 'edit', 'update'],
             ]);
 
             Route::get('settings', ['as' => 'admin.site.settings.index', 'uses' => 'SettingsController@index']);
             Route::put('settings', ['as' => 'admin.site.settings.update', 'uses' => 'SettingsController@update']);
 
             Route::get('system/maintenance', [
-                'as' => 'admin.site.maintenance.index',
-                'uses' => 'MaintenanceController@index',
+                'as'     => 'admin.site.maintenance.index',
+                'uses'   => 'MaintenanceController@index',
                 'before' => 'auth|ip.whitelisted',
             ]);
             Route::post('system/maintenance', [
-                'as' => 'admin.site.maintenance.update',
-                'uses' => 'MaintenanceController@update',
+                'as'     => 'admin.site.maintenance.update',
+                'uses'   => 'MaintenanceController@update',
                 'before' => 'auth|ip.whitelisted',
             ]);
         });

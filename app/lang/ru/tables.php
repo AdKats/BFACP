@@ -3,7 +3,7 @@
 return [
 
     'playerlist' => [
-        'columns' => [
+        'columns'         => [
             'col1' => 'ID',
             'col2' => 'Игра',
             'col3' => 'Уровень',
@@ -13,9 +13,9 @@ return [
             'col7' => 'Всего нарушений',
             'col8' => 'Страна',
         ],
-        'button_next' => 'Дальше',
+        'button_next'     => 'Дальше',
         'button_previous' => 'Назад',
-        'button_reset' => 'Сброс',
+        'button_reset'    => 'Сброс',
     ],
 
 ];

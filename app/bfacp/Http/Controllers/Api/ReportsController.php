@@ -40,13 +40,13 @@ class ReportsController extends BaseController
         $r = App::make('BFACP\Repositories\ReportRepository');
 
         $v = Validator::make(Input::all(), [
-            'id' => 'required|numeric|exists:adkats_records_main,record_id',
-            'action' => 'required|numeric|in:' . implode(',', $r::$allowedCommands),
-            'reason' => 'required|string|between:3,500',
+            'id'                   => 'required|numeric|exists:adkats_records_main,record_id',
+            'action'               => 'required|numeric|in:' . implode(',', $r::$allowedCommands),
+            'reason'               => 'required|string|between:3,500',
             'extras.tban.duration' => 'required_if:action,7|numeric|between:1,525960',
         ], [
             'extras.tban.duration.required_if' => 'The duration is required for temp bans.',
-            'extras.tban.duration.between' => 'The duration must be between :min minute and :max minutes.',
+            'extras.tban.duration.between'     => 'The duration must be between :min minute and :max minutes.',
         ]);
 
         if ($v->fails()) {

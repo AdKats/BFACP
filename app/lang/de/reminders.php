@@ -14,9 +14,9 @@ return [
     */
 
     "password" => "Passwörter müssen mindestens 6 Zeichen lang sein und korrekt bestätigt werden.",
-    "user" => "Wir konnten leider keinen Nutzer mit dieser E-Mail Adresse finden.",
-    "token" => "Der Passwort-Wiederherstellungs-Schlüssel ist ungültig oder abgelaufen.",
-    "sent" => "Passworterinnerung wurde gesendet!",
-    "reset" => "Passwort wurde zurückgesetzt!",
+    "user"     => "Wir konnten leider keinen Nutzer mit dieser E-Mail Adresse finden.",
+    "token"    => "Der Passwort-Wiederherstellungs-Schlüssel ist ungültig oder abgelaufen.",
+    "sent"     => "Passworterinnerung wurde gesendet!",
+    "reset"    => "Passwort wurde zurückgesetzt!",
 
 ];

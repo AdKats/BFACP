@@ -62,14 +62,14 @@ class BF3Conn
     /*-- configuration vars --*/
 
     private $_globalMsg = [
-        'PLAYER_NOT_FOUND' => 'PlayerNotFoundError',
-        'TEAM_NOT_FOUND' => 'TeamNameNotFoundError',
-        'SQUAD_NOT_FOUND' => 'SquadNameNotFoundError',
-        'PLAYMODE_NOT_FOUND' => 'PlaymodeNameNotFoundError',
-        'MAPNAME_NOT_FOUND' => 'MapNameNotFoundError',
+        'PLAYER_NOT_FOUND'        => 'PlayerNotFoundError',
+        'TEAM_NOT_FOUND'          => 'TeamNameNotFoundError',
+        'SQUAD_NOT_FOUND'         => 'SquadNameNotFoundError',
+        'PLAYMODE_NOT_FOUND'      => 'PlaymodeNameNotFoundError',
+        'MAPNAME_NOT_FOUND'       => 'MapNameNotFoundError',
         'ADMIN_YELL_DURATION_MAX' => 60,
-        'NOT_LOGGED_IN' => 'NotLoggedInAsAdmin',
-        'LOGIN_FAILED' => 'LoginFailed',
+        'NOT_LOGGED_IN'           => 'NotLoggedInAsAdmin',
+        'LOGIN_FAILED'            => 'LoginFailed',
     ];
 
     private $_globalVars = [];
@@ -83,12 +83,12 @@ class BF3Conn
     public function __construct(Server $server, $debug = '-d')
     {
         $this->_globalVars = [
-            'mapsFileXML' => $server->maps_file_path,
-            'playmodesFileXML' => $server->modes_file_path,
-            'squadnamesFileXML' => $server->squads_file_path,
-            'teamnamesFileXML' => $server->teams_file_path,
+            'mapsFileXML'           => $server->maps_file_path,
+            'playmodesFileXML'      => $server->modes_file_path,
+            'squadnamesFileXML'     => $server->squads_file_path,
+            'teamnamesFileXML'      => $server->teams_file_path,
             'defaultServerResponse' => 'OK',
-            'cachingEnabled' => true // change this to false if you want caching disabled
+            'cachingEnabled'        => true // change this to false if you want caching disabled
         ];
 
         if ($this->_serverIP == null) {

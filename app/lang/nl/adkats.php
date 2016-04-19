@@ -2,7 +2,7 @@
 
 return [
 
-    'bans' => [
+    'bans'            => [
         'listing' => [
             'table' => [
                 'col1' => 'ID',
@@ -16,35 +16,35 @@ return [
                 'col9' => 'Reden',
             ],
         ],
-        'edit' => [
-            'fields' => [
-                'field1' => 'Speler',
-                'field2' => 'Admin',
-                'field3' => 'Notities',
-                'field4' => 'Reden',
-                'field5' => 'Server',
-                'field6' => 'Datum &amp; Tijd',
-                'field7' => 'Status',
-                'field8' => 'Ban Type',
-                'field9' => 'forceer op GUID',
+        'edit'    => [
+            'fields'  => [
+                'field1'  => 'Speler',
+                'field2'  => 'Admin',
+                'field3'  => 'Notities',
+                'field4'  => 'Reden',
+                'field5'  => 'Server',
+                'field6'  => 'Datum &amp; Tijd',
+                'field7'  => 'Status',
+                'field8'  => 'Ban Type',
+                'field9'  => 'forceer op GUID',
                 'field10' => 'forceer op Name',
                 'field11' => 'forceer op IP',
             ],
             'buttons' => [
-                'submit' => [
+                'submit'  => [
                     'text1' => 'Opslaan',
                     'text2' => 'Even geduld alstublieft...',
                     'text3' => 'Ban Opheffen',
                 ],
-                'cancel' => 'Annuleer',
+                'cancel'  => 'Annuleer',
                 'profile' => 'Terug naar profiel',
             ],
         ],
         'prompts' => [
             'unban' => [
                 'request_failed' => 'Verzoek mislukt. Probeer het later opnieuw.',
-                'reason' => 'Geef de reden voor het opheffen van de ban',
-                'notes' => 'Would you like to update the ban notes?\nClick cancel to keep current notes.',
+                'reason'         => 'Geef de reden voor het opheffen van de ban',
+                'notes'          => 'Would you like to update the ban notes?\nClick cancel to keep current notes.',
             ],
         ],
     ],
@@ -60,15 +60,15 @@ return [
             ],
         ],
     ],
-    'users' => [
+    'users'           => [
         'no_soldiers' => 'Geen Soldaten Gekoppeld.',
-        'no_users' => 'Geen gebruikers gevonden.',
-        'soldiers' => 'Soldaten',
-        'listing' => [
+        'no_users'    => 'Geen gebruikers gevonden.',
+        'soldiers'    => 'Soldaten',
+        'listing'     => [
             'buttons' => [
                 'create' => 'Gebruiker Toevoegen',
             ],
-            'table' => [
+            'table'   => [
                 'col1' => 'Gebruiker',
                 'col2' => 'Email',
                 'col3' => 'Rol',
@@ -77,40 +77,40 @@ return [
                 'col6' => 'Notities',
             ],
         ],
-        'edit' => [
+        'edit'        => [
             'details' => 'Details',
             'buttons' => [
-                'save' => 'Opslaan',
+                'save'   => 'Opslaan',
                 'cancel' => 'Annuleer',
                 'delete' => 'Gebruiker Verwijderen',
             ],
-            'inputs' => [
-                'username' => [
+            'inputs'  => [
+                'username'   => [
                     'label' => 'Gebruikersnaam',
                 ],
-                'email' => [
+                'email'      => [
                     'label' => 'Email',
                 ],
-                'role' => [
+                'role'       => [
                     'label' => 'Rol',
                 ],
                 'expiration' => [
                     'label' => 'Vervaltijd',
-                    'help' => 'Laat datum leeg voor standaard vervaltijd.',
+                    'help'  => 'Laat datum leeg voor standaard vervaltijd.',
                 ],
-                'notes' => [
+                'notes'      => [
                     'label' => 'Notities',
                 ],
-                'soldiers' => [
+                'soldiers'   => [
                     'label' => 'Speler IDs',
-                    'help' => 'Gebruik een komma tussen IDs om meerdere spelers te koppelen. Verwijder IDs om ze te ontkoppelen.',
+                    'help'  => 'Gebruik een komma tussen IDs om meerdere spelers te koppelen. Verwijder IDs om ze te ontkoppelen.',
                 ],
-                'soldier' => [
+                'soldier'    => [
                     'label' => 'Spelers Naam',
-                    'help' => 'Vul de spelersnaam in om het systeem het ID op te laten zoeken. Dit voegt iedere speler toe met de opgegeven naam.',
+                    'help'  => 'Vul de spelersnaam in om het systeem het ID op te laten zoeken. Dit voegt iedere speler toe met de opgegeven naam.',
                 ],
             ],
-            'table' => [
+            'table'   => [
                 'col1' => 'ID',
                 'col2' => 'Spel',
                 'col3' => 'Naam',

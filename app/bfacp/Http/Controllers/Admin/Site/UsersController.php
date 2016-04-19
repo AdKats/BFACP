@@ -44,10 +44,10 @@ class UsersController extends BaseController
 
         $v = Validator::make(Input::all(), [
             'username' => 'required|alpha_dash|min:4|unique:bfacp_users,username',
-            'email' => 'required|email|unique:bfacp_users,email',
+            'email'    => 'required|email|unique:bfacp_users,email',
             'language' => 'required|in:' . implode(',', array_keys(Config::get('bfacp.site.languages'))),
-            'soldier' => 'exists:tbl_playerdata,SoldierName',
-            'role' => 'required',
+            'soldier'  => 'exists:tbl_playerdata,SoldierName',
+            'role'     => 'required',
             'language' => 'required',
         ]);
 
@@ -57,9 +57,9 @@ class UsersController extends BaseController
 
         $data = [
             'username' => Input::get('username'),
-            'email' => Input::get('email'),
-            'ign' => Input::get('soldier'),
-            'lang' => Input::get('language', 'en'),
+            'email'    => Input::get('email'),
+            'ign'      => Input::get('soldier'),
+            'lang'     => Input::get('language', 'en'),
         ];
 
         $user = $repo->signup($data, Input::get('role', 2), true, true);
@@ -120,11 +120,11 @@ class UsersController extends BaseController
             $soldiers = explode(',', Input::get('soldiers', ''));
 
             $v = Validator::make(Input::all(), [
-                'username' => 'required|alpha_dash|min:4|unique:bfacp_users,username,' . $id,
-                'email' => 'required|email|unique:bfacp_users,email,' . $id,
-                'language' => 'required|in:' . implode(',', array_keys(Config::get('bfacp.site.languages'))),
+                'username'      => 'required|alpha_dash|min:4|unique:bfacp_users,username,' . $id,
+                'email'         => 'required|email|unique:bfacp_users,email,' . $id,
+                'language'      => 'required|in:' . implode(',', array_keys(Config::get('bfacp.site.languages'))),
                 'generate_pass' => 'boolean',
-                'confirmed' => 'boolean',
+                'confirmed'     => 'boolean',
             ]);
 
             if ($v->fails()) {

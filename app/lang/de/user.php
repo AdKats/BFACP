@@ -1,24 +1,24 @@
 <?php
 
 return [
-    'account' => [
+    'account'       => [
         'settings' => [
             'blocks' => [
-                'general' => [
-                    'title' => 'Allgemein',
+                'general'  => [
+                    'title'  => 'Allgemein',
                     'inputs' => [
-                        'email' => 'Email',
+                        'email'    => 'Email',
                         'language' => 'Sprache',
                     ],
                 ],
                 'password' => [
-                    'title' => 'Passwort ändern',
-                    'inputs' => [
-                        'password' => 'Passwort',
+                    'title'       => 'Passwort ändern',
+                    'inputs'      => [
+                        'password'         => 'Passwort',
                         'password_confirm' => 'Passwort bestätigen',
                     ],
                     'inputs_help' => [
-                        'password' => 'Um dein Passwort zu ändern gib dein altes Passwort bitte hier ein.',
+                        'password'         => 'Um dein Passwort zu ändern gib dein altes Passwort bitte hier ein.',
                         'password_confirm' => 'Um die Passwortänderung zu bestätigen, gib bitte hier dein neues Passwort ein.',
                     ],
                 ],
@@ -27,7 +27,7 @@ return [
     ],
     'notifications' => [
         'account' => [
-            'email' => [
+            'email'    => [
                 'changed' => 'Email-Adresse wurde zu :addr! geändert',
             ],
             'password' => [

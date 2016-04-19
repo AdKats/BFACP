@@ -77,7 +77,7 @@ class Chat extends Elegant
     public function getProfileUrlAttribute()
     {
         return !is_null($this->logPlayerID) ? route('player.show', [
-            'id' => $this->logPlayerID,
+            'id'   => $this->logPlayerID,
             'name' => $this->logSoldierName,
         ]) : null;
     }

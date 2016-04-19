@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -13,8 +13,7 @@ return array(
     |
     */
 
-    'fetch' => PDO::FETCH_CLASS,
-
+    'fetch'       => PDO::FETCH_CLASS,
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name
@@ -26,8 +25,7 @@ return array(
     |
     */
 
-    'default' => 'mysql',
-
+    'default'     => 'mysql',
     /*
     |--------------------------------------------------------------------------
     | Database Connections
@@ -44,9 +42,9 @@ return array(
     |
     */
 
-    'connections' => array(
+    'connections' => [
 
-        'mysql' => array(
+        'mysql' => [
             'driver'    => 'mysql',
             'host'      => getenv('DB_HOST') ?: 'localhost',
             'database'  => getenv('DB_NAME') ?: '',
@@ -55,10 +53,9 @@ return array(
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
-        )
+        ],
 
-    ),
-
+    ],
     /*
     |--------------------------------------------------------------------------
     | Migration Repository Table
@@ -70,8 +67,7 @@ return array(
     |
     */
 
-    'migrations' => 'bfacp_migrations',
-
+    'migrations'  => 'bfacp_migrations',
     /*
     |--------------------------------------------------------------------------
     | Redis Databases
@@ -83,16 +79,15 @@ return array(
     |
     */
 
-    'redis' => array(
+    'redis'       => [
 
         'cluster' => false,
-
-        'default' => array(
+        'default' => [
             'host'     => '127.0.0.1',
             'port'     => 6379,
             'database' => 0,
-        ),
+        ],
 
-    ),
+    ],
 
-);
+];

@@ -48,12 +48,12 @@ class BansController extends BaseController
                 $title = sprintf('%s banned for %s', $ban['player']['SoldierName'], $ban['record']['record_message']);
 
                 $view = View::make('system.rss.ban_entry_content', [
-                    'playerId' => $ban['player']['PlayerID'],
+                    'playerId'   => $ban['player']['PlayerID'],
                     'playerName' => $ban['player']['SoldierName'],
-                    'banreason' => $ban['record']['record_message'],
+                    'banreason'  => $ban['record']['record_message'],
                     'sourceName' => $ban['record']['source_name'],
-                    'sourceId' => $ban['record']['source_id'],
-                    'banReason' => $ban['record']['record_message'],
+                    'sourceId'   => $ban['record']['source_id'],
+                    'banReason'  => $ban['record']['record_message'],
                 ]);
 
                 $feed->add(
@@ -90,7 +90,7 @@ class BansController extends BaseController
         return MainHelper::response([
             'bans' => [
                 'yesterday' => $yesterdaysBans,
-                'average' => $avgBansPerDay,
+                'average'   => $avgBansPerDay,
             ],
         ], null, null, null, false, true);
     }

@@ -336,75 +336,83 @@ class LiveServerRepository extends BaseRepository
         }
 
         if ($this->isLoggedIn) {
-            $presetMessages = Setting::servers($this->serverID)->settings('Pre-Message List')->first()->setting_value;
+            $presetMessages = Setting::servers($this->serverID)->settings('Pre-Message List')->first();
         }
 
         $_playmode = $this->client->getPlaymodeName($info[4]);
         $_map = $this->client->getMapName($info[5]);
 
         $this->data['server'] = [
-            'name' => $info[1],
-            'description' => trim($this->client->adminVarGetServerDescription()),
-            'type' => method_exists($this->client,
+            'name'             => $info[1],
+            'description'      => trim($this->client->adminVarGetServerDescription()),
+            'type'             => method_exists($this->client,
                 'adminVarGetServerType') ? $this->client->adminVarGetServerType() : null,
-            'isNoobOnly' => method_exists($this->client,
+            'isNoobOnly'       => method_exists($this->client,
                 'adminVarGetNoobJoin') ? $this->client->adminVarGetNoobJoin() : null,
-            'game' => $this->server->game,
-            'players' => [
-                'online' => (int)$info[2],
-                'max' => (int)$info[3],
+            'game'             => $this->server->game,
+            'players'          => [
+                'online'     => (int)$info[2],
+                'max'        => (int)$info[3],
                 'spectators' => 0,
                 'commanders' => 0,
-                'queue' => $this->server->in_queue,
+                'queue'      => $this->server->in_queue,
             ],
-            'mode' => [
+            'mode'             => [
                 'name' => !is_string($_playmode) ? head($_playmode) : $_playmode,
-                'uri' => $info[4],
+                'uri'  => $info[4],
             ],
-            'map' => [
-                'name' => !is_string($_map) ? head($_map) : $_map,
-                'uri' => $info[5],
-                'next' => $this->getNextMap(),
+            'map'              => [
+                'name'   => !is_string($_map) ? head($_map) : $_map,
+                'uri'    => $info[5],
+                'next'   => $this->getNextMap(),
                 'images' => $this->server->map_image_paths,
             ],
-            'tickets_needed' => $ticketcap,
+            'tickets_needed'   => $ticketcap,
             'tickets_starting' => $startingTickets,
-            'round_duration' => $startingTimer,
-            'times' => [
-                'round' => [
+            'round_duration'   => $startingTimer,
+            'times'            => [
+                'round'     => [
                     'humanize' => MainHelper::secToStr($round, true),
-                    'seconds' => (int)$round,
+                    'seconds'  => (int)$round,
                 ],
-                'uptime' => [
+                'uptime'    => [
                     'humanize' => MainHelper::secToStr($uptime, true),
-                    'seconds' => (int)$uptime,
+                    'seconds'  => (int)$uptime,
                 ],
                 'remaining' => [
                     'humanize' => $info[2] >= 4 ? MainHelper::secToStr($startingTimer - $round, true) : 'PreMatch',
-                    'seconds' => $info[2] >= 4 ? $startingTimer - $round : $startingTimer,
+                    'seconds'  => $info[2] >= 4 ? $startingTimer - $round : $startingTimer,
                 ],
             ],
         ];
 
         $this->setFactions();
 
-        $this->data['_presetmessages'] = isset($presetMessages) ? [''] + $presetMessages : [];
+        if (isset($presetMessages)) {
+            if (is_array($presetMessages->setting_value)) {
+                $this->data['_presetmessages'] = array_merge([''], $presetMessages->setting_value);
+            } else {
+                $this->data['_presetmessages'][0] = $presetMessages->setting_value;
+            }
+        } else {
+            $this->data['_presetmessages'] = [];
+        }
 
         $this->data['_teams'] = [
             [
-                'id' => 1,
+                'id'    => 1,
                 'label' => sprintf('%s (%s)', $this->TEAM1['full_name'], 'Team 1'),
             ],
             [
-                'id' => 2,
+                'id'    => 2,
                 'label' => sprintf('%s (%s)', $this->TEAM2['full_name'], 'Team 2'),
             ],
             [
-                'id' => 3,
+                'id'    => 3,
                 'label' => sprintf('%s (%s)', $this->TEAM3['full_name'], 'Team 3'),
             ],
             [
-                'id' => 4,
+                'id'    => 4,
                 'label' => sprintf('%s (%s)', $this->TEAM4['full_name'], 'Team 4'),
             ],
         ];
@@ -452,16 +460,16 @@ class LiveServerRepository extends BaseRepository
             $_map = $this->client->getMapName($map);
 
             $list[] = [
-                'map' => [
+                'map'    => [
                     'name' => !is_string($_map) ? head($_map) : $_map,
-                    'uri' => $map,
+                    'uri'  => $map,
                 ],
-                'mode' => [
+                'mode'   => [
                     'name' => !is_string($_playmode) ? head($_playmode) : $_playmode,
-                    'uri' => $mode,
+                    'uri'  => $mode,
                 ],
                 'rounds' => (int)$rounds,
-                'index' => $i,
+                'index'  => $i,
             ];
         }
 
@@ -494,6 +502,8 @@ class LiveServerRepository extends BaseRepository
         } elseif ($this->data['server']['mode']['uri'] == 'RushLarge0') {
             $this->TEAM1 = $teamFactions[0][4];
             $this->TEAM2 = $teamFactions[0][5];
+            $this->TEAM3 = $teamFactions[0][4];
+            $this->TEAM4 = $teamFactions[0][5];
         } else {
             if ($this->gameName == 'BF3') {
                 $this->TEAM0 = $teamFactions[0][0];
@@ -586,7 +596,7 @@ class LiveServerRepository extends BaseRepository
         }
 
         return [
-            'player' => $player,
+            'player'  => $player,
             'message' => $originalMessage,
         ];
     }
@@ -916,7 +926,7 @@ class LiveServerRepository extends BaseRepository
         }
 
         return [
-            'player' => $player,
+            'player'  => $player,
             'message' => $dbMessage,
         ];
     }
@@ -958,7 +968,7 @@ class LiveServerRepository extends BaseRepository
         }
 
         return [
-            'player' => $player,
+            'player'  => $player,
             'message' => $message,
         ];
     }
@@ -987,9 +997,9 @@ class LiveServerRepository extends BaseRepository
             }
 
             return [
-                'player' => $player,
+                'player'  => $player,
                 'message' => $message,
-                'record' => $this->log($player, 'player_punish', $message, 0, false),
+                'record'  => $this->log($player, 'player_punish', $message, 0, false),
             ];
         }
 
@@ -1021,9 +1031,9 @@ class LiveServerRepository extends BaseRepository
             }
 
             return [
-                'player' => $player,
+                'player'  => $player,
                 'message' => $message,
-                'record' => $this->log($player, 'player_forgive', $message, 0, false),
+                'record'  => $this->log($player, 'player_forgive', $message, 0, false),
             ];
         }
 
@@ -1052,9 +1062,9 @@ class LiveServerRepository extends BaseRepository
             }
 
             return [
-                'player' => $player,
+                'player'  => $player,
                 'message' => $message,
-                'record' => $this->log($player, 'player_mute', $message, 0, false),
+                'record'  => $this->log($player, 'player_mute', $message, 0, false),
             ];
         }
 
@@ -1108,12 +1118,12 @@ class LiveServerRepository extends BaseRepository
 
         if ($command->command_key == 'admin_say') {
             $data['chat'] = Chat::create([
-                'ServerID' => $this->serverID,
-                'logDate' => $timestamp,
-                'logMessage' => $message,
-                'logPlayerID' => $source_id,
+                'ServerID'       => $this->serverID,
+                'logDate'        => $timestamp,
+                'logMessage'     => $message,
+                'logPlayerID'    => $source_id,
                 'logSoldierName' => $source_name,
-                'logSubset' => 'Global',
+                'logSubset'      => 'Global',
             ]);
 
             if ($this->admin instanceof Player) {
@@ -1260,7 +1270,7 @@ class LiveServerRepository extends BaseRepository
             $additional = [
                 'isSquadLocked' => array_key_exists($squadName,
                     $lockedSquads[ $teamID ]) !== false ? $lockedSquads[ $teamID ][ $squadName ] : null,
-                'squadName' => $squadName,
+                'squadName'     => $squadName,
             ];
 
             switch ($teamID) {

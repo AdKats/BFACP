@@ -105,7 +105,7 @@
                 <strong>&copy; 2013-{{ date('Y') }} <a href="http://www.adkgamers.com" target="_blank">A Different Kind, LLC</a>. All rights reserved.</strong> <em>{{ MainHelper::executionTime(true) }}</em>
             </footer>
 
-            @if($bfacp->isLoggedIn && !empty(getenv('PUSHER_APP_KEY')))
+            @if($bfacp->isLoggedIn && $bfacp->user->ability(null, ['admin.site.pusher.users.view', 'admin.site.pusher.chat.view']) && !empty(getenv('PUSHER_APP_KEY')))
             <!-- Control Sidebar -->
             <aside class="control-sidebar control-sidebar-dark">
                 <!-- Create the tabs -->
@@ -115,9 +115,10 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <!-- Home tab content -->
-                    <div class="tab-pane active" id="control-sidebar-users-tab" ng-controller="PusherUsersController">
-                        <h3 class="control-sidebar-heading">Online Users (<span ng-bind="members.online"></span>)</h3>
-                        <ul class="control-sidebar-menu">
+                    <div class="tab-pane active" id="control-sidebar-users-tab" ng-controller="PusherChatController">
+                        @if($bfacp->user->ability(null, 'admin.site.pusher.users.view'))
+                        <h3 class="control-sidebar-heading">{{ Lang::get('common.right_sidebar.online_users') }} (<span ng-bind="members.online"></span>)</h3>
+                        <ul class="control-sidebar-menu" id="sidebar-users">
                             <li ng-repeat="member in members.list track by member.id">
                                 <a href="javascript://">
                                     <img ng-src="@{{ member.avatar }}" class="img-circle menu-icon" style="max-width: 40px">
@@ -131,7 +132,39 @@
                             </li>
                         </ul>
                         <!-- /.control-sidebar-menu -->
+                        @endif
 
+                        @if($bfacp->user->ability(null, 'admin.site.pusher.chat.view'))
+                        <h3 class="control-sidebar-heading">{{ Lang::get('common.right_sidebar.chat_room') }} <span class="badge" ng-bind="connectionState" ng-class="connStateClass"></span> </h3>
+                        <ul class="control-sidebar-menu">
+                            <li>
+                                <div class="direct-chat-messages" id="sidebar-chat">
+                                    <div class="direct-chat-msg" ng-repeat="msg in messages | orderBy:'timestamp':true track by $index">
+                                        <div class="direct-chat-info clearfix">
+                                            <span class="direct-chat-name pull-left" ng-bind="msg.user.username"></span>
+                                            <span class="direct-chat-timestamp pull-right" ng-bind="moment(msg.timestamp).fromNow()"></span>
+                                        </div>
+
+                                        <img ng-src="@{{ msg.user.avatar }}" class="direct-chat-img">
+                                        <div class="direct-chat-text" ng-bind="msg.text"></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="input-group">
+                                    <input type="text" ng-enter="sendMessage()" ng-model="chat.message" class="form-control" ng-disabled="chat.input">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-warning btn-flat" ng-click="sendMessage()" ng-disabled="chat.input">
+                                            <ng-switch on="chat.input">
+                                                <span ng-switch-when="true"><i class="fa fa-cog fa-spin"></i> Sending...</span>
+                                                <span ng-switch-default>Send</span>
+                                            </ng-switch>
+                                        </button>
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
+                        @endif
                     </div>
                     <!-- /.tab-pane -->
                 </div>
@@ -169,10 +202,27 @@
         {{ HTML::script('js/plugins/howler/howler.min.js') }}
         {{ HTML::script('js/plugins/slimScroll/jquery.slimscroll.min.js') }}
         {{ HTML::script('js/boot.js?v=1') }}
-        @if($bfacp->isLoggedIn && !empty(getenv('PUSHER_APP_KEY')))
+        @if($bfacp->isLoggedIn && $bfacp->user->ability(null, ['admin.site.pusher.users.view', 'admin.site.pusher.chat.view']) && !empty(getenv('PUSHER_APP_KEY')))
         <script type="text/javascript">
-            var pusher = new Pusher('{{ getenv('PUSHER_APP_KEY') }}');
-            $('body').addClass('control-sidebar-open');
+            var pusher = new Pusher('{{ getenv('PUSHER_APP_KEY') }}', {
+                authEndpoint: '/api/pusher/auth'
+            });
+
+            $('#site-navbar').append('<li><a href="#" data-toggle="control-sidebar" tooltip="Toggle the sidebar"><i class="fa fa-gears"></i></a></li>');
+
+            @if($bfacp->user->ability(null, 'admin.site.pusher.users.view'))
+            $('#sidebar-users').slimScroll({
+                height: '250px',
+                alwaysVisible: true
+            });
+            @endif
+
+            @if($bfacp->user->ability(null, 'admin.site.pusher.chat.view'))
+            $('#sidebar-chat').slimScroll({
+                height: '350px',
+                alwaysVisible: true
+            });
+            @endif
         </script>
         @endif
         {{ Minify::javascript(array_merge(

@@ -3,9 +3,9 @@
 return [
 
     'admin' => [
-        'users' => [
+        'users'   => [
             'listing' => [
-                'table' => [
+                'table'  => [
                     'col1' => 'Username',
                     'col2' => 'Email',
                     'col3' => 'Role',
@@ -14,24 +14,24 @@ return [
                     'col6' => 'Created',
                 ],
                 'status' => [
-                    'active' => 'Active',
+                    'active'   => 'Active',
                     'inactive' => 'Inactive',
                 ],
             ],
-            'edit' => [
+            'edit'    => [
                 'details' => 'Details',
                 'buttons' => [
-                    'save' => 'Save Changes',
+                    'save'   => 'Save Changes',
                     'cancel' => 'Cancel',
                     'delete' => 'Delete User',
                 ],
-                'inputs' => [
-                    'username' => ['label' => 'Username'],
-                    'email' => ['label' => 'Email'],
-                    'role' => ['label' => 'Role'],
+                'inputs'  => [
+                    'username'       => ['label' => 'Username'],
+                    'email'          => ['label' => 'Email'],
+                    'role'           => ['label' => 'Role'],
                     'account_status' => ['label' => 'Status'],
-                    'lang' => ['label' => 'Language'],
-                    'genpass' => ['label' => 'Generate new password for user'],
+                    'lang'           => ['label' => 'Language'],
+                    'genpass'        => ['label' => 'Generate new password for user'],
                 ],
             ],
             'updates' => [
@@ -39,31 +39,31 @@ return [
                     'generated' => ':username (:email) has been emailed with their new password.',
                 ],
             ],
-            'create' => [
+            'create'  => [
                 'details' => 'Details',
-                'inputs' => [
+                'inputs'  => [
                     'username' => ['label' => 'Username'],
-                    'email' => ['label' => 'Email'],
-                    'role' => ['label' => 'Role'],
-                    'lang' => ['label' => 'Language'],
+                    'email'    => ['label' => 'Email'],
+                    'role'     => ['label' => 'Role'],
+                    'lang'     => ['label' => 'Language'],
                 ],
                 'buttons' => [
-                    'save' => 'Create User',
+                    'save'   => 'Create User',
                     'cancel' => 'Cancel',
                 ],
             ],
         ],
-        'roles' => [
-            'edit' => [
+        'roles'   => [
+            'edit'   => [
                 'buttons' => [
-                    'save' => 'Save Changes',
+                    'save'   => 'Save Changes',
                     'cancel' => 'Cancel',
                     'delete' => 'Delete Role',
                 ],
             ],
             'create' => [
                 'buttons' => [
-                    'save' => 'Create Role',
+                    'save'   => 'Create Role',
                     'cancel' => 'Cancel',
                     'delete' => 'Delete Role',
                 ],
@@ -72,7 +72,7 @@ return [
         'servers' => [
             'edit' => [
                 'buttons' => [
-                    'save' => 'Save Changes',
+                    'save'   => 'Save Changes',
                     'cancel' => 'Cancel',
                     'delete' => 'Delete Server',
                 ],

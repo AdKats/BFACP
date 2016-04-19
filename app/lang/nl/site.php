@@ -3,9 +3,9 @@
 return [
 
     'admin' => [
-        'users' => [
+        'users'   => [
             'listing' => [
-                'table' => [
+                'table'  => [
                     'col1' => 'Gebruikersnaam',
                     'col2' => 'Email',
                     'col3' => 'Rol',
@@ -14,24 +14,24 @@ return [
                     'col6' => 'Aangemaakt',
                 ],
                 'status' => [
-                    'active' => 'Actief',
+                    'active'   => 'Actief',
                     'inactive' => 'Inactief',
                 ],
             ],
-            'edit' => [
+            'edit'    => [
                 'details' => 'Details',
                 'buttons' => [
-                    'save' => 'Opslaan',
+                    'save'   => 'Opslaan',
                     'cancel' => 'Annuleren',
                     'delete' => 'Gebruiker Verwijderen',
                 ],
-                'inputs' => [
-                    'username' => ['label' => 'Gebruikersnaam'],
-                    'email' => ['label' => 'Email'],
-                    'role' => ['label' => 'Rol'],
+                'inputs'  => [
+                    'username'       => ['label' => 'Gebruikersnaam'],
+                    'email'          => ['label' => 'Email'],
+                    'role'           => ['label' => 'Rol'],
                     'account_status' => ['label' => 'Status'],
-                    'lang' => ['label' => 'Taal'],
-                    'genpass' => ['label' => 'Genereer nieuw wachtwoord'],
+                    'lang'           => ['label' => 'Taal'],
+                    'genpass'        => ['label' => 'Genereer nieuw wachtwoord'],
                 ],
             ],
             'updates' => [
@@ -40,17 +40,17 @@ return [
                 ],
             ],
         ],
-        'roles' => [
-            'edit' => [
+        'roles'   => [
+            'edit'   => [
                 'buttons' => [
-                    'save' => 'Opslaan',
+                    'save'   => 'Opslaan',
                     'cancel' => 'Annuleren',
                     'delete' => 'Rol Verwijderen',
                 ],
             ],
             'create' => [
                 'buttons' => [
-                    'save' => 'Rol Aanmaken',
+                    'save'   => 'Rol Aanmaken',
                     'cancel' => 'Annuleren',
                     'delete' => 'Rol Verwijderen',
                 ],
@@ -59,7 +59,7 @@ return [
         'servers' => [
             'edit' => [
                 'buttons' => [
-                    'save' => 'Opslaan',
+                    'save'   => 'Opslaan',
                     'cancel' => 'Cancel',
                     'delete' => 'Server Verwijderen',
                 ],

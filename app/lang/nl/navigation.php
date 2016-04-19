@@ -1,54 +1,54 @@
 <?php
 
 return [
-    'main' => [
+    'main'  => [
         'title' => 'Navigatie',
         'items' => [
-            'dashboard' => [
+            'dashboard'   => [
                 'title' => 'Dashboard',
-                'icon' => [
-                    'fa' => 'fa-dashboard',
+                'icon'  => [
+                    'fa'  => 'fa-dashboard',
                     'ion' => null,
                 ],
             ],
-            'chatlogs' => [
+            'chatlogs'    => [
                 'title' => 'Chatlogs',
-                'icon' => [
-                    'fa' => 'fa-comments',
+                'icon'  => [
+                    'fa'  => 'fa-comments',
                     'ion' => null,
                 ],
             ],
-            'scoreboard' => [
+            'scoreboard'  => [
                 'title' => 'Live Scorebord',
-                'icon' => [
-                    'fa' => 'fa-server',
+                'icon'  => [
+                    'fa'  => 'fa-server',
                     'ion' => null,
                 ],
             ],
-            'playerlist' => [
+            'playerlist'  => [
                 'title' => 'Spelerslijst',
-                'icon' => [
-                    'fa' => 'fa-users',
+                'icon'  => [
+                    'fa'  => 'fa-users',
                     'ion' => null,
                 ],
             ],
             'maintenance' => [
                 'title' => 'Systeem Onderhoud',
-                'icon' => [
-                    'fa' => 'fa-cogs',
+                'icon'  => [
+                    'fa'  => 'fa-cogs',
                     'ion' => null,
                 ],
             ],
         ],
     ],
     'admin' => [
-        'site' => [
+        'site'   => [
             'title' => 'Site Beheer',
             'items' => [
-                'users' => [
+                'users'    => [
                     'title' => 'Gebruikers',
-                    'icon' => [
-                        'fa' => 'fa-users',
+                    'icon'  => [
+                        'fa'  => 'fa-users',
                         'ion' => null,
                     ],
                     'items' => [
@@ -57,14 +57,14 @@ return [
                         ],
                     ],
                 ],
-                'roles' => [
+                'roles'    => [
                     'title' => 'Rollen',
-                    'icon' => [
-                        'fa' => 'fa-list-ol',
+                    'icon'  => [
+                        'fa'  => 'fa-list-ol',
                         'ion' => null,
                     ],
                     'items' => [
-                        'edit' => [
+                        'edit'   => [
                             'title' => 'Rol :name bewerken',
                         ],
                         'create' => [
@@ -74,33 +74,33 @@ return [
                 ],
                 'settings' => [
                     'title' => 'instellingen',
-                    'icon' => [
-                        'fa' => 'fa-cogs',
+                    'icon'  => [
+                        'fa'  => 'fa-cogs',
                         'ion' => null,
                     ],
                     'items' => [],
                 ],
-                'servers' => [
+                'servers'  => [
                     'title' => 'Servers',
-                    'icon' => [
-                        'fa' => 'fa-server',
+                    'icon'  => [
+                        'fa'  => 'fa-server',
                         'ion' => null,
                     ],
                     'items' => [],
                 ],
-                'updater' => [
+                'updater'  => [
                     'title' => 'Updates',
-                    'icon' => [
-                        'fa' => 'fa-wrench',
+                    'icon'  => [
+                        'fa'  => 'fa-wrench',
                         'ion' => null,
                     ],
                     'items' => [],
                 ],
-                'system' => [
+                'system'   => [
                     'logs' => [
                         'title' => 'Systeem Logs',
-                        'icon' => [
-                            'fa' => 'fa-file',
+                        'icon'  => [
+                            'fa'  => 'fa-file',
                             'ion' => null,
                         ],
                     ],
@@ -111,10 +111,10 @@ return [
             'title' => 'AdKats Beheer',
             'items' => [
 
-                'banlist' => [
+                'banlist'         => [
                     'title' => 'Banlijst',
-                    'icon' => [
-                        'fa' => null,
+                    'icon'  => [
+                        'fa'  => null,
                         'ion' => 'ion-hammer',
                     ],
                     'items' => [
@@ -123,10 +123,10 @@ return [
                         ],
                     ],
                 ],
-                'users' => [
+                'users'           => [
                     'title' => 'Gebruikers',
-                    'icon' => [
-                        'fa' => 'fa-users',
+                    'icon'  => [
+                        'fa'  => 'fa-users',
                         'ion' => null,
                     ],
                     'items' => [
@@ -135,14 +135,14 @@ return [
                         ],
                     ],
                 ],
-                'roles' => [
+                'roles'           => [
                     'title' => 'Rollen',
-                    'icon' => [
-                        'fa' => 'fa-list-ol',
+                    'icon'  => [
+                        'fa'  => 'fa-list-ol',
                         'ion' => null,
                     ],
                     'items' => [
-                        'edit' => [
+                        'edit'   => [
                             'title' => 'Rol Bewerken',
                         ],
                         'create' => [
@@ -152,8 +152,8 @@ return [
                 ],
                 'special_players' => [
                     'title' => 'Speciale Spelers',
-                    'icon' => [
-                        'fa' => 'fa-users',
+                    'icon'  => [
+                        'fa'  => 'fa-users',
                         'ion' => null,
                     ],
                     'items' => [

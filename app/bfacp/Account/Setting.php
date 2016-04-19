@@ -13,7 +13,7 @@ class Setting extends Elegant
     public static $rules = [
         'gravatar' => 'email',
         'timezone' => 'timezone',
-        'lang' => 'string',
+        'lang'     => 'string',
     ];
 
     /**

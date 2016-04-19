@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/*
 	|--------------------------------------------------------------------------
@@ -16,8 +16,7 @@ return array(
 	|
 	*/
 
-	'driver' => getenv('SESSION_DRIVER') ?: 'file',
-
+	'driver'          => getenv('SESSION_DRIVER') ?: 'file',
 	/*
 	|--------------------------------------------------------------------------
 	| Session Lifetime
@@ -29,10 +28,8 @@ return array(
 	|
 	*/
 
-	'lifetime' => 120,
-
+	'lifetime'        => 120,
 	'expire_on_close' => true,
-
 	/*
 	|--------------------------------------------------------------------------
 	| Session File Location
@@ -44,8 +41,7 @@ return array(
 	|
 	*/
 
-	'files' => storage_path().'/sessions',
-
+	'files'           => storage_path() . '/sessions',
 	/*
 	|--------------------------------------------------------------------------
 	| Session Database Connection
@@ -57,8 +53,7 @@ return array(
 	|
 	*/
 
-	'connection' => null,
-
+	'connection'      => null,
 	/*
 	|--------------------------------------------------------------------------
 	| Session Database Table
@@ -70,8 +65,7 @@ return array(
 	|
 	*/
 
-	'table' => 'bfacp_sessions',
-
+	'table'           => 'bfacp_sessions',
 	/*
 	|--------------------------------------------------------------------------
 	| Session Sweeping Lottery
@@ -83,8 +77,7 @@ return array(
 	|
 	*/
 
-	'lottery' => array(2, 100),
-
+	'lottery'         => [2, 100],
 	/*
 	|--------------------------------------------------------------------------
 	| Session Cookie Name
@@ -96,8 +89,7 @@ return array(
 	|
 	*/
 
-	'cookie' => 'bfacp_session',
-
+	'cookie'          => 'bfacp_session',
 	/*
 	|--------------------------------------------------------------------------
 	| Session Cookie Path
@@ -109,8 +101,7 @@ return array(
 	|
 	*/
 
-	'path' => '/',
-
+	'path'            => '/',
 	/*
 	|--------------------------------------------------------------------------
 	| Session Cookie Domain
@@ -122,8 +113,7 @@ return array(
 	|
 	*/
 
-	'domain' => null,
-
+	'domain'          => null,
 	/*
 	|--------------------------------------------------------------------------
 	| HTTPS Only Cookies
@@ -135,6 +125,6 @@ return array(
 	|
 	*/
 
-	'secure' => false,
+	'secure'          => false,
 
-);
+];

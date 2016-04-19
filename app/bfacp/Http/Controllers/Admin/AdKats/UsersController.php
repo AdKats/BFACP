@@ -100,9 +100,9 @@ class UsersController extends BaseController
             $soldiers = explode(',', Input::get('soldiers', ''));
 
             $v = Validator::make(Input::all(), [
-                'user_name' => 'required|alpha_dash',
+                'user_name'  => 'required|alpha_dash',
                 'user_email' => 'email',
-                'user_role' => 'required|exists:adkats_roles,role_id',
+                'user_role'  => 'required|exists:adkats_roles,role_id',
                 'user_notes' => 'max:1000',
             ]);
 

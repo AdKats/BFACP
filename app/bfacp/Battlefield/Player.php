@@ -195,7 +195,7 @@ class Player extends Elegant
     public function getProfileUrlAttribute()
     {
         return route('player.show', [
-            'id' => $this->PlayerID,
+            'id'   => $this->PlayerID,
             'name' => $this->SoldierName,
         ]);
     }
@@ -288,7 +288,7 @@ class Player extends Elegant
 
                 $request = App::make('guzzle')->get(sprintf('http://api.bf4db.com/api-player.php?%s', http_build_query([
                     'format' => 'json',
-                    'guid' => $this->EAGUID,
+                    'guid'   => $this->EAGUID,
                 ])), [
                     'connect_timeout' => 5,
                 ]);
@@ -297,7 +297,7 @@ class Player extends Elegant
 
                 if ($response['type'] != 'error') {
                     $bf4db_profile = [
-                        'url' => $response['data']['bf4db_url'],
+                        'url'        => $response['data']['bf4db_url'],
                         'cheatscore' => $response['data']['cheatscore'],
                     ];
                 } else {
@@ -305,7 +305,7 @@ class Player extends Elegant
                 }
             } catch (Exception $e) {
                 $bf4db_profile = [
-                    'url' => sprintf('http://bf4db.com/players?name=%s', $this->SoldierName),
+                    'url'        => sprintf('http://bf4db.com/players?name=%s', $this->SoldierName),
                     'cheatscore' => null,
                 ];
             }
@@ -315,12 +315,12 @@ class Player extends Elegant
             'bf3stats' => $game == 'BF3' ? sprintf('http://bf3stats.com/stats_pc/%s', $this->SoldierName) : null,
             'bf4stats' => $game == 'BF4' ? sprintf('http://bf4stats.com/pc/%s', $this->SoldierName) : null,
             'bfhstats' => $game == 'BFH' ? sprintf('http://bfhstats.com/pc/%s', $this->SoldierName) : null,
-            'istats' => sprintf('http://i-stats.net/index.php?action=pcheck&player=%s&game=%s&sub=Check+Player',
+            'istats'   => sprintf('http://i-stats.net/index.php?action=pcheck&player=%s&game=%s&sub=Check+Player',
                 $this->SoldierName, $game),
             'metabans' => sprintf('http://metabans.com/search/?phrase=%s', $this->SoldierName),
-            'bf4db' => $game == 'BF4' ? $bf4db_profile : null,
+            'bf4db'    => $game == 'BF4' ? $bf4db_profile : null,
             'chatlogs' => route('chatlog.search', ['pid' => $this->PlayerID]),
-            'pbbans' => !empty($this->PBGUID) ? sprintf('http://www.pbbans.com/mbi-guid-search-%s.html',
+            'pbbans'   => !empty($this->PBGUID) ? sprintf('http://www.pbbans.com/mbi-guid-search-%s.html',
                 $this->PBGUID) : null,
         ];
 

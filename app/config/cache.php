@@ -16,7 +16,6 @@ return [
      */
 
     'driver'     => getenv('CACHE_DRIVER') ?: 'file',
-
     /*
     |--------------------------------------------------------------------------
     | File Cache Location
@@ -29,7 +28,6 @@ return [
      */
 
     'path'       => storage_path() . '/cache',
-
     /*
     |--------------------------------------------------------------------------
     | Database Cache Connection
@@ -42,7 +40,6 @@ return [
      */
 
     'connection' => null,
-
     /*
     |--------------------------------------------------------------------------
     | Database Cache Table
@@ -55,7 +52,6 @@ return [
      */
 
     'table'      => 'bfacp_cache',
-
     /*
     |--------------------------------------------------------------------------
     | Memcached Servers
@@ -69,10 +65,9 @@ return [
 
     'memcached'  => [
 
-        ['host' => '127.0.0.1', 'port' => 11211, 'weight' => 100]
+        ['host' => '127.0.0.1', 'port' => 11211, 'weight' => 100],
 
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Cache Key Prefix
@@ -84,6 +79,6 @@ return [
     |
      */
 
-    'prefix'     => 'bfacp_' . (array_key_exists('HTTP_HOST', $_SERVER) ? md5($_SERVER['HTTP_HOST']) : 'local')
+    'prefix'     => 'bfacp_' . (array_key_exists('HTTP_HOST', $_SERVER) ? md5($_SERVER['HTTP_HOST']) : 'local'),
 
 ];

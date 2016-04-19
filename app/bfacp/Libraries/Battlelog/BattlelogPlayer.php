@@ -121,10 +121,10 @@ class BattlelogPlayer extends BattlelogAPI
 
             // Assign a relationship for them and save to the database
             $this->player->battlelog()->save(new Battlelog([
-                'gravatar' => $this->personaGravatar,
+                'gravatar'       => $this->personaGravatar,
                 'persona_banned' => false,
-                'persona_id' => $this->personaID,
-                'user_id' => $this->personaUserID,
+                'persona_id'     => $this->personaID,
+                'user_id'        => $this->personaUserID,
             ]));
 
             // Reload the relationship
@@ -201,20 +201,20 @@ class BattlelogPlayer extends BattlelogAPI
             }
 
             $weapons->push([
-                'slug' => $weapon['slug'],
-                'category' => $weapon['category'],
-                'headshots' => $weapon['headshots'],
-                'kills' => $weapon['kills'],
-                'deaths' => $weapon['deaths'],
-                'score' => $weapon['score'],
-                'fired' => $weapon['shotsFired'],
-                'hit' => $weapon['shotsHit'],
+                'slug'         => $weapon['slug'],
+                'category'     => $weapon['category'],
+                'headshots'    => $weapon['headshots'],
+                'kills'        => $weapon['kills'],
+                'deaths'       => $weapon['deaths'],
+                'score'        => $weapon['score'],
+                'fired'        => $weapon['shotsFired'],
+                'hit'          => $weapon['shotsHit'],
                 'timeEquipped' => $weapon['timeEquipped'],
-                'accuracy' => MainHelper::percent($weapon['shotsHit'], $weapon['shotsFired']),
-                'kpm' => MainHelper::divide($weapon['kills'], MainHelper::divide($weapon['timeEquipped'], 60)),
-                'hskp' => MainHelper::percent($weapon['headshots'], $weapon['kills']),
-                'dps' => MainHelper::percent($weapon['kills'], $weapon['shotsHit']),
-                'weapon_link' => parent::BLOG . $weaponURI,
+                'accuracy'     => MainHelper::percent($weapon['shotsHit'], $weapon['shotsFired']),
+                'kpm'          => MainHelper::divide($weapon['kills'], MainHelper::divide($weapon['timeEquipped'], 60)),
+                'hskp'         => MainHelper::percent($weapon['headshots'], $weapon['kills']),
+                'dps'          => MainHelper::percent($weapon['kills'], $weapon['shotsHit']),
+                'weapon_link'  => parent::BLOG . $weaponURI,
             ]);
         }
 
@@ -257,14 +257,14 @@ class BattlelogPlayer extends BattlelogAPI
 
         foreach ($results['mainVehicleStats'] as $vehicle) {
             $vehicles->push([
-                'slug' => $vehicle['slug'],
-                'code' => $vehicle['code'],
-                'category' => $vehicle['category'],
-                'kills' => $vehicle['kills'],
-                'score' => array_key_exists('score', $vehicle) ? $vehicle['score'] : null,
+                'slug'         => $vehicle['slug'],
+                'code'         => $vehicle['code'],
+                'category'     => $vehicle['category'],
+                'kills'        => $vehicle['kills'],
+                'score'        => array_key_exists('score', $vehicle) ? $vehicle['score'] : null,
                 'timeEquipped' => $vehicle['timeIn'],
                 'serviceStars' => $vehicle['serviceStars'],
-                'kpm' => MainHelper::divide($vehicle['kills'], MainHelper::divide($vehicle['timeIn'], 60)),
+                'kpm'          => MainHelper::divide($vehicle['kills'], MainHelper::divide($vehicle['timeIn'], 60)),
             ]);
         }
 
@@ -311,8 +311,8 @@ class BattlelogPlayer extends BattlelogAPI
         $results = $this->sendRequest($uri);
 
         $battlereport = new Collection([
-            'game' => $this->game,
-            'url' => parent::BLOG . sprintf('%s/battlereport/show/1/%s/%u', $this->game, $id, $this->personaID),
+            'game'   => $this->game,
+            'url'    => parent::BLOG . sprintf('%s/battlereport/show/1/%s/%u', $this->game, $id, $this->personaID),
             'report' => is_null($results) ? [] : $results,
         ]);
 

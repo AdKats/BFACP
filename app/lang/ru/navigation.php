@@ -1,58 +1,58 @@
 <?php
 
 return [
-    'main' => [
+    'main'  => [
         'title' => 'Навигация',
         'items' => [
-            'dashboard' => [
+            'dashboard'   => [
                 'title' => 'Панель управления',
-                'icon' => [
-                    'fa' => 'fa-dashboard',
+                'icon'  => [
+                    'fa'  => 'fa-dashboard',
                     'ion' => null,
                 ],
             ],
-            'chatlogs' => [
+            'chatlogs'    => [
                 'title' => 'Лог чата',
-                'icon' => [
-                    'fa' => 'fa-comments',
+                'icon'  => [
+                    'fa'  => 'fa-comments',
                     'ion' => null,
                 ],
             ],
-            'scoreboard' => [
+            'scoreboard'  => [
                 'title' => 'Онлайн таблица',
-                'icon' => [
-                    'fa' => 'fa-server',
+                'icon'  => [
+                    'fa'  => 'fa-server',
                     'ion' => null,
                 ],
             ],
-            'playerlist' => [
+            'playerlist'  => [
                 'title' => 'Список игроков',
-                'icon' => [
-                    'fa' => 'fa-users',
+                'icon'  => [
+                    'fa'  => 'fa-users',
                     'ion' => null,
                 ],
             ],
             'maintenance' => [
                 'title' => 'Обслуживание',
-                'icon' => [
-                    'fa' => 'fa-cogs',
+                'icon'  => [
+                    'fa'  => 'fa-cogs',
                     'ion' => null,
                 ],
             ],
         ],
     ],
     'admin' => [
-        'site' => [
+        'site'   => [
             'title' => 'Управление сайтом',
             'items' => [
-                'users' => [
+                'users'    => [
                     'title' => 'Пользователи',
-                    'icon' => [
-                        'fa' => 'fa-users',
+                    'icon'  => [
+                        'fa'  => 'fa-users',
                         'ion' => null,
                     ],
                     'items' => [
-                        'edit' => [
+                        'edit'   => [
                             'title' => 'Редактирование пользователя #:id',
                         ],
                         'create' => [
@@ -60,14 +60,14 @@ return [
                         ],
                     ],
                 ],
-                'roles' => [
+                'roles'    => [
                     'title' => 'Группы',
-                    'icon' => [
-                        'fa' => 'fa-list-ol',
+                    'icon'  => [
+                        'fa'  => 'fa-list-ol',
                         'ion' => null,
                     ],
                     'items' => [
-                        'edit' => [
+                        'edit'   => [
                             'title' => 'Редактирование :name группы',
                         ],
                         'create' => [
@@ -77,33 +77,33 @@ return [
                 ],
                 'settings' => [
                     'title' => 'Настройки',
-                    'icon' => [
-                        'fa' => 'fa-cogs',
+                    'icon'  => [
+                        'fa'  => 'fa-cogs',
                         'ion' => null,
                     ],
                     'items' => [],
                 ],
-                'servers' => [
+                'servers'  => [
                     'title' => 'Серверы',
-                    'icon' => [
-                        'fa' => 'fa-server',
+                    'icon'  => [
+                        'fa'  => 'fa-server',
                         'ion' => null,
                     ],
                     'items' => [],
                 ],
-                'updater' => [
+                'updater'  => [
                     'title' => 'Обновление',
-                    'icon' => [
-                        'fa' => 'fa-wrench',
+                    'icon'  => [
+                        'fa'  => 'fa-wrench',
                         'ion' => null,
                     ],
                     'items' => [],
                 ],
-                'system' => [
+                'system'   => [
                     'logs' => [
                         'title' => 'Системные логи',
-                        'icon' => [
-                            'fa' => 'fa-file',
+                        'icon'  => [
+                            'fa'  => 'fa-file',
                             'ion' => null,
                         ],
                     ],
@@ -114,10 +114,10 @@ return [
             'title' => 'Управление AdKats',
             'items' => [
 
-                'banlist' => [
+                'banlist'         => [
                     'title' => 'Банлист',
-                    'icon' => [
-                        'fa' => null,
+                    'icon'  => [
+                        'fa'  => null,
                         'ion' => 'ion-hammer',
                     ],
                     'items' => [
@@ -126,10 +126,10 @@ return [
                         ],
                     ],
                 ],
-                'users' => [
+                'users'           => [
                     'title' => 'Пользователи',
-                    'icon' => [
-                        'fa' => 'fa-users',
+                    'icon'  => [
+                        'fa'  => 'fa-users',
                         'ion' => null,
                     ],
                     'items' => [
@@ -138,14 +138,14 @@ return [
                         ],
                     ],
                 ],
-                'roles' => [
+                'roles'           => [
                     'title' => 'Группы',
-                    'icon' => [
-                        'fa' => 'fa-list-ol',
+                    'icon'  => [
+                        'fa'  => 'fa-list-ol',
                         'ion' => null,
                     ],
                     'items' => [
-                        'edit' => [
+                        'edit'   => [
                             'title' => 'Редактирование группы',
                         ],
                         'create' => [
@@ -155,8 +155,8 @@ return [
                 ],
                 'special_players' => [
                     'title' => 'Особые игроки',
-                    'icon' => [
-                        'fa' => 'fa-users',
+                    'icon'  => [
+                        'fa'  => 'fa-users',
                         'ion' => null,
                     ],
                     'items' => [

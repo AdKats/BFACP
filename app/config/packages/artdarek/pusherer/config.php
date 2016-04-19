@@ -18,15 +18,15 @@ return [
     /**
      * App id
      */
-    'app_id' => getenv('PUSHER_APP_ID'),
+    'app_id'  => getenv('PUSHER_APP_ID'),
     /**
      * App Key
      */
-    'key' => getenv('PUSHER_APP_KEY'),
+    'key'     => getenv('PUSHER_APP_KEY'),
     /**
      * App Secret
      */
-    'secret' => getenv('PUSHER_APP_SECRET'),
+    'secret'  => getenv('PUSHER_APP_SECRET'),
     /**
      * App Options
      * Available: scheme, host, port, timeout, encrypted

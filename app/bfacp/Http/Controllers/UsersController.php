@@ -58,7 +58,7 @@ class UsersController extends BaseController
         $password_confirmation = trim(Input::get('password_confirmation', null));
 
         $v = Validator::make(Input::all(), [
-            'email' => 'required|email|unique:bfacp_users,email,' . $user->id,
+            'email'    => 'required|email|unique:bfacp_users,email,' . $user->id,
             'language' => 'required|in:' . implode(',', array_keys(Config::get('bfacp.site.languages'))),
             'password' => 'min:8|confirmed',
         ]);

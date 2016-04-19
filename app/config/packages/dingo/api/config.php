@@ -13,8 +13,7 @@ return [
     |
     */
 
-    'vendor' => 'bfacp',
-
+    'vendor'              => 'bfacp',
     /*
     |--------------------------------------------------------------------------
     | Default API Version
@@ -25,8 +24,7 @@ return [
     |
     */
 
-    'version' => 'v1',
-
+    'version'             => 'v1',
     /*
     |--------------------------------------------------------------------------
     | Default API Prefix
@@ -37,8 +35,7 @@ return [
     |
     */
 
-    'prefix' => 'api',
-
+    'prefix'              => 'api',
     /*
     |--------------------------------------------------------------------------
     | Default API Domain
@@ -49,8 +46,7 @@ return [
     |
     */
 
-    'domain' => null,
-
+    'domain'              => null,
     /*
     |--------------------------------------------------------------------------
     | Conditional Requests
@@ -64,7 +60,6 @@ return [
     */
 
     'conditional_request' => true,
-
     /*
     |--------------------------------------------------------------------------
     | Strict Mode
@@ -76,8 +71,7 @@ return [
     |
     */
 
-    'strict' => false,
-
+    'strict'              => false,
     /*
     |--------------------------------------------------------------------------
     | Debug Mode
@@ -89,8 +83,7 @@ return [
     |
     */
 
-    'debug' => false,
-
+    'debug'               => false,
     /*
     |--------------------------------------------------------------------------
     | Authentication Providers
@@ -101,12 +94,11 @@ return [
     |
     */
 
-    'auth' => [
+    'auth'                => [
         'basic' => function ($app) {
             return new Dingo\Api\Auth\BasicProvider($app['auth']);
         },
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Throttling / Rate Limiting
@@ -118,10 +110,9 @@ return [
     |
     */
 
-    'throttling' => [
+    'throttling'          => [
 
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Response Transformer
@@ -134,8 +125,7 @@ return [
     |
     */
 
-    'transformer' => 'Dingo\Api\Transformer\FractalTransformer',
-
+    'transformer'         => 'Dingo\Api\Transformer\FractalTransformer',
     /*
     |--------------------------------------------------------------------------
     | Response Formats
@@ -147,12 +137,11 @@ return [
     |
     */
 
-    'default_format' => 'json',
-
-    'formats' => [
+    'default_format'      => 'json',
+    'formats'             => [
 
         'json' => 'Dingo\Api\Http\ResponseFormat\JsonResponseFormat',
 
-    ]
+    ],
 
 ];

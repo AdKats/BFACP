@@ -5,7 +5,7 @@ use BFACP\Option;
 $options = [];
 
 $format = function (&$options, $keys, $value) use (&$format) {
-    $keys ? $format($options[array_shift($keys)], $keys, $value) : $options = $value;
+    $keys ? $format($options[ array_shift($keys) ], $keys, $value) : $options = $value;
 };
 
 try {
@@ -19,7 +19,7 @@ try {
                 if ($option->option_key == 'site.languages') {
                     $values = [];
                     foreach (explode(',', $option->option_value) as $value) {
-                        $values[$value] = MainHelper::languages($value);
+                        $values[ $value ] = MainHelper::languages($value);
                     }
                     $format($options, explode('.', $option->option_key), $values);
                 } else {
