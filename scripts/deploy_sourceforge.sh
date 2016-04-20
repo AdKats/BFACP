@@ -12,6 +12,6 @@ echo "Zipping application into ${FILENAME}."
 zip -9 -q -r $FILENAME . -x *.git*
 USER="prophet731"
 HOST="frs.sourceforge.net"
-echo "Uploading ${FILENAME} to source forge"
-scp -oUserKnownHostsFile=/dev/null "${parentdir}/${FILENAME}" $USER@$HOST:/home$
+echo "Uploading ${FILENAME} to sourceforge."
+scp -oUserKnownHostsFile=/dev/null "${parentdir}/${FILENAME}" $USER@$HOST:/home/pfs/project/b/bf/bfacp/
 echo "${FILENAME} uploaded."
