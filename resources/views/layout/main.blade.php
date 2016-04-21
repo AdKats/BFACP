@@ -214,7 +214,7 @@
             authEndpoint: '/api/pusher/auth'
         });
 
-        $('#site-navbar').append('<li><a href="#" data-toggle="control-sidebar" tooltip="Toggle the sidebar"><i class="fa fa-gears"></i></a></li>');
+        $('#site-navbar').append('<li><a href="javascript://" data-toggle="control-sidebar" tooltip="Toggle the sidebar"><i class="fa fa-gears"></i></a></li>');
 
         @if($bfacp->isLoggedIn && $bfacp->user->ability(null, 'admin.site.pusher.users.view'))
         $('#sidebar-users').slimScroll({
@@ -229,33 +229,6 @@
                     alwaysVisible: true
                 });
         @endif
-
-        function findBootstrapEnvironment() {
-            var envs = ["ExtraSmall", "Small", "Medium", "Large"];
-            var envValues = ["xs", "sm", "md", "lg"];
-
-            var $el = $('<div>');
-            $el.appendTo($('body'));
-
-            for (var i = envValues.length - 1; i >= 0; i--) {
-                var envVal = envValues[i];
-
-                $el.addClass('hidden-' + envVal);
-                if ($el.is(':hidden')) {
-                    $el.remove();
-                    return envs[i]
-                }
-            }
-            ;
-        }
-
-        var bootstrapEnv = findBootstrapEnvironment();
-
-        if (bootstrapEnv != "Large") {
-            $('body').removeClass('control-sidebar-open');
-        } else {
-            $('body').addClass('control-sidebar-open');
-        }
     </script>
 @endif
 {!! Minify::javascript(array_merge(
