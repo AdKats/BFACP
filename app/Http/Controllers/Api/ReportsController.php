@@ -82,7 +82,7 @@ class ReportsController extends Controller
             }
 
             // If the action is {Accept, Deny, Ignore} Round Report then we just need to update the existing record.
-            if (in_array($this->request->get('action'), [40, 41, 61])) {
+            if (in_array($this->request->get('action'), [40, 42, 62])) {
                 $record->command_action = $this->request->get('action');
                 $record->save();
             } else {
