@@ -15,7 +15,7 @@ class PusherController extends Controller
      */
     public function postAuth()
     {
-        if ($this->request->has('channel_name') && $this->request->has('socket_id') && !empty($this->user)) {
+        if ($this->request->has('channel_name') && $this->request->has('socket_id') && ! empty($this->user)) {
             $data = [
                 'id'        => $this->user->id,
                 'username'  => $this->user->username,
