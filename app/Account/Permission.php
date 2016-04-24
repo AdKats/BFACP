@@ -2,6 +2,7 @@
 
 namespace BFACP\Account;
 
+use BFACP\Helpers\PermissionName;
 use Illuminate\Support\Facades\Config;
 use Zizaco\Entrust\EntrustPermission;
 
@@ -52,7 +53,7 @@ class Permission extends EntrustPermission
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = ['key_name'];
 
     /**
      * Models to be loaded automatically.
@@ -66,5 +67,29 @@ class Permission extends EntrustPermission
         parent::__construct();
 
         $this->table = Config::get('entrust.permissions_table');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKeyNameAttribute()
+    {
+        return $this->name->getLast();
+    }
+
+    /**
+     * @return PermissionName
+     */
+    public function getNameAttribute()
+    {
+        return new PermissionName($this->attributes['name']);
+    }
+
+    /**
+     * @param $name
+     */
+    public function setNameAttribute($name)
+    {
+        $this->attributes['name'] = (string) $name;
     }
 }

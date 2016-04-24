@@ -10,9 +10,10 @@ $adminPermsList = Cache::remember('admin.perm.list', 60 * 24, function () {
     $temp = [];
     $permissions = Permission::all();
     $permissions->each(function ($permission) use (&$temp) {
-        if (preg_match('/^admin\\.([a-z]+)/A', $permission->name, $matches)) {
-            $temp[$matches[1]][] = $permission->name;
-            $temp['_admin'][] = $permission->name;
+        $permName = (string) $permission->name;
+        if (preg_match('/^admin\\.([a-z]+)/A', $permName, $matches)) {
+            $temp[$matches[1]][] = $permName;
+            $temp['_admin'][] = $permName;
         }
     });
 

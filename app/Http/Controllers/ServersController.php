@@ -62,15 +62,11 @@ class ServersController extends Controller
             $permissions = $perms['permissions'];
 
             $validPermissions = $this->user->roles[0]->perms->filter(function ($perm) use (&$permissions) {
-                if (array_key_exists($perm->name, $permissions) && $permissions[$perm->name]) {
+                $permName = (string) $perm->name;
+                if (array_key_exists($permName, $permissions) && $permissions[$permName]) {
                     return true;
                 }
-            })->map(function ($perm) {
-                $p = clone $perm;
-                $p->name = explode('.', $perm->name)[2];
-
-                return $p;
-            })->pluck('display_name', 'name');
+            })->lists('display_name', 'key_name');
 
             $adminview = view('partials.scoreboard.admin.admin',
                 compact('validPermissions', 'presetMessages'))->render();
