@@ -1,6 +1,6 @@
 <?php
 
-namespace BFACP\Helpers;
+namespace BFACP\Helpers\Site;
 
 /**
  * Class PermissionName.

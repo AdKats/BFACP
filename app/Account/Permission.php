@@ -2,7 +2,7 @@
 
 namespace BFACP\Account;
 
-use BFACP\Helpers\PermissionName;
+use BFACP\Helpers\Site\PermissionName;
 use Illuminate\Support\Facades\Config;
 use Zizaco\Entrust\EntrustPermission;
 
