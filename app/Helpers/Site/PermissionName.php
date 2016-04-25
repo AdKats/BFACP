@@ -17,7 +17,7 @@ class PermissionName extends Main
      */
     public function __construct($name)
     {
-        $this->chunks = explode(".", $name);
+        $this->chunks = explode('.', $name);
     }
 
     /**
@@ -51,6 +51,6 @@ class PermissionName extends Main
      */
     public function __toString()
     {
-        return implode(".", $this->chunks);
+        return implode('.', $this->chunks);
     }
 }
