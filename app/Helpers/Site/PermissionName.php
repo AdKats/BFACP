@@ -2,6 +2,8 @@
 
 namespace BFACP\Helpers\Site;
 
+use BFACP\Helpers\Main;
+
 /**
  * Class PermissionName.
  */
