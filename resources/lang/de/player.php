@@ -35,6 +35,8 @@ return [
                 'bf4stats'     => 'BF4 Stats',
                 'bfhstats'     => 'BFH Stats',
                 'metabans'     => 'Metabans',
+                'pbbans'       => 'PBBans',
+                'fairplay'     => '24/7 Fairplay',
                 /**
                  * Internal LInks
                  */

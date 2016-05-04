@@ -341,6 +341,7 @@ class Player extends Elegant
             'chatlogs' => route('chatlog.search', ['pid' => $this->PlayerID]),
             'pbbans'   => ! empty($this->PBGUID) ? sprintf('http://www.pbbans.com/mbi-guid-search-%s.html',
                 $this->PBGUID) : null,
+            'fairplay' => sprintf('https://www.247fairplay.com/CheatDetector/%s', $this->SoldierName),
         ];
 
         $links = array_merge($links, $links[0]);
