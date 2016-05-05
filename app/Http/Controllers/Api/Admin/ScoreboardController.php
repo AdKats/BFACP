@@ -167,6 +167,27 @@ class ScoreboardController extends Controller
     }
 
     /**
+     * Issues a ban on the selected players. Ban can be either perm or temp.
+     *
+     * @return MainHelper
+     */
+    public function postBan()
+    {
+        switch($this->request->get('type')) {
+            case 'perm':
+                $this->hasPermission('admin.scoreboard.pban');
+                break;
+            case 'temp':
+                $this->hasPermission('admin.scoreboard.tban');
+                break;
+            default:
+                throw new RconException(sprintf('Invalid type: %s', $this->request->get('type')));
+        }
+
+        return $this->_response();
+    }
+
+    /**
      * Sends a say to the entire server, team, or selected player(s).
      *
      * @return MainHelper

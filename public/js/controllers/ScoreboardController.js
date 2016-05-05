@@ -1122,6 +1122,31 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
                 }).error(function (e) {
                     console.error(e);
                 });
+            },
+            permBanPlayer: function(players, message) {
+                SBA.ban($scope.selectedId, 'perm', players, message).success(function (data) {
+                    var status = data.status;
+                    var player = null;
+                    var res = null;
+                    var failed = data.data.failed;
+                    var passed = data.data.passed;
+
+                    if (status == 'success') {
+                        for (var i = 0; i < failed.length; i++) {
+                            player = failed[i];
+                            toastr.warning(player.message);
+                        }
+                        for (var i = 0; i < passed.length; i++) {
+                            player = passed[i];
+                            toastr.success(player.message, player.player);
+                        }
+                        $scope.admin.resetSys();
+                    } else {
+                        toastr.error(data.message);
+                    }
+
+                    $scope.admin.processing = false;
+                })
             }
         };
     }
