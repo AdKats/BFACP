@@ -173,7 +173,7 @@ class ScoreboardController extends Controller
      */
     public function postBan()
     {
-        switch($this->request->get('type')) {
+        switch ($this->request->get('type')) {
             case 'perm':
                 $this->hasPermission('admin.scoreboard.pban');
                 break;
