@@ -17,7 +17,7 @@
                 <div class="box-body">
                     {!! Former::text('username')->label(trans('site.admin.users.edit.inputs.username.label')) !!}
                     {!! Former::email('email')->label(trans('site.admin.users.edit.inputs.email.label')) !!}
-                    {!! Former::select('role')->options($roles, (!empty($user->roles) ? $user->roles[0]->id : 2))->label(trans('site.admin.users.edit.inputs.role.label')) !!}
+                    {!! Former::select('role')->options($roles, (!isset($user->roles[0]) ? $user->roles[0]->id : 2))->label(trans('site.admin.users.edit.inputs.role.label')) !!}
 
                     {!! Former::select('language')->label(trans('site.admin.users.edit.inputs.lang.label'))->options(Config::get('bfacp.site.languages'))->value($user->setting->lang) !!}
 
