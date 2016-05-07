@@ -103,6 +103,24 @@ class UsersController extends Controller
                 $user = User::findOrFail($id);
             }
 
+            /**
+             * If the user doesn't have a role assigned we need to re-create the link.
+             */
+            if (! isset($user->role[0])) {
+
+                // Fetch the registered role
+                $registeredUserRole = Role::where('name', 'Registered')->first();
+
+                // Associate the registered role with the user
+                $user->roles()->attach($registeredUserRole->id);
+
+                // Save the new user information
+                $user->save();
+
+                // Reload the roles relationship
+                $user->load('roles');
+            }
+
             // Get the list of roles
             $roles = Role::lists('name', 'id');
 
