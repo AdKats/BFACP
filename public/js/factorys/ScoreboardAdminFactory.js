@@ -107,6 +107,18 @@ angular.module('bfacp').factory('SBA', ['$http', function ($http) {
             };
 
             return $http.post(baseurl + '/nuke', payload);
+        },
+
+        ban: function (server_id, type, players, message, duration) {
+            var payload = {
+                server_id: server_id,
+                message: message,
+                players: players,
+                type: type,
+                duration: (duration !== undefined ? duration : null)
+            };
+
+            return $http.post(baseurl + '/ban', payload);
         }
-    }
+    };
 }]);
