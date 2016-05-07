@@ -103,7 +103,7 @@ class UsersController extends Controller
                 $user = User::findOrFail($id);
             }
 
-            /**
+            /*
              * If the user doesn't have a role assigned we need to re-create the link.
              */
             if (! isset($user->role[0])) {
