@@ -336,7 +336,7 @@ class LiveServerRepository extends BaseRepository
         }
 
         if ($this->isLoggedIn) {
-            $presetMessages = Setting::servers($this->serverID)->settings('Pre-Message List')->first()->setting_value;
+            $presetMessages = Setting::servers($this->serverID)->settings('Pre-Message List')->first();
         }
 
         $_playmode = $this->client->getPlaymodeName($info[4]);
@@ -388,7 +388,15 @@ class LiveServerRepository extends BaseRepository
 
         $this->setFactions();
 
-        $this->data['_presetmessages'] = isset($presetMessages) ? [''] + $presetMessages : [];
+        if (isset($presetMessages)) {
+            if (is_array($presetMessages->setting_value)) {
+                $this->data['_presetmessages'] = array_merge([''], $presetMessages->setting_value);
+            } else {
+                $this->data['_presetmessages'][0] = $presetMessages->setting_value;
+            }
+        } else {
+            $this->data['_presetmessages'] = [];
+        }
 
         $this->data['_teams'] = [
             [
@@ -494,6 +502,8 @@ class LiveServerRepository extends BaseRepository
         } elseif ($this->data['server']['mode']['uri'] == 'RushLarge0') {
             $this->TEAM1 = $teamFactions[0][4];
             $this->TEAM2 = $teamFactions[0][5];
+            $this->TEAM3 = $teamFactions[0][4];
+            $this->TEAM4 = $teamFactions[0][5];
         } else {
             if ($this->gameName == 'BF3') {
                 $this->TEAM0 = $teamFactions[0][0];

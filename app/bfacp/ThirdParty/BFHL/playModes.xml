@@ -10,4 +10,5 @@
     <playmode uri="TeamDeathMatch0" name="Team Deathmatch"/>
     <playmode uri="CashGrab0" name="Bounty Hunter"/>
 	<playmode uri="SquadHeist0" name="Squad Heist"/>
+	<playmode uri="CaptureTheFlag0" name="Capture the Bag Maps"/>
 </playmodes>
