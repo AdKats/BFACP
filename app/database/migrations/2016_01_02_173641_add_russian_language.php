@@ -5,7 +5,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class AddRussianLanguage extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -13,6 +12,14 @@ class AddRussianLanguage extends Migration
      */
     public function up()
     {
+        if (Option::count() == 0) {
+            if (! defined('FIRST_RUN')) {
+                define('FIRST_RUN', true);
+            }
+
+            return;
+        }
+
         $setting = Option::setting('site.languages')->first();
 
         $keys = explode(',', $setting->option_value);

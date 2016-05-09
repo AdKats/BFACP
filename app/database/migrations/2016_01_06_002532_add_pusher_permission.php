@@ -7,7 +7,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class AddPusherPermission extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -15,6 +14,14 @@ class AddPusherPermission extends Migration
      */
     public function up()
     {
+        if (Permission::count() == 0) {
+            if (! defined('FIRST_RUN')) {
+                define('FIRST_RUN', true);
+            }
+
+            return;
+        }
+
         $now = Carbon::now();
 
         $permissions = [
