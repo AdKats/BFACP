@@ -44,11 +44,11 @@ class MaintenanceController extends Controller
 
         if ($this->request->has('cache_flush') && $this->request->get('cache_flush') == 1) {
             try {
-                $this->messages[] = 'Cache Cleared';
                 Artisan::call('cache:clear');
+                $this->messages[] = 'Cache Cleared';
             } catch (\Exception $e) {
                 $this->messages[] = 'Error: Unable to clear cache.';
-                $this->messages[] = sprintf('Reason: %s', $e->getMessage());
+                $this->messages[] = sprintf('%s', $e->getMessage());
             }
         }
 
