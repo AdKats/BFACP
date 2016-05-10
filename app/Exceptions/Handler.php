@@ -7,6 +7,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Foundation\Validation\ValidationException;
+use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -51,7 +52,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if (env('APP_DEBUG') == false) {
+        if (Config::get('app.debug') == false) {
             if ($e instanceof \PDOException) {
                 return response()->view('system.db', compact('e'), 500);
             }

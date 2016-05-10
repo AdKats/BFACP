@@ -3,6 +3,7 @@
 namespace BFACP\Providers;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -36,7 +37,9 @@ class AppServiceProvider extends ServiceProvider
         $clientIP = $_SERVER['REMOTE_ADDR'];
 
         if (in_array($clientIP, $ips)) {
-            putenv('APP_DEBUG=true');
+            Config::set('app.debug', true);
+        } else {
+            Config::set('app.debug', false);
         }
     }
 
