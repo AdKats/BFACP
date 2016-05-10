@@ -47,11 +47,11 @@ class MaintenanceController extends Controller
                 Artisan::call('cache:clear');
                 $this->messages[] = 'Cache Cleared';
             } catch (\Exception $e) {
-                $this->messages[] = 'Error: Unable to clear cache.';
-                $this->messages[] = sprintf('%s', $e->getMessage());
+                $this->errors[] = 'Error: Unable to clear cache.';
+                $this->errors[] = sprintf('%s', $e->getMessage());
             }
         }
 
-        return redirect()->route('admin.site.maintenance.index')->withMessages($this->messages);
+        return redirect()->route('admin.site.maintenance.index')->withMessages($this->messages)->withErrors($this->errors);
     }
 }
