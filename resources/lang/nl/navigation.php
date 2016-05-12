@@ -174,6 +174,18 @@ return [
                         ],
                     ],
                 ],
+                'infractions' => [
+                    'title' => 'Infractions',
+                    'icon'  => [
+                        'fa'  => 'fa-users',
+                        'ion' => null,
+                    ],
+                    'items' => [
+                        'edit' => [
+                            'title' => 'Editing Special Player #:id',
+                        ],
+                    ],
+                ],
             ],
         ],
     ],

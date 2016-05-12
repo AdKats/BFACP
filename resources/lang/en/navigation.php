@@ -19,21 +19,21 @@ return [
                 ],
             ],
             'servers' => [
-                'title' => 'Servers',
-                'scoreboard'  => [
+                'title'      => 'Servers',
+                'scoreboard' => [
                     'title' => 'Live Scoreboard',
                     'icon'  => [
                         'fa'  => 'fa-server',
                         'ion' => null,
                     ],
                 ],
-                'list'  => [
+                'list'       => [
                     'title' => 'Listing',
                     'icon'  => [
                         'fa'  => 'fa-list',
                         'ion' => null,
                     ],
-                ]
+                ],
             ],
             'playerlist'  => [
                 'title' => 'Playerlist',
@@ -167,6 +167,18 @@ return [
                 ],
                 'special_players' => [
                     'title' => 'Special Players',
+                    'icon'  => [
+                        'fa'  => 'fa-users',
+                        'ion' => null,
+                    ],
+                    'items' => [
+                        'edit' => [
+                            'title' => 'Editing Special Player #:id',
+                        ],
+                    ],
+                ],
+                'infractions'     => [
+                    'title' => 'Infractions',
                     'icon'  => [
                         'fa'  => 'fa-users',
                         'ion' => null,

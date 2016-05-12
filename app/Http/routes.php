@@ -231,6 +231,18 @@ Route::group(['middleware' => 'web'], function () {
                 ],
                 'only'  => ['index'],
             ]);
+
+            // Adkats Roles
+            Route::resource('infractions', 'InfractionsController', [
+                'names' => [
+                    'index' => 'admin.adkats.infractions.index',
+                    // 'edit'    => 'admin.adkats.infractions.edit',
+                    // 'store'   => 'admin.adkats.infractions.store',
+                    // 'update'  => 'admin.adkats.infractions.update',
+                    // 'create'  => 'admin.adkats.infractions.create',
+                    // 'destroy' => 'admin.adkats.infractions.destroy',
+                ],
+            ]);
         });
 
         Route::group(['prefix' => 'site', 'namespace' => 'Site'], function () {
@@ -269,14 +281,14 @@ Route::group(['middleware' => 'web'], function () {
             Route::put('settings', ['as' => 'admin.site.settings.update', 'uses' => 'SettingsController@update']);
 
             Route::get('system/maintenance', [
-                'as'     => 'admin.site.maintenance.index',
-                'uses'   => 'MaintenanceController@index',
+                'as'   => 'admin.site.maintenance.index',
+                'uses' => 'MaintenanceController@index',
                 'middleware' => ['auth', 'whitelisted'],
             ]);
 
             Route::post('system/maintenance', [
-                'as'     => 'admin.site.maintenance.update',
-                'uses'   => 'MaintenanceController@update',
+                'as'   => 'admin.site.maintenance.update',
+                'uses' => 'MaintenanceController@update',
                 'middleware' => ['auth', 'whitelisted'],
             ]);
         });

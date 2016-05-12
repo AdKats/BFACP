@@ -80,6 +80,10 @@ Menu::make('MainNav', function ($menu) use ($adminPermsList) {
                     ['route' => 'admin.adkats.special_players.index'])->prepend(Macros::faicon(trans('navigation.admin.adkats.items.special_players.icon.fa'),
                     true));
             }
+
+            $adkats->add(trans('navigation.admin.adkats.items.infractions.title'),
+                ['route' => 'admin.adkats.infractions.index'])->prepend(Macros::faicon(trans('navigation.admin.adkats.items.infractions.icon.fa'),
+                true));
         }
 
         /*=============================================
