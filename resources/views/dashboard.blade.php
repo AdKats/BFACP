@@ -218,6 +218,41 @@
                     <div class="box-body" ng-include="'js/templates/onlineadmins.html'" onload="onlineAdmins()"></div>
                 </div>
             </div>
+
+            <div class="col-xs-12 col-lg-6">
+                <div class="box box-solid">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            Latest Reported Players (30 days)
+                        </h3>
+                    </div>
+
+                    <div class="box-body">
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                                <th>Player</th>
+                                <th>Total</th>
+                                <th>Most Recent</th>
+                            </thead>
+
+                            <tbody>
+                                @foreach($latestReported as $player)
+                                    <tr>
+                                        <td>
+                                            {!! link_to_route('player.show', $player->target_name, [$player->target_id, $player->target_name], ['target' => '_self']) !!}
+                                        </td>
+                                        <td>{{ $player->Total }}</td>
+                                        <td>
+                                            {!! \BFACP\Facades\Macros::moment(\Carbon\Carbon::parse($player->Recent)->toIso8601String()) !!}
+                                            (<span class="text-blue">{!! \BFACP\Facades\Macros::moment(\Carbon\Carbon::parse($player->Recent)->toIso8601String(), null, null, true) !!}</span>)
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row">
