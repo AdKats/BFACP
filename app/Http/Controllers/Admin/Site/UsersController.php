@@ -170,7 +170,12 @@ class UsersController extends Controller
 
             // Update the user role if it's been changed
             if ($roleId != $user->roles[0]->id) {
-                $user->roles()->detach($user->roles[0]->id);
+                if (count($user->roles) > 1) {
+                    $user->roles()->sync([]);
+                } else {
+                    $user->roles()->detach($user->roles[0]->id);
+                }
+
                 $user->roles()->attach($roleId);
                 $role = Role::find($roleId);
                 $this->log->info(sprintf('%s changed %s role to %s.', $this->user->username, $user->username,
