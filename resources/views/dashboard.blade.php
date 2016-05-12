@@ -219,6 +219,7 @@
                 </div>
             </div>
 
+            @if($bfacp->isLoggedIn && Auth::user()->ability(null, 'admin.adkats.reports.view'))
             <div class="col-xs-12 col-lg-6">
                 <div class="box box-solid">
                     <div class="box-header">
@@ -253,6 +254,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
 
         <div class="row">
