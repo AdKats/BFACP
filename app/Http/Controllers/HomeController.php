@@ -39,17 +39,12 @@ class HomeController extends Controller
 
         $countryMapTable = $countryMap->sortByDesc('total')->take(5);
 
-        // Cache results for 1 day
-        $latestReported = $this->cache->remember('players.most.reported', 60 * 24, function () {
-            $timestamp = Carbon::now()->subDays(30);
-            $results = Record::whereIn('command_type', [18, 20])->where('record_time', '>=',
-                $timestamp)->groupBy('target_id')->select(DB::raw('target_id, target_name, COUNT(record_id) AS `Total`, MAX(record_time) AS `Recent`'))->orderBy('Recent',
-                    'DESC')->having('Total', '>=', 5)->get();
-
-            return $results;
-        });
+        $timestamp = Carbon::now()->subDays(30);
+        $latestReported = Record::whereIn('command_type', [18, 20])->where('record_time', '>=',
+            $timestamp)->groupBy('target_id')->select(DB::raw('target_id, target_name, COUNT(record_id) AS `Total`, MAX(record_time) AS `Recent`'))->orderBy('Recent',
+            'DESC')->having('Total', '>=', 5)->get();
 
         return view('dashboard', compact('uniquePlayers', 'adkats_statistics', 'countryMap', 'countryMapTable',
-                'latestReported'))->with('page_title', trans('navigation.main.items.dashboard.title'));
+            'latestReported'))->with('page_title', trans('navigation.main.items.dashboard.title'));
     }
 }
