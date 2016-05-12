@@ -106,7 +106,7 @@ class UsersController extends Controller
             /*
              * If the user doesn't have a role assigned we need to re-create the link.
              */
-            if (! isset($user->role[0])) {
+            if (! isset($user->roles[0])) {
 
                 // Fetch the registered role
                 $registeredUserRole = Role::where('name', 'Registered')->first();
