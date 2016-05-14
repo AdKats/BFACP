@@ -47,7 +47,7 @@ if (! $app->runningInConsole()) {
     }
 
     if (file_exists($setupFilePath) && $app->environment() == 'production') {
-        require_once $setupFilePath;
+        //require_once $setupFilePath;
         if (! unlink($setupFilePath)) {
             die(sprintf('Please delete installer located at "%s"', $setupFilePath));
         }
