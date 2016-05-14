@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Schema;
+
 if (! is_writable(storage_path()) || ! is_writable($jsBuildsPath)) {
     $directories = [
         storage_path(),
