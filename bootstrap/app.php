@@ -15,9 +15,7 @@ if (! defined('BFACP_VERSION')) {
 |
 */
 
-$app = new Illuminate\Foundation\Application(
-    realpath(__DIR__.'/../')
-);
+$app = new Illuminate\Foundation\Application(realpath(__DIR__.'/../'));
 
 /*
 |--------------------------------------------------------------------------
@@ -30,20 +28,11 @@ $app = new Illuminate\Foundation\Application(
 |
 */
 
-$app->singleton(
-    Illuminate\Contracts\Http\Kernel::class,
-    BFACP\Http\Kernel::class
-);
+$app->singleton(Illuminate\Contracts\Http\Kernel::class, BFACP\Http\Kernel::class);
 
-$app->singleton(
-    Illuminate\Contracts\Console\Kernel::class,
-    BFACP\Console\Kernel::class
-);
+$app->singleton(Illuminate\Contracts\Console\Kernel::class, BFACP\Console\Kernel::class);
 
-$app->singleton(
-    Illuminate\Contracts\Debug\ExceptionHandler::class,
-    BFACP\Exceptions\Handler::class
-);
+$app->singleton(Illuminate\Contracts\Debug\ExceptionHandler::class, BFACP\Exceptions\Handler::class);
 
 $app->singleton('Guzzle', GuzzleHttp\Client::class);
 
@@ -51,12 +40,13 @@ if (! $app->runningInConsole()) {
     $setupFilePath = app_path('setup.php');
     $jsBuildDirectoryPath = public_path('js/builds');
     $minPHPVersion = '5.5.9';
+    $versionCompare = version_compare(phpversion(), $minPHPVersion, '<');
 
-    if (version_compare(phpversion(), $minPHPVersion, '<') || ! extension_loaded('mcrypt') || ! extension_loaded('pdo')) {
+    if ($versionCompare || ! extension_loaded('mcrypt') || ! extension_loaded('pdo')) {
         die(view('system.requirements', ['required_php_version' => $minPHPVersion]));
     }
 
-    if (file_exists($setupFilePath) && $app->environment() == 'production') {
+    if (file_exists($setupFilePath) && $app->environment() == 'production' && file_exists(base_path('.env'))) {
         require_once $setupFilePath;
         if (! unlink($setupFilePath)) {
             die(sprintf('Please delete installer located at "%s"', $setupFilePath));
