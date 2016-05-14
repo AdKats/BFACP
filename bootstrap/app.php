@@ -37,7 +37,7 @@ $app->singleton(Illuminate\Contracts\Debug\ExceptionHandler::class, BFACP\Except
 $app->singleton('Guzzle', GuzzleHttp\Client::class);
 
 if (! $app->runningInConsole()) {
-    $setupFilePath = app_path('setup.php');
+    $setupFilePath = base_path('installer/install.php');
     $jsBuildDirectoryPath = public_path('js/builds');
     $minPHPVersion = '5.5.9';
     $versionCompare = version_compare(phpversion(), $minPHPVersion, '<');
@@ -48,7 +48,7 @@ if (! $app->runningInConsole()) {
 
     if (file_exists($setupFilePath) && $app->environment() == 'production' && file_exists(base_path('.env'))) {
         require_once $setupFilePath;
-        if (! unlink($setupFilePath)) {
+        if (! \Illuminate\Support\Facades\File::deleteDirectory(base_path('installer'))) {
             die(sprintf('Please delete installer located at "%s"', $setupFilePath));
         }
     }
