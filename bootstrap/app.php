@@ -46,7 +46,7 @@ if (! $app->runningInConsole()) {
         die(view('system.requirements', ['required_php_version' => $minPHPVersion]));
     }
 
-    if (file_exists($setupFilePath) && $app->environment() == 'production' && file_exists(base_path('.env'))) {
+    if (file_exists($setupFilePath) && $app->environment() == 'production') {
         require_once $setupFilePath;
         if (! unlink($setupFilePath)) {
             die(sprintf('Please delete installer located at "%s"', $setupFilePath));
