@@ -48,7 +48,7 @@ if (! $app->runningInConsole()) {
 
     if (file_exists($setupFilePath) && $app->environment() == 'production' && file_exists(base_path('.env'))) {
         require_once $setupFilePath;
-        if (! \Illuminate\Support\Facades\File::deleteDirectory(base_path('installer'))) {
+        if (! unlink($setupFilePath)) {
             die(sprintf('Please delete installer located at "%s"', $setupFilePath));
         }
     }
