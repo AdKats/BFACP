@@ -46,12 +46,14 @@ if (! $app->runningInConsole()) {
         die(view('system.requirements', ['required_php_version' => $minPHPVersion]));
     }
 
+    /*
     if (file_exists($setupFilePath) && ! $app->isLocal()) {
-        //require_once $setupFilePath;
+        require_once $setupFilePath;
         if (! unlink($setupFilePath)) {
             die(sprintf('Please delete installer located at "%s"', $setupFilePath));
         }
     }
+    */
 }
 
 /*
