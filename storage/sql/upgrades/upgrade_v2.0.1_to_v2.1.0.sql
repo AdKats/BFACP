@@ -21,3 +21,5 @@ INSERT INTO `bfacp_user_role`
   FROM `bfacp_assigned_roles`;
 
 DROP TABLE IF EXISTS `bfacp_assigned_roles`;
+
+RENAME TABLE `bfacp_password_reminders` TO `bfacp_password_resets`;
