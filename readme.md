@@ -25,7 +25,7 @@ The Battlefield Admin Control Panel (BFACP) is a web based admin tool designed t
 * Detailed player information with graph charts.
 * Server statistics page for each server showing population history, uptime history with data from UptimeRobot, and Mapstats.
 * Metabans support.
-* Report notifications with ability to change alert sounds.
+* Report notifications.
 * Chatlog searching where you can search by multiple players and/or keywords and ability to only show from a certain date/time range.
 * Message of the Day
 * Quick DB Stats overview
@@ -51,7 +51,7 @@ APP_KEY=SomeRandomString
 
 ## Pusher Configuration (Optional)
 
-If you would like to have real-time online users & site chat, you will to create an account over at [Pusher](https://pusher.com/signup). Once you have your account and are logged in click on the "Your apps" tab on the left and click the buttion that says "Create new app". Now for the app name you can name it whatever you want, I just used my communitys name. For the cluster selection choose the one that's the closest to your web server, if you know it, otherwise the default they provide is fine. After that click "Create my app" button.
+If you would like to have real-time online users & site chat, you will to create an account over at [Pusher](https://pusher.com/signup). Once you have your account and are logged in click on the "Your apps" tab on the left and click the button that says "Create new app". Now for the app name you can name it whatever you want, I just used my communities name. For the cluster selection choose the one that's the closest to your web server, if you know it, otherwise the default they provide is fine. After that click "Create my app" button.
 
 You should now see your newly created app. Now click on the "App keys" tab. Copy the credentials to the approate field in the `.env.example` file.
 
