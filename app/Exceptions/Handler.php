@@ -62,7 +62,10 @@ class Handler extends ExceptionHandler
             }
 
             if ($e instanceof Exception) {
-                return response()->view('system.error', [], 500);
+                return response()->view('system.error', [
+                    'code'      => $e->getCode(),
+                    'exception' => $e,
+                ], 500);
             }
         }
 
