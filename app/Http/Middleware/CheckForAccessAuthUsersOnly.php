@@ -5,7 +5,6 @@ namespace BFACP\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 
 /**
  * Class CheckForAccessAuthUsersOnly.
@@ -20,7 +19,8 @@ class CheckForAccessAuthUsersOnly
 
     /**
      * @param Application $app
-     * @param Request     $request
+     *
+     * @internal param Request $request
      */
     public function __construct(Application $app)
     {
@@ -38,7 +38,13 @@ class CheckForAccessAuthUsersOnly
     public function handle($request, Closure $next)
     {
         if ($this->app['config']->get('bfacp.site.auth') && Auth::guest()) {
-            //return redirect()->route('user.login');
+            $path = explode('/', $request->path());
+
+            $route = (count($path) > 1 ? $path[0].'/'.$path[1] : $path[0]);
+
+            if (! in_array($route, ['login', 'register', 'user/confirm'])) {
+                return redirect()->route('user.login');
+            }
         }
 
         return $next($request);
