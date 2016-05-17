@@ -1,5 +1,5 @@
 angular.module('bfacp').factory('SBA', ['$http', function ($http) {
-    var baseurl = 'api/servers/admin/scoreboard';
+    var baseurl = 'servers/admin/scoreboard';
 
     return {
         say: function (server_id, players, type, message, teamID, hideName) {

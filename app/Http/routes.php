@@ -167,6 +167,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('live', ['as' => 'servers.live', 'uses' => 'ServersController@scoreboard']);
         Route::get('list', ['as' => 'servers.list', 'uses' => 'ServersController@index']);
         Route::get('show/{server}/{slug?}', ['as' => 'servers.show', 'uses' => 'ServersController@show']);
+        Route::controller('admin/scoreboard', 'Api\Admin\ScoreboardController');
     });
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
@@ -281,14 +282,14 @@ Route::group(['middleware' => 'web'], function () {
             Route::put('settings', ['as' => 'admin.site.settings.update', 'uses' => 'SettingsController@update']);
 
             Route::get('system/maintenance', [
-                'as'   => 'admin.site.maintenance.index',
-                'uses' => 'MaintenanceController@index',
+                'as'         => 'admin.site.maintenance.index',
+                'uses'       => 'MaintenanceController@index',
                 'middleware' => ['auth', 'whitelisted'],
             ]);
 
             Route::post('system/maintenance', [
-                'as'   => 'admin.site.maintenance.update',
-                'uses' => 'MaintenanceController@update',
+                'as'         => 'admin.site.maintenance.update',
+                'uses'       => 'MaintenanceController@update',
                 'middleware' => ['auth', 'whitelisted'],
             ]);
         });
