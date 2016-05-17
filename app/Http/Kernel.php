@@ -35,7 +35,6 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         CheckForMaintenanceMode::class,
-        CheckForAccessAuthUsersOnly::class,
     ];
 
     /**
@@ -50,6 +49,7 @@ class Kernel extends HttpKernel
             StartSession::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
+            CheckForAccessAuthUsersOnly::class,
         ],
         'api' => [
             'throttle:60,1',

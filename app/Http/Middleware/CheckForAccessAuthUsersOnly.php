@@ -37,7 +37,7 @@ class CheckForAccessAuthUsersOnly
      */
     public function handle($request, Closure $next)
     {
-        if ($this->app['config']->get('bfacp.site.auth') && ! Auth::check()) {
+        if ($this->app['config']->get('bfacp.site.auth') && Auth::guest()) {
             $path = explode('/', $request->path());
 
             $route = (count($path) > 1 ? $path[0].'/'.$path[1] : $path[0]);
