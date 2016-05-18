@@ -5,12 +5,12 @@ namespace BFACP\Http\Controllers;
 use BFACP\Battlefield\Reputation;
 
 /**
- * Class ReputationController
+ * Class ReputationController.
  */
 class ReputationController extends Controller
 {
     /**
-     * Shows the reputation listing
+     * Shows the reputation listing.
      */
     public function index()
     {
