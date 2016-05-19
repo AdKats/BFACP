@@ -159,8 +159,15 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::group(['prefix' => 'players'], function () {
         Route::get('/', ['as' => 'player.listing', 'uses' => 'PlayersController@listing']);
-        Route::get('{id}/{name?}', ['as' => 'player.show', 'uses' => 'PlayersController@profile'])->where('id',
-            '[0-9]+');
+        Route::post('{player}/forgive', [
+            'as'         => 'player.update',
+            'uses'       => 'Playerscontroller@issueForgive',
+            'middleware' => 'auth',
+        ])->where('id', '[0-9]+');
+        Route::get('{id}/{name?}', [
+            'as'   => 'player.show',
+            'uses' => 'PlayersController@profile',
+        ])->where('id', '[0-9]+');
     });
 
     Route::get('rep', ['as' => 'rep.listing', 'uses' => 'ReputationController@index']);
