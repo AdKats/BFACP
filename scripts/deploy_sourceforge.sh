@@ -46,7 +46,7 @@ EOF
 rm -f .env
 
 echo "Zipping application into ${FILENAME}."
-zip -9 -q -r $FILENAME . -x .git*
+zip -9 -q -r $FILENAME . -x *.git*
 USER="prophet731"
 HOST="frs.sourceforge.net"
 echo "Uploading ${FILENAME} to sourceforge."
