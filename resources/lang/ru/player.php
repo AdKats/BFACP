@@ -219,4 +219,14 @@ return [
             ],
         ],
     ],
+    'admin' => [
+        'forgive' => [
+            'warnings' => [
+                'overage' => 'You have forgivin :player :usertotal time(s) but was reduced to :reduced to equal max punishes. Issue the remaining :remaining on another server if possable.',
+            ],
+            'errors'   => [
+                'err1' => 'You cannot forgive :player if they do not have any punishes to forgive for this server.',
+            ],
+        ],
+    ],
 ];
