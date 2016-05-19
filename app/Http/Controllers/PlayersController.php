@@ -169,7 +169,7 @@ class PlayersController extends Controller
 
         if ($forgive_points == $punish_points) {
             return MainHelper::response(null,
-                trans('player.admin.forgive.errors.err1', ['player' => $player->SoldierName]));
+                trans('player.admin.forgive.errors.err1', ['player' => $player->SoldierName]), 'error');
         }
 
         if ($points > $punish_points && $forgive_points != $punish_points) {
@@ -205,6 +205,9 @@ class PlayersController extends Controller
             $record->save();
         }
 
-        return MainHelper::response($player, $response_message);
+        // Clear any cached version.
+        $player->forget();
+
+        return MainHelper::response(null, 'Forgives Issued.');
     }
 }

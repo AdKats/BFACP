@@ -220,13 +220,18 @@
                                     <th>{{ trans('player.profile.infractions.table.col2') }}</th>
                                     <th>{{ trans('player.profile.infractions.table.col3') }}</th>
                                     <th>{{ trans('player.profile.infractions.table.col4') }}</th>
-                                    <th>{{ trans('player.profile.infractions.table.col5') }}</th>
+                                    <th class="hidden-md hidden-sm hidden-xs">{{ trans('player.profile.infractions.table.col5') }}</th>
                                     </thead>
 
                                     <tbody>
                                     @foreach($player->infractions_server as $infraction)
                                         <tr>
                                             <td>
+                                                @if($bfacp->isLoggedIn && $bfacp->user->ability(null, 'player.infractions.forgive'))
+                                                    <input type="radio" ng-model="admin.forgive.server"
+                                                           value="{{ $infraction->server->ServerID }}"
+                                                           ng-disabled="admin.forgive.processing">&nbsp;
+                                                @endif
                                                 @if($infraction->server->is_active)
                                                     <a href="servers/live#id-{{ $infraction->server->ServerID }}" target="_blank" tooltip="{{ $infraction->server->ServerName }}">
                                                         {{ $infraction->server->server_name_short or str_limit($infraction->server->ServerName, 30) }}
@@ -237,7 +242,10 @@
                                             </td>
                                             <td>{{ $infraction->punish_points }}</td>
                                             <td>{{ $infraction->forgive_points }}</td>
-                                            <td colspan="2">{{ $infraction->total_points }}</td>
+                                            <td>{{ $infraction->total_points }}</td>
+                                            <td class="hidden-md hidden-sm hidden-xs">
+                                                {{ MainHelper::getNextPunishment(null, $player->infractions_global->total_points, $infraction->server->ServerID) }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -250,7 +258,29 @@
                                         <td>{{ $player->infractions_global->punish_points }}</td>
                                         <td>{{ $player->infractions_global->forgive_points }}</td>
                                         <td>{{ $player->infractions_global->total_points }}</td>
-                                        <td>{{ MainHelper::getNextPunishment(null, $player->infractions_global->total_points, $player->infractions_server[0]->server->ServerID) }}</td>
+                                        @if($bfacp->isLoggedIn && $bfacp->user->ability(null, 'player.infractions.forgive'))
+                                            <td width="40%">
+                                                <input type="number" style="width: 60px"
+                                                       class="form-control input-sm pull-left" min="1"
+                                                       ng-model="admin.forgive.points"
+                                                       ng-disabled="admin.forgive.processing">
+
+                                                <div class="input-group input-group-sm">
+                                                    <input type="text" class="form-control" placeholder="ForgivePlayer"
+                                                           ng-model="admin.forgive.message"
+                                                           ng-disabled="admin.forgive.processing">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-info btn-flat"
+                                                                ng-click="issueForgive()"
+                                                                ng-disabled="admin.forgive.processing">
+                                                            <i class="fa fa-refresh fa-spin fa-fw"
+                                                               ng-show="admin.forgive.processing"></i>
+                                                            Issue Forgive
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        @endif
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -506,11 +536,11 @@
 
                     <div class="tab-content">
                         <div class="tab-pane active" id="server-stats-active">
-                            @include('partials.player.profile._serverstats', ['stats' => $player->stats, 'unless' => TRUE])
+                            @include('partials.player.profile._serverstats', ['stats' => $player->stats, 'unless' => true])
                         </div>
 
                         <div class="tab-pane" id="server-stats-inactive">
-                            @include('partials.player.profile._serverstats', ['stats' => $player->stats, 'unless' => FALSE])
+                            @include('partials.player.profile._serverstats', ['stats' => $player->stats, 'unless' => false])
                         </div>
 
                         <div class="tab-pane" id="sessions">

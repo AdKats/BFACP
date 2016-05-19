@@ -133,36 +133,72 @@ angular.module('bfacp').controller('PlayerController', ['$scope', '$resource', '
             }
         };
 
-        var geoRequest = function(ip) {
+        var geoRequest = function (ip) {
             var url = "http://ipinfo.io/" + ip + "/json";
-            if(location.protocol === 'https:') {
+            if (location.protocol === 'https:') {
                 url = 'api/helpers/ip/' + ip;
             }
 
-            if(ip === '' || ip === null) {
+            if (ip === '' || ip === null) {
                 console.log('Invalid IP Given: ' + ip);
                 return;
             }
 
-            $http.get(url).success(function(data) {
+            $http.get(url).success(function (data) {
                 $scope.geoPopover.content.city = data.city;
                 $scope.geoPopover.content.country = data.country;
                 $scope.geoPopover.content.org = data.org;
                 $scope.geoPopover.content.region = data.region;
-            }).error(function(data) {
+            }).error(function (data) {
                 console.error(data);
             });
         };
 
         var player_ip = $("input[name='player_ip']");
 
-        if(player_ip.length != 0) {
+        if (player_ip.length != 0) {
             geoRequest(player_ip.val());
         }
 
         $scope.fetchRecords();
         $scope.fetchAcs();
         $scope.fetchExtendedDetails();
+
+        $scope.admin = {
+            forgive: {
+                points: 1,
+                message: 'ForgivePlayer',
+                processing: false,
+                server: null
+            }
+        }
+
+        $scope.issueForgive = function () {
+            if ($scope.admin.forgive.server === null) {
+                toastr.error('No server selected.');
+                return false;
+            }
+
+            $scope.admin.forgive.processing = true;
+            $http.post('players/' + $scope.playerId + '/forgive', {
+                server_id: $scope.admin.forgive.server,
+                forgive_points: $scope.admin.forgive.points,
+                message: $scope.admin.forgive.message
+            }).success(function (data) {
+                if (data.status == 'error') {
+                    toastr.error(data.message);
+                } else if (data.status == 'warning') {
+                    toastr.warning(data.message);
+                } else {
+                    toastr.success(data.message);
+                }
+            }).error(function (data) {
+                toastr.error(data.message, 'error');
+                console.error(data);
+            }).finally(function () {
+                $scope.admin.forgive.processing = false;
+            });
+        };
 
         /**
          * TODO: Add ability to modify player groups
