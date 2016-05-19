@@ -116,7 +116,6 @@ class PlayersController extends Controller
      *
      * @return mixed
      * @internal param Player $id
-     *
      */
     public function issueForgive(Player $player)
     {
