@@ -2,7 +2,7 @@
 parentdir="$(dirname "$(pwd)")/BFAdminCP"
 
 if [[ -v CIRCLE_BRANCH ]]; then
-    FILENAME="${CIRCLE_BRANCH}.zip"
+    FILENAME="${CIRCLE_BRANCH}-${CIRCLE_SHA1}.zip"
 elif [[ -v CIRCLE_TAG ]]; then
     FILENAME="${CIRCLE_TAG}.zip"
 else
