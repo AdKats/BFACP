@@ -161,7 +161,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/', ['as' => 'player.listing', 'uses' => 'PlayersController@listing']);
         Route::post('{player}/forgive', [
             'as'         => 'player.update',
-            'uses'       => 'Playerscontroller@issueForgive',
+            'uses' => 'PlayersController@issueForgive',
             'middleware' => 'auth',
         ])->where('id', '[0-9]+');
         Route::get('{id}/{name?}', [
