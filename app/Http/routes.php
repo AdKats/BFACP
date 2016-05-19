@@ -163,6 +163,8 @@ Route::group(['middleware' => 'web'], function () {
             '[0-9]+');
     });
 
+    Route::get('rep', ['as' => 'rep.listing', 'uses' => 'ReputationController@index']);
+
     Route::group(['prefix' => 'servers'], function () {
         Route::get('live', ['as' => 'servers.live', 'uses' => 'ServersController@scoreboard']);
         Route::get('list', ['as' => 'servers.list', 'uses' => 'ServersController@index']);
