@@ -2,7 +2,7 @@
 
 namespace BFACP\Http\Controllers;
 
-use BFACP\Battlefield\Reputation;
+use BFACP\Repositories\ReputationRepository;
 
 /**
  * Class ReputationController.
@@ -10,12 +10,27 @@ use BFACP\Battlefield\Reputation;
 class ReputationController extends Controller
 {
     /**
+     * @var ReputationRepository
+     */
+    protected $rep;
+
+    /**
+     * @param ReputationRepository $rep
+     */
+    public function __construct(ReputationRepository $rep)
+    {
+        parent::__construct();
+
+        $this->rep = $rep;
+    }
+
+    /**
      * Shows the reputation listing.
      */
     public function index()
     {
-        $rep = Reputation::paginate(30);
+        $games = $this->rep->getTopReputableByGame();
 
-        return $rep;
+        return view('player.reputation', compact('games'));
     }
 }
