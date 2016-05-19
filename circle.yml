@@ -10,13 +10,17 @@ test:
 dependencies:
    override:
       - composer install --no-scripts --no-interaction --prefer-source --no-progress
-      - php artisan optimize
 
 general:
   artifacts:
     - "storage/logs"
 
 deployment:
+  staging:
+    branch: dev-laravel5
+    commands:
+      - chmod +x ./scripts/deploy_sourceforge.sh
+      - ./scripts/deploy_sourceforge.sh
   release:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
