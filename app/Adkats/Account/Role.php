@@ -52,7 +52,7 @@ class Role extends Elegant
     protected $appends = [];
 
     /**
-     * Models to be loaded automaticly.
+     * Models to be loaded automatically.
      *
      * @var array
      */
@@ -63,7 +63,7 @@ class Role extends Elegant
      */
     public function users()
     {
-        return $this->hasMany('BFACP\Adkats\Account\User', 'user_role');
+        return $this->hasMany(\BFACP\Adkats\Account\User::class, 'user_role');
     }
 
     /**
@@ -95,6 +95,6 @@ class Role extends Elegant
      */
     public function permissions()
     {
-        return $this->belongsToMany('BFACP\Adkats\Command', 'adkats_rolecommands', 'role_id', 'command_id');
+        return $this->belongsToMany(\BFACP\Adkats\Command::class, 'adkats_rolecommands', 'role_id', 'command_id');
     }
 }

@@ -59,11 +59,19 @@ class Game extends Elegant
     protected $with = [];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function servers()
     {
         return $this->hasMany(\BFACP\Battlefield\Server\Server::class, 'GameID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reputations()
+    {
+        return $this->hasMany(\BFACP\Battlefield\Reputation::class, 'game_id');
     }
 
     /**
