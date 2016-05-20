@@ -193,7 +193,7 @@ class PlayersController extends Controller
             $record = new Record;
             $record->server_id = $server_id;
             $record->command_type = 10;
-            $record->command_type = 10;
+            $record->command_action = 10;
             $record->target_name = $player->SoldierName;
             $record->target_id = $player->PlayerID;
             $record->source_name = $adminName;
