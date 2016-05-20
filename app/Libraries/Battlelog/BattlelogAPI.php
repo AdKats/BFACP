@@ -78,6 +78,9 @@ class BattlelogAPI
         'bf3' => 2,
     ];
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->guzzle = app('Guzzle');

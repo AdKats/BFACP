@@ -33,6 +33,9 @@ class BansController extends Controller
      */
     protected $metabans = null;
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();

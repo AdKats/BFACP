@@ -11,6 +11,9 @@ use BFACP\Http\Controllers\Controller;
  */
 class SettingsController extends Controller
 {
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();

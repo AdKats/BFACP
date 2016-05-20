@@ -64,6 +64,9 @@ class Reputation
      */
     protected $weights = [];
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->guzzle = app('Guzzle');

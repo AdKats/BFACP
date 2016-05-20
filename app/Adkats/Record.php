@@ -6,6 +6,20 @@ use BFACP\Elegant;
 
 /**
  * Class Record.
+ *
+ * @property int      record_id
+ * @property int      server_id
+ * @property int      command_type
+ * @property int      command_action
+ * @property int      command_numeric
+ * @property string   target_name
+ * @property int|null target_id
+ * @property string   source_name
+ * @property int|null source_id
+ * @property string   record_message
+ * @property string   record_time
+ * @property string   adkats_read
+ * @property bool     adkats_web
  */
 class Record extends Elegant
 {
@@ -59,7 +73,7 @@ class Record extends Elegant
     protected $with = [];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function target()
     {
@@ -67,7 +81,7 @@ class Record extends Elegant
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function source()
     {
@@ -75,7 +89,7 @@ class Record extends Elegant
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function server()
     {
@@ -83,7 +97,7 @@ class Record extends Elegant
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function type()
     {
@@ -96,7 +110,7 @@ class Record extends Elegant
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function action()
     {

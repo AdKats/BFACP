@@ -32,6 +32,9 @@ class UpdaterController extends Controller
      */
     private $queryString = '';
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();

@@ -19,7 +19,8 @@ class ViewableChatlogs
 
     /**
      * @param Application $app
-     * @param Request     $request
+     *
+     * @internal param Request $request
      */
     public function __construct(Application $app)
     {

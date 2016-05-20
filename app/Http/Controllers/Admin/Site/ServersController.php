@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Session as Session;
  */
 class ServersController extends Controller
 {
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();

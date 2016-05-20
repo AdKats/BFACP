@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Collection as Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\App as App;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
 
 /**
  * Class PlayerRepository.
