@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Inspire::class,
         Commands\MetabansUnban::class,
+        Commands\ReseedTables::class,
     ];
 
     /**
@@ -29,6 +30,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')->hourly();
+        //
     }
 }
