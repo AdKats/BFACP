@@ -30,9 +30,7 @@ class GeoRepository extends BaseRepository
      */
     protected $reader;
 
-    /**
-     *
-     */
+
     public function __construct()
     {
         parent::__construct();

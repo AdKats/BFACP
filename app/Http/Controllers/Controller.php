@@ -78,9 +78,7 @@ class Controller extends BaseController
      */
     public $log;
 
-    /**
-     *
-     */
+
     public function __construct()
     {
         $this->user = Auth::user();

@@ -1451,10 +1451,10 @@ class LiveServerRepository extends BaseRepository
             'adkats_users.user_id')->join('adkats_roles', 'adkats_users.user_role', '=',
             'adkats_roles.role_id')->join('tbl_playerdata', 'adkats_usersoldiers.player_id', '=',
             'tbl_playerdata.PlayerID')->where('tbl_playerdata.GameID', $this->gameID)->whereExists(function ($query) {
-            $query->select('adkats_rolecommands.role_id')->from('adkats_rolecommands')->join('adkats_commands',
+                $query->select('adkats_rolecommands.role_id')->from('adkats_rolecommands')->join('adkats_commands',
                 'adkats_rolecommands.command_id', '=', 'adkats_commands.command_id')->where('command_playerInteraction',
                 1)->whereRaw('adkats_rolecommands.role_id = adkats_users.user_role')->groupBy('adkats_rolecommands.role_id');
-        })->get();
+            })->get();
 
         foreach (['players', 'spectators', 'commander'] as $type) {
             foreach ($this->data['teams'] as $teamID => $team) {
