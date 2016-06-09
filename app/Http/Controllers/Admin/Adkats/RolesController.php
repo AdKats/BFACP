@@ -15,9 +15,6 @@ use Illuminate\Support\Facades\Validator;
  */
 class RolesController extends Controller
 {
-    /**
-     *
-     */
     public function __construct()
     {
         parent::__construct();

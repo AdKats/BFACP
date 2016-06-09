@@ -69,9 +69,7 @@ class Role extends EntrustRole
      */
     protected $with = [];
 
-    /**
-     *
-     */
+
     public function __construct()
     {
         parent::__construct();

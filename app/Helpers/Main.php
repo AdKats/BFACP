@@ -20,9 +20,6 @@ use InvalidArgumentException;
  */
 class Main
 {
-    /**
-     *
-     */
     public function __construct()
     {
         $this->guzzle = app('Guzzle');
