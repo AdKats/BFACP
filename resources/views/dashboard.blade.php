@@ -234,19 +234,21 @@
                                 <th>Player</th>
                                 <th>Total</th>
                                 <th>Most Recent</th>
+                                <th>Reason</th>
                             </thead>
 
                             <tbody>
                                 @foreach($latestReported as $player)
                                     <tr>
                                         <td>
-                                            {!! link_to_route('player.show', $player->target_name, [$player->target_id, $player->target_name], ['target' => '_self']) !!}
+                                            {!! link_to_route('player.show', $player['target_name'], [$player['target_id'], $player['target_name']], ['target' => '_self']) !!}
                                         </td>
-                                        <td>{{ $player->Total }}</td>
+                                        <td>{{ $player['Total'] }}</td>
                                         <td>
-                                            {!! \BFACP\Facades\Macros::moment(\Carbon\Carbon::parse($player->Recent)->toIso8601String()) !!}
-                                            (<span class="text-blue">{!! \BFACP\Facades\Macros::moment(\Carbon\Carbon::parse($player->Recent)->toIso8601String(), null, null, true) !!}</span>)
+                                            {!! \BFACP\Facades\Macros::moment(\Carbon\Carbon::parse($player['Recent'])->toIso8601String()) !!}
+                                            (<span class="text-blue">{!! \BFACP\Facades\Macros::moment(\Carbon\Carbon::parse($player['Recent'])->toIso8601String(), null, null, true) !!}</span>)
                                         </td>
+                                        <td>{{ $player['record_message'] }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
