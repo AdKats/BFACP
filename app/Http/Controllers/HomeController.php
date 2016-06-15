@@ -2,9 +2,7 @@
 
 namespace BFACP\Http\Controllers;
 
-use BFACP\Adkats\Record;
 use BFACP\Repositories\PlayerRepository;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
