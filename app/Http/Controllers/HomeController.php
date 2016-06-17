@@ -37,7 +37,7 @@ class HomeController extends Controller
 
         $countryMapTable = $countryMap->sortByDesc('total')->take(5);
 
-        $latestReported = DB::select(DB::raw(file_get_contents(storage_path('/sql/latestReportedPlayers.sql'))));
+        $latestReported = DB::select(DB::raw(file_get_contents(storage_path('sql/latestReportedPlayers.sql'))));
 
         return view('dashboard', compact('uniquePlayers', 'adkats_statistics', 'countryMap', 'countryMapTable',
             'latestReported'))->with('page_title', trans('navigation.main.items.dashboard.title'));
