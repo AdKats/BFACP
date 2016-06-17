@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>Database Error</title>
+    <title>Fatal System Error</title>
     <style>
         body {
             text-align: center;
@@ -42,19 +42,10 @@
 
 <body>
 <article>
-    <h1>&nbsp;Database Error!</h1>
+    <h1>&nbsp;Fatal System Error!</h1>
 
     <div>
-        @if($e->getCode() == 2002)
-            <p>Sorry, application could not connect to the database.</p>
-            <pre>{{ $e->getMessage() }}</pre>
-        @elseif($e->getCode() == 1045)
-            <p>Could not connect to database with provided credentials.</p>
-        @elseif($e->getCode() == 1044)
-            <p>Database user doesn't have privileges to connect to the database.</p>
-        @else
-            <p>Sorry, something went wrong with the database.</p>
-        @endif
+        <pre>{{ $exception->getMessage() }}</pre>
     </div>
 </article>
 </body>
