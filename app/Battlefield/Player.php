@@ -396,7 +396,7 @@ class Player extends Elegant
     public function getGeoAttribute()
     {
         if (empty($this->IP_Address)) {
-            return null;
+            return;
         }
 
         $geo = app(GeoRepository::class);
