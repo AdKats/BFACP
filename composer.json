@@ -42,7 +42,8 @@
     "graham-campbell/markdown": "^5.3",
     "rap2hpoutre/laravel-log-viewer": "^0.5.2",
     "kryptonit3/pusher": "dev-master",
-    "doctrine/dbal": "^2.5"
+    "doctrine/dbal": "^2.5",
+    "geoip2/geoip2": "~2.0"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
