@@ -42,8 +42,6 @@ $app->singleton('GeoIP', function () {
     if (file_exists($cityBinary)) {
         return new GeoIp2\Database\Reader($cityBinary);
     }
-
-    return null;
 });
 
 if (! $app->runningInConsole()) {
