@@ -98,8 +98,16 @@
 
                                 <div class="col-sm-9">
                                     <p class="form-control-static">
+                                        @if(!is_null($player->geo))
+                                            {!! Html::image($player->geo->flag, $player->geo->country) !!}
+                                            @if($bfacp->isLoggedIn && Auth::user()->ability(null, 'player.view.ip'))
+                                                {{ $player->geo->city }}, {{ $player->geo->subdivision->name }},&nbsp;
+                                            @endif
+                                            {{ $player->geo->country }}
+                                        @else
                                         {!! Html::image($player->country_flag, $player->country_name) !!}
                                         {{ $player->country_name }}
+                                        @endif
                                     </p>
                                 </div>
                             </div>
