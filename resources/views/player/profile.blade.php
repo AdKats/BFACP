@@ -100,7 +100,7 @@
                                     <p class="form-control-static">
                                         @if(!is_null($player->geo))
                                             {!! Html::image($player->geo->flag, $player->geo->country) !!}
-                                            @if($bfacp->isLoggedIn && Auth::user()->ability(null, 'player.view.ip'))
+                                            @if($bfacp->isLoggedIn && Auth::user()->ability(null, 'player.view.ip') && ! empty($player->geo->city))
                                                 {{ $player->geo->city }}, {{ $player->geo->subdivision->name }},&nbsp;
                                             @endif
                                             {{ $player->geo->country }}
