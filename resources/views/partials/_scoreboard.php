@@ -15,7 +15,8 @@
                 </div>
 
                 <div class="box-body">
-                    <img class="img-responsive center-block hidden-xs" ng-src="{{ server.map.images.wide }}" alt="{{ server.map.name }}">
+                    <img class="img-responsive center-block hidden-xs" ng-src="{{ server.map.images.wide }}"
+                         alt="{{ server.map.name }}">
 
                     <div class="table-responsive">
                         <table class="table table-condensed">
@@ -49,7 +50,8 @@
                                     <span ng-bind="server.players.online"></span> /
                                     <span ng-bind="server.players.max"></span>
                                 </td>
-                                <td ng-if="server.game.Name == 'BF4'" class="hidden-xs hidden-sm" ng-bind="server.players.spectators"></td>
+                                <td ng-if="server.game.Name == 'BF4'" class="hidden-xs hidden-sm"
+                                    ng-bind="server.players.spectators"></td>
                                 <td class="hidden-xs hidden-sm" ng-bind="server.players.queue"></td>
                                 <td>
                                     <span ng-bind="server.map.name"></span> /
@@ -60,10 +62,12 @@
                                     <span ng-bind="server.map.next.mode.name"></span>
                                 </td>
                                 <td ng-bind="momentDuration(server.times.round.seconds, 'seconds')"></td>
-                                <td ng-bind="momentDuration(server.times.remaining.seconds, 'seconds')" ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'"></td>
+                                <td ng-bind="momentDuration(server.times.remaining.seconds, 'seconds')"
+                                    ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'"></td>
                                 <td ng-bind="momentDuration(server.times.uptime.seconds, 'seconds')"></td>
                                 <td ng-bind="server.tickets_starting | number"></td>
-                                <td ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'" ng-bind="server.type"></td>
+                                <td ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'"
+                                    ng-bind="server.type"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -91,13 +95,18 @@
                 </div>
 
                 <div class="box-body chat scoreboard-chat" id="chat-box">
-                    <div class="item" ng-repeat="(key, message) in messages | filter: { logSoldierName: search.chat } | orderBy: 'logDate': true track by message.ID">
-                        <img ng-if="message.player.battlelog === null" src="https://www.gravatar.com/avatar/?s=128&d=mm&r=x" width="128" class="online"/>
-                        <img ng-if="message.player.battlelog !== null" ng-src="{{ message.player.battlelog.gravatar_img }}" width="128" class="online"/>
+                    <div class="item"
+                         ng-repeat="(key, message) in messages | filter: { logSoldierName: search.chat } | orderBy: 'logDate': true track by message.ID">
+                        <img ng-if="message.player.battlelog === null"
+                             src="https://www.gravatar.com/avatar/?s=128&d=mm&r=x" width="128" class="online"/>
+                        <img ng-if="message.player.battlelog !== null"
+                             ng-src="{{ message.player.battlelog.gravatar_img }}" width="128" class="online"/>
 
                         <p class="message">
                             <a ng-href="{{ message.player.profile_url }}" target="_blank" class="name">
-                                <small class="text-muted pull-right" tooltip="{{ moment(message.stamp).format('h:mm:ss a') }}" tooltip-placement="left">
+                                <small class="text-muted pull-right"
+                                       tooltip="{{ moment(message.stamp).format('h:mm:ss a') }}"
+                                       tooltip-placement="left">
                                     <i class="fa fa-clock-o"></i>
                                     <span ng-bind="moment(message.stamp).fromNow()"></span>
                                 </small>
@@ -113,9 +122,11 @@
                 <?php if ($bfacp->isLoggedIn && Auth::user()->ability(null, 'admin.scoreboard.say')) : ?>
                     <div class="box-footer">
                         <div class="input-group">
-                            <input type="text" ng-model="chat.message" placeholder="Type message..." class="form-control" ng-disabled="chat.sending" ng-enter="admin.sendMessage()">
+                            <input type="text" ng-model="chat.message" placeholder="Type message..."
+                                   class="form-control" ng-disabled="chat.sending" ng-enter="admin.sendMessage()">
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-danger btn-flat" ng-click="admin.sendMessage()" ng-disabled="chat.sending">
+                            <button type="button" class="btn btn-danger btn-flat" ng-click="admin.sendMessage()"
+                                    ng-disabled="chat.sending">
                                 <ng-switch on="chat.sending">
                                     <span ng-switch-when="true"><i class="fa fa-cog fa-spin"></i> Sending...</span>
                                     <span ng-switch-default>Send</span>
@@ -146,13 +157,15 @@
             </div>
         <?php endif; ?>
 
-        <div ng-if="(server.game.Name == 'BF4' || server.game.Name == 'BFHL') && neutral.spectators" class="col-xs-3 col-<?php if ($bfacp->isLoggedIn): ?>sm-2<?php else: ?>md-3<?php endif; ?>">
+        <div ng-if="(server.game.Name == 'BF4' || server.game.Name == 'BFHL') && neutral.spectators"
+             class="col-xs-3 col-<?php if ($bfacp->isLoggedIn): ?>sm-2<?php else: ?>md-3<?php endif; ?>">
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">Spectators</h3>
 
                     <div class="box-tools pull-right">
-                        <span ng-if="neutral.spectators" class="badge bg-light-blue" ng-bind="neutral.spectators.length"></span>
+                        <span ng-if="neutral.spectators" class="badge bg-light-blue"
+                              ng-bind="neutral.spectators.length"></span>
                     </div>
                 </div>
 
@@ -166,13 +179,15 @@
             </div>
         </div>
 
-        <div ng-if="neutral.players" class="col-xs-3 col-<?php if ($bfacp->isLoggedIn): ?>sm-2<?php else: ?>md-3<?php endif; ?>">
+        <div ng-if="neutral.players"
+             class="col-xs-3 col-<?php if ($bfacp->isLoggedIn): ?>sm-2<?php else: ?>md-3<?php endif; ?>">
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">Joining</h3>
 
                     <div class="box-tools pull-right">
-                        <span ng-if="neutral.players" class="badge bg-light-blue" ng-bind="neutral.players.length"></span>
+                        <span ng-if="neutral.players" class="badge bg-light-blue"
+                              ng-bind="neutral.players.length"></span>
                     </div>
                 </div>
 
@@ -191,12 +206,13 @@
     <div class="row">
         <div class="col-xs-12 col-sm-6">
             <div class="form-group">
-                <input class="form-control" type="text" ng-model="search.scoreboard" placeholder="Search for player..."/>
+                <input class="form-control" type="text" ng-model="search.scoreboard"
+                       placeholder="Search for player..."/>
             </div>
         </div>
     </div>
 
-    <?php if (!is_null($adminview)) {
+    <?php if (! is_null($adminview)) {
         echo $adminview;
     } ?>
 
@@ -227,7 +243,7 @@
                     <div class="table-responsive">
                         <table class="table table-condensed table-striped table-hover scoreboard">
                             <thead>
-                            <?php if ($bfacp->isLoggedIn && !is_null($adminview)): ?>
+                            <?php if ($bfacp->isLoggedIn && ! is_null($adminview)): ?>
                                 <th>
                                     <input type="checkbox" ng-click="selectAll($event)"/>
                                 </th>
@@ -252,25 +268,34 @@
                             <th ng-click="colSort('squadId')" class="hidden-xs hidden-sm">
                                 <i ng-class="colSortClass('squadId')"></i>&nbsp;Squad
                             </th>
-                            <th ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'" ng-click="colSort('ping')">
+                            <th ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'"
+                                ng-click="colSort('ping')">
                                 <i ng-class="colSortClass('ping')"></i>&nbsp;Ping
                             </th>
                             </thead>
 
                             <tbody>
                             <tr ng-repeat="(key, player) in team.players | filter: { name: search.scoreboard } | orderBy:sort.column:sort.desc track by player.name">
-                                <?php if ($bfacp->isLoggedIn && !is_null($adminview)): ?>
+                                <?php if ($bfacp->isLoggedIn && ! is_null($adminview)): ?>
                                     <td>
-                                        <input type="checkbox" name="players" ng-value="player.name" ng-click="isSelectAll($event); updateSelectedPlayers()"/>
+                                        <input type="checkbox" name="players" ng-value="player.name"
+                                               ng-click="isSelectAll($event); updateSelectedPlayers()"/>
                                     </td>
                                 <?php endif; ?>
                                 <td>
-                                    <img ng-src="{{ player._player.rank_image }}" width="24px" tooltip="Rank {{ player.rank }}" class="hidden-xs hidden-sm">
-                                    <img ng-src="{{ player._player.country_flag }}" width="24px" tooltip="{{ player._player.country_name }}" class="hidden-xs hidden-sm">
+                                    <img ng-src="{{ player._player.rank_image }}" width="24px"
+                                         tooltip="Rank {{ player.rank }}" class="hidden-xs hidden-sm">
+                                    <img ng-if="player._player.geo === null" ng-src="{{ player._player.country_flag }}"
+                                         width="24px" tooltip="{{ player._player.country_name }}"
+                                         class="hidden-xs hidden-sm">
+                                    <img ng-if="player._player.geo !== null" ng-src="{{ player._player.geo.flag }}"
+                                         width="24px" tooltip="{{ player._player.geo.country }}"
+                                         class="hidden-xs hidden-sm">
                                         <span ng-if="player._player.ClanTag">
                                             [<span ng-bind="player._player.ClanTag"></span>]
                                         </span>
-                                    <a ng-href="{{ player._player.profile_url }}" ng-bind="player.name" target="_blank"></a>
+                                    <a ng-href="{{ player._player.profile_url }}" ng-bind="player.name"
+                                       target="_blank"></a>
                                 </td>
                                 <td ng-bind="player.score | number"></td>
                                 <td>
@@ -282,13 +307,14 @@
                                     <i class="fa fa-lock" ng-if="player.isSquadLocked">&nbsp;</i>
                                     <span ng-bind="player.squadName"></span>
                                 </td>
-                                <td ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'" ng-bind="player.ping || '--'" ng-class="pingColor(player.ping)"></td>
+                                <td ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'"
+                                    ng-bind="player.ping || '--'" ng-class="pingColor(player.ping)"></td>
                             </tr>
                             </tbody>
 
                             <tfoot>
                             <tr>
-                                <td colspan="<?php echo !$bfacp->isLoggedIn ? 1 : 2; ?>">
+                                <td colspan="<?php echo ! $bfacp->isLoggedIn ? 1 : 2; ?>">
                                     <span class="pull-right">Total</span>
                                 </td>
                                 <td ng-bind="sum(team.players, 'score') | number"></td>
@@ -297,11 +323,13 @@
                                     <span ng-bind="sum(team.players, 'deaths') | number"></span>
                                 </td>
                                 <td class="visible-lg" ng-bind="avg(team.players, 'kd', 2)"></td>
-                                <td class="hidden-xs hidden-sm" ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'">
+                                <td class="hidden-xs hidden-sm"
+                                    ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'">
                                     <span class="pull-right">Average Ping</span>
                                 </td>
                                 <td ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'"
-                                    ng-class="pingColor(avg(team.players, 'ping'))" ng-bind="avg(team.players, 'ping') | number"></td>
+                                    ng-class="pingColor(avg(team.players, 'ping'))"
+                                    ng-bind="avg(team.players, 'ping') | number"></td>
                             </tr>
                             </tfoot>
                         </table>
@@ -337,7 +365,8 @@
                                 <span ng-bind="team.commander.deaths"></span>
                             </td>
                             <td class="visible-lg" ng-bind="kd(team.commander.kills, team.commander.deaths)"></td>
-                            <td ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'" ng-bind="team.commander.ping || '--'" ng-class="pingColor(team.commander.ping)"></td>
+                            <td ng-if="server.game.Name == 'BF4' || server.game.Name == 'BFHL'"
+                                ng-bind="team.commander.ping || '--'" ng-class="pingColor(team.commander.ping)"></td>
                         </tr>
                         </tbody>
                     </table>
