@@ -399,8 +399,12 @@ class Player extends Elegant
             return;
         }
 
-        $geo = app(GeoRepository::class);
+        try {
+            $geo = app(GeoRepository::class);
 
-        return $geo->set($this->IP_Address)->all();
+            return $geo->set($this->IP_Address)->all();
+        } catch (\Exception $e) {
+            return;
+        }
     }
 }
