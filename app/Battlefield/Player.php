@@ -5,6 +5,7 @@ namespace BFACP\Battlefield;
 use BFACP\Adkats\Record;
 use BFACP\Elegant;
 use BFACP\Facades\Main as MainHelper;
+use BFACP\Repositories\GeoRepository;
 use Exception;
 use Illuminate\Support\Facades\Cache as Cache;
 
@@ -53,7 +54,7 @@ class Player extends Elegant
      *
      * @var array
      */
-    protected $appends = ['profile_url', 'country_flag', 'country_name', 'rank_image', 'links'];
+    protected $appends = ['profile_url', 'country_flag', 'country_name', 'rank_image', 'links', 'geo'];
 
     /**
      * Models to be loaded automatically.
@@ -385,5 +386,25 @@ class Player extends Elegant
         }
 
         return $path;
+    }
+
+    /**
+     * Gets the geo data from ip address.
+     *
+     * @return null|array
+     */
+    public function getGeoAttribute()
+    {
+        if (empty($this->IP_Address)) {
+            return;
+        }
+
+        try {
+            $geo = app(GeoRepository::class);
+
+            return $geo->set($this->IP_Address)->all();
+        } catch (\Exception $e) {
+            return;
+        }
     }
 }

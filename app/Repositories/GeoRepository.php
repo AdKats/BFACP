@@ -2,8 +2,6 @@
 
 namespace BFACP\Repositories;
 
-use GeoIp2\Database\Reader;
-
 /**
  * Class GeoRepository.
  */
@@ -30,12 +28,11 @@ class GeoRepository extends BaseRepository
      */
     protected $reader;
 
-
     public function __construct()
     {
         parent::__construct();
-        $path = app_path().'/bfacp/ThirdParty/GeoIP2/GeoLite2-City.mmdb';
-        $this->geo = new Reader($path);
+
+        $this->geo = app('GeoIP');
     }
 
     /**
@@ -61,12 +58,17 @@ class GeoRepository extends BaseRepository
     public function all()
     {
         return [
-            'cc'      => $this->cc(),
-            'country' => $this->country(),
-            'city'    => $this->city(),
-            'lat'     => $this->lat(),
-            'lon'     => $this->lon(),
-            'postal'  => $this->postal(),
+            'cc'          => $this->cc(),
+            'country'     => $this->country(),
+            'city'        => $this->city(),
+            'lat'         => $this->lat(),
+            'lon'         => $this->lon(),
+            'postal'      => $this->postal(),
+            'flag'        => $this->flag(),
+            'subdivision' => [
+                'name' => $this->subDivisionName(),
+                'iso'  => $this->subDivisionIso(),
+            ],
         ];
     }
 
@@ -128,5 +130,35 @@ class GeoRepository extends BaseRepository
     public function postal()
     {
         return $this->reader->postal->code;
+    }
+
+    /**
+     * Returns the file path to the country flag.
+     *
+     * @return string
+     */
+    public function flag()
+    {
+        return sprintf('images/flags/24/%s.png', strtoupper($this->cc()));
+    }
+
+    /**
+     * Returns the name of the subdivision of the country.
+     *
+     * @return mixed
+     */
+    public function subDivisionName()
+    {
+        return $this->reader->mostSpecificSubdivision->name;
+    }
+
+    /**
+     * Returns the iso code of the subdivision of the country.
+     *
+     * @return mixed
+     */
+    public function subDivisionIso()
+    {
+        return $this->reader->mostSpecificSubdivision->isoCode;
     }
 }

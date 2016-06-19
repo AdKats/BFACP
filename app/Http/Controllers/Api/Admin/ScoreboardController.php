@@ -47,7 +47,6 @@ class ScoreboardController extends Controller
      */
     protected $data = [];
 
-
     public function __construct()
     {
         parent::__construct();
@@ -207,23 +206,30 @@ class ScoreboardController extends Controller
             $hideName = true;
         }
 
-        if ($this->request->get('type') == 'Player' && ! empty($this->players)) {
-            foreach ($this->players as $player) {
-                try {
-                    $this->data[] = [
-                        'player'  => $player,
-                        'message' => $message,
-                        'record'  => $this->repository->adminSay($message, $player, null, 'Player', $hideName),
-                    ];
-                } catch (PlayerNotFoundException $e) {
-                    $this->errors[] = $e->getMessage();
+        try {
+            if ($this->request->get('type') == 'Player' && ! empty($this->players)) {
+                foreach ($this->players as $player) {
+                    try {
+                        $this->data[] = [
+                            'player'  => $player,
+                            'message' => $message,
+                            'record'  => $this->repository->adminSay($message, $player, null, 'Player', $hideName),
+                        ];
+                    } catch (PlayerNotFoundException $e) {
+                        $this->errors[] = $e->getMessage();
+                    }
                 }
+            } else {
+                $this->data[] = [
+                    'player'  => null,
+                    'message' => $message,
+                    'record'  => $this->repository->adminSay($message, null, $team, $type, $hideName),
+                ];
             }
-        } else {
-            $this->data[] = [
+        } catch (RconException $e) {
+            $this->errors[] = [
                 'player'  => null,
-                'message' => $message,
-                'record'  => $this->repository->adminSay($message, null, $team, $type, $hideName),
+                'message' => $e->getMessage(),
             ];
         }
 

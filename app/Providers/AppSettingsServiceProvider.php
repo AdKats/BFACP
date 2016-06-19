@@ -4,6 +4,7 @@ namespace BFACP\Providers;
 
 use BFACP\Facades\Main;
 use BFACP\Option;
+use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;

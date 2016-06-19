@@ -36,6 +36,14 @@ $app->singleton(Illuminate\Contracts\Debug\ExceptionHandler::class, BFACP\Except
 
 $app->singleton('Guzzle', GuzzleHttp\Client::class);
 
+$app->singleton('GeoIP', function () {
+    $cityBinary = app_path('ThirdParty/GeoIP2/GeoLite2-City.mmdb');
+
+    if (file_exists($cityBinary)) {
+        return new GeoIp2\Database\Reader($cityBinary);
+    }
+});
+
 if (! $app->runningInConsole()) {
     $setupFilePath = base_path('installer/install.php');
     $jsBuildDirectoryPath = public_path('js/builds');

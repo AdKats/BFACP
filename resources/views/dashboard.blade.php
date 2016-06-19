@@ -224,7 +224,7 @@
                 <div class="box box-solid">
                     <div class="box-header">
                         <h3 class="box-title">
-                            Latest Reported Players (30 days)
+                            Latest Reported Players (2 Weeks)
                         </h3>
                     </div>
 
@@ -234,6 +234,7 @@
                                 <th>Player</th>
                                 <th>Total</th>
                                 <th>Most Recent</th>
+                                <th>Reason</th>
                             </thead>
 
                             <tbody>
@@ -247,6 +248,7 @@
                                             {!! \BFACP\Facades\Macros::moment(\Carbon\Carbon::parse($player->Recent)->toIso8601String()) !!}
                                             (<span class="text-blue">{!! \BFACP\Facades\Macros::moment(\Carbon\Carbon::parse($player->Recent)->toIso8601String(), null, null, true) !!}</span>)
                                         </td>
+                                        <td>{{ $player->record_message }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

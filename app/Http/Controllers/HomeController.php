@@ -2,9 +2,7 @@
 
 namespace BFACP\Http\Controllers;
 
-use BFACP\Adkats\Record;
 use BFACP\Repositories\PlayerRepository;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
@@ -39,10 +37,7 @@ class HomeController extends Controller
 
         $countryMapTable = $countryMap->sortByDesc('total')->take(5);
 
-        $timestamp = Carbon::now()->subDays(30);
-        $latestReported = Record::whereIn('command_type', [18, 20])->where('record_time', '>=',
-            $timestamp)->groupBy('target_id')->select(DB::raw('target_id, target_name, COUNT(record_id) AS `Total`, MAX(record_time) AS `Recent`'))->orderBy('Recent',
-            'DESC')->having('Total', '>=', 5)->get();
+        $latestReported = DB::select(DB::raw(file_get_contents(storage_path('sql/latestReportedPlayers.sql'))));
 
         return view('dashboard', compact('uniquePlayers', 'adkats_statistics', 'countryMap', 'countryMapTable',
             'latestReported'))->with('page_title', trans('navigation.main.items.dashboard.title'));
