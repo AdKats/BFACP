@@ -4,6 +4,7 @@ namespace BFACP\Http\Controllers\Api;
 
 use BFACP\Facades\Main;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class PusherController.
@@ -15,12 +16,12 @@ class PusherController extends Controller
      */
     public function postAuth()
     {
-        if ($this->request->has('channel_name') && $this->request->has('socket_id') && ! empty($this->user)) {
+        if ($this->request->has('channel_name') && $this->request->has('socket_id') && ! empty(Auth::user())) {
             $data = [
-                'id'        => $this->user->id,
-                'username'  => $this->user->username,
-                'avatar'    => $this->user->gravatar,
-                'role'      => $this->user->roles[0]->name,
+                'id'       => Auth::user()->id,
+                'username' => Auth::user()->username,
+                'avatar'   => Auth::user()->gravatar,
+                'role'     => Auth::user()->roles[0]->name,
                 'timestamp' => Carbon::now()->getTimestamp(),
             ];
 
@@ -62,12 +63,12 @@ class PusherController extends Controller
             $history = [];
 
             $data = [
-                'hash'      => md5(sprintf('%s_%s', $timestamp->getTimestamp(), $this->user->id)),
+                'hash'      => md5(sprintf('%s_%s', $timestamp->getTimestamp(), Auth::user()->id)),
                 'user'      => [
-                    'id'       => $this->user->id,
-                    'username' => $this->user->username,
-                    'avatar'   => $this->user->gravatar,
-                    'role'     => $this->user->roles[0]->name,
+                    'id'       => Auth::user()->id,
+                    'username' => Auth::user()->username,
+                    'avatar'   => Auth::user()->gravatar,
+                    'role'     => Auth::user()->roles[0]->name,
                 ],
                 'timestamp' => $timestamp->toIso8601String(),
                 'text'      => $this->request->get('message'),
