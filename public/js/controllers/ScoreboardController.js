@@ -13,7 +13,7 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
         $scope.idleServerId = null;
 
         var idleSound = new Howl({
-            urls: ['audio/ready.mp3', 'audio/ready.ogg'],
+            urls: ['audio/ready.mp3'],
             volume: 0.5,
             buffer: true
         });
@@ -31,8 +31,8 @@ angular.module('bfacp').controller('ScoreboardController', ['$scope', '$rootScop
         }
 
         $scope.$on('$idleWarn', function (e, countdown) {
-            if (countdown < 20) {
-                idleSound.play();
+            if (countdown < 10) {
+                // idleSound.play();
             }
         });
 
