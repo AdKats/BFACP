@@ -6,6 +6,12 @@ angular.module('bfacp').controller('PusherChatController', ['$scope', '$http', f
         $scope.members.online = $scope.members.list.length;
     };
 
+    var newMsgSound = new Howl({
+        urls: ['audio/msn_alert.mp3'],
+        volume: 0.5,
+        buffer: true
+    });
+
     $scope.members = {
         online: 0,
         list: []
@@ -63,9 +69,9 @@ angular.module('bfacp').controller('PusherChatController', ['$scope', '$http', f
         }
     });
 
-
     ChatroomChannel.bind('message-sent', function (data) {
         $scope.messages.push(data);
+        newMsgSound.play();
     });
 
     ChatroomChannel.bind('pusher:subscription_succeeded', function (members) {
