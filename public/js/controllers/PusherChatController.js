@@ -14,7 +14,8 @@ angular.module('bfacp').controller('PusherChatController', ['$scope', '$http', f
 
     $scope.members = {
         online: 0,
-        list: []
+        list: [],
+        me: ChatroomChannel.members.me
     };
 
     $scope.connectionState = '';
@@ -27,13 +28,13 @@ angular.module('bfacp').controller('PusherChatController', ['$scope', '$http', f
 
     $scope.messages = [];
 
-    $http.get('/api/pusher/chat-history').success(function(data) {
+    $http.get('/api/pusher/chat-history').success(function (data) {
         var messages = data.data;
 
-        for(var i=0; i < messages.length; i++) {
+        for (var i = 0; i < messages.length; i++) {
             $scope.messages.push(messages[i]);
         }
-    }).error(function(e) {
+    }).error(function (e) {
         console.error('Unable to get chat history.', e);
     });
 
@@ -71,7 +72,11 @@ angular.module('bfacp').controller('PusherChatController', ['$scope', '$http', f
 
     ChatroomChannel.bind('message-sent', function (data) {
         $scope.messages.push(data);
-        newMsgSound.play();
+
+        if ($scope.members.me.id != data.user.id) {
+            newMsgSound.play();
+            toastr.info(data.user.username + ' just posted a new site message.');
+        }
     });
 
     ChatroomChannel.bind('pusher:subscription_succeeded', function (members) {
