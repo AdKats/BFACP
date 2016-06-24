@@ -15,7 +15,7 @@ angular.module('bfacp').controller('PusherChatController', ['$scope', '$http', f
     $scope.members = {
         online: 0,
         list: [],
-        me: ChatroomChannel.members.me
+        me: null
     };
 
     $scope.connectionState = '';
@@ -83,6 +83,8 @@ angular.module('bfacp').controller('PusherChatController', ['$scope', '$http', f
         members.each(function (member) {
             $scope.members.list.push(member.info);
         });
+
+        $scope.members.me = ChatroomChannel.members.me
 
         update_members_online();
     });
