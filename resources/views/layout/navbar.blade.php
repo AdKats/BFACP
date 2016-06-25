@@ -42,6 +42,7 @@
                     <li class="user-footer">
                         <div class="pull-left">
                             {!! link_to_route('user.account', 'Account', [], ['class' => 'btn btn-default btn-flat', 'target' => '_self']) !!}
+                            {!! link_to_route('user.profile', 'Profile', [$bfacp->user->id, strtolower($bfacp->user->username)], ['class' => 'btn btn-default btn-flat', 'target' => '_self']) !!}
                         </div>
 
                         <div class="pull-right">

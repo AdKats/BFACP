@@ -67,7 +67,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $appends = ['gravatar', 'stamp'];
+    protected $appends = ['gravatar', 'stamp', 'profile_url'];
 
     /**
      * Models to be loaded automatically.
@@ -190,6 +190,16 @@ class User extends Authenticatable
     public function getGravatarAttribute()
     {
         return MainHelper::gravatar($this->email);
+    }
+
+    /**
+     * Get the users profile url.
+     *
+     * @return string
+     */
+    public function getProfileUrlAttribute()
+    {
+        return route('user.profile', [$this->id, strtolower($this->username)]);
     }
 
     /**

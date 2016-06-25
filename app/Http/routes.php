@@ -152,6 +152,11 @@ Route::group(['middleware' => 'web'], function () {
         ['as' => 'user.account', 'uses' => 'UsersController@showAccountSettings', 'middleware' => 'auth']);
     Route::put('account',
         ['as' => 'user.account.save', 'uses' => 'UsersController@saveAccountSettings', 'middleware' => 'auth']);
+    Route::get('profile/{id}-{name}', [
+        'as'         => 'user.profile',
+        'uses'       => 'UsersController@showProfile',
+        'middleware' => 'auth',
+    ])->where('id', '[0-9]+');
 
     /*=====  End of User Router  ======*/
 

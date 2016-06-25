@@ -3,6 +3,7 @@
 namespace BFACP\Http\Controllers;
 
 use BFACP\Account\User;
+use BFACP\Repositories\PlayerRepository;
 use BFACP\Repositories\UserRepository;
 use Former\Facades\Former;
 use Illuminate\Support\Facades\Mail;
@@ -108,6 +109,33 @@ class UsersController extends Controller
     public function showSignup()
     {
         return view('user.register');
+    }
+
+    /**
+     * Show the profile of a user.
+     *
+     * @param null $id
+     * @param null $username
+     *
+     * @return mixed
+     */
+    public function showProfile($id = null, $username = null)
+    {
+        $user = User::findOrFail($id);
+
+        if (! is_null($user)) {
+            if (strtolower($user->username) != strtolower($username)) {
+                return redirect()->route('user.profile', [$user->id, strtolower($user->username)]);
+            }
+        }
+
+        $page_title = $user->username;
+
+        $playerRepository = app(PlayerRepository::class);
+
+        $records = $playerRepository->getPlayerRecords($user->soldiers()->lists('player_id')->toArray());
+
+        return view('user.profile', compact('user', 'records', 'page_title'));
     }
 
     /**
