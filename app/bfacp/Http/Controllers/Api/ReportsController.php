@@ -71,7 +71,8 @@ class ReportsController extends BaseController
 
                 if (Input::get('action') == 7) {
                     $maxDuration = Setting::where('setting_name',
-                        'Maximum Temp-Ban Duration Minutes')->where('server_id', 1)->pluck('setting_value');
+                        'Maximum Temp-Ban Duration Minutes')->where('server_id',
+                        $newRecord->server_id)->pluck('setting_value');
 
                     $duration = Input::get('extras.tban.duration', $maxDuration);
 
