@@ -165,12 +165,12 @@ class PlayerRepository extends BaseRepository
     {
         $result = DB::table('tbl_playerdata')->whereNotIn('CountryCode',
             ['', '--'])->whereNotNull('CountryCode')->whereIn('tbl_playerdata.PlayerID', function ($query) {
-            $query->select('tbl_server_player.PlayerID')->from('tbl_server_player')->whereIn('tbl_server_player.StatsID',
+                $query->select('tbl_server_player.PlayerID')->from('tbl_server_player')->whereIn('tbl_server_player.StatsID',
                 function ($query) {
                     $query->select('StatsID')->from('tbl_playerstats')->where('LastSeenOnServer', '>=',
                         Carbon::now()->subDay());
                 });
-        })->groupBy('CountryCode')->select(DB::raw('UPPER(`CountryCode`) AS `CountryCode`, COUNT(`tbl_playerdata`.`PlayerID`) AS `total`'))->get();
+            })->groupBy('CountryCode')->select(DB::raw('UPPER(`CountryCode`) AS `CountryCode`, COUNT(`tbl_playerdata`.`PlayerID`) AS `total`'))->get();
 
         $result = new Collection($result);
 
@@ -189,14 +189,14 @@ class PlayerRepository extends BaseRepository
     {
         $records = Record::with('target', 'source', 'type', 'action', 'server')->orderBy('record_time',
             'desc')->whereNotIn('command_type', [48, 49, 85, 86])->where(function ($query) use (&$id) {
-            if (is_array($id)) {
-                $query->whereIn('target_id', $id);
-                $query->orWhereIn('source_id', $id);
-            } else {
-                $query->where('target_id', $id);
-                $query->orWhere('source_id', $id);
-            }
-        });
+                if (is_array($id)) {
+                    $query->whereIn('target_id', $id);
+                    $query->orWhereIn('source_id', $id);
+                } else {
+                    $query->where('target_id', $id);
+                    $query->orWhere('source_id', $id);
+                }
+            });
 
         // If a command id is present we are going to only pull records
         // that have the specific id
