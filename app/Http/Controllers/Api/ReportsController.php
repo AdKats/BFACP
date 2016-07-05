@@ -112,14 +112,14 @@ class ReportsController extends Controller
                     $newRecord->record_message = $newMessage;
                 }
 
-                $source = MainHelper::getAdminPlayer($this->user, $newRecord->server->game->GameID);
+                $source = MainHelper::getAdminPlayer(Auth::user(), $newRecord->server->game->GameID);
 
                 if (! is_null($source)) {
                     $newRecord->source_id = $source->PlayerID;
                     $newRecord->source_name = $source->SoldierName;
                 } else {
                     $newRecord->source_id = null;
-                    $newRecord->source_name = $this->user->username;
+                    $newRecord->source_name = Auth::user()->username;
                 }
 
                 $newRecord->record_time = Carbon::now();
