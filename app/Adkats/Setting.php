@@ -3,7 +3,6 @@
 namespace BFACP\Adkats;
 
 use BFACP\Elegant;
-use Exception;
 
 /**
  * Class Setting.
@@ -88,7 +87,7 @@ class Setting extends Elegant
      * Quick way of selecting servers.
      *
      * @param       $query
-     * @param array $ids Array of server ids
+     * @param array $ids   Array of server ids
      *
      * @return
      */
@@ -108,55 +107,51 @@ class Setting extends Elegant
      */
     public function getSettingValueAttribute()
     {
-        try {
-            $value = $this->attributes['setting_value'];
-            $settingName = $this->attributes['setting_name'];
+        $value = $this->attributes['setting_value'];
+        $settingName = $this->attributes['setting_name'];
 
-            if (! array_key_exists('setting_name', $this->attributes) || $settingName == 'Custom HTML Addition') {
-                return $value;
-            }
+        if (! array_key_exists('setting_name', $this->attributes) || $settingName == 'Custom HTML Addition') {
+            return $value;
+        }
 
-            switch ($this->setting_type) {
-                case 'multiline':
-                    if (in_array($settingName, [
-                        'Pre-Message List',
-                        'Server Rule List',
-                        'SpamBot Say List',
-                        'SpamBot Yell List',
-                    ])) {
-                        $value = rawurldecode(urldecode($value));
-                    }
+        switch ($this->setting_type) {
+            case 'multiline':
+                if (in_array($settingName, [
+                    'Pre-Message List',
+                    'Server Rule List',
+                    'SpamBot Say List',
+                    'SpamBot Yell List',
+                ])) {
+                    $value = rawurldecode(urldecode($value));
+                }
 
-                    if (strlen($value) == 0) {
-                        return $value;
-                    }
-
-                    $valueArray = explode('|', $value);
-
-                    return $valueArray;
-                    break;
-
-                case 'bool':
-                    return $value == 'True';
-                    break;
-
-                case 'int':
-                    return (int) $value;
-                    break;
-
-                case 'double':
-                    return (float) $value;
-                    break;
-
-                case 'stringarray':
-                    return explode('|', $value);
-                    break;
-
-                default:
+                if (strlen($value) == 0) {
                     return $value;
-            }
-        } catch (Exception $e) {
-            return $this->attributes['setting_value'];
+                }
+
+                $valueArray = explode('|', $value);
+
+                return $valueArray;
+                break;
+
+            case 'bool':
+                return $value == 'True';
+                break;
+
+            case 'int':
+                return (int) $value;
+                break;
+
+            case 'double':
+                return (float) $value;
+                break;
+
+            case 'stringarray':
+                return explode('|', $value);
+                break;
+
+            default:
+                return $value;
         }
     }
 }
