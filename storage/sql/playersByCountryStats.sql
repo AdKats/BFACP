@@ -29,5 +29,4 @@ FROM
                       ( SELECT StatsID
                        FROM tbl_playerstats
                        WHERE LastSeenOnServer >= DATE_SUB(UTC_TIMESTAMP, INTERVAL 1 DAY) ))
-     GROUP BY CC
-     ORDER BY Cur DESC LIMIT 5) AS a) AS z
+     GROUP BY CC) AS a) AS z

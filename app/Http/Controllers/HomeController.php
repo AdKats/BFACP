@@ -35,7 +35,7 @@ class HomeController extends Controller
             return $playerRepository->getPlayersSeenByCountry();
         });
 
-        $countryMapTable = $countryMap;
+        $countryMapTable = $countryMap->sortByDesc('Cur')->take(10);
 
         $latestReported = DB::select(DB::raw(file_get_contents(storage_path('sql/latestReportedPlayers.sql'))));
 
