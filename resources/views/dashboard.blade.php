@@ -202,9 +202,9 @@
                                     <td ng-bind="{{ (int) $country->Cur }} | number"></td>
                                     <td>
                                         @if($country->ISNEG)
-                                        <i class="fa fa-arrow-down" aria-hidden="true" class="text-red"></i>
+                                        <i class="fa fa-arrow-down text-red" aria-hidden="true"></i>
                                         @else
-                                        <i class="fa fa-arrow-up" aria-hidden="true" class="text-green"></i>
+                                        <i class="fa fa-arrow-up text-green" aria-hidden="true"></i>
                                         @endif
                                         {{ $country->Rate }}
                                     </td>
