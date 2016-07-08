@@ -163,6 +163,7 @@ class PlayerRepository extends BaseRepository
      */
     public function getPlayersSeenByCountry()
     {
+        /*
         $result = DB::table('tbl_playerdata')->whereNotIn('CountryCode',
             ['', '--'])->whereNotNull('CountryCode')->whereIn('tbl_playerdata.PlayerID', function ($query) {
                 $query->select('tbl_server_player.PlayerID')->from('tbl_server_player')->whereIn('tbl_server_player.StatsID',
@@ -171,6 +172,9 @@ class PlayerRepository extends BaseRepository
                         Carbon::now()->subDay());
                 });
             })->groupBy('CountryCode')->select(DB::raw('UPPER(`CountryCode`) AS `CountryCode`, COUNT(`tbl_playerdata`.`PlayerID`) AS `total`'))->get();
+        */
+
+        $result = DB::select(file_get_contents(storage_path('sql/playersByCountryStats.sql')));
 
         $result = new Collection($result);
 

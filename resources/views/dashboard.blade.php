@@ -189,16 +189,25 @@
                             <thead>
                             <th>{{ trans('dashboard.players_seen_country_past_day.table.col1') }}</th>
                             <th>{{ trans('dashboard.players_seen_country_past_day.table.col2') }}</th>
+                            <th>&nbsp;</th>
                             </thead>
 
                             <tbody>
                             @foreach($countryMapTable as $country)
                                 <tr>
                                     <td>
-                                        {!! Html::image(sprintf('images/flags/24/%s.png', strtoupper($country->CountryCode)), MainHelper::countries($country->CountryCode)) !!}
-                                        {{ MainHelper::countries($country->CountryCode) }}
+                                        {!! Html::image(sprintf('images/flags/24/%s.png', strtoupper($country->CC)), MainHelper::countries($country->CC)) !!}
+                                        {{ MainHelper::countries($country->CC) }}
                                     </td>
-                                    <td ng-bind="{{ (int) $country->total }} | number"></td>
+                                    <td ng-bind="{{ (int) $country->Cur }} | number"></td>
+                                    <td>
+                                        @if($country->ISNEG)
+                                        <i class="fa fa-arrow-down" aria-hidden="true" class="text-red"></i>
+                                        @else
+                                        <i class="fa fa-arrow-up" aria-hidden="true" class="text-green"></i>
+                                        @endif
+                                        {{ $country->Rate }}
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -291,7 +300,7 @@
     {!! Html::script('js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') !!}
     <script type="text/javascript">
         $(function () {
-            var playerVisitorData = {!! json_encode($countryMap->pluck('total', 'CountryCode')) !!};
+            var playerVisitorData = {!! json_encode($countryMap->pluck('Cur', 'CC')) !!};
 
             $('#player-world-map').vectorMap({
                 map: 'world_mill_en',
