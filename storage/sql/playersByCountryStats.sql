@@ -8,16 +8,16 @@ FROM
   (SELECT
      *,
      CONCAT(FORMAT((1 - a.Past / a.Cur) * 100, 2), '%') AS Rate,
-     ((1 - a.Past / a.Cur))                             AS Diff
+     ((1 - a.Past / a.Cur)) AS Diff
    FROM
      (SELECT
         UPPER(tb1.CountryCode) AS CC,
-        COUNT(tb1.PlayerID)    AS Cur,
-        c.total                AS Past
+        COUNT(tb1.PlayerID) AS Cur,
+        c.total             AS Past
       FROM
         tbl_playerdata tb1
         INNER JOIN (SELECT
-                      COUNT(tb2.PlayerID)    AS total,
+                      COUNT(tb2.PlayerID) AS total,
                       UPPER(tb2.CountryCode) AS CountryCode
                     FROM
                       tbl_playerdata tb2
@@ -30,10 +30,10 @@ FROM
                                                                        FROM
                                                                          tbl_playerstats
                                                                        WHERE
-                                                                         LastSeenOnServer BETWEEN DATE_SUB(
-                                                                             UTC_TIMESTAMP, INTERVAL 2
-                                                                             DAY) AND DATE_SUB(UTC_TIMESTAMP, INTERVAL 1
-                                                                                               DAY)))
+                                                                         LastSeenOnServer BETWEEN DATE(
+                                                                             DATE_SUB(UTC_TIMESTAMP, INTERVAL 2
+                                                                                      DAY)) AND DATE(
+                                                                             DATE_SUB(UTC_TIMESTAMP, INTERVAL 1 DAY))))
                     GROUP BY CountryCode) c ON c.CountryCode = tb1.CountryCode
                                                AND c.CountryCode NOT IN ('', '--')
       WHERE
@@ -47,5 +47,5 @@ FROM
                                                                tbl_playerstats
                                                              WHERE
                                                                LastSeenOnServer >=
-                                                               DATE_SUB(UTC_TIMESTAMP, INTERVAL 1 DAY)))
+                                                               DATE(DATE_SUB(UTC_TIMESTAMP, INTERVAL 1 DAY))))
       GROUP BY CC) AS a) AS z

@@ -30,8 +30,8 @@ class HomeController extends Controller
             return head($results);
         });
 
-        // Cache results for 1 day
-        $countryMap = $this->cache->remember('players.seen.country', 60 * 24, function () use (&$playerRepository) {
+        // Cache results for 6 hours
+        $countryMap = $this->cache->remember('players.seen.country', 60 * 6, function () use (&$playerRepository) {
             return $playerRepository->getPlayersSeenByCountry();
         });
 
