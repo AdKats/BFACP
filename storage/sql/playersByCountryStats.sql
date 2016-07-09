@@ -13,7 +13,7 @@ FROM
      (SELECT
         UPPER(tb1.CountryCode) AS CC,
         COUNT(tb1.PlayerID) AS Cur,
-        c.total             AS Past
+        c.total AS Past
       FROM
         tbl_playerdata tb1
         INNER JOIN (SELECT
@@ -46,6 +46,7 @@ FROM
                                                              FROM
                                                                tbl_playerstats
                                                              WHERE
-                                                               LastSeenOnServer >=
-                                                               DATE(DATE_SUB(UTC_TIMESTAMP, INTERVAL 1 DAY))))
+                                                               LastSeenOnServer BETWEEN DATE(
+                                                                   DATE_SUB(UTC_TIMESTAMP, INTERVAL 1 DAY)) AND DATE(
+                                                                   UTC_TIMESTAMP)))
       GROUP BY CC) AS a) AS z
