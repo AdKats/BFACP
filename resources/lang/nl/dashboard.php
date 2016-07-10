@@ -43,8 +43,8 @@ return [
         'title' => 'Herkomst spelers (Laatste 24 uur)',
         'table' => [
             'col1' => 'Land',
-            'col2' => 'Todays Bezoeken',
-            'col3' => 'Yesterdays Bezoeken',
+            'col2' => 'Bezoeken vandaag',
+            'col3' => 'Bezoeken gisteren',
         ],
     ],
 ];
