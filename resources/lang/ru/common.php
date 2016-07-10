@@ -4,10 +4,10 @@ return [
     'version'       => 'Версия',
     'login'         => 'Войти',
     'logout'        => 'Выйти',
-    'motd'          => 'Сообщение дня',
+    'motd'          => 'Сообщение Дня',
     'metabans'      => [
         'title'       => 'Metabans',
-        'assessments' => 'Оценки',
+        'assessments' => 'Вердикты',
         'feed'        => 'Лента',
         'columns'     => [
             'col1' => 'Игрок',
@@ -16,8 +16,8 @@ return [
             'col4' => 'Истекает',
         ],
         'type'        => [
-            'none'  => 'Нет оценок',
-            'watch' => 'Под наблюдением',
+            'none'  => 'Нет вердикта',
+            'watch' => 'Проверен',
             'white' => 'Защищен',
             'black' => 'Забанен',
         ],
@@ -25,13 +25,13 @@ return [
     'nav'           => [
         'extras' => [
             'psearch' => [
-                'placeholder' => 'Поиск игрока...',
+                'placeholder' => 'Найти игрока...',
             ],
         ],
     ],
     'right_sidebar' => [
-        'online_users' => 'Сейчас на сайте',
-        'chat_room'    => 'Chat Room',
+        'online_users' => 'Пользователи в Сети',
+        'chat_room'    => 'Чат',
     ],
-    'loading' => 'Погрузка ...',
+    'loading' => 'Загрузка...',
 ];

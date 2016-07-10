@@ -5,30 +5,30 @@ return [
         'title' => 'Навигация',
         'items' => [
             'dashboard'   => [
-                'title' => 'Панель управления',
+                'title' => 'Панель Управления',
                 'icon'  => [
                     'fa'  => 'fa-dashboard',
                     'ion' => null,
                 ],
             ],
             'chatlogs'    => [
-                'title' => 'Лог чата',
+                'title' => 'Чат',
                 'icon'  => [
                     'fa'  => 'fa-comments',
                     'ion' => null,
                 ],
             ],
             'servers' => [
-                'title' => 'Servers',
+                'title' => 'Серверы',
                 'scoreboard'  => [
-                    'title' => 'Онлайн таблица',
+                    'title' => 'Онлайн Таблица',
                     'icon'  => [
                         'fa'  => 'fa-server',
                         'ion' => null,
                     ],
                 ],
                 'list'  => [
-                    'title' => 'Listing',
+                    'title' => 'Список',
                     'icon'  => [
                         'fa'  => 'fa-list',
                         'ion' => null,
@@ -36,14 +36,14 @@ return [
                 ]
             ],
             'playerlist'  => [
-                'title' => 'Список игроков',
+                'title' => 'Список Игроков',
                 'icon'  => [
                     'fa'  => 'fa-users',
                     'ion' => null,
                 ],
             ],
             'maintenance' => [
-                'title' => 'Обслуживание',
+                'title' => 'Системное Обслуживание',
                 'icon'  => [
                     'fa'  => 'fa-cogs',
                     'ion' => null,
@@ -53,7 +53,7 @@ return [
     ],
     'admin' => [
         'site'   => [
-            'title' => 'Управление сайтом',
+            'title' => 'Управление Сайтом',
             'items' => [
                 'users'    => [
                     'title' => 'Пользователи',
@@ -63,10 +63,10 @@ return [
                     ],
                     'items' => [
                         'edit'   => [
-                            'title' => 'Редактирование пользователя #:id',
+                            'title' => 'Редактирование Пользователя #:id',
                         ],
                         'create' => [
-                            'title' => 'Создать нового пользователя',
+                            'title' => 'Создать Нового Пользователя',
                         ],
                     ],
                 ],
@@ -78,10 +78,10 @@ return [
                     ],
                     'items' => [
                         'edit'   => [
-                            'title' => 'Редактирование :name группы',
+                            'title' => 'Редактирование Группы :name',
                         ],
                         'create' => [
-                            'title' => 'Создание новой группы',
+                            'title' => 'Создание Новой Группы',
                         ],
                     ],
                 ],
@@ -100,11 +100,11 @@ return [
                         'ion' => null,
                     ],
                     'items' => [
-                        'edit' => 'Editing :servername',
+                        'edit' => 'Редактирование :servername',
                     ],
                 ],
                 'updater'  => [
-                    'title' => 'Обновление',
+                    'title' => 'Обновления',
                     'icon'  => [
                         'fa'  => 'fa-wrench',
                         'ion' => null,
@@ -113,7 +113,7 @@ return [
                 ],
                 'system'   => [
                     'logs' => [
-                        'title' => 'Системные логи',
+                        'title' => 'Системный Журнал',
                         'icon'  => [
                             'fa'  => 'fa-file',
                             'ion' => null,
@@ -134,7 +134,7 @@ return [
                     ],
                     'items' => [
                         'edit' => [
-                            'title' => 'Редактирование бана #:id',
+                            'title' => 'Редактирование Бана #:id',
                         ],
                     ],
                 ],
@@ -146,7 +146,7 @@ return [
                     ],
                     'items' => [
                         'edit' => [
-                            'title' => 'Редактирование пользователя #:id',
+                            'title' => 'Редактирование Пользователя #:id',
                         ],
                     ],
                 ],
@@ -158,34 +158,34 @@ return [
                     ],
                     'items' => [
                         'edit'   => [
-                            'title' => 'Редактирование группы',
+                            'title' => 'Редактирование Группы',
                         ],
                         'create' => [
-                            'title' => 'Создание новой группы',
+                            'title' => 'Создание Новой Группы',
                         ],
                     ],
                 ],
                 'special_players' => [
-                    'title' => 'Особые игроки',
+                    'title' => 'VIP',
                     'icon'  => [
                         'fa'  => 'fa-users',
                         'ion' => null,
                     ],
                     'items' => [
                         'edit' => [
-                            'title' => 'Редактирование особого игрока #:id',
+                            'title' => 'Редактирование VIP #:id',
                         ],
                     ],
                 ],
                 'infractions' => [
-                    'title' => 'Infractions',
+                    'title' => 'Нарушения',
                     'icon'  => [
                         'fa'  => 'fa-users',
                         'ion' => null,
                     ],
                     'items' => [
                         'edit' => [
-                            'title' => 'Editing Special Player #:id',
+                            'title' => 'Редактирование Нарушения #:id',
                         ],
                     ],
                 ],
