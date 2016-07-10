@@ -60,7 +60,7 @@ return [
             'edit' => [
                 'buttons' => [
                     'save'   => 'Opslaan',
-                    'cancel' => 'Cancel',
+                    'cancel' => 'Annuleren',
                     'delete' => 'Server Verwijderen',
                 ],
             ],
