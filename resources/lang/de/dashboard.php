@@ -38,5 +38,12 @@ return [
             'col4' => 'läuft ab',
         ],
     ],
-    'players_seen_country_past_day' => 'Spieler nach Land (24h)',
+    'players_seen_country_past_day' => [
+        'title' => 'Spieler nach Land (24h)',
+        'table' => [
+            'col1' => 'das Land',
+            'col2' => 'Todays Besuche',
+            'col3' => 'Yesterdays Besuche',
+        ],
+    ],
 ];
