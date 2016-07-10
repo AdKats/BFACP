@@ -59,7 +59,7 @@ return [
                 'col2' => 'Straffen',
                 'col3' => 'Vergevingen',
                 'col4' => 'Totaal',
-                'col5' => 'Next Punishment',
+                'col5' => 'Volgende straf',
             ],
             'table2'  => [
                 'col1' => 'Type',
@@ -222,10 +222,10 @@ return [
     'admin' => [
         'forgive' => [
             'warnings' => [
-                'overage' => 'You have forgivin :player :usertotal time(s) but was reduced to :reduced to equal max punishes. Issue the remaining :remaining on another server if possable.',
+                'overage' => 'Je hebt :player :usertotal keer vergeven maar was gereduceerd tot :reduced om het max aantal straffen te evenaren. Vergeef de overgebleven :remaining op een andere server indien mogelijk.',
             ],
             'errors'   => [
-                'err1' => 'You cannot forgive :player if they do not have any punishes to forgive for this server.',
+                'err1' => 'Je kan :player niet vergeven als ze geen straffen hebben voor deze server.',
             ],
         ],
     ],
