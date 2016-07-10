@@ -189,6 +189,7 @@
                             <thead>
                             <th>{{ trans('dashboard.players_seen_country_past_day.table.col1') }}</th>
                             <th>{{ trans('dashboard.players_seen_country_past_day.table.col2') }}</th>
+                            <th>{{ trans('dashboard.players_seen_country_past_day.table.col3') }}</th>
                             <th>&nbsp;</th>
                             </thead>
 
@@ -200,6 +201,7 @@
                                         {{ MainHelper::countries($country->CC) }}
                                     </td>
                                     <td ng-bind="{{ (int) $country->Cur }} | number"></td>
+                                    <td ng-bind="{{ (int) $country->Past }} | number"></td>
                                     <td>
                                         @if($country->ISNEG)
                                         <i class="fa fa-arrow-down text-red" aria-hidden="true"></i>

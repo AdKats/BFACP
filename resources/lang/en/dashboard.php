@@ -44,7 +44,8 @@ return [
         'title' => 'Players Seen by Country (24h)',
         'table' => [
             'col1' => 'Country',
-            'col2' => 'Visits',
+            'col2' => 'Todays Visits',
+            'col3' => 'Yesterdays Visits',
         ],
     ],
 ];
