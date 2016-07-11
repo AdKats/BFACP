@@ -12,10 +12,10 @@ return [
                     ],
                 ],
                 'password' => [
-                    'title'       => 'Изменить пароль',
+                    'title'       => 'Изменить Пароль',
                     'inputs'      => [
                         'password'         => 'Пароль',
-                        'password_confirm' => 'Повторите пароль',
+                        'password_confirm' => 'Повторите Пароль',
                     ],
                     'inputs_help' => [
                         'password'         => 'Чтобы изменить пароль, введите его здесь.',
@@ -31,7 +31,7 @@ return [
                 'changed' => 'Email был изменен на :addr!',
             ],
             'password' => [
-                'changed' => 'Пароль изменен!',
+                'changed' => 'Пароль был изменен!',
             ],
             'language' => [
                 'changed' => 'Язык был изменен на :lang!',

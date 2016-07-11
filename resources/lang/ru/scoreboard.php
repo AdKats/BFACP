@@ -17,7 +17,7 @@ return [
         ],
         3 => [
             'full_name'  => 'Китайцы',
-            'short_name' => 'Китай',
+            'short_name' => 'КНР',
         ],
         4 => [
             'full_name'  => 'Атакующие',
@@ -28,11 +28,11 @@ return [
             'short_name' => 'Обор',
         ],
         6 => [
-            'full_name'  => 'Менты',
+            'full_name'  => 'Копы',
             'short_name' => 'КОП',
         ],
         7 => [
-            'full_name'  => 'Преступники',
+            'full_name'  => 'Бандиты',
             'short_name' => 'БАН',
         ],
     ],
