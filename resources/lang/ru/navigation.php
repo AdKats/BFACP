@@ -166,14 +166,14 @@ return [
                     ],
                 ],
                 'special_players' => [
-                    'title' => 'VIP',
+                    'title' => 'Особые Игроки',
                     'icon'  => [
                         'fa'  => 'fa-users',
                         'ion' => null,
                     ],
                     'items' => [
                         'edit' => [
-                            'title' => 'Редактирование VIP #:id',
+                            'title' => 'Редактирование Особого Игрока #:id',
                         ],
                     ],
                 ],
