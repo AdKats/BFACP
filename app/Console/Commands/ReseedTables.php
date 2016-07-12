@@ -49,8 +49,8 @@ class ReseedTables extends Command
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
             // Truncate permissions table
-            DB::table(Config::get('entrust::permissions_table'))->truncate();
-            DB::table(Config::get('entrust::permission_role_table'))->truncate();
+            DB::table('bfacp_permissions')->truncate();
+            DB::table('bfacp_permission_role')->truncate();
 
             // Reseed the permissions table
             $this->call('db:seed', ['--force' => true, '--class' => 'PermissionsTableSeeder']);
