@@ -196,7 +196,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.1.6/ZeroClipboard.min.js"></script>
-<script src="//js.pusher.com/3.0/pusher.min.js"></script>
+<script src="//js.pusher.com/3.1/pusher.min.js"></script>
 {!! Html::script('js/plugins/fastclick/fastclick.min.js') !!}
 {!! Html::script('js/plugins/angular-modules/count-to/count-to.js') !!}
 {!! Html::script('js/plugins/angular-modules/ng-idle/angular-idle.min.js') !!}
