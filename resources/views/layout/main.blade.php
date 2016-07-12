@@ -211,7 +211,8 @@
 @if($bfacp->isLoggedIn && $bfacp->user->ability(null, ['admin.site.pusher.users.view', 'admin.site.pusher.chat.view']) && ! empty(env('PUSHER_KEY')))
     <script type="text/javascript">
         var pusher = new Pusher('{{ env('PUSHER_KEY') }}', {
-            authEndpoint: '/api/pusher/auth'
+            authEndpoint: '/api/pusher/auth',
+            cluster: "{{ env('PUSHER_CLUSTER') }}"
         });
 
         $('#site-navbar').append('<li><a href="javascript://" data-toggle="control-sidebar" tooltip="Toggle the sidebar"><i class="fa fa-gears"></i></a></li>');
