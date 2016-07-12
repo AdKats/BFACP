@@ -24,7 +24,7 @@ return [
     'options'    => [
 
         'scheme'    => 'http', // e.g. http or https
-        'host'      => 'api.pusherapp.com', // the host e.g. api.pusherapp.com. No trailing forward slash.
+        'host' => 'ws-cluster.pusher.com', // the host e.g. api.pusherapp.com. No trailing forward slash.
         'port'      => 80, // the http port
         'timeout'   => 30, // the HTTP timeout
         'encrypted' => true, // quick option to use scheme of https and port 443.

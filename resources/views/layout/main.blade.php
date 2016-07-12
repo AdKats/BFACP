@@ -212,7 +212,8 @@
     <script type="text/javascript">
         var pusher = new Pusher('{{ env('PUSHER_KEY') }}', {
             authEndpoint: '/api/pusher/auth',
-            cluster: "{{ env('PUSHER_CLUSTER') }}"
+            cluster: "{{ env('PUSHER_CLUSTER') }}",
+            host: "{{ config('kryptonit3_pusher.options.host') }}"
         });
 
         $('#site-navbar').append('<li><a href="javascript://" data-toggle="control-sidebar" tooltip="Toggle the sidebar"><i class="fa fa-gears"></i></a></li>');
