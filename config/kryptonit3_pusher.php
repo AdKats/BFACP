@@ -1,5 +1,16 @@
 <?php
 
+switch (env('PUSHER_CLUSTER', 'mt1')) {
+    case 'eu':
+        $host = 'api-eu.pusher.com';
+        break;
+    case 'ap1':
+        $host = 'api-ap1.pusher.com';
+        break;
+    default:
+        $host = 'api.pusherapp.com';
+}
+
 return [
 
     /*
@@ -24,8 +35,7 @@ return [
     'options'    => [
 
         'scheme'    => 'http', // e.g. http or https
-        'host' => env('PUSHER_HOST', 'api.pusherapp.com'),
-        // the host e.g. api.pusherapp.com. No trailing forward slash.
+        'host' => $host, // the host e.g. api.pusherapp.com. No trailing forward slash.
         'port'      => 80, // the http port
         'timeout'   => 30, // the HTTP timeout
         'encrypted' => true, // quick option to use scheme of https and port 443.
