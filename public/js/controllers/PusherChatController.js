@@ -44,11 +44,13 @@ angular.module('bfacp').controller('PusherChatController', ['$scope', '$http', f
             channel_name: 'presence-chatroom',
             event: 'message-sent',
             message: $scope.chat.message
-        }).success(function () {
+        }).success(function (data) {
             $scope.chat.input = false;
             $scope.chat.message = '';
-        }).error(function () {
+            console.log(data);
+        }).error(function (data) {
             $scope.chat.input = false;
+            console.error(data);
         });
     };
 
