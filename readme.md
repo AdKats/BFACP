@@ -143,4 +143,4 @@ If you were running a previous version then you will need to run this command as
 php artisan bfacp:reseed
 ```
 
-You should be good to go now. Make sure that you update the subdomain to point to the `public` folder for its directory (not a redirect).
+You should be good to go now. Make sure that you update the subdomain to point to the `public` folder for its directory (not a redirect). If you wish to update to the latest version of this branch just do a `git pull`.
