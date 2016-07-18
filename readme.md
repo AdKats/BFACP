@@ -1,5 +1,5 @@
 # WARNING
-DO NOT USE THIS BRANCH! This is still being upgraded from Laravel 4 to Laravel 5 and therefore unstable.
+DO NOT USE THIS BRANCH! This is still a work in progress and bound to be bugs. If you still wish to run this version, scroll down to the bottom and follow the instructions. You must have access to the command line and have git/composer installed on your system. 
 
 [![Circle CI](https://circleci.com/gh/Prophet731/BFAdminCP.svg?style=svg)](https://circleci.com/gh/Prophet731/BFAdminCP) [![Download Battlefield Admin Control Panel](https://img.shields.io/sourceforge/dt/bfacp.svg)](https://sourceforge.net/projects/bfacp/files/latest/download)[![Latest Stable Version](https://poser.pugx.org/adkgamers/bfadmincp/v/stable)](https://packagist.org/packages/adkgamers/bfadmincp) [![Total Downloads](https://poser.pugx.org/adkgamers/bfadmincp/downloads)](https://packagist.org/packages/adkgamers/bfadmincp) [![Latest Unstable Version](https://poser.pugx.org/adkgamers/bfadmincp/v/unstable)](https://packagist.org/packages/adkgamers/bfadmincp) [![License](https://poser.pugx.org/adkgamers/bfadmincp/license)](https://packagist.org/packages/adkgamers/bfadmincp)
 
@@ -115,3 +115,32 @@ To make this an automated process you can create a cron job for it.
 
 This product includes GeoLite2 data created by MaxMind, available from
 <a href="http://www.maxmind.com">http://www.maxmind.com</a>.
+
+### Installing Dev Version
+
+I will assume you already have a webspace setup for this. If not just follow directions above to get the basics setup then come back here. All you should need to do is follow the commands and you should be up and running.
+
+Make sure the directory is empty.
+```bash
+cd /path/to/bfacp
+git clone https://github.com/Prophet731/BFAdminCP.git .
+git checkout dev-laravel5
+composer install --no-scripts
+chmod -R 0777 storage
+chmod -R 0777 public/js/builds
+cp .env.example .env
+```
+
+After you ran those command edit the file `.env` with the necessary information then save the file. Next enter these commands.
+
+```bash
+php artisan migrate --force
+php artisan db:seed --force
+```
+
+If you were running a previous version then you will need to run this command as well.
+```bash
+php artisan bfacp:reseed
+```
+
+You should be good to go now. Make sure that you update the subdomain to point to the `public` folder for its directory (not a redirect).
