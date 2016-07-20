@@ -8,7 +8,6 @@ use BFACP\Repositories\BanRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
-use Roumen\Feed\Facades\Feed;
 
 /**
  * Class BansController.
@@ -38,7 +37,7 @@ class BansController extends Controller
         }
 
         if ($this->request->has('type') && $this->request->get('type') == 'rss') {
-            $feed = Feed::make();
+            $feed = app('feed');
 
             $feed->title = sprintf('Latest Battlefield Bans by %s', $this->config->get('bfacp.site.title'));
             $feed->description = sprintf('Latest Battlefield Bans by %s', $this->config->get('bfacp.site.title'));

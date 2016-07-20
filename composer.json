@@ -32,7 +32,7 @@
     "lavary/laravel-menu": "dev-master",
     "zizaco/entrust": "dev-laravel-5-2@dev",
     "davejamesmiller/laravel-breadcrumbs": "^3.0",
-    "roumen/feed": "^2.9",
+    "roumen/feed": "~2.10",
     "anahkiasen/former": "4.0.*@dev",
     "guzzlehttp/guzzle": "^6.1",
     "dingo/api": "1.0.*@dev",

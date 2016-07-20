@@ -162,6 +162,7 @@ return [
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         Kryptonit3\Pusher\PusherServiceProvider::class,
+        Roumen\Feed\FeedServiceProvider::class,
     ],
     /*
     |--------------------------------------------------------------------------
@@ -214,6 +215,7 @@ return [
         'Entrust'     => Zizaco\Entrust\EntrustFacade::class,
         'Minify'      => Devfactory\Minify\Facades\MinifyFacade::class,
         'Markdown'    => GrahamCampbell\Markdown\Facades\Markdown::class,
+        'Feed' => Roumen\Feed\Feed::class,
     ],
 
 ];
