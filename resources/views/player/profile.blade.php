@@ -198,10 +198,24 @@
                                 <span class="badge bg-green">{{ $player->infractions_global->total_points or 0 }}</span></a>
                         </li>
                         <li>
-                            <a href="javascript://" data-target="#ban-current" data-toggle="tab">{{ trans('player.profile.bans.current.title') }}</a>
+                            <a href="javascript://" data-target="#ban-current" data-toggle="tab">
+                                {{ trans('player.profile.bans.current.title') }}&nbsp;
+                                @if($player->ban->is_active)
+                                    @if($player->ban->is_perm)
+                                        <label class="label label-danger">{{ trans('player.profile.bans.type.permanent.short') }}</label>
+                                    @else
+                                        <label class="label label-warning">{{ trans('player.profile.bans.type.temporary.short') }}</label>
+                                    @endif
+                                @endif
+                            </a>
                         </li>
                         <li>
-                            <a href="javascript://" data-target="#ban-previous" data-toggle="tab">{{ trans('player.profile.bans.previous.title') }}</a>
+                            <a href="javascript://" data-target="#ban-previous" data-toggle="tab">
+                                {{ trans('player.profile.bans.previous.title') }}
+                                @if(count($player->ban->previous) > 1)
+                                    <span class="badge bg-red">{{ count($player->ban->previous) - 1 }}</span>
+                                @endif
+                            </a>
                         </li>
                         <li class="active">
                             <a href="javascript://" data-target="#links" data-toggle="tab">{{ trans('player.profile.links.title') }}</a>
