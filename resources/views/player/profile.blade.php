@@ -200,7 +200,7 @@
                         <li>
                             <a href="javascript://" data-target="#ban-current" data-toggle="tab">
                                 {{ trans('player.profile.bans.current.title') }}&nbsp;
-                                @if($player->ban->is_active)
+                                @if( ! is_null($player->ban) && $player->ban->is_active)
                                     @if($player->ban->is_perm)
                                         <label class="label label-danger">{{ trans('player.profile.bans.type.permanent.short') }}</label>
                                     @else
@@ -212,7 +212,7 @@
                         <li>
                             <a href="javascript://" data-target="#ban-previous" data-toggle="tab">
                                 {{ trans('player.profile.bans.previous.title') }}
-                                @if(count($player->ban->previous) > 1)
+                                @if( ! is_null($player->ban) && count($player->ban->previous) > 1)
                                     <span class="badge bg-red">{{ count($player->ban->previous) - 1 }}</span>
                                 @endif
                             </a>
