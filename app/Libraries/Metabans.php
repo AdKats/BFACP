@@ -114,8 +114,7 @@ class Metabans
         $this->account = Config::get('bfacp.metabans.account', null);
 
         if (! Config::get('bfacp.metabans.enabled')) {
-            return;
-            // throw new MetabansException(500, 'Metabans integration is not enabled.');
+            throw new MetabansException(500, 'Metabans integration is not enabled.');
         }
 
         if (empty($this->key) || empty($this->user) || empty($this->account)) {

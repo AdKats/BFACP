@@ -61,6 +61,10 @@ class Handler extends ExceptionHandler
                 return response()->view('errors.404', [], 404);
             }
 
+            if ($e instanceof MetabansException) {
+                // Catch Metabans Exception from killing application
+            }
+
             if ($e instanceof Exception) {
                 return response()->view('system.error-fatal', [
                     'code'      => $e->getCode(),
