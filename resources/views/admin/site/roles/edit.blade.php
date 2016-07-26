@@ -73,12 +73,17 @@
 
             var btn = $(this);
 
+            var csrf = $("input[name='_token']").val();
+
             if (confirm('Are you sure you want to delete the role {{ $role->name }}? This can\'t be undone.')) {
                 btn.find('i').removeClass('fa-trash').addClass('fa-spinner fa-pulse');
                 btn.parent().find('button').attr('disabled', true);
                 $.ajax({
                     url: "{{ route('admin.site.roles.destroy', $role->id) }}",
-                    type: 'DELETE'
+                    type: 'DELETE',
+                    data: {
+                        _token: csrf
+                    }
                 })
                 .done(function (data) {
                     toastr.success('Role Deleted!');
