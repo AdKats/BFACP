@@ -3,125 +3,134 @@
 /**
  * Route API Registering.
  */
-$api = app('Dingo\Api\Routing\Router');
+if (php_sapi_name() != "cli") {
+    $api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1', ['namespace' => 'BFACP\Http\Controllers\Api', 'middleware' => 'api'], function ($api) {
+    $api->version('v1', ['namespace' => 'BFACP\Http\Controllers\Api', 'middleware' => 'api'], function ($api) {
 
-    /*===================================
-    =            API Resources          =
-    ===================================*/
-    $api->group(['prefix' => 'helpers'], function ($api) {
-        $api->group(['prefix' => 'adkats'], function ($api) {
-            $api->get('special_groups', 'HelpersController@getSpecialGroups');
+        /*===================================
+        =            API Resources          =
+        ===================================*/
+        $api->group(['prefix' => 'helpers'], function ($api) {
+            $api->group(['prefix' => 'adkats'], function ($api) {
+                $api->get('special_groups', 'HelpersController@getSpecialGroups');
+            });
+            $api->get('online/admins', 'HelpersController@onlineAdmins');
+            $api->get('ip/{addy}', 'HelpersController@iplookup');
+            $api->get('squads', 'HelpersController@getSquads');
         });
-        $api->get('online/admins', 'HelpersController@onlineAdmins');
-        $api->get('ip/{addy}', 'HelpersController@iplookup');
-        $api->get('squads', 'HelpersController@getSquads');
-    });
 
-    /*===================================
-    =            API Pusher             =
-    ===================================*/
+        /*===================================
+        =            API Pusher             =
+        ===================================*/
 
-    $api->controller('pusher', 'PusherController');
+        $api->controller('pusher', 'PusherController');
 
-    /*===================================
-    =            API Players            =
-    ===================================*/
+        /*===================================
+        =            API Players            =
+        ===================================*/
 
-    $api->group(['prefix' => 'players'], function ($api) {
-        $api->get('/', ['as' => 'api.players.index', 'uses' => 'PlayersController@index']);
-        $api->get('{id}', ['as' => 'api.players.show', 'uses' => 'PlayersController@show'])->where('id', '[0-9]+');
-        $api->get('{id}/records',
-            ['as' => 'api.players.show.records', 'uses' => 'PlayersController@showRecords'])->where('id', '[0-9]+');
-        $api->get('{id}/chatlogs',
-            ['as' => 'api.players.show.chatlogs', 'uses' => 'PlayersController@showChatlogs'])->where('id', '[0-9]+');
-        $api->get('{id}/sessions',
-            ['as' => 'api.players.show.sessions', 'uses' => 'PlayersController@showSessions'])->where('id', '[0-9]+');
-    });
-
-    /*=====================================
-    =            API Battlelog            =
-    =====================================*/
-
-    $api->group(['prefix' => 'battlelog'], function ($api) {
         $api->group(['prefix' => 'players'], function ($api) {
-            $api->get('{player}/weapons',
-                ['as' => 'api.battlelog.players.weapons', 'uses' => 'BattlelogController@getWeapons'])->where('player',
+            $api->get('/', ['as' => 'api.players.index', 'uses' => 'PlayersController@index']);
+            $api->get('{id}', ['as' => 'api.players.show', 'uses' => 'PlayersController@show'])->where('id', '[0-9]+');
+            $api->get('{id}/records',
+                ['as' => 'api.players.show.records', 'uses' => 'PlayersController@showRecords'])->where('id', '[0-9]+');
+            $api->get('{id}/chatlogs',
+                ['as' => 'api.players.show.chatlogs', 'uses' => 'PlayersController@showChatlogs'])->where('id',
                 '[0-9]+');
-
-            $api->get('{player}/overview', [
-                'as'   => 'api.battlelog.players.overview',
-                'uses' => 'BattlelogController@getOverview',
-            ])->where('player', '[0-9]+');
-
-            $api->get('{player}/vehicles', [
-                'as'   => 'api.battlelog.players.vehicles',
-                'uses' => 'BattlelogController@getVehicles',
-            ])->where('player', '[0-9]+');
-
-            $api->get('{player}/reports',
-                ['as' => 'api.battlelog.players.reports', 'uses' => 'BattlelogController@getReports'])->where('player',
+            $api->get('{id}/sessions',
+                ['as' => 'api.players.show.sessions', 'uses' => 'PlayersController@showSessions'])->where('id',
                 '[0-9]+');
-
-            $api->get('{player}/report/{id}',
-                ['as' => 'api.battlelog.players.report', 'uses' => 'BattlelogController@getReport'])->where('player',
-                '[0-9]+')->where('id', '[0-9]+');
-
-            $api->get('{player}/acs', [
-                'as'   => 'api.battlelog.players.acs',
-                'uses' => 'BattlelogController@getCheatDetection',
-            ])->where('player', '[0-9]+');
         });
-    });
 
-    /*================================
-    =            API Bans            =
-    ================================*/
+        /*=====================================
+        =            API Battlelog            =
+        =====================================*/
 
-    $api->group(['prefix' => 'bans'], function ($api) {
-        $api->get('latest', ['as' => 'api.bans.latest', 'uses' => 'BansController@latest']);
-        $api->get('stats', ['as' => 'api.bans.stats', 'uses' => 'BansController@stats']);
+        $api->group(['prefix' => 'battlelog'], function ($api) {
+            $api->group(['prefix' => 'players'], function ($api) {
+                $api->get('{player}/weapons', [
+                        'as'   => 'api.battlelog.players.weapons',
+                        'uses' => 'BattlelogController@getWeapons',
+                    ])->where('player', '[0-9]+');
 
-        $api->group(['prefix' => 'metabans'], function ($api) {
-            $api->get('/', ['as' => 'api.bans.metabans.index', 'uses' => 'MetabansController@getIndex']);
-            $api->get('feed', ['as' => 'api.bans.metabans.feed', 'uses' => 'MetabansController@getFeed']);
-            $api->get('assessments',
-                ['as' => 'api.bans.metabans.assessments', 'uses' => 'MetabansController@getAssessments']);
-            $api->get('feed_assessments',
-                ['as' => 'api.bans.metabans.feed_assessments', 'uses' => 'MetabansController@getFeedAssessments']);
+                $api->get('{player}/overview', [
+                    'as'   => 'api.battlelog.players.overview',
+                    'uses' => 'BattlelogController@getOverview',
+                ])->where('player', '[0-9]+');
+
+                $api->get('{player}/vehicles', [
+                    'as'   => 'api.battlelog.players.vehicles',
+                    'uses' => 'BattlelogController@getVehicles',
+                ])->where('player', '[0-9]+');
+
+                $api->get('{player}/reports', [
+                        'as'   => 'api.battlelog.players.reports',
+                        'uses' => 'BattlelogController@getReports',
+                    ])->where('player', '[0-9]+');
+
+                $api->get('{player}/report/{id}', [
+                        'as'   => 'api.battlelog.players.report',
+                        'uses' => 'BattlelogController@getReport',
+                    ])->where('player', '[0-9]+')->where('id', '[0-9]+');
+
+                $api->get('{player}/acs', [
+                    'as'   => 'api.battlelog.players.acs',
+                    'uses' => 'BattlelogController@getCheatDetection',
+                ])->where('player', '[0-9]+');
+            });
         });
+
+        /*================================
+        =            API Bans            =
+        ================================*/
+
+        $api->group(['prefix' => 'bans'], function ($api) {
+            $api->get('latest', ['as' => 'api.bans.latest', 'uses' => 'BansController@latest']);
+            $api->get('stats', ['as' => 'api.bans.stats', 'uses' => 'BansController@stats']);
+
+            $api->group(['prefix' => 'metabans'], function ($api) {
+                $api->get('/', ['as' => 'api.bans.metabans.index', 'uses' => 'MetabansController@getIndex']);
+                $api->get('feed', ['as' => 'api.bans.metabans.feed', 'uses' => 'MetabansController@getFeed']);
+                $api->get('assessments',
+                    ['as' => 'api.bans.metabans.assessments', 'uses' => 'MetabansController@getAssessments']);
+                $api->get('feed_assessments',
+                    ['as' => 'api.bans.metabans.feed_assessments', 'uses' => 'MetabansController@getFeedAssessments']);
+            });
+        });
+
+        /*===================================
+        =            API Servers            =
+        ===================================*/
+
+        $api->group(['prefix' => 'servers'], function ($api) {
+            $api->get('population', ['as' => 'api.servers.population', 'uses' => 'ServersController@population']);
+            $api->get('scoreboard/{id}',
+                ['as' => 'api.servers.scoreboard', 'uses' => 'ServersController@scoreboard'])->where('id', '[0-9]+');
+            $api->get('scoreboard/roundstats/{id}', [
+                    'as'   => 'api.servers.scoreboard.roundstats',
+                    'uses' => 'ServersController@scoreboardExtra',
+                ])->where('id', '[0-9]+');
+            $api->get('chat/{id}', ['as' => 'api.servers.chat', 'uses' => 'ServersController@chat'])->where('id',
+                '[0-9]+');
+            $api->get('extras/{server}', ['as' => 'api.servers.extras', 'uses' => 'ServersController@extras']);
+            $api->controller('admin/scoreboard', 'Admin\ScoreboardController');
+        });
+
+        /*====================================
+        =            API Chatlogs            =
+        ====================================*/
+
+        $api->group(['prefix' => 'chatlogs'], function ($api) {
+            $api->get('/', ['as' => 'api.chatlogs.index', 'uses' => 'ChatlogController@getIndex']);
+        });
+
+        /*===================================
+        =            API Reports            =
+        ===================================*/
+        $api->controller('reports', 'ReportsController');
     });
-
-    /*===================================
-    =            API Servers            =
-    ===================================*/
-
-    $api->group(['prefix' => 'servers'], function ($api) {
-        $api->get('population', ['as' => 'api.servers.population', 'uses' => 'ServersController@population']);
-        $api->get('scoreboard/{id}',
-            ['as' => 'api.servers.scoreboard', 'uses' => 'ServersController@scoreboard'])->where('id', '[0-9]+');
-        $api->get('scoreboard/roundstats/{id}',
-            ['as' => 'api.servers.scoreboard.roundstats', 'uses' => 'ServersController@scoreboardExtra'])->where('id',
-            '[0-9]+');
-        $api->get('chat/{id}', ['as' => 'api.servers.chat', 'uses' => 'ServersController@chat'])->where('id', '[0-9]+');
-        $api->get('extras/{server}', ['as' => 'api.servers.extras', 'uses' => 'ServersController@extras']);
-        $api->controller('admin/scoreboard', 'Admin\ScoreboardController');
-    });
-
-    /*====================================
-    =            API Chatlogs            =
-    ====================================*/
-
-    $api->group(['prefix' => 'chatlogs'], function ($api) {
-        $api->get('/', ['as' => 'api.chatlogs.index', 'uses' => 'ChatlogController@getIndex']);
-    });
-
-    /*===================================
-    =            API Reports            =
-    ===================================*/
-    $api->controller('reports', 'ReportsController');
-});
+}
 
 /*
  * Route Application Registering
