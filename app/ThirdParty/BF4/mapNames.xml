@@ -347,4 +347,11 @@
     <map uri="XP6_CMP" name="Operation Outbreak" playmode="GunMaster1"/>
     <map uri="XP7_Valley" name="Dragon Valley 2015" playmode="GunMaster0"/>
 
+    <!-- Air Superiority Maps -->
+    <map uri="XP1_001" name="Silk Road" playmode="AirSuperiority0"/>
+    <map uri="XP1_002" name="Altai Range" playmode="AirSuperiority0"/>
+    <map uri="XP1_003" name="Guilin Peaks" playmode="AirSuperiority0"/>
+    <map uri="XP1_004" name="Dragon Pass" playmode="AirSuperiority0"/>
+    <map uri="XP7_Valley" name="Dragon Valley 2015" playmode="AirSuperiority0"/>
+
 </mapNames>
