@@ -54,7 +54,7 @@ class ScoreboardController extends Controller
         $permissions = $this->cache->get('admin.perm.list');
 
         if (! $this->isLoggedIn || ! $this->user->ability(null, $permissions['scoreboard'])) {
-            throw new AccessDeniedHttpException();
+            throw new AccessDeniedHttpException("Not Authorized for viewing scoreboard.");
         }
 
         $id = $this->request->get('server_id');

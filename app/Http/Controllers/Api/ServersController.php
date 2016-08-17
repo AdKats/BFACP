@@ -234,7 +234,7 @@ class ServersController extends Controller
             }
 
             if (! $this->isLoggedIn || ! $this->user->ability(null, $permissions['scoreboard'])) {
-                throw new AccessDeniedHttpException();
+                throw new AccessDeniedHttpException("Not Authorized for viewing scoreboard permissions.");
             }
 
             $scoreboard = new LiveServerRepository(Server::findOrFail($id));
