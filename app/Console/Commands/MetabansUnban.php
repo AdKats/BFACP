@@ -51,11 +51,12 @@ class MetabansUnban extends Command
     public function handle()
     {
         $_playerFound = false;
-
+        $_SKIPLOOP = false;
         do {
-            $metabans = new Metabans();
-            $playerID = $this->ask($this->questions['Q1']);
             try {
+                $metabans = new Metabans();
+                $playerID = $this->ask($this->questions['Q1']);
+
                 if (! is_numeric($playerID)) {
                     throw new InvalidArgumentException();
                 }
@@ -87,8 +88,8 @@ class MetabansUnban extends Command
                 $this->error(sprintf('Only integers are allowed for the player id. Input was: %s', gettype($playerID)));
             } catch (MetabansException $e) {
                 $this->error($e->getMessage());
-                die;
+                $_SKIPLOOP = true;
             }
-        } while ($_playerFound == false);
+        } while (! $_playerFound || $_SKIPLOOP);
     }
 }
