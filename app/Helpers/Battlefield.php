@@ -218,8 +218,11 @@ class Battlefield extends Main
                         break;
 
                     case 'Domination0':
-                    case 'AirSuperiority0':
                         $defaultTickets = 300;
+                        break;
+
+                    case 'AirSuperiority0':
+                        $defaultTickets = 200;
                         break;
 
                     case 'CaptureTheFlag0':
