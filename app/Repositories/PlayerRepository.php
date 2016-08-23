@@ -60,7 +60,7 @@ class PlayerRepository extends BaseRepository
                         $eaguid = sprintf('EA_%s', $matches[1]);
                         $q->orWhere('EAGUID', '=', $eaguid);
                     } // Checks if string is a PBGUID
-                    elseif (preg_match('/^([a-f0-9]+)$/', $name, $matches)) {
+                    elseif (preg_match('/^PB_([a-f0-9]+)$/', $name, $matches)) {
                         $pbguid = trim($matches[1]);
                         $q->orWhere('PBGUID', '=', $pbguid);
                     } // Checks if string is an IPv4 Address
