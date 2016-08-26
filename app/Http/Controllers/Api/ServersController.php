@@ -135,8 +135,6 @@ class ServersController extends Controller
      */
     public function scoreboardExtra($id)
     {
-        $sql = File::get(storage_path().DIRECTORY_SEPARATOR.'sql'.DIRECTORY_SEPARATOR.'sbRoundStats.sql');
-
         $stats = [
             [
                 'name'    => trans('scoreboard.factions')[1]['full_name'].' - Tickets',
