@@ -29,7 +29,7 @@ class ReportsController extends Controller
     public function getIndex()
     {
         if (! Auth::check() || ! Auth::user()->ability(null, 'admin.adkats.reports.view')) {
-            throw new AccessDeniedHttpException("Not Authorized for viewing reports.");
+            throw new AccessDeniedHttpException('Not Authorized for viewing reports.');
         }
 
         $this->repository = app(ReportRepository::class);
@@ -55,7 +55,7 @@ class ReportsController extends Controller
     public function putIndex()
     {
         if (! Auth::check() || ! Auth::user()->ability(null, 'admin.adkats.reports.edit')) {
-            throw new AccessDeniedHttpException("Not Authorized for editing reports.");
+            throw new AccessDeniedHttpException('Not Authorized for editing reports.');
         }
 
         $this->repository = app(ReportRepository::class);
