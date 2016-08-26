@@ -167,7 +167,10 @@ class ServersController extends Controller
 
         $data['roundId'] = null;
 
-        $results = $this->db->select($sql, [$id, $id]);
+        $roundId = $this->db->table('tbl_extendedroundstats')->where('server_id', $id)->max('round_id');
+
+        $results = $this->db->table('tbl_extendedroundstats')->where('server_id', $id)->where('round_id',
+            $roundId)->get();
 
         foreach ($results as $result) {
             if (is_null($data['roundId'])) {
