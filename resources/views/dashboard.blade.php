@@ -245,7 +245,7 @@
                                 <th>Player</th>
                                 <th>Total</th>
                                 <th>Most Recent</th>
-                                <th>Reason</th>
+                                <th width="50%">Reason</th>
                             </thead>
 
                             <tbody>
