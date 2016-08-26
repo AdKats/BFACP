@@ -18,7 +18,6 @@ class SpecialPlayersController extends Controller
      */
     protected $guzzle;
 
-
     public function __construct()
     {
         parent::__construct();

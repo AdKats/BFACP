@@ -106,7 +106,6 @@ class Metabans
      */
     private $auth = [];
 
-
     public function __construct()
     {
         $this->key = Config::get('bfacp.metabans.key', null);

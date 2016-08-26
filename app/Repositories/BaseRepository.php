@@ -47,7 +47,6 @@ class BaseRepository
      */
     public $config;
 
-
     public function __construct()
     {
         $this->user = Auth::user();
