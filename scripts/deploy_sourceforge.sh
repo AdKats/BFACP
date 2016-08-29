@@ -39,6 +39,15 @@ IP_WHITELIST=127.0.0.1
 PUSHER_APP_ID=null
 PUSHER_KEY=null
 PUSHER_SECRET=null
+
+# Default Cluster
+# For European use eu
+# For Asia Pacific use ap1
+PUSHER_CLUSTER=mt1
+
+MAIL_DRIVER=mailgun
+MAILGUN_DOMAIN=mg.gamerethos.net
+MAILGUN_SECRET=key-70n5skrzhn0clwqw5tm2ex4kzane-kc3
 EOF
 
 /home/ubuntu/.phpenv/shims/php artisan optimize
