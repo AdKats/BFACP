@@ -163,6 +163,7 @@ return [
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         Kryptonit3\Pusher\PusherServiceProvider::class,
         Roumen\Feed\FeedServiceProvider::class,
+        PragmaRX\Google2FA\Vendor\Laravel\ServiceProvider::class,
     ],
     /*
     |--------------------------------------------------------------------------
@@ -215,7 +216,8 @@ return [
         'Entrust'     => Zizaco\Entrust\EntrustFacade::class,
         'Minify'      => Devfactory\Minify\Facades\MinifyFacade::class,
         'Markdown'    => GrahamCampbell\Markdown\Facades\Markdown::class,
-        'Feed' => Roumen\Feed\Feed::class,
+        'Feed'        => Roumen\Feed\Feed::class,
+        'Google2FA'   => PragmaRX\Google2FA\Vendor\Laravel\Facade::class,
     ],
 
 ];

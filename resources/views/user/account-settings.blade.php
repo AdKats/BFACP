@@ -16,6 +16,16 @@
                 <div class="box-body">
                     {!! Former::email('email')->label(trans('user.account.settings.blocks.general.inputs.email')) !!}
                     {!! Former::select('language')->label(trans('user.account.settings.blocks.general.inputs.language'))->options(Config::get('bfacp.site.languages'))->value($user->setting->lang) !!}
+                    {!! Former::checkbox('twofactor_auth')->label("&nbsp;")->text('Enable Two Factor Authentication')->check($user->twofactor_auth) !!}
+
+                    @if(!empty($user->google2fa_secret))
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <img src="{{ Google2FA::getQRCodeGoogleUrl(config('bfacp.site.title'), $user->email, $user->google2fa_secret) }}">
+                            </div>
+                        </div>
+                    @endif
+
 
                     <div class="form-group">
                         <div class="col-lg-offset-2 col-sm-offset-4 col-lg-10 col-sm-8">

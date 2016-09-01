@@ -3,6 +3,7 @@
 namespace BFACP\Http\Controllers;
 
 use BFACP\Account\User;
+use BFACP\Facades\Main;
 use BFACP\Repositories\PlayerRepository;
 use BFACP\Repositories\UserRepository;
 use Former\Facades\Former;
@@ -52,11 +53,13 @@ class UsersController extends Controller
         $lang = trim($this->request->get('language', null));
         $password = trim($this->request->get('password', null));
         $password_confirmation = trim($this->request->get('password_confirmation', null));
+        $twofactor = Main::stringToBool(trim($this->request->get('twofactor_auth', false)));
 
         $v = Validator::make($this->request->all(), [
-            'email'    => 'required|email|unique:bfacp_users,email,'.$user->id,
-            'language' => 'required|in:'.implode(',', array_keys($this->config->get('bfacp.site.languages'))),
-            'password' => 'min:8|confirmed',
+            'email'          => 'required|email|unique:bfacp_users,email,'.$user->id,
+            'language'       => 'required|in:'.implode(',', array_keys($this->config->get('bfacp.site.languages'))),
+            'password'       => 'min:8|confirmed',
+            'twofactor_auth' => 'boolean',
         ]);
 
         if ($v->fails()) {
@@ -84,6 +87,17 @@ class UsersController extends Controller
         if ($this->request->has('password') && $this->request->has('password_confirmation') && $password == $password_confirmation) {
             $user->password = $password;
             $this->messages[] = trans('user.notifications.password.email.changed');
+        }
+
+        // If the user wants to enable two factor auth we need to enable it and prompt the user to add it to their google auth.
+        if ($twofactor && isset($user->twofactor_auth)) {
+            $google2fa = app()->make('PragmaRX\Google2FA\Contracts\Google2FA');
+            $user->twofactor_auth = true;
+            if (empty($user->google2fa_secret)) {
+                $user->google2fa_secret = $google2fa->generateSecretKey(32);
+            }
+        } else {
+            $user->twofactor_auth = false;
         }
 
         $user->save();

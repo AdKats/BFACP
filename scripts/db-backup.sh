@@ -93,12 +93,16 @@ if [[ -d "$TARGETDIR" ]]; then
     echo "Dumping database to single file: ${DBNAME}"
     mysqldump -h $DBHOST -u $DBUSER -p$DBPASS --single-transaction $DBNAME | gzip -9 > "${TARGETDIR}/${DBNAME}.sql.gz"
 
-    for t in $(mysql --skip-column-names -BA -h $DBHOST -u $DBUSER -p$DBPASS -D $DBNAME -e "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '${DBNAME}' AND TABLE_TYPE = 'BASE TABLE'")
-    do
-        echo "Dumping table: ${DBNAME}.${t}"
-        mysqldump -h $DBHOST -u $DBUSER -p$DBPASS --single-transaction $DBNAME $t | gzip -9 > "${TARGETDIR}/${DBNAME}.${t}.sql.gz"
-        COUNT=$(( COUNT + 1 ))
-    done
+    read -p "Would you like to backup the tables into its own file? (y/n)" dst
+
+    if [[ $dst == "y" ]]; then
+    	for t in $(mysql --skip-column-names -BA -h $DBHOST -u $DBUSER -p$DBPASS -D $DBNAME -e "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '${DBNAME}' AND TABLE_TYPE = 'BASE TABLE'")
+		do
+			echo "Dumping table: ${DBNAME}.${t}"
+			mysqldump -h $DBHOST -u $DBUSER -p$DBPASS --single-transaction $DBNAME $t | gzip -9 > "${TARGETDIR}/${DBNAME}.${t}.sql.gz"
+			COUNT=$(( COUNT + 1 ))
+		done
+    fi
 
     echo "${COUNT} tables dumped from database '${DBNAME}' into dir=${TARGETDIR}"
 fi
