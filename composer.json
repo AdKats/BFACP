@@ -30,12 +30,12 @@
     "php": ">=5.5.9",
     "laravel/framework": "5.2.*",
     "lavary/laravel-menu": "dev-master",
-    "zizaco/entrust": "dev-laravel-5-2@dev",
+    "zizaco/entrust": "5.2.x-dev",
     "davejamesmiller/laravel-breadcrumbs": "^3.0",
     "roumen/feed": "~2.10",
     "anahkiasen/former": "4.0.*@dev",
     "guzzlehttp/guzzle": "^6.1",
-    "dingo/api": "1.0.*@dev",
+    "dingo/api": "1.0.0-beta5@dev",
     "laravelcollective/html": "^5.2",
     "devfactory/minify": "1.0.*",
     "vierbergenlars/php-semver": "3.0.0",
@@ -67,12 +67,6 @@
       "tests/TestCase.php"
     ]
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/hiendv/entrust"
-    }
-  ],
   "config": {
     "preferred-install": "dist"
   }
