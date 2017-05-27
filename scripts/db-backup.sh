@@ -5,10 +5,12 @@ DBNAME=""
 DBUSER=""
 DBPASS=""
 
-TIMESTAMP=$(date +%Y-%m-%d)
+DATESTAMP=$(date -u +%Y-%m-%d)
+TIMESTAMP=$(date -u +%Y_%m_%dT%H%M%z)
 BASEDIR="$(pwd)/snapshots/database"
-TARGETDIR="${BASEDIR}/${TIMESTAMP}"
+TARGETDIR="${BASEDIR}/{$DATESTAMP}/${TIMESTAMP}"
 COUNT=0
+DST=0
 
 function usage()
 {
@@ -19,7 +21,9 @@ function usage()
     echo "-u --dbuser"
     echo "-h --dbhost"
     echo "-n --dbname"
+    echo "-p --dbpass"
     echo "-b --base-path"
+    echo "--skip-table-dump"
     echo ""
 }
 
@@ -34,6 +38,9 @@ while [ "$1" != "" ]; do
         -u | --dbuser)
             DBUSER=$VALUE
             ;;
+        -p | --dbpass)
+            DBPASS=$VALUE
+            ;;
         -h | --dbhost)
             DBHOST=$VALUE
             ;;
@@ -43,6 +50,9 @@ while [ "$1" != "" ]; do
         -b | --base-path)
             BASEDIR=$VALUE
             ;;
+        --skip-table-dump)
+            DST=1
+            ;;
         *)
             echo "ERROR: unknown parameter \"$PARAM\""
             usage
@@ -51,12 +61,6 @@ while [ "$1" != "" ]; do
     esac
     shift
 done
-
-read -p "Enter directory path to store backups. Press enter to use default [${BASEDIR}]: " dbb
-
-if [[ $dbb != "" ]]; then
-    BASEDIR=$dbb
-fi
 
 while [[ $DBHOST == "" ]]; do
     read -p "Please enter the host address for the database: " dbh
@@ -73,7 +77,7 @@ while [[ $DBUSER == "" ]]; do
     DBUSER=$dbu
 done
 
-while true; do
+while [[ $DBPASS == "" ]]; do
     read -s -p "Enter Password: " pass
 
     if [[ $pass == "" ]]; then
@@ -93,16 +97,18 @@ if [[ -d "$TARGETDIR" ]]; then
     echo "Dumping database to single file: ${DBNAME}"
     mysqldump -h $DBHOST -u $DBUSER -p$DBPASS --single-transaction $DBNAME | gzip -9 > "${TARGETDIR}/${DBNAME}.sql.gz"
 
-    read -p "Would you like to backup the tables into its own file? (y/n)" dst
+    if [[ $DST != 1 ]]; then
+        read -p "Would you like to backup the tables into its own file? (y/n)" dst
 
-    if [[ $dst == "y" ]]; then
-    	for t in $(mysql --skip-column-names -BA -h $DBHOST -u $DBUSER -p$DBPASS -D $DBNAME -e "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '${DBNAME}' AND TABLE_TYPE = 'BASE TABLE'")
-		do
-			echo "Dumping table: ${DBNAME}.${t}"
-			mysqldump -h $DBHOST -u $DBUSER -p$DBPASS --single-transaction $DBNAME $t | gzip -9 > "${TARGETDIR}/${DBNAME}.${t}.sql.gz"
-			COUNT=$(( COUNT + 1 ))
-		done
+        if [[ $dst == "y" ]]; then
+            for t in $(mysql --skip-column-names -BA -h $DBHOST -u $DBUSER -p$DBPASS -D $DBNAME -e "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '${DBNAME}' AND TABLE_TYPE = 'BASE TABLE'")
+            do
+                echo "Dumping table: ${DBNAME}.${t}"
+                mysqldump -h $DBHOST -u $DBUSER -p$DBPASS --single-transaction $DBNAME $t | gzip -9 > "${TARGETDIR}/${DBNAME}.${t}.sql.gz"
+                COUNT=$(( COUNT + 1 ))
+            done
+
+            echo "${COUNT} tables dumped from database '${DBNAME}' into dir=${TARGETDIR}"
+        fi
     fi
-
-    echo "${COUNT} tables dumped from database '${DBNAME}' into dir=${TARGETDIR}"
 fi
