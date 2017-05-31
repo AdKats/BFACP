@@ -43,7 +43,7 @@ Download the latest version. Once downloaded unzip it to a temporary folder on y
     'DB_NAME'        => 'mydatabase',
 ```
 
-Next we need to create a encryption key. This is **IMPORTANT**! The default key provided is just a placeholder string and is insecure. I have provided a page where you can get a random 32 character string. I do **NOT** save these and they are random on each refresh. You can access this page [here](https://api.gamerethos.net/random_key). Once you have your key open up the file `.env.php` in the root folder and scroll down till you see the `APP_KEY` field. Replace the `YourSecretKey!!!` with the key that was generated. By default it will look like this.
+Next we need to create a encryption key. This is **IMPORTANT**! The default key provided is just a placeholder string and is insecure. I have provided a page where you can get a random 32 character string. I do **NOT** save these and they are random on each refresh. You can access this page [here](https://adkats.gamerethos.net/api/random_key). Once you have your key open up the file `.env.php` in the root folder and scroll down till you see the `APP_KEY` field. Replace the `YourSecretKey!!!` with the key that was generated. By default it will look like this.
 
 ```PHP
     /**
