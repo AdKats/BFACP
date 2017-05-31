@@ -43,7 +43,7 @@ DB_USERNAME=homestead
 DB_PASSWORD=secret
 ```
 
-Next we need to create a encryption key. This is **IMPORTANT**! The default key provided is just a placeholder string and is insecure. I have provided a page where you can get a random 32 character string. I do **NOT** save these and they are random on each refresh. You can access this page [here](https://api.gamerethos.net/random_key). Now go back to the `.env.example` file and replace the `SomeRandomString` with the key that was generated. By default it will look like this.
+Next we need to create a encryption key. This is **IMPORTANT**! The default key provided is just a placeholder string and is insecure. I have provided a page where you can get a random 32 character string. I do **NOT** save these and they are random on each refresh. You can access this page [here](https://adkats.gamerethos.net/api/random_key). Now go back to the `.env.example` file and replace the `SomeRandomString` with the key that was generated. By default it will look like this.
 
 ```
 APP_KEY=SomeRandomString
