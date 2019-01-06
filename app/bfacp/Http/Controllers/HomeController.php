@@ -70,9 +70,12 @@ class HomeController extends BaseController
 
                 return $p;
             })->lists('display_name', 'name');
-
+	
+    	    // compact throws a warning if a value is undefined
+ 	    set_error_handler(function() { /* ignore errors */ });
             $adminview = View::make('partials.scoreboard.admin.admin',
                 compact('validPermissions', 'presetMessages'))->render();
+	    restore_error_handler();
         } else {
             $adminview = null;
         }

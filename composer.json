@@ -31,7 +31,8 @@
         "kmd/logviewer": "1.2.*",
         "ceesvanegmond/minify": "2.0.*",
         "roumen/feed": "2.8.*",
-        "artdarek/pusherer": "1.0.*"
+        "artdarek/pusherer": "1.0.*",
+        "tomgrohl/laravel4-php71-encrypter": "^1.1"
     },
     "autoload": {
         "classmap": [

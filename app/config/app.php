@@ -74,7 +74,7 @@ return [
      */
 
     'key'             => getenv('APP_KEY') ?: 'YourSecretKey!!!',
-    'cipher'          => MCRYPT_RIJNDAEL_256,
+    'cipher'          => 'AES-256-CBC',
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -96,7 +96,7 @@ return [
         'Illuminate\Database\DatabaseServiceProvider',
         'Illuminate\Database\MigrationServiceProvider',
         'Illuminate\Database\SeedServiceProvider',
-        'Illuminate\Encryption\EncryptionServiceProvider',
+        'Tomgrohl\Laravel\Encryption\EncryptionServiceProvider',
         'Illuminate\Filesystem\FilesystemServiceProvider',
         'Illuminate\Foundation\Providers\ArtisanServiceProvider',
         'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
