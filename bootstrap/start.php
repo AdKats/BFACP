@@ -69,7 +69,7 @@ if (!$app->runningInConsole()) {
     $setupFilePath = $app['path.base'] . '/app/bfacp/setup.php';
     $jsBuildsPath = $app['path.public'] . '/js/builds';
 
-    if (version_compare(phpversion(), '5.5.0', '<') || !extension_loaded('mcrypt') || !extension_loaded('pdo')) {
+    if (version_compare(phpversion(), '5.5.0', '<') || !extension_loaded('pdo')) {
         die(View::make('system.requirements', ['required_php_version' => '5.5.0']));
     }
 
