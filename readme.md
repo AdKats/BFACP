@@ -1,3 +1,6 @@
+# Running on PHP Version 7
+This does not work with any version of the BFACP do not try to run this application on that version. Use the latest stable PHP 5.6.
+
 # WARNING
 DO NOT USE THIS BRANCH! This is still a work in progress and bound to be bugs. If you still wish to run this version, scroll down to the bottom and follow the instructions. You must have access to the command line and have git/composer installed on your system. 
 
