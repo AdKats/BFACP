@@ -1,3 +1,6 @@
+# Running on PHP Version 7
+This does not work with any version of the BFACP do not try to run this application on that version. Use the latest stable PHP 5.6.
+
 [![Circle CI](https://circleci.com/gh/Prophet731/BFAdminCP.svg?style=svg)](https://circleci.com/gh/Prophet731/BFAdminCP) [![Download Battlefield Admin Control Panel](https://img.shields.io/sourceforge/dt/bfacp.svg)](https://sourceforge.net/projects/bfacp/files/latest/download)[![Latest Stable Version](https://poser.pugx.org/adkgamers/bfadmincp/v/stable)](https://packagist.org/packages/adkgamers/bfadmincp) [![Total Downloads](https://poser.pugx.org/adkgamers/bfadmincp/downloads)](https://packagist.org/packages/adkgamers/bfadmincp) [![Latest Unstable Version](https://poser.pugx.org/adkgamers/bfadmincp/v/unstable)](https://packagist.org/packages/adkgamers/bfadmincp) [![License](https://poser.pugx.org/adkgamers/bfadmincp/license)](https://packagist.org/packages/adkgamers/bfadmincp)
 
 # Overview
