@@ -2,7 +2,7 @@ title: Battlefield Admin Control Panel
 description: A web based admin tool for Battlefield 3, Battlefield 4, and Battlefield Hardline integrated with AdKats and XPKillers Stat Logger plugins for ProCon.
 google_analytics: 
 show_downloads: true
-theme: jekyll-theme-cayman
+theme: jekyll-theme-midnight
 
 gems:
   - jekyll-mentions
