@@ -226,4 +226,85 @@
     <map uri="XP5_002" name="Nebandan Flats" playmode="CaptureTheFlag0"/>
     <map uri="XP5_003" name="Kiasar Railroad" playmode="CaptureTheFlag0"/>
     <map uri="XP5_004" name="Sabalan Pipeline" playmode="CaptureTheFlag0"/>
+         
+    <!-- ConquestAssaultSmall1, 9 maps -->
+    <map uri="MP_001" name="Grand Bazaar" playmode="ConquestAssaultSmall1"/>
+    <map uri="MP_003" name="Teheran Highway" playmode="ConquestAssaultSmall1"/>
+    <map uri="MP_007" name="Caspian Border" playmode="ConquestAssaultSmall1"/>
+    <map uri="MP_011" name="Seine Crossing" playmode="ConquestAssaultSmall1"/>
+    <map uri="MP_012" name="Operation Firestorm" playmode="ConquestAssaultSmall1"/>
+    <map uri="MP_013" name="Damavand Peak" playmode="ConquestAssaultSmall1"/>
+    <map uri="MP_017" name="Noshahar Canals" playmode="ConquestAssaultSmall1"/>
+    <map uri="MP_018" name="Kharg Island" playmode="ConquestAssaultSmall1"/>
+    <map uri="MP_Subway" name="Operation Metro" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP1_001" name="Strike at Karkand" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP1_002" name="Gulf of Oman" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP1_003" name="Sharqui Peninsula" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP1_004" name="Wake Island" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP3_Alborz" name="Alborz Mountains" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP3_Desert" name="Bandar Desert" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP3_Shield" name="Armored Shield" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP3_Valley" name="Death Valley" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP4_FD" name="Markaz Monolith" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP4_Parl" name="Azadi Palace" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP4_Quake" name="Epicenter" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP4_Rubble" name="Talah Market" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP5_001" name="Operation Riverside" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP5_002" name="Nebandan Flats" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP5_003" name="Kiasar Railroad" playmode="ConquestAssaultSmall1"/>
+    <map uri="XP5_004" name="Sabalan Pipeline" playmode="ConquestAssaultSmall1"/>
+         
+    <!-- ConquestAssaultSmall10, 9 maps -->
+    <map uri="MP_001" name="Grand Bazaar" playmode="ConquestAssaultSmall10"/>
+    <map uri="MP_003" name="Teheran Highway" playmode="ConquestAssaultSmall10"/>
+    <map uri="MP_007" name="Caspian Border" playmode="ConquestAssaultSmall10"/>
+    <map uri="MP_011" name="Seine Crossing" playmode="ConquestAssaultSmall10"/>
+    <map uri="MP_012" name="Operation Firestorm" playmode="ConquestAssaultSmall10"/>
+    <map uri="MP_013" name="Damavand Peak" playmode="ConquestAssaultSmall10"/>
+    <map uri="MP_017" name="Noshahar Canals" playmode="ConquestAssaultSmall10"/>
+    <map uri="MP_018" name="Kharg Island" playmode="ConquestAssaultSmall10"/>
+    <map uri="MP_Subway" name="Operation Metro" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP1_001" name="Strike at Karkand" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP1_002" name="Gulf of Oman" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP1_003" name="Sharqui Peninsula" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP1_004" name="Wake Island" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP3_Alborz" name="Alborz Mountains" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP3_Desert" name="Bandar Desert" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP3_Shield" name="Armored Shield" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP3_Valley" name="Death Valley" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP4_FD" name="Markaz Monolith" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP4_Parl" name="Azadi Palace" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP4_Quake" name="Epicenter" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP4_Rubble" name="Talah Market" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP5_001" name="Operation Riverside" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP5_002" name="Nebandan Flats" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP5_003" name="Kiasar Railroad" playmode="ConquestAssaultSmall10"/>
+    <map uri="XP5_004" name="Sabalan Pipeline" playmode="ConquestAssaultSmall10"/>
+         
+    <!-- ConquestAssaultLarge0, 9 maps -->
+    <map uri="MP_001" name="Grand Bazaar" playmode="ConquestAssaultLarge0"/>
+    <map uri="MP_003" name="Teheran Highway" playmode="ConquestAssaultLarge0"/>
+    <map uri="MP_007" name="Caspian Border" playmode="ConquestAssaultLarge0"/>
+    <map uri="MP_011" name="Seine Crossing" playmode="ConquestAssaultLarge0"/>
+    <map uri="MP_012" name="Operation Firestorm" playmode="ConquestAssaultLarge0"/>
+    <map uri="MP_013" name="Damavand Peak" playmode="ConquestAssaultLarge0"/>
+    <map uri="MP_017" name="Noshahar Canals" playmode="ConquestAssaultLarge0"/>
+    <map uri="MP_018" name="Kharg Island" playmode="ConquestAssaultLarge0"/>
+    <map uri="MP_Subway" name="Operation Metro" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP1_001" name="Strike at Karkand" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP1_002" name="Gulf of Oman" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP1_003" name="Sharqui Peninsula" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP1_004" name="Wake Island" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP3_Alborz" name="Alborz Mountains" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP3_Desert" name="Bandar Desert" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP3_Shield" name="Armored Shield" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP3_Valley" name="Death Valley" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP4_FD" name="Markaz Monolith" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP4_Parl" name="Azadi Palace" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP4_Quake" name="Epicenter" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP4_Rubble" name="Talah Market" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP5_001" name="Operation Riverside" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP5_002" name="Nebandan Flats" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP5_003" name="Kiasar Railroad" playmode="ConquestAssaultLarge0"/>
+    <map uri="XP5_004" name="Sabalan Pipeline" playmode="ConquestAssaultLarge0"/>
 </mapNames>
