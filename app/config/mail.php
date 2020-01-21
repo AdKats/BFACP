@@ -15,7 +15,7 @@ return [
 	|
 	*/
 
-	'driver'     => 'mailgun',
+	'driver' => getenv('MAIL_DRIVER', 'smtp'),
 	/*
 	|--------------------------------------------------------------------------
 	| SMTP Host Address
@@ -27,7 +27,7 @@ return [
 	|
 	*/
 
-	'host'       => 'smtp.mailgun.org',
+	'host' => getenv('MAIL_HOST', 'smtp.gmail.com'),
 	/*
 	|--------------------------------------------------------------------------
 	| SMTP Host Port
@@ -39,7 +39,7 @@ return [
 	|
 	*/
 
-	'port'       => 587,
+	'port' => getenv('MAIL_PORT', 587),
 	/*
 	|--------------------------------------------------------------------------
 	| Global "From" Address
@@ -51,11 +51,10 @@ return [
 	|
 	*/
 
-	'from'       => [
-		'address' => 'noreply@mg.gamerethos.net',
-		'name'    => 'noreply@' . array_key_exists('SERVER_NAME', $_SERVER) ?
-			$_SERVER['SERVER_NAME'] : 'localhost',
-	],
+	'from' => [
+        'address' => getenv('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        'name' => getenv('MAIL_FROM_NAME', 'Example'),
+        ],
 	/*
 	|--------------------------------------------------------------------------
 	| E-Mail Encryption Protocol
@@ -67,7 +66,7 @@ return [
 	|
 	*/
 
-	'encryption' => 'tls',
+	'encryption' => getenv('MAIL_ENCRYPTION', 'tls'),
 	/*
 	|--------------------------------------------------------------------------
 	| SMTP Server Username
@@ -79,8 +78,9 @@ return [
 	|
 	*/
 
-	'username'   => null,
-	/*
+	'username' => getenv('MAIL_USERNAME'),
+
+    	/*
 	|--------------------------------------------------------------------------
 	| SMTP Server Password
 	|--------------------------------------------------------------------------
@@ -91,7 +91,7 @@ return [
 	|
 	*/
 
-	'password'   => null,
+	'password' => getenv('MAIL_PASSWORD'),
 	/*
 	|--------------------------------------------------------------------------
 	| Sendmail System Path
@@ -102,7 +102,6 @@ return [
 	| been provided here, which will work well on most of your systems.
 	|
 	*/
-
 	'sendmail'   => '/usr/sbin/sendmail -bs',
 	/*
 	|--------------------------------------------------------------------------
