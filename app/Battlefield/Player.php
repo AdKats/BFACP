@@ -299,8 +299,6 @@ class Player extends Elegant
         }
 
         $links[] = [
-            'istats'   => sprintf('http://i-stats.net/index.php?action=pcheck&player=%s&game=%s&sub=Check+Player',
-                $this->SoldierName, $game),
             'chatlogs' => route('chatlog.search', ['pid' => $this->PlayerID]),
             'pbbans'   => ! empty($this->PBGUID) ? sprintf('http://www.pbbans.com/mbi-guid-search-%s.html',
                 $this->PBGUID) : null,
