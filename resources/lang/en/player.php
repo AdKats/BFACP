@@ -39,8 +39,7 @@ return [
                 'metabans'     => 'Metabans',
                 'pbbans'       => 'PBBans',
                 'fairplay'     => '24/7 Fairplay',
-                'Cheatreport'  => 'Cheatreport,
-                '
+                'Cheatreport'  => 'Cheatreport',
                 /**
                  * Internal LInks
                  */
