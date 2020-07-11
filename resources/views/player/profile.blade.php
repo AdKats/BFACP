@@ -471,20 +471,12 @@
                         <div class="tab-pane active" id="links">
                             @foreach($player->links as $key => $link)
                                 @unless(is_null($link))
-                                    @if($key == 'bf4db')
-                                        @if(!is_null($link->cheatscore))
-                                            {!! Html::link($link->url, trans(sprintf('player.profile.links.items.%s', $key)) . sprintf(' - %u%%', $link->cheatscore), ['class' => 'btn bg-blue', 'target' => '_blank']) !!}
-                                        @else
-                                            {!! Html::link($link->url, trans(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => '_blank']) !!}
-                                        @endif
+                                    @if($key == 'chatlogs' && ((!$bfacp->isLoggedIn && !Config::get('bfacp.site.chatlogs.guest')) || ($bfacp->isLoggedIn && !Auth::user()->ability(null, 'chatlogs'))))
+                                        {{-- Do not show the chatlogs button --}}
+                                    @elseif($key == 'pbbans' && (is_null($bfacp->user) || !Auth::user()->ability(null, 'player.view.guids')))
+                                        {{-- Do not show the pbbans button --}}
                                     @else
-                                        @if($key == 'chatlogs' && ((!$bfacp->isLoggedIn && !Config::get('bfacp.site.chatlogs.guest')) || ($bfacp->isLoggedIn && !Auth::user()->ability(null, 'chatlogs'))))
-                                            {{-- Do not show the chatlogs button --}}
-                                        @elseif($key == 'pbbans' && (is_null($bfacp->user) || !Auth::user()->ability(null, 'player.view.guids')))
-                                            {{-- Do not show the pbbans button --}}
-                                        @else
-                                            {!! Html::link($link, trans(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => ($key == 'chatlogs' ? '_self' : '_blank')]) !!}
-                                        @endif
+                                        {!! Html::link($link, trans(sprintf('player.profile.links.items.%s', $key)), ['class' => 'btn bg-blue', 'target' => ($key == 'chatlogs' ? '_self' : '_blank')]) !!}
                                     @endif
                                 @endunless
                             @endforeach
