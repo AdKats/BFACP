@@ -305,19 +305,19 @@ class Player extends Elegant
             'pbbans'   => ! empty($this->PBGUID) ? sprintf('http://www.pbbans.com/mbi-guid-search-%s.html',
                 $this->PBGUID) : null,
             'fairplay' => sprintf('https://www.247fairplay.com/CheatDetector/%s', $this->SoldierName),
-            'Cheatreport' => sprintf('http://bf4cr.com/?pid=&uid=%s&cnt=&startdate=', $this->SoldierName),
         ];
         
         $links2 = [];
         
         if ($game == 'BF4') {
             $links2 = [
-                'Cheatreport' => sprintf('http://bf4cr.com/?pid=&uid=%s&cnt=&startdate=', $this->SoldierName),
+                'cheatreport' => sprintf('http://bf4cr.com/?pid=&uid=%s&cnt=&startdate=', $this->SoldierName),
                 'bf4db' => sprintf('https://bf4db.com/player/search?query=%s', $this->SoldierName),
             ];
         }
 
-        $links = array_merge($links, $links2);
+        $links = array_merge($links, $links[0], $links2);
+        unset($links[0]);
 
         return $links;
     }
