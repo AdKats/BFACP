@@ -308,6 +308,8 @@ class Player extends Elegant
             'Cheatreport' => sprintf('http://bf4cr.com/?pid=&uid=%s&cnt=&startdate=', $this->SoldierName),
         ];
         
+        $links2 = [];
+        
         if ($game == 'BF4') {
             $links2 = [
                 'Cheatreport' => sprintf('http://bf4cr.com/?pid=&uid=%s&cnt=&startdate=', $this->SoldierName),
