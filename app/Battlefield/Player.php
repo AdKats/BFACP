@@ -298,55 +298,24 @@ class Player extends Elegant
             }
         }
 
-        /*
-        if ($game == 'BF4') {
-            try {
-                if (Route::currentRouteName() != 'player.show') {
-                    throw new Exception();
-                }
-
-                $request = app('Guzzle')->get(sprintf('http://api.bf4db.com/api-player.php?%s', http_build_query([
-                    'format' => 'json',
-                    'guid'   => $this->EAGUID,
-                ])), [
-                    'connect_timeout' => 5,
-                ]);
-
-                $response = json_decode($request->getBody(), true);
-
-                if ($response['type'] != 'error') {
-                    $bf4db_profile = [
-                        'url'        => $response['data']['bf4db_url'],
-                        'cheatscore' => $response['data']['cheatscore'],
-                    ];
-                } else {
-                    throw new Exception();
-                }
-            } catch (Exception $e) {
-                $bf4db_profile = [
-                    'url'        => sprintf('http://bf4db.com/players?name=%s', $this->SoldierName),
-                    'cheatscore' => null,
-                ];
-            }
-        }
-        */
-
         $links[] = [
-            'bf3stats' => $game == 'BF3' ? sprintf('http://bf3stats.com/stats_pc/%s', $this->SoldierName) : null,
-            'bf4stats' => $game == 'BF4' ? sprintf('http://bf4stats.com/pc/%s', $this->SoldierName) : null,
-            'bfhstats' => $game == 'BFH' ? sprintf('http://bfhstats.com/pc/%s', $this->SoldierName) : null,
             'istats'   => sprintf('http://i-stats.net/index.php?action=pcheck&player=%s&game=%s&sub=Check+Player',
                 $this->SoldierName, $game),
-            'metabans' => sprintf('http://metabans.com/search/?phrase=%s', $this->SoldierName),
-            // 'bf4db'    => ($game == 'BF4' && isset($bf4db_profile)) ? $bf4db_profile : null,
             'chatlogs' => route('chatlog.search', ['pid' => $this->PlayerID]),
             'pbbans'   => ! empty($this->PBGUID) ? sprintf('http://www.pbbans.com/mbi-guid-search-%s.html',
                 $this->PBGUID) : null,
             'fairplay' => sprintf('https://www.247fairplay.com/CheatDetector/%s', $this->SoldierName),
+            'Cheatreport' => sprintf('http://bf4cr.com/?pid=&uid=%s&cnt=&startdate=', $this->SoldierName),
         ];
+        
+        if ($game == 'BF4') {
+            $links2 = [
+                'Cheatreport' => sprintf('http://bf4cr.com/?pid=&uid=%s&cnt=&startdate=', $this->SoldierName),
+                'bf4db' => sprintf('https://bf4db.com/player/search?query=%s', $this->SoldierName),
+            ];
+        }
 
-        $links = array_merge($links, $links[0]);
-        unset($links[0]);
+        $links = array_merge($links, $links2);
 
         return $links;
     }
