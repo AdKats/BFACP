@@ -304,13 +304,15 @@ class Player extends Elegant
                 $this->PBGUID) : null,
             'fairplay' => sprintf('https://www.247fairplay.com/CheatDetector/%s', $this->SoldierName),
         ];
-        
+
         $links2 = [];
-        
+
         if ($game == 'BF4') {
             $links2 = [
+                'aci' => sprintf('http://www.anticheatinc.net/forums/bansearch.php?search=%s&game=bf4&submit=Submit', $this->PBGUID),
                 'cheatreport' => sprintf('http://bf4cr.com/?pid=&uid=%s&cnt=&startdate=', $this->SoldierName),
                 'bf4db' => sprintf('https://bf4db.com/player/search?query=%s', $this->SoldierName),
+                'ba' => sprintf('https://battlefield.agency/player/by-pb_guid/%s', $this->PBGUID),
             ];
         }
 

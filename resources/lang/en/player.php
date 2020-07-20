@@ -31,7 +31,7 @@ return [
                  */
                 'battlelog'    => 'Battlelog',
                 'istats'       => 'I-Stats',
-                'anticheatinc' => 'Anticheat Inc.',
+                'aci' => 'ACI',
                 'bf4db'        => 'BF4DB',
                 'bf3stats'     => 'BF3 Stats',
                 'bf4stats'     => 'BF4 Stats',
@@ -40,6 +40,7 @@ return [
                 'pbbans'       => 'PBBans',
                 'fairplay'     => '24/7 Fairplay',
                 'cheatreport'  => 'Cheatreport',
+                'ba'           => 'BA',
                 /**
                  * Internal LInks
                  */
