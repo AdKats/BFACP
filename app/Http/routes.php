@@ -6,7 +6,7 @@
 if (php_sapi_name() != 'cli') {
     $api = app('Dingo\Api\Routing\Router');
 
-    $api->version('v1', ['namespace' => 'BFACP\Http\Controllers\Api', 'middleware' => 'api'], function ($api) {
+    $api->version('v1', ['namespace' => 'BFACP\Http\Controllers\Api', 'middleware' => 'api.throttle'], function ($api) {
 
         /*===================================
         =            API Resources          =
