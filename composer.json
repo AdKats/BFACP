@@ -27,7 +27,7 @@
     }
   ],
   "require": {
-    "php": ">=5.5.9",
+    "php": "5.6.1",
     "laravel/framework": "5.2.*",
     "lavary/laravel-menu": "dev-master",
     "zizaco/entrust": "5.2.x-dev",
@@ -68,6 +68,9 @@
     ]
   },
   "config": {
-    "preferred-install": "dist"
+    "preferred-install": "dist",
+    "platform": {
+      "php": "5.6.1"
+    }
   }
 }
