@@ -150,7 +150,7 @@ class Server extends Elegant
      */
     public function scopeActive($query)
     {
-        return $query->where('ConnectionState', 'on');
+        return $query->where('GameID', '<>', 0)->where('ConnectionState', 'on');
     }
 
     /**
@@ -161,8 +161,8 @@ class Server extends Elegant
      */
     public function getServerNameShortAttribute()
     {
-        if (is_null($this->setting) || empty($this->setting->filter)) {
-            return;
+        if (empty($this->setting)) {
+            return null;
         }
 
         $strings = explode(',', $this->setting->filter);
@@ -291,7 +291,7 @@ class Server extends Elegant
     /**
      * Gets the current map image banner.
      *
-     * @return string
+     * @return array
      */
     public function getMapImagePathsAttribute()
     {
@@ -320,7 +320,7 @@ class Server extends Elegant
      */
     public function getIsActiveAttribute()
     {
-        return $this->ConnectionState == 'on';
+        return $this->ConnectionState === 'on';
     }
 
     /**
