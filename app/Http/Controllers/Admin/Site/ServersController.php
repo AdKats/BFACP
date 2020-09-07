@@ -30,7 +30,7 @@ class ServersController extends Controller
      */
     public function index()
     {
-        $servers = Server::all();
+        $servers = Server::where('GameID', '<>', 0)->get();
 
         $page_title = trans('navigation.admin.site.items.servers.title');
 
