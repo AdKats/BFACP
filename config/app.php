@@ -154,7 +154,6 @@ return [
         BFACP\Providers\CloudflareProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         Lavary\Menu\ServiceProvider::class,
-        Dingo\Api\Provider\LaravelServiceProvider::class,
         Former\FormerServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,

@@ -52,7 +52,6 @@ class Kernel extends HttpKernel
             CheckForAccessAuthUsersOnly::class,
         ],
         'api' => [
-            'throttle:200,1',
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,

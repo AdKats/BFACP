@@ -2,6 +2,9 @@
 
 namespace BFACP\Console;
 
+use BFACP\Console\Commands\InfractionsCleanup;
+use BFACP\Console\Commands\ReputationCalculation;
+use BFACP\Console\Commands\ReseedTables;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,9 +19,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\Inspire::class,
-        Commands\MetabansUnban::class,
-        Commands\ReseedTables::class,
+        ReseedTables::class,
+        InfractionsCleanup::class,
+        ReputationCalculation::class,
     ];
 
     /**

@@ -6,8 +6,6 @@ use BFACP\Adkats\Setting;
 use BFACP\Facades\Main as MainHelper;
 use BFACP\Repositories\ReportRepository;
 use Carbon\Carbon;
-use Dingo\Api\Exception\ResourceException;
-use Dingo\Api\Exception\UpdateResourceFailedException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator as Validator;

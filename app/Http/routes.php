@@ -3,42 +3,42 @@
 /**
  * Route API Registering.
  */
-if (php_sapi_name() != 'cli') {
-    $api = app('Dingo\Api\Routing\Router');
 
-    $api->version('v1', ['namespace' => 'BFACP\Http\Controllers\Api', 'middleware' => 'api.throttle'], function ($api) {
+use Illuminate\Support\Facades\Route;
 
+if (PHP_SAPI !== 'cli') {
+    Route::group(['namespace' => 'Api', 'middleware' => ['web', 'throttle:100,1'], 'prefix' => 'api'], function () {
         /*===================================
         =            API Resources          =
         ===================================*/
-        $api->group(['prefix' => 'helpers'], function ($api) {
-            $api->group(['prefix' => 'adkats'], function ($api) {
-                $api->get('special_groups', 'HelpersController@getSpecialGroups');
+        Route::group(['prefix' => 'helpers'], function () {
+            Route::group(['prefix' => 'adkats'], function () {
+                Route::get('special_groups', 'HelpersController@getSpecialGroups');
             });
-            $api->get('online/admins', 'HelpersController@onlineAdmins');
-            $api->get('ip/{addy}', 'HelpersController@iplookup');
-            $api->get('squads', 'HelpersController@getSquads');
+            Route::get('online/admins', 'HelpersController@onlineAdmins');
+            Route::get('ip/{addy}', 'HelpersController@iplookup');
+            Route::get('squads', 'HelpersController@getSquads');
         });
 
         /*===================================
         =            API Pusher             =
         ===================================*/
 
-        $api->controller('pusher', 'PusherController');
+        Route::controller('pusher', 'PusherController');
 
         /*===================================
         =            API Players            =
         ===================================*/
 
-        $api->group(['prefix' => 'players'], function ($api) {
-            $api->get('/', ['as' => 'api.players.index', 'uses' => 'PlayersController@index']);
-            $api->get('{id}', ['as' => 'api.players.show', 'uses' => 'PlayersController@show'])->where('id', '[0-9]+');
-            $api->get('{id}/records',
+        Route::group(['prefix' => 'players'], function ($api) {
+            Route::get('/', ['as' => 'api.players.index', 'uses' => 'PlayersController@index']);
+            Route::get('{id}', ['as' => 'api.players.show', 'uses' => 'PlayersController@show'])->where('id', '[0-9]+');
+            Route::get('{id}/records',
                 ['as' => 'api.players.show.records', 'uses' => 'PlayersController@showRecords'])->where('id', '[0-9]+');
-            $api->get('{id}/chatlogs',
+            Route::get('{id}/chatlogs',
                 ['as' => 'api.players.show.chatlogs', 'uses' => 'PlayersController@showChatlogs'])->where('id',
                 '[0-9]+');
-            $api->get('{id}/sessions',
+            Route::get('{id}/sessions',
                 ['as' => 'api.players.show.sessions', 'uses' => 'PlayersController@showSessions'])->where('id',
                 '[0-9]+');
         });
@@ -47,35 +47,35 @@ if (php_sapi_name() != 'cli') {
         =            API Battlelog            =
         =====================================*/
 
-        $api->group(['prefix' => 'battlelog'], function ($api) {
-            $api->group(['prefix' => 'players'], function ($api) {
-                $api->get('{player}/weapons', [
-                        'as'   => 'api.battlelog.players.weapons',
-                        'uses' => 'BattlelogController@getWeapons',
-                    ])->where('player', '[0-9]+');
+        Route::group(['prefix' => 'battlelog'], function ($api) {
+            Route::group(['prefix' => 'players'], function ($api) {
+                Route::get('{player}/weapons', [
+                    'as' => 'api.battlelog.players.weapons',
+                    'uses' => 'BattlelogController@getWeapons',
+                ])->where('player', '[0-9]+');
 
-                $api->get('{player}/overview', [
-                    'as'   => 'api.battlelog.players.overview',
+                Route::get('{player}/overview', [
+                    'as' => 'api.battlelog.players.overview',
                     'uses' => 'BattlelogController@getOverview',
                 ])->where('player', '[0-9]+');
 
-                $api->get('{player}/vehicles', [
-                    'as'   => 'api.battlelog.players.vehicles',
+                Route::get('{player}/vehicles', [
+                    'as' => 'api.battlelog.players.vehicles',
                     'uses' => 'BattlelogController@getVehicles',
                 ])->where('player', '[0-9]+');
 
-                $api->get('{player}/reports', [
-                        'as'   => 'api.battlelog.players.reports',
-                        'uses' => 'BattlelogController@getReports',
-                    ])->where('player', '[0-9]+');
+                Route::get('{player}/reports', [
+                    'as' => 'api.battlelog.players.reports',
+                    'uses' => 'BattlelogController@getReports',
+                ])->where('player', '[0-9]+');
 
-                $api->get('{player}/report/{id}', [
-                        'as'   => 'api.battlelog.players.report',
-                        'uses' => 'BattlelogController@getReport',
-                    ])->where('player', '[0-9]+')->where('id', '[0-9]+');
+                Route::get('{player}/report/{id}', [
+                    'as' => 'api.battlelog.players.report',
+                    'uses' => 'BattlelogController@getReport',
+                ])->where('player', '[0-9]+')->where('id', '[0-9]+');
 
-                $api->get('{player}/acs', [
-                    'as'   => 'api.battlelog.players.acs',
+                Route::get('{player}/acs', [
+                    'as' => 'api.battlelog.players.acs',
                     'uses' => 'BattlelogController@getCheatDetection',
                 ])->where('player', '[0-9]+');
             });
@@ -85,16 +85,16 @@ if (php_sapi_name() != 'cli') {
         =            API Bans            =
         ================================*/
 
-        $api->group(['prefix' => 'bans'], function ($api) {
-            $api->get('latest', ['as' => 'api.bans.latest', 'uses' => 'BansController@latest']);
-            $api->get('stats', ['as' => 'api.bans.stats', 'uses' => 'BansController@stats']);
+        Route::group(['prefix' => 'bans'], function ($api) {
+            Route::get('latest', ['as' => 'api.bans.latest', 'uses' => 'BansController@latest']);
+            Route::get('stats', ['as' => 'api.bans.stats', 'uses' => 'BansController@stats']);
 
-            $api->group(['prefix' => 'metabans'], function ($api) {
-                $api->get('/', ['as' => 'api.bans.metabans.index', 'uses' => 'MetabansController@getIndex']);
-                $api->get('feed', ['as' => 'api.bans.metabans.feed', 'uses' => 'MetabansController@getFeed']);
-                $api->get('assessments',
+            Route::group(['prefix' => 'metabans'], function ($api) {
+                Route::get('/', ['as' => 'api.bans.metabans.index', 'uses' => 'MetabansController@getIndex']);
+                Route::get('feed', ['as' => 'api.bans.metabans.feed', 'uses' => 'MetabansController@getFeed']);
+                Route::get('assessments',
                     ['as' => 'api.bans.metabans.assessments', 'uses' => 'MetabansController@getAssessments']);
-                $api->get('feed_assessments',
+                Route::get('feed_assessments',
                     ['as' => 'api.bans.metabans.feed_assessments', 'uses' => 'MetabansController@getFeedAssessments']);
             });
         });
@@ -103,32 +103,32 @@ if (php_sapi_name() != 'cli') {
         =            API Servers            =
         ===================================*/
 
-        $api->group(['prefix' => 'servers'], function ($api) {
-            $api->get('population', ['as' => 'api.servers.population', 'uses' => 'ServersController@population']);
-            $api->get('scoreboard/{id}',
+        Route::group(['prefix' => 'servers'], function ($api) {
+            Route::get('population', ['as' => 'api.servers.population', 'uses' => 'ServersController@population']);
+            Route::get('scoreboard/{id}',
                 ['as' => 'api.servers.scoreboard', 'uses' => 'ServersController@scoreboard'])->where('id', '[0-9]+');
-            $api->get('scoreboard/roundstats/{id}', [
-                    'as'   => 'api.servers.scoreboard.roundstats',
-                    'uses' => 'ServersController@scoreboardExtra',
-                ])->where('id', '[0-9]+');
-            $api->get('chat/{id}', ['as' => 'api.servers.chat', 'uses' => 'ServersController@chat'])->where('id',
+            Route::get('scoreboard/roundstats/{id}', [
+                'as' => 'api.servers.scoreboard.roundstats',
+                'uses' => 'ServersController@scoreboardExtra',
+            ])->where('id', '[0-9]+');
+            Route::get('chat/{id}', ['as' => 'api.servers.chat', 'uses' => 'ServersController@chat'])->where('id',
                 '[0-9]+');
-            $api->get('extras/{server}', ['as' => 'api.servers.extras', 'uses' => 'ServersController@extras']);
-            $api->controller('admin/scoreboard', 'Admin\ScoreboardController');
+            Route::get('extras/{server}', ['as' => 'api.servers.extras', 'uses' => 'ServersController@extras']);
+            Route::controller('admin/scoreboard', 'Admin\ScoreboardController');
         });
 
         /*====================================
         =            API Chatlogs            =
         ====================================*/
 
-        $api->group(['prefix' => 'chatlogs'], function ($api) {
-            $api->get('/', ['as' => 'api.chatlogs.index', 'uses' => 'ChatlogController@getIndex']);
+        Route::group(['prefix' => 'chatlogs'], function ($api) {
+            Route::get('/', ['as' => 'api.chatlogs.index', 'uses' => 'ChatlogController@getIndex']);
         });
 
         /*===================================
         =            API Reports            =
         ===================================*/
-        $api->controller('reports', 'ReportsController');
+        Route::controller('reports', 'ReportsController');
     });
 }
 
