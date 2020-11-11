@@ -6,6 +6,7 @@ use BFACP\Battlefield\Server\Server as Server;
 use BFACP\Battlefield\Setting as Setting;
 use BFACP\Exceptions\UptimeRobotException;
 use BFACP\Http\Controllers\Controller;
+use BFACP\Jobs\DeleteServerJob;
 use BFACP\Libraries\Battlelog\BattlelogServer;
 use BFACP\Libraries\UptimeRobot;
 use Exception as Exception;
@@ -30,7 +31,7 @@ class ServersController extends Controller
      */
     public function index()
     {
-        $servers = Server::where('GameID', '<>', 0)->get();
+        $servers = Server::with('game', 'setting')->where('GameID', '<>', 0)->get();
 
         $page_title = trans('navigation.admin.site.items.servers.title');
 
@@ -84,7 +85,7 @@ class ServersController extends Controller
         $id = $server->ServerID;
         $setting = $server->setting;
 
-        if ($this->request->has('rcon_password') && ! empty(trim($this->request->get('rcon_password')))) {
+        if ($this->request->has('rcon_password') && !empty(trim($this->request->get('rcon_password')))) {
             $password = $this->request->get('rcon_password');
             $setting->rcon_password = trim($password);
             $this->log->info(sprintf('%s updated RCON password for server %s.', $this->user->username,
@@ -114,7 +115,7 @@ class ServersController extends Controller
                     $this->log->info(sprintf('%s added server %s to UptimeRobot.', $this->user->username,
                         $server->ServerName));
                     $this->messages[] = 'Server successfully added to UptimeRobot!';
-                } elseif (! empty($setting->monitor_key) && ! $this->request->has('use_uptimerobot')) {
+                } else if (!empty($setting->monitor_key) && !$this->request->has('use_uptimerobot')) {
                     $uptimerobot->deleteMonitor($server);
                     $setting->monitor_key = null;
                     $this->log->info(sprintf('%s removed server %s from UptimeRobot.', $this->user->username,
@@ -136,5 +137,20 @@ class ServersController extends Controller
         $this->messages[] = sprintf('Successfully Updated %s', $server->ServerName);
 
         return redirect()->route('admin.site.servers.edit', [$id])->with('messages', $this->messages);
+    }
+
+    /**
+     * @param Server $server
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws Exception
+     */
+    public function destroy(Server $server)
+    {
+        $this->dispatch(new DeleteServerJob($server));
+
+        $this->messages[] = sprintf('Server "%s" will be deleted in the background.', $server->ServerName);
+
+        return redirect()->route('admin.site.servers.index', [$server->ServerID])->with('messages', $this->messages);
     }
 }

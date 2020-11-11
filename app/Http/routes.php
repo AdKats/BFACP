@@ -294,11 +294,12 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::resource('server', 'ServersController', [
                 'names' => [
-                    'index'  => 'admin.site.servers.index',
-                    'edit'   => 'admin.site.servers.edit',
+                    'index' => 'admin.site.servers.index',
+                    'edit' => 'admin.site.servers.edit',
                     'update' => 'admin.site.servers.update',
+                    'destroy' => 'admin.site.servers.destroy',
                 ],
-                'only'  => ['index', 'edit', 'update'],
+                'only' => ['index', 'edit', 'update', 'destroy'],
             ]);
 
             Route::get('settings', ['as' => 'admin.site.settings.index', 'uses' => 'SettingsController@index']);

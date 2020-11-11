@@ -18,6 +18,9 @@
                             <th>Password Set</th>
                             <th>Address</th>
                             <th>RCON Port</th>
+                            @if(env('QUEUE_CONNECTION') === 'redis')
+                            <th>&nbsp;</th>
+                            @endif
                             </thead>
 
                             <tbody>
@@ -42,6 +45,18 @@
                                     </td>
                                     <td>{{ $server->ip }}</td>
                                     <td>{{ $server->port }}</td>
+                                    @if(env('QUEUE_CONNECTION') === 'redis')
+                                    <td>
+                                        <form action="{{ route('admin.site.servers.destroy', $server->ServerID) }}" method="POST">
+                                            {!! method_field('delete') !!}
+                                            {!! csrf_field() !!}
+                                            <button type="submit" class="btn btn-danger btn-xs">
+                                                <i class="ion-trash-a"></i>
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>
