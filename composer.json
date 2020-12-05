@@ -39,7 +39,7 @@
     "devfactory/minify": "1.0.*",
     "vierbergenlars/php-semver": "3.0.0",
     "graham-campbell/markdown": "^5.3",
-    "rap2hpoutre/laravel-log-viewer": "^0.5.2",
+    "rap2hpoutre/laravel-log-viewer": "^1.7",
     "kryptonit3/pusher": "dev-master",
     "doctrine/dbal": "^2.5",
     "geoip2/geoip2": "~2.0",

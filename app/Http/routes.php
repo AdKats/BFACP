@@ -316,6 +316,10 @@ Route::group(['middleware' => 'web'], function () {
                 'uses'       => 'MaintenanceController@update',
                 'middleware' => ['auth', 'whitelisted'],
             ]);
+
+            Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')
+                ->middleware(['permission:admin.site.system.logs', 'auth'])
+                ->name('admin.site.logs');
         });
 
         Route::get('updater', ['as' => 'admin.updater.index', 'uses' => 'UpdaterController@index']);

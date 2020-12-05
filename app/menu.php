@@ -123,7 +123,7 @@ Menu::make('MainNav', function ($menu) use ($adminPermsList) {
 
             if (Auth::user()->ability(null, 'admin.site.system.logs')) {
                 $site->add(trans('navigation.admin.site.items.system.logs.title'),
-                    Config::get('logviewer::base_url'))->prepend(Macros::faicon(trans('navigation.admin.site.items.system.logs.icon.fa'),
+                    ['route' => 'admin.site.logs'])->prepend(Macros::faicon(trans('navigation.admin.site.items.system.logs.icon.fa'),
                     true));
             }
         }
