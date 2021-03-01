@@ -334,13 +334,9 @@ class Player extends Elegant
                 $rank = $this->GlobalRank;
 
                 if ($rank > 45) {
-                    if ($rank > 100) {
-                        $rank = 100;
-                    }
-
-                    $path = sprintf('images/games/bf3/ranks/large/ss%u.png', $rank);
+                    $path = sprintf('images/games/bf3/ranks/large/ss%u.png', $rank - 45);
                 } else {
-                    $path = sprintf('images/games/bf3/ranks/large/r%u.png', $this->GlobalRank);
+                    $path = sprintf('images/games/bf3/ranks/large/r%u.png', $rank);
                 }
                 break;
 
