@@ -4,11 +4,11 @@ This does not work with any version of the BFACP do not try to run this applicat
 # WARNING
 This is still a work in progress and bound to be bugs. If you still wish to run this version, scroll down to the bottom and follow the instructions. You must have access to the command line and have git/composer installed on your system.
 
-# Managed Hosting Provided By EZRCON
+# Managed Hosting Provided By EZSCALE
 
-If you would like to have this managed for you then EZRCON is another alternative. Only $5 a month. 
+If you would like to have this managed for you then EZSCALE is another alternative. Only $5 a month. 
 
-https://ezrcon.com/store/other-services
+[BFACP Service](https://ezscale.cloud/billing/cart.php?a=add&pid=3)
 
 # Overview
 The Battlefield Admin Control Panel (BFACP) is a web based admin tool designed to work exclusively with [AdKats](https://myrcon.net/topic/459-advanced-in-game-admin-and-ban-enforcer-adkats) (v6+) and [XpKillers Chat, GUID, Stats and Mapstats Logger](https://myrcon.net/topic/162-chat-guid-stats-and-mapstats-logger-1003) (v1.0.0.3). The software is built with the [Laravel](http://laravel.com/) PHP framework to speed up development time and make my job a lot easier.
