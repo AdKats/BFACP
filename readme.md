@@ -1,3 +1,7 @@
+# NOTICE
+This public version is no longer maintained and is now archived. For the latest maintained version, it's available as a SaaS offering at EZSCALE. If you like to ask questions about it please join the [discord](https://ezscale.cloud/discord).
+
+
 # Running on PHP Version 7
 This does not work with any version of the BFACP do not try to run this application on that version. Use the latest stable PHP 5.6.
 
